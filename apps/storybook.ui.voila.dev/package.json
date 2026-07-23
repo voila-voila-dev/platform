@@ -1,0 +1,47 @@
+{
+	"name": "@voila.dev/storybook.ui.voila.dev",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "storybook dev -p 4003",
+		"build": "storybook build",
+		"format": "biome format",
+		"lint": "biome lint",
+		"check": "biome check",
+		"check-types": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@phosphor-icons/react": "catalog:react",
+		"@voila.dev/ui": "workspace:*",
+		"@voila.dev/ui-branding": "workspace:*",
+		"@voila.dev/ui-chart": "workspace:*",
+		"@voila.dev/ui-datatable": "workspace:*",
+		"@voila.dev/ui-email-block-editor": "workspace:*",
+		"@voila.dev/ui-filter": "workspace:*",
+		"@voila.dev/ui-icon": "workspace:*",
+		"@voila.dev/ui-landing": "workspace:*",
+		"@voila.dev/ui-map": "workspace:*",
+		"@voila.dev/ui-spreadsheet": "workspace:*",
+		"input-otp": "^1.4.2",
+		"maplibre-gl": "catalog:maplibre",
+		"react": "catalog:react",
+		"react-dom": "catalog:react",
+		"tailwindcss": "catalog:tailwind"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "catalog:",
+		"@storybook/addon-themes": "^10.4.0",
+		"@storybook/tanstack-react": "^10.4.0",
+		"@tailwindcss/typography": "catalog:tailwind",
+		"@tailwindcss/vite": "catalog:tailwind",
+		"@tanstack/react-router": "^1.170.2",
+		"@types/react": "^19.2.0",
+		"@types/react-dom": "^19.2.0",
+		"@voila.dev/typescript-config": "workspace:*",
+		"storybook": "^10.4.0",
+		"typescript": "catalog:",
+		"vite": "catalog:",
+		"wrangler": "^4.48.0"
+	}
+}

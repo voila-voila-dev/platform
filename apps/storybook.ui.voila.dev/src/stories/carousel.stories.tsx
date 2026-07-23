@@ -1,0 +1,181 @@
+import type { Meta, StoryObj } from "@storybook/tanstack-react";
+import {
+	Carousel,
+	type CarouselApi,
+	CarouselContent,
+	CarouselDots,
+	CarouselItem,
+	CarouselNext,
+	CarouselPrevious,
+} from "@voila.dev/ui/components/carousel";
+import * as React from "react";
+
+const meta = {
+	title: "UI/Carousel",
+	component: Carousel,
+	tags: ["autodocs"],
+	argTypes: {
+		orientation: {
+			control: "inline-radio",
+			options: ["horizontal", "vertical"],
+		},
+		opts: { control: "object" },
+	},
+} satisfies Meta<typeof Carousel>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+	args: {
+		orientation: "horizontal",
+	},
+	render: (args) => (
+		<div className="mx-12 w-full max-w-xs">
+			<Carousel {...args}>
+				<CarouselContent>
+					{[1, 2, 3, 4, 5].map((slideNumber) => (
+						<CarouselItem key={slideNumber}>
+							<div className="flex aspect-square items-center justify-center rounded-xl bg-muted text-4xl font-semibold">
+								{slideNumber}
+							</div>
+						</CarouselItem>
+					))}
+				</CarouselContent>
+				<CarouselPrevious />
+				<CarouselNext />
+			</Carousel>
+		</div>
+	),
+};
+
+export const MultipleItems: Story = {
+	render: () => (
+		<div className="mx-12 w-full max-w-md">
+			<Carousel opts={{ align: "start" }}>
+				<CarouselContent>
+					{[
+						"Physiotherapist",
+						"Osteopath",
+						"Nurse",
+						"Doctor",
+						"Podiatrist",
+						"Athletic trainer",
+					].map((specialty) => (
+						<CarouselItem key={specialty} className="basis-1/3">
+							<div className="flex aspect-square items-center justify-center rounded-xl bg-muted p-2 text-center text-sm font-medium">
+								{specialty}
+							</div>
+						</CarouselItem>
+					))}
+				</CarouselContent>
+				<CarouselPrevious />
+				<CarouselNext />
+			</Carousel>
+		</div>
+	),
+};
+
+export const Vertical: Story = {
+	render: () => (
+		<div className="my-12 w-full max-w-xs">
+			<Carousel orientation="vertical" className="mx-auto w-48">
+				<CarouselContent className="h-48">
+					{[1, 2, 3, 4, 5].map((slideNumber) => (
+						<CarouselItem key={slideNumber}>
+							<div className="flex h-44 items-center justify-center rounded-xl bg-muted text-4xl font-semibold">
+								{slideNumber}
+							</div>
+						</CarouselItem>
+					))}
+				</CarouselContent>
+				<CarouselPrevious />
+				<CarouselNext />
+			</Carousel>
+		</div>
+	),
+};
+
+export const WithDots: Story = {
+	render: () => (
+		<div className="mx-12 w-full max-w-xs">
+			<Carousel opts={{ loop: true }}>
+				<CarouselContent>
+					{[1, 2, 3, 4, 5].map((slideNumber) => (
+						<CarouselItem key={slideNumber}>
+							<div className="flex aspect-square items-center justify-center rounded-xl bg-muted text-4xl font-semibold">
+								{slideNumber}
+							</div>
+						</CarouselItem>
+					))}
+				</CarouselContent>
+				<CarouselPrevious />
+				<CarouselNext />
+				<CarouselDots />
+			</Carousel>
+		</div>
+	),
+};
+
+export const InsetControls: Story = {
+	render: () => (
+		<div className="w-full max-w-xs">
+			<Carousel>
+				<CarouselContent containerClassName="rounded-xl">
+					{[1, 2, 3, 4, 5].map((slideNumber) => (
+						<CarouselItem key={slideNumber}>
+							<div className="flex aspect-square items-center justify-center rounded-xl bg-muted text-4xl font-semibold">
+								{slideNumber}
+							</div>
+						</CarouselItem>
+					))}
+				</CarouselContent>
+				<CarouselPrevious inset />
+				<CarouselNext inset />
+			</Carousel>
+		</div>
+	),
+};
+
+function CurrentSlideExample() {
+	const [api, setApi] = React.useState<CarouselApi>();
+	const [current, setCurrent] = React.useState(1);
+	const [count, setCount] = React.useState(0);
+
+	React.useEffect(() => {
+		if (!api) return;
+		setCount(api.scrollSnapList().length);
+		setCurrent(api.selectedScrollSnap() + 1);
+		const onSelect = () => setCurrent(api.selectedScrollSnap() + 1);
+		api.on("select", onSelect);
+		return () => {
+			api.off("select", onSelect);
+		};
+	}, [api]);
+
+	return (
+		<div className="mx-12 w-full max-w-xs">
+			<Carousel setApi={setApi}>
+				<CarouselContent>
+					{[1, 2, 3, 4, 5].map((slideNumber) => (
+						<CarouselItem key={slideNumber}>
+							<div className="flex aspect-square items-center justify-center rounded-xl bg-muted text-4xl font-semibold">
+								{slideNumber}
+							</div>
+						</CarouselItem>
+					))}
+				</CarouselContent>
+				<CarouselPrevious />
+				<CarouselNext />
+			</Carousel>
+			<p className="pt-2 text-center text-sm text-muted-foreground">
+				Slide {current} of {count}
+			</p>
+		</div>
+	);
+}
+
+export const WithCurrentSlide: Story = {
+	render: () => <CurrentSlideExample />,
+};

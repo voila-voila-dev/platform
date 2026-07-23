@@ -1,0 +1,13 @@
+@import "@voila.dev/ui/styles/globals.css";
+@import "@voila.dev/ui-landing/styles/landing.css";
+
+/* Each package declares its own Tailwind sources, so there are no paths here. */
+@import "@voila.dev/ui-branding/styles.css";
+@import "@voila.dev/ui-chart/styles.css";
+@import "@voila.dev/ui-datatable/styles.css";
+@import "@voila.dev/ui-email-block-editor/styles.css";
+@import "@voila.dev/ui-filter/styles.css";
+@import "@voila.dev/ui-map/styles.css";
+@import "@voila.dev/ui-spreadsheet/styles.css";
+
+@plugin "@tailwindcss/typography";
