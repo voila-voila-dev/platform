@@ -1,0 +1,53 @@
+---
+title: "Icon"
+description: "A Phosphor icon looked up by its export name."
+sidebar:
+  order: 1
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-icon/icons";
+
+<Preview>
+	<Example.Default client:load />
+</Preview>
+
+```tsx
+<Icon name="HeartbeatIcon" className="size-6" />
+```
+
+Everything else goes to the underlying Phosphor component, so `weight`, `size`
+and `color` work as they do there.
+
+<Preview>
+	<Example.Weights client:load />
+</Preview>
+
+## Names from data
+
+<Preview layout="stack">
+	<Example.FromData client:load />
+</Preview>
+
+```tsx
+<Icon name={category.icon} className="size-5" />
+```
+
+An unknown name falls back to `TagIcon` rather than throwing, so a renamed or
+mistyped icon in the database never takes the page down. In development it also
+logs a warning naming the missing icon.
+
+Icons are `aria-hidden` unless you pass an `alt` or an `aria-label`.
+
+The full list of valid names is exported for building a picker or validating
+input, along with the union type behind it:
+
+```ts
+import {
+	phosphorIconNames,
+	type PhosphorIconName,
+} from "@voila.dev/ui-icon/components/icon";
+```
+
+For letting a user choose one, `@voila.dev/ui` has an `IconPicker` built on top
+of this.

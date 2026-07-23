@@ -1,0 +1,32 @@
+---
+title: "Quick start"
+description: "Render a Phosphor icon by its name."
+sidebar:
+  order: 0
+  label: "Quick start"
+---
+
+Most of the time you import the icon you want straight from
+`@phosphor-icons/react` and render it. This package is for the other case: the
+icon name lives in your data, so you only know it at runtime.
+
+## Install
+
+```sh
+bun add @voila.dev/ui-icon
+```
+
+```css title="globals.css"
+@import "@voila.dev/ui-icon/styles.css";
+```
+
+## Import
+
+```ts
+import { Icon } from "@voila.dev/ui-icon/components/icon";
+```
+
+Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.
+
+The package pulls in the whole Phosphor set, which is the point — any name has
+to resolve. Keep it out of bundles that only need a fixed handful of icons.
