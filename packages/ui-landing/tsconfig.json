@@ -1,0 +1,13 @@
+{
+	"extends": "@voila.dev/typescript-config/base.json",
+	"compilerOptions": {
+		"target": "ES2022",
+		"lib": ["ES2022", "DOM", "DOM.Iterable"],
+		"jsx": "react-jsx",
+		"noUncheckedSideEffectImports": true,
+		"paths": {
+			"#/*": ["./src/*"]
+		}
+	},
+	"include": ["**/*.ts", "**/*.tsx"]
+}
