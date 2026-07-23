@@ -1,0 +1,37 @@
+{
+	"name": "@voila.dev/ui-branding",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"description": "The voila.dev brand identity \u2014 canonical logo assets and brand components used by ui.voila.dev and the Storybook. Not published: build your own branding package for your own product (see https://ui.voila.dev/start/branding).",
+	"exports": {
+		"./styles.css": "./src/styles.css",
+		"./assets/*": "./src/assets/*",
+		"./components/*": "./src/components/*.tsx"
+	},
+	"imports": {
+		"#/*": "./src/*"
+	},
+	"scripts": {
+		"check": "biome check",
+		"check-types": "tsc --noEmit",
+		"format": "biome format",
+		"lint": "biome lint"
+	},
+	"dependencies": {
+		"@voila.dev/ui": "workspace:*"
+	},
+	"peerDependencies": {
+		"react": "catalog:react",
+		"react-dom": "catalog:react",
+		"tailwindcss": "catalog:tailwind"
+	},
+	"devDependencies": {
+		"@types/react": "^19.2.0",
+		"@voila.dev/typescript-config": "workspace:*",
+		"typescript": "catalog:"
+	},
+	"sideEffects": [
+		"**/*.css"
+	]
+}
