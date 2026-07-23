@@ -1,0 +1,70 @@
+{
+	"name": "@voila.dev/ui-filter",
+	"version": "0.0.0",
+	"type": "module",
+	"description": "Composable, responsive list filters for @voila.dev/ui: a screen declares its filterable fields, the package renders the editor, the active-filter chips and the trigger",
+	"license": "MIT",
+	"homepage": "https://ui.voila.dev/components/filter-bar",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/voila-voila-dev/ui.git",
+		"directory": "packages/ui-filter"
+	},
+	"keywords": [
+		"react",
+		"filters",
+		"list",
+		"faceted-search",
+		"tailwindcss"
+	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"files": [
+		"src",
+		"!src/**/*.test.ts",
+		"!src/**/*.test.tsx",
+		"!src/**/*.stories.ts",
+		"!src/**/*.stories.tsx"
+	],
+	"sideEffects": [
+		"**/*.css"
+	],
+	"exports": {
+		"./styles.css": "./src/styles.css",
+		"./types": "./src/types.ts",
+		"./lib/*": "./src/lib/*.ts",
+		"./components/*": "./src/components/*.tsx",
+		"./components/fields/*": "./src/components/fields/*.tsx"
+	},
+	"imports": {
+		"#/*": "./src/*"
+	},
+	"scripts": {
+		"check": "biome check",
+		"check-types": "tsc --noEmit",
+		"format": "biome format",
+		"lint": "biome lint",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"@phosphor-icons/react": "catalog:react",
+		"@voila.dev/ui": "workspace:*",
+		"@voila.dev/ui-map": "workspace:*"
+	},
+	"peerDependencies": {
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0",
+		"tailwindcss": "^4.0.0"
+	},
+	"devDependencies": {
+		"@testing-library/dom": "^10.4.1",
+		"@testing-library/react": "^16.3.0",
+		"@types/react": "^19.2.0",
+		"@types/react-dom": "^19.2.0",
+		"@voila.dev/typescript-config": "workspace:*",
+		"jsdom": "29.1.1",
+		"typescript": "catalog:",
+		"vitest": "catalog:"
+	}
+}
