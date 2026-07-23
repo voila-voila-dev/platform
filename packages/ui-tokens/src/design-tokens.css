@@ -1,0 +1,394 @@
+/*
+ * @voila.dev/ui-tokens - the single source of truth for design tokens.
+ *
+ * One color space (OKLch), one semantic palette. Import it AFTER
+ * `@import "tailwindcss"` in your app's `globals.css`; `@voila.dev/ui` already
+ * pulls it in through its own `styles/globals.css`.
+ *
+ * Everything here is a plain CSS custom property, so rebranding the whole
+ * system is a matter of redefining the handful you care about in your own
+ * stylesheet - see https://ui.voila.dev/start/theming.
+ *
+ * Roles (shadcn convention - each is a `color` + `-foreground` pair):
+ *   --primary       indigo - the neutral brand identity; admin UI + default CTAs.
+ *   --provider      blue   - a first product surface.
+ *   --organization  orange - a second product surface.
+ *   --secondary     neutral gray (the standard shadcn role; not a brand color).
+ * `--provider` and `--organization` exist for products that need two distinct
+ * workspace identities; drop or rename them if yours does not. Lighter/tinted
+ * use is an opacity modifier (`bg-provider/10 text-provider`), never an extra
+ * token. Remaining neutrals (`muted`, `accent`) follow the shadcn OKLch system,
+ * with a full `.dark` palette.
+ */
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+	color-scheme: light;
+
+	/* Surfaces & text */
+	--background: oklch(1 0 0);
+	--foreground: oklch(0.145 0 0);
+	--card: oklch(1 0 0);
+	--card-foreground: oklch(0.145 0 0);
+	--popover: oklch(1 0 0);
+	--popover-foreground: oklch(0.145 0 0);
+
+	/* Primary - deep indigo #151B77 (neutral brand identity; admin UI + default
+	 * CTAs). Replaces a flat black so primary buttons, progress fills and active
+	 * states read as branded rather than "default shadcn black"; sits between the
+	 * provider blue and the deep-navy brand feel. Foreground stays white (AA: white
+	 * on #151B77 ~= 11:1). */
+	--primary: oklch(0.3 0.13 269);
+	--primary-foreground: oklch(0.985 0 0);
+	--secondary: oklch(0.97 0 0);
+	--secondary-foreground: oklch(0.205 0 0);
+
+	/* Brand surfaces - provider (blue) & organization (orange) */
+	--provider: oklch(0.5547 0.2451 266.71);
+	--provider-foreground: oklch(1 0 0);
+	--organization: oklch(0.705 0.186 47);
+	--organization-foreground: oklch(1 0 0);
+
+	/* Neutral roles */
+	--muted: oklch(0.97 0 0);
+	/* Secondary text (metadata, placeholders, "Back", helper copy). Darkened from
+	 * 0.556 (~4.8:1 on white, AA but borderline) to 0.49 (~5.8:1) so dates,
+	 * helper strings and disabled-looking labels clear WCAG AA comfortably. */
+	--muted-foreground: oklch(0.49 0 0);
+	--accent: oklch(0.97 0 0);
+	--accent-foreground: oklch(0.205 0 0);
+
+	/* Status */
+	--destructive: oklch(0.577 0.245 27.325);
+	--destructive-foreground: oklch(0.985 0 0);
+	--success: oklch(0.623 0.1688 149.18);
+	--success-foreground: oklch(1 0 0);
+	--warning: oklch(0.7697 0.1645 70.61);
+	--warning-foreground: oklch(1 0 0);
+
+	/* Badge palette - an intentional, closed multi-color set for catalog badges
+	 * (skills, activities). Documented exception to the "no ad-hoc tokens" rule
+	 * above: the names are enumerated once in `BadgeColorEnum` (domain) and
+	 * `badgeColors` (badge.tsx). Each has a `.dark` override so chips stay legible
+	 * in both themes; bright hues (amber/yellow/lime/cyan) take a dark foreground. */
+	--badge-slate: oklch(0.554 0.041 257);
+	--badge-slate-foreground: oklch(1 0 0);
+	--badge-gray: oklch(0.551 0.027 264);
+	--badge-gray-foreground: oklch(1 0 0);
+	--badge-zinc: oklch(0.552 0.016 286);
+	--badge-zinc-foreground: oklch(1 0 0);
+	--badge-red: oklch(0.637 0.237 25.3);
+	--badge-red-foreground: oklch(1 0 0);
+	--badge-orange: oklch(0.705 0.186 47);
+	--badge-orange-foreground: oklch(1 0 0);
+	--badge-amber: oklch(0.79 0.155 75);
+	--badge-amber-foreground: oklch(0.27 0.02 75);
+	--badge-yellow: oklch(0.852 0.16 95);
+	--badge-yellow-foreground: oklch(0.27 0.02 95);
+	--badge-lime: oklch(0.83 0.2 128);
+	--badge-lime-foreground: oklch(0.27 0.03 128);
+	--badge-green: oklch(0.723 0.19 149);
+	--badge-green-foreground: oklch(1 0 0);
+	--badge-emerald: oklch(0.696 0.149 162);
+	--badge-emerald-foreground: oklch(1 0 0);
+	--badge-teal: oklch(0.704 0.12 183);
+	--badge-teal-foreground: oklch(1 0 0);
+	--badge-cyan: oklch(0.715 0.123 215);
+	--badge-cyan-foreground: oklch(0.27 0.02 215);
+	--badge-sky: oklch(0.685 0.149 237);
+	--badge-sky-foreground: oklch(1 0 0);
+	--badge-blue: oklch(0.623 0.214 259);
+	--badge-blue-foreground: oklch(1 0 0);
+	--badge-indigo: oklch(0.585 0.233 277);
+	--badge-indigo-foreground: oklch(1 0 0);
+	--badge-violet: oklch(0.606 0.25 292);
+	--badge-violet-foreground: oklch(1 0 0);
+	--badge-purple: oklch(0.627 0.265 304);
+	--badge-purple-foreground: oklch(1 0 0);
+	--badge-fuchsia: oklch(0.667 0.295 322);
+	--badge-fuchsia-foreground: oklch(1 0 0);
+	--badge-pink: oklch(0.656 0.241 354);
+	--badge-pink-foreground: oklch(1 0 0);
+	--badge-rose: oklch(0.645 0.246 16.4);
+	--badge-rose-foreground: oklch(1 0 0);
+
+	/* Lines & focus */
+	--border: oklch(0.922 0 0);
+	--input: oklch(0.922 0 0);
+	--ring: oklch(0.708 0 0);
+
+	/* Charts */
+	--chart-1: oklch(0.646 0.222 41.116);
+	--chart-2: oklch(0.6 0.118 184.704);
+	--chart-3: oklch(0.398 0.07 227.392);
+	--chart-4: oklch(0.828 0.189 84.429);
+	--chart-5: oklch(0.769 0.188 70.08);
+
+	/* Sidebar */
+	--sidebar: oklch(0.985 0 0);
+	--sidebar-foreground: oklch(0.145 0 0);
+	--sidebar-primary: oklch(0.205 0 0);
+	--sidebar-primary-foreground: oklch(0.985 0 0);
+	--sidebar-accent: oklch(0.97 0 0);
+	--sidebar-accent-foreground: oklch(0.205 0 0);
+	--sidebar-border: oklch(0.922 0 0);
+	--sidebar-ring: oklch(0.708 0 0);
+
+	/* Radius */
+	--radius: 0.625rem;
+}
+
+.dark {
+	color-scheme: dark;
+
+	--background: oklch(0.145 0 0);
+	--foreground: oklch(0.985 0 0);
+	--card: oklch(0.205 0 0);
+	--card-foreground: oklch(0.985 0 0);
+	--popover: oklch(0.205 0 0);
+	--popover-foreground: oklch(0.985 0 0);
+
+	--primary: oklch(0.922 0 0);
+	--primary-foreground: oklch(0.205 0 0);
+	--secondary: oklch(0.269 0 0);
+	--secondary-foreground: oklch(0.985 0 0);
+	--provider: oklch(0.65 0.2 266.71);
+	--provider-foreground: oklch(1 0 0);
+	--organization: oklch(0.74 0.17 50);
+	--organization-foreground: oklch(1 0 0);
+	--muted: oklch(0.269 0 0);
+	--muted-foreground: oklch(0.708 0 0);
+	--accent: oklch(0.269 0 0);
+	--accent-foreground: oklch(0.985 0 0);
+
+	--destructive: oklch(0.704 0.191 22.216);
+	--destructive-foreground: oklch(0.985 0 0);
+	--success: oklch(0.696 0.17 162.48);
+	--success-foreground: oklch(0.145 0 0);
+	--warning: oklch(0.828 0.189 84.429);
+	--warning-foreground: oklch(0.145 0 0);
+
+	/* Badge palette - dark overrides (lighter bases; same foreground policy). */
+	--badge-slate: oklch(0.64 0.04 257);
+	--badge-slate-foreground: oklch(1 0 0);
+	--badge-gray: oklch(0.64 0.025 264);
+	--badge-gray-foreground: oklch(1 0 0);
+	--badge-zinc: oklch(0.64 0.015 286);
+	--badge-zinc-foreground: oklch(1 0 0);
+	--badge-red: oklch(0.704 0.191 22.2);
+	--badge-red-foreground: oklch(1 0 0);
+	--badge-orange: oklch(0.74 0.17 50);
+	--badge-orange-foreground: oklch(1 0 0);
+	--badge-amber: oklch(0.83 0.15 78);
+	--badge-amber-foreground: oklch(0.27 0.02 78);
+	--badge-yellow: oklch(0.86 0.16 95);
+	--badge-yellow-foreground: oklch(0.27 0.02 95);
+	--badge-lime: oklch(0.86 0.2 128);
+	--badge-lime-foreground: oklch(0.27 0.03 128);
+	--badge-green: oklch(0.76 0.18 150);
+	--badge-green-foreground: oklch(1 0 0);
+	--badge-emerald: oklch(0.74 0.15 162);
+	--badge-emerald-foreground: oklch(1 0 0);
+	--badge-teal: oklch(0.75 0.12 183);
+	--badge-teal-foreground: oklch(1 0 0);
+	--badge-cyan: oklch(0.78 0.12 215);
+	--badge-cyan-foreground: oklch(0.27 0.02 215);
+	--badge-sky: oklch(0.74 0.14 237);
+	--badge-sky-foreground: oklch(1 0 0);
+	--badge-blue: oklch(0.68 0.19 259);
+	--badge-blue-foreground: oklch(1 0 0);
+	--badge-indigo: oklch(0.66 0.2 277);
+	--badge-indigo-foreground: oklch(1 0 0);
+	--badge-violet: oklch(0.68 0.22 292);
+	--badge-violet-foreground: oklch(1 0 0);
+	--badge-purple: oklch(0.7 0.23 304);
+	--badge-purple-foreground: oklch(1 0 0);
+	--badge-fuchsia: oklch(0.73 0.26 322);
+	--badge-fuchsia-foreground: oklch(1 0 0);
+	--badge-pink: oklch(0.72 0.22 354);
+	--badge-pink-foreground: oklch(1 0 0);
+	--badge-rose: oklch(0.71 0.22 16.4);
+	--badge-rose-foreground: oklch(1 0 0);
+
+	--border: oklch(1 0 0 / 10%);
+	--input: oklch(1 0 0 / 15%);
+	--ring: oklch(0.556 0 0);
+
+	--chart-1: oklch(0.488 0.243 264.376);
+	--chart-2: oklch(0.696 0.17 162.48);
+	--chart-3: oklch(0.769 0.188 70.08);
+	--chart-4: oklch(0.627 0.265 303.9);
+	--chart-5: oklch(0.645 0.246 16.439);
+
+	--sidebar: oklch(0.205 0 0);
+	--sidebar-foreground: oklch(0.985 0 0);
+	--sidebar-primary: oklch(0.922 0 0);
+	--sidebar-primary-foreground: oklch(0.205 0 0);
+	--sidebar-accent: oklch(0.269 0 0);
+	--sidebar-accent-foreground: oklch(0.985 0 0);
+	--sidebar-border: oklch(1 0 0 / 10%);
+	--sidebar-ring: oklch(0.556 0 0);
+}
+
+/* Map raw tokens onto Tailwind's `--color-*` namespace. `inline` keeps the
+ * `var(--token)` reference in generated utilities so `.dark` overrides apply. */
+@theme inline {
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-provider: var(--provider);
+	--color-provider-foreground: var(--provider-foreground);
+	--color-organization: var(--organization);
+	--color-organization-foreground: var(--organization-foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-destructive: var(--destructive);
+	--color-destructive-foreground: var(--destructive-foreground);
+	--color-success: var(--success);
+	--color-success-foreground: var(--success-foreground);
+	--color-warning: var(--warning);
+	--color-warning-foreground: var(--warning-foreground);
+
+	/* Badge palette - keep in sync with `badgeColors` in badge.tsx. */
+	--color-badge-slate: var(--badge-slate);
+	--color-badge-slate-foreground: var(--badge-slate-foreground);
+	--color-badge-gray: var(--badge-gray);
+	--color-badge-gray-foreground: var(--badge-gray-foreground);
+	--color-badge-zinc: var(--badge-zinc);
+	--color-badge-zinc-foreground: var(--badge-zinc-foreground);
+	--color-badge-red: var(--badge-red);
+	--color-badge-red-foreground: var(--badge-red-foreground);
+	--color-badge-orange: var(--badge-orange);
+	--color-badge-orange-foreground: var(--badge-orange-foreground);
+	--color-badge-amber: var(--badge-amber);
+	--color-badge-amber-foreground: var(--badge-amber-foreground);
+	--color-badge-yellow: var(--badge-yellow);
+	--color-badge-yellow-foreground: var(--badge-yellow-foreground);
+	--color-badge-lime: var(--badge-lime);
+	--color-badge-lime-foreground: var(--badge-lime-foreground);
+	--color-badge-green: var(--badge-green);
+	--color-badge-green-foreground: var(--badge-green-foreground);
+	--color-badge-emerald: var(--badge-emerald);
+	--color-badge-emerald-foreground: var(--badge-emerald-foreground);
+	--color-badge-teal: var(--badge-teal);
+	--color-badge-teal-foreground: var(--badge-teal-foreground);
+	--color-badge-cyan: var(--badge-cyan);
+	--color-badge-cyan-foreground: var(--badge-cyan-foreground);
+	--color-badge-sky: var(--badge-sky);
+	--color-badge-sky-foreground: var(--badge-sky-foreground);
+	--color-badge-blue: var(--badge-blue);
+	--color-badge-blue-foreground: var(--badge-blue-foreground);
+	--color-badge-indigo: var(--badge-indigo);
+	--color-badge-indigo-foreground: var(--badge-indigo-foreground);
+	--color-badge-violet: var(--badge-violet);
+	--color-badge-violet-foreground: var(--badge-violet-foreground);
+	--color-badge-purple: var(--badge-purple);
+	--color-badge-purple-foreground: var(--badge-purple-foreground);
+	--color-badge-fuchsia: var(--badge-fuchsia);
+	--color-badge-fuchsia-foreground: var(--badge-fuchsia-foreground);
+	--color-badge-pink: var(--badge-pink);
+	--color-badge-pink-foreground: var(--badge-pink-foreground);
+	--color-badge-rose: var(--badge-rose);
+	--color-badge-rose-foreground: var(--badge-rose-foreground);
+
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+	--color-chart-1: var(--chart-1);
+	--color-chart-2: var(--chart-2);
+	--color-chart-3: var(--chart-3);
+	--color-chart-4: var(--chart-4);
+	--color-chart-5: var(--chart-5);
+	--color-sidebar: var(--sidebar);
+	--color-sidebar-foreground: var(--sidebar-foreground);
+	--color-sidebar-primary: var(--sidebar-primary);
+	--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+	--color-sidebar-accent: var(--sidebar-accent);
+	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+	--color-sidebar-border: var(--sidebar-border);
+	--color-sidebar-ring: var(--sidebar-ring);
+
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+}
+
+/* Typography & motion - static values, shared across both sites. */
+@theme {
+	--font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+	--font-heading: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+
+	/* Fluid overshoot-free easing for panel/positioner motion (navigation menu;
+	 * reuse instead of copying the cubic-bezier literal). */
+	--ease-fluid: cubic-bezier(0.22, 1, 0.36, 1);
+
+	--animate-fade-in: fade-in 0.5s ease-out forwards;
+	--animate-fade-up: fade-up 0.5s ease-out forwards;
+	--animate-slide-in-left: slide-in-left 0.5s ease-out forwards;
+	--animate-slide-in-right: slide-in-right 0.5s ease-out forwards;
+	--animate-scale-in: scale-in 0.3s ease-out forwards;
+
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
+	}
+
+	@keyframes fade-up {
+		from {
+			opacity: 0;
+			transform: translateY(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes slide-in-left {
+		from {
+			opacity: 0;
+			transform: translateX(-20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
+
+	@keyframes slide-in-right {
+		from {
+			opacity: 0;
+			transform: translateX(20px);
+		}
+		to {
+			opacity: 1;
+			transform: translateX(0);
+		}
+	}
+
+	@keyframes scale-in {
+		from {
+			opacity: 0;
+			transform: scale(0.95);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+}

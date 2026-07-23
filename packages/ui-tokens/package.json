@@ -1,0 +1,38 @@
+{
+	"name": "@voila.dev/ui-tokens",
+	"version": "0.0.0",
+	"type": "module",
+	"description": "Design tokens for @voila.dev/ui (OKLch palette, radius, typography, motion) as plain CSS custom properties",
+	"license": "MIT",
+	"homepage": "https://ui.voila.dev/start/theming",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/voila-voila-dev/ui.git",
+		"directory": "packages/ui-tokens"
+	},
+	"keywords": [
+		"design-tokens",
+		"tailwindcss",
+		"oklch",
+		"theme"
+	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"files": [
+		"src",
+		"!src/**/*.test.ts",
+		"!src/**/*.test.tsx",
+		"!src/**/*.stories.ts",
+		"!src/**/*.stories.tsx"
+	],
+	"sideEffects": [
+		"**/*.css"
+	],
+	"exports": {
+		"./design-tokens.css": "./src/design-tokens.css"
+	},
+	"peerDependencies": {
+		"tailwindcss": "^4.0.0"
+	}
+}
