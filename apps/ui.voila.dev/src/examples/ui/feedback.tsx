@@ -40,7 +40,7 @@ import {
 	ProgressValue,
 } from "@voila.dev/ui/components/progress";
 import { Skeleton } from "@voila.dev/ui/components/skeleton";
-import { toast, Toaster } from "@voila.dev/ui/components/sonner";
+import { Toaster, toast } from "@voila.dev/ui/components/sonner";
 import { Spinner } from "@voila.dev/ui/components/spinner";
 
 /* -------------------------------------------------------------------------- */

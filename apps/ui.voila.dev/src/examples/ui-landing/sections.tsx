@@ -38,11 +38,11 @@ import { LogoMarquee } from "@voila.dev/ui-landing/components/logo-marquee";
 import { NumberedCards } from "@voila.dev/ui-landing/components/numbered-cards";
 import { PageHeader } from "@voila.dev/ui-landing/components/page-header";
 import { ProseArticle as ProseArticleComponent } from "@voila.dev/ui-landing/components/prose-article";
-import { SectionIntro as SectionIntroParts } from "@voila.dev/ui-landing/components/section-intro";
 import {
 	Section as SectionComponent,
 	sectionBackgroundOptions,
 } from "@voila.dev/ui-landing/components/section";
+import { SectionIntro as SectionIntroParts } from "@voila.dev/ui-landing/components/section-intro";
 import { SiteFooter } from "@voila.dev/ui-landing/components/site-footer";
 import { SiteHeader } from "@voila.dev/ui-landing/components/site-header";
 import { StatsRow } from "@voila.dev/ui-landing/components/stats-row";

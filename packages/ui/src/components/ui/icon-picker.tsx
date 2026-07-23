@@ -1,4 +1,9 @@
 import { Combobox as ComboboxPrimitive } from "@base-ui/react/combobox";
+import {
+	Icon,
+	type PhosphorIconName,
+	phosphorIconNames,
+} from "@voila.dev/ui-icon/components/icon";
 import { useMemo, useState } from "react";
 import { Button } from "#/components/ui/button.tsx";
 import {
@@ -9,11 +14,6 @@ import {
 	ComboboxList,
 	ComboboxRow,
 } from "#/components/ui/combobox.tsx";
-import {
-	Icon,
-	type PhosphorIconName,
-	phosphorIconNames,
-} from "@voila.dev/ui-icon/components/icon";
 import { cn } from "#/lib/utils.ts";
 
 /**
