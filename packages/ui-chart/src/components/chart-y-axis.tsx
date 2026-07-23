@@ -1,0 +1,90 @@
+import { cn } from "@voila.dev/ui/lib/utils";
+import type * as React from "react";
+
+import { useChartContext } from "#/context/chart-context.tsx";
+import { axisTicks } from "#/core/axis.ts";
+import { formatLabel } from "#/core/format.ts";
+
+/** The left axis: values on a vertical chart, categories on a horizontal one. */
+
+export interface ChartYAxisProps extends React.ComponentProps<"g"> {
+	readonly tickLine?: boolean;
+	readonly axisLine?: boolean;
+	readonly tickCount?: number;
+	readonly minTickGap?: number;
+	readonly tickMargin?: number;
+	readonly tickFormatter?: (value: number | string) => string;
+	readonly hide?: boolean;
+}
+
+const TICK_LINE_LENGTH = 4;
+
+function ChartYAxis({
+	className,
+	tickLine = false,
+	axisLine = false,
+	tickCount = 5,
+	minTickGap = 4,
+	tickMargin = 8,
+	tickFormatter,
+	hide = false,
+	...props
+}: ChartYAxisProps) {
+	const { yScale, innerHeight } = useChartContext();
+	if (hide) {
+		return null;
+	}
+
+	const ticks = axisTicks(yScale, {
+		count: tickCount,
+		minTickGap,
+		available: innerHeight,
+	});
+	const format = tickFormatter ?? formatLabel;
+
+	return (
+		<g
+			data-slot="chart-y-axis"
+			className={cn("stroke-border text-muted-foreground", className)}
+			{...props}
+		>
+			{axisLine ? (
+				<line
+					data-slot="chart-axis-line"
+					x1={0}
+					x2={0}
+					y1={0}
+					y2={innerHeight}
+				/>
+			) : null}
+			{ticks.map((tick) => (
+				<g
+					key={`${tick.value}`}
+					data-slot="chart-y-axis-tick"
+					transform={`translate(0,${tick.offset})`}
+				>
+					{tickLine ? (
+						<line
+							data-slot="chart-tick-line"
+							x1={0}
+							x2={-TICK_LINE_LENGTH}
+							y1={0}
+							y2={0}
+						/>
+					) : null}
+					<text
+						data-slot="chart-tick-label"
+						x={-tickMargin}
+						dy="0.32em"
+						textAnchor="end"
+						className="fill-muted-foreground stroke-none text-[10px]"
+					>
+						{format(tick.value)}
+					</text>
+				</g>
+			))}
+		</g>
+	);
+}
+
+export { ChartYAxis };
