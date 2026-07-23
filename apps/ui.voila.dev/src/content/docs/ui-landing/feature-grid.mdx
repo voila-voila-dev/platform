@@ -1,0 +1,26 @@
+---
+title: "FeatureGrid"
+description: "A grid of icon-title-description cards, tinted by tone."
+sidebar:
+  order: 12
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-landing/sections";
+
+<Preview layout="stack">
+	<Example.FeatureGridExample client:load />
+</Preview>
+
+```tsx
+<FeatureGrid.Root tone="destructive" columns="3">
+	<FeatureGrid.Card>
+		<FeatureGrid.CardIcon><CurrencyEurIcon /></FeatureGrid.CardIcon>
+		<FeatureGrid.CardTitle>Des prix élevés</FeatureGrid.CardTitle>
+		<FeatureGrid.CardDescription>Le matériel…</FeatureGrid.CardDescription>
+	</FeatureGrid.Card>
+</FeatureGrid.Root>
+```
+
+`tone` on the root tints every card's icon, which is how a pains section reads
+as red and a benefits section as green without setting a colour per card.

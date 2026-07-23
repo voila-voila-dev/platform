@@ -1,0 +1,27 @@
+---
+title: "StatsRow"
+description: "A row of headline figures, separated by rules."
+sidebar:
+  order: 11
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-landing/sections";
+
+<Preview layout="stack">
+	<Example.StatsRowExample client:load />
+</Preview>
+
+```tsx
+<StatsRow.Root>
+	<StatsRow.Item>
+		<StatsRow.Value>20K+</StatsRow.Value>
+		<StatsRow.Label>Membres engagés</StatsRow.Label>
+	</StatsRow.Item>
+	<StatsRow.Divider />
+	<StatsRow.Item>…</StatsRow.Item>
+</StatsRow.Root>
+```
+
+The dividers are your own children rather than something the root injects, so a
+two-column row and a four-column row both work without a count prop.

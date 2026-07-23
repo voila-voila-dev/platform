@@ -1,0 +1,23 @@
+---
+title: "Eyebrow"
+description: "The small tinted label above a section title."
+sidebar:
+  order: 8
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-landing/sections";
+
+<Preview>
+	<Example.Eyebrow client:load />
+</Preview>
+
+```tsx
+<Eyebrow.Root tone="provider">
+	<Eyebrow.Dot pulse />
+	<Eyebrow.Label>Nouvelle plateforme</Eyebrow.Label>
+</Eyebrow.Root>
+```
+
+`Dot` and `Icon` are alternatives, not a pair. Use the dot when the label is a
+status, the icon when it names an audience.

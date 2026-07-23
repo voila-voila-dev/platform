@@ -1,0 +1,19 @@
+---
+title: "Container"
+description: "The reading width, centred, with the responsive gutters."
+sidebar:
+  order: 5
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-landing/sections";
+
+<Preview layout="stack">
+	<Example.ContainerExample client:load />
+</Preview>
+
+```tsx
+<Container size="xl">…</Container>
+```
+
+The sizes are exported as `containerSizeOptions` if you need to iterate them.

@@ -1,0 +1,22 @@
+---
+title: "ProseArticle"
+description: "Typographic styles for rendered blog content."
+sidebar:
+  order: 23
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-landing/sections";
+
+<Preview layout="stack">
+	<Example.ProseArticle client:load />
+</Preview>
+
+```tsx
+<ProseArticle>
+	<div dangerouslySetInnerHTML={{ __html: post.html }} />
+</ProseArticle>
+```
+
+This is the one place in the package that styles bare tags, because the content
+comes from a CMS and cannot carry classes.

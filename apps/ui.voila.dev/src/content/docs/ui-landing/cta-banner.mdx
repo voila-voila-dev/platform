@@ -1,0 +1,26 @@
+---
+title: "CtaBanner"
+description: "The full-bleed closing call to action."
+sidebar:
+  order: 19
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-landing/sections";
+
+<Preview layout="stack">
+	<Example.CtaBannerExample client:load />
+</Preview>
+
+```tsx
+<CtaBanner.Root>
+	<CtaBanner.Title>Rejoignez l'aventure Acme</CtaBanner.Title>
+	<CtaBanner.Description>Club ou professionnel de santé…</CtaBanner.Description>
+	<CtaBanner.Actions>
+		<Button size="lg" variant="secondary">Je suis un club</Button>
+	</CtaBanner.Actions>
+</CtaBanner.Root>
+```
+
+The banner is always on a dark brand fill, so buttons inside it need light
+variants rather than the page defaults.

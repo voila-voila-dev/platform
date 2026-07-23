@@ -1,0 +1,30 @@
+---
+title: "BentoGrid"
+description: "One featured tile plus a run of smaller ones."
+sidebar:
+  order: 13
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-landing/sections";
+
+<Preview layout="stack">
+	<Example.BentoGridExample client:load />
+</Preview>
+
+```tsx
+<BentoGrid.Root>
+	<BentoGrid.FeaturedItem>
+		<BentoGrid.FeaturedContent>
+			<BentoGrid.FeaturedTitle>CARE</BentoGrid.FeaturedTitle>
+		</BentoGrid.FeaturedContent>
+		<BentoGrid.FeaturedDescription>Prendre soin…</BentoGrid.FeaturedDescription>
+	</BentoGrid.FeaturedItem>
+	<BentoGrid.Item wide>
+		<BentoGrid.ItemLayout>…</BentoGrid.ItemLayout>
+	</BentoGrid.Item>
+</BentoGrid.Root>
+```
+
+`wide` makes an item span two columns, which is how you close a row that would
+otherwise leave a gap.

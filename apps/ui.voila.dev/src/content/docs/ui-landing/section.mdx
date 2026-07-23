@@ -1,0 +1,22 @@
+---
+title: "Section"
+description: "A full-width band: vertical rhythm and background by variant."
+sidebar:
+  order: 4
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-landing/sections";
+
+<Preview layout="stack">
+	<Example.SectionExample client:load />
+</Preview>
+
+```tsx
+<Section spacing="md" background="muted">
+	<Container>…</Container>
+</Section>
+```
+
+`Section` owns the band, `Container` owns the reading width. Nest them rather
+than putting padding on either one.

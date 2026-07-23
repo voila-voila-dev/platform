@@ -1,0 +1,23 @@
+---
+title: "ArticleTags"
+description: "The tag chips on a blog card or article header."
+sidebar:
+  order: 22
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-landing/sections";
+
+<Preview>
+	<Example.ArticleTags client:load />
+</Preview>
+
+```tsx
+<ArticleTags.Root>
+	<ArticleTags.Tag>Prévention</ArticleTags.Tag>
+	<ArticleTags.Tag>Kiné du sport</ArticleTags.Tag>
+</ArticleTags.Root>
+```
+
+Inside an [ArticleCard](/ui-landing/article-card/) the row is
+`ArticleCard.Tags`; the tags themselves come from here either way.

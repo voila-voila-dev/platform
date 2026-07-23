@@ -1,0 +1,36 @@
+---
+title: "SiteHeader"
+description: "The sticky top bar, with a burger menu below the md breakpoint."
+sidebar:
+  order: 2
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-landing/sections";
+
+<Preview layout="stack">
+	<Example.SiteHeaderExample client:load />
+</Preview>
+
+```tsx
+<SiteHeader.Root>
+	<SiteHeader.Bar>
+		<SiteHeader.Brand href="/"><BrandLogo /></SiteHeader.Brand>
+		<SiteHeader.Nav>
+			<SiteHeader.NavList>
+				<SiteHeader.NavItem href="/#pricing">Tarifs</SiteHeader.NavItem>
+			</SiteHeader.NavList>
+			<SiteHeader.Actions>
+				<Button size="sm">Je suis un club</Button>
+			</SiteHeader.Actions>
+		</SiteHeader.Nav>
+		<SiteHeader.MobileToggle aria-label="Ouvrir ou fermer le menu" />
+	</SiteHeader.Bar>
+	<SiteHeader.MobileMenu>
+		<SiteHeader.MobileNavItem href="/#pricing">Tarifs</SiteHeader.MobileNavItem>
+	</SiteHeader.MobileMenu>
+</SiteHeader.Root>
+```
+
+`MobileToggle` and `MobileMenu` share their open state through the root, so the
+two lists are declared separately but only one is ever visible.

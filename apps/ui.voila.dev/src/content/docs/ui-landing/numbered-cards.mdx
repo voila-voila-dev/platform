@@ -1,0 +1,29 @@
+---
+title: "NumberedCards"
+description: "A how-it-works row where each card carries its step number."
+sidebar:
+  order: 14
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-landing/sections";
+
+<Preview layout="stack">
+	<Example.NumberedCardsExample client:load />
+</Preview>
+
+```tsx
+<NumberedCards.Root tone="organization" columns="3">
+	<NumberedCards.Card>
+		<NumberedCards.CardHeader>
+			<NumberedCards.CardIcon><EnvelopeIcon /></NumberedCards.CardIcon>
+			<NumberedCards.CardLabel>Étape 1</NumberedCards.CardLabel>
+		</NumberedCards.CardHeader>
+		<NumberedCards.CardTitle>Envoyez votre demande</NumberedCards.CardTitle>
+		<NumberedCards.CardDescription>Décrivez…</NumberedCards.CardDescription>
+	</NumberedCards.Card>
+</NumberedCards.Root>
+```
+
+The label is your text, not a counter — write "Étape 1" or "01" as the design
+asks. For a two-audience flow reach for [StepTracks](/ui-landing/step-tracks/).

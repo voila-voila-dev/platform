@@ -1,0 +1,38 @@
+---
+title: "LandingHero"
+description: "The top of a marketing page: eyebrow, title, lead, actions, media."
+sidebar:
+  order: 1
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-landing/sections";
+
+<Preview layout="stack">
+	<Example.Hero client:load />
+</Preview>
+
+```tsx
+<LandingHero.Root>
+	<LandingHero.Content>
+		<LandingHero.Title>
+			Trouvez un{" "}
+			<LandingHero.Highlight tone="provider">pro de santé</LandingHero.Highlight>
+		</LandingHero.Title>
+		<LandingHero.Lead>La plateforme qui met en relation…</LandingHero.Lead>
+		<LandingHero.Actions>
+			<Button size="lg">Je suis un club</Button>
+		</LandingHero.Actions>
+	</LandingHero.Content>
+	<LandingHero.Media>
+		<HeroIllustration />
+	</LandingHero.Media>
+</LandingHero.Root>
+```
+
+Drop `LandingHero.Media` and pass `layout="centered"` for a hero with no
+illustration.
+
+<Preview layout="stack">
+	<Example.HeroCentered client:load />
+</Preview>

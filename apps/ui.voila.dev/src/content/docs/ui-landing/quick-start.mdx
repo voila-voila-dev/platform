@@ -1,0 +1,33 @@
+---
+title: "Quick start"
+description: "Composable marketing sections: heroes, feature grids, testimonials, footers."
+sidebar:
+  order: 0
+  label: "Quick start"
+---
+
+The sections a marketing site repeats: a hero, a feature grid, a comparison
+table, testimonials, a CTA banner, a header and a footer. Each is a compound
+component you compose, not a template you configure.
+
+## Install
+
+```sh
+bun add @voila.dev/ui-landing
+```
+
+```css title="globals.css"
+@import "@voila.dev/ui-landing/styles/landing.css";
+```
+
+## Import
+
+```ts
+import { LandingHero } from "@voila.dev/ui-landing/components/landing-hero";
+import { Section } from "@voila.dev/ui-landing/components/section";
+```
+
+The landing stylesheet already declares the package sources, so that one import
+covers both the marquee keyframes and the Tailwind scan.
+
+Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.

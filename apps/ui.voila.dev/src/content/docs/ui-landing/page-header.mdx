@@ -1,0 +1,23 @@
+---
+title: "PageHeader"
+description: "The title band of an inner page: contact, about, legal."
+sidebar:
+  order: 10
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-landing/sections";
+
+<Preview layout="stack">
+	<Example.PageHeaderExample client:load />
+</Preview>
+
+```tsx
+<PageHeader.Root background="muted">
+	<PageHeader.Title>Contact</PageHeader.Title>
+	<PageHeader.Lead>Écrivez-nous, on vous répond rapidement.</PageHeader.Lead>
+</PageHeader.Root>
+```
+
+This is the quieter counterpart to `LandingHero` — no illustration, no actions,
+one background band.

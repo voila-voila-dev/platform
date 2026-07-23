@@ -1,0 +1,40 @@
+---
+title: "StepTracks"
+description: "Two parallel journeys, one per audience, three steps each."
+sidebar:
+  order: 16
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-landing/sections";
+
+<Preview layout="stack">
+	<Example.StepTracksExample client:load />
+</Preview>
+
+```tsx
+<StepTracks.Root>
+	<StepTracks.Track tone="organization">
+		<StepTracks.Header>
+			<StepTracks.HeaderIcon><BuildingsIcon /></StepTracks.HeaderIcon>
+			<StepTracks.HeaderText>
+				<StepTracks.HeaderTitle>Club</StepTracks.HeaderTitle>
+				<StepTracks.HeaderSubtitle>Vous organisez…</StepTracks.HeaderSubtitle>
+			</StepTracks.HeaderText>
+		</StepTracks.Header>
+		<StepTracks.Steps>
+			<StepTracks.Step>
+				<StepTracks.StepIcon number={1}><FileTextIcon /></StepTracks.StepIcon>
+				<StepTracks.Body>
+					<StepTracks.BodyTitle>Publiez votre annonce</StepTracks.BodyTitle>
+					<StepTracks.BodyDescription>Date, lieu…</StepTracks.BodyDescription>
+				</StepTracks.Body>
+			</StepTracks.Step>
+		</StepTracks.Steps>
+	</StepTracks.Track>
+	<StepTracks.Track tone="provider">…</StepTracks.Track>
+</StepTracks.Root>
+```
+
+`number` on the step icon is explicit rather than derived, so a track can start
+at something other than one.

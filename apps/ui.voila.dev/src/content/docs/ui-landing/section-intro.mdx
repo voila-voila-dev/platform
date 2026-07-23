@@ -1,0 +1,23 @@
+---
+title: "SectionIntro"
+description: "The centred eyebrow, title and description that opens a section."
+sidebar:
+  order: 9
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-landing/sections";
+
+<Preview layout="stack">
+	<Example.SectionIntro client:load />
+</Preview>
+
+```tsx
+<SectionIntro.Root>
+	<Eyebrow.Root tone="primary" className="mb-4">
+		<Eyebrow.Label>Comment ça marche ?</Eyebrow.Label>
+	</Eyebrow.Root>
+	<SectionIntro.Title>Deux parcours, une rencontre</SectionIntro.Title>
+	<SectionIntro.Description>Trois étapes suffisent.</SectionIntro.Description>
+</SectionIntro.Root>
+```

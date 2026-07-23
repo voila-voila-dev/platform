@@ -1,0 +1,33 @@
+---
+title: "TestimonialGrid"
+description: "Quote cards with an avatar, a role, and a star rating."
+sidebar:
+  order: 17
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-landing/sections";
+
+<Preview layout="stack">
+	<Example.TestimonialGridExample client:load />
+</Preview>
+
+```tsx
+<TestimonialGrid.Root>
+	<TestimonialGrid.Item>
+		<TestimonialGrid.QuoteIcon />
+		<TestimonialGrid.Quote>Trouver un kiné relevait…</TestimonialGrid.Quote>
+		<TestimonialGrid.Footer>
+			<TestimonialGrid.Avatar accent="primary">R</TestimonialGrid.Avatar>
+			<TestimonialGrid.Author>
+				<TestimonialGrid.AuthorName>Responsable de club</TestimonialGrid.AuthorName>
+				<TestimonialGrid.AuthorRole>Football amateur</TestimonialGrid.AuthorRole>
+			</TestimonialGrid.Author>
+			<TestimonialGrid.Rating />
+		</TestimonialGrid.Footer>
+	</TestimonialGrid.Item>
+</TestimonialGrid.Root>
+```
+
+`Avatar` takes an initial rather than an image on purpose: a testimonial without
+a photo should not look like one that is missing its photo.

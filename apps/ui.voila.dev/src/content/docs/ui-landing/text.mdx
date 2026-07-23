@@ -1,0 +1,20 @@
+---
+title: "Text"
+description: "Body copy for marketing pages: lead, default, muted, small."
+sidebar:
+  order: 7
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-landing/sections";
+
+<Preview layout="stack">
+	<Example.Text client:load />
+</Preview>
+
+```tsx
+<Text variant="lead">La plateforme qui met en relation…</Text>
+```
+
+`variant`, `size`, `align` and `weight` are independent, and each is exported as
+an options array.

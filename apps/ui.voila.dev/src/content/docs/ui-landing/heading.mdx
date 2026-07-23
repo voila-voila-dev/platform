@@ -1,0 +1,22 @@
+---
+title: "Heading"
+description: "The marketing type scale, h1 through h4."
+sidebar:
+  order: 6
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-landing/sections";
+
+<Preview layout="stack">
+	<Example.Heading client:load />
+</Preview>
+
+```tsx
+<Heading level="h1">
+	Trouvez un <span className="text-provider">pro de santé</span>
+</Heading>
+```
+
+`level` sets the size and the rendered tag together. Wrap the words you want
+tinted in a span with a surface token rather than colouring the whole heading.

@@ -1,0 +1,31 @@
+---
+title: "LogoMarquee"
+description: "A scrolling or static row of partner logos."
+sidebar:
+  order: 18
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-landing/sections";
+
+<Preview layout="stack">
+	<Example.LogoMarqueeExample client:load />
+</Preview>
+
+```tsx
+<LogoMarquee.Root>
+	<LogoMarquee.Title>Ils nous font confiance</LogoMarquee.Title>
+	<LogoMarquee.Viewport>
+		<LogoMarquee.Track duration={30}>
+			<LogoMarquee.Item src={logo} alt="AS Vitré" />
+		</LogoMarquee.Track>
+	</LogoMarquee.Viewport>
+</LogoMarquee.Root>
+```
+
+`Track` duplicates its children to make the loop seamless. For a handful of
+logos that fit on one line, swap it for `StaticTrack` and drop the viewport.
+
+<Preview layout="stack">
+	<Example.LogoMarqueeStatic client:load />
+</Preview>

@@ -1,0 +1,38 @@
+---
+title: "SiteFooter"
+description: "The bottom of every marketing page: brand column, link columns, legal line."
+sidebar:
+  order: 3
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-landing/sections";
+
+<Preview layout="stack">
+	<Example.SiteFooterExample client:load />
+</Preview>
+
+```tsx
+<SiteFooter.Root>
+	<SiteFooter.Columns>
+		<SiteFooter.Brand>
+			<BrandLogo />
+			<SiteFooter.BrandDescription>Clubs et pros…</SiteFooter.BrandDescription>
+			<SiteFooter.SocialLinks>
+				<SiteFooter.SocialLink href="#" aria-label="LinkedIn">
+					<LinkedinLogoIcon />
+				</SiteFooter.SocialLink>
+			</SiteFooter.SocialLinks>
+		</SiteFooter.Brand>
+		<SiteFooter.Column>
+			<SiteFooter.ColumnTitle>Légal</SiteFooter.ColumnTitle>
+			<SiteFooter.ColumnList>
+				<SiteFooter.ColumnLink href="/cgu">CGU</SiteFooter.ColumnLink>
+			</SiteFooter.ColumnList>
+		</SiteFooter.Column>
+	</SiteFooter.Columns>
+	<SiteFooter.Bottom>
+		<SiteFooter.BottomText>© 2026 acme.dev</SiteFooter.BottomText>
+	</SiteFooter.Bottom>
+</SiteFooter.Root>
+```

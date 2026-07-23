@@ -1,0 +1,42 @@
+---
+title: "ArticleCard"
+description: "A blog post as a linked card: cover, tags, title, meta."
+sidebar:
+  order: 21
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-landing/sections";
+
+<Preview layout="stack">
+	<Example.ArticleCardExample client:load />
+</Preview>
+
+```tsx
+<ArticleCard.Root href="/blog/mon-article">
+	<ArticleCard.Frame>
+		<ArticleCard.Image src={cover} alt="Couverture" />
+		<ArticleCard.Content>
+			<ArticleCard.Tags>
+				<ArticleTags.Tag>Prévention</ArticleTags.Tag>
+			</ArticleCard.Tags>
+			<ArticleCard.Title>Pourquoi médicaliser…</ArticleCard.Title>
+			<ArticleCard.Description>Chaque week-end…</ArticleCard.Description>
+			<ArticleCard.Meta>
+				<ArticleCard.MetaItems>
+					<ArticleCard.MetaItem><CalendarBlankIcon />12 juillet 2026</ArticleCard.MetaItem>
+				</ArticleCard.MetaItems>
+				<ArticleCard.Arrow />
+			</ArticleCard.Meta>
+		</ArticleCard.Content>
+	</ArticleCard.Frame>
+</ArticleCard.Root>
+```
+
+`Root` is the link, so nothing inside it should be one. Posts with no cover use
+`ArticleCard.ImageFallback`, which keeps the card the same height as its
+neighbours in a grid.
+
+<Preview layout="stack">
+	<Example.ArticleCardFallback client:load />
+</Preview>
