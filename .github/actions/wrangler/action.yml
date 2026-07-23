@@ -1,0 +1,59 @@
+name: 'Wrangler'
+description: >
+  Run a wrangler command via `bunx`. Bun understands the `catalog:` protocol used
+  across this monorepo's package.json files; `cloudflare/wrangler-action` falls
+  back to `npm install` when no wrangler is pre-installed, and npm rejects
+  `catalog:` with EUNSUPPORTEDPROTOCOL. Self-contained (sets up Bun itself), so it
+  works in workflows that don't otherwise install dependencies (e.g. cleanups).
+inputs:
+  command:
+    description: 'Wrangler command + flags, e.g. "deploy" or "deploy --config wrangler.preview.json" or "delete --name foo"'
+    required: true
+  working-directory:
+    description: 'Directory to run wrangler in'
+    required: false
+    default: '.'
+  cloudflare-api-token:
+    description: 'Cloudflare API token'
+    required: true
+  cloudflare-account-id:
+    description: 'Cloudflare account id'
+    required: true
+outputs:
+  command-output:
+    description: 'Combined stdout+stderr of the wrangler command'
+    value: ${{ steps.run.outputs.command-output }}
+runs:
+  using: 'composite'
+  steps:
+    # Wrangler is invoked through `bunx`, but when dependencies are already
+    # installed it resolves the local `node_modules/.bin/wrangler`, whose
+    # `#!/usr/bin/env node` shebang makes Bun hand execution to the system Node.
+    # Wrangler v4 requires Node >= 22, so pin it here (Blacksmith's ubuntu-2404
+    # ships Node 20). Mirrors the Setup Node.js step in preview-api-tries-care.
+    - name: Setup Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version: '22'
+
+    - name: Setup Bun
+      uses: ./.github/actions/setup-bun
+
+    - name: Run wrangler
+      id: run
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        CLOUDFLARE_API_TOKEN: ${{ inputs.cloudflare-api-token }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ inputs.cloudflare-account-id }}
+        WRANGLER_COMMAND: ${{ inputs.command }}
+      run: |
+        set -euo pipefail
+        OUTPUT_FILE=$(mktemp)
+        # Word-split WRANGLER_COMMAND intentionally - it's a controlled internal input.
+        bunx wrangler $WRANGLER_COMMAND 2>&1 | tee "$OUTPUT_FILE"
+        {
+          echo "command-output<<WRANGLER_OUTPUT_EOF"
+          cat "$OUTPUT_FILE"
+          echo "WRANGLER_OUTPUT_EOF"
+        } >> "$GITHUB_OUTPUT"

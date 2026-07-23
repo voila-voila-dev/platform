@@ -1,0 +1,50 @@
+name: 'Generate preview wrangler config'
+description: >
+  Produce a derived wrangler config from an app's wrangler.jsonc for a non-default
+  environment. The worker is renamed to `worker-name` and any containers are
+  capped at max_instances 1. Route handling depends on `custom-domain`:
+    - empty (per-PR previews): `routes` are stripped, so the worker never binds a
+      custom domain; workers_dev keeps the *.workers.dev URL.
+    - set (persistent preview env): `routes` are replaced with a single
+      `custom_domain` route for that hostname (e.g. api.preview.tries.care).
+  The transforms are no-ops when `routes`/`containers` are absent, so this is safe
+  for both the container API worker and the static-asset workers.
+inputs:
+  working-directory:
+    description: "App directory containing wrangler.jsonc"
+    required: true
+  worker-name:
+    description: "Derived worker name, e.g. app-tries-care-pr-12 or app-tries-care-preview"
+    required: true
+  custom-domain:
+    description: >
+      Hostname to bind as a custom_domain route (e.g. app.preview.tries.care).
+      Omit to strip routes entirely (per-PR preview behaviour).
+    required: false
+    default: ''
+  output-file:
+    description: "Filename to write the generated config to (within working-directory)"
+    required: false
+    default: 'wrangler.preview.json'
+runs:
+  using: 'composite'
+  steps:
+    - name: Generate preview wrangler config
+      shell: bash
+      working-directory: ${{ inputs.working-directory }}
+      env:
+        PR_WORKER_NAME: ${{ inputs.worker-name }}
+        CUSTOM_DOMAIN: ${{ inputs.custom-domain }}
+        OUTPUT_FILE: ${{ inputs.output-file }}
+      run: |
+        set -euo pipefail
+        npx --yes strip-json-comments-cli wrangler.jsonc > wrangler.preview.tmp.json
+        jq --arg name "$PR_WORKER_NAME" --arg domain "$CUSTOM_DOMAIN" '
+          .name = $name
+          | (if $domain != ""
+              then .routes = [{ pattern: $domain, custom_domain: true }]
+              else del(.routes) end)
+          | (if .containers then .containers |= map(.max_instances = 1) else . end)
+        ' wrangler.preview.tmp.json > "$OUTPUT_FILE"
+        rm wrangler.preview.tmp.json
+        cat "$OUTPUT_FILE"

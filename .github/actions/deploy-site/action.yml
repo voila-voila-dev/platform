@@ -1,0 +1,69 @@
+name: 'Deploy a site'
+description: >
+  Build one of the two static sites and deploy it to Cloudflare Workers, either
+  to its production worker (bound to a custom domain) or to an isolated per-PR
+  preview worker reached through its *.workers.dev URL.
+inputs:
+  app:
+    description: 'Workspace directory under apps/, e.g. storybook.ui.voila.dev'
+    required: true
+  worker-name:
+    description: >
+      Worker to deploy to. Leave empty to deploy the app's own wrangler.jsonc
+      (production). Set it to deploy a derived per-PR config instead.
+    required: false
+    default: ''
+  cloudflare-api-token:
+    description: 'Cloudflare API token'
+    required: true
+  cloudflare-account-id:
+    description: 'Cloudflare account id'
+    required: true
+outputs:
+  url:
+    description: 'The deployed preview URL (empty for production deploys)'
+    value: ${{ steps.preview_url.outputs.url }}
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Bun
+      uses: ./.github/actions/setup-bun
+
+    - name: Setup Node
+      uses: actions/setup-node@v6
+      with:
+        node-version: '23.8.0'
+
+    - name: Install dependencies
+      uses: ./.github/actions/install-dependencies
+
+    - name: Build ${{ inputs.app }}
+      shell: bash
+      run: bun run --filter @voila.dev/${{ inputs.app }} build
+
+    # Per-PR previews get a derived config: the worker is renamed (so it never
+    # touches production) and `routes` are stripped, leaving the workers.dev URL.
+    - name: Generate preview wrangler config
+      if: inputs.worker-name != ''
+      uses: ./.github/actions/generate-preview-wrangler-config
+      with:
+        working-directory: apps/${{ inputs.app }}
+        worker-name: ${{ inputs.worker-name }}
+
+    - name: Deploy
+      id: deploy
+      uses: ./.github/actions/wrangler
+      with:
+        cloudflare-api-token: ${{ inputs.cloudflare-api-token }}
+        cloudflare-account-id: ${{ inputs.cloudflare-account-id }}
+        working-directory: apps/${{ inputs.app }}
+        command: >-
+          deploy ${{ inputs.worker-name != '' && '--config wrangler.preview.json' || '' }}
+
+    - name: Resolve preview URL
+      id: preview_url
+      if: inputs.worker-name != ''
+      uses: ./.github/actions/resolve-worker-url
+      with:
+        command-output: ${{ steps.deploy.outputs.command-output }}
+        worker-name: ${{ inputs.worker-name }}

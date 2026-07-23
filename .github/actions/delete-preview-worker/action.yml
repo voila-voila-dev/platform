@@ -1,0 +1,21 @@
+name: 'Delete preview worker'
+description: 'Tear down a per-PR preview Worker by name (best-effort).'
+inputs:
+  cloudflare-api-token:
+    description: 'Cloudflare API token'
+    required: true
+  cloudflare-account-id:
+    description: 'Cloudflare account id'
+    required: true
+  worker-name:
+    description: 'Name of the preview worker to delete'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Delete preview worker
+      uses: ./.github/actions/wrangler
+      with:
+        cloudflare-api-token: ${{ inputs.cloudflare-api-token }}
+        cloudflare-account-id: ${{ inputs.cloudflare-account-id }}
+        command: delete --name ${{ inputs.worker-name }} --force

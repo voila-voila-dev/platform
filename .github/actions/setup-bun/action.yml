@@ -1,0 +1,27 @@
+name: 'Setup Bun'
+description: 'Setup Bun runtime'
+inputs:
+  bun-version:
+    description: 'Version of Bun to install'
+    required: false
+    default: 'latest'
+runs:
+  using: 'composite'
+  steps:
+    # actions/cache@v6 is the first tag that targets Node 24; earlier tags (and
+    # useblacksmith/cache@v5, which has no Node 24 release yet) still declare
+    # node20 and trip the runner deprecation warning.
+    - name: Cache Bun
+      id: cache-bun
+      uses: actions/cache@v6
+      with:
+        path: ~/.bun/install/cache
+        key: bun-${{ inputs.bun-version }}-${{ runner.os }}
+        restore-keys: |
+          bun-${{ inputs.bun-version }}-
+          bun-latest-
+
+    - name: Setup Bun
+      uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: ${{ inputs.bun-version }}

@@ -1,0 +1,28 @@
+name: 'Run checks'
+description: 'Install dependencies and run the repo lint / type-check / test suite.'
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Bun
+      uses: ./.github/actions/setup-bun
+
+    # `astro check` (apps/ui.voila.dev) requires Node >= 22.12.
+    - name: Setup Node
+      uses: actions/setup-node@v6
+      with:
+        node-version: '23.8.0'
+
+    - name: Install dependencies
+      uses: ./.github/actions/install-dependencies
+
+    - name: Lint & format (Biome)
+      shell: bash
+      run: bun run ci
+
+    - name: Type check
+      shell: bash
+      run: bun run check-types
+
+    - name: Test
+      shell: bash
+      run: bun run test

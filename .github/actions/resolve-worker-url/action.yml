@@ -1,0 +1,46 @@
+name: 'Resolve worker URL'
+description: >
+  Resolve the public URL of a deployed Worker. Prefers the wrangler-action
+  `deployment-url` output; falls back to grepping the workers.dev URL out of the
+  command output (wrangler-action does not always expose deployment-url for
+  Workers). Shared by every per-PR worker preview.
+inputs:
+  deployment-url:
+    description: 'wrangler-action deployment-url output (may be empty)'
+    required: false
+    default: ''
+  command-output:
+    description: 'wrangler-action command-output output (grepped as fallback)'
+    required: false
+    default: ''
+  worker-name:
+    description: 'Worker name, used to build the workers.dev grep pattern (e.g. app-tries-care-pr-12)'
+    required: true
+outputs:
+  url:
+    description: 'Resolved worker URL'
+    value: ${{ steps.resolve.outputs.url }}
+runs:
+  using: 'composite'
+  steps:
+    - name: Resolve worker URL
+      id: resolve
+      shell: bash
+      env:
+        DEPLOYMENT_URL: ${{ inputs.deployment-url }}
+        COMMAND_OUTPUT: ${{ inputs.command-output }}
+        WORKER_NAME: ${{ inputs.worker-name }}
+      run: |
+        set -euo pipefail
+        URL="$DEPLOYMENT_URL"
+        if [ -z "$URL" ]; then
+          URL=$(printf '%s' "$COMMAND_OUTPUT" \
+            | grep -oE "https://${WORKER_NAME}\.[a-z0-9-]+\.workers\.dev" \
+            | head -n1)
+        fi
+        if [ -z "$URL" ]; then
+          echo "::error::Could not resolve worker URL for $WORKER_NAME" >&2
+          printf '%s\n' "$COMMAND_OUTPUT" >&2
+          exit 1
+        fi
+        echo "url=$URL" >> "$GITHUB_OUTPUT"
