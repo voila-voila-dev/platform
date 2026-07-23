@@ -1,0 +1,27 @@
+---
+title: "Select filter"
+description: "One or many options; a long list gets its own search box."
+sidebar:
+  order: 11
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-filter/filters";
+
+<Preview layout="stack">
+	<Example.SelectField client:load />
+</Preview>
+
+```tsx
+const definition: FilterDefinition = {
+	kind: "select",
+	key: "status",
+	label: "Status",
+	multiple: true,
+	allowExclusion: true,
+	options: [
+		{ value: "sent", label: "Sent" },
+		{ value: "failed", label: "Failed" },
+	],
+};
+```

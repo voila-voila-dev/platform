@@ -1,0 +1,17 @@
+---
+title: "Date range filter"
+description: "An inclusive range of ISO days; a calendar on desktop, native inputs on mobile."
+sidebar:
+  order: 14
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-filter/filters";
+
+<Preview layout="stack">
+	<Example.DateRangeField client:load />
+</Preview>
+
+```tsx
+const definition: FilterDefinition = { kind: "dateRange", key: "sentAt", label: "Sent" };
+```

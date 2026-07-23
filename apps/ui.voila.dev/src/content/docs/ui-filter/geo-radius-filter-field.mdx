@@ -1,0 +1,23 @@
+---
+title: "Geo radius filter"
+description: "A place and a radius, drawn on a map."
+sidebar:
+  order: 16
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-filter/filters";
+
+<Preview layout="stack">
+	<Example.GeoRadiusField client:load />
+</Preview>
+
+```tsx
+const definition: FilterDefinition = {
+	kind: "geoRadius",
+	key: "area",
+	label: "Area",
+	searchPlaces: async (query) => geocode(query),
+	defaultRadiusKm: 30,
+};
+```

@@ -1,0 +1,31 @@
+---
+title: "Column visibility"
+description: "A menu of every hideable column, plus CSV export."
+sidebar:
+  order: 5
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-datatable/tables";
+
+<Preview layout="stack">
+	<Example.ViewOptions client:load />
+</Preview>
+
+```tsx
+<DataTable
+	columns={columns}
+	data={missions}
+	toolbar={(table) => (
+		<DataTableToolbar>
+			<DataTableActions>
+				<DataTableViewOptions table={table} />
+				<DataTableExport table={table} filename="missions.csv" />
+			</DataTableActions>
+		</DataTableToolbar>
+	)}
+/>;
+```
+
+`toolbar` takes a render prop when a control needs the table instance — the
+column menu and the exporter both do.

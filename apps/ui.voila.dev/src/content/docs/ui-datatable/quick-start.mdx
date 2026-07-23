@@ -1,0 +1,54 @@
+---
+title: "Quick start"
+description: "A full-featured read-only data table: sorting, selection, resizing, pinning, visibility, density, expansion and CSV export."
+sidebar:
+  order: 0
+  label: "Quick start"
+---
+
+The table you reach for when the rows are read, scanned, sorted and exported —
+not edited. Built on `@tanstack/react-table`, with the classic features behind
+opt-in props so a plain table stays a plain table.
+
+For editing a grid of values in place, use
+[`@voila.dev/ui-spreadsheet`](/ui-spreadsheet/quick-start/) instead. The two look
+alike and behave nothing alike: this one owns a row model, that one owns a
+keyboard grid.
+
+## Install
+
+```sh
+bun add @voila.dev/ui-datatable
+```
+
+```css title="globals.css"
+@import "@voila.dev/ui-datatable/styles.css";
+```
+
+## Import
+
+```ts
+import {
+	DataTable,
+	type ColumnDef,
+} from "@voila.dev/ui-datatable/components/data-table";
+```
+
+## What is included
+
+| Prop | |
+| --- | --- |
+| `enableColumnResizing` | Drag column edges; arrow keys nudge by 16px. |
+| `columnVisibility` | Pair with `DataTableViewOptions` for a columns menu. |
+| `columnPinning` | Freeze columns against either edge. |
+| `density` | `comfortable` or `compact` row heights. |
+| `renderExpandedRow` | A detail panel under any row. |
+| `globalFilter` | Client-side search across visible cells. |
+| `enableRowSelection` | Checkbox column via `dataTableSelectionColumn()`. |
+| `pagination` | Server-side windowed footer. |
+| `renderMobileCard` | A card list below `md` instead of horizontal scroll. |
+
+Sorting is always on for sortable columns. CSV export comes from
+`DataTableExport` (or `dataTableToCsv` if you want the bytes yourself).
+
+Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.

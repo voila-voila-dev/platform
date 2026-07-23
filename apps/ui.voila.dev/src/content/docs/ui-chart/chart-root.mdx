@@ -1,0 +1,35 @@
+---
+title: "Chart.Root"
+description: "Measures the box, derives the scales, owns the active datum. Every other part draws into it."
+sidebar:
+  order: 1
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-chart/chart";
+
+<Preview layout="stack">
+	<Example.Root client:load />
+</Preview>
+
+```tsx
+<Chart.Root
+	config={config}
+	data={data}
+	x={{ key: "month" }}
+	y={{ keys: ["missions", "bookings"] }}
+	margin={{ top: 8, right: 8, bottom: 52, left: 40 }}
+>
+	<Chart.Grid />
+	<Chart.XAxis />
+	<Chart.YAxis />
+	<Chart.Cursor />
+	<Chart.Bars />
+	<Chart.Tooltip />
+	<Chart.Legend />
+</Chart.Root>;
+```
+
+`margin` is manual: axes and the legend are drawn **inside** the root's box, so
+leave about 40px left for a y axis, 28px bottom for an x axis, and 24px more for
+a bottom legend.

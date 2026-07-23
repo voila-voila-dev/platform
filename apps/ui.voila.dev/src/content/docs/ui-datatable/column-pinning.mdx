@@ -1,0 +1,24 @@
+---
+title: "Column pinning"
+description: "Freeze columns against either edge while the rest pans."
+sidebar:
+  order: 4
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-datatable/tables";
+
+<Preview layout="stack">
+	<Example.Pinning client:load />
+</Preview>
+
+```tsx
+<DataTable
+	columns={columns}
+	data={missions}
+	columnPinning={{ left: ["reference"], right: ["amount"] }}
+/>;
+```
+
+Pinned columns stack, so several per side work. An edge rule marks where the
+frozen part ends — without it the two run together mid-scroll.

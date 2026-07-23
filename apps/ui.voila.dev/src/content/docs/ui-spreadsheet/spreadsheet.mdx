@@ -1,0 +1,43 @@
+---
+title: "Spreadsheet"
+description: "A virtualized, keyboard-driven editable grid: arrow keys, paste from a real spreadsheet, drag to reorder."
+sidebar:
+  order: 2
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-spreadsheet/grids";
+
+<Preview layout="stack">
+	<Example.Grid client:load />
+</Preview>
+
+```tsx
+<Spreadsheet.Root>
+	<Spreadsheet.Columns>
+		<Spreadsheet.Column />
+		<Spreadsheet.Column width={130} />
+	</Spreadsheet.Columns>
+	<Spreadsheet.Header>
+		<tr>
+			<Spreadsheet.Head>Name</Spreadsheet.Head>
+			<Spreadsheet.Head>Reference</Spreadsheet.Head>
+		</tr>
+	</Spreadsheet.Header>
+	<Spreadsheet.Body>
+		{rows.map((row) => (
+			<Spreadsheet.Row key={row.id}>
+				<Spreadsheet.Cell>
+					<Input value={row.name} onChange={…} />
+				</Spreadsheet.Cell>
+				<Spreadsheet.Cell>
+					<Input value={row.reference} onChange={…} />
+				</Spreadsheet.Cell>
+			</Spreadsheet.Row>
+		))}
+	</Spreadsheet.Body>
+</Spreadsheet.Root>;
+```
+
+The grid never sorts or reorders your rows itself — it reports the intent and
+you reorder the array, so the data stays the single source of truth.

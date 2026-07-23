@@ -1,0 +1,23 @@
+---
+title: "NestedTableInput"
+description: "A cell whose value is a whole sub-table, summarized closed and edited in a popover."
+sidebar:
+  order: 3
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-spreadsheet/grids";
+
+<Preview layout="stack">
+	<Example.Nested client:load />
+</Preview>
+
+```tsx
+<NestedTableInput
+	summary={`${tiers.length} tiers`}
+	ariaLabel="Quantity discounts"
+	title="Quantity discounts"
+>
+	<Spreadsheet.Root>{/* the nested grid */}</Spreadsheet.Root>
+</NestedTableInput>;
+```

@@ -1,0 +1,26 @@
+---
+title: "DataTable"
+description: "The table itself: sortable columns, a mobile card fallback, and every extra behind a prop."
+sidebar:
+  order: 1
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-datatable/tables";
+
+<Preview layout="stack">
+	<Example.Default client:load />
+</Preview>
+
+```tsx
+const columns: ColumnDef<Mission>[] = [
+	{ accessorKey: "reference", header: "Reference", size: 130 },
+	{ accessorKey: "club", header: "Club" },
+	{ accessorKey: "amount", header: "Amount", size: 110 },
+];
+
+<DataTable columns={columns} data={missions} />;
+```
+
+A column with a numeric `size` switches the table to fixed layout, and sized
+cells truncate instead of stretching.

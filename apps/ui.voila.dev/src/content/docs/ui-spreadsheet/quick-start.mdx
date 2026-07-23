@@ -1,0 +1,34 @@
+---
+title: "Quick start"
+description: "A virtualized, keyboard-driven editable grid: paste, drag-reorder and column resizing."
+sidebar:
+  order: 0
+  label: "Quick start"
+---
+
+An editable grid: virtualized rows, keyboard navigation, paste from a real
+spreadsheet, drag to reorder, per-column resizing. `Spreadsheet.Root` owns the
+state and the keyboard grid; every other part draws into it.
+
+For rows that are read, sorted and exported rather than edited, use
+[`@voila.dev/ui-datatable`](/ui-datatable/quick-start/) instead. The two look
+alike and behave nothing alike: that one owns a row model, this one owns a
+keyboard grid.
+
+## Install
+
+```sh
+bun add @voila.dev/ui-spreadsheet
+```
+
+```css title="globals.css"
+@import "@voila.dev/ui-spreadsheet/styles.css";
+```
+
+## Import
+
+```ts
+import { EditableTable } from "@voila.dev/ui-spreadsheet/components/editable-table";
+```
+
+Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.

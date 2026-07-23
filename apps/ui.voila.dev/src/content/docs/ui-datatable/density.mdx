@@ -1,0 +1,19 @@
+---
+title: "Density"
+description: "Comfortable or compact rows, for tables people scan rather than read."
+sidebar:
+  order: 6
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-datatable/tables";
+
+<Preview layout="stack">
+	<Example.Density client:load />
+</Preview>
+
+```tsx
+const [density, setDensity] = useState<DataTableDensity>("comfortable");
+
+<DataTable columns={columns} data={missions} density={density} />;
+```

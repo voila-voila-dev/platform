@@ -1,0 +1,17 @@
+---
+title: "Text filter"
+description: "A free-text field, optionally negatable."
+sidebar:
+  order: 10
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-filter/filters";
+
+<Preview layout="stack">
+	<Example.TextField client:load />
+</Preview>
+
+```tsx
+const definition: FilterDefinition = { kind: "text", key: "recipient", label: "Recipient", allowExclusion: true };
+```

@@ -1,0 +1,17 @@
+---
+title: "Stacked bars"
+description: "Series stacked on a shared baseline."
+sidebar:
+  order: 11
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-chart/chart";
+
+<Preview layout="stack">
+	<Example.BarsStacked client:load />
+</Preview>
+
+```tsx
+y={{ keys: ["missions", "bookings"], stacked: true }}
+```

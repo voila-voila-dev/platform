@@ -1,0 +1,22 @@
+---
+title: "FilterTrigger"
+description: "The search-shaped button that opens the editor."
+sidebar:
+  order: 4
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-filter/filters";
+
+<Preview layout="stack">
+	<Example.Trigger client:load />
+</Preview>
+
+```tsx
+<FilterTrigger
+	summary={search}
+	activeCount={2}
+	labels={defaultFilterLabels}
+	onClick={() => setOpen(true)}
+/>;
+```

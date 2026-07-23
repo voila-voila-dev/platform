@@ -1,0 +1,21 @@
+---
+title: "RadiusMap"
+description: "A geodesic circle of a given radius around a place, with the viewport following it."
+sidebar:
+  order: 2
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-map/maps";
+
+<Preview layout="stack">
+	<Example.Radius client:load />
+</Preview>
+
+```tsx
+<RadiusMap
+	className="h-80 w-full overflow-hidden rounded-lg border"
+	center={{ latitude: 47.2184, longitude: -1.5536 }}
+	radiusKm={radiusKm}
+/>;
+```

@@ -1,0 +1,36 @@
+---
+title: "Quick start"
+description: "Declarative, responsive list filters: declare the fields, get the editor, the chips and the trigger."
+sidebar:
+  order: 0
+  label: "Quick start"
+---
+
+A screen declares *which fields are filterable*; the package renders the editor,
+the active-filter chips and the search-shaped trigger that opens them.
+
+`FilterValues` never holds an empty filter — clearing a field removes its key —
+so `Object.keys(values).length` is the active count and the record round-trips
+to a query string unchanged.
+
+## Install
+
+```sh
+bun add @voila.dev/ui-filter
+```
+
+```css title="globals.css"
+@import "@voila.dev/ui-filter/styles.css";
+```
+
+## Import
+
+```ts
+import { FilterBar } from "@voila.dev/ui-filter/components/filter-bar";
+import type { FilterDefinition, FilterValues } from "@voila.dev/ui-filter/types";
+```
+
+All copy comes from `labels` (English by default) and all formatting from
+`locale`, so the package never needs to know your i18n setup.
+
+Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.

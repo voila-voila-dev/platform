@@ -1,0 +1,21 @@
+---
+title: "Column resizing"
+description: "Drag a column edge, or nudge it with the arrow keys."
+sidebar:
+  order: 3
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-datatable/tables";
+
+<Preview layout="stack">
+	<Example.Resizing client:load />
+</Preview>
+
+```tsx
+<DataTable columns={columns} data={missions} enableColumnResizing />;
+```
+
+The handle is a real button, so the width is reachable without a pointer:
+focus it and press left/right. Pass `columnSizing` and `onColumnSizingChange`
+to persist widths across mounts.

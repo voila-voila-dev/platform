@@ -1,0 +1,34 @@
+---
+title: "Global filter"
+description: "Client-side search across every visible cell."
+sidebar:
+  order: 8
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-datatable/tables";
+
+<Preview layout="stack">
+	<Example.GlobalFilter client:load />
+</Preview>
+
+```tsx
+const [search, setSearch] = useState("");
+
+<DataTable
+	columns={columns}
+	data={missions}
+	globalFilter={search}
+	toolbar={
+		<DataTableToolbar>
+			<DataTableSearch
+				value={search}
+				onChange={(event) => setSearch(event.target.value)}
+			/>
+		</DataTableToolbar>
+	}
+/>;
+```
+
+Leave `globalFilter` undefined for server-side search: drive `DataTableSearch`
+yourself and filter in the query.

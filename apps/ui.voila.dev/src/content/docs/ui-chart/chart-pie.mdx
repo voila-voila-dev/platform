@@ -1,0 +1,20 @@
+---
+title: "Chart.Pie"
+description: "Parts of a whole."
+sidebar:
+  order: 20
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-chart/chart";
+
+<Preview layout="stack">
+	<Example.Pie client:load />
+</Preview>
+
+```tsx
+<Chart.Pie />
+```
+
+Polar marks want a square box and `interactive={false}` on the root — the
+keyboard cursor is a cartesian idea.

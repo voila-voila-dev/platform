@@ -1,0 +1,24 @@
+---
+title: "Pagination"
+description: "A windowed server-side footer."
+sidebar:
+  order: 10
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-datatable/tables";
+
+<Preview layout="stack">
+	<Example.Pagination client:load />
+</Preview>
+
+```tsx
+<DataTable
+	columns={columns}
+	data={pageRows}
+	pagination={{ page, pageSize: 20, total, onPageChange: setPage }}
+/>;
+```
+
+The footer is server-shaped: it never slices your rows, it reports the page you
+should fetch.

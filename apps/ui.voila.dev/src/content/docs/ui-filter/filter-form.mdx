@@ -1,0 +1,23 @@
+---
+title: "FilterForm"
+description: "Every declared filter, in order — the editor without the overlay around it."
+sidebar:
+  order: 2
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-filter/filters";
+
+<Preview layout="stack">
+	<Example.Form client:load />
+</Preview>
+
+```tsx
+<FilterForm
+	definitions={definitions}
+	values={values}
+	onValuesChange={setValues}
+	labels={defaultFilterLabels}
+	locale="en-US"
+/>;
+```

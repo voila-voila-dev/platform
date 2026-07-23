@@ -1,0 +1,23 @@
+---
+title: "FilterChips"
+description: "What is currently filtered, as removable chips."
+sidebar:
+  order: 3
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-filter/filters";
+
+<Preview layout="stack">
+	<Example.Chips client:load />
+</Preview>
+
+```tsx
+<FilterChips
+	definitions={definitions}
+	values={values}
+	onValuesChange={setValues}
+	labels={defaultFilterLabels}
+	locale="en-US"
+/>;
+```

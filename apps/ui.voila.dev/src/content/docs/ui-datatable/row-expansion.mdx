@@ -1,0 +1,24 @@
+---
+title: "Row expansion"
+description: "A detail panel under any row."
+sidebar:
+  order: 7
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-datatable/tables";
+
+<Preview layout="stack">
+	<Example.Expansion client:load />
+</Preview>
+
+```tsx
+<DataTable
+	columns={columns}
+	data={missions}
+	renderExpandedRow={(mission) => <MissionDetail mission={mission} />}
+/>;
+```
+
+Supplying the prop is what makes rows expandable — each grows a caret in a
+leading cell, and the panel spans the full width beneath it.

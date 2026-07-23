@@ -1,0 +1,29 @@
+---
+title: "FilterBar"
+description: "The whole filtering surface of a list: trigger, editor, chips and result count."
+sidebar:
+  order: 1
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-filter/filters";
+
+<Preview layout="stack">
+	<Example.Bar client:load />
+</Preview>
+
+```tsx
+const [values, setValues] = useState<FilterValues>({});
+
+<FilterBar
+	definitions={definitions}
+	values={values}
+	onValuesChange={setValues}
+	searchValue={search}
+	onSearchChange={setSearch}
+	resultCount={total}
+/>;
+```
+
+`FilterValues` never holds an empty filter, so `Object.keys(values).length` is
+the active count and the record round-trips to a query string unchanged.

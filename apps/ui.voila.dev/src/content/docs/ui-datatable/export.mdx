@@ -1,0 +1,30 @@
+---
+title: "CSV export"
+description: "Download exactly what is on screen — filtered, sorted, visible columns only."
+sidebar:
+  order: 9
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-datatable/tables";
+
+<Preview layout="stack">
+	<Example.Export client:load />
+</Preview>
+
+```tsx
+<DataTable
+	columns={columns}
+	data={missions}
+	toolbar={(table) => (
+		<DataTableToolbar>
+			<DataTableActions>
+				<DataTableExport table={table} filename="missions.csv" />
+			</DataTableActions>
+		</DataTableToolbar>
+	)}
+/>;
+```
+
+`dataTableToCsv(table)` returns the same string if you want to send it
+somewhere other than a download. Fields are RFC 4180 quoted.

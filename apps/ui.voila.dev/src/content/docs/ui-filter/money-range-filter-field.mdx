@@ -1,0 +1,17 @@
+---
+title: "Money range filter"
+description: "A minimum and a maximum, in minor units."
+sidebar:
+  order: 13
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-filter/filters";
+
+<Preview layout="stack">
+	<Example.MoneyRangeField client:load />
+</Preview>
+
+```tsx
+const definition: FilterDefinition = { kind: "moneyRange", key: "price", label: "Price", currency: "EUR" };
+```

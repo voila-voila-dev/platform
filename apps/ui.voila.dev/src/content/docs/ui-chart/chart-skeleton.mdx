@@ -1,0 +1,17 @@
+---
+title: "Chart.Skeleton"
+description: "The loading state, in the chart's own frame."
+sidebar:
+  order: 40
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-chart/chart";
+
+<Preview layout="stack">
+	<Example.Skeleton client:load />
+</Preview>
+
+```tsx
+<Chart.Skeleton className="h-56 w-full" />
+```

@@ -1,0 +1,32 @@
+---
+title: "Quick start"
+description: "Composable SVG charts with no charting library underneath."
+sidebar:
+  order: 0
+  label: "Quick start"
+---
+
+`Chart.Root` measures its box, derives the scales and owns the active datum;
+every other part draws into it. No D3, no Recharts — the scales, ticks and
+geometry are a few hundred lines of arithmetic in the package.
+
+Series colours default to the `--chart-1` … `--chart-5` tokens, so charts follow
+a rebrand like everything else.
+
+## Install
+
+```sh
+bun add @voila.dev/ui-chart
+```
+
+```css title="globals.css"
+@import "@voila.dev/ui-chart/styles.css";
+```
+
+## Import
+
+```ts
+import { Chart, type ChartConfig } from "@voila.dev/ui-chart/components/chart";
+```
+
+Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.

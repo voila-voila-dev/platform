@@ -1,0 +1,17 @@
+---
+title: "Chart.Empty"
+description: "No data, said in the chart's own frame."
+sidebar:
+  order: 41
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-chart/chart";
+
+<Preview layout="stack">
+	<Example.Empty client:load />
+</Preview>
+
+```tsx
+<Chart.Empty className="h-56 w-full">No data for this period</Chart.Empty>
+```

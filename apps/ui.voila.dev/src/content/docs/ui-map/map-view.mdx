@@ -1,0 +1,29 @@
+---
+title: "MapView"
+description: "A MapLibre GL basemap that stays out of your bundle until a map mounts."
+sidebar:
+  order: 1
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-map/maps";
+
+<Preview layout="stack">
+	<Example.Basic client:load />
+</Preview>
+
+```tsx
+<MapView
+	className="h-80 w-full overflow-hidden rounded-lg border"
+	center={[2.3522, 48.8566]}
+	zoom={11}
+	onReady={(map) => {
+		map.addSource("providers", { type: "geojson", data: providers });
+		map.addLayer({ id: "pins", type: "circle", source: "providers" });
+	}}
+	onMoveEnd={(bounds, zoom) => refetch({ ...bounds, zoom })}
+/>;
+```
+
+`onReady` replays after a theme-driven basemap swap, which drops custom sources
+and layers — write it as "make the map look like this", not "do this once".

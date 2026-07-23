@@ -1,0 +1,20 @@
+---
+title: "Chart.Bars"
+description: "Bars, grouped by default."
+sidebar:
+  order: 10
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-chart/chart";
+
+<Preview layout="stack">
+	<Example.Bars client:load />
+</Preview>
+
+```tsx
+<Chart.Bars />
+```
+
+Pass `stacked: true` on the y axis to stack them instead — worth it only when
+the series sum to a meaningful total.
