@@ -1,0 +1,17 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "ui-voila-dev",
+	"compatibility_date": "2025-10-01",
+	// Static-asset Worker (no `main`): serves the Astro static build.
+	"assets": {
+		"directory": "./dist",
+		"not_found_handling": "404-page"
+	},
+	"observability": {
+		"enabled": true
+	},
+	// workers.dev stays on: per-PR previews are deployed from a derived config
+	// that strips `routes`, and reach the worker through its *.workers.dev URL.
+	"routes": [{ "pattern": "ui.voila.dev", "custom_domain": true }],
+	"workers_dev": true
+}

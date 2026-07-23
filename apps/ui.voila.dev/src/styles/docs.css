@@ -1,0 +1,156 @@
+/*
+ * Tailwind for the docs site, without Preflight.
+ *
+ * Starlight ships its own base styles and Preflight would flatten them, so we
+ * import Tailwind's theme and utility layers only. The few resets the
+ * @voila.dev/ui components genuinely depend on (border defaults, box-sizing)
+ * are restated below.
+ */
+@layer theme, base, starlight, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+@import "tw-animate-css";
+@import "@voila.dev/ui-tokens/design-tokens.css";
+@import "@voila.dev/ui-landing/styles/landing.css";
+
+/*
+ * Live previews render real components, so their classes must be generated.
+ * Each package declares its own sources, so these are package imports rather
+ * than paths into node_modules.
+ */
+@import "@voila.dev/ui/styles.css";
+@import "@voila.dev/ui-branding/styles.css";
+@import "@voila.dev/ui-chart/styles.css";
+@import "@voila.dev/ui-datatable/styles.css";
+@import "@voila.dev/ui-email-block-editor/styles.css";
+@import "@voila.dev/ui-filter/styles.css";
+@import "@voila.dev/ui-icon/styles.css";
+@import "@voila.dev/ui-map/styles.css";
+@import "@voila.dev/ui-spreadsheet/styles.css";
+
+@layer base {
+	/* The slice of Preflight the components assume. */
+	.preview *,
+	.preview *::before,
+	.preview *::after {
+		box-sizing: border-box;
+		border-width: 0;
+		border-style: solid;
+		border-color: var(--border);
+	}
+	.preview button,
+	.preview input,
+	.preview select,
+	.preview textarea {
+		font: inherit;
+		color: inherit;
+		background: none;
+	}
+}
+
+/* Indeterminate progress: a half-width bar sweeping across the track. */
+@theme {
+	--animate-progress-indeterminate: progress-indeterminate 1.5s ease-in-out
+		infinite;
+
+	@keyframes progress-indeterminate {
+		from {
+			translate: -100% 0;
+		}
+		to {
+			translate: 200% 0;
+		}
+	}
+}
+
+/* Scrollable regions that hide their scrollbar (sidebar, command, combobox). */
+@utility no-scrollbar {
+	scrollbar-width: none;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+
+/*
+ * Starlight toggles `data-theme` on <html>; @voila.dev/ui-tokens keys its dark
+ * palette off a `.dark` class. `head.astro` mirrors one onto the other, and
+ * this teaches Tailwind's `dark:` variant about both.
+ */
+@custom-variant dark (&:is(.dark *, [data-theme="dark"] *));
+
+/* --- Starlight chrome, tuned to the voilà palette ------------------------ */
+
+:root {
+	--sl-color-accent-low: #211c4d;
+	--sl-color-accent: #5b4bff;
+	--sl-color-accent-high: #c3bcff;
+	--sl-font: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+	/* Code blocks, inline code and the wordmark all share it. */
+	--sl-font-mono:
+		"Intel One Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+	--sl-content-width: 50rem;
+}
+
+:root[data-theme="light"] {
+	--sl-color-accent-low: #dcd8ff;
+	--sl-color-accent: #4436e6;
+	--sl-color-accent-high: #221a73;
+}
+
+/* --- Live preview frame -------------------------------------------------- */
+
+.preview {
+	margin-block: 1.25rem;
+	padding: 1.75rem;
+	border: 1px solid var(--sl-color-gray-5);
+	border-radius: 0.75rem;
+	background-color: var(--background);
+	color: var(--foreground);
+	/*
+	 * A faint grid, so a transparent or ghost component still reads as sitting
+	 * on a surface rather than floating in the page.
+	 */
+	background-image:
+		linear-gradient(
+			to right,
+			color-mix(in oklab, var(--border) 45%, transparent) 1px,
+			transparent 1px
+		),
+		linear-gradient(
+			to bottom,
+			color-mix(in oklab, var(--border) 45%, transparent) 1px,
+			transparent 1px
+		);
+	background-size: 1.5rem 1.5rem;
+}
+
+.preview__stage {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.preview__stage--stack {
+	flex-direction: column;
+	align-items: stretch;
+}
+
+.preview__stage--center {
+	justify-content: center;
+}
+
+/* Wide previews scroll inside their own frame; the page never does. */
+.preview--scroll .preview__stage {
+	overflow-x: auto;
+	flex-wrap: nowrap;
+}
+
+.preview__label {
+	margin-bottom: 0.75rem;
+	font-size: 0.75rem;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: var(--sl-color-gray-3);
+}

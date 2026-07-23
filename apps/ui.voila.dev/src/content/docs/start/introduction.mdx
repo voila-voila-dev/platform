@@ -1,0 +1,61 @@
+---
+title: "Introduction"
+description: "What @voila.dev/ui is, what it assumes about your app, and when it is the wrong choice."
+---
+
+`@voila.dev/ui` is a React component system distributed as **source**. When you
+install it, `node_modules/@voila.dev/ui/src` contains the same `.tsx` files the
+maintainers edit. There is no `dist/`, no build step, and nothing compiled ahead
+of time.
+
+## What you get
+
+- **~80 components** in the core package, from primitives (`Button`, `Input`,
+  `Dialog`) up to composed pieces (`Sidebar`, `Chat`, `ProfileHeader`,
+  `ImageCropper`).
+- **A semantic token layer** — every colour, radius and font is a CSS custom
+  property, so rebranding does not mean forking components.
+- **Add-on packages** for the heavy things: charts, data grids, maps, filter
+  bars, landing sections, an email block editor. Install only what you use.
+
+## What it assumes
+
+| Assumption | Why |
+| --- | --- |
+| React 19 | The components use the current React APIs and are typed against React 19. |
+| Tailwind CSS 4 | Styling is Tailwind utility classes; the tokens are a Tailwind 4 `@theme`. |
+| A bundler | Vite, Rspack, Turbopack, anything that compiles TypeScript and JSX. |
+
+If your setup ticks those three boxes, everything works. If it does not — a
+Webpack 4 app, a Tailwind 3 app, no bundler at all — this is the wrong library
+and no amount of configuration will make it a good fit.
+
+## When to reach for something else
+
+- **You want a design system you never touch.** This one is meant to be read and
+  edited. Something compiled and versioned may suit you better.
+- **You need a specific accessibility certification.** The components build on
+  [Base UI](https://base-ui.com) and follow its patterns, but no formal audit
+  has been done. Verify what you must guarantee.
+- **You need React 18 or earlier.** Not supported.
+
+## How the pieces fit
+
+```
+@voila.dev/ui-tokens          the CSS custom properties
+        │
+        ▼
+@voila.dev/ui                 the components
+        │
+        ├── @voila.dev/ui-chart
+        ├── @voila.dev/ui-spreadsheet
+        ├── @voila.dev/ui-map
+        ├── @voila.dev/ui-filter
+        ├── @voila.dev/ui-landing
+        └── @voila.dev/ui-email-block-editor
+```
+
+A clean line: tokens know nothing about components, components know nothing
+about the add-ons, and each add-on depends only on the core.
+
+Next: [Installation](/start/installation/).

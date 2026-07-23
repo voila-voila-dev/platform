@@ -1,0 +1,79 @@
+---
+title: "ui.voila.dev"
+description: "A source-shipped React + Tailwind component system. Copy the tokens, keep the components."
+template: splash
+hero:
+  title: "The component system you can actually read"
+  tagline: A React component system that ships as source. No build step, no compiled bundle, no black box — you get the .tsx files and your bundler does the rest.
+  actions:
+    - text: Get started
+      link: /start/installation/
+      icon: right-arrow
+    - text: Browse the Storybook
+      link: https://storybook.ui.voila.dev
+      icon: external
+      variant: minimal
+---
+
+import { Card, CardGrid } from "@astrojs/starlight/components";
+
+## Install
+
+```sh
+bun add @voila.dev/ui @voila.dev/ui-tokens
+```
+
+```css
+/* your globals.css */
+@import "tailwindcss";
+@import "@voila.dev/ui/styles/globals.css";
+```
+
+That is the whole setup. Peers are `react@19`, `react-dom@19` and `tailwindcss@4`.
+
+<CardGrid stagger>
+	<Card title="Ships as source" icon="seti:typescript">
+		Packages contain `.tsx` files, not `dist/`. Your bundler compiles them
+		alongside your own code, so tree-shaking, source maps and stepping into a
+		component in the debugger all just work.
+	</Card>
+	<Card title="Yours to rebrand" icon="setting">
+		Every colour, radius and font is a CSS custom property in
+		`@voila.dev/ui-tokens`. Override the handful you care about and the whole
+		system follows. [Theming and tokens](/start/theming/)
+	</Card>
+	<Card title="Built on Base UI" icon="puzzle">
+		Accessibility, focus management and keyboard behaviour come from
+		[Base UI](https://base-ui.com). The components add the styling, the
+		composition and the sensible defaults.
+	</Card>
+	<Card title="Pick what you need" icon="open-book">
+		The core is deliberately lean. Maps, data grids, charts, filter bars and
+		landing sections are separate packages you install only when you use them.
+	</Card>
+</CardGrid>
+
+## The packages
+
+| Package | What it is |
+| --- | --- |
+| [`@voila.dev/ui`](https://www.npmjs.com/package/@voila.dev/ui) | The core: ~80 components, from `Button` to `Sidebar`. |
+| [`@voila.dev/ui-tokens`](https://www.npmjs.com/package/@voila.dev/ui-tokens) | The design tokens, as plain CSS custom properties. |
+| [`@voila.dev/ui-chart`](https://www.npmjs.com/package/@voila.dev/ui-chart) | Composable SVG charts, no charting library underneath. |
+| [`@voila.dev/ui-spreadsheet`](https://www.npmjs.com/package/@voila.dev/ui-spreadsheet) | `DataTable` and a virtualized, keyboard-driven `EditableTable`. |
+| [`@voila.dev/ui-map`](https://www.npmjs.com/package/@voila.dev/ui-map) | A lazy-loaded MapLibre GL map view. |
+| [`@voila.dev/ui-filter`](https://www.npmjs.com/package/@voila.dev/ui-filter) | A filter toolbar and pager for list pages. |
+| [`@voila.dev/ui-landing`](https://www.npmjs.com/package/@voila.dev/ui-landing) | Marketing sections: heroes, feature grids, testimonials, footers. |
+| [`@voila.dev/ui-email-block-editor`](https://www.npmjs.com/package/@voila.dev/ui-email-block-editor) | A drag-and-drop block editor for marketing emails. |
+
+All of them publish in lockstep at one version, so cross-package versions always line up.
+
+## Why source, not a bundle
+
+A compiled component library is a wall. You can style around it, but you cannot
+see what it does, you cannot step into it, and the day you need a variant it
+does not have, you are stuck.
+
+Shipping source removes the wall. The trade is that your bundler compiles a few
+thousand more lines. In exchange, `Cmd+click` on any component takes you to the
+code that renders it.

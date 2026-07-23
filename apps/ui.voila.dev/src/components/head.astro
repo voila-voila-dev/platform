@@ -1,0 +1,42 @@
+---
+import Default from "@astrojs/starlight/components/Head.astro";
+---
+
+<Default><slot /></Default>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+	href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Intel+One+Mono:wght@400;500;600;700&display=swap"
+	rel="stylesheet"
+/>
+
+<script is:inline>
+	(() => {
+		const root = document.documentElement;
+
+		// Starlight follows the OS preference when nothing is stored; we want dark
+		// as the site's own default. Seed the stored preference on the first visit
+		// only, so the toggle keeps full control from then on.
+		try {
+			if (!localStorage.getItem("starlight-theme")) {
+				localStorage.setItem("starlight-theme", "dark");
+				root.dataset.theme = "dark";
+			}
+		} catch {
+			/* private mode: fall through to the OS preference */
+		}
+
+		// @voila.dev/ui-tokens keys its dark palette off a `.dark` class, while
+		// Starlight toggles `data-theme` on <html>. Mirror one onto the other so
+		// the live previews follow the site's theme switch.
+		const syncPreviewTheme = () => {
+			root.classList.toggle("dark", root.dataset.theme === "dark");
+		};
+		syncPreviewTheme();
+		new MutationObserver(syncPreviewTheme).observe(root, {
+			attributes: true,
+			attributeFilter: ["data-theme"],
+		});
+	})();
+</script>

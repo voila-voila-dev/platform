@@ -1,0 +1,126 @@
+---
+title: "Project setup"
+description: "Structure your app as a Bun workspace monorepo so the UI layer stays separable from the product."
+---
+
+You do not need a monorepo to use `@voila.dev/ui`. A single Vite app with two
+dependencies works perfectly well, and if that is your whole product, stop here.
+
+This page is for the case where it is not: several apps, a shared design layer,
+and a brand you want to own rather than scatter. The layout below is the one
+`@voila.dev/ui` itself uses.
+
+## The shape
+
+```
+your-product/
+├── apps/
+│   ├── web/                 # the customer-facing app
+│   ├── admin/               # the internal one
+│   └── storybook/           # your components, in isolation
+├── packages/
+│   ├── branding/            # YOUR logo + brand components  ← see the next page
+│   ├── ui-theme/            # your token overrides, one CSS file
+│   └── typescript-config/   # shared tsconfig bases
+└── package.json             # workspaces + catalogs
+```
+
+Two things earn their own package here, and it is worth being precise about why:
+
+- **`branding`** — your logo, wordmark and brand-specific components. It is the
+  thing you would never publish and never share. Keeping it separate is what
+  lets the rest be generic. [Your branding package](/start/branding/)
+- **`ui-theme`** — one CSS file with your token overrides. Every app imports it,
+  so a colour changes in one place.
+
+Everything else — buttons, dialogs, tables — comes from npm. You are not
+maintaining it.
+
+## The root manifest
+
+```json title="package.json"
+{
+	"name": "your-product",
+	"private": true,
+	"packageManager": "bun@1.3.4",
+	"workspaces": {
+		"packages": ["apps/*", "packages/*"],
+		"catalog": {
+			"typescript": "6.0.3",
+			"vite": "8.1.0"
+		},
+		"catalogs": {
+			"react": {
+				"react": "19.2.6",
+				"react-dom": "19.2.6"
+			},
+			"voila": {
+				"@voila.dev/ui": "0.4.0",
+				"@voila.dev/ui-tokens": "0.4.0",
+				"@voila.dev/ui-chart": "0.4.0"
+			}
+		}
+	}
+}
+```
+
+**Catalogs are the point.** A workspace member writes `"@voila.dev/ui":
+"catalog:voila"` instead of a version, so every app in the repo is pinned to the
+same one. Upgrading is a one-line edit at the root rather than a hunt through
+five manifests — and because the `@voila.dev/*` packages publish in lockstep,
+one catalog entry per version keeps the cross-package deps consistent too.
+
+## Your theme package
+
+The whole package is one CSS file and a manifest:
+
+```css title="packages/ui-theme/src/theme.css"
+@import "tailwindcss";
+@import "@voila.dev/ui/styles/globals.css";
+
+:root {
+	--primary: oklch(0.55 0.21 145);
+	--radius: 0.5rem;
+}
+
+.dark {
+	--primary: oklch(0.72 0.18 145);
+}
+```
+
+```json title="packages/ui-theme/package.json"
+{
+	"name": "@your-product/ui-theme",
+	"private": true,
+	"type": "module",
+	"sideEffects": ["**/*.css"],
+	"exports": { "./theme.css": "./src/theme.css" },
+	"dependencies": { "@voila.dev/ui": "catalog:voila" }
+}
+```
+
+Each app then imports one thing:
+
+```css title="apps/web/src/globals.css"
+@import "@your-product/ui-theme/theme.css";
+```
+
+One line, and it is the same line in every app. Because each `@voila.dev`
+package declares its own Tailwind sources relative to itself, nothing here has
+to know whether the package is a workspace symlink or a real `node_modules`
+directory.
+
+## Storybook as the review surface
+
+An app-level Storybook is where your *compositions* live — the branded header,
+the checkout form, the empty states. The `@voila.dev/ui` primitives already have
+[their own Storybook](https://storybook.ui.voila.dev); duplicating it buys you
+nothing.
+
+## A note on when not to split
+
+Do not create a package until two things need it. A `packages/ui-theme` with one
+consumer is a directory with extra ceremony. Start with the CSS file inside the
+app, and promote it the day the second app appears.
+
+Next: [Your branding package](/start/branding/).

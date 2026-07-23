@@ -1,0 +1,164 @@
+---
+title: "Theming and tokens"
+description: "Override the CSS custom properties in @voila.dev/ui-tokens to rebrand the whole system without forking a single component."
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/theming";
+
+The palette that ships with `@voila.dev/ui-tokens` is a **default, not a
+brand**. Every colour, radius and font is a CSS custom property, and every
+component reads them through Tailwind's semantic class names (`bg-primary`,
+`text-muted-foreground`, `border-border`). Redefine the properties and the whole
+system moves with them — no component is forked, no class is overridden.
+
+## The one rule
+
+**Override tokens, never component classes.** If you find yourself writing
+`.button { background: … }` or passing `className="!bg-blue-500"`, the token you
+actually wanted is missing from your override list. Find it and set it there;
+every other component that uses it stays consistent for free.
+
+## How to override
+
+Redefine the properties *after* importing the stylesheet. Set both themes.
+
+```css title="src/styles/globals.css"
+@import "tailwindcss";
+@import "@voila.dev/ui/styles/globals.css";
+@source "./node_modules/@voila.dev/ui/src";
+
+:root {
+	--primary: oklch(0.52 0.19 24);        /* your brand red */
+	--primary-foreground: oklch(0.99 0 0);
+	--ring: oklch(0.52 0.19 24);           /* focus rings follow the brand */
+	--radius: 0.375rem;                    /* squarer corners */
+}
+
+.dark {
+	--primary: oklch(0.68 0.17 24);        /* lighter, so it holds up on dark */
+	--primary-foreground: oklch(0.16 0 0);
+}
+```
+
+Values are [OKLch](https://oklch.com) — a perceptual colour space, which is why
+"the same colour but lighter" is a change to one number rather than a guess. Hex
+and `rgb()` work too if you prefer.
+
+## The token map
+
+Each role is a `color` + `-foreground` pair: the surface, and the text that goes
+on it. Set both or you will eventually ship white-on-yellow.
+
+### Surfaces and text
+
+| Token | Used by |
+| --- | --- |
+| `--background` / `--foreground` | The page itself |
+| `--card` / `--card-foreground` | `Card`, `StatCard`, raised panels |
+| `--popover` / `--popover-foreground` | `Popover`, `DropdownMenu`, `Select`, `Combobox` |
+| `--muted` / `--muted-foreground` | Secondary text, placeholders, quiet fills |
+| `--accent` / `--accent-foreground` | Hover and highlight states |
+
+### Actions and status
+
+| Token | Used by |
+| --- | --- |
+| `--primary` / `--primary-foreground` | Default buttons, progress fills, active states |
+| `--secondary` / `--secondary-foreground` | The `secondary` button variant |
+| `--destructive` / `--destructive-foreground` | Destructive buttons, error text, invalid fields |
+| `--success` / `--success-foreground` | Success banners and badges |
+| `--warning` / `--warning-foreground` | Warning banners and badges |
+
+### Product surfaces
+
+`--provider` (blue) and `--organization` (orange) exist for apps with two
+distinct workspace identities — think a marketplace with a supply side and a
+demand side. If yours has one identity, ignore them. If it has two, rename is
+not needed: just set them to your two colours.
+
+### Lines, focus, radius
+
+| Token | Used by |
+| --- | --- |
+| `--border` | Every border, via the base layer |
+| `--input` | Form control borders |
+| `--ring` | Focus rings |
+| `--radius` | The corner radius scale (`sm`/`md`/`lg`/`xl` derive from it) |
+
+`--radius` is a single number the rest derive from, so one line takes the whole
+system from soft to sharp:
+
+```css
+:root { --radius: 0.25rem; }  /* sharp */
+:root { --radius: 1rem; }     /* very round */
+```
+
+### Charts and sidebar
+
+`--chart-1` … `--chart-5` are the categorical series colours used by
+`@voila.dev/ui-chart`. `--sidebar*` is a parallel surface set so the sidebar can
+sit at a different elevation from the page without every sidebar component
+taking an override.
+
+### Badges
+
+`--badge-slate` through `--badge-rose` are a closed, enumerated multi-colour set
+for catalogue-style chips, where the colour is data rather than meaning. It is a
+deliberate exception to "no ad-hoc colour tokens": the names are fixed, and each
+has a dark override so chips stay legible in both themes.
+
+<Preview label="Badges are data-coloured, not semantic">
+	<Example.BadgeColors client:load />
+</Preview>
+
+## Typography
+
+The default theme expects two families. Point them at your own:
+
+```css
+:root {
+	--font-sans: "Your Sans", ui-sans-serif, system-ui, sans-serif;
+	--font-display: "Your Display", var(--font-sans);
+}
+```
+
+Load the fonts however your framework prefers — `next/font`, a `<link>`, a
+self-hosted `@font-face`. The tokens only name them.
+
+## A worked example
+
+A minimal but complete rebrand, both themes, roughly twenty lines:
+
+```css
+:root {
+	--primary: oklch(0.55 0.21 145);
+	--primary-foreground: oklch(0.99 0 0);
+	--ring: oklch(0.55 0.21 145);
+	--radius: 0.5rem;
+	--font-sans: "Söhne", ui-sans-serif, system-ui, sans-serif;
+}
+
+.dark {
+	--background: oklch(0.16 0.01 145);
+	--foreground: oklch(0.97 0 0);
+	--card: oklch(0.21 0.01 145);
+	--primary: oklch(0.72 0.18 145);
+	--primary-foreground: oklch(0.16 0.01 145);
+	--border: oklch(0.29 0.01 145);
+}
+```
+
+<Preview label="What moves when --primary and --radius move">
+	<Example.TokenSurface client:load />
+</Preview>
+
+## Checking contrast
+
+Overriding a `-foreground` without checking it against its surface is the one
+way to ship something genuinely broken. The default palette targets WCAG AA
+(4.5:1 for body text, 3:1 for large text and UI). Run your own values through a
+contrast checker before shipping — OKLch makes the fix obvious, since lightness
+is the first number.
+
+Next: [Project setup](/start/project-setup/).

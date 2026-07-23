@@ -1,0 +1,104 @@
+---
+title: "Installation"
+description: "Install @voila.dev/ui, point Tailwind at it, and render your first component."
+---
+
+import { Steps, Tabs, TabItem } from "@astrojs/starlight/components";
+
+<Steps>
+
+1.  **Install the core and the tokens.**
+
+    <Tabs syncKey="pkg">
+    	<TabItem label="bun">
+    	```sh
+    	bun add @voila.dev/ui @voila.dev/ui-tokens
+    	```
+    	</TabItem>
+    	<TabItem label="pnpm">
+    	```sh
+    	pnpm add @voila.dev/ui @voila.dev/ui-tokens
+    	```
+    	</TabItem>
+    	<TabItem label="npm">
+    	```sh
+    	npm install @voila.dev/ui @voila.dev/ui-tokens
+    	```
+    	</TabItem>
+    </Tabs>
+
+    The peers are `react@19`, `react-dom@19` and `tailwindcss@4`. Your app almost
+    certainly has the first two already.
+
+2.  **Import the stylesheet.**
+
+    In the CSS entry point your app already loads:
+
+    ```css title="src/styles/globals.css"
+    @import "tailwindcss";
+    @import "@voila.dev/ui/styles/globals.css";
+    ```
+
+    That one line covers the tokens, the animation utilities, and — this is the
+    part people expect to have to configure — telling Tailwind to scan the
+    package. Each `@voila.dev` package declares its own sources, so you never
+    write a path into `node_modules`.
+
+    Add-on packages each export the same file:
+
+    ```css
+    @import "@voila.dev/ui-chart/styles.css";
+    @import "@voila.dev/ui-spreadsheet/styles.css";
+    ```
+
+3.  **Render something.**
+
+    ```tsx title="src/app.tsx"
+    import { Button } from "@voila.dev/ui/components/button";
+
+    export function App() {
+    	return <Button>Ship it</Button>;
+    }
+    ```
+
+</Steps>
+
+## Import paths
+
+Every component is its own entry point, named after its file:
+
+```ts
+import { Button } from "@voila.dev/ui/components/button";
+import { Dialog, DialogContent } from "@voila.dev/ui/components/dialog";
+import { cn } from "@voila.dev/ui/lib/utils";
+import { useIsMobile } from "@voila.dev/ui/hooks/use-mobile";
+```
+
+There is no barrel export on purpose. A barrel would pull every component into
+the module graph of any file that imports one, which costs you both bundle size
+and dev-server cold start.
+
+## Dark mode
+
+The tokens define a full dark palette under a `.dark` class. Put that class on
+`<html>` (or any ancestor) and everything below it switches:
+
+```tsx
+document.documentElement.classList.toggle("dark", prefersDark);
+```
+
+If your app keys dark mode off something else — a `data-theme` attribute, say —
+redefine the variant once in your CSS:
+
+```css
+@custom-variant dark (&:is([data-theme="dark"] *));
+```
+
+## Verifying the install
+
+If components render but look unstyled, an `@import` is missing — the package
+whose classes are absent has not been imported, so Tailwind never scanned it.
+If the import throws, check that your bundler resolves package `exports`
+(anything modern does) and that TypeScript is on `"moduleResolution": "bundler"`.
+
+Next: [Theming and tokens](/start/theming/).
