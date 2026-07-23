@@ -1,0 +1,29 @@
+---
+title: "TableBlock"
+description: "Plain-text rows and columns, with per-column alignment."
+sidebar:
+  order: 9
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-email-block-editor/blocks";
+
+<Preview layout="stack">
+	<Example.Table client:load />
+</Preview>
+
+```ts
+{
+	id: "table",
+	type: "table",
+	headerRow: true,
+	columns: [
+		{ label: "Prestation", align: "left" },
+		{ label: "Tarif", align: "right" },
+	],
+	rows: [["Kinésithérapie", "60,00 €"]],
+}
+```
+
+`rows` is row-major plain text. A row shorter than the column count renders
+blank trailing cells rather than failing.

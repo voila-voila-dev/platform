@@ -1,0 +1,17 @@
+---
+title: "DividerBlock"
+description: "A horizontal rule between sections."
+sidebar:
+  order: 6
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-email-block-editor/blocks";
+
+<Preview layout="stack">
+	<Example.Divider client:load />
+</Preview>
+
+```ts
+{ id: "divider", type: "divider" }
+```

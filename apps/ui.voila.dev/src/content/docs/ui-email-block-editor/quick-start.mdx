@@ -1,0 +1,33 @@
+---
+title: "Quick start"
+description: "A drag-and-drop block editor for marketing emails."
+sidebar:
+  order: 0
+  label: "Quick start"
+---
+
+An editing surface dressed as the email it produces: a grey canvas, a 600px
+card, and blocks the author drags into place. The document is a plain
+serializable structure, so your server renders the real email from the same
+data.
+
+The branded header and footer are placeholders — pass `headerSlot` and
+`footerSlot` to render your own chrome.
+
+## Install
+
+```sh
+bun add @voila.dev/ui-email-block-editor
+```
+
+```css title="globals.css"
+@import "@voila.dev/ui-email-block-editor/styles.css";
+```
+
+## Import
+
+```ts
+import { EmailBlockEditor } from "@voila.dev/ui-email-block-editor/email-block-editor";
+```
+
+Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.

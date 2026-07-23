@@ -1,0 +1,29 @@
+---
+title: "ParagraphBlock"
+description: "A run of body copy with bold, italic, underline and links."
+sidebar:
+  order: 2
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-email-block-editor/blocks";
+
+<Preview layout="stack">
+	<Example.Paragraph client:load />
+</Preview>
+
+```ts
+{
+	id: "paragraph",
+	type: "paragraph",
+	spans: [
+		{ text: "Découvrez les " },
+		{ text: "nouvelles missions", bold: true },
+		{ text: " ou consultez " },
+		{ text: "votre espace", href: "https://app.acme.dev" },
+	],
+}
+```
+
+Rich text is a flat list of spans rather than a tree, which is what makes it
+safe to render into an email: escape the text, wrap the marks, done.

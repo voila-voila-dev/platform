@@ -1,0 +1,27 @@
+---
+title: "GridBlock"
+description: "A multi-column row: two article cards, three offers, a gallery."
+sidebar:
+  order: 7
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-email-block-editor/blocks";
+
+<Preview layout="stack">
+	<Example.Grid client:load />
+</Preview>
+
+```ts
+{
+	id: "grid",
+	type: "grid",
+	desktopColumns: 2,
+	mobileColumns: 1,
+	children: [statBlock, statBlock],
+}
+```
+
+`children` is a flat list that flows into the columns rather than one bucket per
+column, and a grid cannot contain another grid. An asymmetric layout is two
+sibling blocks, not a nested one.

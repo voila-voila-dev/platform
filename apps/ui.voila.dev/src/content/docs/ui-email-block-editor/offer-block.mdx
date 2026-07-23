@@ -1,0 +1,33 @@
+---
+title: "OfferBlock"
+description: "A pricing plan: recurring price, feature list, one button."
+sidebar:
+  order: 12
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-email-block-editor/blocks";
+
+<Preview layout="stack">
+	<Example.Offer client:load />
+</Preview>
+
+```ts
+{
+	id: "offer",
+	type: "offer",
+	eyebrow: "Le plus choisi",
+	name: "Essentiel",
+	description: "Le socle pour recruter en continu.",
+	image: { src: "", alt: "" },
+	price: { amountInMinorUnits: 2900, currency: "EUR" },
+	period: "par mois",
+	features: ["Missions illimitées", "Support 7j/7"],
+	buttonLabel: "Choisir cette offre",
+	buttonHref: "https://acme.dev/offres",
+	highlighted: true,
+}
+```
+
+`highlighted` draws the card in the brand colour, for the recommended plan of a
+row. Leave `period` empty for a one-off price.

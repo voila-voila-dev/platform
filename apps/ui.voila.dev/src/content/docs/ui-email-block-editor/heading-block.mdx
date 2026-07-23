@@ -1,0 +1,20 @@
+---
+title: "HeadingBlock"
+description: "The email's title, or a section heading inside it."
+sidebar:
+  order: 1
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-email-block-editor/blocks";
+
+<Preview layout="stack">
+	<Example.Heading client:load />
+</Preview>
+
+```ts
+{ id: "heading", type: "heading", text: "Bonjour {{firstName}} !", level: 1 }
+```
+
+Placeholders like `{{firstName}}` are substituted when the email is rendered,
+not in the editor, so the author sees the token rather than a sample value.

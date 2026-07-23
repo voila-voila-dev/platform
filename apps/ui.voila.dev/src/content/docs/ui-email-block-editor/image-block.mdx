@@ -1,0 +1,36 @@
+---
+title: "ImageBlock"
+description: "A picture, optionally linked, optionally badged as a video."
+sidebar:
+  order: 4
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-email-block-editor/blocks";
+
+<Preview layout="stack">
+	<Example.Image client:load />
+</Preview>
+
+```ts
+{
+	id: "image",
+	type: "image",
+	src: "https://cdn.acme.dev/campaign.png",
+	alt: "Visuel de la campagne",
+	href: "",
+	width: "full",
+	overlay: "none",
+	rounded: true,
+}
+```
+
+With no `src` the block renders its upload state, which calls the editor's
+`onUploadImage` and expects a URL back.
+
+<Preview layout="stack">
+	<Example.ImageEmpty client:load />
+</Preview>
+
+`overlay: "play"` composites a play badge over the image. No email client plays
+an embedded video, so a video is a thumbnail that links out.

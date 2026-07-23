@@ -1,0 +1,28 @@
+---
+title: "ListBlock"
+description: "Bulleted, numbered or badged items, each with an optional lead-in."
+sidebar:
+  order: 5
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-email-block-editor/blocks";
+
+<Preview layout="stack">
+	<Example.List client:load />
+</Preview>
+
+```ts
+{
+	id: "list",
+	type: "list",
+	marker: "badge",
+	items: [
+		{ title: "Publiez votre mission", spans: [{ text: "En deux minutes." }] },
+		{ spans: [{ text: "Payez une fois la mission terminée." }] },
+	],
+}
+```
+
+Item bodies use the same span model as the paragraph, so bold, italic and links
+work inside them.

@@ -1,0 +1,24 @@
+---
+title: "ButtonBlock"
+description: "The call to action, as a filled or outlined button."
+sidebar:
+  order: 3
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-email-block-editor/blocks";
+
+<Preview layout="stack">
+	<Example.ButtonBlock client:load />
+</Preview>
+
+```ts
+{
+	id: "button",
+	type: "button",
+	label: "Voir les missions",
+	href: "https://app.acme.dev/missions",
+	align: "center",
+	variant: "primary",
+}
+```

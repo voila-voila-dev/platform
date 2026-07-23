@@ -1,0 +1,30 @@
+---
+title: "ArticleBlock"
+description: "A blog post as a card: image, title, description, byline."
+sidebar:
+  order: 10
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-email-block-editor/blocks";
+
+<Preview layout="stack">
+	<Example.Article client:load />
+</Preview>
+
+```ts
+{
+	id: "article",
+	type: "article",
+	title: "Bien choisir son kinésithérapeute",
+	description: "Les trois critères qui comptent vraiment.",
+	image: { src: "https://cdn.acme.dev/kine.png", alt: "Séance de kiné" },
+	author: "Emma Martin",
+	publishDate: "2026-07-20",
+	href: "https://acme.dev/blog/choisir-son-kine",
+}
+```
+
+The field names follow the blog content model, so building a digest from
+published posts is a straight mapping. Empty strings stand for absent
+optionals, and `publishDate` is formatted for the recipient at render.

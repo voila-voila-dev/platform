@@ -1,0 +1,27 @@
+---
+title: "StatBlock"
+description: "One figure, its label, and a line of context."
+sidebar:
+  order: 8
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-email-block-editor/blocks";
+
+<Preview layout="stack">
+	<Example.Stat client:load />
+</Preview>
+
+```ts
+{
+	id: "stat",
+	type: "stat",
+	value: "1 240",
+	label: "Missions pourvues",
+	description: "Sur les douze derniers mois.",
+	align: "center",
+}
+```
+
+One stat per block. A row of three is a three-column [grid](/ui-email-block-editor/grid-block/)
+of stat blocks.

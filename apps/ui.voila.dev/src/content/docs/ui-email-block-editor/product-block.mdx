@@ -1,0 +1,31 @@
+---
+title: "ProductBlock"
+description: "A catalogue item with its price, compare-at price and buy button."
+sidebar:
+  order: 11
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-email-block-editor/blocks";
+
+<Preview layout="stack">
+	<Example.Product client:load />
+</Preview>
+
+```ts
+{
+	id: "product",
+	type: "product",
+	name: "Bande de contention Essity",
+	description: "Boîte de 10, largeur 10 cm.",
+	image: { src: "https://cdn.acme.dev/bande.png", alt: "Bande" },
+	price: { amountInMinorUnits: 5990, currency: "EUR" },
+	compareAtPrice: { amountInMinorUnits: 7990, currency: "EUR" },
+	href: "https://shop.acme.dev/bande-contention",
+	buttonLabel: "Commander",
+}
+```
+
+Prices are integer minor units plus a currency, never a pre-formatted string.
+One campaign can go out in several locales, so the formatting happens at render.
+Set `compareAtPrice` to `null` when the product is not discounted.

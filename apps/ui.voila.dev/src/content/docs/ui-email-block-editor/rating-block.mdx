@@ -1,0 +1,28 @@
+---
+title: "RatingBlock"
+description: "A one-to-five satisfaction question, each step a tracked link."
+sidebar:
+  order: 13
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui-email-block-editor/blocks";
+
+<Preview layout="stack">
+	<Example.Rating client:load />
+</Preview>
+
+```ts
+{
+	id: "rating",
+	type: "rating",
+	question: [{ text: "Que pensez-vous de votre dernière mission ?" }],
+	style: "filled",
+	lowLabel: "Pas du tout",
+	highLabel: "Tout à fait",
+	href: "https://acme.dev/avis",
+}
+```
+
+Each star links to `href` with `?rating=N` appended, so the five steps are five
+separately countable links and the distribution falls out of the click stats.
