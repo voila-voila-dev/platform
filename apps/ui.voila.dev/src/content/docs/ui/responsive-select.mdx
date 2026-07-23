@@ -1,0 +1,27 @@
+---
+title: "ResponsiveSelect"
+description: "The styled popup on desktop, the OS picker on mobile."
+sidebar:
+  order: 18
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="center">
+	<Example.ResponsiveSelectExample client:load />
+</Preview>
+
+```tsx
+<ResponsiveSelect.Root value={value} onValueChange={setValue}>
+	<ResponsiveSelect.Trigger>
+		<ResponsiveSelect.Value placeholder="Select a specialty" />
+	</ResponsiveSelect.Trigger>
+	<ResponsiveSelect.Content>
+		<ResponsiveSelect.Item value="physiotherapist">Physiotherapist</ResponsiveSelect.Item>
+	</ResponsiveSelect.Content>
+</ResponsiveSelect.Root>
+```
+
+One declaration drives both surfaces, switching at 768px. Narrow the window on
+the preview to get the native picker.

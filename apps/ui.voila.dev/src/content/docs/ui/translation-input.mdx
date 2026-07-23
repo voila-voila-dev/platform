@@ -1,0 +1,29 @@
+---
+title: "TranslationInput"
+description: "One field per locale, with a switcher."
+sidebar:
+  order: 11
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="stack">
+	<Example.TranslationInputExample client:load />
+</Preview>
+
+```tsx
+<TranslationInput
+	value={title}
+	onValueChange={setTitle}
+	locale={locale}
+	locales={["fr-FR", "en-GB"]}
+	onLocaleChange={setLocale}
+	localeLabel="Langue"
+	localeCodes={{ "fr-FR": "FR", "en-GB": "EN" }}
+/>
+```
+
+Typing into a locale copies the text into every locale that is still empty, so
+a value written once is complete in all of them. Locales that already hold their
+own wording are never overwritten.

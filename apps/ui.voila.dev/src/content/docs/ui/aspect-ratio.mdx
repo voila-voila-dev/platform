@@ -1,0 +1,21 @@
+---
+title: "AspectRatio"
+description: "Hold a box at a fixed ratio while its width is fluid."
+sidebar:
+  order: 69
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/display";
+
+<Preview layout="stack">
+	<Example.AspectRatioExample client:load />
+</Preview>
+
+```tsx
+<AspectRatio ratio={16 / 9}>
+	<img src={cover} alt="" className="size-full rounded-lg object-cover" />
+</AspectRatio>
+```
+
+The width comes from the parent, so the ratio has something to work against.

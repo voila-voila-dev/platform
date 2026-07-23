@@ -1,0 +1,24 @@
+---
+title: "NativeSelect"
+description: "A real <select>, styled to match."
+sidebar:
+  order: 17
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="center">
+	<Example.NativeSelectExample client:load />
+</Preview>
+
+```tsx
+<NativeSelect defaultValue="rugby">
+	<NativeSelectOptGroup label="Team sports">
+		<NativeSelectOption value="rugby">Rugby</NativeSelectOption>
+	</NativeSelectOptGroup>
+</NativeSelect>
+```
+
+No portal, no JavaScript for the popup: the OS draws the list. That makes it
+the right choice on mobile and inside a form that has to work before hydration.

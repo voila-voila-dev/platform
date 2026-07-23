@@ -1,0 +1,36 @@
+---
+title: "DropdownMenu"
+description: "A menu of actions opened from a button."
+sidebar:
+  order: 40
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/overlays";
+
+<Preview layout="center">
+	<Example.DropdownMenuExample client:load />
+</Preview>
+
+```tsx
+<DropdownMenu>
+	<DropdownMenuTrigger render={<Button variant="outline" />}>Actions</DropdownMenuTrigger>
+	<DropdownMenuContent className="w-56">
+		<DropdownMenuLabel>Match coverage</DropdownMenuLabel>
+		<DropdownMenuGroup>
+			<DropdownMenuItem>
+				Edit mission
+				<DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
+			</DropdownMenuItem>
+		</DropdownMenuGroup>
+		<DropdownMenuSeparator />
+		<DropdownMenuItem variant="destructive">Cancel mission</DropdownMenuItem>
+	</DropdownMenuContent>
+</DropdownMenu>
+```
+
+`DropdownMenuLabel` has to sit inside a `DropdownMenuGroup` or at the top of the
+content — a label floating between groups throws.
+
+Checkbox and radio items are available as `DropdownMenuCheckboxItem` and
+`DropdownMenuRadioItem` inside a `DropdownMenuRadioGroup`.

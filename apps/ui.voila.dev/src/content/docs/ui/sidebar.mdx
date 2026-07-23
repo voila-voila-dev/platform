@@ -1,0 +1,46 @@
+---
+title: "Sidebar"
+description: "The application's left navigation rail, collapsible and persistent."
+sidebar:
+  order: 54
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/navigation";
+
+<Preview layout="stack">
+	<Example.SidebarExample client:load />
+</Preview>
+
+```tsx
+<SidebarProvider>
+	<Sidebar collapsible="icon">
+		<SidebarHeader>…</SidebarHeader>
+		<SidebarContent>
+			<SidebarGroup>
+				<SidebarGroupLabel>Platform</SidebarGroupLabel>
+				<SidebarGroupContent>
+					<SidebarMenu>
+						<SidebarMenuItem>
+							<SidebarMenuButton isActive tooltip="Dashboard">
+								<HouseIcon />
+								<span>Dashboard</span>
+							</SidebarMenuButton>
+						</SidebarMenuItem>
+					</SidebarMenu>
+				</SidebarGroupContent>
+			</SidebarGroup>
+		</SidebarContent>
+	</Sidebar>
+	<SidebarInset>
+		<header><SidebarTrigger /></header>
+	</SidebarInset>
+</SidebarProvider>
+```
+
+`collapsible` takes `offcanvas` (slides away), `icon` (collapses to a rail of
+icons) or `none`. With `icon`, the `tooltip` on each menu button is what labels
+it once the text is hidden, so pass it always.
+
+The provider stores the open state in a cookie, so the sidebar comes back the
+way the user left it.

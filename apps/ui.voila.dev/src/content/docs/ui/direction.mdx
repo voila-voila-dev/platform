@@ -1,0 +1,24 @@
+---
+title: "DirectionProvider"
+description: "Tell Base UI which way the text reads."
+sidebar:
+  order: 81
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/display";
+
+<Preview layout="center">
+	<Example.DirectionExample client:load />
+</Preview>
+
+```tsx
+<DirectionProvider direction="rtl">
+	<App />
+</DirectionProvider>
+```
+
+This only informs Base UI's logical positioning and keyboard navigation. It
+does not set `dir` on the DOM, so text alignment and portaled popups still
+follow the nearest `dir` ancestor. Localising to a right-to-left language means
+setting `dir="rtl"` on `<html>` as well as rendering this provider.

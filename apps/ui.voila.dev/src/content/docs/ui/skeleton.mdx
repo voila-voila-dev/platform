@@ -1,0 +1,28 @@
+---
+title: "Skeleton"
+description: "A shimmering placeholder in the shape of the content that is coming."
+sidebar:
+  order: 24
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/feedback";
+
+<Preview layout="stack">
+	<Example.SkeletonDefault client:load />
+</Preview>
+
+```tsx
+<Skeleton className="h-4 w-40" />
+```
+
+Build the placeholder out of the real layout rather than a generic block, so
+nothing jumps when the data lands.
+
+<Preview layout="stack">
+	<Example.SkeletonCard client:load />
+</Preview>
+
+`Skeleton` is a shape and nothing else. Announcing the wait is the wrapper's
+job: `role="status"` plus a sr-only label, with the placeholder itself
+`aria-hidden`.

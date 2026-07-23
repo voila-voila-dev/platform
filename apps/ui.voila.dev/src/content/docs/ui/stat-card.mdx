@@ -1,0 +1,30 @@
+---
+title: "StatCard"
+description: "One metric, its change, and an optional sparkline."
+sidebar:
+  order: 64
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/display";
+
+<Preview layout="stack">
+	<Example.StatCardExample client:load />
+</Preview>
+
+```tsx
+<StatCard>
+	<StatCardHeader>
+		<StatCardLabel>Missions published</StatCardLabel>
+	</StatCardHeader>
+	<StatCardValue>38</StatCardValue>
+	<StatCardDelta trend="up">+12% vs. last month</StatCardDelta>
+</StatCard>
+```
+
+`trend` picks the arrow and the colour; it is separate from the text because a
+falling number is not always bad — cancellations going down is a `down` trend
+you would want to read as good.
+
+`StatCardChart` is a full-bleed slot pinned to the bottom edge for a sparkline.
+Constrain the chart's height on the `Chart.Root` itself.

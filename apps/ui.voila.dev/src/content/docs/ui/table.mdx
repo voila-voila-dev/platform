@@ -1,0 +1,34 @@
+---
+title: "Table"
+description: "A plain styled HTML table."
+sidebar:
+  order: 67
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/display";
+
+<Preview layout="stack" scroll>
+	<Example.TableExample client:load />
+</Preview>
+
+```tsx
+<Table>
+	<TableCaption>Recent missions for your organization.</TableCaption>
+	<TableHeader>
+		<TableRow>
+			<TableHead>Reference</TableHead>
+			<TableHead className="text-right">Amount</TableHead>
+		</TableRow>
+	</TableHeader>
+	<TableBody>
+		<TableRow>
+			<TableCell className="font-medium">MIS-001</TableCell>
+			<TableCell className="text-right">180.00 EUR</TableCell>
+		</TableRow>
+	</TableBody>
+</Table>
+```
+
+Markup and styles, nothing else. For sorting, filtering, selection, pinning and
+the rest, [DataTable](/ui-datatable/data-table/) is the one you want.

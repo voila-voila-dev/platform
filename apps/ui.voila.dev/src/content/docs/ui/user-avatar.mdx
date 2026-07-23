@@ -1,0 +1,24 @@
+---
+title: "UserAvatar"
+description: "An avatar with the person's name, role and presence beside it."
+sidebar:
+  order: 62
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/display";
+
+<Preview layout="stack">
+	<Example.UserAvatarExample client:load />
+</Preview>
+
+```tsx
+<UserAvatar
+	name="Camille Dubois"
+	description="Kinésithérapeute du sport"
+	src={user.avatarUrl}
+	status="online"
+/>
+```
+
+Initials are derived from `name`, so the fallback needs nothing from you.

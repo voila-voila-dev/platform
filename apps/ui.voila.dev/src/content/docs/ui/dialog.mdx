@@ -1,0 +1,32 @@
+---
+title: "Dialog"
+description: "A modal window for a focused task."
+sidebar:
+  order: 30
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/overlays";
+
+<Preview layout="center">
+	<Example.DialogExample client:load />
+</Preview>
+
+```tsx
+<Dialog>
+	<DialogTrigger render={<Button variant="outline" />}>Invite</DialogTrigger>
+	<DialogContent>
+		<DialogHeader>
+			<DialogTitle>Invite a provider</DialogTitle>
+			<DialogDescription>Send an invitation so they can…</DialogDescription>
+		</DialogHeader>
+		<DialogFooter>
+			<DialogClose render={<Button variant="outline" />}>Cancel</DialogClose>
+			<Button>Send invitation</Button>
+		</DialogFooter>
+	</DialogContent>
+</Dialog>
+```
+
+Triggers take a `render` prop rather than wrapping a button, so the trigger *is*
+your button and there is no nested-button markup.

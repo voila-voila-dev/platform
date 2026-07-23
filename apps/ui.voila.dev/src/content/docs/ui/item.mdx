@@ -1,0 +1,29 @@
+---
+title: "Item"
+description: "A row of content: media, text, actions."
+sidebar:
+  order: 65
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/display";
+
+<Preview layout="stack">
+	<Example.ItemExample client:load />
+</Preview>
+
+```tsx
+<Item variant="outline">
+	<ItemMedia variant="icon"><CalendarCheckIcon /></ItemMedia>
+	<ItemContent>
+		<ItemTitle>Saturday match coverage</ItemTitle>
+		<ItemDescription>Physiotherapist needed for…</ItemDescription>
+	</ItemContent>
+	<ItemActions>
+		<Button size="sm" variant="outline">Apply</Button>
+	</ItemActions>
+</Item>
+```
+
+One row on its own. For several, [List](/ui/list/) wraps the same parts in the
+right list semantics.

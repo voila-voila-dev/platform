@@ -1,0 +1,25 @@
+---
+title: "HoverCard"
+description: "A preview card that opens on hover, for a link worth previewing."
+sidebar:
+  order: 38
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/overlays";
+
+<Preview layout="center">
+	<Example.HoverCardExample client:load />
+</Preview>
+
+```tsx
+<HoverCard>
+	<HoverCardTrigger render={<a href={profileUrl} />}>@nathan.guyot</HoverCardTrigger>
+	<HoverCardContent>
+		<ProviderPreview />
+	</HoverCardContent>
+</HoverCard>
+```
+
+Hover only opens it on a pointer, so nothing here can be the only way to reach
+the information.

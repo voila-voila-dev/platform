@@ -1,0 +1,39 @@
+---
+title: "Quick start"
+description: "The core: around 80 React components built on Base UI and Tailwind CSS 4."
+sidebar:
+  order: 0
+  label: "Quick start"
+---
+
+The core package. Around 80 components, from primitives (`Button`, `Input`,
+`Dialog`) up to composed pieces (`Sidebar`, `Chat`, `ImageCropper`), built on
+[Base UI](https://base-ui.com) for behaviour and Tailwind for styling.
+
+## Install
+
+```sh
+bun add @voila.dev/ui
+```
+
+```css title="globals.css"
+@import "tailwindcss";
+@import "@voila.dev/ui/styles/globals.css";
+```
+
+## Import
+
+```ts
+import { Button } from "@voila.dev/ui/components/button";
+import { cn } from "@voila.dev/ui/lib/utils";
+import { useIsMobile } from "@voila.dev/ui/hooks/use-mobile";
+```
+
+Every component is its own entry point, named after its file. There is no barrel
+export: a barrel would pull all 80 components into the module graph of any file
+that imports one.
+
+`@voila.dev/ui-tokens` comes along as a dependency, and `styles/globals.css`
+already imports it — you do not install or import the tokens separately.
+
+Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.

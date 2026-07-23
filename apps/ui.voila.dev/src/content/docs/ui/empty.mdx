@@ -1,0 +1,29 @@
+---
+title: "Empty"
+description: "The empty state of a list, table or panel."
+sidebar:
+  order: 25
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/feedback";
+
+<Preview layout="stack">
+	<Example.EmptyDefault client:load />
+</Preview>
+
+```tsx
+<Empty bordered>
+	<EmptyHeader>
+		<EmptyMedia variant="icon"><CalendarPlusIcon /></EmptyMedia>
+		<EmptyTitle>No missions yet</EmptyTitle>
+		<EmptyDescription>Create your first mission to…</EmptyDescription>
+	</EmptyHeader>
+	<EmptyContent>
+		<Button>Create a mission</Button>
+	</EmptyContent>
+</Empty>
+```
+
+`EmptyMedia` takes `variant="icon"` for a tinted icon tile, or plain children
+for anything else — an avatar, an illustration.

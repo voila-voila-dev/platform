@@ -1,0 +1,24 @@
+---
+title: "Toggle"
+description: "A button that stays pressed."
+sidebar:
+  order: 21
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview>
+	<Example.ToggleExample client:load />
+</Preview>
+
+```tsx
+<Toggle aria-label="Mark provider as favorite">
+	<StarIcon className="group-data-pressed/toggle:hidden" />
+	<StarIcon weight="fill" className="hidden group-data-pressed/toggle:inline" />
+	Favorite
+</Toggle>
+```
+
+Colour alone is a weak pressed state. Swapping an outline icon for a filled one
+off `group-data-pressed` is the pattern the component is built for.

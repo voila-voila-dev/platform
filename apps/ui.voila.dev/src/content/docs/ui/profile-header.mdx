@@ -1,0 +1,27 @@
+---
+title: "ProfileHeader"
+description: "The cover, avatar, name and actions at the top of a profile."
+sidebar:
+  order: 63
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/display";
+
+<Preview layout="stack">
+	<Example.ProfileHeaderExample client:load />
+</Preview>
+
+```tsx
+<ProfileHeader
+	name="Camille Dubois"
+	headline="Kinésithérapeute du sport"
+	theme="provider"
+	avatar={{ src: user.avatarUrl, name: user.name }}
+	badges={<Badge variant="provider">Identité vérifiée</Badge>}
+	actions={<Button size="sm">Contacter</Button>}
+/>
+```
+
+`theme` picks the product surface — `provider` or `organization` — which tints
+the gradient used when there is no cover image.

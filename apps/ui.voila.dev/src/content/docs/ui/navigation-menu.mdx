@@ -1,0 +1,35 @@
+---
+title: "NavigationMenu"
+description: "A horizontal menu whose items open panels of links."
+sidebar:
+  order: 51
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/navigation";
+
+<Preview layout="stack">
+	<Example.NavigationMenuExample client:load />
+</Preview>
+
+```tsx
+<NavigationMenu>
+	<NavigationMenuList>
+		<NavigationMenuItem>
+			<NavigationMenuTrigger>Missions</NavigationMenuTrigger>
+			<NavigationMenuContent>
+				<ul className="grid w-64 gap-1">
+					<li><NavigationMenuLink href="/missions">Open missions</NavigationMenuLink></li>
+				</ul>
+			</NavigationMenuContent>
+		</NavigationMenuItem>
+	</NavigationMenuList>
+</NavigationMenu>
+```
+
+This is for navigation; [DropdownMenu](/ui/dropdown-menu/) is for actions. The
+difference is real to a screen reader, which announces one as a list of links
+and the other as a menu of commands.
+
+A top-level item that goes straight somewhere needs no trigger — use a
+`NavigationMenuLink` with `navigationMenuTriggerStyle()`.

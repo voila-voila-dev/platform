@@ -1,0 +1,28 @@
+---
+title: "InputOTP"
+description: "A one-time-code field, one box per digit."
+sidebar:
+  order: 8
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="center">
+	<Example.InputOTPExample client:load />
+</Preview>
+
+```tsx
+<InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS}>
+	<InputOTPGroup>
+		<InputOTPSlot index={0} />
+		<InputOTPSlot index={1} />
+		<InputOTPSlot index={2} />
+	</InputOTPGroup>
+	<InputOTPSeparator />
+	<InputOTPGroup>…</InputOTPGroup>
+</InputOTP>
+```
+
+Built on [input-otp](https://input-otp.rodz.dev/), so it is one real input
+behind the boxes — paste, autofill from an SMS, and select-all all work.

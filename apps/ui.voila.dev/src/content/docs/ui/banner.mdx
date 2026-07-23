@@ -1,0 +1,32 @@
+---
+title: "Banner"
+description: "A full-width message about the whole app, pinned above the layout."
+sidebar:
+  order: 21
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/feedback";
+
+<Preview layout="stack">
+	<Example.BannerVariants client:load />
+</Preview>
+
+```tsx
+<Banner variant="warning">
+	<WarningIcon />
+	<BannerTitle>Votre compte Stripe est incomplet.</BannerTitle>
+	<BannerClose />
+</Banner>
+```
+
+An [Alert](/ui/alert/) talks about the content it sits next to; a banner talks
+about the whole session, which is why it is full-bleed and has no description
+slot.
+
+<Preview layout="stack">
+	<Example.BannerWithAction client:load />
+</Preview>
+
+`BannerClose` does not remove the banner by itself. Wire its `onClick` to
+whatever holds the dismissed state, so it stays dismissed on the next page.

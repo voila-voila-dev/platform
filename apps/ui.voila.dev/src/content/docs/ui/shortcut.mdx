@@ -1,0 +1,22 @@
+---
+title: "Shortcut"
+description: "A shortcut hint aligned to the end of a row."
+sidebar:
+  order: 72
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/display";
+
+<Preview layout="stack">
+	<Example.ShortcutExample client:load />
+</Preview>
+
+```tsx
+<Shortcut>⌘K</Shortcut>
+<Shortcut keys={["⌘", "K"]} />
+```
+
+The `keys` form renders each key as a [Kbd](/ui/kbd/); the children form is
+plain muted text. Menus have their own version of this —
+`DropdownMenuShortcut` and its siblings — which is what you want inside one.

@@ -1,0 +1,28 @@
+---
+title: "Menubar"
+description: "A persistent horizontal bar of menus, like a desktop application."
+sidebar:
+  order: 42
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/overlays";
+
+<Preview layout="stack">
+	<Example.MenubarExample client:load />
+</Preview>
+
+```tsx
+<Menubar>
+	<MenubarMenu>
+		<MenubarTrigger>Missions</MenubarTrigger>
+		<MenubarContent>
+			<MenubarItem>New mission <MenubarShortcut>⌘N</MenubarShortcut></MenubarItem>
+			<MenubarSeparator />
+			<MenubarItem variant="destructive">Cancel mission</MenubarItem>
+		</MenubarContent>
+	</MenubarMenu>
+</Menubar>
+```
+
+Once one menu is open, moving across the bar opens the others on hover.

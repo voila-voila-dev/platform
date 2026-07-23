@@ -1,0 +1,21 @@
+---
+title: "TimePicker"
+description: "A time field with a list of slots."
+sidebar:
+  order: 30
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="center">
+	<Example.TimePickerExample client:load />
+</Preview>
+
+```tsx
+<TimePicker value={time} onValueChange={setTime} locale="fr-FR" />
+```
+
+The value is a `"HH:mm"` string, not a `Date` — a time with no date attached
+does not need one, and storing it as text avoids a timezone question that has
+no answer.

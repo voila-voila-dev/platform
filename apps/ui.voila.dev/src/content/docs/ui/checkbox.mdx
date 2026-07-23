@@ -1,0 +1,22 @@
+---
+title: "Checkbox"
+description: "An independent on-off box, with an indeterminate state."
+sidebar:
+  order: 12
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="stack">
+	<Example.CheckboxExample client:load />
+</Preview>
+
+```tsx
+<Checkbox id="mission-terms" />
+<Label htmlFor="mission-terms">Accept mission terms</Label>
+```
+
+`indeterminate` is the dash for a parent whose children are partly ticked. It
+is separate from `checked`, so the parent can be unchecked and indeterminate at
+the same time — which is what "some of them" means.

@@ -1,0 +1,28 @@
+---
+title: "List"
+description: "A semantic list of Item rows."
+sidebar:
+  order: 66
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/display";
+
+<Preview layout="stack">
+	<Example.ListExample client:load />
+</Preview>
+
+```tsx
+<List aria-label="Open missions">
+	<ListItem variant="outline">
+		<ItemMedia variant="icon"><CalendarCheckIcon /></ItemMedia>
+		<ItemContent>
+			<ItemTitle>Saturday match coverage</ItemTitle>
+		</ItemContent>
+	</ListItem>
+</List>
+```
+
+`List` renders a `<ul>` and `ListItem` an `<li>`, taking the same children as
+[Item](/ui/item/). Give the list an `aria-label` — a screen reader announces
+the count, and "list of 12" is only useful if it says a list of what.

@@ -1,0 +1,30 @@
+---
+title: "Stepper"
+description: "Progress through a numbered flow."
+sidebar:
+  order: 34
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="stack">
+	<Example.StepperExample client:load />
+</Preview>
+
+```tsx
+<Stepper value={2}>
+	<StepperItem step={1}>
+		<StepperIndicator />
+		<StepperTitle>Profil</StepperTitle>
+		<StepperSeparator />
+	</StepperItem>
+	<StepperItem step={2}>…</StepperItem>
+</Stepper>
+```
+
+`value` is the step the user is on; each item knows whether it is done, current
+or still ahead from its own `step`. Leave the separator off the last item.
+
+`orientation="vertical"` stacks the steps, with `StepperDescription` under each
+title.

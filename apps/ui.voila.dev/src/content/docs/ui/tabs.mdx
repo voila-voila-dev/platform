@@ -1,0 +1,31 @@
+---
+title: "Tabs"
+description: "Switch between panels that occupy the same space."
+sidebar:
+  order: 52
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/navigation";
+
+<Preview layout="stack">
+	<Example.TabsExample client:load />
+</Preview>
+
+```tsx
+<Tabs defaultValue="missions">
+	<TabsList>
+		<TabsTrigger value="missions">Missions</TabsTrigger>
+		<TabsTrigger value="providers">Providers</TabsTrigger>
+	</TabsList>
+	<TabsContent value="missions">…</TabsContent>
+	<TabsContent value="providers">…</TabsContent>
+</Tabs>
+```
+
+`variant="line"` on the list swaps the filled rail for an underline, which sits
+better directly under a page header.
+
+<Preview layout="stack">
+	<Example.TabsLine client:load />
+</Preview>

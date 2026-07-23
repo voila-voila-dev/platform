@@ -1,0 +1,22 @@
+---
+title: "DateTimePicker"
+description: "A date and a time in one control."
+sidebar:
+  order: 29
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="center">
+	<Example.DateTimePickerExample client:load />
+</Preview>
+
+```tsx
+<DateTimePicker value={value} onValueChange={setValue} placeholder="Mission start" />
+```
+
+The module also exports `DateTimeRangeInput` for a start and an end,
+`ShiftTimeRangeInput` for a shift that can cross midnight, and
+`NativeDateTimeInput` / `ResponsiveDateTimeInput` for the native-picker
+variants.

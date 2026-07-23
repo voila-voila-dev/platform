@@ -1,0 +1,33 @@
+---
+title: "Card"
+description: "A bordered surface grouping a title, some content and its actions."
+sidebar:
+  order: 60
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/display";
+
+<Preview layout="stack">
+	<Example.CardExample client:load />
+</Preview>
+
+```tsx
+<Card>
+	<CardHeader>
+		<CardTitle>Physiotherapist — Match day</CardTitle>
+		<CardDescription>Racing Club de Lyon · Saturday, June 20</CardDescription>
+		<CardAction><Badge>Open</Badge></CardAction>
+	</CardHeader>
+	<CardContent>…</CardContent>
+	<CardFooter className="justify-end gap-2">
+		<Button size="sm">Apply</Button>
+	</CardFooter>
+</Card>
+```
+
+`CardAction` goes inside the header, not after it — the header is a grid and the
+action occupies its right-hand column.
+
+An `<img>` as the card's first child is detected and bled to the edges, so a
+cover image needs no wrapper.

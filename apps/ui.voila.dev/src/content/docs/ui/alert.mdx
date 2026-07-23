@@ -1,0 +1,28 @@
+---
+title: "Alert"
+description: "An inline message about the thing the user is looking at."
+sidebar:
+  order: 20
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/feedback";
+
+<Preview layout="stack">
+	<Example.AlertVariants client:load />
+</Preview>
+
+```tsx
+<Alert variant="warning">
+	<WarningIcon />
+	<AlertTitle>Report due soon</AlertTitle>
+	<AlertDescription>Submit the report within 48 hours.</AlertDescription>
+</Alert>
+```
+
+`AlertAction` and `AlertClose` are optional slots the layout knows about, so a
+button or a dismiss control lands in the right place without wrapper markup.
+
+<Preview layout="stack">
+	<Example.AlertWithAction client:load />
+</Preview>

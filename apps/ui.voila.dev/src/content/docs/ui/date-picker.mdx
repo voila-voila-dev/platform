@@ -1,0 +1,26 @@
+---
+title: "DatePicker"
+description: "A date field opening a calendar."
+sidebar:
+  order: 28
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="center">
+	<Example.DatePickerExample client:load />
+</Preview>
+
+```tsx
+<DatePicker
+	value={date}
+	onValueChange={setDate}
+	placeholder="Mission date"
+	locale="fr-FR"
+/>
+```
+
+`calendarProps` passes through to the [Calendar](/ui/calendar/) underneath —
+`defaultMonth`, `disabled`, and so on. `DateRangePicker` is the two-date
+version.

@@ -1,0 +1,21 @@
+---
+title: "Spinner"
+description: "The indeterminate loading glyph."
+sidebar:
+  order: 23
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/feedback";
+
+<Preview>
+	<Example.SpinnerDefault client:load />
+</Preview>
+
+```tsx
+<Spinner className="size-4" />
+```
+
+Size and colour come from `className` — the glyph uses `currentColor`, so a
+role token tints it directly. Inside a button, prefer the button's own
+`loading` prop, which adds the disabled and `aria-busy` semantics too.

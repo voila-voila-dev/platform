@@ -1,0 +1,27 @@
+---
+title: "Avatar"
+description: "A person's picture, with initials as the fallback."
+sidebar:
+  order: 61
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/display";
+
+<Preview>
+	<Example.AvatarExample client:load />
+</Preview>
+
+```tsx
+<Avatar>
+	<AvatarImage src={user.avatarUrl} alt={user.name} />
+	<AvatarFallback>CD</AvatarFallback>
+</Avatar>
+```
+
+The fallback shows while the image loads and stays if it fails, so always give
+one. `AvatarGroup` overlaps a row of them and `AvatarGroupCount` closes it with
+an overflow count.
+
+For a name and a role next to the picture, [UserAvatar](/ui/user-avatar/) does
+that in one component.

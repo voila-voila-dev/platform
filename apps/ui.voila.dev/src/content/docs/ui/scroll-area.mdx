@@ -1,0 +1,19 @@
+---
+title: "ScrollArea"
+description: "A scrollable region with a styled scrollbar."
+sidebar:
+  order: 74
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/display";
+
+<Preview layout="stack">
+	<Example.ScrollAreaExample client:load />
+</Preview>
+
+```tsx
+<ScrollArea className="h-56 w-72 rounded-lg border">…</ScrollArea>
+```
+
+The height has to come from you — a scroll area with no bound never scrolls.

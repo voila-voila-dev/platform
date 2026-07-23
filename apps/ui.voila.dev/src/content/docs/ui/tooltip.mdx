@@ -1,0 +1,26 @@
+---
+title: "Tooltip"
+description: "A short label describing the control under the cursor."
+sidebar:
+  order: 39
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/overlays";
+
+<Preview>
+	<Example.TooltipExample client:load />
+</Preview>
+
+```tsx
+<Tooltip>
+	<TooltipTrigger render={<Button size="icon" aria-label="Save" />}>
+		<FloppyDiskIcon />
+	</TooltipTrigger>
+	<TooltipContent>Save report</TooltipContent>
+</Tooltip>
+```
+
+A tooltip is a label, not a place to put content — it cannot hold anything
+focusable, and it never carries information that is not available elsewhere. An
+icon-only button still needs its own `aria-label`.

@@ -1,0 +1,21 @@
+---
+title: "ColorPicker"
+description: "Pick one of the catalogue colours."
+sidebar:
+  order: 24
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="center">
+	<Example.ColorPickerExample client:load />
+</Preview>
+
+```tsx
+<ColorPicker value={color} onValueChange={setColor} />
+```
+
+The palette is the closed [Badge](/ui/badge/) colour set, so a colour picked
+here is a name you can store and render as a chip anywhere. It is not a
+free-form colour wheel, on purpose.

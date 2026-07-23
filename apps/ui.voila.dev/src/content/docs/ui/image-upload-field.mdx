@@ -1,0 +1,25 @@
+---
+title: "ImageUploadField"
+description: "Drop an image, crop it, confirm it."
+sidebar:
+  order: 32
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="stack">
+	<Example.ImageUploadFieldExample client:load />
+</Preview>
+
+```tsx
+<ImageUploadField
+	value={avatarUrl}
+	onFileCropped={upload}
+	onRemove={clear}
+	shape="circle"
+/>
+```
+
+`shape="rectangle"` with an `aspectRatio` covers a banner. `onFileCropped`
+receives the cropped file, so the upload stays yours.

@@ -1,0 +1,21 @@
+---
+title: "IconPicker"
+description: "Search and pick a Phosphor icon."
+sidebar:
+  order: 25
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="center">
+	<Example.IconPickerExample client:load />
+</Preview>
+
+```tsx
+<IconPicker value={iconName} onValueChange={setIconName} />
+```
+
+The value is a Phosphor export name like `"FirstAidKitIcon"`, which is what
+[Icon](/ui-icon/icon/) renders. The grid caps at 120 swatches — the full set is
+around 1,500 and is not virtualised — so the rest is reached by searching.

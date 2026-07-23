@@ -1,0 +1,26 @@
+---
+title: "Collapsible"
+description: "One region that shows and hides."
+sidebar:
+  order: 56
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/navigation";
+
+<Preview layout="stack">
+	<Example.CollapsibleExample client:load />
+</Preview>
+
+```tsx
+<Collapsible>
+	<CollapsibleTrigger render={<Button variant="ghost" size="icon-sm" />}>
+		<CaretDownIcon />
+	</CollapsibleTrigger>
+	<CollapsibleContent>…</CollapsibleContent>
+</Collapsible>
+```
+
+One section with your own trigger, where [Accordion](/ui/accordion/) is a set
+with a house style. Rotate the caret off the trigger's `aria-expanded` rather
+than tracking the open state yourself.

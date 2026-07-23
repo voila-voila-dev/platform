@@ -1,0 +1,34 @@
+---
+title: "Select"
+description: "Pick one option from a styled popup."
+sidebar:
+  order: 16
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="center">
+	<Example.SelectExample client:load />
+</Preview>
+
+```tsx
+<Select>
+	<SelectTrigger className="w-56">
+		<SelectValue placeholder="Select a specialty" />
+	</SelectTrigger>
+	<SelectContent>
+		<SelectGroup>
+			<SelectLabel>Rehabilitation</SelectLabel>
+			<SelectItem value="physiotherapist">Physiotherapist</SelectItem>
+		</SelectGroup>
+	</SelectContent>
+</Select>
+```
+
+To show a label rather than the raw value on a controlled select, pass `items`
+as a value-to-label record — otherwise the trigger shows `recovery-session`
+instead of "Recovery session".
+
+More than a dozen options wants [Combobox](/ui/combobox/); a phone-first form
+wants [ResponsiveSelect](/ui/responsive-select/).

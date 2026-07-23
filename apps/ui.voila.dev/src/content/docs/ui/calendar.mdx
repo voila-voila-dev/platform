@@ -1,0 +1,22 @@
+---
+title: "Calendar"
+description: "A month grid for picking a date or a range."
+sidebar:
+  order: 27
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="center">
+	<Example.CalendarExample client:load />
+</Preview>
+
+```tsx
+<Calendar mode="single" selected={date} onSelect={setDate} />
+<Calendar mode="range" selected={range} onSelect={setRange} />
+```
+
+Built on [React DayPicker](https://daypicker.dev/), so its `mode`, `disabled`,
+`locale` and the rest apply. Inside a popover trigger, use
+[DatePicker](/ui/date-picker/) instead — this is the bare grid.

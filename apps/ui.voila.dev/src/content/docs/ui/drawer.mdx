@@ -1,0 +1,33 @@
+---
+title: "Drawer"
+description: "A draggable panel anchored to an edge, with the momentum of a native sheet."
+sidebar:
+  order: 36
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/overlays";
+
+<Preview layout="center">
+	<Example.DrawerExample client:load />
+</Preview>
+
+```tsx
+<Drawer direction="right">
+	<DrawerTrigger asChild>
+		<Button variant="outline">View mission</Button>
+	</DrawerTrigger>
+	<DrawerContent>
+		<DrawerHeader>
+			<DrawerTitle>Match coverage — Saturday</DrawerTitle>
+			<DrawerDescription>Stade Marcel Michelin, 14:00.</DrawerDescription>
+		</DrawerHeader>
+		<DrawerFooter>
+			<Button>Apply to this mission</Button>
+		</DrawerFooter>
+	</DrawerContent>
+</Drawer>
+```
+
+Built on [Vaul](https://vaul.emilkowal.ski/), which is why this one uses
+`asChild` where the rest of the kit uses `render`.

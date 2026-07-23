@@ -1,0 +1,22 @@
+---
+title: "Rating"
+description: "A star rating, read-only or as an input."
+sidebar:
+  order: 26
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="stack">
+	<Example.RatingExample client:load />
+</Preview>
+
+```tsx
+<Rating value={4.2} count={128} />
+
+<RatingInput value={value} onChange={setValue} />
+```
+
+`Rating` displays and accepts fractions; `RatingInput` collects a whole number
+from the user. `ReviewItem` lays out a rating with its author and comment.

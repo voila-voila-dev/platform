@@ -1,0 +1,33 @@
+---
+title: "AlertDialog"
+description: "A modal that interrupts to confirm something consequential."
+sidebar:
+  order: 31
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/overlays";
+
+<Preview layout="center">
+	<Example.AlertDialogExample client:load />
+</Preview>
+
+```tsx
+<AlertDialog>
+	<AlertDialogTrigger render={<Button variant="outline" />}>Cancel</AlertDialogTrigger>
+	<AlertDialogContent size="sm">
+		<AlertDialogHeader>
+			<AlertDialogMedia><WarningIcon className="text-destructive" /></AlertDialogMedia>
+			<AlertDialogTitle>Cancel this mission?</AlertDialogTitle>
+			<AlertDialogDescription>The provider will be notified.</AlertDialogDescription>
+		</AlertDialogHeader>
+		<AlertDialogFooter>
+			<AlertDialogCancel>Keep mission</AlertDialogCancel>
+			<AlertDialogAction variant="destructive">Cancel mission</AlertDialogAction>
+		</AlertDialogFooter>
+	</AlertDialogContent>
+</AlertDialog>
+```
+
+Unlike [Dialog](/ui/dialog/) it has no close button and does not dismiss on an
+outside click. The user has to answer the question, which is the point.

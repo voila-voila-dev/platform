@@ -1,0 +1,27 @@
+---
+title: "ContextMenu"
+description: "The same menu, opened by right-click on a region."
+sidebar:
+  order: 41
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/overlays";
+
+<Preview layout="center">
+	<Example.ContextMenuExample client:load />
+</Preview>
+
+```tsx
+<ContextMenu>
+	<ContextMenuTrigger className="…">Right-click here</ContextMenuTrigger>
+	<ContextMenuContent>
+		<ContextMenuItem>Edit mission</ContextMenuItem>
+		<ContextMenuSeparator />
+		<ContextMenuItem variant="destructive">Cancel mission</ContextMenuItem>
+	</ContextMenuContent>
+</ContextMenu>
+```
+
+There is no right-click on a touchscreen, so anything here needs a second route
+— usually the same items in a [DropdownMenu](/ui/dropdown-menu/).

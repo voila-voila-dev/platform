@@ -1,0 +1,23 @@
+---
+title: "Kbd"
+description: "A keyboard key, rendered as a key."
+sidebar:
+  order: 71
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/display";
+
+<Preview>
+	<Example.KbdExample client:load />
+</Preview>
+
+```tsx
+<Kbd>⌘K</Kbd>
+
+<KbdGroup>
+	<Kbd>⌘</Kbd>
+	<Kbd>⇧</Kbd>
+	<Kbd>P</Kbd>
+</KbdGroup>
+```

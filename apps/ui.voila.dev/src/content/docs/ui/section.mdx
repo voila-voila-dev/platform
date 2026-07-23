@@ -1,0 +1,34 @@
+---
+title: "Section"
+description: "A titled block of a page, with its own actions."
+sidebar:
+  order: 78
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/display";
+
+<Preview layout="stack">
+	<Example.SectionExample client:load />
+</Preview>
+
+```tsx
+<Section>
+	<SectionHeader>
+		<SectionHeading>
+			<SectionTitle>Prochaines missions</SectionTitle>
+			<SectionDescription>Les missions de cette semaine.</SectionDescription>
+		</SectionHeading>
+		<SectionActions>
+			<Button variant="ghost" size="sm">Voir tout</Button>
+		</SectionActions>
+	</SectionHeader>
+	<Card>…</Card>
+</Section>
+```
+
+`SectionTitle` renders an `h2`. When sections nest, pass `render={<h3 />}` to
+keep the heading outline honest.
+
+This is the application-side section. Marketing pages have their own, wider one
+in [ui-landing](/ui-landing/section/).

@@ -1,0 +1,28 @@
+---
+title: "ResponsiveSheet"
+description: "A side sheet on desktop, a bottom drawer on small screens."
+sidebar:
+  order: 35
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/overlays";
+
+<Preview layout="center">
+	<Example.ResponsiveSheetExample client:load />
+</Preview>
+
+```tsx
+<ResponsiveSheet>
+	<ResponsiveSheetTrigger render={<Button variant="outline" />}>Open</ResponsiveSheetTrigger>
+	<ResponsiveSheetContent size="xl">
+		<ResponsiveSheetHeader>
+			<ResponsiveSheetTitle>Email details</ResponsiveSheetTitle>
+		</ResponsiveSheetHeader>
+		<ResponsiveSheetBody>…</ResponsiveSheetBody>
+	</ResponsiveSheetContent>
+</ResponsiveSheet>
+```
+
+Reach for this over [Sheet](/ui/sheet/) for detail panels, which are the ones
+that hurt most on a phone.

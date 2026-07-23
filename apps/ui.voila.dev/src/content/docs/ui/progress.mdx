@@ -1,0 +1,24 @@
+---
+title: "Progress"
+description: "A determinate or indeterminate progress bar, with an optional label."
+sidebar:
+  order: 22
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/feedback";
+
+<Preview layout="stack">
+	<Example.ProgressDefault client:load />
+</Preview>
+
+```tsx
+<Progress value={35}>
+	<ProgressLabel>Profile completion</ProgressLabel>
+	<ProgressValue />
+</Progress>
+```
+
+`value={null}` is the indeterminate state — the bar loops instead of filling.
+`ProgressValue` takes a formatter child when a percentage is not what you want
+to show.

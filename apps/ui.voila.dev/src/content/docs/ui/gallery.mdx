@@ -1,0 +1,20 @@
+---
+title: "Gallery"
+description: "A grid of thumbnails opening into a swipeable lightbox."
+sidebar:
+  order: 75
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/display";
+
+<Preview layout="stack">
+	<Example.GalleryExample client:load />
+</Preview>
+
+```tsx
+<Gallery images={[{ src, alt }, …]} />
+```
+
+With an empty `images` array it renders its own empty state, which
+`emptyLabel` and `emptyDescription` let you word.

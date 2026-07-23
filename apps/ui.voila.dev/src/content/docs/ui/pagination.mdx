@@ -1,0 +1,31 @@
+---
+title: "Pagination"
+description: "Page links for a long list."
+sidebar:
+  order: 53
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/navigation";
+
+<Preview layout="stack">
+	<Example.PaginationExample client:load />
+</Preview>
+
+```tsx
+<Pagination>
+	<PaginationContent>
+		<PaginationItem><PaginationPrevious href="?page=1" /></PaginationItem>
+		<PaginationItem><PaginationLink href="?page=2" isActive>2</PaginationLink></PaginationItem>
+		<PaginationItem><PaginationEllipsis /></PaginationItem>
+		<PaginationItem><PaginationNext href="?page=3" /></PaginationItem>
+	</PaginationContent>
+</Pagination>
+```
+
+These are links, so the page number belongs in the URL. Omit `href` on
+`PaginationPrevious` or `PaginationNext` at the ends of the range and they
+render disabled rather than navigating nowhere.
+
+For a paginated table, [DataTable](/ui-datatable/pagination/) has this wired up
+already.

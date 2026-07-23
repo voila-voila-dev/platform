@@ -1,0 +1,31 @@
+---
+title: "Field"
+description: "Label, control, description and error as one unit."
+sidebar:
+  order: 6
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="stack">
+	<Example.FieldExample client:load />
+</Preview>
+
+```tsx
+<FieldGroup>
+	<Field>
+		<FieldLabel htmlFor="organization-name">Club name</FieldLabel>
+		<Input id="organization-name" />
+		<FieldDescription>Shown to providers on every mission.</FieldDescription>
+	</Field>
+	<Field data-invalid>
+		<FieldLabel htmlFor="contact-email">Contact email</FieldLabel>
+		<Input id="contact-email" aria-invalid />
+		<FieldError>Enter a complete email address.</FieldError>
+	</Field>
+</FieldGroup>
+```
+
+`FieldSet` and `FieldLegend` wrap a group of related fields in the right
+semantics; `FieldSeparator` takes a label for an "Optional" divider.

@@ -1,0 +1,23 @@
+---
+title: "Input"
+description: "A single-line text field."
+sidebar:
+  order: 3
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="stack">
+	<Example.InputExample client:load />
+</Preview>
+
+```tsx
+<Input type="email" placeholder="contact@club.fr" />
+```
+
+Everything goes to the underlying `<input>`, `aria-invalid` included — that is
+what draws the error ring, so wire it to your validation state rather than
+adding a class.
+
+For a label, description and error around it, use [Field](/ui/field/).

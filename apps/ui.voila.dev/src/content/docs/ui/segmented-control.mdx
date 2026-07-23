@@ -1,0 +1,24 @@
+---
+title: "SegmentedControl"
+description: "One-of-a-few, as a filled track with a sliding thumb."
+sidebar:
+  order: 23
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="stack">
+	<Example.SegmentedControlExample client:load />
+</Preview>
+
+```tsx
+<SegmentedControl defaultValue="week">
+	<SegmentedControlItem value="day">Day</SegmentedControlItem>
+	<SegmentedControlItem value="week">Week</SegmentedControlItem>
+	<SegmentedControlItem value="month">Month</SegmentedControlItem>
+</SegmentedControl>
+```
+
+Always exactly one selected, so it suits a view switcher rather than a filter.
+Keep it to a handful of short labels — the segments share the width evenly.

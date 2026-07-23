@@ -1,0 +1,31 @@
+---
+title: "Breadcrumb"
+description: "The trail from the root of the app to the current page."
+sidebar:
+  order: 50
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/navigation";
+
+<Preview layout="stack">
+	<Example.BreadcrumbExample client:load />
+</Preview>
+
+```tsx
+<Breadcrumb>
+	<BreadcrumbList>
+		<BreadcrumbItem>
+			<BreadcrumbLink href="/missions">Missions</BreadcrumbLink>
+		</BreadcrumbItem>
+		<BreadcrumbSeparator />
+		<BreadcrumbItem>
+			<BreadcrumbPage>Match day coverage</BreadcrumbPage>
+		</BreadcrumbItem>
+	</BreadcrumbList>
+</Breadcrumb>
+```
+
+The last crumb is a `BreadcrumbPage`, not a link — it carries `aria-current` and
+is not clickable, because it is where you already are. `BreadcrumbEllipsis`
+stands in for collapsed middle levels.

@@ -1,0 +1,33 @@
+---
+title: "Combobox"
+description: "A select you can type to filter, with optional multi-select chips."
+sidebar:
+  order: 19
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="center">
+	<Example.ComboboxExample client:load />
+</Preview>
+
+```tsx
+<Combobox items={specialties}>
+	<ComboboxInput placeholder="Select a specialty" />
+	<ComboboxContent>
+		<ComboboxEmpty>No specialty found.</ComboboxEmpty>
+		<ComboboxList>
+			{(specialty: string) => (
+				<ComboboxItem key={specialty} value={specialty}>{specialty}</ComboboxItem>
+			)}
+		</ComboboxList>
+	</ComboboxContent>
+</Combobox>
+```
+
+`ComboboxList` takes a render function rather than elements, so the filtering
+stays inside the component instead of being something you reimplement.
+
+`ComboboxChips`, `ComboboxChip` and `ComboboxChipsInput` turn it into a
+multi-select whose picks appear as chips in the field.

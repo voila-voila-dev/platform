@@ -1,0 +1,28 @@
+---
+title: "InputGroup"
+description: "An input with an icon, prefix text or button attached."
+sidebar:
+  order: 7
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="stack">
+	<Example.InputGroupExample client:load />
+</Preview>
+
+```tsx
+<InputGroup>
+	<InputGroupAddon>
+		<MagnifyingGlassIcon />
+	</InputGroupAddon>
+	<InputGroupInput placeholder="Search providers…" />
+</InputGroup>
+```
+
+`align="inline-end"` puts an addon on the trailing side. The group owns the
+border and the focus ring, so the input inside it has none of its own — which
+is why it is `InputGroupInput` and not [Input](/ui/input/).
+
+`InputGroupTextarea` does the same for a multi-line field.

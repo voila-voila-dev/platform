@@ -1,0 +1,25 @@
+---
+title: "CheckboxGroup"
+description: "Several checkboxes sharing one value."
+sidebar:
+  order: 13
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="stack">
+	<Example.CheckboxGroupExample client:load />
+</Preview>
+
+```tsx
+<CheckboxGroup defaultValue={["physiotherapy"]}>
+	<Checkbox name="physiotherapy" id="skills-physiotherapy" />
+	<Label htmlFor="skills-physiotherapy">Physiotherapy</Label>
+</CheckboxGroup>
+```
+
+The group's value is the array of ticked `name`s. In parent mode (`parent` plus
+`allValues`) Base UI rewrites the boxes' ids for its `aria-controls` wiring, so
+labels have to *wrap* their checkbox there rather than point at it with
+`htmlFor`.

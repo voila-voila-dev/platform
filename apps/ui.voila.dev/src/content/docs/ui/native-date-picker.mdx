@@ -1,0 +1,23 @@
+---
+title: "NativeDatePicker"
+description: "The OS date, time and datetime pickers, styled to match."
+sidebar:
+  order: 31
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="stack">
+	<Example.NativeDatePickerExample client:load />
+</Preview>
+
+```tsx
+<NativeDatePicker defaultValue="2026-06-20" min="2026-06-01" max="2026-06-30" />
+<NativeTimePicker defaultValue="14:30" />
+<NativeDateTimePicker defaultValue="2026-06-20T14:30" />
+```
+
+Real `<input type="date">` elements, so the OS draws the picker and the value
+is an ISO string. On a phone that is a better picker than anything drawn in the
+page.

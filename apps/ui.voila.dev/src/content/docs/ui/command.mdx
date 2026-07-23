@@ -1,0 +1,33 @@
+---
+title: "Command"
+description: "A filtered command list — the palette behind ⌘K."
+sidebar:
+  order: 43
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/overlays";
+
+<Preview layout="stack">
+	<Example.CommandExample client:load />
+</Preview>
+
+```tsx
+<Command>
+	<CommandInput placeholder="Search missions, providers…" />
+	<CommandList>
+		<CommandEmpty>No results found.</CommandEmpty>
+		<CommandGroup heading="Missions">
+			<CommandItem>
+				<CalendarIcon />
+				Match coverage — Saturday
+			</CommandItem>
+		</CommandGroup>
+	</CommandList>
+</Command>
+```
+
+Built on [cmdk](https://cmdk.paco.me/), so an item's `value` and `keywords`
+drive the filtering — set them when the visible label is not what people will
+type. `CommandDialog` wraps the same list in a modal, and the
+`useCommandPalette` hook wires up the ⌘K shortcut.

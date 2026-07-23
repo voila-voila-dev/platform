@@ -1,0 +1,23 @@
+---
+title: "RadioGroup"
+description: "Pick exactly one of a set."
+sidebar:
+  order: 14
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="stack">
+	<Example.RadioGroupExample client:load />
+</Preview>
+
+```tsx
+<RadioGroup defaultValue="physiotherapist">
+	<RadioGroupItem value="physiotherapist" id="profession-physiotherapist" />
+	<Label htmlFor="profession-physiotherapist">Physiotherapist</Label>
+</RadioGroup>
+```
+
+`RadioGroupCard` swaps the dot for a selectable card, for options that need a
+description rather than a word.

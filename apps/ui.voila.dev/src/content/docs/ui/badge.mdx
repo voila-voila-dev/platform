@@ -1,0 +1,108 @@
+---
+title: "Badge"
+description: "A small status or category chip — semantic variants for meaning, a fixed palette for data."
+sidebar:
+  order: 2
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/badge";
+
+`Badge` covers two jobs that look the same and are not: labelling **status**
+(pending, failed, verified) and labelling **category** (a tag, a skill, a
+department). The first is semantic and uses `variant`; the second is arbitrary
+and uses `color`.
+
+```ts
+import { Badge } from "@voila.dev/ui/components/badge";
+```
+
+## Variants — when the colour means something
+
+<Preview label="Semantic variants">
+	<Example.Variants client:load />
+</Preview>
+
+<Preview label="Product surfaces">
+	<Example.SurfaceVariants client:load />
+</Preview>
+
+| Variant | Reads as |
+| --- | --- |
+| `default` | Neutral emphasis — the current state, the active plan. |
+| `secondary` | Neutral, quieter. Metadata that is not a status. |
+| `outline` | Quietest of all; a chip that should not compete with its row. |
+| `destructive` | Something failed, expired, or was rejected. |
+| `ghost` / `link` | Interactive chips — a removable filter, a link. |
+
+## Colours — when the colour is data
+
+<Preview label="The full catalogue palette">
+	<Example.Colors client:load />
+</Preview>
+
+Twenty fixed names, each with a `--badge-*` token and a dark override so chips
+stay legible in both themes. Use them when the colour is a property of the thing
+being labelled — a skill's colour, a project's colour — and the user chose it or
+it came out of a database.
+
+The set is deliberately closed. Storing `"emerald"` in your data and mapping it
+to a token means a chip renders the same everywhere, and adding a colour is a
+decision made once rather than an ad-hoc `bg-[#10b981]` somewhere in a table.
+
+```tsx
+<Badge color={skill.color}>{skill.name}</Badge>
+```
+
+`color` wins over `variant` if you pass both, so you never need to remember to
+drop the variant.
+
+The names are exported, which is what the preview above iterates:
+
+```ts
+import { badgeColors, type BadgeColor } from "@voila.dev/ui/components/badge";
+```
+
+## Sizes
+
+<Preview label="Sizes">
+	<Example.Sizes client:load />
+</Preview>
+
+`sm` exists for dense surfaces — inside a table cell, next to a list item's
+title. Below that, use text.
+
+## Icons
+
+<Preview label="With a leading icon">
+	<Example.WithIcons client:load />
+</Preview>
+
+Icons are auto-sized. Keep them to a leading position: a badge is small enough
+that a trailing icon reads as a dismiss button, which it is not.
+
+## Interactive badges
+
+<Preview label="Rendered as an anchor">
+	<Example.AsLink client:load />
+</Preview>
+
+Solid variants only hover when rendered as an anchor — a static chip should stay
+inert under the cursor, so the ones that *are* clickable are distinguishable.
+For a chip the user can remove, reach for `Chip` instead; it has the dismiss affordance built in.
+
+## Props
+
+| Prop | Type | Default | |
+| --- | --- | --- | --- |
+| `variant` | `"default" \| "secondary" \| "provider" \| "organization" \| "destructive" \| "outline" \| "ghost" \| "link"` | `"default"` | Semantic role. |
+| `color` | `BadgeColor` | — | Catalogue palette; overrides `variant`. |
+| `size` | `"default" \| "sm"` | `"default"` | |
+| `render` | `ReactElement` | — | Base UI: render as another element. |
+
+## A note on status colour
+
+Colour alone is not an accessible status indicator — roughly one in twelve men
+cannot reliably separate red from green. The label inside the badge is doing the
+work; the colour is reinforcement. Never ship a badge whose only content is a
+colour.

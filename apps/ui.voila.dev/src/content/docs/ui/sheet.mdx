@@ -1,0 +1,30 @@
+---
+title: "Sheet"
+description: "A panel that slides in from an edge."
+sidebar:
+  order: 34
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/overlays";
+
+<Preview layout="center">
+	<Example.SheetExample client:load />
+</Preview>
+
+```tsx
+<Sheet>
+	<SheetTrigger render={<Button variant="outline" />}>Details</SheetTrigger>
+	<SheetContent side="right" size="lg">
+		<SheetHeader>
+			<SheetTitle>Mission details</SheetTitle>
+			<SheetDescription>Pitch-side cover for Saturday.</SheetDescription>
+		</SheetHeader>
+		<SheetFooter>
+			<Button>Confirm booking</Button>
+		</SheetFooter>
+	</SheetContent>
+</Sheet>
+```
+
+`side` takes `top`, `right`, `bottom` or `left`; `size` runs `sm` through `full`.

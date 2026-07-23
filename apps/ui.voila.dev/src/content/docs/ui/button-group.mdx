@@ -1,0 +1,29 @@
+---
+title: "ButtonGroup"
+description: "Buttons joined into one control."
+sidebar:
+  order: 79
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/display";
+
+<Preview layout="stack">
+	<Example.ButtonGroupExample client:load />
+</Preview>
+
+```tsx
+<ButtonGroup>
+	<Button variant="outline">Day</Button>
+	<Button variant="outline">Week</Button>
+	<Button variant="outline">Month</Button>
+</ButtonGroup>
+```
+
+The group strips the inner radii and collapses the shared borders. It groups
+*actions*; for picking one of a set, reach for
+[SegmentedControl](/ui/segmented-control/) or
+[ToggleGroup](/ui/toggle-group/), which carry the selected state.
+
+`ButtonGroupText` and `ButtonGroupSeparator` add a non-interactive label or a
+rule inside the group — an input with a prefix, say.

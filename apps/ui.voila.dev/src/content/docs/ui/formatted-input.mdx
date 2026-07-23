@@ -1,0 +1,21 @@
+---
+title: "FormattedInput"
+description: "A text field that formats as you type, from a mask."
+sidebar:
+  order: 9
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="stack">
+	<Example.FormattedInputExample client:load />
+</Preview>
+
+```tsx
+<FormattedInput mask={siretMask} placeholder="123 456 789 00012" />
+```
+
+`siretMask`, `rppsMask` and `frenchPhoneMask` ship with the component. The
+value you get back is unformatted, so what you store is digits and the grouping
+is only ever presentation.

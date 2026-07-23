@@ -1,0 +1,27 @@
+---
+title: "Accordion"
+description: "Stacked sections that expand one at a time."
+sidebar:
+  order: 55
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/navigation";
+
+<Preview layout="stack">
+	<Example.AccordionExample client:load />
+</Preview>
+
+```tsx
+<Accordion defaultValue={["publishing"]}>
+	<AccordionItem value="publishing">
+		<AccordionTrigger>How do I publish a mission?</AccordionTrigger>
+		<AccordionContent>
+			<p>From your club dashboard, create a mission with…</p>
+		</AccordionContent>
+	</AccordionItem>
+</Accordion>
+```
+
+`value` is an array even for a single open panel. Pass `multiple` to let several
+stay open at once.

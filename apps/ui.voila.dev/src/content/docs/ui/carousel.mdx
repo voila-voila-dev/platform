@@ -1,0 +1,31 @@
+---
+title: "Carousel"
+description: "A swipeable track of slides."
+sidebar:
+  order: 76
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/display";
+
+<Preview layout="center">
+	<Example.CarouselExample client:load />
+</Preview>
+
+```tsx
+<Carousel opts={{ loop: true }}>
+	<CarouselContent>
+		<CarouselItem>…</CarouselItem>
+	</CarouselContent>
+	<CarouselPrevious />
+	<CarouselNext />
+	<CarouselDots />
+</Carousel>
+```
+
+Built on [Embla](https://www.embla-carousel.com/); `opts` goes straight to it.
+The arrows sit outside the track, so leave horizontal room around the carousel
+or they will clip.
+
+`basis-1/3` on the items shows three at a time — the track does not have a
+"slides per view" prop because that is what the width is for.

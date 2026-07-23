@@ -1,0 +1,20 @@
+---
+title: "ImageCropper"
+description: "The dropzone and crop surface on their own."
+sidebar:
+  order: 33
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+```tsx
+<ImageCropper>
+	<ImageCropperDropzone />
+	<ImageCropperArea />
+</ImageCropper>
+```
+
+The parts behind [ImageUploadField](/ui/image-upload-field/), for when you need
+the crop step inside a dialog or a flow of your own. `useImageCropper` gives
+you the crop area and the zoom so you can drive them from your own controls.

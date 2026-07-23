@@ -1,0 +1,21 @@
+---
+title: "Slider"
+description: "Pick a number, or a range, by dragging."
+sidebar:
+  order: 20
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/forms";
+
+<Preview layout="stack">
+	<Example.SliderExample client:load />
+</Preview>
+
+```tsx
+<Slider defaultValue={50} />
+<Slider defaultValue={[35, 65]} min={20} max={100} />
+```
+
+An array value gives you two thumbs and a range. `SliderValue` renders the
+current value as text next to it.

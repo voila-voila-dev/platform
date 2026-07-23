@@ -1,0 +1,27 @@
+---
+title: "ConfirmDialog"
+description: "An AlertDialog as a single component, with async confirm handling."
+sidebar:
+  order: 32
+---
+
+import Preview from "../../../components/preview.astro";
+import * as Example from "../../../examples/ui/overlays";
+
+<Preview>
+	<Example.ConfirmDialogExample client:load />
+</Preview>
+
+```tsx
+<ConfirmDialog
+	trigger={<Button variant="outline">Archive mission</Button>}
+	title="Archive this mission?"
+	description="The mission will be hidden from the active list."
+	confirmLabel="Archive"
+	onConfirm={() => archiveMission(id)}
+/>
+```
+
+If `onConfirm` returns a promise the confirm button shows a spinner until it
+settles, and the dialog stays open if it rejects — so a failed request leaves
+the user where they can retry.
