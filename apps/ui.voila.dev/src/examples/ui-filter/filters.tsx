@@ -341,8 +341,7 @@ export function Listing() {
 	const [values, setValues] = useState<FilterValues>({});
 	const [search, setSearch] = useState("");
 	const missions = useMemo(
-		() =>
-			MISSIONS.filter((mission) => matchesMission(mission, values, search)),
+		() => MISSIONS.filter((mission) => matchesMission(mission, values, search)),
 		[values, search],
 	);
 	const area = values.area;
