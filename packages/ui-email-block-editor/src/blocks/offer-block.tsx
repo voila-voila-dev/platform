@@ -78,9 +78,9 @@ function OfferHeader({
 				</span>
 			)}
 			<BlockTextInput
-				ariaLabel="Nom de l'offre"
+				ariaLabel="Offer name"
 				value={block.name}
-				placeholder="Nom de l'offre"
+				placeholder="Offer name"
 				onChange={(name) => onChange({ ...block, name })}
 				className="font-bold text-[17px] leading-[1.3]"
 				style={{ color: EMAIL_COLOR.brand }}
@@ -100,7 +100,7 @@ function OfferHeader({
 	);
 }
 
-/** The ticked « points inclus », mirroring the bulleted list the renderer
+/** The ticked included features, mirroring the bulleted list the renderer
  * emits for them. */
 function OfferFeatureList({ features }: { features: ReadonlyArray<string> }) {
 	if (features.length === 0) {
@@ -135,11 +135,11 @@ function OfferFeatureSettings({
 }) {
 	return (
 		<div className="flex flex-col gap-2">
-			<span className="font-medium text-sm">Points inclus</span>
+			<span className="font-medium text-sm">Included features</span>
 			{block.features.map((feature, index) => (
 				<div key={index} className="flex items-center gap-2">
 					<input
-						aria-label={`Point inclus ${index + 1}`}
+						aria-label={`Included feature ${index + 1}`}
 						value={feature}
 						onChange={(event) =>
 							onChange({
@@ -154,7 +154,7 @@ function OfferFeatureSettings({
 					<Button
 						variant="ghost"
 						size="icon-sm"
-						aria-label={`Supprimer le point ${index + 1}`}
+						aria-label={`Remove feature ${index + 1}`}
 						onClick={() =>
 							onChange({
 								...block,
@@ -174,7 +174,7 @@ function OfferFeatureSettings({
 				}
 			>
 				<PlusIcon aria-hidden />
-				Ajouter un point
+				Add a feature
 			</Button>
 		</div>
 	);
@@ -186,29 +186,29 @@ function OfferBlockSettings({
 }: EmailBlockComponentProps<EmailEditorOfferBlock>) {
 	return (
 		<>
-			<BlockOptionSection title="Contenu">
+			<BlockOptionSection title="Content">
 				<TextOption
-					label="Surtitre"
+					label="Eyebrow"
 					value={block.eyebrow}
 					onChange={(eyebrow) => onChange({ ...block, eyebrow })}
-					placeholder="Le plus choisi"
+					placeholder="Most popular"
 				/>
 				<TextOption
-					label="Nom"
+					label="Name"
 					value={block.name}
 					onChange={(name) => onChange({ ...block, name })}
 				/>
 				<MoneyOption
-					label="Prix"
+					label="Price"
 					value={block.price}
 					onChange={(price) => onChange({ ...block, price })}
 				/>
 				<TextOption
-					label="Périodicité"
+					label="Billing period"
 					value={block.period}
 					onChange={(period) => onChange({ ...block, period })}
-					placeholder="par mois"
-					description="Laissez vide pour un tarif unique."
+					placeholder="per month"
+					description="Leave empty for a one-off price."
 				/>
 				<TextAreaOption
 					label="Description"
@@ -217,37 +217,37 @@ function OfferBlockSettings({
 				/>
 				<OfferFeatureSettings block={block} onChange={onChange} />
 			</BlockOptionSection>
-			<BlockOptionSection title="Apparence">
+			<BlockOptionSection title="Appearance">
 				<ToggleOption
-					label="Mettre en avant"
+					label="Highlight"
 					checked={block.highlighted}
 					onChange={(highlighted) => onChange({ ...block, highlighted })}
-					description="Encadre la carte dans la couleur de marque. Outlook (moteur Word) affiche des angles droits."
+					description="Frames the card in the brand color. Outlook (Word engine) renders square corners."
 				/>
 				<TextOption
-					label="Adresse de l'image"
+					label="Image URL"
 					value={block.image.src}
 					onChange={(src) =>
 						onChange({ ...block, image: { ...block.image, src } })
 					}
 					placeholder="https://"
-					description="Laissez vide pour une offre sans visuel."
+					description="Leave empty for an offer without a visual."
 				/>
 				<TextOption
-					label="Texte alternatif"
+					label="Alt text"
 					value={block.image.alt}
 					onChange={(alt) =>
 						onChange({ ...block, image: { ...block.image, alt } })
 					}
 				/>
 			</BlockOptionSection>
-			<BlockOptionSection title="Lien">
+			<BlockOptionSection title="Link">
 				<TextOption
-					label="Libellé du bouton"
+					label="Button label"
 					value={block.buttonLabel}
 					onChange={(buttonLabel) => onChange({ ...block, buttonLabel })}
-					placeholder="Choisir cette offre"
-					description="Laissez vide pour une carte sans bouton."
+					placeholder="Choose this offer"
+					description="Leave empty for a card without a button."
 				/>
 				<LinkOption
 					value={block.buttonHref}
@@ -260,7 +260,7 @@ function OfferBlockSettings({
 
 export const offerBlockDefinition: EmailBlockDefinition<EmailEditorOfferBlock> =
 	{
-		label: "Offre",
+		label: "Offer",
 		icon: SealPercentIcon,
 		View: OfferBlockView,
 		Settings: OfferBlockSettings,

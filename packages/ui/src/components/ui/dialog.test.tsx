@@ -22,18 +22,18 @@ function Fixture({
 	return (
 		<Dialog>
 			<DialogTrigger render={<Button variant="outline" />}>
-				Cancel mission
+				Cancel project
 			</DialogTrigger>
 			<DialogContent {...props}>
 				<DialogHeader>
-					<DialogTitle>Cancel this mission?</DialogTitle>
+					<DialogTitle>Cancel this project?</DialogTitle>
 					<DialogDescription>
-						The assigned provider will be notified immediately.
+						The assigned freelancer will be notified immediately.
 					</DialogDescription>
 				</DialogHeader>
 				<DialogFooter closeLabel={footerCloseLabel}>
 					<DialogClose render={<Button variant="outline" />}>
-						Keep mission
+						Keep project
 					</DialogClose>
 					<Button variant="destructive">Confirm cancellation</Button>
 				</DialogFooter>
@@ -47,25 +47,27 @@ afterEach(cleanup);
 describe("Dialog", () => {
 	it("renders only the trigger while closed", () => {
 		const screen = render(<Fixture />);
-		expect(screen.getByRole("button", { name: "Cancel mission" })).toBeTruthy();
+		expect(screen.getByRole("button", { name: "Cancel project" })).toBeTruthy();
 		expect(screen.queryByRole("dialog")).toBeNull();
 	});
 
 	it("opens on trigger click with title and description", async () => {
 		const screen = render(<Fixture />);
-		fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+		fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 		await waitFor(() => {
 			expect(screen.getByRole("dialog")).toBeTruthy();
-			expect(screen.getByText("Cancel this mission?")).toBeTruthy();
+			expect(screen.getByText("Cancel this project?")).toBeTruthy();
 			expect(
-				screen.getByText("The assigned provider will be notified immediately."),
+				screen.getByText(
+					"The assigned freelancer will be notified immediately.",
+				),
 			).toBeTruthy();
 		});
 	});
 
 	it("applies the size to the popup as a data attribute", async () => {
 		const screen = render(<Fixture size="lg" />);
-		fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+		fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 		await waitFor(() => {
 			const content = screen.baseElement.querySelector(
 				"[data-slot=dialog-content]",
@@ -76,7 +78,7 @@ describe("Dialog", () => {
 
 	it("defaults the size to sm", async () => {
 		const screen = render(<Fixture />);
-		fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+		fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 		await waitFor(() => {
 			const content = screen.baseElement.querySelector(
 				"[data-slot=dialog-content]",
@@ -87,7 +89,7 @@ describe("Dialog", () => {
 
 	it("renders the built-in close button under its own slot, separate from DialogClose", async () => {
 		const screen = render(<Fixture />);
-		fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+		fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 		await waitFor(() => {
 			expect(screen.getByRole("dialog")).toBeTruthy();
 		});
@@ -97,12 +99,12 @@ describe("Dialog", () => {
 			screen.baseElement.querySelector("[data-slot=dialog-close-button]"),
 		).not.toBeNull();
 		const cancel = screen.baseElement.querySelector("[data-slot=dialog-close]");
-		expect(cancel?.textContent).toBe("Keep mission");
+		expect(cancel?.textContent).toBe("Keep project");
 	});
 
 	it("closes when the built-in close button is clicked", async () => {
 		const screen = render(<Fixture />);
-		fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+		fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 		await waitFor(() => {
 			expect(screen.getByRole("dialog")).toBeTruthy();
 		});
@@ -115,12 +117,12 @@ describe("Dialog", () => {
 
 	it("closes when a DialogClose action is clicked", async () => {
 		const screen = render(<Fixture />);
-		fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+		fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 		await waitFor(() => {
 			expect(screen.getByRole("dialog")).toBeTruthy();
 		});
 
-		fireEvent.click(screen.getByRole("button", { name: "Keep mission" }));
+		fireEvent.click(screen.getByRole("button", { name: "Keep project" }));
 		await waitFor(() => {
 			expect(screen.queryByRole("dialog")).toBeNull();
 		});
@@ -128,7 +130,7 @@ describe("Dialog", () => {
 
 	it("overrides the built-in close button label for localization", async () => {
 		const screen = render(<Fixture closeButtonLabel="Fermer" />);
-		fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+		fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 		await waitFor(() => {
 			expect(screen.getByRole("button", { name: "Fermer" })).toBeTruthy();
 		});
@@ -136,7 +138,7 @@ describe("Dialog", () => {
 
 	it("hides the built-in close button when showCloseButton is false", async () => {
 		const screen = render(<Fixture showCloseButton={false} />);
-		fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+		fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 		await waitFor(() => {
 			expect(screen.getByRole("dialog")).toBeTruthy();
 		});
@@ -147,7 +149,7 @@ describe("Dialog", () => {
 
 	it("renders the footer close button before the actions so it never lands after the primary", async () => {
 		const screen = render(<Fixture footerCloseLabel="Fermer" />);
-		fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+		fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 		await waitFor(() => {
 			expect(screen.getByRole("dialog")).toBeTruthy();
 		});
@@ -158,14 +160,14 @@ describe("Dialog", () => {
 		const buttons = Array.from(footer?.querySelectorAll("button") ?? []);
 		expect(buttons.map((button) => button.textContent)).toEqual([
 			"Fermer",
-			"Keep mission",
+			"Keep project",
 			"Confirm cancellation",
 		]);
 	});
 
 	it("omits the footer close button when no closeLabel is provided", async () => {
 		const screen = render(<Fixture />);
-		fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+		fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 		await waitFor(() => {
 			expect(screen.getByRole("dialog")).toBeTruthy();
 		});
@@ -176,7 +178,7 @@ describe("Dialog", () => {
 
 	it("closes when the footer close button is clicked", async () => {
 		const screen = render(<Fixture footerCloseLabel="Fermer" />);
-		fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+		fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 		await waitFor(() => {
 			expect(screen.getByRole("dialog")).toBeTruthy();
 		});
@@ -189,7 +191,7 @@ describe("Dialog", () => {
 
 	it("merges className onto the content popup", async () => {
 		const screen = render(<Fixture className="custom-dialog" />);
-		fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+		fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 		await waitFor(() => {
 			const content = screen.baseElement.querySelector(
 				"[data-slot=dialog-content]",
@@ -200,7 +202,7 @@ describe("Dialog", () => {
 
 	it("forwards overlayClassName to the overlay", async () => {
 		const screen = render(<Fixture overlayClassName="custom-overlay" />);
-		fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+		fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 		await waitFor(() => {
 			const overlay = screen.baseElement.querySelector(
 				"[data-slot=dialog-overlay]",

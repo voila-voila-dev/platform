@@ -190,7 +190,7 @@ export interface EmailEditorProductBlock {
 	readonly description: string;
 	readonly image: EmailEditorCardImage;
 	readonly price: EmailEditorMoney;
-	/** The struck-through « tarif de base », mirroring the shop catalogue's
+	/** The struck-through base price, mirroring the shop catalogue's
 	 * `publicPriceHtCents`. Null when the product is not discounted. */
 	readonly compareAtPrice: EmailEditorMoney | null;
 	readonly href: string;
@@ -205,7 +205,7 @@ export interface EmailEditorOfferBlock {
 	readonly description: string;
 	readonly image: EmailEditorCardImage;
 	readonly price: EmailEditorMoney;
-	/** « par mois », « par an »; empty for a one-off price. */
+	/** "per month", "per year"; empty for a one-off price. */
 	readonly period: string;
 	readonly features: ReadonlyArray<string>;
 	readonly buttonLabel: string;

@@ -19,8 +19,8 @@ const meta = {
 		<PageHeader.Root {...args}>
 			<PageHeader.Title>Contact</PageHeader.Title>
 			<PageHeader.Lead>
-				Une question, un besoin, une idée ? Écrivez-nous, on vous répond
-				rapidement.
+				A question, a request, an idea? Write to us and we will get back to you
+				quickly.
 			</PageHeader.Lead>
 		</PageHeader.Root>
 	),

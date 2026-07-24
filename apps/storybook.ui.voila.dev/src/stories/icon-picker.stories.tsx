@@ -92,7 +92,7 @@ export const SearchWithSpaces: Story = {
 
 export const LocalizedLabels: Story = {
 	render: () => {
-		const [iconName, setIconName] = useState<string | null>("HeartbeatIcon");
+		const [iconName, setIconName] = useState<string | null>("PaletteIcon");
 		return (
 			<div className="w-64">
 				<IconPicker

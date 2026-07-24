@@ -45,7 +45,7 @@ export const Default: Story = {
 export const Range: Story = {
 	render: () => (
 		<div className="w-72 space-y-2">
-			<p className="text-sm font-medium">Hourly rate (EUR)</p>
+			<p className="text-sm font-medium">Hourly rate (USD)</p>
 			<Slider defaultValue={[35, 65]} min={20} max={100} />
 		</div>
 	),
@@ -56,7 +56,7 @@ export const WithValue: Story = {
 		<div className="w-72">
 			<Slider defaultValue={[35, 65]} min={20} max={100}>
 				<div className="mt-2 flex justify-between">
-					<span className="text-sm font-medium">Hourly rate (EUR)</span>
+					<span className="text-sm font-medium">Hourly rate (USD)</span>
 					<SliderValue />
 				</div>
 			</Slider>
@@ -69,7 +69,7 @@ export const Steps: Story = {
 		<div className="w-72">
 			<Slider defaultValue={60} min={0} max={120} step={15}>
 				<div className="mt-2 flex justify-between">
-					<span className="text-sm font-medium">Mission duration (min)</span>
+					<span className="text-sm font-medium">Meeting duration (min)</span>
 					<SliderValue />
 				</div>
 			</Slider>

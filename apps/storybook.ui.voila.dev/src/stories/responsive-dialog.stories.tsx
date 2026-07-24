@@ -26,15 +26,14 @@ export const Default: Story = {
 	render: () => (
 		<ResponsiveDialog>
 			<ResponsiveDialogTrigger render={<Button variant="outline" />}>
-				Invite a provider
+				Invite a freelancer
 			</ResponsiveDialogTrigger>
 			<ResponsiveDialogContent>
 				<ResponsiveDialogHeader>
-					<ResponsiveDialogTitle>Invite a provider</ResponsiveDialogTitle>
+					<ResponsiveDialogTitle>Invite a freelancer</ResponsiveDialogTitle>
 					<ResponsiveDialogDescription>
-						Send an invitation to a healthcare provider so they can apply to
-						your club's missions. Resize the viewport below 768px to get the
-						bottom drawer.
+						Send an invitation to a freelancer so they can apply to your team's
+						projects. Resize the viewport below 768px to get the bottom drawer.
 					</ResponsiveDialogDescription>
 				</ResponsiveDialogHeader>
 				<ResponsiveDialogFooter closeLabel="Cancel">
@@ -49,26 +48,26 @@ export const WithBody: Story = {
 	render: () => (
 		<ResponsiveDialog>
 			<ResponsiveDialogTrigger render={<Button variant="outline" />}>
-				Cancel mission
+				Cancel project
 			</ResponsiveDialogTrigger>
 			<ResponsiveDialogContent>
 				<ResponsiveDialogHeader>
-					<ResponsiveDialogTitle>Cancel this mission?</ResponsiveDialogTitle>
+					<ResponsiveDialogTitle>Cancel this project?</ResponsiveDialogTitle>
 					<ResponsiveDialogDescription>
-						The assigned provider will be notified immediately.
+						The assigned freelancer will be notified immediately.
 					</ResponsiveDialogDescription>
 				</ResponsiveDialogHeader>
 				<ResponsiveDialogBody>
 					<p>
 						Refunds follow the escrow cancellation policy: the held payment is
-						returned to the club's wallet once the cancellation is confirmed.
+						returned to the client's wallet once the cancellation is confirmed.
 					</p>
 				</ResponsiveDialogBody>
 				<ResponsiveDialogFooter>
 					<ResponsiveDialogClose render={<Button variant="outline" />}>
-						Keep mission
+						Keep project
 					</ResponsiveDialogClose>
-					<Button variant="destructive">Cancel mission</Button>
+					<Button variant="destructive">Cancel project</Button>
 				</ResponsiveDialogFooter>
 			</ResponsiveDialogContent>
 		</ResponsiveDialog>

@@ -59,12 +59,12 @@ describe("Button", () => {
 
 	it("renders as an anchor via the render prop", () => {
 		const screen = render(
-			<Button render={<a href="/missions">Open missions</a>} />,
+			<Button render={<a href="/projects">Open projects</a>} />,
 		);
 		const button = queryButton(screen);
 		expect(button?.tagName).toBe("A");
-		expect(button?.getAttribute("href")).toBe("/missions");
-		expect(button?.textContent).toBe("Open missions");
+		expect(button?.getAttribute("href")).toBe("/projects");
+		expect(button?.textContent).toBe("Open projects");
 		expect(button?.classList.contains("bg-primary")).toBe(true);
 	});
 

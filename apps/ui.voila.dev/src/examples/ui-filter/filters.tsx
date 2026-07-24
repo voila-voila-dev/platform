@@ -46,7 +46,7 @@ const PRICE = {
 	kind: "moneyRange",
 	key: "price",
 	label: "Price",
-	currency: "EUR",
+	currency: "USD",
 } as const satisfies FilterDefinition;
 
 const ATTEMPTS = {
@@ -171,10 +171,10 @@ export function Trigger() {
 
 // --- The end-to-end listing recipe: filters + datatable + map -------------
 
-interface Mission {
+interface Project {
 	readonly reference: string;
-	readonly club: string;
-	readonly specialty: "physio" | "osteopath" | "nurse";
+	readonly client: string;
+	readonly role: "designer" | "developer" | "writer";
 	/** Day rate in minor units (cents), the platform's money representation. */
 	readonly rate: number;
 	readonly city: string;
@@ -182,56 +182,56 @@ interface Mission {
 	readonly longitude: number;
 }
 
-const MISSIONS: ReadonlyArray<Mission> = [
+const PROJECTS: ReadonlyArray<Project> = [
 	{
-		reference: "MIS-001",
-		club: "Riverside Rugby",
-		specialty: "physio",
+		reference: "PRJ-001",
+		client: "Riverside Studio",
+		role: "designer",
 		rate: 18_000,
 		city: "Nantes",
 		latitude: 47.2184,
 		longitude: -1.5536,
 	},
 	{
-		reference: "MIS-002",
-		club: "Northgate FC",
-		specialty: "osteopath",
+		reference: "PRJ-002",
+		client: "Northgate Labs",
+		role: "developer",
 		rate: 24_000,
 		city: "Saint-Herblain",
 		latitude: 47.2122,
 		longitude: -1.6496,
 	},
 	{
-		reference: "MIS-003",
-		club: "Harbour Athletics",
-		specialty: "nurse",
+		reference: "PRJ-003",
+		client: "Harbour Media",
+		role: "writer",
 		rate: 15_000,
 		city: "Paris",
 		latitude: 48.8566,
 		longitude: 2.3522,
 	},
 	{
-		reference: "MIS-004",
-		club: "Eastfield United",
-		specialty: "physio",
+		reference: "PRJ-004",
+		client: "Eastfield Group",
+		role: "designer",
 		rate: 21_000,
 		city: "Boulogne-Billancourt",
 		latitude: 48.8397,
 		longitude: 2.2399,
 	},
 	{
-		reference: "MIS-005",
-		club: "Southbank Swim",
-		specialty: "osteopath",
+		reference: "PRJ-005",
+		client: "Southbank Digital",
+		role: "developer",
 		rate: 32_000,
 		city: "Lyon",
 		latitude: 45.764,
 		longitude: 4.8357,
 	},
 	{
-		reference: "MIS-006",
-		club: "Westgate Handball",
-		specialty: "physio",
+		reference: "PRJ-006",
+		client: "Westgate Ventures",
+		role: "designer",
 		rate: 17_000,
 		city: "Villeurbanne",
 		latitude: 45.7719,
@@ -239,15 +239,15 @@ const MISSIONS: ReadonlyArray<Mission> = [
 	},
 ];
 
-const SPECIALTY = {
+const ROLE = {
 	kind: "select",
-	key: "specialty",
-	label: "Specialty",
+	key: "role",
+	label: "Role",
 	multiple: true,
 	options: [
-		{ value: "physio", label: "Physiotherapist" },
-		{ value: "osteopath", label: "Osteopath" },
-		{ value: "nurse", label: "Nurse" },
+		{ value: "designer", label: "Designer" },
+		{ value: "developer", label: "Developer" },
+		{ value: "writer", label: "Copywriter" },
 	],
 } as const satisfies FilterDefinition;
 
@@ -255,31 +255,31 @@ const RATE = {
 	kind: "moneyRange",
 	key: "rate",
 	label: "Day rate",
-	currency: "EUR",
+	currency: "USD",
 } as const satisfies FilterDefinition;
 
-const LISTING_DEFINITIONS = [SPECIALTY, RATE, AREA];
+const LISTING_DEFINITIONS = [ROLE, RATE, AREA];
 
-const SPECIALTY_LABEL: Record<Mission["specialty"], string> = {
-	physio: "Physiotherapist",
-	osteopath: "Osteopath",
-	nurse: "Nurse",
+const ROLE_LABEL: Record<Project["role"], string> = {
+	designer: "Designer",
+	developer: "Developer",
+	writer: "Copywriter",
 };
 
-const MISSION_COLUMNS: ColumnDef<Mission>[] = [
+const PROJECT_COLUMNS: ColumnDef<Project>[] = [
 	{ accessorKey: "reference", header: "Reference", size: 110 },
-	{ accessorKey: "club", header: "Club" },
+	{ accessorKey: "client", header: "Client" },
 	{
-		accessorKey: "specialty",
-		header: "Specialty",
-		cell: ({ row }) => SPECIALTY_LABEL[row.original.specialty],
+		accessorKey: "role",
+		header: "Role",
+		cell: ({ row }) => ROLE_LABEL[row.original.role],
 	},
 	{ accessorKey: "city", header: "City" },
 	{
 		accessorKey: "rate",
 		header: "Day rate",
 		size: 110,
-		cell: ({ row }) => `€${row.original.rate / 100}`,
+		cell: ({ row }) => `$${row.original.rate / 100}`,
 	},
 ];
 
@@ -298,38 +298,38 @@ function distanceKm(
 	return 2 * 6371 * Math.asin(Math.sqrt(h));
 }
 
-function matchesMission(
-	mission: Mission,
+function matchesProject(
+	project: Project,
 	values: FilterValues,
 	search: string,
 ): boolean {
 	const query = search.trim().toLowerCase();
 	if (
 		query &&
-		!`${mission.club} ${mission.city}`.toLowerCase().includes(query)
+		!`${project.client} ${project.city}`.toLowerCase().includes(query)
 	) {
 		return false;
 	}
-	const specialty = values.specialty;
-	if (specialty?.kind === "select" && specialty.values.length > 0) {
-		const included = specialty.values.includes(mission.specialty);
-		if (specialty.excluded ? included : !included) {
+	const role = values.role;
+	if (role?.kind === "select" && role.values.length > 0) {
+		const included = role.values.includes(project.role);
+		if (role.excluded ? included : !included) {
 			return false;
 		}
 	}
 	const rate = values.rate;
 	if (rate?.kind === "moneyRange") {
-		if (rate.min !== undefined && mission.rate < rate.min) {
+		if (rate.min !== undefined && project.rate < rate.min) {
 			return false;
 		}
-		if (rate.max !== undefined && mission.rate > rate.max) {
+		if (rate.max !== undefined && project.rate > rate.max) {
 			return false;
 		}
 	}
 	const area = values.area;
 	if (
 		area?.kind === "geoRadius" &&
-		distanceKm(area.place, mission) > area.radiusKm
+		distanceKm(area.place, project) > area.radiusKm
 	) {
 		return false;
 	}
@@ -340,8 +340,8 @@ function matchesMission(
 export function Listing() {
 	const [values, setValues] = useState<FilterValues>({});
 	const [search, setSearch] = useState("");
-	const missions = useMemo(
-		() => MISSIONS.filter((mission) => matchesMission(mission, values, search)),
+	const projects = useMemo(
+		() => PROJECTS.filter((project) => matchesProject(project, values, search)),
 		[values, search],
 	);
 	const area = values.area;
@@ -353,9 +353,9 @@ export function Listing() {
 				onValuesChange={setValues}
 				searchValue={search}
 				onSearchChange={setSearch}
-				resultCount={missions.length}
+				resultCount={projects.length}
 			/>
-			<DataTable columns={MISSION_COLUMNS} data={missions} />
+			<DataTable columns={PROJECT_COLUMNS} data={projects} />
 			{area?.kind === "geoRadius" ? (
 				<RadiusMap
 					className="h-64 w-full overflow-hidden rounded-lg border"

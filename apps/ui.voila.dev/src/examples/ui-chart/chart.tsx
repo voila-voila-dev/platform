@@ -2,22 +2,22 @@ import { Chart, type ChartConfig } from "@voila.dev/ui-chart/components/chart";
 import type { ReactNode } from "react";
 
 const data = [
-	{ month: "January", missions: 24, bookings: 18 },
-	{ month: "February", missions: 31, bookings: 22 },
-	{ month: "March", missions: 28, bookings: 25 },
-	{ month: "April", missions: 35, bookings: 30 },
-	{ month: "May", missions: 42, bookings: 36 },
-	{ month: "June", missions: 38, bookings: 33 },
+	{ month: "January", projects: 24, proposals: 18 },
+	{ month: "February", projects: 31, proposals: 22 },
+	{ month: "March", projects: 28, proposals: 25 },
+	{ month: "April", projects: 35, proposals: 30 },
+	{ month: "May", projects: 42, proposals: 36 },
+	{ month: "June", projects: 38, proposals: 33 },
 ];
 
 const config = {
-	missions: { label: "Missions published", color: "var(--chart-1)" },
-	bookings: { label: "Bookings confirmed", color: "var(--chart-2)" },
+	projects: { label: "Projects published", color: "var(--chart-1)" },
+	proposals: { label: "Proposals accepted", color: "var(--chart-2)" },
 } satisfies ChartConfig;
 
 const x = { key: "month" } as const;
-const both = { keys: ["missions", "bookings"] } as const;
-const one = { keys: ["missions"] } as const;
+const both = { keys: ["projects", "proposals"] } as const;
+const one = { keys: ["projects"] } as const;
 const shortMonth = (value: unknown) => `${value}`.slice(0, 3);
 
 const FRAME = "w-full";
@@ -82,7 +82,7 @@ export const BarsStacked = () => (
 		config={config}
 		data={data}
 		x={x}
-		y={{ keys: ["missions", "bookings"], stacked: true }}
+		y={{ keys: ["projects", "proposals"], stacked: true }}
 		className={FRAME}
 		margin={LEGEND_MARGIN}
 	>
@@ -218,7 +218,7 @@ export const AreaStacked = () => (
 		config={config}
 		data={data}
 		x={x}
-		y={{ keys: ["bookings", "missions"], stacked: true }}
+		y={{ keys: ["proposals", "projects"], stacked: true }}
 		className={FRAME}
 		margin={LEGEND_MARGIN}
 	>
@@ -230,20 +230,20 @@ export const AreaStacked = () => (
 	</Chart.Root>
 );
 
-const clubData = [
-	{ club: "Alpha", missions: 12, spend: 4200 },
-	{ club: "Bravo", missions: 26, spend: 9100 },
-	{ club: "Charlie", missions: 18, spend: 6400 },
-	{ club: "Delta", missions: 34, spend: 15800 },
-	{ club: "Echo", missions: 9, spend: 2100 },
+const clientData = [
+	{ client: "Alpha", projects: 12, spend: 4200 },
+	{ client: "Bravo", projects: 26, spend: 9100 },
+	{ client: "Charlie", projects: 18, spend: 6400 },
+	{ client: "Delta", projects: 34, spend: 15800 },
+	{ client: "Echo", projects: 9, spend: 2100 },
 ];
 
 export const Bubble = () => (
 	<Chart.Root
-		config={{ missions: { label: "Missions", color: "var(--chart-4)" } }}
-		data={clubData}
-		x={{ key: "club", type: "point" }}
-		y={{ keys: ["missions"] }}
+		config={{ projects: { label: "Projects", color: "var(--chart-4)" } }}
+		data={clientData}
+		x={{ key: "client", type: "point" }}
+		y={{ keys: ["projects"] }}
 		className={FRAME}
 		margin={{ top: 16, right: 24, bottom: 24, left: 40 }}
 	>
@@ -261,18 +261,18 @@ const SQUARE = "mx-auto aspect-square w-full max-w-72";
 const ROUND_MARGIN = { top: 0, right: 0, bottom: 48, left: 0 } as const;
 
 const shareData = [
-	{ specialty: "physiotherapy", providers: 86 },
-	{ specialty: "osteopathy", providers: 54 },
-	{ specialty: "nursing", providers: 37 },
-	{ specialty: "medicine", providers: 21 },
+	{ discipline: "design", freelancers: 86 },
+	{ discipline: "development", freelancers: 54 },
+	{ discipline: "writing", freelancers: 37 },
+	{ discipline: "consulting", freelancers: 21 },
 ];
 
 const shareConfig = {
-	providers: { label: "Providers" },
-	physiotherapy: { label: "Physiotherapy", color: "var(--chart-1)" },
-	osteopathy: { label: "Osteopathy", color: "var(--chart-2)" },
-	nursing: { label: "Nursing", color: "var(--chart-3)" },
-	medicine: { label: "Medicine", color: "var(--chart-4)" },
+	freelancers: { label: "Freelancers" },
+	design: { label: "Design", color: "var(--chart-1)" },
+	development: { label: "Development", color: "var(--chart-2)" },
+	writing: { label: "Writing", color: "var(--chart-3)" },
+	consulting: { label: "Consulting", color: "var(--chart-4)" },
 } satisfies ChartConfig;
 
 function Round({ children }: { readonly children: ReactNode }) {
@@ -280,17 +280,17 @@ function Round({ children }: { readonly children: ReactNode }) {
 		<Chart.Root
 			config={shareConfig}
 			data={shareData}
-			x={{ key: "specialty" }}
-			y={{ keys: ["providers"] }}
+			x={{ key: "discipline" }}
+			y={{ keys: ["freelancers"] }}
 			className={SQUARE}
 			margin={ROUND_MARGIN}
 			interactive={false}
 		>
 			{children}
 			<Chart.Tooltip
-				content={<Chart.TooltipContent nameKey="specialty" hideLabel />}
+				content={<Chart.TooltipContent nameKey="discipline" hideLabel />}
 			/>
-			<Chart.Legend content={<Chart.LegendContent nameKey="specialty" />} />
+			<Chart.Legend content={<Chart.LegendContent nameKey="discipline" />} />
 		</Chart.Root>
 	);
 }

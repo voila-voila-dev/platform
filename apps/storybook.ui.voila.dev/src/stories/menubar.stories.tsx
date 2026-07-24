@@ -32,12 +32,12 @@ export const Default: Story = {
 	render: () => (
 		<Menubar>
 			<MenubarMenu>
-				<MenubarTrigger>Missions</MenubarTrigger>
+				<MenubarTrigger>Projects</MenubarTrigger>
 				<MenubarContent>
 					<MenubarItem>
-						New mission <MenubarShortcut>⌘N</MenubarShortcut>
+						New project <MenubarShortcut>⌘N</MenubarShortcut>
 					</MenubarItem>
-					<MenubarItem>Duplicate mission</MenubarItem>
+					<MenubarItem>Duplicate project</MenubarItem>
 					<MenubarSeparator />
 					<MenubarSub>
 						<MenubarSubTrigger>Export</MenubarSubTrigger>
@@ -47,13 +47,13 @@ export const Default: Story = {
 						</MenubarSubContent>
 					</MenubarSub>
 					<MenubarSeparator />
-					<MenubarItem variant="destructive">Cancel mission</MenubarItem>
+					<MenubarItem variant="destructive">Cancel project</MenubarItem>
 				</MenubarContent>
 			</MenubarMenu>
 			<MenubarMenu>
-				<MenubarTrigger>Providers</MenubarTrigger>
+				<MenubarTrigger>Freelancers</MenubarTrigger>
 				<MenubarContent>
-					<MenubarItem>Invite a provider</MenubarItem>
+					<MenubarItem>Invite a freelancer</MenubarItem>
 					<MenubarItem>Browse directory</MenubarItem>
 				</MenubarContent>
 			</MenubarMenu>
@@ -61,7 +61,7 @@ export const Default: Story = {
 				<MenubarTrigger>View</MenubarTrigger>
 				<MenubarContent>
 					<MenubarCheckboxItem defaultChecked>
-						Show archived missions
+						Show archived projects
 					</MenubarCheckboxItem>
 					<MenubarSeparator />
 					<MenubarRadioGroup defaultValue="week">
@@ -90,7 +90,7 @@ export const WithLabelsGroupsAndStates: Story = {
 					<MenubarSeparator />
 					<MenubarGroup>
 						<MenubarLabel inset>Workspace</MenubarLabel>
-						<MenubarItem inset>Switch organization</MenubarItem>
+						<MenubarItem inset>Switch workspace</MenubarItem>
 						<MenubarItem inset>Billing settings</MenubarItem>
 					</MenubarGroup>
 					<MenubarSeparator />
@@ -111,7 +111,7 @@ export const OpenInteraction: Story = {
 	...Default,
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
-		const trigger = canvas.getByRole("menuitem", { name: "Missions" });
+		const trigger = canvas.getByRole("menuitem", { name: "Projects" });
 
 		await userEvent.click(trigger);
 		await waitFor(() =>
@@ -121,7 +121,7 @@ export const OpenInteraction: Story = {
 		// Menu content renders in a portal, so query the document body.
 		const body = within(canvasElement.ownerDocument.body);
 		await waitFor(() =>
-			expect(body.getByRole("menuitem", { name: /New mission/ })).toBeVisible(),
+			expect(body.getByRole("menuitem", { name: /New project/ })).toBeVisible(),
 		);
 
 		const exportTrigger = body.getByRole("menuitem", { name: "Export" });

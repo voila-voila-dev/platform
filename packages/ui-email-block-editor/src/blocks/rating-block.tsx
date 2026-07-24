@@ -23,8 +23,8 @@ const STYLE_OPTIONS: ReadonlyArray<{
 	readonly value: EmailEditorRatingStyle;
 	readonly label: string;
 }> = [
-	{ value: "filled", label: "Étoiles pleines" },
-	{ value: "outline", label: "Étoiles contour" },
+	{ value: "filled", label: "Filled stars" },
+	{ value: "outline", label: "Outlined stars" },
 ];
 
 /**
@@ -42,7 +42,7 @@ function RatingBlockView({
 				spans={block.question}
 				onChange={(question) => onChange({ ...block, question })}
 				ariaLabel="Question"
-				placeholder="Que pensez-vous de votre dernière mission ?"
+				placeholder="How did your last project go?"
 				className="text-center text-[16px] leading-[1.6]"
 				style={{ fontFamily: EMAIL_FONT, color: EMAIL_COLOR.ink }}
 			/>
@@ -75,25 +75,25 @@ function RatingBlockSettings({
 }: EmailBlockComponentProps<EmailEditorRatingBlock>) {
 	return (
 		<>
-			<BlockOptionSection title="Contenu">
+			<BlockOptionSection title="Content">
 				<p className="text-muted-foreground text-xs">
-					La question se saisit et se met en forme directement sur le bloc,
-					comme un paragraphe.
+					The question is typed and formatted directly on the block, like a
+					paragraph.
 				</p>
 				<TextOption
-					label="Libellé bas de l'échelle"
+					label="Low end of the scale"
 					value={block.lowLabel}
 					onChange={(lowLabel) => onChange({ ...block, lowLabel })}
-					placeholder="Pas du tout"
+					placeholder="Not at all"
 				/>
 				<TextOption
-					label="Libellé haut de l'échelle"
+					label="High end of the scale"
 					value={block.highLabel}
 					onChange={(highLabel) => onChange({ ...block, highLabel })}
-					placeholder="Tout à fait"
+					placeholder="Absolutely"
 				/>
 			</BlockOptionSection>
-			<BlockOptionSection title="Apparence">
+			<BlockOptionSection title="Appearance">
 				<SelectOption
 					label="Style"
 					value={block.style}
@@ -101,11 +101,11 @@ function RatingBlockSettings({
 					onChange={(style) => onChange({ ...block, style })}
 				/>
 			</BlockOptionSection>
-			<BlockOptionSection title="Lien">
+			<BlockOptionSection title="Link">
 				<LinkOption
 					value={block.href}
 					onChange={(href) => onChange({ ...block, href })}
-					description="Chaque étoile pointe vers cette adresse avec « rating=1 » à « rating=5 » ajouté : les cinq notes sont donc comptées séparément dans les statistiques de clic."
+					description="Each star points to this address with rating=1 through rating=5 appended: the five scores are therefore counted separately in the click statistics."
 				/>
 			</BlockOptionSection>
 		</>
@@ -114,7 +114,7 @@ function RatingBlockSettings({
 
 export const ratingBlockDefinition: EmailBlockDefinition<EmailEditorRatingBlock> =
 	{
-		label: "Notation",
+		label: "Rating",
 		icon: StarIcon,
 		View: RatingBlockView,
 		Settings: RatingBlockSettings,

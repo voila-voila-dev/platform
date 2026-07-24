@@ -28,17 +28,17 @@ export const Default: Story = {
 	render: () => (
 		<Popover>
 			<PopoverTrigger
-				render={<Button variant="outline">Mission details</Button>}
+				render={<Button variant="outline">Project details</Button>}
 			/>
 			<PopoverContent>
 				<PopoverHeader>
-					<PopoverTitle>Saturday match coverage</PopoverTitle>
+					<PopoverTitle>Landing page redesign</PopoverTitle>
 					<PopoverDescription>
-						Stade Rennais — June 14, from 14:00 to 18:00.
+						Acme Labs — June 14, kickoff from 14:00 to 18:00.
 					</PopoverDescription>
 				</PopoverHeader>
 				<p className="text-muted-foreground">
-					A physiotherapist is needed pitch-side for the senior rugby team.
+					A product designer is needed to lead the marketing site refresh.
 				</p>
 			</PopoverContent>
 		</Popover>
@@ -53,11 +53,11 @@ export const WithForm: Story = {
 				<PopoverHeader>
 					<PopoverTitle>Hourly rate</PopoverTitle>
 					<PopoverDescription>
-						Update the rate offered for this mission.
+						Update the rate offered for this project.
 					</PopoverDescription>
 				</PopoverHeader>
 				<div className="grid gap-2">
-					<Label htmlFor="hourly-rate">Rate (EUR)</Label>
+					<Label htmlFor="hourly-rate">Rate (USD)</Label>
 					<Input id="hourly-rate" type="number" defaultValue="45" />
 					<Button size="sm">Save</Button>
 				</div>
@@ -70,13 +70,13 @@ export const WithCloseButton: Story = {
 	render: () => (
 		<Popover>
 			<PopoverTrigger
-				render={<Button variant="outline">Mission details</Button>}
+				render={<Button variant="outline">Project details</Button>}
 			/>
 			<PopoverContent>
 				<PopoverHeader>
-					<PopoverTitle>Saturday match coverage</PopoverTitle>
+					<PopoverTitle>Landing page redesign</PopoverTitle>
 					<PopoverDescription>
-						Stade Rennais — June 14, from 14:00 to 18:00.
+						Acme Labs — June 14, kickoff from 14:00 to 18:00.
 					</PopoverDescription>
 				</PopoverHeader>
 				<PopoverClose
@@ -127,7 +127,7 @@ function ControlledPopover() {
 			</Button>
 			<Popover open={open} onOpenChange={setOpen}>
 				<PopoverTrigger
-					render={<Button variant="outline">Mission details</Button>}
+					render={<Button variant="outline">Project details</Button>}
 				/>
 				<PopoverContent>
 					<PopoverHeader>

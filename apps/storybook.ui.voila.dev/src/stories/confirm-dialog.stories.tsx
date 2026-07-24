@@ -21,9 +21,9 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
 	render: () => (
 		<ConfirmDialog
-			trigger={<Button variant="outline">Publish mission</Button>}
-			title="Publish this mission?"
-			description="Providers matching the required skills will be notified and can start applying."
+			trigger={<Button variant="outline">Publish project</Button>}
+			title="Publish this project?"
+			description="Freelancers matching the required skills will be notified and can start applying."
 			confirmLabel="Publish"
 		/>
 	),
@@ -32,25 +32,25 @@ export const Default: Story = {
 export const Destructive: Story = {
 	render: () => (
 		<ConfirmDialog
-			trigger={<Button variant="destructive">Remove provider</Button>}
+			trigger={<Button variant="destructive">Remove freelancer</Button>}
 			size="sm"
 			media={<WarningIcon className="text-destructive" />}
-			title="Remove this provider?"
-			description="Camille Dubois will lose access to all upcoming missions for your club."
+			title="Remove this freelancer?"
+			description="Camille Dubois will lose access to all upcoming projects for your team."
 			confirmLabel="Remove"
 			variant="destructive"
 		/>
 	),
 };
 
-export const LocalizedLabels: Story = {
+export const CustomLabels: Story = {
 	render: () => (
 		<ConfirmDialog
-			trigger={<Button variant="outline">Annuler la mission</Button>}
-			title="Annuler cette mission ?"
-			description="Le professionnel sera notifié et la réservation sera libérée. Cette action est irréversible."
-			confirmLabel="Annuler la mission"
-			cancelLabel="Retour"
+			trigger={<Button variant="outline">Cancel the project</Button>}
+			title="Cancel this project?"
+			description="The freelancer will be notified and the booking will be released. This action is irreversible."
+			confirmLabel="Cancel the project"
+			cancelLabel="Go back"
 			variant="destructive"
 		/>
 	),
@@ -59,9 +59,9 @@ export const LocalizedLabels: Story = {
 export const AsyncAction: Story = {
 	render: () => (
 		<ConfirmDialog
-			trigger={<Button variant="outline">Archive mission</Button>}
-			title="Archive this mission?"
-			description="The mission will be hidden from the active list. You can restore it from the archive at any time."
+			trigger={<Button variant="outline">Archive project</Button>}
+			title="Archive this project?"
+			description="The project will be hidden from the active list. You can restore it from the archive at any time."
 			confirmLabel="Archive"
 			onConfirm={() => new Promise((resolve) => setTimeout(resolve, 1500))}
 		/>
@@ -71,8 +71,8 @@ export const AsyncAction: Story = {
 function FailingAsyncConfirmDialog() {
 	return (
 		<ConfirmDialog
-			trigger={<Button variant="destructive">Delete organization</Button>}
-			title="Delete this organization?"
+			trigger={<Button variant="destructive">Delete workspace</Button>}
+			title="Delete this workspace?"
 			description="This async action always fails after a second — the dialog stays open so the user can retry."
 			confirmLabel="Delete"
 			variant="destructive"
@@ -103,7 +103,7 @@ function ControlledConfirmDialog() {
 				open={open}
 				onOpenChange={setOpen}
 				title="Decline this application?"
-				description="The provider will be notified that their application was declined."
+				description="The freelancer will be notified that their application was declined."
 				confirmLabel="Decline"
 				variant="destructive"
 			/>

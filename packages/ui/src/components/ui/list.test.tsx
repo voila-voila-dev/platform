@@ -38,7 +38,7 @@ describe("ListItem", () => {
 	it("renders an li carrying the Item recipe", () => {
 		const screen = render(
 			<List>
-				<ListItem>Mission</ListItem>
+				<ListItem>Project</ListItem>
 			</List>,
 		);
 		const item = querySlot(screen, "list-item");
@@ -51,7 +51,7 @@ describe("ListItem", () => {
 		const screen = render(
 			<List>
 				<ListItem variant="outline" size="sm">
-					Mission
+					Project
 				</ListItem>
 			</List>,
 		);
@@ -78,12 +78,12 @@ describe("ListItem", () => {
 
 	it("exposes list semantics to the accessibility tree", () => {
 		const screen = render(
-			<List aria-label="Missions">
+			<List aria-label="Projects">
 				<ListItem>First</ListItem>
 				<ListItem>Second</ListItem>
 			</List>,
 		);
-		const list = screen.getByRole("list", { name: "Missions" });
+		const list = screen.getByRole("list", { name: "Projects" });
 		expect(screen.getAllByRole("listitem")).toHaveLength(2);
 		expect(list.querySelectorAll("li")).toHaveLength(2);
 	});

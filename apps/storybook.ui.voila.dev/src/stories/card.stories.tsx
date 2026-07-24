@@ -14,7 +14,7 @@ import {
 // Inline SVG so the image-topped story renders offline (and is a real <img>,
 // which the card's `has-[>img:first-child]` / image-rounding selectors need).
 const coverImage = `data:image/svg+xml;utf8,${encodeURIComponent(
-	'<svg xmlns="http://www.w3.org/2000/svg" width="384" height="160"><rect width="384" height="160" fill="#1f6feb"/><text x="50%" y="50%" fill="white" font-family="sans-serif" font-size="20" text-anchor="middle" dy=".3em">Match day</text></svg>',
+	'<svg xmlns="http://www.w3.org/2000/svg" width="384" height="160"><rect width="384" height="160" fill="#7c3aed"/><text x="50%" y="50%" fill="white" font-family="sans-serif" font-size="20" text-anchor="middle" dy=".3em">Site launch</text></svg>',
 )}`;
 
 const meta = {
@@ -37,9 +37,9 @@ export const Default: Story = {
 	render: () => (
 		<Card className="w-96">
 			<CardHeader>
-				<CardTitle>Physiotherapist — Match day</CardTitle>
+				<CardTitle>Brand designer — Site launch</CardTitle>
 				<CardDescription>
-					Racing Club de Lyon · Saturday, June 20
+					Northwind Studio · Due Saturday, June 20
 				</CardDescription>
 				<CardAction>
 					<Badge>Open</Badge>
@@ -47,8 +47,8 @@ export const Default: Story = {
 			</CardHeader>
 			<CardContent>
 				<p>
-					Pitch-side coverage for the senior rugby team, including warm-up
-					supervision and injury assessment.
+					Design support for the marketing site launch, including landing page
+					layouts and asset handoff.
 				</p>
 			</CardContent>
 			<CardFooter className="justify-end gap-2">
@@ -65,11 +65,11 @@ export const Small: Story = {
 	render: () => (
 		<Card size="sm" className="w-80">
 			<CardHeader>
-				<CardTitle>Mission report</CardTitle>
+				<CardTitle>Project report</CardTitle>
 				<CardDescription>Submitted 2 hours ago</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<p>Two minor injuries treated, no follow-up required.</p>
+				<p>Two revision rounds delivered, no follow-up required.</p>
 			</CardContent>
 		</Card>
 	),
@@ -80,11 +80,11 @@ export const SmallWithFooter: Story = {
 	render: () => (
 		<Card size="sm" className="w-80">
 			<CardHeader>
-				<CardTitle>Mission report</CardTitle>
+				<CardTitle>Project report</CardTitle>
 				<CardDescription>Submitted 2 hours ago</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<p>Two minor injuries treated, no follow-up required.</p>
+				<p>Two revision rounds delivered, no follow-up required.</p>
 			</CardContent>
 			<CardFooter className="justify-end gap-2">
 				<Button size="sm">Acknowledge</Button>
@@ -100,13 +100,13 @@ export const SmallWithFooter: Story = {
 export const ImageTopped: Story = {
 	render: () => (
 		<Card className="w-96">
-			<img src={coverImage} alt="Match day cover" />
+			<img src={coverImage} alt="Site launch cover" />
 			<CardHeader>
-				<CardTitle>Match day coverage</CardTitle>
-				<CardDescription>Racing Club de Lyon</CardDescription>
+				<CardTitle>Site launch design</CardTitle>
+				<CardDescription>Northwind Studio</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<p>Senior rugby fixture — pitch-side physiotherapy required.</p>
+				<p>Marketing site relaunch — senior brand designer required.</p>
 			</CardContent>
 		</Card>
 	),
@@ -117,11 +117,11 @@ export const HeaderWithBorder: Story = {
 	render: () => (
 		<Card className="w-96">
 			<CardHeader className="border-b">
-				<CardTitle>Physiotherapist — Match day</CardTitle>
-				<CardDescription>Racing Club de Lyon</CardDescription>
+				<CardTitle>Brand designer — Site launch</CardTitle>
+				<CardDescription>Northwind Studio</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<p>Pitch-side coverage for the senior rugby team.</p>
+				<p>Design support for the marketing site launch.</p>
 			</CardContent>
 		</Card>
 	),
@@ -132,10 +132,10 @@ export const FooterMetadata: Story = {
 	render: () => (
 		<Card className="w-96">
 			<CardHeader>
-				<CardTitle>Mission report</CardTitle>
+				<CardTitle>Project report</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<p>Two minor injuries treated, no follow-up required.</p>
+				<p>Two revision rounds delivered, no follow-up required.</p>
 			</CardContent>
 			<CardFooter className="gap-2 text-muted-foreground">
 				<Badge variant="secondary">Closed</Badge>
@@ -153,11 +153,11 @@ export const SemanticHeading: Story = {
 	render: () => (
 		<Card render={<article />} className="w-96">
 			<CardHeader>
-				<CardTitle render={<h2>Physiotherapist — Match day</h2>} />
-				<CardDescription>Racing Club de Lyon</CardDescription>
+				<CardTitle render={<h2>Brand designer — Site launch</h2>} />
+				<CardDescription>Northwind Studio</CardDescription>
 			</CardHeader>
 			<CardContent>
-				<p>Pitch-side coverage for the senior rugby team.</p>
+				<p>Design support for the marketing site launch.</p>
 			</CardContent>
 		</Card>
 	),

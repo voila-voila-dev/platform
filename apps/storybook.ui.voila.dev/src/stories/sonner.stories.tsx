@@ -19,8 +19,8 @@ export const Default: Story = {
 			<Button
 				variant="outline"
 				onClick={() =>
-					toast("Mission published", {
-						description: "Providers in your area have been notified.",
+					toast("Project published", {
+						description: "Matching freelancers have been notified.",
 					})
 				}
 			>
@@ -36,19 +36,19 @@ export const Types: Story = {
 			<Toaster />
 			<Button
 				variant="outline"
-				onClick={() => toast.success("Booking confirmed")}
+				onClick={() => toast.success("Engagement confirmed")}
 			>
 				Success
 			</Button>
 			<Button
 				variant="outline"
-				onClick={() => toast.info("A provider applied to your mission")}
+				onClick={() => toast.info("A freelancer applied to your project")}
 			>
 				Info
 			</Button>
 			<Button
 				variant="outline"
-				onClick={() => toast.warning("Mission starts in less than 24 hours")}
+				onClick={() => toast.warning("Project starts in less than 24 hours")}
 			>
 				Warning
 			</Button>
@@ -60,7 +60,7 @@ export const Types: Story = {
 			</Button>
 			<Button
 				variant="outline"
-				onClick={() => toast.loading("Publishing mission…")}
+				onClick={() => toast.loading("Publishing project…")}
 			>
 				Loading
 			</Button>

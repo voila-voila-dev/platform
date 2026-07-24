@@ -12,8 +12,8 @@ const meta = {
 			options: [
 				"default",
 				"secondary",
-				"provider",
-				"organization",
+				"brand",
+				"highlight",
 				"destructive",
 				"outline",
 			],
@@ -36,34 +36,34 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
 	render: (args) => (
 		<Chip {...args}>
-			Kinésithérapie du sport
-			<ChipRemove aria-label="Retirer Kinésithérapie du sport" />
+			Product design
+			<ChipRemove aria-label="Remove Product design" />
 		</Chip>
 	),
 };
 
 export const Static: Story = {
-	render: (args) => <Chip {...args}>Kinésithérapie du sport</Chip>,
+	render: (args) => <Chip {...args}>Product design</Chip>,
 };
 
 export const Colors: Story = {
 	render: () => (
 		<div className="flex max-w-md flex-wrap gap-2">
 			<Chip color="blue">
-				Rugby
-				<ChipRemove aria-label="Retirer Rugby" />
+				Branding
+				<ChipRemove aria-label="Remove Branding" />
 			</Chip>
 			<Chip color="green">
-				Récupération
-				<ChipRemove aria-label="Retirer Récupération" />
+				Research
+				<ChipRemove aria-label="Remove Research" />
 			</Chip>
 			<Chip color="amber">
-				Strapping
-				<ChipRemove aria-label="Retirer Strapping" />
+				Prototyping
+				<ChipRemove aria-label="Remove Prototyping" />
 			</Chip>
 			<Chip color="violet">
-				Ostéopathie
-				<ChipRemove aria-label="Retirer Ostéopathie" />
+				Analytics
+				<ChipRemove aria-label="Remove Analytics" />
 			</Chip>
 		</div>
 	),
@@ -73,8 +73,8 @@ export const Outline: Story = {
 	args: { variant: "outline" },
 	render: (args) => (
 		<Chip {...args}>
-			Football
-			<ChipRemove aria-label="Retirer Football" />
+			Web design
+			<ChipRemove aria-label="Remove Web design" />
 		</Chip>
 	),
 };
@@ -83,8 +83,8 @@ export const Small: Story = {
 	args: { size: "sm" },
 	render: (args) => (
 		<Chip {...args}>
-			Handball
-			<ChipRemove aria-label="Retirer Handball" />
+			SEO
+			<ChipRemove aria-label="Remove SEO" />
 		</Chip>
 	),
 };
@@ -92,10 +92,10 @@ export const Small: Story = {
 export const SkillsCatalog: Story = {
 	render: function SkillsCatalogStory() {
 		const [skills, setSkills] = useState([
-			"Kinésithérapie du sport",
-			"Strapping",
-			"Récupération",
-			"Urgences terrain",
+			"Product design",
+			"Prototyping",
+			"User research",
+			"Design systems",
 		]);
 		return (
 			<div className="flex max-w-md flex-wrap gap-2">
@@ -103,7 +103,7 @@ export const SkillsCatalog: Story = {
 					<Chip key={skill}>
 						{skill}
 						<ChipRemove
-							aria-label={`Retirer ${skill}`}
+							aria-label={`Remove ${skill}`}
 							onClick={() =>
 								setSkills((current) =>
 									current.filter((other) => other !== skill),
@@ -114,7 +114,7 @@ export const SkillsCatalog: Story = {
 				))}
 				{skills.length === 0 ? (
 					<span className="text-sm text-muted-foreground">
-						Aucune compétence sélectionnée.
+						No skills selected.
 					</span>
 				) : null}
 			</div>

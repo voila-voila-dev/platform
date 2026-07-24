@@ -24,15 +24,15 @@ export const Default: Story = {
 		<NavigationMenu>
 			<NavigationMenuList>
 				<NavigationMenuItem>
-					<NavigationMenuTrigger>Missions</NavigationMenuTrigger>
+					<NavigationMenuTrigger>Projects</NavigationMenuTrigger>
 					<NavigationMenuContent>
 						<ul className="grid w-64 gap-1">
 							<li>
 								<NavigationMenuLink href="#">
 									<div className="flex flex-col gap-0.5">
-										<span className="font-medium">Open missions</span>
+										<span className="font-medium">Open projects</span>
 										<span className="text-muted-foreground text-xs">
-											Missions waiting for a provider.
+											Projects waiting for a freelancer.
 										</span>
 									</div>
 								</NavigationMenuLink>
@@ -40,9 +40,9 @@ export const Default: Story = {
 							<li>
 								<NavigationMenuLink href="#">
 									<div className="flex flex-col gap-0.5">
-										<span className="font-medium">My bookings</span>
+										<span className="font-medium">My engagements</span>
 										<span className="text-muted-foreground text-xs">
-											Confirmed missions and schedules.
+											Confirmed projects and schedules.
 										</span>
 									</div>
 								</NavigationMenuLink>
@@ -52,7 +52,7 @@ export const Default: Story = {
 									<div className="flex flex-col gap-0.5">
 										<span className="font-medium">Past reports</span>
 										<span className="text-muted-foreground text-xs">
-											Completed missions and follow-up sheets.
+											Completed projects and deliverables.
 										</span>
 									</div>
 								</NavigationMenuLink>
@@ -61,7 +61,7 @@ export const Default: Story = {
 					</NavigationMenuContent>
 				</NavigationMenuItem>
 				<NavigationMenuItem>
-					<NavigationMenuTrigger>Providers</NavigationMenuTrigger>
+					<NavigationMenuTrigger>Freelancers</NavigationMenuTrigger>
 					<NavigationMenuContent>
 						<ul className="grid w-56 gap-1">
 							<li>

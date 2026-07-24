@@ -10,7 +10,7 @@ const meta = {
 	component: Heading,
 	tags: ["autodocs"],
 	args: {
-		children: "Deux parcours, une rencontre",
+		children: "Two journeys, one meeting point",
 	},
 	argTypes: {
 		level: {
@@ -45,8 +45,8 @@ export const Levels: Story = {
 export const WithHighlights: Story = {
 	render: () => (
 		<Heading level="h1">
-			Trouvez un <span className="text-provider">pro de santé</span> pour vos{" "}
-			<span className="text-organization">événements sportifs</span>
+			Find a <span className="text-brand">trusted freelancer</span> for your{" "}
+			<span className="text-highlight">next projects</span>
 		</Heading>
 	),
 };

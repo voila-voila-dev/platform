@@ -30,20 +30,20 @@ export const Default: Story = {
 	render: () => (
 		<AlertDialog>
 			<AlertDialogTrigger render={<Button variant="outline" />}>
-				Cancel mission
+				Cancel project
 			</AlertDialogTrigger>
 			<AlertDialogContent>
 				<AlertDialogHeader>
-					<AlertDialogTitle>Cancel this mission?</AlertDialogTitle>
+					<AlertDialogTitle>Cancel this project?</AlertDialogTitle>
 					<AlertDialogDescription>
-						The provider will be notified and the booking will be released. This
-						action cannot be undone.
+						The freelancer will be notified and the booking will be released.
+						This action cannot be undone.
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>
-					<AlertDialogCancel>Keep mission</AlertDialogCancel>
+					<AlertDialogCancel>Keep project</AlertDialogCancel>
 					<AlertDialogAction variant="destructive">
-						Cancel mission
+						Cancel project
 					</AlertDialogAction>
 				</AlertDialogFooter>
 			</AlertDialogContent>
@@ -55,17 +55,17 @@ export const WithMedia: Story = {
 	render: () => (
 		<AlertDialog>
 			<AlertDialogTrigger render={<Button variant="destructive" />}>
-				Remove provider
+				Remove freelancer
 			</AlertDialogTrigger>
 			<AlertDialogContent size="sm">
 				<AlertDialogHeader>
 					<AlertDialogMedia>
 						<WarningIcon className="text-destructive" />
 					</AlertDialogMedia>
-					<AlertDialogTitle>Remove this provider?</AlertDialogTitle>
+					<AlertDialogTitle>Remove this freelancer?</AlertDialogTitle>
 					<AlertDialogDescription>
-						Camille Dubois will lose access to all upcoming missions for your
-						club.
+						Camille Dubois will lose access to all upcoming projects for your
+						team.
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>
@@ -81,20 +81,20 @@ export const DefaultOpen: Story = {
 	render: () => (
 		<AlertDialog defaultOpen>
 			<AlertDialogTrigger render={<Button variant="outline" />}>
-				Cancel mission
+				Cancel project
 			</AlertDialogTrigger>
 			<AlertDialogContent>
 				<AlertDialogHeader>
-					<AlertDialogTitle>Cancel this mission?</AlertDialogTitle>
+					<AlertDialogTitle>Cancel this project?</AlertDialogTitle>
 					<AlertDialogDescription>
-						The provider will be notified and the booking will be released. This
-						action cannot be undone.
+						The freelancer will be notified and the booking will be released.
+						This action cannot be undone.
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>
-					<AlertDialogCancel>Keep mission</AlertDialogCancel>
+					<AlertDialogCancel>Keep project</AlertDialogCancel>
 					<AlertDialogAction variant="destructive">
-						Cancel mission
+						Cancel project
 					</AlertDialogAction>
 				</AlertDialogFooter>
 			</AlertDialogContent>
@@ -112,7 +112,7 @@ export const SmallWithoutMedia: Story = {
 				<AlertDialogHeader>
 					<AlertDialogTitle>Decline this application?</AlertDialogTitle>
 					<AlertDialogDescription>
-						The provider will be notified that their application was declined.
+						The freelancer will be notified that their application was declined.
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>
@@ -128,27 +128,27 @@ export const LongDescription: Story = {
 	render: () => (
 		<AlertDialog>
 			<AlertDialogTrigger render={<Button variant="outline" />}>
-				Delete organization
+				Delete workspace
 			</AlertDialogTrigger>
 			<AlertDialogContent>
 				<AlertDialogHeader>
-					<AlertDialogTitle>Delete this organization?</AlertDialogTitle>
+					<AlertDialogTitle>Delete this workspace?</AlertDialogTitle>
 					<AlertDialogDescription>
-						Deleting your organization is permanent and cannot be undone. All
-						missions, bookings, and applications associated with this
-						organization will be cancelled. Every provider with upcoming
-						missions will be notified and their bookings released. Pending
-						invoices will still be collected, and your billing history will
-						remain available to our support team for legal retention purposes.
-						Members of your organization will immediately lose access to the
-						dashboard, and any scheduled events will be removed from their
-						calendars. If you only want to pause activity, consider archiving
-						the organization instead — archiving keeps your data and can be
-						reversed at any time by contacting support.
+						Deleting your workspace is permanent and cannot be undone. All
+						projects, bookings, and applications associated with this workspace
+						will be cancelled. Every freelancer with upcoming projects will be
+						notified and their bookings released. Pending invoices will still be
+						collected, and your billing history will remain available to our
+						support team for legal retention purposes. Members of your workspace
+						will immediately lose access to the dashboard, and any scheduled
+						milestones will be removed from their calendars. If you only want to
+						pause activity, consider archiving the workspace instead — archiving
+						keeps your data and can be reversed at any time by contacting
+						support.
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>
-					<AlertDialogCancel>Keep organization</AlertDialogCancel>
+					<AlertDialogCancel>Keep workspace</AlertDialogCancel>
 					<AlertDialogAction variant="destructive">Delete</AlertDialogAction>
 				</AlertDialogFooter>
 			</AlertDialogContent>
@@ -169,13 +169,13 @@ function AsyncActionAlertDialog() {
 			}}
 		>
 			<AlertDialogTrigger render={<Button variant="outline" />}>
-				Archive mission
+				Archive project
 			</AlertDialogTrigger>
 			<AlertDialogContent>
 				<AlertDialogHeader>
-					<AlertDialogTitle>Archive this mission?</AlertDialogTitle>
+					<AlertDialogTitle>Archive this project?</AlertDialogTitle>
 					<AlertDialogDescription>
-						The mission will be hidden from the active list. You can restore it
+						The project will be hidden from the active list. You can restore it
 						from the archive at any time.
 					</AlertDialogDescription>
 				</AlertDialogHeader>

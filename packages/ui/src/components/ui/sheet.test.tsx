@@ -17,13 +17,13 @@ function Fixture(props: React.ComponentProps<typeof SheetContent>) {
 	return (
 		<Sheet>
 			<SheetTrigger render={<Button variant="outline" />}>
-				Open mission details
+				Open project details
 			</SheetTrigger>
 			<SheetContent {...props}>
 				<SheetHeader>
-					<SheetTitle>Mission details</SheetTitle>
+					<SheetTitle>Project details</SheetTitle>
 					<SheetDescription>
-						Pitch-side physiotherapy cover for the Saturday home match.
+						Design support for the Q3 brand refresh launch.
 					</SheetDescription>
 				</SheetHeader>
 				<SheetFooter>
@@ -41,7 +41,7 @@ describe("Sheet", () => {
 	it("renders only the trigger while closed", () => {
 		const screen = render(<Fixture />);
 		expect(
-			screen.getByRole("button", { name: "Open mission details" }),
+			screen.getByRole("button", { name: "Open project details" }),
 		).toBeTruthy();
 		expect(screen.queryByRole("dialog")).toBeNull();
 	});
@@ -49,15 +49,13 @@ describe("Sheet", () => {
 	it("opens on trigger click with title and description", async () => {
 		const screen = render(<Fixture />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "Open mission details" }),
+			screen.getByRole("button", { name: "Open project details" }),
 		);
 		await waitFor(() => {
 			expect(screen.getByRole("dialog")).toBeTruthy();
-			expect(screen.getByText("Mission details")).toBeTruthy();
+			expect(screen.getByText("Project details")).toBeTruthy();
 			expect(
-				screen.getByText(
-					"Pitch-side physiotherapy cover for the Saturday home match.",
-				),
+				screen.getByText("Design support for the Q3 brand refresh launch."),
 			).toBeTruthy();
 		});
 	});
@@ -65,7 +63,7 @@ describe("Sheet", () => {
 	it("defaults to the right side", async () => {
 		const screen = render(<Fixture />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "Open mission details" }),
+			screen.getByRole("button", { name: "Open project details" }),
 		);
 		await waitFor(() => {
 			const content = screen.baseElement.querySelector(
@@ -83,7 +81,7 @@ describe("Sheet", () => {
 	] as const)("applies the %s side as a data attribute", async (side) => {
 		const screen = render(<Fixture side={side} />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "Open mission details" }),
+			screen.getByRole("button", { name: "Open project details" }),
 		);
 		await waitFor(() => {
 			const content = screen.baseElement.querySelector(
@@ -96,7 +94,7 @@ describe("Sheet", () => {
 	it("applies the size to the popup as a data attribute", async () => {
 		const screen = render(<Fixture size="lg" />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "Open mission details" }),
+			screen.getByRole("button", { name: "Open project details" }),
 		);
 		await waitFor(() => {
 			const content = screen.baseElement.querySelector(
@@ -109,7 +107,7 @@ describe("Sheet", () => {
 	it("defaults the size to default", async () => {
 		const screen = render(<Fixture />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "Open mission details" }),
+			screen.getByRole("button", { name: "Open project details" }),
 		);
 		await waitFor(() => {
 			const content = screen.baseElement.querySelector(
@@ -122,7 +120,7 @@ describe("Sheet", () => {
 	it("renders the built-in close button under its own slot, separate from SheetClose", async () => {
 		const screen = render(<Fixture />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "Open mission details" }),
+			screen.getByRole("button", { name: "Open project details" }),
 		);
 		await waitFor(() => {
 			expect(screen.getByRole("dialog")).toBeTruthy();
@@ -139,7 +137,7 @@ describe("Sheet", () => {
 	it("closes when the built-in close button is clicked", async () => {
 		const screen = render(<Fixture />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "Open mission details" }),
+			screen.getByRole("button", { name: "Open project details" }),
 		);
 		await waitFor(() => {
 			expect(screen.getByRole("dialog")).toBeTruthy();
@@ -154,7 +152,7 @@ describe("Sheet", () => {
 	it("closes when a SheetClose action is clicked", async () => {
 		const screen = render(<Fixture />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "Open mission details" }),
+			screen.getByRole("button", { name: "Open project details" }),
 		);
 		await waitFor(() => {
 			expect(screen.getByRole("dialog")).toBeTruthy();
@@ -167,19 +165,19 @@ describe("Sheet", () => {
 	});
 
 	it("overrides the built-in close button label for localization", async () => {
-		const screen = render(<Fixture closeButtonLabel="Fermer" />);
+		const screen = render(<Fixture closeButtonLabel="Close panel" />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "Open mission details" }),
+			screen.getByRole("button", { name: "Open project details" }),
 		);
 		await waitFor(() => {
-			expect(screen.getByRole("button", { name: "Fermer" })).toBeTruthy();
+			expect(screen.getByRole("button", { name: "Close panel" })).toBeTruthy();
 		});
 	});
 
 	it("hides the built-in close button when showCloseButton is false", async () => {
 		const screen = render(<Fixture showCloseButton={false} />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "Open mission details" }),
+			screen.getByRole("button", { name: "Open project details" }),
 		);
 		await waitFor(() => {
 			expect(screen.getByRole("dialog")).toBeTruthy();
@@ -192,7 +190,7 @@ describe("Sheet", () => {
 	it("merges className onto the content popup", async () => {
 		const screen = render(<Fixture className="custom-sheet" />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "Open mission details" }),
+			screen.getByRole("button", { name: "Open project details" }),
 		);
 		await waitFor(() => {
 			const content = screen.baseElement.querySelector(

@@ -15,13 +15,13 @@ import {
 import { useState } from "react";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 
-const specialties = [
-	"Physiotherapist",
-	"Osteopath",
-	"Nurse",
-	"Sports doctor",
-	"Podiatrist",
-	"Dietitian",
+const roles = [
+	"Designer",
+	"Developer",
+	"Data analyst",
+	"Copywriter",
+	"Consultant",
+	"Illustrator",
 ];
 
 const meta = {
@@ -36,14 +36,14 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<Combobox items={specialties}>
-			<ComboboxInput placeholder="Select a specialty" className="w-64" />
+		<Combobox items={roles}>
+			<ComboboxInput placeholder="Select a role" className="w-64" />
 			<ComboboxContent>
-				<ComboboxEmpty>No specialty found.</ComboboxEmpty>
+				<ComboboxEmpty>No role found.</ComboboxEmpty>
 				<ComboboxList>
-					{(specialty: string) => (
-						<ComboboxItem key={specialty} value={specialty}>
-							{specialty}
+					{(role: string) => (
+						<ComboboxItem key={role} value={role}>
+							{role}
 						</ComboboxItem>
 					)}
 				</ComboboxList>
@@ -54,18 +54,14 @@ export const Default: Story = {
 
 export const WithClearButton: Story = {
 	render: () => (
-		<Combobox items={specialties} defaultValue="Physiotherapist">
-			<ComboboxInput
-				placeholder="Select a specialty"
-				className="w-64"
-				showClear
-			/>
+		<Combobox items={roles} defaultValue="Designer">
+			<ComboboxInput placeholder="Select a role" className="w-64" showClear />
 			<ComboboxContent>
-				<ComboboxEmpty>No specialty found.</ComboboxEmpty>
+				<ComboboxEmpty>No role found.</ComboboxEmpty>
 				<ComboboxList>
-					{(specialty: string) => (
-						<ComboboxItem key={specialty} value={specialty}>
-							{specialty}
+					{(role: string) => (
+						<ComboboxItem key={role} value={role}>
+							{role}
 						</ComboboxItem>
 					)}
 				</ComboboxList>
@@ -76,18 +72,14 @@ export const WithClearButton: Story = {
 
 export const Disabled: Story = {
 	render: () => (
-		<Combobox items={specialties} disabled>
-			<ComboboxInput
-				placeholder="Select a specialty"
-				className="w-64"
-				disabled
-			/>
+		<Combobox items={roles} disabled>
+			<ComboboxInput placeholder="Select a role" className="w-64" disabled />
 			<ComboboxContent>
-				<ComboboxEmpty>No specialty found.</ComboboxEmpty>
+				<ComboboxEmpty>No role found.</ComboboxEmpty>
 				<ComboboxList>
-					{(specialty: string) => (
-						<ComboboxItem key={specialty} value={specialty}>
-							{specialty}
+					{(role: string) => (
+						<ComboboxItem key={role} value={role}>
+							{role}
 						</ComboboxItem>
 					)}
 				</ComboboxList>
@@ -104,10 +96,10 @@ function MultiSelectChipsExample({
 	disabled?: boolean;
 }) {
 	const anchor = useComboboxAnchor();
-	const [value, setValue] = useState<string[]>(["Physiotherapist", "Nurse"]);
+	const [value, setValue] = useState<string[]>(["Designer", "Copywriter"]);
 	return (
 		<Combobox
-			items={specialties}
+			items={roles}
 			multiple
 			value={value}
 			onValueChange={setValue}
@@ -116,21 +108,21 @@ function MultiSelectChipsExample({
 			<ComboboxChips ref={anchor} className="w-96">
 				<ComboboxValue>
 					{(selected: string[]) =>
-						selected.map((specialty) => (
-							<ComboboxChip key={specialty} showRemove={showRemove}>
-								{specialty}
+						selected.map((role) => (
+							<ComboboxChip key={role} showRemove={showRemove}>
+								{role}
 							</ComboboxChip>
 						))
 					}
 				</ComboboxValue>
-				<ComboboxChipsInput placeholder="Add a specialty" />
+				<ComboboxChipsInput placeholder="Add a role" />
 			</ComboboxChips>
 			<ComboboxContent anchor={anchor}>
-				<ComboboxEmpty>No specialty found.</ComboboxEmpty>
+				<ComboboxEmpty>No role found.</ComboboxEmpty>
 				<ComboboxList>
-					{(specialty: string) => (
-						<ComboboxItem key={specialty} value={specialty}>
-							{specialty}
+					{(role: string) => (
+						<ComboboxItem key={role} value={role}>
+							{role}
 						</ComboboxItem>
 					)}
 				</ComboboxList>
@@ -144,7 +136,7 @@ export const MultiSelectChips: Story = {
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
 		await expect(
-			canvas.getAllByText("Physiotherapist", {
+			canvas.getAllByText("Designer", {
 				selector: "[data-slot=combobox-chip]",
 			}),
 		).toHaveLength(1);
@@ -158,12 +150,12 @@ export const MultiSelectChipsAddAndRemove: Story = {
 	render: () => <MultiSelectChipsExample />,
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
-		// Add a third specialty by typing into the chips input and picking the match.
-		const input = canvas.getByPlaceholderText("Add a specialty");
-		await userEvent.type(input, "pod");
+		// Add a third role by typing into the chips input and picking the match.
+		const input = canvas.getByPlaceholderText("Add a role");
+		await userEvent.type(input, "data");
 		const option = await waitFor(() => {
 			const item = document.querySelector("[data-slot=combobox-item]");
-			expect(item?.textContent).toContain("Podiatrist");
+			expect(item?.textContent).toContain("Data analyst");
 			return item as HTMLElement;
 		});
 		await userEvent.click(option);

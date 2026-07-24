@@ -19,10 +19,10 @@ function renderMenu(
 	return render(
 		<NavigationMenu {...rootProps}>
 			<NavigationMenuList>
-				<NavigationMenuItem value="missions">
-					<NavigationMenuTrigger>Missions</NavigationMenuTrigger>
+				<NavigationMenuItem value="projects">
+					<NavigationMenuTrigger>Projects</NavigationMenuTrigger>
 					<NavigationMenuContent>
-						<NavigationMenuLink href="#">Open missions</NavigationMenuLink>
+						<NavigationMenuLink href="#">Open projects</NavigationMenuLink>
 					</NavigationMenuContent>
 				</NavigationMenuItem>
 				<NavigationMenuItem>
@@ -47,20 +47,20 @@ describe("NavigationMenu", () => {
 		expect(
 			document.querySelector("[data-slot=navigation-menu-item]"),
 		).not.toBeNull();
-		expect(screen.getByText("Missions").getAttribute("data-slot")).toBe(
+		expect(screen.getByText("Projects").getAttribute("data-slot")).toBe(
 			"navigation-menu-trigger",
 		);
 	});
 
 	it("keeps panel content out of the DOM while closed", () => {
 		const screen = renderMenu();
-		expect(screen.queryByText("Open missions")).toBeNull();
+		expect(screen.queryByText("Open projects")).toBeNull();
 	});
 
 	it("opens the panel when the trigger is clicked", () => {
 		const screen = renderMenu();
-		fireEvent.click(screen.getByText("Missions"));
-		expect(screen.getByText("Open missions")).toBeTruthy();
+		fireEvent.click(screen.getByText("Projects"));
+		expect(screen.getByText("Open projects")).toBeTruthy();
 		expect(
 			document.querySelector("[data-slot=navigation-menu-content]"),
 		).not.toBeNull();
@@ -68,7 +68,7 @@ describe("NavigationMenu", () => {
 
 	it("only highlights focused triggers for keyboard users, not after clicks", () => {
 		const screen = renderMenu();
-		const trigger = screen.getByText("Missions");
+		const trigger = screen.getByText("Projects");
 		expect(trigger.className).toContain("focus-visible:bg-muted");
 		expect(trigger.className).not.toMatch(/(?<!-visible):?\bfocus:bg-muted/);
 	});
@@ -108,7 +108,7 @@ describe("NavigationMenu", () => {
 
 	it("rotates the trigger caret while its popup is open", () => {
 		const screen = renderMenu();
-		const caret = screen.getByText("Missions").querySelector("svg");
+		const caret = screen.getByText("Projects").querySelector("svg");
 		expect(
 			caret?.classList.contains(
 				"group-data-popup-open/navigation-menu-trigger:rotate-180",

@@ -8,7 +8,7 @@ const meta = {
 	tags: ["autodocs"],
 	args: {
 		children: "Favorite",
-		"aria-label": "Mark provider as favorite",
+		"aria-label": "Mark freelancer as favorite",
 	},
 	argTypes: {
 		variant: {
@@ -35,7 +35,7 @@ export const Default: Story = {};
  */
 export const WithIcon: Story = {
 	render: () => (
-		<Toggle aria-label="Mark provider as favorite">
+		<Toggle aria-label="Mark freelancer as favorite">
 			<StarIcon
 				data-icon="inline-start"
 				className="group-data-pressed/toggle:hidden"

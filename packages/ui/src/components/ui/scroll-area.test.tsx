@@ -24,7 +24,7 @@ describe("ScrollArea", () => {
 	it("renders children inside the viewport", () => {
 		const screen = render(
 			<ScrollArea>
-				<p>Mission #1 — Match day coverage</p>
+				<p>Project #1 — Brand refresh sprint</p>
 			</ScrollArea>,
 		);
 		const root = screen.baseElement.querySelector("[data-slot=scroll-area]");
@@ -32,7 +32,7 @@ describe("ScrollArea", () => {
 			"[data-slot=scroll-area-viewport]",
 		);
 		expect(root).toBeTruthy();
-		expect(viewport?.contains(screen.getByText(/Mission #1/))).toBe(true);
+		expect(viewport?.contains(screen.getByText(/Project #1/))).toBe(true);
 	});
 
 	it("only mounts scrollbars when the content overflows", () => {

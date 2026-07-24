@@ -20,8 +20,8 @@ function ParagraphBlockView({
 		<RichTextEditable
 			spans={block.spans}
 			onChange={(spans) => onChange({ ...block, spans })}
-			ariaLabel="Paragraphe"
-			placeholder="Votre texte. Utilisez {{firstName}} pour personnaliser."
+			ariaLabel="Paragraph"
+			placeholder="Your text. Use {{firstName}} to personalize."
 			className="text-[16px] leading-[1.6]"
 			style={{ fontFamily: EMAIL_FONT, color: EMAIL_COLOR.ink }}
 		/>
@@ -32,7 +32,7 @@ function ParagraphBlockSettings() {
 	return (
 		<p className="text-muted-foreground text-xs">
 			{
-				"Mettez en forme le texte (gras, italique, souligné, lien) depuis la barre d'outils du bloc. Personnalisez avec {{firstName}}, {{lastName}} ou {{email}} ; la valeur du contact est substituée à l'envoi."
+				"Format the text (bold, italic, underline, link) from the block toolbar. Personalize with {{firstName}}, {{lastName}} or {{email}}; the contact's value is substituted at send time."
 			}
 		</p>
 	);
@@ -40,7 +40,7 @@ function ParagraphBlockSettings() {
 
 export const paragraphBlockDefinition: EmailBlockDefinition<EmailEditorParagraphBlock> =
 	{
-		label: "Paragraphe",
+		label: "Paragraph",
 		icon: TextAlignLeftIcon,
 		View: ParagraphBlockView,
 		Settings: ParagraphBlockSettings,

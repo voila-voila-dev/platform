@@ -13,13 +13,13 @@ import * as Example from "../../../examples/ui-datatable/tables";
 </Preview>
 
 ```tsx
-const columns: ColumnDef<Mission>[] = [
+const columns: ColumnDef<Project>[] = [
 	{ accessorKey: "reference", header: "Reference", size: 130 },
-	{ accessorKey: "club", header: "Club" },
+	{ accessorKey: "client", header: "Client" },
 	{ accessorKey: "amount", header: "Amount", size: 110 },
 ];
 
-<DataTable columns={columns} data={missions} />;
+<DataTable columns={columns} data={projects} />;
 ```
 
 A column with a numeric `size` switches the table to fixed layout, and sized

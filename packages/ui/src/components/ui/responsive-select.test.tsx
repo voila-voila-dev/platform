@@ -42,7 +42,7 @@ afterEach(() => {
 });
 
 function Skills({
-	value = "nurse",
+	value = "designer",
 	onValueChange = () => {},
 	placeholder,
 	...rootProps
@@ -59,9 +59,9 @@ function Skills({
 				<ResponsiveSelect.Value placeholder={placeholder} />
 			</ResponsiveSelect.Trigger>
 			<ResponsiveSelect.Content>
-				<ResponsiveSelect.Item value="nurse">Nurse</ResponsiveSelect.Item>
-				<ResponsiveSelect.Item value="physiotherapist">
-					Physiotherapist
+				<ResponsiveSelect.Item value="designer">Designer</ResponsiveSelect.Item>
+				<ResponsiveSelect.Item value="developer">
+					Developer
 				</ResponsiveSelect.Item>
 			</ResponsiveSelect.Content>
 		</ResponsiveSelect.Root>
@@ -71,28 +71,26 @@ function Skills({
 describe("ResponsiveSelect", () => {
 	it("projects the parts onto a native select under the mobile breakpoint", () => {
 		setViewportWidth(MOBILE_WIDTH);
-		const screen = render(<Skills value="nurse" />);
+		const screen = render(<Skills value="designer" />);
 		const select = screen.getByRole("combobox", {
 			name: "Skill",
 		}) as HTMLSelectElement;
 		expect(select.tagName).toBe("SELECT");
-		expect(select.value).toBe("nurse");
-		expect(screen.getByRole("option", { name: "Nurse" })).toBeDefined();
-		expect(
-			screen.getByRole("option", { name: "Physiotherapist" }),
-		).toBeDefined();
+		expect(select.value).toBe("designer");
+		expect(screen.getByRole("option", { name: "Designer" })).toBeDefined();
+		expect(screen.getByRole("option", { name: "Developer" })).toBeDefined();
 	});
 
 	it("reports the chosen value from the native select", () => {
 		setViewportWidth(MOBILE_WIDTH);
 		const onValueChange = vi.fn();
 		const screen = render(
-			<Skills value="nurse" onValueChange={onValueChange} />,
+			<Skills value="designer" onValueChange={onValueChange} />,
 		);
 		fireEvent.change(screen.getByRole("combobox", { name: "Skill" }), {
-			target: { value: "physiotherapist" },
+			target: { value: "developer" },
 		});
-		expect(onValueChange).toHaveBeenCalledWith("physiotherapist");
+		expect(onValueChange).toHaveBeenCalledWith("developer");
 	});
 
 	it("renders the Value placeholder as a leading empty option on mobile", () => {
@@ -113,15 +111,15 @@ describe("ResponsiveSelect", () => {
 				</ResponsiveSelect.Trigger>
 				<ResponsiveSelect.Content>
 					<ResponsiveSelect.Group>
-						<ResponsiveSelect.Label>Métropole</ResponsiveSelect.Label>
+						<ResponsiveSelect.Label>Europe</ResponsiveSelect.Label>
 						<ResponsiveSelect.Item value="Europe/Paris">
 							Paris
 						</ResponsiveSelect.Item>
 					</ResponsiveSelect.Group>
 					<ResponsiveSelect.Group>
-						<ResponsiveSelect.Label>Outre-mer</ResponsiveSelect.Label>
-						<ResponsiveSelect.Item value="America/Martinique">
-							Martinique
+						<ResponsiveSelect.Label>Americas</ResponsiveSelect.Label>
+						<ResponsiveSelect.Item value="America/New_York">
+							New York
 						</ResponsiveSelect.Item>
 					</ResponsiveSelect.Group>
 				</ResponsiveSelect.Content>
@@ -131,15 +129,15 @@ describe("ResponsiveSelect", () => {
 			'[data-slot="native-select-optgroup"]',
 		);
 		expect(groups.length).toBe(2);
-		expect(groups[0]?.getAttribute("label")).toBe("Métropole");
-		expect(screen.getByRole("option", { name: "Martinique" })).toBeDefined();
+		expect(groups[0]?.getAttribute("label")).toBe("Europe");
+		expect(screen.getByRole("option", { name: "New York" })).toBeDefined();
 	});
 
 	it("forwards Trigger control attributes to the native select", () => {
 		setViewportWidth(MOBILE_WIDTH);
 		const screen = render(
 			<ResponsiveSelect.Root
-				value="nurse"
+				value="designer"
 				onValueChange={() => {}}
 				name="skill"
 				required
@@ -152,7 +150,9 @@ describe("ResponsiveSelect", () => {
 					<ResponsiveSelect.Value />
 				</ResponsiveSelect.Trigger>
 				<ResponsiveSelect.Content>
-					<ResponsiveSelect.Item value="nurse">Nurse</ResponsiveSelect.Item>
+					<ResponsiveSelect.Item value="designer">
+						Designer
+					</ResponsiveSelect.Item>
 				</ResponsiveSelect.Content>
 			</ResponsiveSelect.Root>,
 		);
@@ -164,7 +164,7 @@ describe("ResponsiveSelect", () => {
 	});
 
 	it("renders the Base UI trigger with the selected label on desktop", () => {
-		const screen = render(<Skills value="nurse" />);
+		const screen = render(<Skills value="designer" />);
 		expect(
 			screen.container.querySelector('[data-slot="native-select"]'),
 		).toBeNull();
@@ -172,13 +172,13 @@ describe("ResponsiveSelect", () => {
 			'[data-slot="select-trigger"]',
 		);
 		expect(trigger).not.toBeNull();
-		expect(trigger?.textContent).toContain("Nurse");
+		expect(trigger?.textContent).toContain("Designer");
 	});
 
 	it("drops Base UI's null reset when the selected item disappears on desktop", async () => {
 		const onValueChange = vi.fn();
 		const skills = (items: string[]) => (
-			<ResponsiveSelect.Root value="nurse" onValueChange={onValueChange}>
+			<ResponsiveSelect.Root value="designer" onValueChange={onValueChange}>
 				<ResponsiveSelect.Trigger aria-label="Skill" className="w-full">
 					<ResponsiveSelect.Value />
 				</ResponsiveSelect.Trigger>
@@ -191,7 +191,7 @@ describe("ResponsiveSelect", () => {
 				</ResponsiveSelect.Content>
 			</ResponsiveSelect.Root>
 		);
-		const screen = render(skills(["nurse", "physiotherapist"]));
+		const screen = render(skills(["designer", "developer"]));
 		const trigger = screen.container.querySelector(
 			'[data-slot="select-trigger"]',
 		) as HTMLElement;
@@ -207,14 +207,14 @@ describe("ResponsiveSelect", () => {
 		// reach the consumer (it crashed the skills field with
 		// `null.localeCompare` in production).
 		await act(async () => {
-			screen.rerender(skills(["physiotherapist"]));
+			screen.rerender(skills(["developer"]));
 			await Promise.resolve();
 		});
 		expect(onValueChange).not.toHaveBeenCalled();
 	});
 
 	it("switches surfaces when the viewport crosses the breakpoint", () => {
-		const screen = render(<Skills value="nurse" />);
+		const screen = render(<Skills value="designer" />);
 		expect(
 			screen.container.querySelector('[data-slot="native-select"]'),
 		).toBeNull();

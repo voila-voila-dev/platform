@@ -69,7 +69,7 @@ export const Vertical: Story = {
 	render: () => (
 		<ButtonGroup orientation="vertical">
 			<Button variant="outline">Accept application</Button>
-			<Button variant="outline">Message provider</Button>
+			<Button variant="outline">Message freelancer</Button>
 			<Button variant="outline">Decline</Button>
 		</ButtonGroup>
 	),
@@ -79,7 +79,7 @@ export const VerticalWithSeparator: Story = {
 	render: () => (
 		<ButtonGroup orientation="vertical">
 			<Button variant="outline">Accept application</Button>
-			<Button variant="outline">Message provider</Button>
+			<Button variant="outline">Message freelancer</Button>
 			<ButtonGroupSeparator />
 			<Button variant="outline">Decline</Button>
 		</ButtonGroup>
@@ -88,8 +88,8 @@ export const VerticalWithSeparator: Story = {
 
 export const WithInput: Story = {
 	render: () => (
-		<ButtonGroup aria-label="Search missions" className="w-80">
-			<Input type="search" placeholder="Search missions…" />
+		<ButtonGroup aria-label="Search projects" className="w-80">
+			<Input type="search" placeholder="Search projects…" />
 			<Button variant="outline" size="icon" aria-label="Search">
 				<MagnifyingGlassIcon />
 			</Button>
@@ -99,15 +99,15 @@ export const WithInput: Story = {
 
 export const WithSelect: Story = {
 	render: () => (
-		<ButtonGroup aria-label="Filter by specialty">
-			<Select defaultValue="physiotherapist">
+		<ButtonGroup aria-label="Filter by role">
+			<Select defaultValue="designer">
 				<SelectTrigger>
-					<SelectValue placeholder="Specialty" />
+					<SelectValue placeholder="Role" />
 				</SelectTrigger>
 				<SelectContent>
-					<SelectItem value="physiotherapist">Physiotherapist</SelectItem>
-					<SelectItem value="osteopath">Osteopath</SelectItem>
-					<SelectItem value="nurse">Nurse</SelectItem>
+					<SelectItem value="designer">Designer</SelectItem>
+					<SelectItem value="developer">Developer</SelectItem>
+					<SelectItem value="copywriter">Copywriter</SelectItem>
 				</SelectContent>
 			</Select>
 			<Button variant="outline">Apply</Button>
@@ -139,7 +139,7 @@ export const NestedGroups: Story = {
 
 export const WithDisabledMember: Story = {
 	render: () => (
-		<ButtonGroup aria-label="Booking actions">
+		<ButtonGroup aria-label="Proposal actions">
 			<Button variant="outline">Accept</Button>
 			<Button variant="outline" disabled>
 				Message

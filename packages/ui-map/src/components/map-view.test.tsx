@@ -134,10 +134,10 @@ describe("MapView", () => {
 
 	it("passes native div props through to the wrapper", () => {
 		const screen = render(
-			<MapView aria-label="Carte des clubs" data-testid="admin-map" />,
+			<MapView aria-label="Map of clients" data-testid="admin-map" />,
 		);
 		const wrapper = queryMapView(screen);
-		expect(wrapper?.getAttribute("aria-label")).toBe("Carte des clubs");
+		expect(wrapper?.getAttribute("aria-label")).toBe("Map of clients");
 		expect(wrapper?.getAttribute("data-testid")).toBe("admin-map");
 	});
 

@@ -29,8 +29,8 @@ export const Default: Story = {
 				<SiteFooter.Brand>
 					<BrandLogo className="mb-4 block" />
 					<SiteFooter.BrandDescription>
-						Plateforme qui met en relation clubs de sport et professionnels de
-						santé pour des événements sportifs de qualité.
+						The platform that connects client teams and independent freelancers
+						to deliver quality projects together.
 					</SiteFooter.BrandDescription>
 					<SiteFooter.SocialLinks>
 						<SiteFooter.SocialLink href="#" aria-label="Facebook">
@@ -67,10 +67,10 @@ export const Default: Story = {
 
 			<SiteFooter.Bottom>
 				<SiteFooter.BottomText>
-					© 2026 acme.dev. Tous droits réservés.
+					© 2026 acme.dev. All rights reserved.
 				</SiteFooter.BottomText>
 				<SiteFooter.BottomText>
-					Fait avec ❤️ pour le sport et la santé
+					Made with ❤️ for independent work
 				</SiteFooter.BottomText>
 			</SiteFooter.Bottom>
 		</SiteFooter.Root>

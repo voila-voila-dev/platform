@@ -33,10 +33,10 @@ export const Default: Story = {
 				Right-click here
 			</ContextMenuTrigger>
 			<ContextMenuContent>
-				<ContextMenuLabel>Mission</ContextMenuLabel>
+				<ContextMenuLabel>Project</ContextMenuLabel>
 				<ContextMenuGroup>
 					<ContextMenuItem>
-						Edit mission
+						Edit project
 						<ContextMenuShortcut>⌘E</ContextMenuShortcut>
 					</ContextMenuItem>
 					<ContextMenuItem>
@@ -46,7 +46,7 @@ export const Default: Story = {
 				</ContextMenuGroup>
 				<ContextMenuSeparator />
 				<ContextMenuSub>
-					<ContextMenuSubTrigger>Assign provider</ContextMenuSubTrigger>
+					<ContextMenuSubTrigger>Assign freelancer</ContextMenuSubTrigger>
 					<ContextMenuSubContent>
 						<ContextMenuItem>Nathan Guyot</ContextMenuItem>
 						<ContextMenuItem>Marie Lefevre</ContextMenuItem>
@@ -54,7 +54,7 @@ export const Default: Story = {
 					</ContextMenuSubContent>
 				</ContextMenuSub>
 				<ContextMenuSeparator />
-				<ContextMenuItem variant="destructive">Cancel mission</ContextMenuItem>
+				<ContextMenuItem variant="destructive">Cancel project</ContextMenuItem>
 			</ContextMenuContent>
 		</ContextMenu>
 	),
@@ -69,15 +69,17 @@ export const WithSelectionItems: Story = {
 			<ContextMenuContent>
 				<ContextMenuLabel>Display</ContextMenuLabel>
 				<ContextMenuCheckboxItem defaultChecked>
-					Show confirmed missions
+					Show confirmed projects
 				</ContextMenuCheckboxItem>
 				<ContextMenuCheckboxItem>Show drafts</ContextMenuCheckboxItem>
 				<ContextMenuSeparator />
 				<ContextMenuLabel>Sort by</ContextMenuLabel>
 				<ContextMenuRadioGroup defaultValue="date">
 					<ContextMenuRadioItem value="date">Date</ContextMenuRadioItem>
-					<ContextMenuRadioItem value="club">Club</ContextMenuRadioItem>
-					<ContextMenuRadioItem value="provider">Provider</ContextMenuRadioItem>
+					<ContextMenuRadioItem value="client">Client</ContextMenuRadioItem>
+					<ContextMenuRadioItem value="freelancer">
+						Freelancer
+					</ContextMenuRadioItem>
 				</ContextMenuRadioGroup>
 			</ContextMenuContent>
 		</ContextMenu>

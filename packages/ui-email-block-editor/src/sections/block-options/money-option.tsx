@@ -62,7 +62,7 @@ export function MoneyOption({
 					})
 				}
 				currency={value.currency}
-				currencyLabel="Devise"
+				currencyLabel="Currency"
 			/>
 		</BlockOptionRow>
 	);

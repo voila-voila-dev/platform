@@ -19,8 +19,8 @@ function queryBoxes(screen: ReturnType<typeof render>) {
 function renderGroup(props?: React.ComponentProps<typeof CheckboxGroup>) {
 	return render(
 		<CheckboxGroup {...props}>
-			<Checkbox name="physiotherapy" />
-			<Checkbox name="osteopathy" />
+			<Checkbox name="design" />
+			<Checkbox name="development" />
 		</CheckboxGroup>,
 	);
 }
@@ -33,7 +33,7 @@ describe("CheckboxGroup", () => {
 	});
 
 	it("ticks the boxes named in defaultValue", () => {
-		const screen = renderGroup({ defaultValue: ["osteopathy"] });
+		const screen = renderGroup({ defaultValue: ["development"] });
 		const [first, second] = queryBoxes(screen);
 		expect(first?.getAttribute("aria-checked")).toBe("false");
 		expect(second?.getAttribute("aria-checked")).toBe("true");
@@ -58,7 +58,7 @@ describe("CheckboxGroup", () => {
 	it("reports the new value array when a box is ticked", () => {
 		const onValueChange = vi.fn();
 		const screen = renderGroup({
-			defaultValue: ["physiotherapy"],
+			defaultValue: ["design"],
 			onValueChange,
 		});
 		const [, second] = queryBoxes(screen);
@@ -66,7 +66,7 @@ describe("CheckboxGroup", () => {
 		fireEvent.click(second);
 		expect(second.getAttribute("aria-checked")).toBe("true");
 		expect(onValueChange).toHaveBeenCalledWith(
-			["physiotherapy", "osteopathy"],
+			["design", "development"],
 			expect.anything(),
 		);
 	});
@@ -93,10 +93,10 @@ describe("CheckboxGroup", () => {
 
 	it("drives a tick-all parent checkbox via allValues", () => {
 		const screen = render(
-			<CheckboxGroup allValues={["physiotherapy", "osteopathy"]}>
+			<CheckboxGroup allValues={["design", "development"]}>
 				<Checkbox parent />
-				<Checkbox name="physiotherapy" />
-				<Checkbox name="osteopathy" />
+				<Checkbox name="design" />
+				<Checkbox name="development" />
 			</CheckboxGroup>,
 		);
 		const [parent, first, second] = queryBoxes(screen);
@@ -115,9 +115,9 @@ describe("CheckboxGroup", () => {
 		// by a generated one, so `htmlFor`/`id` label pairs silently break. If
 		// this starts failing on a Base UI upgrade, the constraint is gone.
 		const screen = render(
-			<CheckboxGroup allValues={["physiotherapy"]}>
+			<CheckboxGroup allValues={["design"]}>
 				<Checkbox parent />
-				<Checkbox name="physiotherapy" id="custom-box-id" />
+				<Checkbox name="design" id="custom-box-id" />
 			</CheckboxGroup>,
 		);
 		expect(screen.baseElement.querySelector("#custom-box-id")).toBeNull();
@@ -126,25 +126,19 @@ describe("CheckboxGroup", () => {
 	it("toggles a box through its wrapping label in parent mode", () => {
 		const onValueChange = vi.fn();
 		const screen = render(
-			<CheckboxGroup
-				allValues={["physiotherapy"]}
-				onValueChange={onValueChange}
-			>
+			<CheckboxGroup allValues={["design"]} onValueChange={onValueChange}>
 				<Checkbox parent />
 				{/* biome-ignore lint/a11y/noLabelWithoutControl: the control is the wrapped checkbox's hidden input */}
 				<label>
-					<Checkbox name="physiotherapy" />
-					Physiotherapy
+					<Checkbox name="design" />
+					Design
 				</label>
 			</CheckboxGroup>,
 		);
 		const label = screen.baseElement.querySelector("label");
 		if (!label) throw new Error("missing label");
 		fireEvent.click(label);
-		expect(onValueChange).toHaveBeenCalledWith(
-			["physiotherapy"],
-			expect.anything(),
-		);
+		expect(onValueChange).toHaveBeenCalledWith(["design"], expect.anything());
 	});
 
 	it("merges className over the group classes", () => {

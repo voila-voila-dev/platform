@@ -40,10 +40,10 @@ export const Default: Story = {
  * sr-only text is the accessible-loading pattern the Skeleton itself does
  * not provide.
  */
-export const MissionCard: Story = {
+export const ProjectCard: Story = {
 	render: () => (
 		<div role="status" className="w-72">
-			<span className="sr-only">Loading mission...</span>
+			<span className="sr-only">Loading project...</span>
 			<Card aria-hidden>
 				<CardHeader>
 					<Skeleton className="h-5 w-44" />

@@ -141,7 +141,7 @@ function StructureControls({
 					<Button
 						variant="ghost"
 						size={coarsePointer ? "icon" : "icon-sm"}
-						aria-label="Ajouter un bloc"
+						aria-label="Add a block"
 						className={toolbarButtonClassName(coarsePointer)}
 					>
 						<PlusIcon aria-hidden />
@@ -151,7 +151,7 @@ function StructureControls({
 			<Button
 				variant="ghost"
 				size={coarsePointer ? "icon" : "icon-sm"}
-				aria-label="Déplacer le bloc"
+				aria-label="Move block"
 				className={cn(
 					toolbarButtonClassName(coarsePointer),
 					"cursor-grab touch-none active:cursor-grabbing",
@@ -164,7 +164,7 @@ function StructureControls({
 			</Button>
 			{onSelectContainer ? (
 				<ToolbarIconButton
-					label="Sélectionner la ligne de colonnes"
+					label="Select the column row"
 					coarsePointer={coarsePointer}
 					onClick={onSelectContainer}
 				>
@@ -190,7 +190,7 @@ function RichTextControls({
 		<>
 			<ToolbarSeparator />
 			<ToolbarIconButton
-				label="Gras"
+				label="Bold"
 				active={active.has("bold")}
 				coarsePointer={coarsePointer}
 				onMouseDown={keepSelection}
@@ -199,7 +199,7 @@ function RichTextControls({
 				<TextBIcon aria-hidden />
 			</ToolbarIconButton>
 			<ToolbarIconButton
-				label="Italique"
+				label="Italic"
 				active={active.has("italic")}
 				coarsePointer={coarsePointer}
 				onMouseDown={keepSelection}
@@ -208,7 +208,7 @@ function RichTextControls({
 				<TextItalicIcon aria-hidden />
 			</ToolbarIconButton>
 			<ToolbarIconButton
-				label="Souligné"
+				label="Underline"
 				active={active.has("underline")}
 				coarsePointer={coarsePointer}
 				onMouseDown={keepSelection}
@@ -253,7 +253,7 @@ function SelectionLinkButton({
 				<Button
 					variant="ghost"
 					size={coarsePointer ? "icon" : "icon-sm"}
-					aria-label="Insérer un lien"
+					aria-label="Insert a link"
 					aria-pressed={active || undefined}
 					className={toolbarButtonClassName(coarsePointer, active)}
 					onMouseDown={keepSelection}
@@ -295,7 +295,7 @@ function SelectionLinkButton({
 /**
  * The controls of the selected block: add-below, drag handle, inline
  * formatting when the block holds rich text, duplicate, delete, plus a
- * « Réglages » button when the settings live in a bottom sheet rather than in
+ * Settings button when the settings live in a bottom sheet rather than in
  * the sidebar. App-chrome styling on purpose — the toolbar is editor UI, not
  * part of the email. Only ever rendered for the selected block, so a single
  * toolbar is visible at a time.
@@ -303,7 +303,7 @@ function SelectionLinkButton({
  * At 44px per target the full set is wider than a 390px viewport, so the row
  * wraps under a touch pointer rather than scrolling: it sits in the flow there
  * (see the canvas), so a second line costs nothing, while a scrolling row
- * would hide « Supprimer » behind an edge with no affordance.
+ * would hide Delete behind an edge with no affordance.
  */
 export function BlockToolbar({
 	handle,
@@ -353,7 +353,7 @@ export function BlockToolbar({
 			<ToolbarSeparator />
 			{onOpenSettings ? (
 				<ToolbarIconButton
-					label="Réglages du bloc"
+					label="Block settings"
 					coarsePointer={coarsePointer}
 					onClick={onOpenSettings}
 				>
@@ -361,14 +361,14 @@ export function BlockToolbar({
 				</ToolbarIconButton>
 			) : null}
 			<ToolbarIconButton
-				label="Dupliquer le bloc"
+				label="Duplicate block"
 				coarsePointer={coarsePointer}
 				onClick={onDuplicate}
 			>
 				<CopyIcon aria-hidden />
 			</ToolbarIconButton>
 			<ToolbarIconButton
-				label="Supprimer le bloc"
+				label="Delete block"
 				coarsePointer={coarsePointer}
 				onClick={onRemove}
 			>

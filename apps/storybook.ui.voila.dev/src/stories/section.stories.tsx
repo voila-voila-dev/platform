@@ -25,19 +25,19 @@ export const Default: Story = {
 		<Section>
 			<SectionHeader>
 				<SectionHeading>
-					<SectionTitle>Prochaines missions</SectionTitle>
+					<SectionTitle>Upcoming projects</SectionTitle>
 					<SectionDescription>
-						Les missions de votre club cette semaine.
+						Your team's projects this week.
 					</SectionDescription>
 				</SectionHeading>
 				<SectionActions>
 					<Button variant="ghost" size="sm">
-						Voir tout
+						View all
 					</Button>
 				</SectionActions>
 			</SectionHeader>
 			<Card>
-				<CardContent>Match senior — samedi 14 juin, 15h00</CardContent>
+				<CardContent>Design review — Saturday June 14, 3:00 PM</CardContent>
 			</Card>
 		</Section>
 	),
@@ -52,7 +52,7 @@ export const TitleOnly: Story = {
 				</SectionHeading>
 			</SectionHeader>
 			<Card>
-				<CardContent>Attestation d'assurance.pdf</CardContent>
+				<CardContent>Statement-of-work.pdf</CardContent>
 			</Card>
 		</Section>
 	),
@@ -68,30 +68,30 @@ export const Stacked: Story = {
 			<Section>
 				<SectionHeader>
 					<SectionHeading>
-						<SectionTitle>Profil</SectionTitle>
+						<SectionTitle>Profile</SectionTitle>
 						<SectionDescription>
-							Informations visibles par les clubs.
+							Information visible to clients.
 						</SectionDescription>
 					</SectionHeading>
 				</SectionHeader>
 				<Card>
-					<CardContent>Nathan Guyot — Kinésithérapeute</CardContent>
+					<CardContent>Nathan Guyot — Full-stack developer</CardContent>
 				</Card>
 			</Section>
 			<Section>
 				<SectionHeader>
 					<SectionHeading>
 						{/* biome-ignore lint/a11y/useHeadingContent: Base UI's render prop nests the SectionTitle children inside the heading. */}
-						<SectionTitle render={<h3 />}>Qualifications</SectionTitle>
+						<SectionTitle render={<h3 />}>Certifications</SectionTitle>
 					</SectionHeading>
 					<SectionActions>
 						<Button variant="outline" size="sm">
-							Ajouter
+							Add
 						</Button>
 					</SectionActions>
 				</SectionHeader>
 				<Card>
-					<CardContent>Urgence terrain — niveau 2</CardContent>
+					<CardContent>AWS Solutions Architect — Associate</CardContent>
 				</Card>
 			</Section>
 		</div>

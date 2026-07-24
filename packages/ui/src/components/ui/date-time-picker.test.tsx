@@ -52,9 +52,9 @@ const queryNativeInput = (screen: ReturnType<typeof render>) =>
 
 describe("DateTimePicker", () => {
 	it("shows the placeholder and marks the trigger empty when nothing is selected", () => {
-		const screen = render(<DateTimePicker placeholder="Mission start" />);
+		const screen = render(<DateTimePicker placeholder="Project start" />);
 		const trigger = queryTrigger(screen);
-		expect(trigger?.textContent).toContain("Mission start");
+		expect(trigger?.textContent).toContain("Project start");
 		expect(trigger?.getAttribute("data-empty")).toBe("true");
 	});
 
@@ -144,12 +144,12 @@ describe("DateTimePicker", () => {
 	it("serializes the value into a hidden form input as yyyy-MM-ddTHH:mm", () => {
 		const screen = render(
 			<DateTimePicker
-				name="missionStart"
+				name="projectStart"
 				value={new Date(2026, 5, 20, 9, 30)}
 			/>,
 		);
 		const input = screen.baseElement.querySelector(
-			'input[type=hidden][name="missionStart"]',
+			'input[type=hidden][name="projectStart"]',
 		) as HTMLInputElement;
 		expect(input).not.toBeNull();
 		expect(input.value).toBe("2026-06-20T09:30");
@@ -241,10 +241,10 @@ describe("DateTimeRangeInput", () => {
 
 	it("renders the start and end labels", () => {
 		const screen = render(
-			<DateTimeRangeInput startLabel="Début" endLabel="Fin" />,
+			<DateTimeRangeInput startLabel="From" endLabel="To" />,
 		);
-		expect(screen.getByText("Début")).not.toBeNull();
-		expect(screen.getByText("Fin")).not.toBeNull();
+		expect(screen.getByText("From")).not.toBeNull();
+		expect(screen.getByText("To")).not.toBeNull();
 	});
 
 	it("seeds the end an hour after the start when the end is empty", async () => {

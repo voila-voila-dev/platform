@@ -12,16 +12,16 @@ afterEach(cleanup);
 
 function Fixture(props: React.ComponentProps<typeof Tabs>) {
 	return (
-		<Tabs defaultValue="missions" {...props}>
+		<Tabs defaultValue="projects" {...props}>
 			<TabsList>
-				<TabsTrigger value="missions">Missions</TabsTrigger>
-				<TabsTrigger value="providers">Providers</TabsTrigger>
+				<TabsTrigger value="projects">Projects</TabsTrigger>
+				<TabsTrigger value="freelancers">Freelancers</TabsTrigger>
 				<TabsTrigger value="billing" disabled>
 					Billing
 				</TabsTrigger>
 			</TabsList>
-			<TabsContent value="missions">Missions panel</TabsContent>
-			<TabsContent value="providers">Providers panel</TabsContent>
+			<TabsContent value="projects">Projects panel</TabsContent>
+			<TabsContent value="freelancers">Freelancers panel</TabsContent>
 			<TabsContent value="billing">Billing panel</TabsContent>
 		</Tabs>
 	);
@@ -30,19 +30,19 @@ function Fixture(props: React.ComponentProps<typeof Tabs>) {
 describe("Tabs", () => {
 	it("marks the default tab active and shows only its panel", () => {
 		const screen = render(<Fixture />);
-		const missions = screen.getByRole("tab", { name: "Missions" });
-		expect(missions.getAttribute("aria-selected")).toBe("true");
-		expect(missions.hasAttribute("data-active")).toBe(true);
-		expect(screen.getByText("Missions panel")).toBeTruthy();
-		expect(screen.queryByText("Providers panel")).toBeNull();
+		const projects = screen.getByRole("tab", { name: "Projects" });
+		expect(projects.getAttribute("aria-selected")).toBe("true");
+		expect(projects.hasAttribute("data-active")).toBe(true);
+		expect(screen.getByText("Projects panel")).toBeTruthy();
+		expect(screen.queryByText("Freelancers panel")).toBeNull();
 	});
 
 	it("switches the active panel on trigger click", async () => {
 		const screen = render(<Fixture />);
-		fireEvent.click(screen.getByRole("tab", { name: "Providers" }));
+		fireEvent.click(screen.getByRole("tab", { name: "Freelancers" }));
 		await waitFor(() => {
-			expect(screen.getByText("Providers panel")).toBeTruthy();
-			expect(screen.queryByText("Missions panel")).toBeNull();
+			expect(screen.getByText("Freelancers panel")).toBeTruthy();
+			expect(screen.queryByText("Projects panel")).toBeNull();
 		});
 	});
 
@@ -55,7 +55,7 @@ describe("Tabs", () => {
 		fireEvent.click(billing);
 		await waitFor(() => {
 			expect(screen.queryByText("Billing panel")).toBeNull();
-			expect(screen.getByText("Missions panel")).toBeTruthy();
+			expect(screen.getByText("Projects panel")).toBeTruthy();
 		});
 	});
 

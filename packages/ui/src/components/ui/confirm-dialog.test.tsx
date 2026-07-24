@@ -11,27 +11,27 @@ describe("ConfirmDialog", () => {
 	it("renders only the trigger while closed", () => {
 		const screen = render(
 			<ConfirmDialog
-				trigger={<Button variant="outline">Cancel mission</Button>}
-				title="Cancel this mission?"
+				trigger={<Button variant="outline">Cancel project</Button>}
+				title="Cancel this project?"
 				description="This action cannot be undone."
 			/>,
 		);
-		expect(screen.getByRole("button", { name: "Cancel mission" })).toBeTruthy();
+		expect(screen.getByRole("button", { name: "Cancel project" })).toBeTruthy();
 		expect(screen.queryByRole("alertdialog")).toBeNull();
 	});
 
 	it("opens on trigger click with title, description and default labels", async () => {
 		const screen = render(
 			<ConfirmDialog
-				trigger={<Button variant="outline">Cancel mission</Button>}
-				title="Cancel this mission?"
+				trigger={<Button variant="outline">Cancel project</Button>}
+				title="Cancel this project?"
 				description="This action cannot be undone."
 			/>,
 		);
-		fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+		fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 		await waitFor(() => {
 			expect(screen.getByRole("alertdialog")).toBeTruthy();
-			expect(screen.getByText("Cancel this mission?")).toBeTruthy();
+			expect(screen.getByText("Cancel this project?")).toBeTruthy();
 			expect(screen.getByText("This action cannot be undone.")).toBeTruthy();
 			expect(screen.getByRole("button", { name: "Confirm" })).toBeTruthy();
 			expect(screen.getByRole("button", { name: "Cancel" })).toBeTruthy();
@@ -41,18 +41,18 @@ describe("ConfirmDialog", () => {
 	it("renders localized labels and the confirm button variant", async () => {
 		const screen = render(
 			<ConfirmDialog
-				trigger={<Button>Supprimer</Button>}
-				title="Supprimer cette mission ?"
-				confirmLabel="Supprimer"
-				cancelLabel="Annuler"
+				trigger={<Button>Eliminar</Button>}
+				title="¿Eliminar este proyecto?"
+				confirmLabel="Eliminar"
+				cancelLabel="Cancelar"
 				variant="destructive"
 			/>,
 		);
-		fireEvent.click(screen.getByRole("button", { name: "Supprimer" }));
+		fireEvent.click(screen.getByRole("button", { name: "Eliminar" }));
 		await waitFor(() => {
 			expect(screen.getByRole("alertdialog")).toBeTruthy();
 		});
-		expect(screen.getByRole("button", { name: "Annuler" })).toBeTruthy();
+		expect(screen.getByRole("button", { name: "Cancelar" })).toBeTruthy();
 		const confirm = screen.baseElement.querySelector(
 			"[data-slot=confirm-dialog-confirm]",
 		);
@@ -115,7 +115,7 @@ describe("ConfirmDialog", () => {
 		const screen = render(
 			<ConfirmDialog
 				trigger={<Button>Archive</Button>}
-				title="Archive this mission?"
+				title="Archive this project?"
 				onConfirm={onConfirm}
 			/>,
 		);
@@ -152,7 +152,7 @@ describe("ConfirmDialog", () => {
 		const screen = render(
 			<ConfirmDialog
 				trigger={<Button>Archive</Button>}
-				title="Archive this mission?"
+				title="Archive this project?"
 				onConfirm={onConfirm}
 			/>,
 		);
@@ -181,7 +181,7 @@ describe("ConfirmDialog", () => {
 					<ConfirmDialog
 						open={open}
 						onOpenChange={setOpen}
-						title="Remove this provider?"
+						title="Remove this freelancer?"
 					/>
 				</>
 			);
@@ -206,7 +206,7 @@ describe("ConfirmDialog", () => {
 			<ConfirmDialog
 				open
 				size="sm"
-				title="Remove this provider?"
+				title="Remove this freelancer?"
 				media={<svg role="img" aria-label="Warning" />}
 			/>,
 		);

@@ -11,32 +11,32 @@ function queryLabel(screen: ReturnType<typeof render>) {
 
 describe("Label", () => {
 	it("renders its children in a native label element", () => {
-		const screen = render(<Label>Organization email</Label>);
+		const screen = render(<Label>Workspace email</Label>);
 		const label = queryLabel(screen);
 		expect(label?.tagName).toBe("LABEL");
-		expect(label?.textContent).toBe("Organization email");
+		expect(label?.textContent).toBe("Workspace email");
 	});
 
 	it("forwards htmlFor to the label element", () => {
 		const screen = render(
-			<Label htmlFor="organization-email">Organization email</Label>,
+			<Label htmlFor="workspace-email">Workspace email</Label>,
 		);
-		expect(queryLabel(screen)?.getAttribute("for")).toBe("organization-email");
+		expect(queryLabel(screen)?.getAttribute("for")).toBe("workspace-email");
 	});
 
 	it("associates with its control through htmlFor", () => {
 		const screen = render(
 			<>
-				<Label htmlFor="organization-email">Organization email</Label>
-				<input id="organization-email" type="email" />
+				<Label htmlFor="workspace-email">Workspace email</Label>
+				<input id="workspace-email" type="email" />
 			</>,
 		);
-		const input = screen.getByLabelText("Organization email");
+		const input = screen.getByLabelText("Workspace email");
 		expect(input.tagName).toBe("INPUT");
 	});
 
 	it("keeps the base typography and layout classes", () => {
-		const screen = render(<Label>Organization email</Label>);
+		const screen = render(<Label>Workspace email</Label>);
 		const label = queryLabel(screen);
 		expect(label?.classList.contains("text-sm")).toBe(true);
 		expect(label?.classList.contains("font-medium")).toBe(true);
@@ -46,7 +46,7 @@ describe("Label", () => {
 	});
 
 	it("keeps the peer and group disabled-propagation hooks", () => {
-		const screen = render(<Label>Organization email</Label>);
+		const screen = render(<Label>Workspace email</Label>);
 		const label = queryLabel(screen);
 		expect(label?.classList.contains("peer-disabled:opacity-50")).toBe(true);
 		expect(label?.classList.contains("peer-disabled:cursor-not-allowed")).toBe(
@@ -64,7 +64,7 @@ describe("Label", () => {
 
 	it("merges className over the base classes", () => {
 		const screen = render(
-			<Label className="custom-label-class">Organization email</Label>,
+			<Label className="custom-label-class">Workspace email</Label>,
 		);
 		const label = queryLabel(screen);
 		expect(label?.classList.contains("custom-label-class")).toBe(true);
@@ -74,7 +74,7 @@ describe("Label", () => {
 	it("spreads arbitrary props onto the label element", () => {
 		const screen = render(
 			<Label id="email-label" data-testid="email-label">
-				Organization email
+				Workspace email
 			</Label>,
 		);
 		const label = queryLabel(screen);

@@ -21,7 +21,7 @@ import { EMAIL_COLOR } from "#/theme.ts";
 
 /**
  * A catalogue item on the shared card shell: visual, name, description, price
- * with an optional struck-through « tarif de base », and a call to action.
+ * with an optional struck-through base price, and a call to action.
  */
 function ProductBlockView({
 	block,
@@ -30,17 +30,17 @@ function ProductBlockView({
 	return (
 		<EmailCardShell image={block.image}>
 			<BlockTextInput
-				ariaLabel="Nom du produit"
+				ariaLabel="Product name"
 				value={block.name}
-				placeholder="Nom du produit"
+				placeholder="Product name"
 				onChange={(name) => onChange({ ...block, name })}
 				className="font-bold text-[17px] leading-[1.3]"
 				style={{ color: EMAIL_COLOR.brand }}
 			/>
 			<textarea
-				aria-label="Description du produit"
+				aria-label="Product description"
 				value={block.description}
-				placeholder="La description du produit."
+				placeholder="The product description."
 				rows={2}
 				onChange={(event) =>
 					onChange({ ...block, description: event.target.value })
@@ -75,9 +75,9 @@ function ProductBlockSettings({
 }: EmailBlockComponentProps<EmailEditorProductBlock>) {
 	return (
 		<>
-			<BlockOptionSection title="Contenu">
+			<BlockOptionSection title="Content">
 				<TextOption
-					label="Nom"
+					label="Name"
 					value={block.name}
 					onChange={(name) => onChange({ ...block, name })}
 				/>
@@ -87,12 +87,12 @@ function ProductBlockSettings({
 					onChange={(description) => onChange({ ...block, description })}
 				/>
 				<MoneyOption
-					label="Prix"
+					label="Price"
 					value={block.price}
 					onChange={(price) => onChange({ ...block, price })}
 				/>
 				<ToggleOption
-					label="Tarif de base barré"
+					label="Struck-through base price"
 					checked={block.compareAtPrice !== null}
 					onChange={(enabled) =>
 						onChange({
@@ -100,11 +100,11 @@ function ProductBlockSettings({
 							compareAtPrice: enabled ? { ...block.price } : null,
 						})
 					}
-					description="Affiche un prix barré à côté du prix courant."
+					description="Shows a struck-through price next to the current price."
 				/>
 				{block.compareAtPrice === null ? null : (
 					<MoneyOption
-						label="Tarif de base"
+						label="Base price"
 						value={block.compareAtPrice}
 						onChange={(compareAtPrice) =>
 							onChange({ ...block, compareAtPrice })
@@ -112,9 +112,9 @@ function ProductBlockSettings({
 					/>
 				)}
 			</BlockOptionSection>
-			<BlockOptionSection title="Apparence">
+			<BlockOptionSection title="Appearance">
 				<TextOption
-					label="Adresse de l'image"
+					label="Image URL"
 					value={block.image.src}
 					onChange={(src) =>
 						onChange({ ...block, image: { ...block.image, src } })
@@ -122,20 +122,20 @@ function ProductBlockSettings({
 					placeholder="https://"
 				/>
 				<TextOption
-					label="Texte alternatif"
+					label="Alt text"
 					value={block.image.alt}
 					onChange={(alt) =>
 						onChange({ ...block, image: { ...block.image, alt } })
 					}
 				/>
 			</BlockOptionSection>
-			<BlockOptionSection title="Lien">
+			<BlockOptionSection title="Link">
 				<TextOption
-					label="Libellé du bouton"
+					label="Button label"
 					value={block.buttonLabel}
 					onChange={(buttonLabel) => onChange({ ...block, buttonLabel })}
-					placeholder="Commander"
-					description="Laissez vide pour une carte sans bouton."
+					placeholder="Order now"
+					description="Leave empty for a card without a button."
 				/>
 				<LinkOption
 					value={block.href}
@@ -148,7 +148,7 @@ function ProductBlockSettings({
 
 export const productBlockDefinition: EmailBlockDefinition<EmailEditorProductBlock> =
 	{
-		label: "Produit",
+		label: "Product",
 		icon: TagIcon,
 		View: ProductBlockView,
 		Settings: ProductBlockSettings,

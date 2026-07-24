@@ -23,8 +23,8 @@ function ScrollablePage({ children }: { children: React.ReactNode }) {
 			<div className="flex flex-col gap-3 p-4 pb-2">
 				{Array.from({ length: 12 }, (_, index) => (
 					<p key={String(index)} className="text-sm text-muted-foreground">
-						Détail de la mission {index + 1} — couverture kiné du match de
-						samedi, arrivée 30 minutes avant le coup d'envoi.
+						Project detail {index + 1} — landing page redesign for the spring
+						launch, kickoff call 30 minutes before the sprint starts.
 					</p>
 				))}
 			</div>
@@ -37,7 +37,7 @@ export const Default: Story = {
 	render: (args) => (
 		<ScrollablePage>
 			<StickyActionBar {...args}>
-				<Button>Postuler</Button>
+				<Button>Apply</Button>
 			</StickyActionBar>
 		</ScrollablePage>
 	),
@@ -47,8 +47,8 @@ export const TwoActions: Story = {
 	render: (args) => (
 		<ScrollablePage>
 			<StickyActionBar {...args}>
-				<Button variant="outline">Contacter</Button>
-				<Button>Postuler</Button>
+				<Button variant="outline">Contact</Button>
+				<Button>Apply</Button>
 			</StickyActionBar>
 		</ScrollablePage>
 	),
@@ -62,7 +62,7 @@ export const MobileOnly: Story = {
 	render: (args) => (
 		<ScrollablePage>
 			<StickyActionBar {...args}>
-				<Button>Postuler</Button>
+				<Button>Apply</Button>
 			</StickyActionBar>
 		</ScrollablePage>
 	),

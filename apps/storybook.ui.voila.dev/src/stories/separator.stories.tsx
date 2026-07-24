@@ -16,16 +16,16 @@ export const Default: Story = {
 	render: () => (
 		<div className="w-72">
 			<div className="space-y-1">
-				<h4 className="text-sm font-medium">Mission details</h4>
+				<h4 className="text-sm font-medium">Project details</h4>
 				<p className="text-sm text-muted-foreground">
-					Saturday match cover at Stade Rochelais.
+					Landing page redesign for Northwind Studio.
 				</p>
 			</div>
 			<Separator className="my-4" />
 			<div className="flex h-5 items-center gap-4 text-sm">
-				<span>Missions</span>
+				<span>Projects</span>
 				<Separator orientation="vertical" />
-				<span>Providers</span>
+				<span>Freelancers</span>
 				<Separator orientation="vertical" />
 				<span>Billing</span>
 			</div>
@@ -36,23 +36,23 @@ export const Default: Story = {
 export const Vertical: Story = {
 	render: () => (
 		<div className="flex h-8 items-center gap-4 text-sm">
-			<span>Club</span>
+			<span>Client</span>
 			<Separator orientation="vertical" />
-			<span>Provider</span>
+			<span>Freelancer</span>
 		</div>
 	),
 };
 
 /**
- * Pass children for the auth-screen "OU" divider. The lines flank the label,
+ * Pass children for the auth-screen "OR" divider. The lines flank the label,
  * so it works on any background - cards included.
  */
 export const WithLabel: Story = {
 	render: () => (
 		<div className="flex w-72 flex-col gap-4">
-			<Button>Se connecter par e-mail</Button>
-			<Separator>OU</Separator>
-			<Button variant="outline">Continuer avec Google</Button>
+			<Button>Sign in with email</Button>
+			<Separator>OR</Separator>
+			<Button variant="outline">Continue with Google</Button>
 		</div>
 	),
 };
@@ -60,9 +60,9 @@ export const WithLabel: Story = {
 export const WithLabelVertical: Story = {
 	render: () => (
 		<div className="flex h-40 items-center gap-6 text-sm">
-			<span>Connexion</span>
-			<Separator orientation="vertical">OU</Separator>
-			<span>Inscription</span>
+			<span>Sign in</span>
+			<Separator orientation="vertical">OR</Separator>
+			<span>Sign up</span>
 		</div>
 	),
 };

@@ -13,12 +13,12 @@ export const sectionVariants = cva({
 		background: {
 			default: "bg-background",
 			muted: "bg-muted",
-			provider: "bg-provider text-primary-foreground",
+			brand: "bg-brand text-primary-foreground",
 			gradient: "bg-gradient-to-br from-background via-background to-muted",
 			"gradient-primary":
 				"bg-gradient-to-br from-primary/5 via-background to-primary/10",
-			"gradient-provider":
-				"bg-gradient-to-br from-provider/5 via-background to-provider/10",
+			"gradient-brand":
+				"bg-gradient-to-br from-brand/5 via-background to-brand/10",
 		},
 	},
 	defaultVariants: {
@@ -40,8 +40,8 @@ export const sectionSpacingOptions = [
 export const sectionBackgroundOptions = [
 	"default",
 	"muted",
-	"provider",
+	"brand",
 	"gradient",
 	"gradient-primary",
-	"gradient-provider",
+	"gradient-brand",
 ] as const satisfies readonly NonNullable<SectionVariants["background"]>[];

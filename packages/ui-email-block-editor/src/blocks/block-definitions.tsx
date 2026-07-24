@@ -47,7 +47,7 @@ export interface EmailBlockComponentProps<
 export interface EmailBlockDefinition<
 	B extends EmailEditorBlock = EmailEditorBlock,
 > {
-	/** French label shown in the add-block menu. */
+	/** Label shown in the add-block menu. */
 	readonly label: string;
 	readonly icon: Icon;
 	/** The WYSIWYG rendering, edited in place on the canvas. */

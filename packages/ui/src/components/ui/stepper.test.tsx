@@ -17,12 +17,12 @@ function renderThreeSteps(value: number) {
 		<Stepper value={value}>
 			<StepperItem step={1}>
 				<StepperIndicator />
-				<StepperTitle>Profil</StepperTitle>
+				<StepperTitle>Profile</StepperTitle>
 				<StepperSeparator />
 			</StepperItem>
 			<StepperItem step={2}>
 				<StepperIndicator />
-				<StepperTitle>Disponibilités</StepperTitle>
+				<StepperTitle>Availability</StepperTitle>
 				<StepperSeparator />
 			</StepperItem>
 			<StepperItem step={3}>
@@ -97,8 +97,8 @@ describe("Stepper", () => {
 				<StepperItem step={1}>
 					<StepperIndicator />
 					<div>
-						<StepperTitle>Profil</StepperTitle>
-						<StepperDescription>Vos informations</StepperDescription>
+						<StepperTitle>Profile</StepperTitle>
+						<StepperDescription>Your details</StepperDescription>
 					</div>
 				</StepperItem>
 			</Stepper>,
@@ -106,11 +106,11 @@ describe("Stepper", () => {
 		expect(
 			screen.baseElement.querySelector("[data-slot=stepper-title]")
 				?.textContent,
-		).toBe("Profil");
+		).toBe("Profile");
 		expect(
 			screen.baseElement.querySelector("[data-slot=stepper-description]")
 				?.textContent,
-		).toBe("Vos informations");
+		).toBe("Your details");
 	});
 
 	it("defaults to the horizontal orientation and propagates it", () => {
@@ -137,7 +137,7 @@ describe("Stepper", () => {
 			<Stepper value={1} orientation="vertical">
 				<StepperItem step={1}>
 					<StepperIndicator />
-					<StepperTitle>Profil</StepperTitle>
+					<StepperTitle>Profile</StepperTitle>
 					<StepperSeparator />
 				</StepperItem>
 			</Stepper>,
@@ -168,7 +168,7 @@ describe("Stepper", () => {
 			<Stepper value={1} className="custom-stepper">
 				<StepperItem step={1} className="custom-item">
 					<StepperIndicator className="custom-indicator" />
-					<StepperTitle className="custom-title">Profil</StepperTitle>
+					<StepperTitle className="custom-title">Profile</StepperTitle>
 				</StepperItem>
 			</Stepper>,
 		);

@@ -3,21 +3,21 @@ import { Chart, type ChartConfig } from "@voila.dev/ui-chart/components/chart";
 import { expect, fireEvent, within } from "storybook/test";
 
 const chartData = [
-	{ month: "January", missions: 24, bookings: 18 },
-	{ month: "February", missions: 31, bookings: 22 },
-	{ month: "March", missions: 28, bookings: 25 },
-	{ month: "April", missions: 35, bookings: 30 },
-	{ month: "May", missions: 42, bookings: 36 },
-	{ month: "June", missions: 38, bookings: 33 },
+	{ month: "January", projects: 24, proposals: 18 },
+	{ month: "February", projects: 31, proposals: 22 },
+	{ month: "March", projects: 28, proposals: 25 },
+	{ month: "April", projects: 35, proposals: 30 },
+	{ month: "May", projects: 42, proposals: 36 },
+	{ month: "June", projects: 38, proposals: 33 },
 ];
 
 const chartConfig = {
-	missions: { label: "Missions published", color: "var(--chart-1)" },
-	bookings: { label: "Bookings confirmed", color: "var(--chart-2)" },
+	projects: { label: "Projects published", color: "var(--chart-1)" },
+	proposals: { label: "Proposals accepted", color: "var(--chart-2)" },
 } satisfies ChartConfig;
 
 const monthAxis = { key: "month" } as const;
-const bothSeries = { keys: ["missions", "bookings"] } as const;
+const bothSeries = { keys: ["projects", "proposals"] } as const;
 
 const meta = {
 	title: "UI/Chart",
@@ -84,7 +84,7 @@ export const BarsStacked: Story = {
 		config: chartConfig,
 		data: chartData,
 		x: monthAxis,
-		y: { keys: ["missions", "bookings"], stacked: true },
+		y: { keys: ["projects", "proposals"], stacked: true },
 		className: frame,
 		margin: legendMargin,
 		children: (
@@ -106,7 +106,7 @@ export const BarsHorizontal: Story = {
 		config: chartConfig,
 		data: chartData,
 		x: monthAxis,
-		y: { keys: ["missions"] },
+		y: { keys: ["projects"] },
 		orientation: "horizontal",
 		className: frame,
 		margin: { top: 4, right: 48, bottom: 4, left: 80 },
@@ -183,7 +183,7 @@ export const LineStepWithDots: Story = {
 		config: chartConfig,
 		data: chartData,
 		x: { key: "month", type: "point" },
-		y: { keys: ["bookings"] },
+		y: { keys: ["proposals"] },
 		className: frame,
 		margin: { top: 8, right: 16, bottom: 24, left: 40 },
 		children: (
@@ -204,7 +204,7 @@ export const Area: Story = {
 		config: chartConfig,
 		data: chartData,
 		x: { key: "month", type: "point" },
-		y: { keys: ["missions"] },
+		y: { keys: ["projects"] },
 		className: frame,
 		margin: { top: 8, right: 16, bottom: 24, left: 40 },
 		children: (
@@ -225,7 +225,7 @@ export const AreaStacked: Story = {
 		config: chartConfig,
 		data: chartData,
 		x: { key: "month", type: "point" },
-		y: { keys: ["bookings", "missions"], stacked: true },
+		y: { keys: ["proposals", "projects"], stacked: true },
 		className: frame,
 		margin: { top: 8, right: 16, bottom: 52, left: 40 },
 		children: (
@@ -242,21 +242,21 @@ export const AreaStacked: Story = {
 };
 
 const scatterData = [
-	{ club: "Alpha", missions: 12, providers: 8, spend: 4200 },
-	{ club: "Bravo", missions: 26, providers: 15, spend: 9100 },
-	{ club: "Charlie", missions: 18, providers: 11, spend: 6400 },
-	{ club: "Delta", missions: 34, providers: 21, spend: 15800 },
-	{ club: "Echo", missions: 9, providers: 5, spend: 2100 },
+	{ client: "Alpha", projects: 12, freelancers: 8, spend: 4200 },
+	{ client: "Bravo", projects: 26, freelancers: 15, spend: 9100 },
+	{ client: "Charlie", projects: 18, freelancers: 11, spend: 6400 },
+	{ client: "Delta", projects: 34, freelancers: 21, spend: 15800 },
+	{ client: "Echo", projects: 9, freelancers: 5, spend: 2100 },
 ];
 
 export const Points: Story = {
 	args: {
 		config: {
-			missions: { label: "Missions", color: "var(--chart-4)" },
+			projects: { label: "Projects", color: "var(--chart-4)" },
 		},
 		data: scatterData,
-		x: { key: "club", type: "point" },
-		y: { keys: ["missions"] },
+		x: { key: "client", type: "point" },
+		y: { keys: ["projects"] },
 		className: frame,
 		margin: { top: 16, right: 24, bottom: 24, left: 40 },
 		children: (
@@ -271,28 +271,28 @@ export const Points: Story = {
 	},
 };
 
-const specialtyData = [
-	{ specialty: "physiotherapy", providers: 86 },
-	{ specialty: "osteopathy", providers: 54 },
-	{ specialty: "nursing", providers: 37 },
-	{ specialty: "medicine", providers: 21 },
-	{ specialty: "other", providers: 12 },
+const roleData = [
+	{ role: "design", freelancers: 86 },
+	{ role: "development", freelancers: 54 },
+	{ role: "writing", freelancers: 37 },
+	{ role: "consulting", freelancers: 21 },
+	{ role: "other", freelancers: 12 },
 ];
 
-const specialtyConfig = {
-	providers: { label: "Providers" },
-	physiotherapy: { label: "Physiotherapy", color: "var(--chart-1)" },
-	osteopathy: { label: "Osteopathy", color: "var(--chart-2)" },
-	nursing: { label: "Nursing", color: "var(--chart-3)" },
-	medicine: { label: "Medicine", color: "var(--chart-4)" },
+const roleConfig = {
+	freelancers: { label: "Freelancers" },
+	design: { label: "Design", color: "var(--chart-1)" },
+	development: { label: "Development", color: "var(--chart-2)" },
+	writing: { label: "Writing", color: "var(--chart-3)" },
+	consulting: { label: "Consulting", color: "var(--chart-4)" },
 	other: { label: "Other", color: "var(--chart-5)" },
 } satisfies ChartConfig;
 
 const roundArgs = {
-	config: specialtyConfig,
-	data: specialtyData,
-	x: { key: "specialty" },
-	y: { keys: ["providers"] },
+	config: roleConfig,
+	data: roleData,
+	x: { key: "role" },
+	y: { keys: ["freelancers"] },
 	className: square,
 	margin: { top: 0, right: 0, bottom: 48, left: 0 },
 	interactive: false,
@@ -305,20 +305,20 @@ export const Pie: Story = {
 			<>
 				<Chart.Pie />
 				<Chart.Tooltip
-					content={<Chart.TooltipContent nameKey="specialty" hideLabel />}
+					content={<Chart.TooltipContent nameKey="role" hideLabel />}
 				/>
-				<Chart.Legend content={<Chart.LegendContent nameKey="specialty" />} />
+				<Chart.Legend content={<Chart.LegendContent nameKey="role" />} />
 			</>
 		),
 	},
 	play: async ({ canvasElement }) => {
 		const wedges = canvasElement.querySelectorAll('[data-slot="chart-slice"]');
-		await expect(wedges).toHaveLength(specialtyData.length);
+		await expect(wedges).toHaveLength(roleData.length);
 		fireEvent.pointerOver(wedges[0]);
 		// The readout portals to the document body, outside the story canvas.
 		await expect(
 			await within(document.body).findByRole("status"),
-		).toHaveTextContent("Physiotherapy");
+		).toHaveTextContent("Design");
 	},
 };
 
@@ -329,21 +329,21 @@ export const Donut: Story = {
 			<>
 				<Chart.Donut />
 				<Chart.Tooltip
-					content={<Chart.TooltipContent nameKey="specialty" hideLabel />}
+					content={<Chart.TooltipContent nameKey="role" hideLabel />}
 				/>
-				<Chart.Legend content={<Chart.LegendContent nameKey="specialty" />} />
+				<Chart.Legend content={<Chart.LegendContent nameKey="role" />} />
 			</>
 		),
 	},
 };
 
 const coverageData = [
-	{ region: "Île-de-France", coverage: 92 },
-	{ region: "Bretagne", coverage: 68 },
-	{ region: "Occitanie", coverage: 74 },
-	{ region: "Auvergne-Rhône-Alpes", coverage: 85 },
-	{ region: "Nouvelle-Aquitaine", coverage: 61 },
-	{ region: "Hauts-de-France", coverage: 57 },
+	{ region: "North America", coverage: 92 },
+	{ region: "Western Europe", coverage: 68 },
+	{ region: "Asia-Pacific", coverage: 74 },
+	{ region: "Latin America", coverage: 85 },
+	{ region: "Middle East", coverage: 61 },
+	{ region: "Africa", coverage: 57 },
 ];
 
 export const Radar: Story = {
@@ -477,7 +477,7 @@ export const Dashboard: StoryObj = {
 				config={chartConfig}
 				data={chartData}
 				x={{ key: "month", type: "point" }}
-				y={{ keys: ["missions"] }}
+				y={{ keys: ["projects"] }}
 				className="aspect-auto w-full"
 				margin={{ top: 8, right: 16, bottom: 24, left: 40 }}
 				style={{ height: 220 }}
@@ -492,15 +492,15 @@ export const Dashboard: StoryObj = {
 			<Chart.Root {...roundArgs} className="aspect-square w-full">
 				<Chart.Donut />
 				<Chart.Tooltip
-					content={<Chart.TooltipContent nameKey="specialty" hideLabel />}
+					content={<Chart.TooltipContent nameKey="role" hideLabel />}
 				/>
-				<Chart.Legend content={<Chart.LegendContent nameKey="specialty" />} />
+				<Chart.Legend content={<Chart.LegendContent nameKey="role" />} />
 			</Chart.Root>
 			<Chart.Root
 				config={chartConfig}
 				data={chartData}
 				x={monthAxis}
-				y={{ keys: ["missions"] }}
+				y={{ keys: ["projects"] }}
 				orientation="horizontal"
 				className="aspect-auto w-full"
 				margin={{ top: 4, right: 48, bottom: 4, left: 80 }}

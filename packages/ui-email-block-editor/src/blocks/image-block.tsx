@@ -34,16 +34,16 @@ const WIDTH_OPTIONS: ReadonlyArray<{
 	readonly value: EmailEditorImageWidth;
 	readonly label: string;
 }> = [
-	{ value: "full", label: "Pleine largeur" },
-	{ value: "contained", label: "Largeur réduite (centrée)" },
+	{ value: "full", label: "Full width" },
+	{ value: "contained", label: "Reduced width (centered)" },
 ];
 
 const OVERLAY_OPTIONS: ReadonlyArray<{
 	readonly value: EmailEditorImageOverlay;
 	readonly label: string;
 }> = [
-	{ value: "none", label: "Aucune" },
-	{ value: "play", label: "Bouton lecture (vignette vidéo)" },
+	{ value: "none", label: "None" },
+	{ value: "play", label: "Play button (video thumbnail)" },
 ];
 
 /** The play badge composited over a video thumbnail. */
@@ -135,7 +135,7 @@ function ImageDropZone({
 				}}
 			>
 				<ImageIcon size={24} aria-hidden />
-				{uploading ? "Téléversement en cours…" : "Ajouter une image"}
+				{uploading ? "Uploading…" : "Add an image"}
 			</button>
 			<input
 				ref={fileInputRef}
@@ -172,7 +172,7 @@ function ImageUploadButton({
 				onClick={() => fileInputRef.current?.click()}
 			>
 				<UploadSimpleIcon aria-hidden />
-				{block.src === "" ? "Téléverser une image" : "Remplacer l'image"}
+				{block.src === "" ? "Upload an image" : "Replace the image"}
 			</Button>
 			<input
 				ref={fileInputRef}
@@ -198,15 +198,15 @@ function ImageBlockSettings({
 }: EmailBlockComponentProps<EmailEditorImageBlock>) {
 	return (
 		<>
-			<BlockOptionSection title="Contenu">
+			<BlockOptionSection title="Content">
 				<TextOption
-					label="Texte alternatif"
+					label="Alt text"
 					value={block.alt}
 					onChange={(alt) => onChange({ ...block, alt })}
-					description="Affiché quand l'image est bloquée par la messagerie."
+					description="Shown when the email client blocks the image."
 				/>
 				<TextOption
-					label="Adresse de l'image"
+					label="Image URL"
 					value={block.src}
 					onChange={(src) => onChange({ ...block, src })}
 					placeholder="https://"
@@ -219,36 +219,36 @@ function ImageBlockSettings({
 					/>
 				) : null}
 			</BlockOptionSection>
-			<BlockOptionSection title="Apparence">
+			<BlockOptionSection title="Appearance">
 				<SelectOption
-					label="Largeur"
+					label="Width"
 					value={block.width}
 					options={WIDTH_OPTIONS}
 					onChange={(width) => onChange({ ...block, width })}
 				/>
 				<SelectOption
-					label="Superposition"
+					label="Overlay"
 					value={block.overlay}
 					options={OVERLAY_OPTIONS}
 					onChange={(overlay) => onChange({ ...block, overlay })}
 					description={
 						block.overlay === "play"
-							? "Aucune messagerie ne lit une vidéo intégrée : la vignette renvoie vers le lien ci-dessous. Outlook affiche la pastille sous l'image."
+							? "No email client plays an embedded video: the thumbnail links to the URL below. Outlook shows the badge under the image."
 							: undefined
 					}
 				/>
 				<ToggleOption
-					label="Coins arrondis"
+					label="Rounded corners"
 					checked={block.rounded}
 					onChange={(rounded) => onChange({ ...block, rounded })}
-					description="Outlook (moteur Word) affiche toujours des angles droits."
+					description="Outlook (Word engine) always renders square corners."
 				/>
 			</BlockOptionSection>
-			<BlockOptionSection title="Lien">
+			<BlockOptionSection title="Link">
 				<LinkOption
 					value={block.href}
 					onChange={(href) => onChange({ ...block, href })}
-					description="Laissez vide pour une image non cliquable."
+					description="Leave empty for a non-clickable image."
 				/>
 			</BlockOptionSection>
 		</>

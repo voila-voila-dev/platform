@@ -28,23 +28,23 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => {
-		const [value, setValue] = useState("physiotherapist");
+		const [value, setValue] = useState("designer");
 		return (
 			<div className="w-72">
 				<ResponsiveSelect.Root value={value} onValueChange={setValue}>
 					<ResponsiveSelect.Trigger className="w-full">
-						<ResponsiveSelect.Value placeholder="Select a specialty" />
+						<ResponsiveSelect.Value placeholder="Select a role" />
 					</ResponsiveSelect.Trigger>
 					<ResponsiveSelect.Content>
-						<ResponsiveSelect.Item value="physiotherapist">
-							Physiotherapist
+						<ResponsiveSelect.Item value="designer">
+							Designer
 						</ResponsiveSelect.Item>
-						<ResponsiveSelect.Item value="osteopath">
-							Osteopath
+						<ResponsiveSelect.Item value="developer">
+							Developer
 						</ResponsiveSelect.Item>
-						<ResponsiveSelect.Item value="nurse">Nurse</ResponsiveSelect.Item>
-						<ResponsiveSelect.Item value="sports-doctor">
-							Sports doctor
+						<ResponsiveSelect.Item value="writer">Writer</ResponsiveSelect.Item>
+						<ResponsiveSelect.Item value="data-analyst">
+							Data analyst
 						</ResponsiveSelect.Item>
 					</ResponsiveSelect.Content>
 				</ResponsiveSelect.Root>
@@ -63,8 +63,8 @@ export const Placeholder: Story = {
 						<ResponsiveSelect.Value placeholder="Pick a skill…" />
 					</ResponsiveSelect.Trigger>
 					<ResponsiveSelect.Content>
-						<ResponsiveSelect.Item value="rugby">Rugby</ResponsiveSelect.Item>
-						<ResponsiveSelect.Item value="tennis">Tennis</ResponsiveSelect.Item>
+						<ResponsiveSelect.Item value="figma">Figma</ResponsiveSelect.Item>
+						<ResponsiveSelect.Item value="react">React</ResponsiveSelect.Item>
 					</ResponsiveSelect.Content>
 				</ResponsiveSelect.Root>
 			</div>
@@ -83,7 +83,7 @@ export const Grouped: Story = {
 					</ResponsiveSelect.Trigger>
 					<ResponsiveSelect.Content>
 						<ResponsiveSelect.Group>
-							<ResponsiveSelect.Label>Métropole</ResponsiveSelect.Label>
+							<ResponsiveSelect.Label>Europe</ResponsiveSelect.Label>
 							<ResponsiveSelect.Item value="Europe/Paris">
 								Paris
 							</ResponsiveSelect.Item>
@@ -92,12 +92,12 @@ export const Grouped: Story = {
 							</ResponsiveSelect.Item>
 						</ResponsiveSelect.Group>
 						<ResponsiveSelect.Group>
-							<ResponsiveSelect.Label>Outre-mer</ResponsiveSelect.Label>
-							<ResponsiveSelect.Item value="America/Martinique">
-								Martinique
+							<ResponsiveSelect.Label>Americas</ResponsiveSelect.Label>
+							<ResponsiveSelect.Item value="America/New_York">
+								New York
 							</ResponsiveSelect.Item>
-							<ResponsiveSelect.Item value="Indian/Reunion">
-								Réunion
+							<ResponsiveSelect.Item value="America/Sao_Paulo">
+								São Paulo
 							</ResponsiveSelect.Item>
 						</ResponsiveSelect.Group>
 					</ResponsiveSelect.Content>
@@ -109,7 +109,7 @@ export const Grouped: Story = {
 
 export const Invalid: Story = {
 	render: () => {
-		const [value, setValue] = useState("physiotherapist");
+		const [value, setValue] = useState("designer");
 		return (
 			<div className="w-72">
 				<ResponsiveSelect.Root value={value} onValueChange={setValue}>
@@ -117,11 +117,11 @@ export const Invalid: Story = {
 						<ResponsiveSelect.Value />
 					</ResponsiveSelect.Trigger>
 					<ResponsiveSelect.Content>
-						<ResponsiveSelect.Item value="physiotherapist">
-							Physiotherapist
+						<ResponsiveSelect.Item value="designer">
+							Designer
 						</ResponsiveSelect.Item>
-						<ResponsiveSelect.Item value="osteopath">
-							Osteopath
+						<ResponsiveSelect.Item value="developer">
+							Developer
 						</ResponsiveSelect.Item>
 					</ResponsiveSelect.Content>
 				</ResponsiveSelect.Root>
@@ -133,13 +133,13 @@ export const Invalid: Story = {
 export const Disabled: Story = {
 	render: () => (
 		<div className="w-72">
-			<ResponsiveSelect.Root value="physiotherapist" disabled>
+			<ResponsiveSelect.Root value="designer" disabled>
 				<ResponsiveSelect.Trigger className="w-full">
 					<ResponsiveSelect.Value />
 				</ResponsiveSelect.Trigger>
 				<ResponsiveSelect.Content>
-					<ResponsiveSelect.Item value="physiotherapist">
-						Physiotherapist
+					<ResponsiveSelect.Item value="designer">
+						Designer
 					</ResponsiveSelect.Item>
 				</ResponsiveSelect.Content>
 			</ResponsiveSelect.Root>

@@ -56,16 +56,16 @@ export const MultipleItems: Story = {
 			<Carousel opts={{ align: "start" }}>
 				<CarouselContent>
 					{[
-						"Physiotherapist",
-						"Osteopath",
-						"Nurse",
-						"Doctor",
-						"Podiatrist",
-						"Athletic trainer",
-					].map((specialty) => (
-						<CarouselItem key={specialty} className="basis-1/3">
+						"Designer",
+						"Developer",
+						"Data analyst",
+						"Copywriter",
+						"Consultant",
+						"Strategist",
+					].map((role) => (
+						<CarouselItem key={role} className="basis-1/3">
 							<div className="flex aspect-square items-center justify-center rounded-xl bg-muted p-2 text-center text-sm font-medium">
-								{specialty}
+								{role}
 							</div>
 						</CarouselItem>
 					))}

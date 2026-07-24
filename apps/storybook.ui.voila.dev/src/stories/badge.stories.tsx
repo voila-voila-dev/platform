@@ -40,12 +40,12 @@ export const Variants: Story = {
 		<div className="flex flex-wrap items-center gap-2">
 			<Badge variant="default">Open</Badge>
 			<Badge variant="secondary">Draft</Badge>
-			<Badge variant="provider">Provider</Badge>
-			<Badge variant="organization">Club</Badge>
+			<Badge variant="brand">Freelancer</Badge>
+			<Badge variant="highlight">Client</Badge>
 			<Badge variant="destructive">Cancelled</Badge>
 			<Badge variant="outline">Pending</Badge>
 			<Badge variant="ghost">Archived</Badge>
-			<Badge variant="link">View mission</Badge>
+			<Badge variant="link">View project</Badge>
 		</div>
 	),
 };
@@ -81,9 +81,9 @@ export const WithIcon: Story = {
 export const AsLink: Story = {
 	render: () => (
 		<div className="flex flex-wrap items-center gap-2">
-			<Badge render={<a href="#missions">Open missions</a>} />
+			<Badge render={<a href="#projects">Open projects</a>} />
 			<Badge variant="ghost" render={<a href="#archive">Archived</a>} />
-			<Badge variant="link" render={<a href="#mission">View mission</a>} />
+			<Badge variant="link" render={<a href="#project">View project</a>} />
 		</div>
 	),
 };

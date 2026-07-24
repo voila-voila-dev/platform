@@ -24,44 +24,44 @@ export const Default: Story = {
 	render: () => (
 		<Select>
 			<SelectTrigger className="w-56">
-				<SelectValue placeholder="Select a specialty" />
+				<SelectValue placeholder="Select a role" />
 			</SelectTrigger>
 			<SelectContent>
-				<SelectItem value="physiotherapist">Physiotherapist</SelectItem>
-				<SelectItem value="osteopath">Osteopath</SelectItem>
-				<SelectItem value="nurse">Nurse</SelectItem>
-				<SelectItem value="sports-doctor">Sports doctor</SelectItem>
+				<SelectItem value="designer">Designer</SelectItem>
+				<SelectItem value="developer">Developer</SelectItem>
+				<SelectItem value="copywriter">Copywriter</SelectItem>
+				<SelectItem value="data-analyst">Data analyst</SelectItem>
 			</SelectContent>
 		</Select>
 	),
 };
 
-/* `items` is what makes the trigger show "Recovery session" instead of the
- * raw "recovery-session" value — regression story for the labeled value. */
-const missionTypeItems = {
-	"pitch-side-cover": "Pitch-side cover",
-	"post-match-care": "Post-match care",
-	"recovery-session": "Recovery session",
-	"injury-screening": "Injury screening",
+/* `items` is what makes the trigger show "Design sprint" instead of the
+ * raw "design-sprint" value — regression story for the labeled value. */
+const projectTypeItems = {
+	"brand-refresh": "Brand refresh",
+	"landing-page": "Landing page",
+	"design-sprint": "Design sprint",
+	"code-review": "Code review",
 };
 
 export const WithGroups: Story = {
 	render: () => (
-		<Select defaultValue="recovery-session" items={missionTypeItems}>
+		<Select defaultValue="design-sprint" items={projectTypeItems}>
 			<SelectTrigger className="w-64">
-				<SelectValue placeholder="Select a mission type" />
+				<SelectValue placeholder="Select a project type" />
 			</SelectTrigger>
 			<SelectContent>
 				<SelectGroup>
-					<SelectLabel>Match day</SelectLabel>
-					<SelectItem value="pitch-side-cover">Pitch-side cover</SelectItem>
-					<SelectItem value="post-match-care">Post-match care</SelectItem>
+					<SelectLabel>Marketing</SelectLabel>
+					<SelectItem value="brand-refresh">Brand refresh</SelectItem>
+					<SelectItem value="landing-page">Landing page</SelectItem>
 				</SelectGroup>
 				<SelectSeparator />
 				<SelectGroup>
-					<SelectLabel>Training</SelectLabel>
-					<SelectItem value="recovery-session">Recovery session</SelectItem>
-					<SelectItem value="injury-screening">Injury screening</SelectItem>
+					<SelectLabel>Product</SelectLabel>
+					<SelectItem value="design-sprint">Design sprint</SelectItem>
+					<SelectItem value="code-review">Code review</SelectItem>
 				</SelectGroup>
 			</SelectContent>
 		</Select>
@@ -72,10 +72,10 @@ export const Disabled: Story = {
 	render: () => (
 		<Select disabled>
 			<SelectTrigger className="w-56">
-				<SelectValue placeholder="Select a specialty" />
+				<SelectValue placeholder="Select a role" />
 			</SelectTrigger>
 			<SelectContent>
-				<SelectItem value="physiotherapist">Physiotherapist</SelectItem>
+				<SelectItem value="designer">Designer</SelectItem>
 			</SelectContent>
 		</Select>
 	),

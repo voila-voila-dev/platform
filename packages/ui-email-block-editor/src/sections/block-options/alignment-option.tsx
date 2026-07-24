@@ -13,28 +13,28 @@ const ALIGNMENTS: ReadonlyArray<{
 }> = [
 	{
 		value: "left",
-		label: "Aligner à gauche",
+		label: "Align left",
 		icon: <TextAlignLeftIcon aria-hidden />,
 	},
 	{
 		value: "center",
-		label: "Centrer",
+		label: "Align center",
 		icon: <TextAlignCenterIcon aria-hidden />,
 	},
 	{
 		value: "right",
-		label: "Aligner à droite",
+		label: "Align right",
 		icon: <TextAlignRightIcon aria-hidden />,
 	},
 ];
 
 /**
  * The one alignment control. Every block that can be aligned uses this exact
- * segmented control, so « Alignement » means the same thing and looks the same
+ * segmented control, so "Alignment" means the same thing and looks the same
  * everywhere (§1.2 of the editor plan).
  */
 export function AlignmentOption({
-	label = "Alignement",
+	label = "Alignment",
 	value,
 	onChange,
 }: {

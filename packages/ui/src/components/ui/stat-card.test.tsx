@@ -36,7 +36,7 @@ describe("StatCard", () => {
 		const screen = render(
 			<StatCard size="sm">
 				<StatCardHeader>
-					<StatCardLabel>Missions</StatCardLabel>
+					<StatCardLabel>Projects</StatCardLabel>
 				</StatCardHeader>
 				<StatCardValue>42</StatCardValue>
 			</StatCard>,
@@ -55,7 +55,7 @@ describe("StatCard", () => {
 		const screen = render(
 			<StatCard>
 				<StatCardHeader>
-					<StatCardLabel>Missions publiées</StatCardLabel>
+					<StatCardLabel>Projects published</StatCardLabel>
 					<StatCardDelta trend="up">+12%</StatCardDelta>
 				</StatCardHeader>
 				<StatCardValue>1 284</StatCardValue>
@@ -65,7 +65,7 @@ describe("StatCard", () => {
 			</StatCard>,
 		);
 		expect(querySlot(screen, "stat-card-label")?.textContent).toBe(
-			"Missions publiées",
+			"Projects published",
 		);
 		expect(querySlot(screen, "stat-card-value")?.textContent).toBe("1 284");
 		expect(querySlot(screen, "stat-card-delta")?.textContent).toBe("+12%");

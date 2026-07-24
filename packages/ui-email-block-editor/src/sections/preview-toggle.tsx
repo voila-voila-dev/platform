@@ -10,7 +10,7 @@ const PREVIEWS: ReadonlyArray<{
 	readonly label: string;
 	readonly Icon: typeof DesktopIcon;
 }> = [
-	{ value: "desktop", label: "Ordinateur", Icon: DesktopIcon },
+	{ value: "desktop", label: "Desktop", Icon: DesktopIcon },
 	{ value: "mobile", label: "Mobile", Icon: DeviceMobileIcon },
 ];
 
@@ -30,7 +30,7 @@ export function PreviewToggle({
 	return (
 		<SegmentedControl
 			size="sm"
-			aria-label="Aperçu"
+			aria-label="Preview"
 			value={value}
 			onValueChange={(next) => onChange(next as EmailEditorPreview)}
 		>

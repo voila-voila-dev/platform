@@ -36,9 +36,9 @@ const queryDay = (screen: ReturnType<typeof render>, day: string) =>
 
 describe("DatePicker", () => {
 	it("shows the placeholder and marks the trigger empty when nothing is selected", () => {
-		const screen = render(<DatePicker placeholder="Mission date" />);
+		const screen = render(<DatePicker placeholder="Project date" />);
 		const trigger = queryTrigger(screen);
-		expect(trigger?.textContent).toContain("Mission date");
+		expect(trigger?.textContent).toContain("Project date");
 		expect(trigger?.getAttribute("data-empty")).toBe("true");
 	});
 
@@ -95,10 +95,10 @@ describe("DatePicker", () => {
 
 	it("serializes the value into a hidden form input as yyyy-MM-dd", () => {
 		const screen = render(
-			<DatePicker name="missionDate" defaultValue={JUNE_20} />,
+			<DatePicker name="projectDate" defaultValue={JUNE_20} />,
 		);
 		const input = screen.baseElement.querySelector(
-			'input[type=hidden][name="missionDate"]',
+			'input[type=hidden][name="projectDate"]',
 		) as HTMLInputElement;
 		expect(input).not.toBeNull();
 		expect(input.value).toBe("2026-06-20");
@@ -150,9 +150,9 @@ describe("DatePicker", () => {
 
 describe("DateRangePicker", () => {
 	it("shows the placeholder when no range is selected", () => {
-		const screen = render(<DateRangePicker placeholder="Mission window" />);
+		const screen = render(<DateRangePicker placeholder="Project window" />);
 		const trigger = queryTrigger(screen);
-		expect(trigger?.textContent).toContain("Mission window");
+		expect(trigger?.textContent).toContain("Project window");
 		expect(trigger?.getAttribute("data-empty")).toBe("true");
 	});
 
@@ -227,7 +227,7 @@ describe("DateRangePicker", () => {
 	it("serializes the range into -from/-to hidden inputs", () => {
 		const screen = render(
 			<DateRangePicker
-				name="missionWindow"
+				name="projectWindow"
 				defaultValue={{
 					from: new Date(2026, 5, 9),
 					to: new Date(2026, 5, 13),
@@ -235,10 +235,10 @@ describe("DateRangePicker", () => {
 			/>,
 		);
 		const from = screen.baseElement.querySelector(
-			'input[type=hidden][name="missionWindow-from"]',
+			'input[type=hidden][name="projectWindow-from"]',
 		) as HTMLInputElement;
 		const to = screen.baseElement.querySelector(
-			'input[type=hidden][name="missionWindow-to"]',
+			'input[type=hidden][name="projectWindow-to"]',
 		) as HTMLInputElement;
 		expect(from.value).toBe("2026-06-09");
 		expect(to.value).toBe("2026-06-13");

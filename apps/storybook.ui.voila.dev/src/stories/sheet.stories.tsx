@@ -25,22 +25,22 @@ export const Default: Story = {
 	render: () => (
 		<Sheet>
 			<SheetTrigger render={<Button variant="outline" />}>
-				Open mission details
+				Open project details
 			</SheetTrigger>
 			<SheetContent>
 				<SheetHeader>
-					<SheetTitle>Mission details</SheetTitle>
+					<SheetTitle>Project details</SheetTitle>
 					<SheetDescription>
-						Pitch-side physiotherapy cover for the Saturday home match.
+						Landing page redesign for the spring product launch.
 					</SheetDescription>
 				</SheetHeader>
 				<div className="grid gap-2 px-4 text-sm">
-					<p>Club: Stade Rochelais</p>
-					<p>Date: Saturday, June 14 - 2:00 PM</p>
-					<p>Rate: 45 EUR / hour</p>
+					<p>Client: Northwind Studio</p>
+					<p>Kickoff: Saturday, June 14 - 2:00 PM</p>
+					<p>Rate: 45 USD / hour</p>
 				</div>
 				<SheetFooter>
-					<Button>Confirm booking</Button>
+					<Button>Confirm engagement</Button>
 					<SheetClose render={<Button variant="outline" />}>Cancel</SheetClose>
 				</SheetFooter>
 			</SheetContent>
@@ -58,7 +58,7 @@ export const Sides: Story = {
 					</SheetTrigger>
 					<SheetContent side={side}>
 						<SheetHeader>
-							<SheetTitle>Mission details</SheetTitle>
+							<SheetTitle>Project details</SheetTitle>
 							<SheetDescription>
 								This sheet opens from the {side} side.
 							</SheetDescription>
@@ -80,7 +80,7 @@ export const Sizes: Story = {
 					</SheetTrigger>
 					<SheetContent size={size}>
 						<SheetHeader>
-							<SheetTitle>Mission details</SheetTitle>
+							<SheetTitle>Project details</SheetTitle>
 							<SheetDescription>
 								This right sheet uses the {size} size.
 							</SheetDescription>
@@ -100,7 +100,7 @@ export const WithoutCloseButton: Story = {
 			</SheetTrigger>
 			<SheetContent showCloseButton={false}>
 				<SheetHeader>
-					<SheetTitle>Mission details</SheetTitle>
+					<SheetTitle>Project details</SheetTitle>
 					<SheetDescription>
 						Dismiss this sheet from the footer action.
 					</SheetDescription>

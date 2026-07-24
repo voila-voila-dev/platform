@@ -33,14 +33,14 @@ export const Default: Story = {
 					<EmptyMedia variant="icon">
 						<CalendarPlusIcon />
 					</EmptyMedia>
-					<EmptyTitle>No missions yet</EmptyTitle>
+					<EmptyTitle>No projects yet</EmptyTitle>
 					<EmptyDescription>
-						Create your first mission to start receiving applications from
-						healthcare providers.
+						Create your first project to start receiving applications from
+						freelancers.
 					</EmptyDescription>
 				</EmptyHeader>
 				<EmptyContent>
-					<Button>Create a mission</Button>
+					<Button>Create a project</Button>
 				</EmptyContent>
 			</Empty>
 		</div>
@@ -55,16 +55,16 @@ export const WithSecondaryAction: Story = {
 					<EmptyMedia variant="icon">
 						<UsersIcon />
 					</EmptyMedia>
-					<EmptyTitle>No providers found</EmptyTitle>
+					<EmptyTitle>No freelancers found</EmptyTitle>
 					<EmptyDescription>
-						No provider matches your filters. Try widening the search area or
-						removing a specialty filter.
+						No freelancer matches your filters. Try widening the search area or
+						removing a skill filter.
 					</EmptyDescription>
 				</EmptyHeader>
 				<EmptyContent>
 					<div className="flex gap-2">
 						<Button variant="outline">Clear filters</Button>
-						<Button>Invite a provider</Button>
+						<Button>Invite a freelancer</Button>
 					</div>
 				</EmptyContent>
 			</Empty>
@@ -102,7 +102,7 @@ export const WithLinkInDescription: Story = {
 					</EmptyMedia>
 					<EmptyTitle>No messages yet</EmptyTitle>
 					<EmptyDescription>
-						Start a conversation with a club, or{" "}
+						Start a conversation with a client, or{" "}
 						<a href="#help">read the messaging guide</a> to learn more.
 					</EmptyDescription>
 				</EmptyHeader>

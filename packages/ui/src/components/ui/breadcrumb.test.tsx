@@ -26,7 +26,7 @@ function Fixture() {
 				</BreadcrumbItem>
 				<BreadcrumbSeparator />
 				<BreadcrumbItem>
-					<BreadcrumbPage>Match day coverage</BreadcrumbPage>
+					<BreadcrumbPage>Launch week coverage</BreadcrumbPage>
 				</BreadcrumbItem>
 			</BreadcrumbList>
 		</Breadcrumb>
@@ -73,12 +73,12 @@ describe("BreadcrumbLink", () => {
 			return <a href={to} {...props} />;
 		}
 		const screen = render(
-			<BreadcrumbLink render={<RouterLink to="/missions" />}>
-				Missions
+			<BreadcrumbLink render={<RouterLink to="/projects" />}>
+				Projects
 			</BreadcrumbLink>,
 		);
-		const link = screen.getByRole("link", { name: "Missions" });
-		expect(link.getAttribute("href")).toBe("/missions");
+		const link = screen.getByRole("link", { name: "Projects" });
+		expect(link.getAttribute("href")).toBe("/projects");
 		expect(link.getAttribute("data-slot")).toBe("breadcrumb-link");
 		expect(link.classList.contains("transition-colors")).toBe(true);
 	});
@@ -87,7 +87,7 @@ describe("BreadcrumbLink", () => {
 describe("BreadcrumbPage", () => {
 	it("marks the current page without disabling it", () => {
 		const screen = render(<Fixture />);
-		const page = screen.getByText("Match day coverage");
+		const page = screen.getByText("Launch week coverage");
 		expect(page.tagName).toBe("SPAN");
 		expect(page.getAttribute("aria-current")).toBe("page");
 		expect(page.getAttribute("aria-disabled")).toBeNull();

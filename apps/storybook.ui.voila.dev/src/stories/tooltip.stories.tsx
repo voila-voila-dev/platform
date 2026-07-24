@@ -24,7 +24,7 @@ export const Default: Story = {
 			<TooltipTrigger render={<Button variant="outline" />}>
 				Hover me
 			</TooltipTrigger>
-			<TooltipContent>Invite this provider to your mission</TooltipContent>
+			<TooltipContent>Invite this freelancer to your project</TooltipContent>
 		</Tooltip>
 	),
 	play: async ({ canvasElement }) => {
@@ -59,9 +59,9 @@ export const DefaultOpen: Story = {
 	render: () => (
 		<Tooltip defaultOpen>
 			<TooltipTrigger render={<Button variant="outline" />}>
-				Mission status
+				Project status
 			</TooltipTrigger>
-			<TooltipContent>Awaiting provider confirmation</TooltipContent>
+			<TooltipContent>Awaiting freelancer confirmation</TooltipContent>
 		</Tooltip>
 	),
 };
@@ -73,7 +73,7 @@ export const WithKbd: Story = {
 				Save report
 			</TooltipTrigger>
 			<TooltipContent>
-				Save the follow-up report
+				Save the project report
 				<Kbd>⌘S</Kbd>
 			</TooltipContent>
 		</Tooltip>
@@ -84,12 +84,12 @@ export const LongContent: Story = {
 	render: () => (
 		<Tooltip defaultOpen>
 			<TooltipTrigger render={<Button variant="outline" />}>
-				Booking policy
+				Payment policy
 			</TooltipTrigger>
 			<TooltipContent>
-				Once the provider accepts, the mission amount is held in escrow and
-				released 48 hours after the follow-up report is submitted, unless the
-				club opens a dispute.
+				Once the freelancer accepts, the project amount is held in escrow and
+				released 48 hours after the final deliverable is submitted, unless the
+				client opens a dispute.
 			</TooltipContent>
 		</Tooltip>
 	),

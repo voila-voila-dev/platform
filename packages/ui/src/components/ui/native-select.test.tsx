@@ -13,7 +13,7 @@ describe("NativeSelect", () => {
 	it("renders a select with its slot attribute", () => {
 		const screen = render(
 			<NativeSelect aria-label="Profession">
-				<NativeSelectOption value="nurse">Nurse</NativeSelectOption>
+				<NativeSelectOption value="designer">Designer</NativeSelectOption>
 			</NativeSelect>,
 		);
 		const select = screen.getByRole("combobox", { name: "Profession" });
@@ -24,7 +24,7 @@ describe("NativeSelect", () => {
 	it("renders a decorative caret overlay hidden from assistive tech", () => {
 		const screen = render(
 			<NativeSelect aria-label="Profession">
-				<NativeSelectOption value="nurse">Nurse</NativeSelectOption>
+				<NativeSelectOption value="designer">Designer</NativeSelectOption>
 			</NativeSelect>,
 		);
 		const icon = screen.container.querySelector(
@@ -38,7 +38,7 @@ describe("NativeSelect", () => {
 	it("defaults to the regular size on wrapper and select", () => {
 		const screen = render(
 			<NativeSelect aria-label="Profession">
-				<NativeSelectOption value="nurse">Nurse</NativeSelectOption>
+				<NativeSelectOption value="designer">Designer</NativeSelectOption>
 			</NativeSelect>,
 		);
 		const select = screen.getByRole("combobox", { name: "Profession" });
@@ -53,7 +53,7 @@ describe("NativeSelect", () => {
 	it("reflects the small size through the data-size attribute", () => {
 		const screen = render(
 			<NativeSelect aria-label="Profession" size="sm">
-				<NativeSelectOption value="nurse">Nurse</NativeSelectOption>
+				<NativeSelectOption value="designer">Designer</NativeSelectOption>
 			</NativeSelect>,
 		);
 		const select = screen.getByRole("combobox", { name: "Profession" });
@@ -68,7 +68,7 @@ describe("NativeSelect", () => {
 	it("routes className to the select, not the wrapper", () => {
 		const screen = render(
 			<NativeSelect aria-label="Profession" className="text-lg">
-				<NativeSelectOption value="nurse">Nurse</NativeSelectOption>
+				<NativeSelectOption value="designer">Designer</NativeSelectOption>
 			</NativeSelect>,
 		);
 		const select = screen.getByRole("combobox", { name: "Profession" });
@@ -82,7 +82,7 @@ describe("NativeSelect", () => {
 	it("routes wrapperClassName to the wrapper, not the select", () => {
 		const screen = render(
 			<NativeSelect aria-label="Profession" wrapperClassName="w-48">
-				<NativeSelectOption value="nurse">Nurse</NativeSelectOption>
+				<NativeSelectOption value="designer">Designer</NativeSelectOption>
 			</NativeSelect>,
 		);
 		const select = screen.getByRole("combobox", { name: "Profession" });
@@ -96,7 +96,7 @@ describe("NativeSelect", () => {
 	it("dims the whole control via the wrapper when disabled", () => {
 		const screen = render(
 			<NativeSelect aria-label="Profession" disabled>
-				<NativeSelectOption value="nurse">Nurse</NativeSelectOption>
+				<NativeSelectOption value="designer">Designer</NativeSelectOption>
 			</NativeSelect>,
 		);
 		const select = screen.getByRole("combobox", { name: "Profession" });
@@ -113,7 +113,7 @@ describe("NativeSelect", () => {
 	it("marks invalid state for the destructive styles", () => {
 		const screen = render(
 			<NativeSelect aria-label="Profession" aria-invalid>
-				<NativeSelectOption value="nurse">Nurse</NativeSelectOption>
+				<NativeSelectOption value="designer">Designer</NativeSelectOption>
 			</NativeSelect>,
 		);
 		const select = screen.getByRole("combobox", { name: "Profession" });
@@ -127,7 +127,7 @@ describe("NativeSelect", () => {
 	it("opts the native picker into the dark color scheme", () => {
 		const screen = render(
 			<NativeSelect aria-label="Profession">
-				<NativeSelectOption value="nurse">Nurse</NativeSelectOption>
+				<NativeSelectOption value="designer">Designer</NativeSelectOption>
 			</NativeSelect>,
 		);
 		const select = screen.getByRole("combobox", { name: "Profession" });
@@ -137,25 +137,27 @@ describe("NativeSelect", () => {
 	it("selects the controlled value and reports changes", () => {
 		const onChange = vi.fn();
 		const screen = render(
-			<NativeSelect aria-label="Profession" value="nurse" onChange={onChange}>
-				<NativeSelectOption value="physiotherapist">
-					Physiotherapist
-				</NativeSelectOption>
-				<NativeSelectOption value="nurse">Nurse</NativeSelectOption>
+			<NativeSelect
+				aria-label="Profession"
+				value="designer"
+				onChange={onChange}
+			>
+				<NativeSelectOption value="developer">Developer</NativeSelectOption>
+				<NativeSelectOption value="designer">Designer</NativeSelectOption>
 			</NativeSelect>,
 		);
 		const select = screen.getByRole("combobox", {
 			name: "Profession",
 		}) as HTMLSelectElement;
-		expect(select.value).toBe("nurse");
-		fireEvent.change(select, { target: { value: "physiotherapist" } });
+		expect(select.value).toBe("designer");
+		fireEvent.change(select, { target: { value: "developer" } });
 		expect(onChange).toHaveBeenCalled();
 	});
 
 	it("passes native attributes through to the select", () => {
 		const screen = render(
 			<NativeSelect aria-label="Profession" name="profession" required>
-				<NativeSelectOption value="nurse">Nurse</NativeSelectOption>
+				<NativeSelectOption value="designer">Designer</NativeSelectOption>
 			</NativeSelect>,
 		);
 		const select = screen.getByRole("combobox", { name: "Profession" });
@@ -165,9 +167,9 @@ describe("NativeSelect", () => {
 
 	it("renders options and groups with their slot attributes", () => {
 		const screen = render(
-			<NativeSelect aria-label="Sport" defaultValue="rugby">
-				<NativeSelectOptGroup label="Team sports">
-					<NativeSelectOption value="rugby">Rugby</NativeSelectOption>
+			<NativeSelect aria-label="Category" defaultValue="design">
+				<NativeSelectOptGroup label="Creative">
+					<NativeSelectOption value="design">Design</NativeSelectOption>
 				</NativeSelectOptGroup>
 			</NativeSelect>,
 		);
@@ -179,14 +181,14 @@ describe("NativeSelect", () => {
 		);
 		expect(option?.tagName).toBe("OPTION");
 		expect(group?.tagName).toBe("OPTGROUP");
-		expect(group?.getAttribute("label")).toBe("Team sports");
+		expect(group?.getAttribute("label")).toBe("Creative");
 	});
 
 	it("merges custom option classes over the defaults", () => {
 		const screen = render(
 			<NativeSelect aria-label="Profession">
-				<NativeSelectOption value="nurse" className="font-bold">
-					Nurse
+				<NativeSelectOption value="designer" className="font-bold">
+					Designer
 				</NativeSelectOption>
 			</NativeSelect>,
 		);

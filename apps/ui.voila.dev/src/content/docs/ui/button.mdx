@@ -62,14 +62,14 @@ Base UI's `render` prop swaps the underlying element while keeping the styling
 and behaviour:
 
 ```tsx
-<Button render={<Link to="/missions/$id" params={{ id }} />}>Open mission</Button>
+<Button render={<Link to="/projects/$id" params={{ id }} />}>Open project</Button>
 ```
 
 ## API
 
 | Prop | Default | |
 | --- | --- | --- |
-| `variant` | `"default"` | `secondary`, `outline`, `ghost`, `destructive`, `link`, plus the surface variants `provider` and `organization`. |
+| `variant` | `"default"` | `secondary`, `outline`, `ghost`, `destructive`, `link`, plus the surface variants `brand` and `highlight`. |
 | `size` | `"default"` | `xs`, `sm`, `lg`, and the square `icon-*` set. |
 | `shape` | `"default"` | `pill` forces a fully rounded button. |
 | `loading` | `false` | Leading spinner, `disabled`, `aria-busy`. |

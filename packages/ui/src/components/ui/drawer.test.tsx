@@ -23,17 +23,17 @@ function Fixture({
 	return (
 		<Drawer direction={direction}>
 			<DrawerTrigger asChild>
-				<Button variant="outline">View mission details</Button>
+				<Button variant="outline">View project details</Button>
 			</DrawerTrigger>
 			<DrawerContent {...props}>
 				<DrawerHeader>
-					<DrawerTitle>Match coverage — Saturday</DrawerTitle>
+					<DrawerTitle>Brand refresh — kickoff</DrawerTitle>
 					<DrawerDescription>
-						One physiotherapist requested at Stade Marcel Michelin.
+						One designer requested for the website redesign.
 					</DrawerDescription>
 				</DrawerHeader>
 				<DrawerFooter>
-					<Button>Apply to this mission</Button>
+					<Button>Apply to this project</Button>
 					<DrawerClose asChild>
 						<Button variant="outline">Dismiss</Button>
 					</DrawerClose>
@@ -68,7 +68,7 @@ describe("Drawer", () => {
 	it("renders only the trigger while closed", () => {
 		const screen = render(<Fixture />);
 		expect(
-			screen.getByRole("button", { name: "View mission details" }),
+			screen.getByRole("button", { name: "View project details" }),
 		).toBeTruthy();
 		expect(screen.queryByRole("dialog")).toBeNull();
 	});
@@ -76,15 +76,13 @@ describe("Drawer", () => {
 	it("opens on trigger click with title and description", async () => {
 		const screen = render(<Fixture />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "View mission details" }),
+			screen.getByRole("button", { name: "View project details" }),
 		);
 		await waitFor(() => {
 			expect(screen.getByRole("dialog")).toBeTruthy();
-			expect(screen.getByText("Match coverage — Saturday")).toBeTruthy();
+			expect(screen.getByText("Brand refresh — kickoff")).toBeTruthy();
 			expect(
-				screen.getByText(
-					"One physiotherapist requested at Stade Marcel Michelin.",
-				),
+				screen.getByText("One designer requested for the website redesign."),
 			).toBeTruthy();
 		});
 	});
@@ -92,7 +90,7 @@ describe("Drawer", () => {
 	it("defaults to the bottom direction on the content", async () => {
 		const screen = render(<Fixture />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "View mission details" }),
+			screen.getByRole("button", { name: "View project details" }),
 		);
 		await waitFor(() => {
 			const content = screen.baseElement.querySelector(
@@ -107,7 +105,7 @@ describe("Drawer", () => {
 	it("reflects the direction prop on the content for side drawers", async () => {
 		const screen = render(<Fixture direction="right" />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "View mission details" }),
+			screen.getByRole("button", { name: "View project details" }),
 		);
 		await waitFor(() => {
 			const content = screen.baseElement.querySelector(
@@ -120,7 +118,7 @@ describe("Drawer", () => {
 	it("renders the grab handle by default", async () => {
 		const screen = render(<Fixture />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "View mission details" }),
+			screen.getByRole("button", { name: "View project details" }),
 		);
 		await waitFor(() => {
 			expect(
@@ -132,7 +130,7 @@ describe("Drawer", () => {
 	it("hides the grab handle when showHandle is false", async () => {
 		const screen = render(<Fixture showHandle={false} />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "View mission details" }),
+			screen.getByRole("button", { name: "View project details" }),
 		);
 		await waitFor(() => {
 			expect(screen.getByRole("dialog")).toBeTruthy();
@@ -145,7 +143,7 @@ describe("Drawer", () => {
 	it("renders the built-in close button under its own slot, separate from DrawerClose", async () => {
 		const screen = render(<Fixture />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "View mission details" }),
+			screen.getByRole("button", { name: "View project details" }),
 		);
 		await waitFor(() => {
 			expect(screen.getByRole("dialog")).toBeTruthy();
@@ -164,7 +162,7 @@ describe("Drawer", () => {
 	it("closes when the built-in close button is clicked", async () => {
 		const screen = render(<Fixture direction="right" />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "View mission details" }),
+			screen.getByRole("button", { name: "View project details" }),
 		);
 		await waitFor(() => {
 			expect(screen.getByRole("dialog")).toBeTruthy();
@@ -186,7 +184,7 @@ describe("Drawer", () => {
 	it("closes when a DrawerClose action is clicked", async () => {
 		const screen = render(<Fixture />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "View mission details" }),
+			screen.getByRole("button", { name: "View project details" }),
 		);
 		await waitFor(() => {
 			expect(screen.getByRole("dialog")).toBeTruthy();
@@ -206,19 +204,19 @@ describe("Drawer", () => {
 	});
 
 	it("overrides the built-in close button label for localization", async () => {
-		const screen = render(<Fixture closeButtonLabel="Fermer" />);
+		const screen = render(<Fixture closeButtonLabel="Close panel" />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "View mission details" }),
+			screen.getByRole("button", { name: "View project details" }),
 		);
 		await waitFor(() => {
-			expect(screen.getByRole("button", { name: "Fermer" })).toBeTruthy();
+			expect(screen.getByRole("button", { name: "Close panel" })).toBeTruthy();
 		});
 	});
 
 	it("hides the built-in close button when showCloseButton is false", async () => {
 		const screen = render(<Fixture showCloseButton={false} />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "View mission details" }),
+			screen.getByRole("button", { name: "View project details" }),
 		);
 		await waitFor(() => {
 			expect(screen.getByRole("dialog")).toBeTruthy();
@@ -231,7 +229,7 @@ describe("Drawer", () => {
 	it("merges className onto the content", async () => {
 		const screen = render(<Fixture className="custom-drawer" />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "View mission details" }),
+			screen.getByRole("button", { name: "View project details" }),
 		);
 		await waitFor(() => {
 			const content = screen.baseElement.querySelector(
@@ -244,7 +242,7 @@ describe("Drawer", () => {
 	it("forwards overlayClassName to the overlay", async () => {
 		const screen = render(<Fixture overlayClassName="custom-overlay" />);
 		fireEvent.click(
-			screen.getByRole("button", { name: "View mission details" }),
+			screen.getByRole("button", { name: "View project details" }),
 		);
 		await waitFor(() => {
 			const overlay = screen.baseElement.querySelector(

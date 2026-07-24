@@ -1,7 +1,7 @@
 import {
 	CalendarCheckIcon,
 	CalendarIcon,
-	FirstAidKitIcon,
+	CodeIcon,
 } from "@phosphor-icons/react";
 import { AspectRatio } from "@voila.dev/ui/components/aspect-ratio";
 import {
@@ -104,7 +104,7 @@ import { UserAvatar } from "@voila.dev/ui/components/user-avatar";
 import { useState } from "react";
 
 const coverImage = `data:image/svg+xml;utf8,${encodeURIComponent(
-	'<svg xmlns="http://www.w3.org/2000/svg" width="384" height="160"><rect width="384" height="160" fill="#1f6feb"/><text x="50%" y="50%" fill="white" font-family="sans-serif" font-size="20" text-anchor="middle" dy=".3em">Match day</text></svg>',
+	'<svg xmlns="http://www.w3.org/2000/svg" width="384" height="160"><rect width="384" height="160" fill="#7c3aed"/><text x="50%" y="50%" fill="white" font-family="sans-serif" font-size="20" text-anchor="middle" dy=".3em">Launch day</text></svg>',
 )}`;
 
 /* -------------------------------------------------------------------------- */
@@ -115,18 +115,16 @@ export function CardExample() {
 	return (
 		<Card className="w-full max-w-96">
 			<CardHeader>
-				<CardTitle>Physiotherapist — Match day</CardTitle>
-				<CardDescription>
-					Racing Club de Lyon · Saturday, June 20
-				</CardDescription>
+				<CardTitle>Product designer — Launch week</CardTitle>
+				<CardDescription>Northgate Labs · Saturday, June 20</CardDescription>
 				<CardAction>
 					<Badge>Open</Badge>
 				</CardAction>
 			</CardHeader>
 			<CardContent>
 				<p>
-					Pitch-side coverage for the senior rugby team, including warm-up
-					supervision and injury assessment.
+					End-to-end design support for the launch sprint, including asset
+					production and final design QA.
 				</p>
 			</CardContent>
 			<CardFooter className="justify-end gap-2">
@@ -178,11 +176,11 @@ export function UserAvatarExample() {
 		<div className="flex flex-col items-start gap-4">
 			<UserAvatar
 				name="Camille Dubois"
-				description="Kinésithérapeute du sport"
+				description="Freelance product designer"
 				src="https://github.com/shadcn.png"
 				status="online"
 			/>
-			<UserAvatar name="Nathan Guyot" description="Ostéopathe" size="sm" />
+			<UserAvatar name="Nathan Guyot" description="Developer" size="sm" />
 			<UserAvatar name="Marie Lefevre" size="lg" />
 		</div>
 	);
@@ -193,16 +191,16 @@ export function ProfileHeaderExample() {
 		<ProfileHeader
 			className="w-full rounded-xl border"
 			name="Camille Dubois"
-			headline="Kinésithérapeute du sport"
-			theme="provider"
+			headline="Freelance product designer"
+			theme="brand"
 			avatar={{ src: "https://github.com/shadcn.png", name: "Camille Dubois" }}
 			badges={
 				<>
-					<Badge variant="provider">Identité vérifiée</Badge>
-					<Badge variant="secondary">Kinésithérapie</Badge>
+					<Badge variant="brand">Identity verified</Badge>
+					<Badge variant="secondary">Product design</Badge>
 				</>
 			}
-			actions={<Button size="sm">Contacter</Button>}
+			actions={<Button size="sm">Contact</Button>}
 		/>
 	);
 }
@@ -216,7 +214,7 @@ export function StatCardExample() {
 		<div className="grid w-full gap-4 sm:grid-cols-2">
 			<StatCard>
 				<StatCardHeader>
-					<StatCardLabel>Missions published</StatCardLabel>
+					<StatCardLabel>Projects published</StatCardLabel>
 				</StatCardHeader>
 				<StatCardValue>38</StatCardValue>
 				<StatCardDelta trend="up">+12% vs. last month</StatCardDelta>
@@ -243,10 +241,10 @@ export function ItemExample() {
 				<CalendarCheckIcon />
 			</ItemMedia>
 			<ItemContent>
-				<ItemTitle>Saturday match coverage</ItemTitle>
+				<ItemTitle>Landing page redesign</ItemTitle>
 				<ItemDescription>
-					Physiotherapist needed for the senior rugby team, June 14 from 14:00
-					to 18:00.
+					Designer needed for the marketing site refresh, June 14 through June
+					18.
 				</ItemDescription>
 			</ItemContent>
 			<ItemActions>
@@ -260,15 +258,15 @@ export function ItemExample() {
 
 export function ListExample() {
 	return (
-		<List aria-label="Open missions" className="w-full max-w-md">
+		<List aria-label="Open projects" className="w-full max-w-md">
 			<ListItem variant="outline">
 				<ItemMedia variant="icon">
 					<CalendarCheckIcon />
 				</ItemMedia>
 				<ItemContent>
-					<ItemTitle>Saturday match coverage</ItemTitle>
+					<ItemTitle>Landing page redesign</ItemTitle>
 					<ItemDescription>
-						Physiotherapist for the senior rugby team, June 14.
+						Designer for the marketing site refresh, June 14.
 					</ItemDescription>
 				</ItemContent>
 				<ItemActions>
@@ -279,12 +277,12 @@ export function ListExample() {
 			</ListItem>
 			<ListItem variant="outline">
 				<ItemMedia variant="icon">
-					<FirstAidKitIcon />
+					<CodeIcon />
 				</ItemMedia>
 				<ItemContent>
-					<ItemTitle>Tournament first aid</ItemTitle>
+					<ItemTitle>API integration sprint</ItemTitle>
 					<ItemDescription>
-						Two nurses for the youth handball tournament, June 21.
+						Two developers for the billing API integration, June 21.
 					</ItemDescription>
 				</ItemContent>
 				<ItemActions>
@@ -301,53 +299,53 @@ export function ListExample() {
 /* Table                                                                      */
 /* -------------------------------------------------------------------------- */
 
-const missions = [
+const projects = [
 	{
-		reference: "MIS-001",
-		club: "Stade Rochelais",
+		reference: "PRJ-001",
+		client: "Northwind Trading",
 		status: "Confirmed",
-		amount: "180.00 EUR",
+		amount: "180.00 USD",
 	},
 	{
-		reference: "MIS-002",
-		club: "RC Vannes",
+		reference: "PRJ-002",
+		client: "Globex Media",
 		status: "Pending",
-		amount: "240.00 EUR",
+		amount: "240.00 USD",
 	},
 	{
-		reference: "MIS-003",
-		club: "US Carcassonne",
+		reference: "PRJ-003",
+		client: "Initech Systems",
 		status: "Confirmed",
-		amount: "150.00 EUR",
+		amount: "150.00 USD",
 	},
 ];
 
 export function TableExample() {
 	return (
 		<Table>
-			<TableCaption>Recent missions for your organization.</TableCaption>
+			<TableCaption>Recent projects for your workspace.</TableCaption>
 			<TableHeader>
 				<TableRow>
 					<TableHead>Reference</TableHead>
-					<TableHead>Club</TableHead>
+					<TableHead>Client</TableHead>
 					<TableHead>Status</TableHead>
 					<TableHead className="text-right">Amount</TableHead>
 				</TableRow>
 			</TableHeader>
 			<TableBody>
-				{missions.map((mission) => (
-					<TableRow key={mission.reference}>
-						<TableCell className="font-medium">{mission.reference}</TableCell>
-						<TableCell>{mission.club}</TableCell>
-						<TableCell>{mission.status}</TableCell>
-						<TableCell className="text-right">{mission.amount}</TableCell>
+				{projects.map((project) => (
+					<TableRow key={project.reference}>
+						<TableCell className="font-medium">{project.reference}</TableCell>
+						<TableCell>{project.client}</TableCell>
+						<TableCell>{project.status}</TableCell>
+						<TableCell className="text-right">{project.amount}</TableCell>
 					</TableRow>
 				))}
 			</TableBody>
 			<TableFooter>
 				<TableRow>
 					<TableCell colSpan={3}>Total</TableCell>
-					<TableCell className="text-right">570.00 EUR</TableCell>
+					<TableCell className="text-right">570.00 USD</TableCell>
 				</TableRow>
 			</TableFooter>
 		</Table>
@@ -362,20 +360,20 @@ export function SeparatorExample() {
 	return (
 		<div className="w-full max-w-72">
 			<div className="space-y-1">
-				<h4 className="font-medium text-sm">Mission details</h4>
+				<h4 className="font-medium text-sm">Project details</h4>
 				<p className="text-muted-foreground text-sm">
-					Saturday match cover at Stade Rochelais.
+					Landing page redesign for Northwind Trading.
 				</p>
 			</div>
 			<Separator className="my-4" />
 			<div className="flex h-5 items-center gap-4 text-sm">
-				<span>Missions</span>
+				<span>Projects</span>
 				<Separator orientation="vertical" />
-				<span>Providers</span>
+				<span>Freelancers</span>
 				<Separator orientation="vertical" />
 				<span>Billing</span>
 			</div>
-			<Separator className="my-4">OU</Separator>
+			<Separator className="my-4">OR</Separator>
 		</div>
 	);
 }
@@ -386,7 +384,7 @@ export function AspectRatioExample() {
 			<AspectRatio ratio={16 / 9}>
 				<img
 					src={coverImage}
-					alt="Match day cover"
+					alt="Launch day cover"
 					className="size-full rounded-lg object-cover"
 				/>
 			</AspectRatio>
@@ -398,13 +396,13 @@ export function ChipExample() {
 	return (
 		<>
 			<Chip variant="secondary">
-				Kinésithérapie du sport
-				<ChipRemove aria-label="Retirer Kinésithérapie du sport" />
+				Product design
+				<ChipRemove aria-label="Remove Product design" />
 			</Chip>
-			<Chip variant="outline">Ostéopathie</Chip>
-			<Chip variant="provider" size="sm">
-				Nantes
-				<ChipRemove aria-label="Retirer Nantes" />
+			<Chip variant="outline">Development</Chip>
+			<Chip variant="brand" size="sm">
+				Remote
+				<ChipRemove aria-label="Remove Remote" />
 			</Chip>
 		</>
 	);
@@ -428,7 +426,7 @@ export function ShortcutExample() {
 	return (
 		<div className="flex w-full max-w-56 flex-col gap-2">
 			<div className="flex items-center rounded-lg border px-3 py-2 text-sm">
-				Rechercher
+				Search
 				<Shortcut>⌘K</Shortcut>
 			</div>
 			<div className="flex items-center rounded-lg border px-3 py-2 text-sm">
@@ -457,13 +455,13 @@ export function ScrollAreaExample() {
 	return (
 		<ScrollArea className="h-56 w-full max-w-72 rounded-lg border">
 			<div className="p-3">
-				<p className="mb-2 font-medium text-sm">Upcoming missions</p>
+				<p className="mb-2 font-medium text-sm">Upcoming projects</p>
 				{Array.from({ length: 20 }, (_, index) => (
 					<div
-						key={`mission-${index + 1}`}
+						key={`project-${index + 1}`}
 						className="border-b py-2 text-sm last:border-b-0"
 					>
-						Mission #{index + 1} — Match day coverage
+						Project #{index + 1} — Landing page sprint
 					</div>
 				))}
 			</div>
@@ -477,20 +475,20 @@ export function ScrollAreaExample() {
 
 const galleryImages = [
 	{
-		src: "https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=800&q=80",
-		alt: "Training session on the pitch",
+		src: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80",
+		alt: "Bright open-plan office",
 	},
 	{
-		src: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80",
-		alt: "Athlete warming up",
+		src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80",
+		alt: "Team collaborating at a desk",
 	},
 	{
-		src: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=800&q=80",
-		alt: "Weight room",
+		src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80",
+		alt: "Laptop with code on screen",
 	},
 	{
-		src: "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&q=80",
-		alt: "Stadium at dusk",
+		src: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
+		alt: "Planning notes on a desk",
 	},
 ];
 
@@ -529,13 +527,13 @@ export function ResizableExample() {
 			<ResizablePanelGroup className="rounded-lg border">
 				<ResizablePanel defaultSize={50}>
 					<div className="flex h-full items-center justify-center p-6">
-						<span className="font-medium text-sm">Mission list</span>
+						<span className="font-medium text-sm">Project list</span>
 					</div>
 				</ResizablePanel>
 				<ResizableHandle withHandle />
 				<ResizablePanel defaultSize={50}>
 					<div className="flex h-full items-center justify-center p-6">
-						<span className="font-medium text-sm">Mission details</span>
+						<span className="font-medium text-sm">Project details</span>
 					</div>
 				</ResizablePanel>
 			</ResizablePanelGroup>
@@ -548,19 +546,19 @@ export function SectionExample() {
 		<Section className="w-full">
 			<SectionHeader>
 				<SectionHeading>
-					<SectionTitle>Prochaines missions</SectionTitle>
+					<SectionTitle>Upcoming projects</SectionTitle>
 					<SectionDescription>
-						Les missions de votre club cette semaine.
+						Your workspace's projects this week.
 					</SectionDescription>
 				</SectionHeading>
 				<SectionActions>
 					<Button variant="ghost" size="sm">
-						Voir tout
+						View all
 					</Button>
 				</SectionActions>
 			</SectionHeader>
 			<Card>
-				<CardContent>Match senior — samedi 14 juin, 15h00</CardContent>
+				<CardContent>Design review — Saturday, June 14, 3:00 pm</CardContent>
 			</Card>
 		</Section>
 	);
@@ -579,7 +577,7 @@ export function ButtonGroupExample() {
 					<CalendarIcon />
 				</ButtonGroupText>
 				<ButtonGroupSeparator />
-				<Button variant="outline">Cette semaine</Button>
+				<Button variant="outline">This week</Button>
 			</ButtonGroup>
 		</div>
 	);
@@ -613,8 +611,8 @@ function Composer() {
 			value={draft}
 			onValueChange={setDraft}
 			onSubmit={() => setDraft("")}
-			placeholder="Écrivez votre message…"
-			sendLabel="Envoyer"
+			placeholder="Write your message…"
+			sendLabel="Send"
 		/>
 	);
 }
@@ -631,25 +629,25 @@ export function ChatExample() {
 	return (
 		<div className="flex h-96 w-full max-w-xl flex-col gap-3">
 			<ChatMessageList>
-				<ChatDateSeparator>Hier</ChatDateSeparator>
+				<ChatDateSeparator>Yesterday</ChatDateSeparator>
 				<ChatMessageGroup align="start">
 					<ChatMessageSender
 						avatar={senderAvatar("CD")}
 						name="Camille Dubois"
-						badge={<Badge variant="provider">Professionnel de santé</Badge>}
+						badge={<Badge variant="brand">Verified freelancer</Badge>}
 					/>
 					<ChatMessage variant="other">
-						Bonjour, je serai sur place 30 minutes avant le match.
+						Hi, I will share the first drafts before our call tomorrow.
 						<ChatMessageTime dateTime="2026-06-11T18:42">18:42</ChatMessageTime>
 					</ChatMessage>
 					<ChatMessage variant="other">
-						Y a-t-il un local pour déposer mon matériel ?
+						Is there a shared folder where I can drop the files?
 						<ChatMessageTime dateTime="2026-06-11T18:43">18:43</ChatMessageTime>
 					</ChatMessage>
 				</ChatMessageGroup>
 				<ChatMessageGroup align="end">
 					<ChatMessage variant="own">
-						Oui, le vestiaire arbitres est réservé pour vous.
+						Yes, the project drive is already shared with you.
 						<ChatMessageTime dateTime="2026-06-12T09:10">09:10</ChatMessageTime>
 					</ChatMessage>
 				</ChatMessageGroup>
@@ -666,15 +664,15 @@ export function ChatConversations() {
 				leading={senderAvatar("SU")}
 				title="Support"
 				badges={<Badge variant="secondary">Support</Badge>}
-				description="Notre équipe vous répond directement ici."
+				description="Our team replies to you directly here."
 				timestamp="09:10"
 				unreadCount={2}
 			/>
 			<ChatConversationItem
 				leading={senderAvatar("RC")}
-				title="Match RC Toulon — 12 avril"
-				badges={<Badge variant="outline">Événement</Badge>}
-				description="Conversation archivée"
+				title="Website launch — April 12"
+				badges={<Badge variant="outline">Milestone</Badge>}
+				description="Archived conversation"
 				timestamp="12/04"
 			/>
 		</div>

@@ -32,7 +32,7 @@ async function renderWithToast(ui: React.ReactElement, title = "Toast title") {
 
 describe("Toaster", () => {
 	it("renders the notifications region once a toast fires", async () => {
-		await renderWithToast(<Toaster />, "Mission published");
+		await renderWithToast(<Toaster />, "Project published");
 		expect(queryToaster()).not.toBeNull();
 	});
 
@@ -68,13 +68,13 @@ describe("Toaster", () => {
 	it("shows a toast with its title and description", async () => {
 		const screen = render(<Toaster />);
 		act(() => {
-			toast("Mission published", {
-				description: "Providers in your area have been notified.",
+			toast("Project published", {
+				description: "Freelancers in your network have been notified.",
 			});
 		});
-		expect(await screen.findByText("Mission published")).toBeTruthy();
+		expect(await screen.findByText("Project published")).toBeTruthy();
 		expect(
-			screen.getByText("Providers in your area have been notified."),
+			screen.getByText("Freelancers in your network have been notified."),
 		).toBeTruthy();
 	});
 
@@ -82,7 +82,7 @@ describe("Toaster", () => {
 		const screen = render(<Toaster />);
 		act(() => {
 			toast.success("Booking confirmed");
-			toast.warning("Mission starts soon");
+			toast.warning("Project starts soon");
 			toast.error("Payment could not be processed");
 		});
 		await screen.findByText("Payment could not be processed");
@@ -98,9 +98,9 @@ describe("Toaster", () => {
 	it("uses the kit Spinner as the loading icon", async () => {
 		const screen = render(<Toaster />);
 		act(() => {
-			toast.loading("Publishing mission…");
+			toast.loading("Publishing project…");
 		});
-		await screen.findByText("Publishing mission…");
+		await screen.findByText("Publishing project…");
 		const spinner = document.querySelector(
 			"[data-sonner-toast][data-type=loading] [data-slot=spinner]",
 		);
@@ -108,7 +108,7 @@ describe("Toaster", () => {
 	});
 
 	it("renders a close button on toasts by default", async () => {
-		await renderWithToast(<Toaster />, "Mission published");
+		await renderWithToast(<Toaster />, "Project published");
 		expect(document.querySelector("[data-close-button]")).not.toBeNull();
 	});
 });

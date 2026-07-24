@@ -70,13 +70,13 @@ export const Review: Story = {
 				authorName="Camille Dubois"
 				authorAvatarSrc="https://github.com/shadcn.png"
 				rating={5}
-				date="12 juin 2026"
+				date="June 12, 2026"
 			>
-				Intervention impeccable pendant tout le tournoi, les joueurs étaient
-				entre de très bonnes mains.
+				Flawless work from kickoff to delivery — the whole redesign shipped
+				ahead of schedule.
 			</ReviewItem>
-			<ReviewItem authorName="Nathan Guyot" rating={4} date="3 mai 2026">
-				Très professionnel et ponctuel.
+			<ReviewItem authorName="Nathan Guyot" rating={4} date="May 3, 2026">
+				Very professional and responsive.
 			</ReviewItem>
 		</div>
 	),

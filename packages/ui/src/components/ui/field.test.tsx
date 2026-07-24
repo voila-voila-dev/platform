@@ -74,10 +74,12 @@ describe("FieldTitle", () => {
 
 describe("FieldLabel", () => {
 	it("renders a label with the field-label slot", () => {
-		const screen = render(<FieldLabel htmlFor="club-name">Club</FieldLabel>);
+		const screen = render(
+			<FieldLabel htmlFor="client-name">Client</FieldLabel>,
+		);
 		const label = querySlot(screen, "field-label");
 		expect(label?.tagName).toBe("LABEL");
-		expect(label?.getAttribute("for")).toBe("club-name");
+		expect(label?.getAttribute("for")).toBe("client-name");
 	});
 });
 
@@ -146,11 +148,11 @@ describe("FieldError", () => {
 
 	it("renders a single error as plain text with role=alert", () => {
 		const screen = render(
-			<FieldError errors={[{ message: "RPPS number must be 11 digits." }]} />,
+			<FieldError errors={[{ message: "VAT number must be 11 digits." }]} />,
 		);
 		const error = querySlot(screen, "field-error");
 		expect(error?.getAttribute("role")).toBe("alert");
-		expect(error?.textContent).toBe("RPPS number must be 11 digits.");
+		expect(error?.textContent).toBe("VAT number must be 11 digits.");
 		expect(error?.querySelector("ul")).toBeNull();
 	});
 
@@ -189,9 +191,9 @@ describe("FieldError", () => {
 
 	it("accepts an id for aria-describedby wiring", () => {
 		const screen = render(
-			<FieldError id="rpps-error" errors={[{ message: "Invalid." }]} />,
+			<FieldError id="vat-error" errors={[{ message: "Invalid." }]} />,
 		);
-		expect(querySlot(screen, "field-error")?.id).toBe("rpps-error");
+		expect(querySlot(screen, "field-error")?.id).toBe("vat-error");
 	});
 });
 

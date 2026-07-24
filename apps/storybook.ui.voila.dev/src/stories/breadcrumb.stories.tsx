@@ -34,11 +34,11 @@ export const Default: Story = {
 				</BreadcrumbItem>
 				<BreadcrumbSeparator />
 				<BreadcrumbItem>
-					<BreadcrumbLink href="#">Missions</BreadcrumbLink>
+					<BreadcrumbLink href="#">Projects</BreadcrumbLink>
 				</BreadcrumbItem>
 				<BreadcrumbSeparator />
 				<BreadcrumbItem>
-					<BreadcrumbPage>Match day coverage</BreadcrumbPage>
+					<BreadcrumbPage>Website redesign</BreadcrumbPage>
 				</BreadcrumbItem>
 			</BreadcrumbList>
 		</Breadcrumb>
@@ -84,8 +84,8 @@ export const WithDropdownEllipsis: Story = {
 							render={<DropdownMenuTrigger />}
 						/>
 						<DropdownMenuContent align="start">
-							<DropdownMenuItem>Organizations</DropdownMenuItem>
-							<DropdownMenuItem>Missions</DropdownMenuItem>
+							<DropdownMenuItem>Workspaces</DropdownMenuItem>
+							<DropdownMenuItem>Projects</DropdownMenuItem>
 						</DropdownMenuContent>
 					</DropdownMenu>
 				</BreadcrumbItem>
@@ -127,13 +127,13 @@ export const WithRouterLink: Story = {
 				</BreadcrumbItem>
 				<BreadcrumbSeparator />
 				<BreadcrumbItem>
-					<BreadcrumbLink render={<RouterLink to="/missions" />}>
-						Missions
+					<BreadcrumbLink render={<RouterLink to="/projects" />}>
+						Projects
 					</BreadcrumbLink>
 				</BreadcrumbItem>
 				<BreadcrumbSeparator />
 				<BreadcrumbItem>
-					<BreadcrumbPage>Match day coverage</BreadcrumbPage>
+					<BreadcrumbPage>Website redesign</BreadcrumbPage>
 				</BreadcrumbItem>
 			</BreadcrumbList>
 		</Breadcrumb>
@@ -151,14 +151,14 @@ export const LongLabels: Story = {
 					<BreadcrumbSeparator />
 					<BreadcrumbItem>
 						<BreadcrumbLink href="#">
-							Stade Toulousain Rugby Club professionnel
+							Northwind Industries global marketing team
 						</BreadcrumbLink>
 					</BreadcrumbItem>
 					<BreadcrumbSeparator />
 					<BreadcrumbItem>
 						<BreadcrumbPage>
-							Couverture kinésithérapie du tournoi inter-régional des moins de
-							19 ans
+							Complete brand identity refresh for the international product
+							launch campaign
 						</BreadcrumbPage>
 					</BreadcrumbItem>
 				</BreadcrumbList>

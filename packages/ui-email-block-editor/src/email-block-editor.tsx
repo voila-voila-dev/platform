@@ -23,7 +23,7 @@ import {
 } from "#/sections/editor-sidebar.tsx";
 import { PreviewToggle } from "#/sections/preview-toggle.tsx";
 
-/** « Réglages du bloc » as a bottom sheet, for the viewports where a 280px
+/** The block settings panel as a bottom sheet, for the viewports where a 280px
  * column would put the options a screenful away from their block. */
 function BlockSettingsSheet({
 	open,
@@ -42,9 +42,9 @@ function BlockSettingsSheet({
 		<Drawer open={open} onOpenChange={onOpenChange}>
 			<DrawerContent>
 				<DrawerHeader>
-					<DrawerTitle>Réglages du bloc</DrawerTitle>
+					<DrawerTitle>Block settings</DrawerTitle>
 					<DrawerDescription className="sr-only">
-						Options du bloc sélectionné.
+						Options for the selected block.
 					</DrawerDescription>
 				</DrawerHeader>
 				<div className="flex flex-col gap-4 overflow-y-auto px-4 pb-8">

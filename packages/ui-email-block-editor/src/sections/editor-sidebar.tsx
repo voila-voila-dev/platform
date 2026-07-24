@@ -22,7 +22,7 @@ function SelectedBlockSettings({
 	if (definition.Settings === null) {
 		return (
 			<p className="text-muted-foreground text-sm">
-				Aucun réglage pour ce bloc.
+				This block has no settings.
 			</p>
 		);
 	}
@@ -58,7 +58,7 @@ export function BlockSettingsPanel({
 	if (selectedBlock === null) {
 		return (
 			<p className="text-muted-foreground text-sm">
-				Sélectionnez un bloc pour modifier ses réglages.
+				Select a block to edit its settings.
 			</p>
 		);
 	}
@@ -84,7 +84,7 @@ export function EditorSidebar({
 }) {
 	return (
 		<div className="flex flex-col gap-4 rounded-lg border bg-background p-4">
-			<h3 className="font-medium text-sm">Réglages du bloc</h3>
+			<h3 className="font-medium text-sm">Block settings</h3>
 			<BlockSettingsPanel
 				state={state}
 				dispatch={dispatch}

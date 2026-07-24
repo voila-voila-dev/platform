@@ -12,7 +12,7 @@ function Fixture(props: React.ComponentProps<typeof Collapsible>) {
 		<Collapsible {...props}>
 			<CollapsibleTrigger>Toggle applications</CollapsibleTrigger>
 			<CollapsibleContent>
-				<p>Lea Martin — Osteopath</p>
+				<p>Lea Martin — Developer</p>
 			</CollapsibleContent>
 		</Collapsible>
 	);
@@ -25,7 +25,7 @@ describe("Collapsible", () => {
 		const screen = render(<Fixture />);
 		const trigger = screen.getByRole("button", { name: "Toggle applications" });
 		expect(trigger.getAttribute("aria-expanded")).toBe("false");
-		expect(screen.queryByText("Lea Martin — Osteopath")).toBeNull();
+		expect(screen.queryByText("Lea Martin — Developer")).toBeNull();
 	});
 
 	it("opens the panel on trigger click and closes it on a second click", async () => {
@@ -35,13 +35,13 @@ describe("Collapsible", () => {
 		fireEvent.click(trigger);
 		await waitFor(() => {
 			expect(trigger.getAttribute("aria-expanded")).toBe("true");
-			expect(screen.getByText("Lea Martin — Osteopath")).toBeTruthy();
+			expect(screen.getByText("Lea Martin — Developer")).toBeTruthy();
 		});
 
 		fireEvent.click(trigger);
 		await waitFor(() => {
 			expect(trigger.getAttribute("aria-expanded")).toBe("false");
-			expect(screen.queryByText("Lea Martin — Osteopath")).toBeNull();
+			expect(screen.queryByText("Lea Martin — Developer")).toBeNull();
 		});
 	});
 
@@ -49,16 +49,16 @@ describe("Collapsible", () => {
 		const screen = render(<Fixture defaultOpen />);
 		const trigger = screen.getByRole("button", { name: "Toggle applications" });
 		expect(trigger.getAttribute("aria-expanded")).toBe("true");
-		expect(screen.getByText("Lea Martin — Osteopath")).toBeTruthy();
+		expect(screen.getByText("Lea Martin — Developer")).toBeTruthy();
 	});
 
 	it("supports controlled open state", async () => {
 		const screen = render(<Fixture open={false} />);
-		expect(screen.queryByText("Lea Martin — Osteopath")).toBeNull();
+		expect(screen.queryByText("Lea Martin — Developer")).toBeNull();
 
 		screen.rerender(<Fixture open />);
 		await waitFor(() => {
-			expect(screen.getByText("Lea Martin — Osteopath")).toBeTruthy();
+			expect(screen.getByText("Lea Martin — Developer")).toBeTruthy();
 		});
 	});
 
@@ -70,7 +70,7 @@ describe("Collapsible", () => {
 		fireEvent.click(trigger);
 		await waitFor(() => {
 			expect(trigger.getAttribute("aria-expanded")).toBe("false");
-			expect(screen.queryByText("Lea Martin — Osteopath")).toBeNull();
+			expect(screen.queryByText("Lea Martin — Developer")).toBeNull();
 		});
 	});
 
@@ -79,7 +79,7 @@ describe("Collapsible", () => {
 			<Collapsible>
 				<CollapsibleTrigger>Toggle brief</CollapsibleTrigger>
 				<CollapsibleContent keepMounted>
-					<p>Mission brief</p>
+					<p>Project brief</p>
 				</CollapsibleContent>
 			</Collapsible>,
 		);
@@ -88,7 +88,7 @@ describe("Collapsible", () => {
 		);
 		expect(panel).not.toBeNull();
 		expect(panel?.getAttribute("hidden")).not.toBeNull();
-		expect(screen.getByText("Mission brief", { ignore: "" })).toBeTruthy();
+		expect(screen.getByText("Project brief", { ignore: "" })).toBeTruthy();
 	});
 
 	it("merges className into every slot", () => {

@@ -30,7 +30,7 @@ runs:
     # installed it resolves the local `node_modules/.bin/wrangler`, whose
     # `#!/usr/bin/env node` shebang makes Bun hand execution to the system Node.
     # Wrangler v4 requires Node >= 22, so pin it here (Blacksmith's ubuntu-2404
-    # ships Node 20). Mirrors the Setup Node.js step in preview-api-tries-care.
+    # ships Node 20). Mirrors the Setup Node.js step in the preview API workflow.
     - name: Setup Node.js
       uses: actions/setup-node@v6
       with:

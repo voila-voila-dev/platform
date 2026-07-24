@@ -31,13 +31,13 @@ export const Default: Story = {
 	render: () => (
 		<DropdownMenu>
 			<DropdownMenuTrigger render={<Button variant="outline" />}>
-				Mission actions
+				Project actions
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-56">
-				<DropdownMenuLabel>Match coverage — Saturday</DropdownMenuLabel>
+				<DropdownMenuLabel>Landing page redesign</DropdownMenuLabel>
 				<DropdownMenuGroup>
 					<DropdownMenuItem>
-						Edit mission
+						Edit project
 						<DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
 					</DropdownMenuItem>
 					<DropdownMenuItem>
@@ -47,7 +47,7 @@ export const Default: Story = {
 				</DropdownMenuGroup>
 				<DropdownMenuSeparator />
 				<DropdownMenuSub>
-					<DropdownMenuSubTrigger>Assign provider</DropdownMenuSubTrigger>
+					<DropdownMenuSubTrigger>Assign freelancer</DropdownMenuSubTrigger>
 					<DropdownMenuSubContent>
 						<DropdownMenuItem>Nathan Guyot</DropdownMenuItem>
 						<DropdownMenuItem>Marie Lefevre</DropdownMenuItem>
@@ -56,7 +56,7 @@ export const Default: Story = {
 				</DropdownMenuSub>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem variant="destructive">
-					Cancel mission
+					Cancel project
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
@@ -75,7 +75,7 @@ export const WithCheckboxItems: Story = {
 					New applications
 				</DropdownMenuCheckboxItem>
 				<DropdownMenuCheckboxItem defaultChecked>
-					Mission reminders
+					Project reminders
 				</DropdownMenuCheckboxItem>
 				<DropdownMenuCheckboxItem>Weekly digest</DropdownMenuCheckboxItem>
 			</DropdownMenuContent>
@@ -87,13 +87,13 @@ export const WithRadioGroup: Story = {
 	render: () => (
 		<DropdownMenu>
 			<DropdownMenuTrigger render={<Button variant="outline" />}>
-				Sort missions
+				Sort projects
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-48">
 				<DropdownMenuLabel>Sort by</DropdownMenuLabel>
 				<DropdownMenuRadioGroup defaultValue="date">
 					<DropdownMenuRadioItem value="date">Date</DropdownMenuRadioItem>
-					<DropdownMenuRadioItem value="club">Club</DropdownMenuRadioItem>
+					<DropdownMenuRadioItem value="client">Client</DropdownMenuRadioItem>
 					<DropdownMenuRadioItem value="status">Status</DropdownMenuRadioItem>
 				</DropdownMenuRadioGroup>
 			</DropdownMenuContent>

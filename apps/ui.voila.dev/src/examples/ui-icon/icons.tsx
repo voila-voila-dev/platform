@@ -3,9 +3,9 @@ import { Icon } from "@voila.dev/ui-icon/components/icon";
 export function Default() {
 	return (
 		<>
-			<Icon name="HeartbeatIcon" className="size-6" />
-			<Icon name="StethoscopeIcon" className="size-6" />
-			<Icon name="FirstAidKitIcon" className="size-6" />
+			<Icon name="PaletteIcon" className="size-6" />
+			<Icon name="CodeIcon" className="size-6" />
+			<Icon name="PenNibIcon" className="size-6" />
 			<Icon name="TrophyIcon" className="size-6" />
 		</>
 	);
@@ -14,21 +14,21 @@ export function Default() {
 export function Weights() {
 	return (
 		<>
-			<Icon name="HeartbeatIcon" weight="thin" className="size-6" />
-			<Icon name="HeartbeatIcon" weight="regular" className="size-6" />
-			<Icon name="HeartbeatIcon" weight="bold" className="size-6" />
-			<Icon name="HeartbeatIcon" weight="fill" className="size-6" />
-			<Icon name="HeartbeatIcon" weight="duotone" className="size-6" />
+			<Icon name="PaletteIcon" weight="thin" className="size-6" />
+			<Icon name="PaletteIcon" weight="regular" className="size-6" />
+			<Icon name="PaletteIcon" weight="bold" className="size-6" />
+			<Icon name="PaletteIcon" weight="fill" className="size-6" />
+			<Icon name="PaletteIcon" weight="duotone" className="size-6" />
 		</>
 	);
 }
 
 export function FromData() {
 	const categories = [
-		{ name: "Kinésithérapie", icon: "HeartbeatIcon", color: "text-provider" },
-		{ name: "Médecine", icon: "StethoscopeIcon", color: "text-organization" },
-		{ name: "Urgences", icon: "FirstAidKitIcon", color: "text-destructive" },
-		{ name: "Inconnue", icon: "NotAnIconName", color: "text-muted-foreground" },
+		{ name: "Design", icon: "PaletteIcon", color: "text-brand" },
+		{ name: "Development", icon: "CodeIcon", color: "text-highlight" },
+		{ name: "Overdue", icon: "WarningIcon", color: "text-destructive" },
+		{ name: "Unknown", icon: "NotAnIconName", color: "text-muted-foreground" },
 	];
 	return (
 		<div className="flex flex-col gap-2">

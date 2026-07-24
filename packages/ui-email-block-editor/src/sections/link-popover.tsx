@@ -8,7 +8,7 @@ import {
 import { type ReactElement, useState } from "react";
 
 /**
- * The shared « lien » editing surface: a small popover with a URL field,
+ * The shared link editing surface: a small popover with a URL field,
  * apply, and an optional remove action. The paragraph toolbar drives it with
  * text-selection callbacks; the button block edits its target through it.
  */
@@ -25,7 +25,7 @@ export function LinkPopover({
 	/** Runs as the popover opens (the toolbar saves the text selection here). */
 	onOpen?: () => void;
 	onApply: (href: string) => void;
-	/** « Retirer le lien » — omitted when removing makes no sense (a button). */
+	/** "Remove link" — omitted when removing makes no sense (a button). */
 	onRemove?: () => void;
 }) {
 	const [open, setOpen] = useState(false);
@@ -57,7 +57,7 @@ export function LinkPopover({
 					}}
 				>
 					<Input
-						aria-label="Adresse du lien"
+						aria-label="Link URL"
 						type="url"
 						placeholder="https://"
 						value={href}
@@ -66,7 +66,7 @@ export function LinkPopover({
 					/>
 					<div className="flex items-center justify-between gap-2">
 						<Button type="submit" size="sm" disabled={href.trim() === ""}>
-							Appliquer
+							Apply
 						</Button>
 						{onRemove ? (
 							<Button
@@ -78,7 +78,7 @@ export function LinkPopover({
 									setOpen(false);
 								}}
 							>
-								Retirer le lien
+								Remove link
 							</Button>
 						) : null}
 					</div>

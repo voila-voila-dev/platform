@@ -33,13 +33,13 @@ function Fixture(props: React.ComponentProps<typeof PopoverContent>) {
 	return (
 		<Popover>
 			<PopoverTrigger render={<Button variant="outline" />}>
-				Mission details
+				Project details
 			</PopoverTrigger>
 			<PopoverContent {...props}>
 				<PopoverHeader>
-					<PopoverTitle>Saturday match coverage</PopoverTitle>
+					<PopoverTitle>Q3 brand refresh</PopoverTitle>
 					<PopoverDescription>
-						Stade Rennais — June 14, from 14:00 to 18:00.
+						Kickoff call — June 14, from 14:00 to 18:00.
 					</PopoverDescription>
 				</PopoverHeader>
 				<PopoverClose render={<Button variant="ghost" />}>Close</PopoverClose>
@@ -55,30 +55,30 @@ describe("Popover", () => {
 	it("renders only the trigger while closed", () => {
 		const screen = render(<Fixture />);
 		expect(
-			screen.getByRole("button", { name: "Mission details" }),
+			screen.getByRole("button", { name: "Project details" }),
 		).toBeTruthy();
 		expect(screen.queryByRole("dialog")).toBeNull();
 	});
 
 	it("opens on trigger click with an a11y-wired title and description", async () => {
 		const screen = render(<Fixture />);
-		fireEvent.click(screen.getByRole("button", { name: "Mission details" }));
+		fireEvent.click(screen.getByRole("button", { name: "Project details" }));
 		await waitFor(() => {
 			const dialog = screen.getByRole("dialog");
 			expect(dialog).toBeTruthy();
 			// Base UI auto-wires aria-labelledby/aria-describedby to Title/Description.
 			expect(dialog.getAttribute("aria-labelledby")).toBeTruthy();
 			expect(dialog.getAttribute("aria-describedby")).toBeTruthy();
-			expect(screen.getByText("Saturday match coverage")).toBeTruthy();
+			expect(screen.getByText("Q3 brand refresh")).toBeTruthy();
 			expect(
-				screen.getByText("Stade Rennais — June 14, from 14:00 to 18:00."),
+				screen.getByText("Kickoff call — June 14, from 14:00 to 18:00."),
 			).toBeTruthy();
 		});
 	});
 
 	it("closes when PopoverClose is clicked", async () => {
 		const screen = render(<Fixture />);
-		fireEvent.click(screen.getByRole("button", { name: "Mission details" }));
+		fireEvent.click(screen.getByRole("button", { name: "Project details" }));
 		await waitFor(() => {
 			expect(screen.getByRole("dialog")).toBeTruthy();
 		});
@@ -93,7 +93,7 @@ describe("Popover", () => {
 
 	it("respects reduced motion on the popup animation", async () => {
 		const screen = render(<Fixture />);
-		fireEvent.click(screen.getByRole("button", { name: "Mission details" }));
+		fireEvent.click(screen.getByRole("button", { name: "Project details" }));
 		await waitFor(() => {
 			expect(
 				queryContent(screen)?.classList.contains("motion-reduce:animate-none"),
@@ -104,7 +104,7 @@ describe("Popover", () => {
 	it("does not restate text-sm on the header (inherited from the popup)", async () => {
 		// Regression: the header duplicated the popup's `text-sm`, a drift hazard.
 		const screen = render(<Fixture />);
-		fireEvent.click(screen.getByRole("button", { name: "Mission details" }));
+		fireEvent.click(screen.getByRole("button", { name: "Project details" }));
 		await waitFor(() => {
 			const header = screen.baseElement.querySelector(
 				"[data-slot=popover-header]",
@@ -116,7 +116,7 @@ describe("Popover", () => {
 
 	it("forwards the side prop to the positioned popup", async () => {
 		const screen = render(<Fixture side="top" />);
-		fireEvent.click(screen.getByRole("button", { name: "Mission details" }));
+		fireEvent.click(screen.getByRole("button", { name: "Project details" }));
 		await waitFor(() => {
 			expect(queryContent(screen)?.getAttribute("data-side")).toBe("top");
 		});
@@ -126,7 +126,7 @@ describe("Popover", () => {
 		const screen = render(
 			<Fixture positionerProps={{ "data-testid": "positioner" } as never} />,
 		);
-		fireEvent.click(screen.getByRole("button", { name: "Mission details" }));
+		fireEvent.click(screen.getByRole("button", { name: "Project details" }));
 		await waitFor(() => {
 			expect(
 				screen.baseElement.querySelector('[data-testid="positioner"]'),
@@ -136,7 +136,7 @@ describe("Popover", () => {
 
 	it("merges className onto the popup", async () => {
 		const screen = render(<Fixture className="custom-popover" />);
-		fireEvent.click(screen.getByRole("button", { name: "Mission details" }));
+		fireEvent.click(screen.getByRole("button", { name: "Project details" }));
 		await waitFor(() => {
 			expect(queryContent(screen)?.classList.contains("custom-popover")).toBe(
 				true,

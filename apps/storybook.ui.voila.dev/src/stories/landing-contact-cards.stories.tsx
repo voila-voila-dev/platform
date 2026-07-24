@@ -31,13 +31,13 @@ export const Default: Story = {
 			</ContactCards.Card>
 
 			<ContactCards.Card>
-				<ContactCards.CardTitle>Par téléphone</ContactCards.CardTitle>
+				<ContactCards.CardTitle>By phone</ContactCards.CardTitle>
 				<ContactCards.CardDescription>
-					Du lundi au vendredi, de 9h à 18h.
+					Monday to Friday, 9am to 6pm.
 				</ContactCards.CardDescription>
 				<Button
 					variant="outline"
-					render={<a href="tel:+33647672472">+33 6 47 67 24 72</a>}
+					render={<a href="tel:+15550134567">+1 (555) 013-4567</a>}
 				/>
 			</ContactCards.Card>
 		</ContactCards.Root>

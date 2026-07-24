@@ -14,9 +14,9 @@ import {
 afterEach(cleanup);
 
 const specialtyItems = {
-	physiotherapist: "Physiotherapist",
-	osteopath: "Osteopath",
-	nurse: "Nurse",
+	developer: "Developer",
+	consultant: "Consultant",
+	designer: "Designer",
 };
 
 function renderSelect(
@@ -29,9 +29,9 @@ function renderSelect(
 				<SelectValue placeholder="Select a specialty" />
 			</SelectTrigger>
 			<SelectContent>
-				<SelectItem value="physiotherapist">Physiotherapist</SelectItem>
-				<SelectItem value="osteopath">Osteopath</SelectItem>
-				<SelectItem value="nurse">Nurse</SelectItem>
+				<SelectItem value="developer">Developer</SelectItem>
+				<SelectItem value="consultant">Consultant</SelectItem>
+				<SelectItem value="designer">Designer</SelectItem>
 			</SelectContent>
 		</Select>,
 	);
@@ -46,10 +46,10 @@ describe("Select", () => {
 	});
 
 	it("shows the item label in the trigger, not the raw value", () => {
-		const screen = renderSelect({ defaultValue: "osteopath" });
+		const screen = renderSelect({ defaultValue: "consultant" });
 		const trigger = screen.getByRole("combobox");
-		expect(trigger.textContent).toContain("Osteopath");
-		expect(trigger.textContent).not.toContain("osteopath");
+		expect(trigger.textContent).toContain("Consultant");
+		expect(trigger.textContent).not.toContain("consultant");
 	});
 
 	it("defaults to the default size and supports sm", () => {
@@ -87,12 +87,12 @@ describe("Select", () => {
 		render(
 			<Select defaultOpen>
 				<SelectTrigger>
-					<SelectValue placeholder="Mission type" />
+					<SelectValue placeholder="Project type" />
 				</SelectTrigger>
 				<SelectContent>
 					<SelectGroup>
-						<SelectLabel>Training</SelectLabel>
-						<SelectItem value="recovery-session">Recovery session</SelectItem>
+						<SelectLabel>Reviews</SelectLabel>
+						<SelectItem value="design-review">Design review</SelectItem>
 					</SelectGroup>
 				</SelectContent>
 			</Select>,
@@ -103,17 +103,17 @@ describe("Select", () => {
 	});
 
 	it("marks the selected item and shows its indicator", () => {
-		renderSelect({ defaultValue: "nurse", defaultOpen: true });
+		renderSelect({ defaultValue: "designer", defaultOpen: true });
 		const selected = document.querySelector(
 			"[data-slot=select-item][data-selected]",
 		);
-		expect(selected?.textContent).toContain("Nurse");
+		expect(selected?.textContent).toContain("Designer");
 		expect(selected?.querySelector("svg")).not.toBeNull();
 	});
 
 	it("renders a hidden input for forms integration", () => {
-		renderSelect({ name: "specialty", defaultValue: "physiotherapist" });
-		const input = document.querySelector("input[name=specialty]");
+		renderSelect({ name: "role", defaultValue: "developer" });
+		const input = document.querySelector("input[name=role]");
 		expect(input).not.toBeNull();
 	});
 

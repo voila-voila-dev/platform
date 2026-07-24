@@ -32,7 +32,7 @@ const helperIcons = [BellIcon, TrophyIcon, ChartBarIcon];
 export const TwoTracks: Story = {
 	render: () => (
 		<StepTracks.Root>
-			<StepTracks.Track tone="organization">
+			<StepTracks.Track tone="highlight">
 				<StepTracks.Header>
 					<StepTracks.HeaderIcon>
 						<BuildingsIcon />
@@ -69,7 +69,7 @@ export const TwoTracks: Story = {
 				</StepTracks.Steps>
 			</StepTracks.Track>
 
-			<StepTracks.Track tone="provider" style={{ animationDelay: "0.15s" }}>
+			<StepTracks.Track tone="brand" style={{ animationDelay: "0.15s" }}>
 				<StepTracks.Header>
 					<StepTracks.HeaderIcon>
 						<StethoscopeIcon />

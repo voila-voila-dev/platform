@@ -38,18 +38,18 @@ export const HomeHero: Story = {
 	render: () => (
 		<LandingHero.Root>
 			<LandingHero.Content>
-				<Eyebrow.Root tone="provider" className="mb-6">
+				<Eyebrow.Root tone="brand" className="mb-6">
 					<Eyebrow.Dot pulse />
 					<Eyebrow.Label>{heroCopy.badge}</Eyebrow.Label>
 				</Eyebrow.Root>
 
 				<LandingHero.Title>
 					{heroCopy.titleStart}{" "}
-					<LandingHero.Highlight tone="provider">
+					<LandingHero.Highlight tone="brand">
 						{heroCopy.titleHighlight}
 					</LandingHero.Highlight>{" "}
 					{heroCopy.titleMiddle}{" "}
-					<LandingHero.Highlight tone="organization">
+					<LandingHero.Highlight tone="highlight">
 						{heroCopy.titleHighlightEnd}
 					</LandingHero.Highlight>{" "}
 					{heroCopy.titleEnd}
@@ -58,14 +58,14 @@ export const HomeHero: Story = {
 				<LandingHero.Lead>{heroCopy.description}</LandingHero.Lead>
 
 				<LandingHero.Actions>
-					<Button size="lg" variant="organization" className="group">
+					<Button size="lg" variant="highlight" className="group">
 						<BuildingsIcon className="h-5 w-5" />
-						{heroCopy.ctaClub}
+						{heroCopy.ctaClient}
 						<ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
 					</Button>
-					<Button size="lg" variant="provider" className="group">
+					<Button size="lg" variant="brand" className="group">
 						<StethoscopeIcon className="h-5 w-5" />
-						{heroCopy.ctaHealthPro}
+						{heroCopy.ctaFreelancer}
 						<ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
 					</Button>
 				</LandingHero.Actions>
@@ -105,7 +105,7 @@ export const Centered: Story = {
 				</LandingHero.Lead>
 				<LandingHero.Actions className="justify-center">
 					<Button size="lg" variant="primary">
-						{heroCopy.ctaClub}
+						{heroCopy.ctaClient}
 					</Button>
 				</LandingHero.Actions>
 			</LandingHero.Content>

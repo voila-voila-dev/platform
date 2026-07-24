@@ -3,12 +3,12 @@ import * as React from "react";
 import { Input } from "#/components/ui/input.tsx";
 
 /**
- * Digit masks for the French identifiers the apps collect. `#` is a digit
+ * Ready-made digit masks for common identifier fields. `#` is a digit
  * slot; any other character is a literal separator inserted while typing.
  */
-const rppsMask = "###########";
-const siretMask = "### ### ### #####";
-const frenchPhoneMask = "## ## ## ## ##";
+const idNumberMask = "###########";
+const businessIdMask = "### ### ### #####";
+const phoneMask = "## ## ## ## ##";
 
 function countDigitSlots(mask: string): number {
 	let count = 0;
@@ -128,7 +128,7 @@ type FormattedInputProps = Omit<
 	React.ComponentProps<typeof Input>,
 	"value" | "defaultValue" | "onValueChange" | "type"
 > & {
-	/** Digit mask, e.g. `"### ### ### #####"` for SIRET. `#` marks a digit slot. */
+	/** Digit mask, e.g. `"### ### ### #####"` for a business id. `#` marks a digit slot. */
 	mask: string;
 	/** Raw digits (unformatted). */
 	value?: string;
@@ -211,9 +211,9 @@ function FormattedInput({
 
 export {
 	applyMask,
+	businessIdMask,
 	FormattedInput,
 	type FormattedInputProps,
-	frenchPhoneMask,
-	rppsMask,
-	siretMask,
+	idNumberMask,
+	phoneMask,
 };

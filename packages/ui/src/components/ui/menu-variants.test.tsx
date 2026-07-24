@@ -82,9 +82,9 @@ describe("recipe adoption", () => {
 	it("renders identical item classes in dropdown-menu and context-menu", () => {
 		const dropdownScreen = render(
 			<DropdownMenu defaultOpen>
-				<DropdownMenuTrigger>Mission actions</DropdownMenuTrigger>
+				<DropdownMenuTrigger>Project actions</DropdownMenuTrigger>
 				<DropdownMenuContent>
-					<DropdownMenuItem>Edit mission</DropdownMenuItem>
+					<DropdownMenuItem>Edit project</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>,
 		);
@@ -92,7 +92,7 @@ describe("recipe adoption", () => {
 			<ContextMenu defaultOpen>
 				<ContextMenuTrigger>Right-click here</ContextMenuTrigger>
 				<ContextMenuContent>
-					<ContextMenuItem>Edit mission</ContextMenuItem>
+					<ContextMenuItem>Edit project</ContextMenuItem>
 				</ContextMenuContent>
 			</ContextMenu>,
 		);
@@ -109,9 +109,9 @@ describe("recipe adoption", () => {
 	it("renders identical content classes apart from context-menu's min width", () => {
 		const dropdownScreen = render(
 			<DropdownMenu defaultOpen>
-				<DropdownMenuTrigger>Mission actions</DropdownMenuTrigger>
+				<DropdownMenuTrigger>Project actions</DropdownMenuTrigger>
 				<DropdownMenuContent>
-					<DropdownMenuItem>Edit mission</DropdownMenuItem>
+					<DropdownMenuItem>Edit project</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>,
 		);
@@ -119,7 +119,7 @@ describe("recipe adoption", () => {
 			<ContextMenu defaultOpen>
 				<ContextMenuTrigger>Right-click here</ContextMenuTrigger>
 				<ContextMenuContent>
-					<ContextMenuItem>Edit mission</ContextMenuItem>
+					<ContextMenuItem>Edit project</ContextMenuItem>
 				</ContextMenuContent>
 			</ContextMenu>,
 		);

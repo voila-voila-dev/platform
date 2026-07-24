@@ -12,7 +12,7 @@ const meta = {
 	component: Textarea,
 	tags: ["autodocs"],
 	args: {
-		placeholder: "Describe the mission for the provider...",
+		placeholder: "Describe the project for the freelancer...",
 	},
 } satisfies Meta<typeof Textarea>;
 
@@ -25,7 +25,7 @@ export const Default: Story = {};
 export const WithValue: Story = {
 	args: {
 		defaultValue:
-			"Pitch-side physiotherapy cover for the Saturday home match. Arrive one hour before kick-off for taping and warm-up support.",
+			"Complete redesign of the marketing site for the spring launch. Join the kickoff call one hour early for scope and handoff review.",
 	},
 };
 
@@ -39,16 +39,16 @@ export const Disabled: Story = {
 export const Overflowing: Story = {
 	args: {
 		defaultValue: [
-			"Pitch-side physiotherapy cover for the Saturday home match.",
-			"Arrive one hour before kick-off for taping and warm-up support.",
-			"Stay through the cool-down and compile the injury report.",
-			"Coordinate with the club doctor on any head-injury assessment.",
-			"Restock the medical bag and flag missing supplies to the staff.",
-			"Debrief the head coach on player availability for next week.",
-			"File the fiche de suivi within 48 hours of the final whistle.",
-			"Note any follow-up treatment recommendations per player.",
-			"Confirm travel reimbursement details with the club secretary.",
-			"Leave emergency contact instructions with the duty manager.",
+			"Complete redesign of the marketing site for the spring launch.",
+			"Join the kickoff call one hour early for scope and handoff review.",
+			"Stay through the retro and compile the delivery report.",
+			"Coordinate with the client lead on any scope-change assessment.",
+			"Update the design system library and flag missing tokens.",
+			"Debrief the project manager on availability for next quarter.",
+			"File the project report within 48 hours of the final milestone.",
+			"Note any follow-up recommendations per deliverable.",
+			"Confirm expense reimbursement details with the client admin.",
+			"Leave escalation contact instructions with the account manager.",
 		].join("\n\n"),
 	},
 };
@@ -74,16 +74,18 @@ export const InField: Story = {
 	render: () => (
 		<div className="w-96">
 			<Field invalid>
-				<FieldLabel htmlFor="mission-description">
-					Mission description
+				<FieldLabel htmlFor="project-description">
+					Project description
 				</FieldLabel>
 				<Textarea
-					id="mission-description"
+					id="project-description"
 					aria-invalid
 					defaultValue="Too short"
-					placeholder="Describe the mission for the provider..."
+					placeholder="Describe the project for the freelancer..."
 				/>
-				<FieldDescription>Providers see this before applying.</FieldDescription>
+				<FieldDescription>
+					Freelancers see this before applying.
+				</FieldDescription>
 				<FieldError>The description must be at least 80 characters.</FieldError>
 			</Field>
 		</div>

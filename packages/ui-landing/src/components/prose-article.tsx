@@ -17,9 +17,9 @@ function ProseArticle({
 			{
 				className: cn(
 					"prose prose-lg md:prose-xl mx-auto max-w-none",
-					"prose-blockquote:border-l-provider prose-blockquote:bg-muted/50 prose-blockquote:py-1 prose-blockquote:pl-6 prose-blockquote:not-italic",
+					"prose-blockquote:border-l-brand prose-blockquote:bg-muted/50 prose-blockquote:py-1 prose-blockquote:pl-6 prose-blockquote:not-italic",
 					"prose-p:text-muted-foreground",
-					"prose-a:text-provider",
+					"prose-a:text-brand",
 					"prose-strong:text-foreground",
 					"prose-img:rounded-xl",
 					className,

@@ -1,22 +1,22 @@
 import {
 	ArrowRightIcon,
 	BellIcon,
+	BriefcaseIcon,
 	BuildingsIcon,
 	CalendarBlankIcon,
 	ChartBarIcon,
-	CurrencyEurIcon,
+	CheckCircleIcon,
+	CurrencyDollarIcon,
 	EnvelopeIcon,
 	EnvelopeSimpleIcon,
 	FileTextIcon,
 	HandHeartIcon,
-	HeartbeatIcon,
 	LightningIcon,
 	LinkedinLogoIcon,
 	PackageIcon,
 	PathIcon,
-	StethoscopeIcon,
+	RocketLaunchIcon,
 	TrophyIcon,
-	TruckIcon,
 	UserCheckIcon,
 } from "@phosphor-icons/react";
 import { Button } from "@voila.dev/ui/components/button";
@@ -75,7 +75,7 @@ function partnerLogoDataUri(name: string): string {
 	return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 }
 
-const partnerNames = ["AS Vitré", "CJF Fleury", "FC Nantes", "RC Vannes"];
+const partnerNames = ["Northwind", "Globex", "Initech", "Contoso"];
 
 function IllustrationPlaceholder({ label }: { label: string }) {
 	return (
@@ -86,15 +86,15 @@ function IllustrationPlaceholder({ label }: { label: string }) {
 }
 
 const stats = [
-	{ value: "20K+", label: "Membres engagés" },
-	{ value: "2000+", label: "Professionnels référencés" },
-	{ value: "700+", label: "Prestations effectuées" },
+	{ value: "20K+", label: "Active members" },
+	{ value: "2000+", label: "Vetted freelancers" },
+	{ value: "700+", label: "Projects delivered" },
 ];
 
 const mainNavigation = [
-	{ title: "Comment ça marche ?", href: "#how-it-works" },
-	{ title: "Pour les clubs", href: "#club-benefits" },
-	{ title: "Pour les pros", href: "#health-pro-benefits" },
+	{ title: "How it works", href: "#how-it-works" },
+	{ title: "For clients", href: "#client-benefits" },
+	{ title: "For freelancers", href: "#freelancer-benefits" },
 ];
 
 /* -------------------------------------------------------------------------- */
@@ -129,12 +129,10 @@ export function Heading() {
 	return (
 		<div className="space-y-4">
 			<HeadingComponent level="h1">
-				Trouvez un <span className="text-provider">pro de santé</span> pour vos{" "}
-				<span className="text-organization">événements sportifs</span>
+				Find a <span className="text-brand">trusted freelancer</span> for your{" "}
+				<span className="text-highlight">next project</span>
 			</HeadingComponent>
-			<HeadingComponent level="h3">
-				Deux parcours, une rencontre
-			</HeadingComponent>
+			<HeadingComponent level="h3">Two journeys, one match</HeadingComponent>
 		</div>
 	);
 }
@@ -143,11 +141,10 @@ export function Text() {
 	return (
 		<div className="space-y-4">
 			<TextComponent variant="lead">
-				La plateforme qui met en relation clubs de sport et professionnels de
-				santé.
+				The platform that connects client teams with independent freelancers.
 			</TextComponent>
 			<TextComponent variant="muted">
-				Construisons ensemble un sport amateur mieux accompagné.
+				Let's build better projects, together.
 			</TextComponent>
 		</div>
 	);
@@ -156,15 +153,15 @@ export function Text() {
 export function Eyebrow() {
 	return (
 		<div className="flex flex-wrap gap-4">
-			<EyebrowParts.Root tone="provider">
+			<EyebrowParts.Root tone="brand">
 				<EyebrowParts.Dot pulse />
-				<EyebrowParts.Label>Nouvelle plateforme</EyebrowParts.Label>
+				<EyebrowParts.Label>New platform</EyebrowParts.Label>
 			</EyebrowParts.Root>
-			<EyebrowParts.Root tone="organization">
+			<EyebrowParts.Root tone="highlight">
 				<EyebrowParts.Icon>
 					<BuildingsIcon />
 				</EyebrowParts.Icon>
-				<EyebrowParts.Label>Pour les clubs de sport</EyebrowParts.Label>
+				<EyebrowParts.Label>For client teams</EyebrowParts.Label>
 			</EyebrowParts.Root>
 		</div>
 	);
@@ -174,14 +171,14 @@ export function SectionIntro() {
 	return (
 		<SectionIntroParts.Root>
 			<EyebrowParts.Root tone="primary" className="mb-4">
-				<EyebrowParts.Label>Comment ça marche ?</EyebrowParts.Label>
+				<EyebrowParts.Label>How it works</EyebrowParts.Label>
 			</EyebrowParts.Root>
 			<SectionIntroParts.Title>
-				Deux parcours, une <span className="text-primary">rencontre</span>
+				Two journeys, one <span className="text-primary">match</span>
 			</SectionIntroParts.Title>
 			<SectionIntroParts.Description>
-				Staffez votre événement côté club, trouvez vos missions côté
-				professionnel de santé : trois étapes suffisent.
+				Staff your project as a client, find your next engagement as a
+				freelancer: three steps are enough.
 			</SectionIntroParts.Description>
 		</SectionIntroParts.Root>
 	);
@@ -192,8 +189,8 @@ export function PageHeaderExample() {
 		<PageHeader.Root>
 			<PageHeader.Title>Contact</PageHeader.Title>
 			<PageHeader.Lead>
-				Une question, un besoin, une idée ? Écrivez-nous, on vous répond
-				rapidement.
+				A question, a request, an idea? Write to us and we will get back to you
+				quickly.
 			</PageHeader.Lead>
 		</PageHeader.Root>
 	);
@@ -220,12 +217,12 @@ export function SiteHeaderExample() {
 							))}
 						</SiteHeader.NavList>
 						<SiteHeader.Actions>
-							<Button size="sm" variant="organization">
-								Je suis un club
+							<Button size="sm" variant="highlight">
+								I'm a client
 							</Button>
 						</SiteHeader.Actions>
 					</SiteHeader.Nav>
-					<SiteHeader.MobileToggle aria-label="Ouvrir ou fermer le menu" />
+					<SiteHeader.MobileToggle aria-label="Open or close the menu" />
 				</SiteHeader.Bar>
 				<SiteHeader.MobileMenu>
 					{mainNavigation.map((item) => (
@@ -234,14 +231,14 @@ export function SiteHeaderExample() {
 						</SiteHeader.MobileNavItem>
 					))}
 					<SiteHeader.MobileActions>
-						<Button variant="organization" className="w-full">
-							Je suis un club
+						<Button variant="highlight" className="w-full">
+							I'm a client
 						</Button>
 					</SiteHeader.MobileActions>
 				</SiteHeader.MobileMenu>
 			</SiteHeader.Root>
 			<div className="p-6 text-muted-foreground text-sm">
-				L'en-tête reste collé en haut, avec un flou d'arrière-plan.
+				The header stays pinned to the top, with a backdrop blur.
 			</div>
 		</div>
 	);
@@ -254,8 +251,8 @@ export function SiteFooterExample() {
 				<SiteFooter.Brand>
 					<BrandLogo className="mb-4 block" />
 					<SiteFooter.BrandDescription>
-						Clubs de sport et professionnels de santé, réunis autour des mêmes
-						événements.
+						Client teams and independent freelancers, brought together around
+						the same projects.
 					</SiteFooter.BrandDescription>
 					<SiteFooter.SocialLinks>
 						<SiteFooter.SocialLink href="#" aria-label="LinkedIn">
@@ -270,29 +267,23 @@ export function SiteFooterExample() {
 					</SiteFooter.SocialLinks>
 				</SiteFooter.Brand>
 				<SiteFooter.Column>
-					<SiteFooter.ColumnTitle>Plateforme</SiteFooter.ColumnTitle>
+					<SiteFooter.ColumnTitle>Platform</SiteFooter.ColumnTitle>
 					<SiteFooter.ColumnList>
-						<SiteFooter.ColumnLink href="#">
-							Comment ça marche ?
-						</SiteFooter.ColumnLink>
-						<SiteFooter.ColumnLink href="#">
-							Pour les clubs
-						</SiteFooter.ColumnLink>
+						<SiteFooter.ColumnLink href="#">How it works</SiteFooter.ColumnLink>
+						<SiteFooter.ColumnLink href="#">For clients</SiteFooter.ColumnLink>
 					</SiteFooter.ColumnList>
 				</SiteFooter.Column>
 				<SiteFooter.Column>
-					<SiteFooter.ColumnTitle>Légal</SiteFooter.ColumnTitle>
+					<SiteFooter.ColumnTitle>Legal</SiteFooter.ColumnTitle>
 					<SiteFooter.ColumnList>
-						<SiteFooter.ColumnLink href="#">
-							Mentions légales
-						</SiteFooter.ColumnLink>
-						<SiteFooter.ColumnLink href="#">CGU</SiteFooter.ColumnLink>
+						<SiteFooter.ColumnLink href="#">Legal notice</SiteFooter.ColumnLink>
+						<SiteFooter.ColumnLink href="#">Terms</SiteFooter.ColumnLink>
 					</SiteFooter.ColumnList>
 				</SiteFooter.Column>
 			</SiteFooter.Columns>
 			<SiteFooter.Bottom>
 				<SiteFooter.BottomText>
-					© 2026 acme.dev. Tous droits réservés.
+					© 2026 acme.dev. All rights reserved.
 				</SiteFooter.BottomText>
 			</SiteFooter.Bottom>
 		</SiteFooter.Root>
@@ -307,30 +298,29 @@ export function Hero() {
 	return (
 		<LandingHero.Root>
 			<LandingHero.Content>
-				<EyebrowParts.Root tone="provider" className="mb-6">
+				<EyebrowParts.Root tone="brand" className="mb-6">
 					<EyebrowParts.Dot pulse />
-					<EyebrowParts.Label>Nouvelle plateforme</EyebrowParts.Label>
+					<EyebrowParts.Label>New platform</EyebrowParts.Label>
 				</EyebrowParts.Root>
 				<LandingHero.Title>
-					Trouvez un{" "}
-					<LandingHero.Highlight tone="provider">
-						pro de santé
+					Find a{" "}
+					<LandingHero.Highlight tone="brand">
+						trusted freelancer
 					</LandingHero.Highlight>{" "}
-					pour vos{" "}
-					<LandingHero.Highlight tone="organization">
-						événements sportifs
+					for your{" "}
+					<LandingHero.Highlight tone="highlight">
+						next project
 					</LandingHero.Highlight>
 				</LandingHero.Title>
 				<LandingHero.Lead>
-					La plateforme qui met en relation clubs de sport et professionnels de
-					santé.
+					The platform that connects client teams with independent freelancers.
 				</LandingHero.Lead>
 				<LandingHero.Actions>
-					<Button size="lg" variant="organization">
-						<BuildingsIcon /> Je suis un club
+					<Button size="lg" variant="highlight">
+						<BuildingsIcon /> I'm a client
 					</Button>
-					<Button size="lg" variant="provider">
-						<StethoscopeIcon /> Je suis professionnel de santé
+					<Button size="lg" variant="brand">
+						<BriefcaseIcon /> I'm a freelancer
 					</Button>
 				</LandingHero.Actions>
 				<StatsRow.Root>
@@ -357,17 +347,15 @@ export function HeroCentered() {
 		<LandingHero.Root layout="centered" background="gradient-primary">
 			<LandingHero.Content className="text-center">
 				<LandingHero.Title>
-					Rejoignez le{" "}
-					<LandingHero.Highlight tone="primary">
-						mouvement
-					</LandingHero.Highlight>
+					Join the{" "}
+					<LandingHero.Highlight tone="primary">movement</LandingHero.Highlight>
 				</LandingHero.Title>
 				<LandingHero.Lead className="mx-auto">
-					Club ou professionnel de santé, il y a une place pour vous.
+					Client or freelancer, there is a place for you.
 				</LandingHero.Lead>
 				<LandingHero.Actions className="justify-center">
 					<Button size="lg" variant="primary">
-						Commencer
+						Get started
 					</Button>
 				</LandingHero.Actions>
 			</LandingHero.Content>
@@ -393,15 +381,16 @@ export function StatsRowExample() {
 
 const features = [
 	{
-		icon: CurrencyEurIcon,
-		title: "Des prix pharmacie élevés",
+		icon: CurrencyDollarIcon,
+		title: "Agency rates run high",
 		description:
-			"Le matériel acheté à l'unité grève le budget des clubs amateurs.",
+			"Hiring an agency for every small task drains the budget of growing teams.",
 	},
 	{
 		icon: PackageIcon,
-		title: "Des trousses incomplètes",
-		description: "Il manque toujours l'essentiel au moment où on en a besoin.",
+		title: "Skills always missing",
+		description:
+			"The expertise you need is never in-house at the moment you need it.",
 	},
 ];
 
@@ -429,15 +418,15 @@ export function FeatureGridExample() {
 const values = [
 	{
 		icon: LightningIcon,
-		title: "Réactivité",
+		title: "Responsiveness",
 		description:
-			"Des offres sur-mesure pour combler les manques du suivi médical sportif.",
+			"Tailored matches that fill the gaps in your delivery pipeline.",
 	},
 	{
 		icon: PathIcon,
-		title: "Simplicité",
+		title: "Simplicity",
 		description:
-			"De la recherche à la facturation, nous gérons tout le processus.",
+			"From the first search to the final invoice, we handle the whole process.",
 	},
 ];
 
@@ -449,11 +438,11 @@ export function BentoGridExample() {
 					<BentoGrid.FeaturedIcon>
 						<HandHeartIcon />
 					</BentoGrid.FeaturedIcon>
-					<BentoGrid.FeaturedLabel>Notre mantra</BentoGrid.FeaturedLabel>
-					<BentoGrid.FeaturedTitle>CARE</BentoGrid.FeaturedTitle>
+					<BentoGrid.FeaturedLabel>Our mantra</BentoGrid.FeaturedLabel>
+					<BentoGrid.FeaturedTitle>CRAFT</BentoGrid.FeaturedTitle>
 				</BentoGrid.FeaturedContent>
 				<BentoGrid.FeaturedDescription>
-					Prendre soin de l'ensemble des acteurs du sport, à chaque étape.
+					Taking care of everyone who ships great work, at every step.
 				</BentoGrid.FeaturedDescription>
 			</BentoGrid.FeaturedItem>
 			{values.map((value, index) => {
@@ -481,24 +470,24 @@ export function BentoGridExample() {
 const orderSteps = [
 	{
 		icon: EnvelopeIcon,
-		title: "Envoyez votre demande",
-		description: "Décrivez vos besoins : nous préparons un devis adapté.",
+		title: "Send your brief",
+		description: "Describe your needs: we prepare a tailored quote.",
 	},
 	{
 		icon: FileTextIcon,
-		title: "Validez le devis",
-		description: "Une offre claire et détaillée, sans engagement, sous 48 h.",
+		title: "Approve the quote",
+		description: "A clear, detailed offer, with no commitment, within 48 h.",
 	},
 	{
-		icon: TruckIcon,
-		title: "Recevez votre matériel",
-		description: "Livraison directe au club, avec un suivi complet.",
+		icon: RocketLaunchIcon,
+		title: "Kick off the project",
+		description: "A vetted freelancer starts, with full progress tracking.",
 	},
 ];
 
 export function NumberedCardsExample() {
 	return (
-		<NumberedCards.Root tone="organization">
+		<NumberedCards.Root tone="highlight">
 			{orderSteps.map((step, index) => {
 				const Icon = step.icon;
 				return (
@@ -508,7 +497,7 @@ export function NumberedCardsExample() {
 								<Icon />
 							</NumberedCards.CardIcon>
 							<NumberedCards.CardLabel>
-								Étape {index + 1}
+								Step {index + 1}
 							</NumberedCards.CardLabel>
 						</NumberedCards.CardHeader>
 						<NumberedCards.CardTitle>{step.title}</NumberedCards.CardTitle>
@@ -523,35 +512,35 @@ export function NumberedCardsExample() {
 }
 
 const withoutItems = [
-	"Départ sans staff médical, trop cher à déplacer",
-	"Un professionnel cherché en urgence, sur place",
-	"Aucun suivi médical après le match",
+	"Weeks lost sourcing candidates for one task",
+	"A contractor found in a rush, never vetted",
+	"No follow-up once the work is delivered",
 ];
 
 const withItems = [
-	"Un professionnel vérifié vous attend sur le lieu du match",
-	"Matériel professionnel complet sur place",
-	"Zéro frais de transport ou d'hébergement",
+	"A verified freelancer ready when the project starts",
+	"A complete, professional toolkit from day one",
+	"Zero overhead on contracts or invoicing",
 ];
 
 export function ComparisonSectionExample() {
 	return (
-		<ComparisonSection.Root tone="organization" background="muted">
+		<ComparisonSection.Root tone="highlight" background="muted">
 			<ComparisonSection.Content>
-				<EyebrowParts.Root tone="organization" className="mb-4">
+				<EyebrowParts.Root tone="highlight" className="mb-4">
 					<EyebrowParts.Icon>
 						<BuildingsIcon />
 					</EyebrowParts.Icon>
-					<EyebrowParts.Label>Pour les clubs de sport</EyebrowParts.Label>
+					<EyebrowParts.Label>For client teams</EyebrowParts.Label>
 				</EyebrowParts.Root>
 				<HeadingComponent className="mb-8">
-					Vos sportifs se déplacent.{" "}
-					<span className="text-organization">Pas votre staff médical.</span>
+					Your roadmap keeps moving.{" "}
+					<span className="text-highlight">Hiring shouldn't slow it.</span>
 				</HeadingComponent>
 				<ComparisonSection.Panels>
 					<ComparisonSection.Panel variant="without">
 						<ComparisonSection.PanelTitle>
-							Déplacement classique
+							Traditional hiring
 						</ComparisonSection.PanelTitle>
 						<ComparisonSection.PanelList>
 							{withoutItems.map((item) => (
@@ -563,7 +552,7 @@ export function ComparisonSectionExample() {
 					</ComparisonSection.Panel>
 					<ComparisonSection.Panel variant="with">
 						<ComparisonSection.PanelTitle>
-							Avec Acme
+							With Acme
 						</ComparisonSection.PanelTitle>
 						<ComparisonSection.PanelList>
 							{withItems.map((item) => (
@@ -575,12 +564,12 @@ export function ComparisonSectionExample() {
 					</ComparisonSection.Panel>
 				</ComparisonSection.Panels>
 				<ComparisonSection.TagList>
-					{["Football", "Rugby", "Basketball"].map((tag) => (
+					{["Design", "Development", "Copywriting"].map((tag) => (
 						<ComparisonSection.Tag key={tag}>{tag}</ComparisonSection.Tag>
 					))}
 				</ComparisonSection.TagList>
-				<Button size="lg" variant="organization">
-					Trouver un professionnel <ArrowRightIcon />
+				<Button size="lg" variant="highlight">
+					Find a freelancer <ArrowRightIcon />
 				</Button>
 			</ComparisonSection.Content>
 			<ComparisonSection.Media>
@@ -590,60 +579,60 @@ export function ComparisonSectionExample() {
 	);
 }
 
-const clubSteps = [
+const clientSteps = [
 	{
 		icon: FileTextIcon,
-		title: "Publiez votre annonce",
-		description: "Date, lieu, horaires et type de professionnel recherché.",
+		title: "Post your project",
+		description: "Scope, budget, timeline and the profile you're looking for.",
 	},
 	{
 		icon: UserCheckIcon,
-		title: "Sélectionnez votre professionnel",
-		description: "Choisissez votre praticien parmi les profils intéressés.",
+		title: "Select your freelancer",
+		description: "Choose your expert among the profiles that applied.",
 	},
 	{
-		icon: HeartbeatIcon,
-		title: "Profitez du suivi médical",
-		description: "Recevez la liste des interventions réalisées.",
+		icon: CheckCircleIcon,
+		title: "Receive the deliverable",
+		description: "Get the project report and sign off on the work.",
 	},
 ];
 
-const proSteps = [
+const freelancerSteps = [
 	{
 		icon: BellIcon,
-		title: "Restez informé",
+		title: "Stay in the loop",
 		description:
-			"Recevez une alerte ciblée et postulez si la mission vous plaît.",
+			"Get a targeted alert and apply if the project appeals to you.",
 	},
 	{
 		icon: TrophyIcon,
-		title: "Réalisez votre intervention",
-		description: "Participez à l'aventure et profitez du terrain.",
+		title: "Deliver the work",
+		description: "Join the adventure and do what you do best.",
 	},
 	{
 		icon: ChartBarIcon,
-		title: "Suivez vos prestations",
-		description: "Facturation et analytics : l'administratif est simplifié.",
+		title: "Track your engagements",
+		description: "Invoicing and analytics: the admin work is simplified.",
 	},
 ];
 
 export function StepTracksExample() {
 	return (
 		<StepTracks.Root>
-			<StepTracks.Track tone="organization">
+			<StepTracks.Track tone="highlight">
 				<StepTracks.Header>
 					<StepTracks.HeaderIcon>
 						<BuildingsIcon />
 					</StepTracks.HeaderIcon>
 					<StepTracks.HeaderText>
-						<StepTracks.HeaderTitle>Club</StepTracks.HeaderTitle>
+						<StepTracks.HeaderTitle>Client</StepTracks.HeaderTitle>
 						<StepTracks.HeaderSubtitle>
-							Vous organisez un événement sportif
+							You're staffing a project
 						</StepTracks.HeaderSubtitle>
 					</StepTracks.HeaderText>
 				</StepTracks.Header>
 				<StepTracks.Steps>
-					{clubSteps.map((step, index) => {
+					{clientSteps.map((step, index) => {
 						const Icon = step.icon;
 						return (
 							<StepTracks.Step key={step.title}>
@@ -661,22 +650,22 @@ export function StepTracksExample() {
 					})}
 				</StepTracks.Steps>
 			</StepTracks.Track>
-			<StepTracks.Track tone="provider">
+			<StepTracks.Track tone="brand">
 				<StepTracks.Header>
 					<StepTracks.HeaderIcon>
-						<StethoscopeIcon />
+						<BriefcaseIcon />
 					</StepTracks.HeaderIcon>
 					<StepTracks.HeaderText>
 						<StepTracks.HeaderTitle>
-							Professionnel de santé
+							Independent freelancer
 						</StepTracks.HeaderTitle>
 						<StepTracks.HeaderSubtitle>
-							Vous êtes professionnel de santé
+							You work as a freelancer
 						</StepTracks.HeaderSubtitle>
 					</StepTracks.HeaderText>
 				</StepTracks.Header>
 				<StepTracks.Steps>
-					{proSteps.map((step, index) => {
+					{freelancerSteps.map((step, index) => {
 						const Icon = step.icon;
 						return (
 							<StepTracks.Step key={step.title}>
@@ -701,17 +690,17 @@ export function StepTracksExample() {
 const testimonials = [
 	{
 		quote:
-			"Trouver un kiné pour nos matchs relevait du parcours du combattant. Aujourd'hui, on publie notre besoin et on est rappelés dans la journée.",
-		name: "Responsable de club",
-		role: "Football amateur",
+			"Finding a designer for our launches used to be an obstacle course. Now we post our brief and hear back within the day.",
+		name: "Head of product",
+		role: "SaaS startup",
 		accent: "primary",
 	},
 	{
 		quote:
-			"J'interviens sur des événements près de chez moi, avec un cadre clair. Acme m'a permis de développer mon activité dans le sport.",
-		name: "Kinésithérapeute du sport",
-		role: "Membre du réseau",
-		accent: "orange",
+			"I work on projects that match my skills, with a clear framework. Acme helped me grow my independent practice.",
+		name: "Freelance product designer",
+		role: "Network member",
+		accent: "highlight",
 	},
 ] as const;
 
@@ -745,7 +734,7 @@ export function TestimonialGridExample() {
 export function LogoMarqueeExample() {
 	return (
 		<LogoMarquee.Root>
-			<LogoMarquee.Title>Ils nous font confiance</LogoMarquee.Title>
+			<LogoMarquee.Title>Trusted by teams at</LogoMarquee.Title>
 			<LogoMarquee.Viewport>
 				<LogoMarquee.Track>
 					{partnerNames.map((name) => (
@@ -764,7 +753,7 @@ export function LogoMarqueeExample() {
 export function LogoMarqueeStatic() {
 	return (
 		<LogoMarquee.Root>
-			<LogoMarquee.Title>Des marques de référence</LogoMarquee.Title>
+			<LogoMarquee.Title>Reference brands</LogoMarquee.Title>
 			<LogoMarquee.StaticTrack>
 				{partnerNames.map((name) => (
 					<LogoMarquee.Item
@@ -781,21 +770,20 @@ export function LogoMarqueeStatic() {
 export function CtaBannerExample() {
 	return (
 		<CtaBanner.Root>
-			<CtaBanner.Title>Rejoignez l'aventure Acme</CtaBanner.Title>
+			<CtaBanner.Title>Join the Acme adventure</CtaBanner.Title>
 			<CtaBanner.Description>
-				Club ou professionnel de santé : construisons ensemble un sport amateur
-				mieux accompagné.
+				Client or freelancer: let's build better projects, together.
 			</CtaBanner.Description>
 			<CtaBanner.Actions>
 				<Button size="lg" variant="secondary">
-					Je suis un club <ArrowRightIcon />
+					I'm a client <ArrowRightIcon />
 				</Button>
 				<Button
 					size="lg"
 					variant="outline"
 					className="border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white"
 				>
-					Je suis professionnel de santé
+					I'm a freelancer
 				</Button>
 			</CtaBanner.Actions>
 		</CtaBanner.Root>
@@ -806,9 +794,9 @@ export function ContactCardsExample() {
 	return (
 		<ContactCards.Root>
 			<ContactCards.Card>
-				<ContactCards.CardTitle>Par email</ContactCards.CardTitle>
+				<ContactCards.CardTitle>By email</ContactCards.CardTitle>
 				<ContactCards.CardDescription>
-					Pour toute question sur la plateforme ou un partenariat.
+					For any question about the platform or a partnership.
 				</ContactCards.CardDescription>
 				<Button
 					variant="outline"
@@ -816,13 +804,13 @@ export function ContactCardsExample() {
 				/>
 			</ContactCards.Card>
 			<ContactCards.Card>
-				<ContactCards.CardTitle>Par téléphone</ContactCards.CardTitle>
+				<ContactCards.CardTitle>By phone</ContactCards.CardTitle>
 				<ContactCards.CardDescription>
-					Du lundi au vendredi, de 9h à 18h.
+					Monday to Friday, from 9 am to 6 pm.
 				</ContactCards.CardDescription>
 				<Button
 					variant="outline"
-					render={<a href="tel:+33647672472">+33 6 47 67 24 72</a>}
+					render={<a href="tel:+15550100100">+1 (555) 010-0100</a>}
 				/>
 			</ContactCards.Card>
 		</ContactCards.Root>
@@ -839,26 +827,26 @@ export function ArticleCardExample() {
 			<ArticleCard.Root href="#">
 				<ArticleCard.Frame>
 					<ArticleCard.Image
-						src={partnerLogoDataUri("Couverture")}
-						alt="Couverture de l'article"
+						src={partnerLogoDataUri("Cover")}
+						alt="Article cover"
 					/>
 					<ArticleCard.Content>
 						<ArticleCard.Tags>
-							<ArticleTagsParts.Tag>Prévention</ArticleTagsParts.Tag>
-							<ArticleTagsParts.Tag>Kiné du sport</ArticleTagsParts.Tag>
+							<ArticleTagsParts.Tag>Remote work</ArticleTagsParts.Tag>
+							<ArticleTagsParts.Tag>Product design</ArticleTagsParts.Tag>
 						</ArticleCard.Tags>
 						<ArticleCard.Title>
-							Pourquoi médicaliser les événements sportifs amateurs ?
+							Why every launch deserves a dedicated freelancer
 						</ArticleCard.Title>
 						<ArticleCard.Description>
-							Chaque week-end, des milliers de matchs amateurs se jouent sans
-							aucun encadrement médical.
+							Every week, thousands of product launches ship without any
+							dedicated design support.
 						</ArticleCard.Description>
 						<ArticleCard.Meta>
 							<ArticleCard.MetaItems>
 								<ArticleCard.MetaItem>
 									<CalendarBlankIcon />
-									12 juillet 2026
+									July 12, 2026
 								</ArticleCard.MetaItem>
 							</ArticleCard.MetaItems>
 							<ArticleCard.Arrow />
@@ -877,16 +865,16 @@ export function ArticleCardFallback() {
 				<ArticleCard.Frame>
 					<ArticleCard.ImageFallback />
 					<ArticleCard.Content>
-						<ArticleCard.Title>Un article sans visuel</ArticleCard.Title>
+						<ArticleCard.Title>An article without a visual</ArticleCard.Title>
 						<ArticleCard.Description>
-							La carte garde le même gabarit, avec un aplat à la place de
-							l'image.
+							The card keeps the same layout, with a flat fill in place of the
+							image.
 						</ArticleCard.Description>
 						<ArticleCard.Meta>
 							<ArticleCard.MetaItems>
 								<ArticleCard.MetaItem>
 									<CalendarBlankIcon />
-									12 juillet 2026
+									July 12, 2026
 								</ArticleCard.MetaItem>
 							</ArticleCard.MetaItems>
 							<ArticleCard.Arrow />
@@ -901,9 +889,9 @@ export function ArticleCardFallback() {
 export function ArticleTags() {
 	return (
 		<ArticleTagsParts.Root>
-			<ArticleTagsParts.Tag>Prévention</ArticleTagsParts.Tag>
-			<ArticleTagsParts.Tag>Kiné du sport</ArticleTagsParts.Tag>
-			<ArticleTagsParts.Tag>Terrain</ArticleTagsParts.Tag>
+			<ArticleTagsParts.Tag>Remote work</ArticleTagsParts.Tag>
+			<ArticleTagsParts.Tag>Product design</ArticleTagsParts.Tag>
+			<ArticleTagsParts.Tag>Freelancing</ArticleTagsParts.Tag>
 		</ArticleTagsParts.Root>
 	);
 }
@@ -918,10 +906,10 @@ export function QuickStartWin() {
 			<Container size="md">
 				<SectionIntroParts.Root>
 					<SectionIntroParts.Title>
-						Pourquoi choisir <span className="text-primary">Acme</span> ?
+						Why choose <span className="text-primary">Acme</span>?
 					</SectionIntroParts.Title>
 					<SectionIntroParts.Description>
-						Deux raisons suffisent pour commencer.
+						Two reasons are enough to get started.
 					</SectionIntroParts.Description>
 				</SectionIntroParts.Root>
 				<FeatureGrid.Root tone="primary" columns="2" className="mt-10">
@@ -948,23 +936,24 @@ export function QuickStartWin() {
 export function ProseArticle() {
 	return (
 		<ProseArticleComponent>
-			<h2>Pourquoi médicaliser les événements sportifs amateurs ?</h2>
+			<h2>Why every launch deserves a dedicated freelancer</h2>
 			<p>
-				Chaque week-end, des milliers de matchs amateurs se jouent sans aucun
-				encadrement médical. Pourtant, la présence d'un{" "}
-				<strong>professionnel de santé</strong> au bord du terrain change tout.
+				Every week, thousands of product launches ship without any dedicated
+				support. Yet having an <strong>independent expert</strong> alongside the
+				team changes everything.
 			</p>
 			<blockquote>
 				<p>
-					Être suivi par un pro pendant la saison a tout changé : moins de
-					blessures, et le sentiment d'être enfin pris au sérieux.
+					Working with a dedicated freelancer through the quarter changed
+					everything: fewer reworks, and the feeling of finally shipping on
+					time.
 				</p>
 			</blockquote>
-			<h3>Ce que dit la réglementation</h3>
+			<h3>What good delivery looks like</h3>
 			<ul>
-				<li>Prévention des blessures avant l'effort</li>
-				<li>Prise en charge immédiate sur le terrain</li>
-				<li>Suivi et continuité médicale après l'événement</li>
+				<li>Scoping the work before the sprint</li>
+				<li>Hands-on support during the build</li>
+				<li>Follow-up and continuity after the launch</li>
 			</ul>
 		</ProseArticleComponent>
 	);

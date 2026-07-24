@@ -23,24 +23,24 @@ function CardContent() {
 	return (
 		<ArticleCard.Content>
 			<ArticleCard.Tags>
-				<ArticleTags.Tag>Prévention</ArticleTags.Tag>
-				<ArticleTags.Tag>Kiné du sport</ArticleTags.Tag>
+				<ArticleTags.Tag>Playbook</ArticleTags.Tag>
+				<ArticleTags.Tag>Freelancing</ArticleTags.Tag>
 			</ArticleCard.Tags>
 			<ArticleCard.Title>
-				Pourquoi médicaliser les événements sportifs amateurs ?
+				Why every product launch deserves a dedicated designer
 			</ArticleCard.Title>
 			<ArticleCard.Description>
-				Chaque week-end, des milliers de matchs amateurs se jouent sans aucun
-				encadrement médical. Voici ce que ça change.
+				Every quarter, thousands of launches ship without a single design
+				review. Here is what that changes.
 			</ArticleCard.Description>
 			<ArticleCard.Meta>
 				<ArticleCard.MetaItems>
 					<ArticleCard.MetaItem>
 						<CalendarBlankIcon />
-						12 juillet 2026
+						July 12, 2026
 					</ArticleCard.MetaItem>
 					<ArticleCard.MetaItem>
-						<ClockIcon />5 min de lecture
+						<ClockIcon />5 min read
 					</ArticleCard.MetaItem>
 				</ArticleCard.MetaItems>
 				<ArticleCard.Arrow />
@@ -53,11 +53,11 @@ function CardContent() {
 export const WithImage: Story = {
 	render: () => (
 		<div className="max-w-md">
-			<ArticleCard.Root href="/blog/exemple">
+			<ArticleCard.Root href="/blog/example">
 				<ArticleCard.Frame>
 					<ArticleCard.Image
-						src={partnerLogoDataUri("Couverture")}
-						alt="Couverture de l'article"
+						src={partnerLogoDataUri("Cover")}
+						alt="Article cover"
 					/>
 					<CardContent />
 				</ArticleCard.Frame>
@@ -69,7 +69,7 @@ export const WithImage: Story = {
 export const WithoutImage: Story = {
 	render: () => (
 		<div className="max-w-md">
-			<ArticleCard.Root href="/blog/exemple">
+			<ArticleCard.Root href="/blog/example">
 				<ArticleCard.Frame>
 					<ArticleCard.ImageFallback />
 					<CardContent />
@@ -82,8 +82,8 @@ export const WithoutImage: Story = {
 export const Grid: Story = {
 	render: () => (
 		<div className="grid gap-6 md:grid-cols-3">
-			{["Prévention", "Terrain", "Réseau"].map((tag) => (
-				<ArticleCard.Root key={tag} href="/blog/exemple">
+			{["Playbook", "Process", "Network"].map((tag) => (
+				<ArticleCard.Root key={tag} href="/blog/example">
 					<ArticleCard.Frame>
 						<ArticleCard.ImageFallback />
 						<ArticleCard.Content>
@@ -91,17 +91,17 @@ export const Grid: Story = {
 								<ArticleTags.Tag>{tag}</ArticleTags.Tag>
 							</ArticleCard.Tags>
 							<ArticleCard.Title>
-								Un article sur le thème « {tag} »
+								An article on the theme “{tag}”
 							</ArticleCard.Title>
 							<ArticleCard.Description>
-								Chaque week-end, des milliers de matchs amateurs se jouent sans
-								encadrement médical.
+								Every quarter, thousands of launches ship without a single
+								design review.
 							</ArticleCard.Description>
 							<ArticleCard.Meta>
 								<ArticleCard.MetaItems>
 									<ArticleCard.MetaItem>
 										<CalendarBlankIcon />
-										12 juillet 2026
+										July 12, 2026
 									</ArticleCard.MetaItem>
 								</ArticleCard.MetaItems>
 								<ArticleCard.Arrow />

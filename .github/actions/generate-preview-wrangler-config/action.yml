@@ -6,7 +6,7 @@ description: >
     - empty (per-PR previews): `routes` are stripped, so the worker never binds a
       custom domain; workers_dev keeps the *.workers.dev URL.
     - set (persistent preview env): `routes` are replaced with a single
-      `custom_domain` route for that hostname (e.g. api.preview.tries.care).
+      `custom_domain` route for that hostname (e.g. api.preview.example.com).
   The transforms are no-ops when `routes`/`containers` are absent, so this is safe
   for both the container API worker and the static-asset workers.
 inputs:
@@ -14,11 +14,11 @@ inputs:
     description: "App directory containing wrangler.jsonc"
     required: true
   worker-name:
-    description: "Derived worker name, e.g. app-tries-care-pr-12 or app-tries-care-preview"
+    description: "Derived worker name, e.g. app-example-com-pr-12 or app-example-com-preview"
     required: true
   custom-domain:
     description: >
-      Hostname to bind as a custom_domain route (e.g. app.preview.tries.care).
+      Hostname to bind as a custom_domain route (e.g. app.preview.example.com).
       Omit to strip routes entirely (per-PR preview behaviour).
     required: false
     default: ''

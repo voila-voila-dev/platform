@@ -49,19 +49,19 @@ import {
 	DataTableToolbar,
 } from "@voila.dev/ui-datatable/components/data-table";
 
-const columns: ColumnDef<Mission>[] = [
+const columns: ColumnDef<Project>[] = [
 	{ accessorKey: "reference", header: "Reference", size: 130 },
-	{ accessorKey: "club", header: "Club" },
+	{ accessorKey: "client", header: "Client" },
 	{ accessorKey: "amount", header: "Amount", size: 110 },
 ];
 
 <DataTable
 	columns={columns}
-	data={missions}
+	data={projects}
 	toolbar={(table) => (
 		<DataTableToolbar>
 			<DataTableActions>
-				<DataTableExport table={table} filename="missions.csv" />
+				<DataTableExport table={table} filename="projects.csv" />
 			</DataTableActions>
 		</DataTableToolbar>
 	)}

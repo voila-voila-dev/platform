@@ -65,7 +65,7 @@ export const Heading: Story = {
 			initial={{
 				id: "heading",
 				type: "heading",
-				text: "Bonjour {{firstName}} !",
+				text: "Hello {{firstName}}!",
 				level: 1,
 			}}
 		/>
@@ -79,10 +79,10 @@ export const Paragraph: Story = {
 				id: "paragraph",
 				type: "paragraph",
 				spans: [
-					{ text: "Découvrez les " },
-					{ text: "nouvelles missions", bold: true },
-					{ text: " disponibles près de chez vous, ou consultez " },
-					{ text: "votre espace", href: "https://app.acme.dev" },
+					{ text: "Discover the " },
+					{ text: "new projects", bold: true },
+					{ text: " published in your field, or head to " },
+					{ text: "your dashboard", href: "https://app.acme.dev" },
 					{ text: "." },
 				],
 			}}
@@ -96,8 +96,8 @@ export const CallToActionButton: Story = {
 			initial={{
 				id: "button",
 				type: "button",
-				label: "Voir les missions",
-				href: "https://app.acme.dev/missions",
+				label: "Browse projects",
+				href: "https://app.acme.dev/projects",
 				align: "center",
 				variant: "primary",
 			}}
@@ -112,7 +112,7 @@ export const Image: Story = {
 				id: "image",
 				type: "image",
 				src: "https://placehold.co/536x200/png",
-				alt: "Visuel de la campagne",
+				alt: "Campaign visual",
 				href: "",
 				width: "full",
 				overlay: "none",
@@ -156,18 +156,18 @@ export const List: Story = {
 				marker: "badge",
 				items: [
 					{
-						title: "Publiez votre mission",
-						spans: [{ text: "En deux minutes, depuis votre espace." }],
+						title: "Post your project",
+						spans: [{ text: "In two minutes, from your dashboard." }],
 					},
 					{
-						title: "Recevez des candidatures",
+						title: "Receive applications",
 						spans: [
-							{ text: "Des professionnels " },
-							{ text: "vérifiés", bold: true },
-							{ text: " près de chez vous." },
+							{ text: "From " },
+							{ text: "verified", bold: true },
+							{ text: " freelancers, ready to start." },
 						],
 					},
-					{ spans: [{ text: "Payez une fois la mission terminée." }] },
+					{ spans: [{ text: "Pay once the project is delivered." }] },
 				],
 			}}
 		/>
@@ -180,9 +180,9 @@ export const Stat: Story = {
 			initial={{
 				id: "stat",
 				type: "stat",
-				value: "1 240",
-				label: "Missions pourvues",
-				description: "Sur les douze derniers mois.",
+				value: "1,240",
+				label: "Projects staffed",
+				description: "Over the last twelve months.",
 				align: "center",
 			}}
 		/>
@@ -197,14 +197,14 @@ export const Table: Story = {
 				type: "table",
 				headerRow: true,
 				columns: [
-					{ label: "Prestation", align: "left" },
-					{ label: "Durée", align: "left" },
-					{ label: "Tarif", align: "right" },
+					{ label: "Service", align: "left" },
+					{ label: "Duration", align: "left" },
+					{ label: "Rate", align: "right" },
 				],
 				rows: [
-					["Kinésithérapie", "1 h", "60,00 €"],
-					["Ostéopathie", "45 min", "55,00 €"],
-					["Bilan postural", "30 min", "40,00 €"],
+					["UX design", "1 h", "€60.00"],
+					["Copywriting", "45 min", "€55.00"],
+					["Design audit", "30 min", "€40.00"],
 				],
 			}}
 		/>
@@ -217,16 +217,16 @@ export const Article: Story = {
 			initial={{
 				id: "article",
 				type: "article",
-				title: "Bien choisir son kinésithérapeute",
+				title: "How to choose your freelance designer",
 				description:
-					"Diplôme, spécialité, disponibilités : les trois critères qui comptent vraiment.",
+					"Portfolio, specialty, availability: the three criteria that really matter.",
 				image: {
 					src: "https://placehold.co/536x180/png",
-					alt: "Séance de kiné",
+					alt: "Design session",
 				},
 				author: "Emma Martin",
 				publishDate: "2026-07-20",
-				href: "https://acme.dev/blog/choisir-son-kine",
+				href: "https://acme.dev/blog/choosing-a-designer",
 			}}
 		/>
 	),
@@ -238,13 +238,13 @@ export const Product: Story = {
 			initial={{
 				id: "product",
 				type: "product",
-				name: "Bande de contention Essity",
-				description: "Boîte de 10, largeur 10 cm.",
-				image: { src: "https://placehold.co/536x180/png", alt: "Bande" },
+				name: "Landing page template pack",
+				description: "Set of 10, fully responsive.",
+				image: { src: "https://placehold.co/536x180/png", alt: "Template" },
 				price: { amountInMinorUnits: 5990, currency: "EUR" },
 				compareAtPrice: { amountInMinorUnits: 7990, currency: "EUR" },
-				href: "https://shop.acme.dev/bande-contention",
-				buttonLabel: "Commander",
+				href: "https://shop.acme.dev/template-pack",
+				buttonLabel: "Order now",
 			}}
 		/>
 	),
@@ -256,19 +256,19 @@ export const Offer: Story = {
 			initial={{
 				id: "offer",
 				type: "offer",
-				eyebrow: "Le plus choisi",
-				name: "Essentiel",
-				description: "Le socle pour recruter en continu.",
+				eyebrow: "Most popular",
+				name: "Essential",
+				description: "The foundation for hiring on repeat.",
 				image: { src: "", alt: "" },
 				price: { amountInMinorUnits: 2900, currency: "EUR" },
-				period: "par mois",
+				period: "per month",
 				features: [
-					"Missions illimitées",
-					"Professionnels vérifiés",
-					"Support 7j/7",
+					"Unlimited projects",
+					"Verified freelancers",
+					"7-day support",
 				],
-				buttonLabel: "Choisir cette offre",
-				buttonHref: "https://acme.dev/offres",
+				buttonLabel: "Choose this plan",
+				buttonHref: "https://acme.dev/plans",
 				highlighted: true,
 			}}
 		/>
@@ -281,11 +281,11 @@ export const Rating: Story = {
 			initial={{
 				id: "rating",
 				type: "rating",
-				question: [{ text: "Que pensez-vous de votre dernière mission ?" }],
+				question: [{ text: "How was your latest project?" }],
 				style: "filled",
-				lowLabel: "Pas du tout",
-				highLabel: "Tout à fait",
-				href: "https://acme.dev/avis",
+				lowLabel: "Not at all",
+				highLabel: "Absolutely",
+				href: "https://acme.dev/reviews",
 			}}
 		/>
 	),

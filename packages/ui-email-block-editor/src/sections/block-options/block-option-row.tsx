@@ -7,7 +7,7 @@ import {
 import type { ReactNode } from "react";
 
 /**
- * One labelled option in « Réglages du bloc ». Every block setting goes
+ * One labelled option in the block settings panel. Every block setting goes
  * through this row rather than hand-rolling `useId()` + `Label` + control, so
  * spacing, label typography and description placement cannot drift from block
  * to block.
@@ -58,8 +58,8 @@ export function BlockOptionRow({
 
 /**
  * A titled group of rows. §1.4 of the editor plan: once a block carries more
- * than a handful of options they are split into « Contenu », « Apparence » and
- * « Lien », always in that order.
+ * than a handful of options they are split into "Content", "Appearance" and
+ * "Link", always in that order.
  */
 export function BlockOptionSection({
 	title,

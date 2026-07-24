@@ -19,21 +19,18 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<RadioGroup defaultValue="physiotherapist" className="w-64">
+		<RadioGroup defaultValue="designer" className="w-64">
 			<div className="flex items-center gap-2">
-				<RadioGroupItem
-					value="physiotherapist"
-					id="profession-physiotherapist"
-				/>
-				<Label htmlFor="profession-physiotherapist">Physiotherapist</Label>
+				<RadioGroupItem value="designer" id="profession-designer" />
+				<Label htmlFor="profession-designer">Designer</Label>
 			</div>
 			<div className="flex items-center gap-2">
-				<RadioGroupItem value="osteopath" id="profession-osteopath" />
-				<Label htmlFor="profession-osteopath">Osteopath</Label>
+				<RadioGroupItem value="developer" id="profession-developer" />
+				<Label htmlFor="profession-developer">Developer</Label>
 			</div>
 			<div className="flex items-center gap-2">
-				<RadioGroupItem value="nurse" id="profession-nurse" />
-				<Label htmlFor="profession-nurse">Nurse</Label>
+				<RadioGroupItem value="copywriter" id="profession-copywriter" />
+				<Label htmlFor="profession-copywriter">Copywriter</Label>
 			</div>
 		</RadioGroup>
 	),
@@ -64,7 +61,7 @@ export const Disabled: Story = {
 		<RadioGroup defaultValue="single" disabled className="w-64">
 			<div className="flex items-center gap-2">
 				<RadioGroupItem value="single" id="recurrence-single" />
-				<Label htmlFor="recurrence-single">Single mission</Label>
+				<Label htmlFor="recurrence-single">Single project</Label>
 			</div>
 			<div className="flex items-center gap-2">
 				<RadioGroupItem value="weekly" id="recurrence-weekly" />
@@ -115,17 +112,17 @@ export const Invalid: Story = {
 // free-form, the checked card gets a primary border plus a corner icon.
 export const ChoiceCards: Story = {
 	render: () => (
-		<RadioGroup defaultValue="club" className="w-80">
-			<RadioGroupCard value="club">
-				<span className="font-medium">Club de sport</span>
+		<RadioGroup defaultValue="client" className="w-80">
+			<RadioGroupCard value="client">
+				<span className="font-medium">Client</span>
 				<span className="text-muted-foreground">
-					Publiez des missions et trouvez des professionnels de santé.
+					Post projects and find vetted independent freelancers.
 				</span>
 			</RadioGroupCard>
-			<RadioGroupCard value="professional">
-				<span className="font-medium">Professionnel de santé</span>
+			<RadioGroupCard value="freelancer">
+				<span className="font-medium">Freelancer</span>
 				<span className="text-muted-foreground">
-					Candidatez aux missions des clubs près de chez vous.
+					Apply to projects from clients that match your skills.
 				</span>
 			</RadioGroupCard>
 		</RadioGroup>
@@ -143,15 +140,15 @@ export const ChoiceCardsGrid: Story = {
 		>
 			<RadioGroupCard value="standard">
 				<span className="font-medium">Standard</span>
-				<span className="text-muted-foreground">29 € / mission</span>
+				<span className="text-muted-foreground">$29 / project</span>
 			</RadioGroupCard>
 			<RadioGroupCard value="express">
 				<span className="font-medium">Express</span>
-				<span className="text-muted-foreground">49 € / mission</span>
+				<span className="text-muted-foreground">$49 / project</span>
 			</RadioGroupCard>
 			<RadioGroupCard value="premium" disabled>
 				<span className="font-medium">Premium</span>
-				<span className="text-muted-foreground">Bientôt disponible</span>
+				<span className="text-muted-foreground">Coming soon</span>
 			</RadioGroupCard>
 		</RadioGroup>
 	),
@@ -159,7 +156,7 @@ export const ChoiceCardsGrid: Story = {
 
 export const Controlled: Story = {
 	render: () => {
-		const [value, setValue] = useState("osteopath");
+		const [value, setValue] = useState("developer");
 		return (
 			<div className="flex flex-col gap-3">
 				<RadioGroup
@@ -168,12 +165,12 @@ export const Controlled: Story = {
 					className="w-64"
 				>
 					<div className="flex items-center gap-2">
-						<RadioGroupItem value="physiotherapist" id="ctrl-physiotherapist" />
-						<Label htmlFor="ctrl-physiotherapist">Physiotherapist</Label>
+						<RadioGroupItem value="designer" id="ctrl-designer" />
+						<Label htmlFor="ctrl-designer">Designer</Label>
 					</div>
 					<div className="flex items-center gap-2">
-						<RadioGroupItem value="osteopath" id="ctrl-osteopath" />
-						<Label htmlFor="ctrl-osteopath">Osteopath</Label>
+						<RadioGroupItem value="developer" id="ctrl-developer" />
+						<Label htmlFor="ctrl-developer">Developer</Label>
 					</div>
 				</RadioGroup>
 				<p className="text-muted-foreground text-sm">Selected: {value}</p>

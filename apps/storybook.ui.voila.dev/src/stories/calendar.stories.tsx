@@ -65,7 +65,7 @@ function DropdownCaptionCalendar() {
 
 	// Constrain the year dropdown to a sane "now ± 2y" window instead of the
 	// react-day-picker default of ±100 years (1926–2026), which is meaningless
-	// for mission scheduling.
+	// for project scheduling.
 	return (
 		<Calendar
 			mode="single"

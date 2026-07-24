@@ -72,8 +72,8 @@ const MapViewImplementation = lazy(() =>
  * Thin, reusable MapLibre GL basemap: it owns the canvas, lifecycle, navigation
  * control and resize handling, and surfaces the instance (`onReady`) and view
  * changes (`onMoveEnd`). It is deliberately presentational and data-agnostic, so
- * any feature — the admin map's clustered entities, a single provider-profile
- * pin, an event venue — composes its own sources/layers on top.
+ * any feature — the admin map's clustered entities, a single freelancer-profile
+ * pin, a client office — composes its own sources/layers on top.
  *
  * The MapLibre runtime is code-split: while its chunk downloads, a skeleton
  * with the same frame pulses in place, matching the tile-streaming placeholder

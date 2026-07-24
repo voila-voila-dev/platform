@@ -25,7 +25,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
 	render: () => (
 		<div className="flex w-56 items-center rounded-lg border px-3 py-2 text-sm">
-			Rechercher
+			Search
 			<Shortcut>⌘K</Shortcut>
 		</div>
 	),
@@ -34,7 +34,7 @@ export const Default: Story = {
 export const WithKbdKeys: Story = {
 	render: () => (
 		<div className="flex w-56 items-center rounded-lg border px-3 py-2 text-sm">
-			Rechercher
+			Search
 			<Shortcut keys={["⌘", "K"]} />
 		</div>
 	),
@@ -43,10 +43,10 @@ export const WithKbdKeys: Story = {
 export const InDropdownMenu: Story = {
 	render: () => (
 		<DropdownMenu>
-			<DropdownMenuTrigger>Mission actions</DropdownMenuTrigger>
+			<DropdownMenuTrigger>Project actions</DropdownMenuTrigger>
 			<DropdownMenuContent>
 				<DropdownMenuItem>
-					Edit mission
+					Edit project
 					<DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
 				</DropdownMenuItem>
 				<DropdownMenuItem>
@@ -58,7 +58,7 @@ export const InDropdownMenu: Story = {
 	),
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
-		await userEvent.click(canvas.getByText("Mission actions"));
+		await userEvent.click(canvas.getByText("Project actions"));
 		await waitFor(() =>
 			expect(
 				document.querySelector("[data-slot=dropdown-menu-shortcut]"),

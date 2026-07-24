@@ -32,8 +32,8 @@ export function Variants() {
 export function SurfaceVariants() {
 	return (
 		<>
-			<Button variant="provider">Provider</Button>
-			<Button variant="organization">Organization</Button>
+			<Button variant="brand">Freelancer</Button>
+			<Button variant="highlight">Client</Button>
 		</>
 	);
 }
@@ -72,7 +72,7 @@ export function WithIcons() {
 	return (
 		<>
 			<Button>
-				<PlusIcon /> New mission
+				<PlusIcon /> New project
 			</Button>
 			<Button variant="outline">
 				Continue <ArrowRightIcon />

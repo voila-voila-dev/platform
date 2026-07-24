@@ -4,7 +4,7 @@ import { Container, type ContainerProps } from "#/components/container.tsx";
 import { Heading, type HeadingProps } from "#/components/heading.tsx";
 import { Section, type SectionProps } from "#/components/section.tsx";
 import { Text, type TextProps } from "#/components/text.tsx";
-import { accentOrangeBlobClass, brandGradientClass } from "#/lib/tones.ts";
+import { accentHighlightBlobClass, brandGradientClass } from "#/lib/tones.ts";
 
 /**
  * Gradient call-to-action banner with decorative blur blobs. Compose: Root > Title,
@@ -42,7 +42,7 @@ function Root({
 					<div
 						className={cn(
 							"pointer-events-none absolute -bottom-20 -left-10 h-56 w-56 rounded-full blur-3xl",
-							accentOrangeBlobClass,
+							accentHighlightBlobClass,
 						)}
 					/>
 

@@ -24,20 +24,20 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<Tabs defaultValue="missions" className="w-96">
+		<Tabs defaultValue="projects" className="w-96">
 			<TabsList>
-				<TabsTrigger value="missions">Missions</TabsTrigger>
-				<TabsTrigger value="providers">Providers</TabsTrigger>
+				<TabsTrigger value="projects">Projects</TabsTrigger>
+				<TabsTrigger value="freelancers">Freelancers</TabsTrigger>
 				<TabsTrigger value="billing">Billing</TabsTrigger>
 			</TabsList>
-			<TabsContent value="missions">
-				Review upcoming missions and their staffing status.
+			<TabsContent value="projects">
+				Review upcoming projects and their delivery status.
 			</TabsContent>
-			<TabsContent value="providers">
-				Browse healthcare providers available in your area.
+			<TabsContent value="freelancers">
+				Browse vetted freelancers available for your projects.
 			</TabsContent>
 			<TabsContent value="billing">
-				Track invoices and payouts for completed missions.
+				Track invoices and payouts for completed projects.
 			</TabsContent>
 		</Tabs>
 	),
@@ -48,10 +48,12 @@ export const Default: Story = {
 		// variants match the emitted data attributes - guards the regression
 		// where every data-[orientation=…] class was dead.
 		expect(list?.getBoundingClientRect().height).toBeLessThan(40);
-		await userEvent.click(canvas.getByRole("tab", { name: "Providers" }));
+		await userEvent.click(canvas.getByRole("tab", { name: "Freelancers" }));
 		await waitFor(() =>
 			expect(
-				canvas.getByText("Browse healthcare providers available in your area."),
+				canvas.getByText(
+					"Browse vetted freelancers available for your projects.",
+				),
 			).toBeVisible(),
 		);
 	},
@@ -59,20 +61,20 @@ export const Default: Story = {
 
 export const LineVariant: Story = {
 	render: () => (
-		<Tabs defaultValue="missions" className="w-96">
+		<Tabs defaultValue="projects" className="w-96">
 			<TabsList variant="line">
-				<TabsTrigger value="missions">Missions</TabsTrigger>
-				<TabsTrigger value="providers">Providers</TabsTrigger>
+				<TabsTrigger value="projects">Projects</TabsTrigger>
+				<TabsTrigger value="freelancers">Freelancers</TabsTrigger>
 				<TabsTrigger value="billing">Billing</TabsTrigger>
 			</TabsList>
-			<TabsContent value="missions">
-				Review upcoming missions and their staffing status.
+			<TabsContent value="projects">
+				Review upcoming projects and their delivery status.
 			</TabsContent>
-			<TabsContent value="providers">
-				Browse healthcare providers available in your area.
+			<TabsContent value="freelancers">
+				Browse vetted freelancers available for your projects.
 			</TabsContent>
 			<TabsContent value="billing">
-				Track invoices and payouts for completed missions.
+				Track invoices and payouts for completed projects.
 			</TabsContent>
 		</Tabs>
 	),
@@ -91,20 +93,20 @@ export const LineVariant: Story = {
 
 export const Vertical: Story = {
 	render: () => (
-		<Tabs defaultValue="missions" orientation="vertical" className="w-96">
+		<Tabs defaultValue="projects" orientation="vertical" className="w-96">
 			<TabsList>
-				<TabsTrigger value="missions">Missions</TabsTrigger>
-				<TabsTrigger value="providers">Providers</TabsTrigger>
+				<TabsTrigger value="projects">Projects</TabsTrigger>
+				<TabsTrigger value="freelancers">Freelancers</TabsTrigger>
 				<TabsTrigger value="billing">Billing</TabsTrigger>
 			</TabsList>
-			<TabsContent value="missions">
-				Review upcoming missions and their staffing status.
+			<TabsContent value="projects">
+				Review upcoming projects and their delivery status.
 			</TabsContent>
-			<TabsContent value="providers">
-				Browse healthcare providers available in your area.
+			<TabsContent value="freelancers">
+				Browse vetted freelancers available for your projects.
 			</TabsContent>
 			<TabsContent value="billing">
-				Track invoices and payouts for completed missions.
+				Track invoices and payouts for completed projects.
 			</TabsContent>
 		</Tabs>
 	),
@@ -121,29 +123,29 @@ export const Vertical: Story = {
 
 export const WithIcons: Story = {
 	render: () => (
-		<Tabs defaultValue="missions" className="w-96">
+		<Tabs defaultValue="projects" className="w-96">
 			<TabsList>
-				<TabsTrigger value="missions">
+				<TabsTrigger value="projects">
 					<ClipboardTextIcon data-icon="inline-start" />
-					Missions
+					Projects
 				</TabsTrigger>
-				<TabsTrigger value="providers">
+				<TabsTrigger value="freelancers">
 					<UsersIcon data-icon="inline-start" />
-					Providers
+					Freelancers
 				</TabsTrigger>
 				<TabsTrigger value="billing">
 					<ReceiptIcon data-icon="inline-start" />
 					Billing
 				</TabsTrigger>
 			</TabsList>
-			<TabsContent value="missions">
-				Review upcoming missions and their staffing status.
+			<TabsContent value="projects">
+				Review upcoming projects and their delivery status.
 			</TabsContent>
-			<TabsContent value="providers">
-				Browse healthcare providers available in your area.
+			<TabsContent value="freelancers">
+				Browse vetted freelancers available for your projects.
 			</TabsContent>
 			<TabsContent value="billing">
-				Track invoices and payouts for completed missions.
+				Track invoices and payouts for completed projects.
 			</TabsContent>
 		</Tabs>
 	),
@@ -151,22 +153,22 @@ export const WithIcons: Story = {
 
 export const WithDisabled: Story = {
 	render: () => (
-		<Tabs defaultValue="missions" className="w-96">
+		<Tabs defaultValue="projects" className="w-96">
 			<TabsList>
-				<TabsTrigger value="missions">Missions</TabsTrigger>
-				<TabsTrigger value="providers" disabled>
-					Providers
+				<TabsTrigger value="projects">Projects</TabsTrigger>
+				<TabsTrigger value="freelancers" disabled>
+					Freelancers
 				</TabsTrigger>
 				<TabsTrigger value="billing">Billing</TabsTrigger>
 			</TabsList>
-			<TabsContent value="missions">
-				Review upcoming missions and their staffing status.
+			<TabsContent value="projects">
+				Review upcoming projects and their delivery status.
 			</TabsContent>
-			<TabsContent value="providers">
-				Browse healthcare providers available in your area.
+			<TabsContent value="freelancers">
+				Browse vetted freelancers available for your projects.
 			</TabsContent>
 			<TabsContent value="billing">
-				Track invoices and payouts for completed missions.
+				Track invoices and payouts for completed projects.
 			</TabsContent>
 		</Tabs>
 	),

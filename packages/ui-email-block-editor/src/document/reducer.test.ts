@@ -22,12 +22,12 @@ const stateOf = (document: EmailEditorDocument): EmailEditorState => ({
 const documentWithBlocks = (): EmailEditorDocument => ({
 	version: 1,
 	blocks: [
-		{ id: "a", type: "heading", text: "Bonjour", level: 1 },
-		{ id: "b", type: "paragraph", spans: [{ text: "Un texte" }] },
+		{ id: "a", type: "heading", text: "Hello", level: 1 },
+		{ id: "b", type: "paragraph", spans: [{ text: "Some text" }] },
 		{
 			id: "c",
 			type: "button",
-			label: "Voir",
+			label: "View",
 			href: "https://acme.dev",
 			align: "center",
 			variant: "primary",
@@ -111,18 +111,18 @@ describe("createEmailEditorReducer", () => {
 	it("updates a block in place by id", () => {
 		const state = reduce(stateOf(documentWithBlocks()), {
 			type: "update",
-			block: { id: "b", type: "paragraph", spans: [{ text: "Corrigé" }] },
+			block: { id: "b", type: "paragraph", spans: [{ text: "Fixed" }] },
 		});
 
 		expect(state.document.blocks[1]).toEqual({
 			id: "b",
 			type: "paragraph",
-			spans: [{ text: "Corrigé" }],
+			spans: [{ text: "Fixed" }],
 		});
 		expect(state.document.blocks[0]).toEqual({
 			id: "a",
 			type: "heading",
-			text: "Bonjour",
+			text: "Hello",
 			level: 1,
 		});
 	});
@@ -204,7 +204,7 @@ describe("createEmailEditorReducer", () => {
 		expect(state.document.blocks[2]).toEqual({
 			id: "id-1",
 			type: "paragraph",
-			spans: [{ text: "Un texte" }],
+			spans: [{ text: "Some text" }],
 		});
 		expect(state.selectedBlockId).toBe("id-1");
 	});
@@ -318,14 +318,14 @@ describe("createEmailEditorReducer with grids", () => {
 	it("updates a block nested in a grid", () => {
 		const state = reduce(stateOf(documentWithGrids()), {
 			type: "update",
-			block: { id: "g1-b", type: "paragraph", spans: [{ text: "Corrigé" }] },
+			block: { id: "g1-b", type: "paragraph", spans: [{ text: "Fixed" }] },
 		});
 
 		const updated = state.document.blocks[1];
 		expect(updated.type === "grid" && updated.children[1]).toEqual({
 			id: "g1-b",
 			type: "paragraph",
-			spans: [{ text: "Corrigé" }],
+			spans: [{ text: "Fixed" }],
 		});
 	});
 

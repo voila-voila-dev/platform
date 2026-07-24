@@ -39,7 +39,7 @@ export const Marquee: Story = {
 export const StaticRow: Story = {
 	render: () => (
 		<LogoMarquee.Root>
-			<LogoMarquee.Title>Des marques de référence</LogoMarquee.Title>
+			<LogoMarquee.Title>Reference brands</LogoMarquee.Title>
 			<LogoMarquee.StaticTrack>
 				{partnerNames.slice(0, 4).map((name) => (
 					<LogoMarquee.Item

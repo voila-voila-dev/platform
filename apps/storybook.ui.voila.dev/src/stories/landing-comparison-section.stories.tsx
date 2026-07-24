@@ -1,7 +1,7 @@
 import {
 	ArrowRightIcon,
 	BuildingsIcon,
-	StethoscopeIcon,
+	PenNibIcon,
 } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import { Button } from "@voila.dev/ui/components/button";
@@ -10,9 +10,9 @@ import { Eyebrow } from "@voila.dev/ui-landing/components/eyebrow";
 import { Heading } from "@voila.dev/ui-landing/components/heading";
 import { Text } from "@voila.dev/ui-landing/components/text";
 import {
-	helperBenefits,
+	clientBenefits,
+	freelancerBenefits,
 	IllustrationPlaceholder,
-	organizationBenefits,
 } from "./landing-fixtures";
 
 const meta = {
@@ -28,32 +28,32 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-/** Reproduces the original Astro site's `section-organization-benefits.astro`. */
-export const OrganizationBenefits: Story = {
+/** Reproduces the original Astro site's client-benefits section. */
+export const ClientBenefits: Story = {
 	render: () => (
-		<ComparisonSection.Root tone="organization" background="muted">
+		<ComparisonSection.Root tone="highlight" background="muted">
 			<ComparisonSection.Content>
-				<Eyebrow.Root tone="organization" className="mb-4">
+				<Eyebrow.Root tone="highlight" className="mb-4">
 					<Eyebrow.Icon>
 						<BuildingsIcon />
 					</Eyebrow.Icon>
-					<Eyebrow.Label>{organizationBenefits.badge}</Eyebrow.Label>
+					<Eyebrow.Label>{clientBenefits.badge}</Eyebrow.Label>
 				</Eyebrow.Root>
 
 				<Heading className="mb-8">
-					{organizationBenefits.titleStart}{" "}
-					<span className="text-organization">
-						{organizationBenefits.titleHighlight}
+					{clientBenefits.titleStart}{" "}
+					<span className="text-highlight">
+						{clientBenefits.titleHighlight}
 					</span>
 				</Heading>
 
 				<ComparisonSection.Panels>
 					<ComparisonSection.Panel variant="without">
 						<ComparisonSection.PanelTitle>
-							{organizationBenefits.withoutTitle}
+							{clientBenefits.withoutTitle}
 						</ComparisonSection.PanelTitle>
 						<ComparisonSection.PanelList>
-							{organizationBenefits.withoutItems.map((item, index) => (
+							{clientBenefits.withoutItems.map((item, index) => (
 								<ComparisonSection.PanelItem
 									key={item}
 									style={{ animationDelay: `${index * 0.08}s` }}
@@ -69,10 +69,10 @@ export const OrganizationBenefits: Story = {
 						style={{ animationDelay: "0.3s" }}
 					>
 						<ComparisonSection.PanelTitle>
-							{organizationBenefits.withTitle}
+							{clientBenefits.withTitle}
 						</ComparisonSection.PanelTitle>
 						<ComparisonSection.PanelList>
-							{organizationBenefits.withItems.map((item, index) => (
+							{clientBenefits.withItems.map((item, index) => (
 								<ComparisonSection.PanelItem
 									key={item}
 									style={{ animationDelay: `${0.3 + index * 0.08}s` }}
@@ -85,23 +85,23 @@ export const OrganizationBenefits: Story = {
 				</ComparisonSection.Panels>
 
 				<ComparisonSection.TagList>
-					{organizationBenefits.tags.map((tag) => (
+					{clientBenefits.tags.map((tag) => (
 						<ComparisonSection.Tag key={tag}>{tag}</ComparisonSection.Tag>
 					))}
 				</ComparisonSection.TagList>
 
 				<Button
 					size="lg"
-					variant="organization"
+					variant="highlight"
 					className="group h-auto min-h-11 max-w-full whitespace-normal py-2 text-center"
 				>
-					{organizationBenefits.cta}
+					{clientBenefits.cta}
 					<ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
 				</Button>
 			</ComparisonSection.Content>
 
 			<ComparisonSection.Media>
-				<IllustrationPlaceholder label="OrganizationDashboardIllustration (app-side)" />
+				<IllustrationPlaceholder label="ClientDashboardIllustration (app-side)" />
 			</ComparisonSection.Media>
 		</ComparisonSection.Root>
 	),
@@ -110,33 +110,33 @@ export const OrganizationBenefits: Story = {
 /** Reproduces the original Astro site's `section-helper-benefits.astro`. */
 export const HelperBenefits: Story = {
 	render: () => (
-		<ComparisonSection.Root tone="provider">
+		<ComparisonSection.Root tone="brand">
 			<ComparisonSection.Content>
-				<Eyebrow.Root tone="provider" className="mb-4">
+				<Eyebrow.Root tone="brand" className="mb-4">
 					<Eyebrow.Icon>
-						<StethoscopeIcon />
+						<PenNibIcon />
 					</Eyebrow.Icon>
-					<Eyebrow.Label>{helperBenefits.badge}</Eyebrow.Label>
+					<Eyebrow.Label>{freelancerBenefits.badge}</Eyebrow.Label>
 				</Eyebrow.Root>
 
 				<Heading className="mb-4">
-					{helperBenefits.titleStart}{" "}
-					<span className="text-provider lg:block">
-						{helperBenefits.titleHighlight}
+					{freelancerBenefits.titleStart}{" "}
+					<span className="text-brand lg:block">
+						{freelancerBenefits.titleHighlight}
 					</span>
 				</Heading>
 
 				<Text variant="lead" className="mb-8">
-					{helperBenefits.lead}
+					{freelancerBenefits.lead}
 				</Text>
 
 				<ComparisonSection.Panels>
 					<ComparisonSection.Panel variant="without">
 						<ComparisonSection.PanelTitle>
-							{helperBenefits.withoutTitle}
+							{freelancerBenefits.withoutTitle}
 						</ComparisonSection.PanelTitle>
 						<ComparisonSection.PanelList>
-							{helperBenefits.withoutItems.map((item) => (
+							{freelancerBenefits.withoutItems.map((item) => (
 								<ComparisonSection.PanelItem key={item}>
 									{item}
 								</ComparisonSection.PanelItem>
@@ -146,10 +146,10 @@ export const HelperBenefits: Story = {
 
 					<ComparisonSection.Panel variant="with">
 						<ComparisonSection.PanelTitle>
-							{helperBenefits.withTitle}
+							{freelancerBenefits.withTitle}
 						</ComparisonSection.PanelTitle>
 						<ComparisonSection.PanelList>
-							{helperBenefits.withItems.map((item) => (
+							{freelancerBenefits.withItems.map((item) => (
 								<ComparisonSection.PanelItem key={item}>
 									{item}
 								</ComparisonSection.PanelItem>
@@ -159,13 +159,13 @@ export const HelperBenefits: Story = {
 				</ComparisonSection.Panels>
 
 				<ComparisonSection.TagList>
-					{helperBenefits.tags.map((tag) => (
+					{freelancerBenefits.tags.map((tag) => (
 						<ComparisonSection.Tag key={tag}>{tag}</ComparisonSection.Tag>
 					))}
 				</ComparisonSection.TagList>
 
-				<Button size="lg" variant="provider" className="group">
-					{helperBenefits.cta}
+				<Button size="lg" variant="brand" className="group">
+					{freelancerBenefits.cta}
 					<ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
 				</Button>
 			</ComparisonSection.Content>

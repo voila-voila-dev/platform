@@ -3,10 +3,10 @@ import { cleanup, fireEvent, render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import {
 	applyMask,
+	businessIdMask,
 	FormattedInput,
-	frenchPhoneMask,
-	rppsMask,
-	siretMask,
+	idNumberMask,
+	phoneMask,
 } from "#/components/ui/formatted-input.tsx";
 
 afterEach(cleanup);
@@ -39,24 +39,26 @@ function typeRaw(
 }
 
 describe("applyMask", () => {
-	it("formats a full SIRET into 3-3-3-5 groups", () => {
-		expect(applyMask("12345678901234", siretMask)).toBe("123 456 789 01234");
+	it("formats a full business id into 3-3-3-5 groups", () => {
+		expect(applyMask("12345678901234", businessIdMask)).toBe(
+			"123 456 789 01234",
+		);
 	});
 
 	it("formats partial digits without a trailing separator", () => {
-		expect(applyMask("123", siretMask)).toBe("123");
-		expect(applyMask("1234", siretMask)).toBe("123 4");
+		expect(applyMask("123", businessIdMask)).toBe("123");
+		expect(applyMask("1234", businessIdMask)).toBe("123 4");
 	});
 
-	it("leaves RPPS unseparated and pairs French phone digits", () => {
-		expect(applyMask("10003456789", rppsMask)).toBe("10003456789");
-		expect(applyMask("0612345678", frenchPhoneMask)).toBe("06 12 34 56 78");
+	it("leaves the id number unseparated and pairs phone digits", () => {
+		expect(applyMask("10003456789", idNumberMask)).toBe("10003456789");
+		expect(applyMask("0612345678", phoneMask)).toBe("06 12 34 56 78");
 	});
 });
 
 describe("FormattedInput", () => {
 	it("renders a numeric text input tagged with data-slot", () => {
-		const screen = render(<FormattedInput mask={siretMask} />);
+		const screen = render(<FormattedInput mask={businessIdMask} />);
 		const input = queryInput(screen);
 		expect(input?.tagName).toBe("INPUT");
 		expect(input?.getAttribute("type")).toBe("text");
@@ -66,7 +68,7 @@ describe("FormattedInput", () => {
 
 	it("formats the defaultValue digits through the mask", () => {
 		const screen = render(
-			<FormattedInput mask={frenchPhoneMask} defaultValue="0612345678" />,
+			<FormattedInput mask={phoneMask} defaultValue="0612345678" />,
 		);
 		expect(queryInput(screen)?.value).toBe("06 12 34 56 78");
 	});
@@ -74,7 +76,7 @@ describe("FormattedInput", () => {
 	it("reformats on change and reports raw digits via onValueChange", () => {
 		const onValueChange = vi.fn();
 		const screen = render(
-			<FormattedInput mask={siretMask} onValueChange={onValueChange} />,
+			<FormattedInput mask={businessIdMask} onValueChange={onValueChange} />,
 		);
 		const input = queryInput(screen);
 		if (!input) throw new Error("input not rendered");
@@ -89,12 +91,12 @@ describe("FormattedInput", () => {
 	it("strips non-digits and truncates pasted overflow to the mask capacity", () => {
 		const onValueChange = vi.fn();
 		const screen = render(
-			<FormattedInput mask={rppsMask} onValueChange={onValueChange} />,
+			<FormattedInput mask={idNumberMask} onValueChange={onValueChange} />,
 		);
 		const input = queryInput(screen);
 		if (!input) throw new Error("input not rendered");
 
-		fireEvent.change(input, { target: { value: "RPPS 10003456789 extra 99" } });
+		fireEvent.change(input, { target: { value: "ID 10003456789 extra 99" } });
 
 		expect(input.value).toBe("10003456789");
 		expect(onValueChange).toHaveBeenLastCalledWith("10003456789");
@@ -104,7 +106,7 @@ describe("FormattedInput", () => {
 		const onValueChange = vi.fn();
 		const screen = render(
 			<FormattedInput
-				mask={rppsMask}
+				mask={idNumberMask}
 				defaultValue="123"
 				onValueChange={onValueChange}
 			/>,
@@ -119,19 +121,17 @@ describe("FormattedInput", () => {
 	});
 
 	it("supports controlled usage: display follows the value prop", () => {
-		const screen = render(
-			<FormattedInput mask={frenchPhoneMask} value="0612" />,
-		);
+		const screen = render(<FormattedInput mask={phoneMask} value="0612" />);
 		const input = queryInput(screen);
 		expect(input?.value).toBe("06 12");
 
-		screen.rerender(<FormattedInput mask={frenchPhoneMask} value="061234" />);
+		screen.rerender(<FormattedInput mask={phoneMask} value="061234" />);
 		expect(input?.value).toBe("06 12 34");
 	});
 
 	it("forwards backspace over a separator to the digit before it", () => {
 		const screen = render(
-			<FormattedInput mask={siretMask} defaultValue="123456" />,
+			<FormattedInput mask={businessIdMask} defaultValue="123456" />,
 		);
 		const input = queryInput(screen);
 		if (!input) throw new Error("input not rendered");
@@ -148,7 +148,7 @@ describe("FormattedInput", () => {
 
 	it("forwards forward-delete over a separator to the digit after it", () => {
 		const screen = render(
-			<FormattedInput mask={siretMask} defaultValue="123456" />,
+			<FormattedInput mask={businessIdMask} defaultValue="123456" />,
 		);
 		const input = queryInput(screen);
 		if (!input) throw new Error("input not rendered");
@@ -163,7 +163,7 @@ describe("FormattedInput", () => {
 
 	it("keeps the caret with the typed digit when inserting mid-value", () => {
 		const screen = render(
-			<FormattedInput mask={siretMask} defaultValue="12345" />,
+			<FormattedInput mask={businessIdMask} defaultValue="12345" />,
 		);
 		const input = queryInput(screen);
 		if (!input) throw new Error("input not rendered");
@@ -178,7 +178,7 @@ describe("FormattedInput", () => {
 
 	it("forwards aria-invalid and disabled to the underlying input", () => {
 		const screen = render(
-			<FormattedInput mask={siretMask} aria-invalid disabled />,
+			<FormattedInput mask={businessIdMask} aria-invalid disabled />,
 		);
 		const input = queryInput(screen);
 		expect(input?.getAttribute("aria-invalid")).toBe("true");

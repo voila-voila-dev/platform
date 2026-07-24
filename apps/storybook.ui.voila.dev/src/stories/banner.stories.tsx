@@ -36,8 +36,7 @@ export const Default: Story = {
 		<Banner {...args}>
 			<MegaphoneIcon />
 			<BannerTitle>
-				La messagerie est disponible — échangez directement avec les clubs
-				depuis une mission.
+				Messaging is here — chat with clients directly from a project page.
 			</BannerTitle>
 			<BannerClose />
 		</Banner>
@@ -49,8 +48,8 @@ export const Muted: Story = {
 	render: (args) => (
 		<Banner {...args}>
 			<BannerTitle>
-				Maintenance planifiée dimanche de 2h à 4h — la plateforme sera
-				indisponible.
+				Scheduled maintenance Sunday from 2 AM to 4 AM — the platform will be
+				unavailable.
 			</BannerTitle>
 			<BannerClose />
 		</Banner>
@@ -62,7 +61,7 @@ export const Success: Story = {
 	render: (args) => (
 		<Banner {...args}>
 			<BannerTitle>
-				Votre profil est complet — vous pouvez désormais postuler aux missions.
+				Your profile is complete — you can now apply to projects.
 			</BannerTitle>
 			<BannerClose />
 		</Banner>
@@ -75,8 +74,8 @@ export const Warning: Story = {
 		<Banner {...args}>
 			<WarningIcon />
 			<BannerTitle>
-				Votre compte Stripe est incomplet — terminez la configuration pour
-				recevoir vos paiements.
+				Your Stripe account is incomplete — finish the setup to receive your
+				payouts.
 			</BannerTitle>
 		</Banner>
 	),
@@ -88,8 +87,7 @@ export const Destructive: Story = {
 		<Banner {...args}>
 			<WarningIcon />
 			<BannerTitle>
-				Le paiement de votre abonnement a échoué — mettez à jour votre moyen de
-				paiement.
+				Your subscription payment failed — update your payment method.
 			</BannerTitle>
 		</Banner>
 	),
@@ -99,16 +97,14 @@ export const WithAction: Story = {
 	render: (args) => (
 		<Banner {...args}>
 			<MegaphoneIcon />
-			<BannerTitle>
-				La messagerie est disponible — échangez directement avec les clubs.
-			</BannerTitle>
+			<BannerTitle>Messaging is here — chat with clients directly.</BannerTitle>
 			<BannerAction>
 				<Button
 					variant="outline"
 					size="xs"
 					className="border-current/30 bg-transparent text-current hover:bg-current/10 hover:text-current"
 				>
-					Découvrir
+					Learn more
 				</Button>
 			</BannerAction>
 			<BannerClose />
@@ -122,8 +118,8 @@ export const WithLink: Story = {
 		<Banner {...args}>
 			<WarningIcon />
 			<BannerTitle>
-				Soumettez la <a href="#report">fiche de suivi</a> sous 48h pour
-				déclencher le paiement.
+				Submit the <a href="#report">project report</a> within 48 hours to
+				release the payment.
 			</BannerTitle>
 		</Banner>
 	),
@@ -136,7 +132,7 @@ export const Dismissible: Story = {
 			return (
 				<div className="p-4">
 					<Button variant="outline" size="sm" onClick={() => setOpen(true)}>
-						Réafficher la bannière
+						Show banner again
 					</Button>
 				</div>
 			);
@@ -145,7 +141,7 @@ export const Dismissible: Story = {
 			<Banner {...args}>
 				<MegaphoneIcon />
 				<BannerTitle>
-					La messagerie est disponible — échangez directement avec les clubs.
+					Messaging is here — chat with clients directly.
 				</BannerTitle>
 				<BannerClose onClick={() => setOpen(false)} />
 			</Banner>

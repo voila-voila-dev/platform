@@ -31,11 +31,11 @@ function renderGroup(
 	return render(
 		<ResizablePanelGroup {...props}>
 			<ResizablePanel defaultSize={50}>
-				<span>Mission list</span>
+				<span>Project list</span>
 			</ResizablePanel>
 			<ResizableHandle {...handleProps} />
 			<ResizablePanel defaultSize={50}>
-				<span>Mission details</span>
+				<span>Project details</span>
 			</ResizablePanel>
 		</ResizablePanelGroup>,
 	);
@@ -54,8 +54,8 @@ describe("ResizablePanelGroup", () => {
 			screen.baseElement.querySelectorAll("[data-slot=resizable-panel]"),
 		).toHaveLength(2);
 		expect(queryHandle(screen)).toBeTruthy();
-		expect(screen.getByText("Mission list")).toBeTruthy();
-		expect(screen.getByText("Mission details")).toBeTruthy();
+		expect(screen.getByText("Project list")).toBeTruthy();
+		expect(screen.getByText("Project details")).toBeTruthy();
 	});
 
 	it("merges className onto the group", () => {

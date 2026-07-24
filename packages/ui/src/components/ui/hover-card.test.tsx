@@ -37,7 +37,7 @@ function Fixture({
 				@nathan.guyot
 			</HoverCardTrigger>
 			<HoverCardContent {...contentProps}>
-				<p>Physiotherapist — Clermont-Ferrand.</p>
+				<p>Product designer — Lisbon.</p>
 			</HoverCardContent>
 		</HoverCard>
 	);
@@ -60,9 +60,7 @@ describe("HoverCard", () => {
 		fireEvent.mouseEnter(trigger);
 		await waitFor(() => {
 			expect(queryContent(screen)).not.toBeNull();
-			expect(
-				screen.getByText("Physiotherapist — Clermont-Ferrand."),
-			).toBeTruthy();
+			expect(screen.getByText("Product designer — Lisbon.")).toBeTruthy();
 		});
 	});
 

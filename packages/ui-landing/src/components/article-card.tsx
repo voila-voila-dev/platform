@@ -76,7 +76,7 @@ function ImageFallback({
 		<div
 			data-slot="article-card-image-fallback"
 			className={cn(
-				"relative aspect-video overflow-hidden rounded-t-lg bg-linear-to-br from-provider/20 to-organization/20",
+				"relative aspect-video overflow-hidden rounded-t-lg bg-linear-to-br from-brand/20 to-highlight/20",
 				className,
 			)}
 			{...props}
@@ -107,7 +107,7 @@ function Title({ className, ...props }: React.ComponentProps<"h3">) {
 		<h3
 			data-slot="article-card-title"
 			className={cn(
-				"mb-2 line-clamp-2 text-lg font-semibold transition-colors group-hover:text-provider",
+				"mb-2 line-clamp-2 text-lg font-semibold transition-colors group-hover:text-brand",
 				className,
 			)}
 			{...props}

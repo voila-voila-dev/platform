@@ -23,7 +23,7 @@ function SingleDatePicker() {
 		<DatePicker
 			value={selectedDate}
 			onValueChange={setSelectedDate}
-			placeholder="Mission date"
+			placeholder="Project date"
 			calendarProps={{ defaultMonth: new Date(2026, 5, 1) }}
 		/>
 	);
@@ -55,7 +55,7 @@ function FrenchLocaleDatePicker() {
 			locale="fr-FR"
 			value={selectedDate}
 			onValueChange={setSelectedDate}
-			placeholder="Date de la mission"
+			placeholder="Project date"
 		/>
 	);
 }
@@ -67,12 +67,12 @@ export const FrenchLocale: Story = {
 function DisabledDaysDatePicker() {
 	const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
-	// Weekends are disabled — e.g. weekday-only mission scheduling.
+	// Weekends are disabled — e.g. weekday-only project scheduling.
 	return (
 		<DatePicker
 			value={selectedDate}
 			onValueChange={setSelectedDate}
-			placeholder="Weekday mission date"
+			placeholder="Weekday project date"
 			calendarProps={{
 				defaultMonth: new Date(2026, 5, 1),
 				disabled: { dayOfWeek: [0, 6] },
@@ -86,12 +86,12 @@ export const DisabledDays: Story = {
 };
 
 export const Disabled: Story = {
-	render: () => <DatePicker disabled placeholder="Mission date" />,
+	render: () => <DatePicker disabled placeholder="Project date" />,
 };
 
 export const Invalid: Story = {
 	render: () => (
-		<DatePicker aria-invalid placeholder="Mission date (required)" />
+		<DatePicker aria-invalid placeholder="Project date (required)" />
 	),
 };
 
@@ -105,7 +105,7 @@ function RangeDatePicker() {
 		<DateRangePicker
 			value={selectedRange}
 			onValueChange={setSelectedRange}
-			placeholder="Mission window"
+			placeholder="Project window"
 		/>
 	);
 }

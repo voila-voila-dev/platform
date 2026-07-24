@@ -11,12 +11,12 @@
  *
  * Roles (shadcn convention - each is a `color` + `-foreground` pair):
  *   --primary       indigo - the neutral brand identity; admin UI + default CTAs.
- *   --provider      blue   - a first product surface.
- *   --organization  orange - a second product surface.
+ *   --brand      violet - a first product surface.
+ *   --highlight  teal   - a second product surface.
  *   --secondary     neutral gray (the standard shadcn role; not a brand color).
- * `--provider` and `--organization` exist for products that need two distinct
+ * `--brand` and `--highlight` exist for products that need two distinct
  * workspace identities; drop or rename them if yours does not. Lighter/tinted
- * use is an opacity modifier (`bg-provider/10 text-provider`), never an extra
+ * use is an opacity modifier (`bg-brand/10 text-brand`), never an extra
  * token. Remaining neutrals (`muted`, `accent`) follow the shadcn OKLch system,
  * with a full `.dark` palette.
  */
@@ -36,19 +36,18 @@
 
 	/* Primary - deep indigo #151B77 (neutral brand identity; admin UI + default
 	 * CTAs). Replaces a flat black so primary buttons, progress fills and active
-	 * states read as branded rather than "default shadcn black"; sits between the
-	 * provider blue and the deep-navy brand feel. Foreground stays white (AA: white
-	 * on #151B77 ~= 11:1). */
+	 * states read as branded rather than "default shadcn black". Foreground stays
+	 * white (AA: white on #151B77 ~= 11:1). */
 	--primary: oklch(0.3 0.13 269);
 	--primary-foreground: oklch(0.985 0 0);
 	--secondary: oklch(0.97 0 0);
 	--secondary-foreground: oklch(0.205 0 0);
 
-	/* Brand surfaces - provider (blue) & organization (orange) */
-	--provider: oklch(0.5547 0.2451 266.71);
-	--provider-foreground: oklch(1 0 0);
-	--organization: oklch(0.705 0.186 47);
-	--organization-foreground: oklch(1 0 0);
+	/* Brand surfaces - provider (violet) & organization (teal) */
+	--brand: oklch(0.541 0.245 293);
+	--brand-foreground: oklch(1 0 0);
+	--highlight: oklch(0.6 0.118 184.7);
+	--highlight-foreground: oklch(1 0 0);
 
 	/* Neutral roles */
 	--muted: oklch(0.97 0 0);
@@ -153,10 +152,10 @@
 	--primary-foreground: oklch(0.205 0 0);
 	--secondary: oklch(0.269 0 0);
 	--secondary-foreground: oklch(0.985 0 0);
-	--provider: oklch(0.65 0.2 266.71);
-	--provider-foreground: oklch(1 0 0);
-	--organization: oklch(0.74 0.17 50);
-	--organization-foreground: oklch(1 0 0);
+	--brand: oklch(0.65 0.21 293);
+	--brand-foreground: oklch(1 0 0);
+	--highlight: oklch(0.704 0.14 182.5);
+	--highlight-foreground: oklch(1 0 0);
 	--muted: oklch(0.269 0 0);
 	--muted-foreground: oklch(0.708 0 0);
 	--accent: oklch(0.269 0 0);
@@ -244,10 +243,10 @@
 	--color-primary-foreground: var(--primary-foreground);
 	--color-secondary: var(--secondary);
 	--color-secondary-foreground: var(--secondary-foreground);
-	--color-provider: var(--provider);
-	--color-provider-foreground: var(--provider-foreground);
-	--color-organization: var(--organization);
-	--color-organization-foreground: var(--organization-foreground);
+	--color-brand: var(--brand);
+	--color-brand-foreground: var(--brand-foreground);
+	--color-highlight: var(--highlight);
+	--color-highlight-foreground: var(--highlight-foreground);
 	--color-muted: var(--muted);
 	--color-muted-foreground: var(--muted-foreground);
 	--color-accent: var(--accent);

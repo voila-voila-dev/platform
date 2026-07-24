@@ -13,10 +13,10 @@ import {
 } from "@voila.dev/ui-datatable/components/data-table";
 import { useState } from "react";
 
-interface Mission {
+interface Project {
 	reference: string;
-	club: string;
-	specialty: string;
+	client: string;
+	role: string;
 	status: "Confirmed" | "Pending" | "Completed";
 	amount: number;
 }
@@ -27,48 +27,48 @@ const STATUS_COLOR = {
 	Completed: "gray",
 } as const;
 
-const MISSIONS: Mission[] = [
+const PROJECTS: Project[] = [
 	{
-		reference: "MIS-001",
-		club: "Riverside Rugby",
-		specialty: "Physiotherapist",
+		reference: "PRJ-001",
+		client: "Riverside Studio",
+		role: "Designer",
 		status: "Confirmed",
 		amount: 180,
 	},
 	{
-		reference: "MIS-002",
-		club: "Northgate FC",
-		specialty: "Osteopath",
+		reference: "PRJ-002",
+		client: "Northgate Labs",
+		role: "Developer",
 		status: "Pending",
 		amount: 240,
 	},
 	{
-		reference: "MIS-003",
-		club: "Harbour Athletics",
-		specialty: "Nurse",
+		reference: "PRJ-003",
+		client: "Harbour Media",
+		role: "Copywriter",
 		status: "Confirmed",
 		amount: 150,
 	},
 	{
-		reference: "MIS-004",
-		club: "Eastfield United",
-		specialty: "Physiotherapist",
+		reference: "PRJ-004",
+		client: "Eastfield Group",
+		role: "Designer",
 		status: "Completed",
 		amount: 210,
 	},
 	{
-		reference: "MIS-005",
-		club: "Southbank Swim",
-		specialty: "Sports doctor",
+		reference: "PRJ-005",
+		client: "Southbank Digital",
+		role: "Consultant",
 		status: "Pending",
 		amount: 320,
 	},
 ];
 
-const columns: ColumnDef<Mission>[] = [
+const columns: ColumnDef<Project>[] = [
 	{ accessorKey: "reference", header: "Reference", size: 130 },
-	{ accessorKey: "club", header: "Club" },
-	{ accessorKey: "specialty", header: "Specialty" },
+	{ accessorKey: "client", header: "Client" },
+	{ accessorKey: "role", header: "Role" },
 	{
 		accessorKey: "status",
 		header: "Status",
@@ -82,7 +82,7 @@ const columns: ColumnDef<Mission>[] = [
 		accessorKey: "amount",
 		header: "Amount",
 		size: 110,
-		cell: ({ row }) => `€${row.original.amount}`,
+		cell: ({ row }) => `$${row.original.amount}`,
 	},
 ];
 
@@ -92,26 +92,26 @@ export function Hero() {
 		<div className="w-full">
 			<DataTable
 				columns={[
-					dataTableSelectionColumn<Mission>({
-						selectAllLabel: "Select all missions",
-						selectRowLabel: (mission) => `Select ${mission.reference}`,
+					dataTableSelectionColumn<Project>({
+						selectAllLabel: "Select all projects",
+						selectRowLabel: (project) => `Select ${project.reference}`,
 					}),
 					...columns,
 				]}
-				data={MISSIONS}
+				data={PROJECTS}
 				enableRowSelection
-				getRowId={(mission) => mission.reference}
+				getRowId={(project) => project.reference}
 				globalFilter={search}
 				toolbar={(table) => (
 					<DataTableToolbar>
 						<DataTableSearch
 							value={search}
 							onChange={(event) => setSearch(event.target.value)}
-							placeholder="Search missions"
+							placeholder="Search projects"
 						/>
 						<DataTableActions>
 							<DataTableViewOptions table={table} />
-							<DataTableExport table={table} filename="missions.csv" />
+							<DataTableExport table={table} filename="projects.csv" />
 						</DataTableActions>
 					</DataTableToolbar>
 				)}
@@ -123,7 +123,7 @@ export function Hero() {
 export function Default() {
 	return (
 		<div className="w-full">
-			<DataTable columns={columns} data={MISSIONS} />
+			<DataTable columns={columns} data={PROJECTS} />
 		</div>
 	);
 }
@@ -133,15 +133,15 @@ export function Selection() {
 		<div className="w-full">
 			<DataTable
 				columns={[
-					dataTableSelectionColumn<Mission>({
-						selectAllLabel: "Select all missions",
-						selectRowLabel: (mission) => `Select ${mission.reference}`,
+					dataTableSelectionColumn<Project>({
+						selectAllLabel: "Select all projects",
+						selectRowLabel: (project) => `Select ${project.reference}`,
 					}),
 					...columns,
 				]}
-				data={MISSIONS}
+				data={PROJECTS}
 				enableRowSelection
-				getRowId={(mission) => mission.reference}
+				getRowId={(project) => project.reference}
 			/>
 		</div>
 	);
@@ -150,7 +150,7 @@ export function Selection() {
 export function Resizing() {
 	return (
 		<div className="w-full">
-			<DataTable columns={columns} data={MISSIONS} enableColumnResizing />
+			<DataTable columns={columns} data={PROJECTS} enableColumnResizing />
 		</div>
 	);
 }
@@ -161,7 +161,7 @@ export function Pinning() {
 		<div className="w-full max-w-md">
 			<DataTable
 				columns={columns}
-				data={MISSIONS}
+				data={PROJECTS}
 				columnPinning={{ left: ["reference"], right: ["amount"] }}
 			/>
 		</div>
@@ -173,12 +173,12 @@ export function ViewOptions() {
 		<div className="w-full">
 			<DataTable
 				columns={columns}
-				data={MISSIONS}
+				data={PROJECTS}
 				toolbar={(table) => (
 					<DataTableToolbar>
 						<DataTableActions>
 							<DataTableViewOptions table={table} />
-							<DataTableExport table={table} filename="missions.csv" />
+							<DataTableExport table={table} filename="projects.csv" />
 						</DataTableActions>
 					</DataTableToolbar>
 				)}
@@ -193,7 +193,7 @@ export function Density() {
 		<div className="w-full">
 			<DataTable
 				columns={columns}
-				data={MISSIONS}
+				data={PROJECTS}
 				density={density}
 				toolbar={
 					<DataTableToolbar>
@@ -215,16 +215,16 @@ export function Expansion() {
 		<div className="w-full">
 			<DataTable
 				columns={columns}
-				data={MISSIONS}
-				renderExpandedRow={(mission) => (
+				data={PROJECTS}
+				renderExpandedRow={(project) => (
 					<dl className="grid gap-1 text-sm sm:grid-cols-2">
 						<div>
-							<dt className="inline text-muted-foreground">Club: </dt>
-							<dd className="inline">{mission.club}</dd>
+							<dt className="inline text-muted-foreground">Client: </dt>
+							<dd className="inline">{project.client}</dd>
 						</div>
 						<div>
-							<dt className="inline text-muted-foreground">Specialty: </dt>
-							<dd className="inline">{mission.specialty}</dd>
+							<dt className="inline text-muted-foreground">Role: </dt>
+							<dd className="inline">{project.role}</dd>
 						</div>
 					</dl>
 				)}
@@ -234,19 +234,19 @@ export function Expansion() {
 }
 
 export function GlobalFilter() {
-	const [search, setSearch] = useState("phys");
+	const [search, setSearch] = useState("des");
 	return (
 		<div className="w-full">
 			<DataTable
 				columns={columns}
-				data={MISSIONS}
+				data={PROJECTS}
 				globalFilter={search}
 				toolbar={
 					<DataTableToolbar>
 						<DataTableSearch
 							value={search}
 							onChange={(event) => setSearch(event.target.value)}
-							placeholder="Search missions"
+							placeholder="Search projects"
 						/>
 					</DataTableToolbar>
 				}
@@ -260,11 +260,11 @@ export function Export() {
 		<div className="w-full">
 			<DataTable
 				columns={columns}
-				data={MISSIONS}
+				data={PROJECTS}
 				toolbar={(table) => (
 					<DataTableToolbar>
 						<DataTableActions>
-							<DataTableExport table={table} filename="missions.csv" />
+							<DataTableExport table={table} filename="projects.csv" />
 						</DataTableActions>
 					</DataTableToolbar>
 				)}
@@ -279,11 +279,11 @@ export function Pagination() {
 		<div className="w-full">
 			<DataTable
 				columns={columns}
-				data={MISSIONS.slice(page * 2, page * 2 + 2)}
+				data={PROJECTS.slice(page * 2, page * 2 + 2)}
 				pagination={{
 					page,
 					pageSize: 2,
-					total: MISSIONS.length,
+					total: PROJECTS.length,
 					onPageChange: setPage,
 				}}
 			/>

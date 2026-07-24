@@ -123,7 +123,7 @@ describe("Alert", () => {
 	it("allows overriding the dismiss button label", () => {
 		const screen = render(
 			<Alert>
-				<AlertTitle>Nouvelle fonctionnalité</AlertTitle>
+				<AlertTitle>New feature</AlertTitle>
 				<AlertClose aria-label="Fermer" />
 			</Alert>,
 		);

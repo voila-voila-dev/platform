@@ -88,7 +88,7 @@ export const WithIcon: Story = {
 		<div className="flex flex-wrap items-center gap-4">
 			<Button>
 				<PlusIcon data-icon="inline-start" />
-				Add mission
+				Add project
 			</Button>
 			<Button variant="outline">
 				Next

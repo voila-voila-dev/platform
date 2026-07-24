@@ -11,15 +11,15 @@ function queryChip(screen: ReturnType<typeof render>) {
 
 describe("Chip", () => {
 	it("renders its children in a span with the badge recipe", () => {
-		const screen = render(<Chip>Kinésithérapeute</Chip>);
+		const screen = render(<Chip>Product designer</Chip>);
 		const chip = queryChip(screen);
 		expect(chip?.tagName).toBe("SPAN");
-		expect(chip?.textContent).toBe("Kinésithérapeute");
+		expect(chip?.textContent).toBe("Product designer");
 		expect(chip?.classList.contains("rounded-4xl")).toBe(true);
 	});
 
 	it("defaults to the secondary variant", () => {
-		const screen = render(<Chip>Rugby</Chip>);
+		const screen = render(<Chip>Branding</Chip>);
 		const chip = queryChip(screen);
 		expect(chip?.getAttribute("data-variant")).toBe("secondary");
 		expect(chip?.classList.contains("bg-secondary")).toBe(true);
@@ -28,7 +28,7 @@ describe("Chip", () => {
 	it("forwards the variant, color and size axes", () => {
 		const screen = render(
 			<Chip variant="outline" color="blue" size="sm">
-				Rugby
+				Branding
 			</Chip>,
 		);
 		const chip = queryChip(screen);
@@ -40,7 +40,7 @@ describe("Chip", () => {
 	});
 
 	it("merges className over the recipe classes", () => {
-		const screen = render(<Chip className="custom-chip">Rugby</Chip>);
+		const screen = render(<Chip className="custom-chip">Branding</Chip>);
 		expect(queryChip(screen)?.classList.contains("custom-chip")).toBe(true);
 	});
 
@@ -48,7 +48,7 @@ describe("Chip", () => {
 		const onClick = vi.fn();
 		const screen = render(
 			<Chip>
-				Rugby
+				Branding
 				<ChipRemove onClick={onClick} />
 			</Chip>,
 		);
@@ -62,17 +62,19 @@ describe("Chip", () => {
 	it("allows overriding the remove button label", () => {
 		const screen = render(
 			<Chip>
-				Rugby
-				<ChipRemove aria-label="Retirer Rugby" />
+				Branding
+				<ChipRemove aria-label="Remove Branding" />
 			</Chip>,
 		);
-		expect(screen.getByRole("button", { name: "Retirer Rugby" })).toBeTruthy();
+		expect(
+			screen.getByRole("button", { name: "Remove Branding" }),
+		).toBeTruthy();
 	});
 
 	it("tightens the trailing padding when a remove button is present", () => {
 		const screen = render(
 			<Chip>
-				Rugby
+				Branding
 				<ChipRemove />
 			</Chip>,
 		);

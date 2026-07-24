@@ -16,21 +16,21 @@ import {
 
 afterEach(cleanup);
 
-interface Mission {
+interface Project {
 	reference: string;
-	club: string;
+	client: string;
 	amount: number;
 }
 
-const missions: Mission[] = [
-	{ reference: "MIS-001", club: "Stade Rochelais", amount: 180 },
-	{ reference: "MIS-002", club: "RC Vannes", amount: 240 },
-	{ reference: "MIS-003", club: "Provence Rugby", amount: 150 },
+const projects: Project[] = [
+	{ reference: "PRJ-001", client: "Northwind Labs", amount: 180 },
+	{ reference: "PRJ-002", client: "Globex Media", amount: 240 },
+	{ reference: "PRJ-003", client: "Acme Studio", amount: 150 },
 ];
 
-const columns: ColumnDef<Mission>[] = [
+const columns: ColumnDef<Project>[] = [
 	{ accessorKey: "reference", header: "Reference" },
-	{ accessorKey: "club", header: "Club" },
+	{ accessorKey: "client", header: "Client" },
 	{ accessorKey: "amount", header: "Amount" },
 ];
 
@@ -42,37 +42,37 @@ function bodyRows(screen: ReturnType<typeof render>) {
 
 describe("DataTable", () => {
 	it("renders headers and one row per data item", () => {
-		const screen = render(<DataTable columns={columns} data={missions} />);
+		const screen = render(<DataTable columns={columns} data={projects} />);
 		expect(screen.getByText("Reference")).toBeDefined();
-		expect(screen.getByText("Club")).toBeDefined();
+		expect(screen.getByText("Client")).toBeDefined();
 		const rows = bodyRows(screen);
 		expect(rows).toHaveLength(3);
-		expect(rows[0]?.textContent).toContain("MIS-001");
+		expect(rows[0]?.textContent).toContain("PRJ-001");
 	});
 
 	it("sorts when a sortable header is clicked and exposes aria-sort", () => {
-		const screen = render(<DataTable columns={columns} data={missions} />);
-		const clubHeader = screen.getByText("Club").closest("th");
-		if (!clubHeader) throw new Error("missing Club header");
+		const screen = render(<DataTable columns={columns} data={projects} />);
+		const clientHeader = screen.getByText("Client").closest("th");
+		if (!clientHeader) throw new Error("missing Client header");
 
-		fireEvent.click(clubHeader);
-		expect(clubHeader.getAttribute("aria-sort")).toBe("ascending");
-		expect(bodyRows(screen)[0]?.textContent).toContain("Provence Rugby");
+		fireEvent.click(clientHeader);
+		expect(clientHeader.getAttribute("aria-sort")).toBe("ascending");
+		expect(bodyRows(screen)[0]?.textContent).toContain("Acme Studio");
 
-		fireEvent.click(clubHeader);
-		expect(clubHeader.getAttribute("aria-sort")).toBe("descending");
-		expect(bodyRows(screen)[0]?.textContent).toContain("Stade Rochelais");
+		fireEvent.click(clientHeader);
+		expect(clientHeader.getAttribute("aria-sort")).toBe("descending");
+		expect(bodyRows(screen)[0]?.textContent).toContain("Northwind Labs");
 	});
 
 	it("applies initialSorting", () => {
 		const screen = render(
 			<DataTable
 				columns={columns}
-				data={missions}
+				data={projects}
 				initialSorting={[{ id: "amount", desc: true }]}
 			/>,
 		);
-		expect(bodyRows(screen)[0]?.textContent).toContain("MIS-002");
+		expect(bodyRows(screen)[0]?.textContent).toContain("PRJ-002");
 	});
 
 	it("renders the default empty state when there are no rows", () => {
@@ -91,15 +91,15 @@ describe("DataTable", () => {
 	it("invokes onRowClick with the row's data", () => {
 		const onRowClick = vi.fn();
 		const screen = render(
-			<DataTable columns={columns} data={missions} onRowClick={onRowClick} />,
+			<DataTable columns={columns} data={projects} onRowClick={onRowClick} />,
 		);
-		fireEvent.click(screen.getByText("RC Vannes"));
-		expect(onRowClick).toHaveBeenCalledWith(missions[1]);
+		fireEvent.click(screen.getByText("Globex Media"));
+		expect(onRowClick).toHaveBeenCalledWith(projects[1]);
 	});
 
 	it("shows a loading overlay while keeping rows visible", () => {
 		const screen = render(
-			<DataTable columns={columns} data={missions} loading />,
+			<DataTable columns={columns} data={projects} loading />,
 		);
 		expect(
 			screen.baseElement.querySelector("[data-slot=spinner]"),
@@ -111,7 +111,7 @@ describe("DataTable", () => {
 		const screen = render(
 			<DataTable
 				columns={columns}
-				data={missions}
+				data={projects}
 				stickyHeader
 				containerClassName="max-h-40"
 			/>,
@@ -130,10 +130,10 @@ describe("DataTable", () => {
 		const screen = render(
 			<DataTable
 				columns={columns}
-				data={missions}
-				initialSorting={[{ id: "club", desc: false }]}
+				data={projects}
+				initialSorting={[{ id: "client", desc: false }]}
 				onRowClick={onRowClick}
-				renderMobileCard={(mission) => <span>{mission.reference} card</span>}
+				renderMobileCard={(project) => <span>{project.reference} card</span>}
 			/>,
 		);
 		const list = screen.baseElement.querySelector(
@@ -143,9 +143,9 @@ describe("DataTable", () => {
 		const cards = Array.from(list?.querySelectorAll("li") ?? []);
 		expect(cards).toHaveLength(3);
 		// Cards follow the table's sorted row model, not the raw data order.
-		expect(cards[0]?.textContent).toBe("MIS-003 card");
-		fireEvent.click(screen.getByText("MIS-002 card"));
-		expect(onRowClick).toHaveBeenCalledWith(missions[1]);
+		expect(cards[0]?.textContent).toBe("PRJ-003 card");
+		fireEvent.click(screen.getByText("PRJ-002 card"));
+		expect(onRowClick).toHaveBeenCalledWith(projects[1]);
 		const tableWrapper = screen.baseElement.querySelector(
 			"[data-slot=table-container]",
 		)?.parentElement;
@@ -157,17 +157,17 @@ describe("DataTable", () => {
 		const screen = render(
 			<DataTable
 				columns={columns}
-				data={missions}
+				data={projects}
 				toolbar={
 					<DataTableToolbar>
-						<DataTableSearch placeholder="Search missions" />
+						<DataTableSearch placeholder="Search projects" />
 						<DataTableFilters>filters</DataTableFilters>
 						<DataTableActions>actions</DataTableActions>
 					</DataTableToolbar>
 				}
 			/>,
 		);
-		expect(screen.getByPlaceholderText("Search missions")).toBeDefined();
+		expect(screen.getByPlaceholderText("Search projects")).toBeDefined();
 		expect(
 			screen.baseElement.querySelector("[data-slot=data-table-filters]"),
 		).not.toBeNull();
@@ -178,10 +178,10 @@ describe("DataTable", () => {
 });
 
 describe("DataTable selection", () => {
-	const selectableColumns: ColumnDef<Mission>[] = [
-		dataTableSelectionColumn<Mission>({
-			selectAllLabel: "Select all missions",
-			selectRowLabel: (mission) => `Select ${mission.reference}`,
+	const selectableColumns: ColumnDef<Project>[] = [
+		dataTableSelectionColumn<Project>({
+			selectAllLabel: "Select all projects",
+			selectRowLabel: (project) => `Select ${project.reference}`,
 		}),
 		...columns,
 	];
@@ -191,29 +191,29 @@ describe("DataTable selection", () => {
 		const screen = render(
 			<DataTable
 				columns={selectableColumns}
-				data={missions}
+				data={projects}
 				enableRowSelection
 				onRowSelectionChange={onRowSelectionChange}
 			/>,
 		);
-		fireEvent.click(screen.getByLabelText("Select MIS-002"));
+		fireEvent.click(screen.getByLabelText("Select PRJ-002"));
 		expect(onRowSelectionChange).toHaveBeenCalledWith({ 1: true });
 		const selected = bodyRows(screen).filter((row) =>
 			row.hasAttribute("data-selected"),
 		);
 		expect(selected).toHaveLength(1);
-		expect(selected[0]?.textContent).toContain("MIS-002");
+		expect(selected[0]?.textContent).toContain("PRJ-002");
 	});
 
 	it("selects every row through the header checkbox", () => {
 		const screen = render(
 			<DataTable
 				columns={selectableColumns}
-				data={missions}
+				data={projects}
 				enableRowSelection
 			/>,
 		);
-		fireEvent.click(screen.getByLabelText("Select all missions"));
+		fireEvent.click(screen.getByLabelText("Select all projects"));
 		expect(
 			bodyRows(screen).every((row) => row.hasAttribute("data-selected")),
 		).toBe(true);
@@ -224,12 +224,12 @@ describe("DataTable selection", () => {
 		const screen = render(
 			<DataTable
 				columns={selectableColumns}
-				data={missions}
+				data={projects}
 				enableRowSelection
 				onRowClick={onRowClick}
 			/>,
 		);
-		fireEvent.click(screen.getByLabelText("Select MIS-001"));
+		fireEvent.click(screen.getByLabelText("Select PRJ-001"));
 		expect(onRowClick).not.toHaveBeenCalled();
 	});
 
@@ -237,7 +237,7 @@ describe("DataTable selection", () => {
 		const screen = render(
 			<DataTable
 				columns={selectableColumns}
-				data={missions}
+				data={projects}
 				enableRowSelection
 				rowSelection={{ 0: true }}
 			/>,
@@ -246,7 +246,7 @@ describe("DataTable selection", () => {
 			row.hasAttribute("data-selected"),
 		);
 		expect(selected).toHaveLength(1);
-		expect(selected[0]?.textContent).toContain("MIS-001");
+		expect(selected[0]?.textContent).toContain("PRJ-001");
 	});
 });
 
@@ -331,16 +331,16 @@ describe("DataTablePagination", () => {
 				pageSize={10}
 				total={30}
 				onPageChange={() => {}}
-				previousText="Précédent"
-				nextText="Suivant"
-				rangeText={({ from, to, total }) => `${from}–${to} sur ${total}`}
-				pageLabel={(pageNumber) => `Aller à la page ${pageNumber}`}
+				previousText="Anterior"
+				nextText="Siguiente"
+				rangeText={({ from, to, total }) => `${from}–${to} de ${total}`}
+				pageLabel={(pageNumber) => `Ir a la página ${pageNumber}`}
 			/>,
 		);
-		expect(screen.getByText("Précédent")).toBeDefined();
-		expect(screen.getByText("Suivant")).toBeDefined();
-		expect(screen.getByText("1–10 sur 30")).toBeDefined();
-		expect(screen.getByLabelText("Aller à la page 2")).toBeDefined();
+		expect(screen.getByText("Anterior")).toBeDefined();
+		expect(screen.getByText("Siguiente")).toBeDefined();
+		expect(screen.getByText("1–10 de 30")).toBeDefined();
+		expect(screen.getByLabelText("Ir a la página 2")).toBeDefined();
 	});
 });
 
@@ -349,7 +349,7 @@ describe("DataTable with pagination", () => {
 		const screen = render(
 			<DataTable
 				columns={columns}
-				data={missions}
+				data={projects}
 				pagination={{
 					page: 0,
 					pageSize: 3,
@@ -365,8 +365,8 @@ describe("DataTable with pagination", () => {
 });
 
 describe("DataTable row expansion", () => {
-	const renderExpanded = (mission: Mission) => (
-		<p data-testid="detail">{mission.club}</p>
+	const renderExpanded = (project: Project) => (
+		<p data-testid="detail">{project.client}</p>
 	);
 
 	// Regression: the body grew a leading cell for the expander while the header
@@ -375,7 +375,7 @@ describe("DataTable row expansion", () => {
 		const screen = render(
 			<DataTable
 				columns={columns}
-				data={missions}
+				data={projects}
 				renderExpandedRow={renderExpanded}
 			/>,
 		);
@@ -390,13 +390,13 @@ describe("DataTable row expansion", () => {
 		const screen = render(
 			<DataTable
 				columns={columns}
-				data={missions}
+				data={projects}
 				renderExpandedRow={renderExpanded}
 			/>,
 		);
 		expect(screen.queryByTestId("detail")).toBeNull();
 		fireEvent.click(screen.getAllByRole("button", { name: "Expand row" })[0]);
-		expect(screen.getByTestId("detail").textContent).toBe("Stade Rochelais");
+		expect(screen.getByTestId("detail").textContent).toBe("Northwind Labs");
 		fireEvent.click(screen.getByRole("button", { name: "Collapse row" }));
 		expect(screen.queryByTestId("detail")).toBeNull();
 	});
@@ -405,7 +405,7 @@ describe("DataTable row expansion", () => {
 		const screen = render(
 			<DataTable
 				columns={columns}
-				data={missions}
+				data={projects}
 				renderExpandedRow={renderExpanded}
 			/>,
 		);
@@ -417,14 +417,14 @@ describe("DataTable row expansion", () => {
 	});
 
 	it("leaves rows unexpandable when no panel is supplied", () => {
-		const screen = render(<DataTable columns={columns} data={missions} />);
+		const screen = render(<DataTable columns={columns} data={projects} />);
 		expect(screen.queryByRole("button", { name: "Expand row" })).toBeNull();
 	});
 });
 
 describe("DataTable column resizing", () => {
 	it("offers a focusable handle per column, off by default", () => {
-		const plain = render(<DataTable columns={columns} data={missions} />);
+		const plain = render(<DataTable columns={columns} data={projects} />);
 		expect(
 			plain.baseElement.querySelectorAll(
 				"[data-slot=data-table-resize-handle]",
@@ -432,7 +432,7 @@ describe("DataTable column resizing", () => {
 		).toHaveLength(0);
 		cleanup();
 		const resizable = render(
-			<DataTable columns={columns} data={missions} enableColumnResizing />,
+			<DataTable columns={columns} data={projects} enableColumnResizing />,
 		);
 		const handles = resizable.baseElement.querySelectorAll(
 			"[data-slot=data-table-resize-handle]",
@@ -446,7 +446,7 @@ describe("DataTable column resizing", () => {
 		const screen = render(
 			<DataTable
 				columns={columns}
-				data={missions}
+				data={projects}
 				enableColumnResizing
 				onColumnSizingChange={onColumnSizingChange}
 			/>,
@@ -465,7 +465,7 @@ describe("DataTable column resizing", () => {
 	// the handle must not also reorder the rows.
 	it("does not sort when the handle is clicked", () => {
 		const screen = render(
-			<DataTable columns={columns} data={missions} enableColumnResizing />,
+			<DataTable columns={columns} data={projects} enableColumnResizing />,
 		);
 		const handle = screen.baseElement.querySelector(
 			"[data-slot=data-table-resize-handle]",
@@ -481,7 +481,7 @@ describe("DataTable column pinning", () => {
 		const screen = render(
 			<DataTable
 				columns={columns}
-				data={missions}
+				data={projects}
 				columnPinning={{ left: ["reference"], right: ["amount"] }}
 			/>,
 		);
@@ -502,7 +502,7 @@ describe("DataTable column pinning", () => {
 		const screen = render(
 			<DataTable
 				columns={columns}
-				data={missions}
+				data={projects}
 				columnPinning={{ left: ["reference"] }}
 			/>,
 		);
@@ -516,13 +516,13 @@ describe("DataTable column visibility and export", () => {
 		const screen = render(
 			<DataTable
 				columns={columns}
-				data={missions}
+				data={projects}
 				toolbar={(table) => <DataTableViewOptions table={table} />}
 			/>,
 		);
 		expect(screen.getAllByRole("columnheader")).toHaveLength(columns.length);
 		fireEvent.click(screen.getByRole("button", { name: "Columns" }));
-		fireEvent.click(screen.getByRole("menuitemcheckbox", { name: "Club" }));
+		fireEvent.click(screen.getByRole("menuitemcheckbox", { name: "Client" }));
 		expect(screen.getAllByRole("columnheader")).toHaveLength(
 			columns.length - 1,
 		);
@@ -533,7 +533,7 @@ describe("DataTable column visibility and export", () => {
 		render(
 			<DataTable
 				columns={columns}
-				data={missions}
+				data={projects}
 				toolbar={(table) => {
 					csv = dataTableToCsv(table);
 					return null;
@@ -541,34 +541,34 @@ describe("DataTable column visibility and export", () => {
 			/>,
 		);
 		const lines = csv.split("\r\n");
-		expect(lines[0]).toBe("Reference,Club,Amount");
-		expect(lines[1]).toBe("MIS-001,Stade Rochelais,180");
-		expect(lines).toHaveLength(missions.length + 1);
+		expect(lines[0]).toBe("Reference,Client,Amount");
+		expect(lines[1]).toBe("PRJ-001,Northwind Labs,180");
+		expect(lines).toHaveLength(projects.length + 1);
 	});
 
 	it("quotes fields containing a comma or a quote", () => {
 		let csv = "";
 		render(
 			<DataTable
-				columns={[{ accessorKey: "club", header: "Club" }]}
-				data={[{ reference: "x", club: 'Rugby, "the club"', amount: 0 }]}
+				columns={[{ accessorKey: "client", header: "Client" }]}
+				data={[{ reference: "x", client: 'Acme, "the client"', amount: 0 }]}
 				toolbar={(table) => {
 					csv = dataTableToCsv(table);
 					return null;
 				}}
 			/>,
 		);
-		expect(csv.split("\r\n")[1]).toBe('"Rugby, ""the club"""');
+		expect(csv.split("\r\n")[1]).toBe('"Acme, ""the client"""');
 	});
 });
 
 describe("DataTable global filter", () => {
 	it("narrows the rows to the matching ones", () => {
 		const screen = render(
-			<DataTable columns={columns} data={missions} globalFilter="Vannes" />,
+			<DataTable columns={columns} data={projects} globalFilter="Globex" />,
 		);
 		const rows = screen.baseElement.querySelectorAll("tbody tr");
 		expect(rows).toHaveLength(1);
-		expect(rows[0]?.textContent).toContain("MIS-002");
+		expect(rows[0]?.textContent).toContain("PRJ-002");
 	});
 });

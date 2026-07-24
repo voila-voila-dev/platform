@@ -16,13 +16,13 @@ describe("textSpansToEditorHtml", () => {
 	it("wraps the marks and escapes the text", () => {
 		expect(
 			textSpansToEditorHtml([
-				{ text: "Un mot " },
-				{ text: "fort <b>", bold: true },
-				{ text: " et un " },
-				{ text: "lien", href: "https://acme.dev?a=1&b=2" },
+				{ text: "A word " },
+				{ text: "bold <b>", bold: true },
+				{ text: " and a " },
+				{ text: "link", href: "https://acme.dev?a=1&b=2" },
 			]),
 		).toBe(
-			'Un mot <b>fort &lt;b&gt;</b> et un <a href="https://acme.dev?a=1&amp;b=2">lien</a>',
+			'A word <b>bold &lt;b&gt;</b> and a <a href="https://acme.dev?a=1&amp;b=2">link</a>',
 		);
 	});
 
@@ -36,52 +36,50 @@ describe("editorElementToTextSpans", () => {
 		expect(
 			editorElementToTextSpans(
 				elementOf(
-					'Un mot <b>fort</b>, <em>penché</em>, <u>souligné</u> et <a href="https://acme.dev">un lien</a>',
+					'A word <b>bold</b>, <em>italic</em>, <u>underlined</u> and <a href="https://acme.dev">a link</a>',
 				),
 			),
 		).toEqual([
-			{ text: "Un mot " },
-			{ text: "fort", bold: true },
+			{ text: "A word " },
+			{ text: "bold", bold: true },
 			{ text: ", " },
-			{ text: "penché", italic: true },
+			{ text: "italic", italic: true },
 			{ text: ", " },
-			{ text: "souligné", underline: true },
-			{ text: " et " },
-			{ text: "un lien", href: "https://acme.dev" },
+			{ text: "underlined", underline: true },
+			{ text: " and " },
+			{ text: "a link", href: "https://acme.dev" },
 		]);
 	});
 
 	it("understands style-based marks some browsers emit", () => {
 		expect(
 			editorElementToTextSpans(
-				elementOf('<span style="font-weight:bold">gras</span>'),
+				elementOf('<span style="font-weight:bold">bold</span>'),
 			),
-		).toEqual([{ text: "gras", bold: true }]);
+		).toEqual([{ text: "bold", bold: true }]);
 	});
 
 	it("turns <br> and block wrappers into newlines and drops the trailing one", () => {
+		expect(editorElementToTextSpans(elementOf("line 1<br>line 2<br>"))).toEqual(
+			[{ text: "line 1\nline 2" }],
+		);
 		expect(
-			editorElementToTextSpans(elementOf("ligne 1<br>ligne 2<br>")),
-		).toEqual([{ text: "ligne 1\nligne 2" }]);
-		expect(
-			editorElementToTextSpans(
-				elementOf("<div>ligne 1</div><div>ligne 2</div>"),
-			),
-		).toEqual([{ text: "ligne 1\nligne 2" }]);
+			editorElementToTextSpans(elementOf("<div>line 1</div><div>line 2</div>")),
+		).toEqual([{ text: "line 1\nline 2" }]);
 	});
 
 	it("merges adjacent runs with identical marks", () => {
 		expect(
-			editorElementToTextSpans(elementOf("<b>gr</b><b>as</b> fin")),
-		).toEqual([{ text: "gras", bold: true }, { text: " fin" }]);
+			editorElementToTextSpans(elementOf("<b>bo</b><b>ld</b> plain")),
+		).toEqual([{ text: "bold", bold: true }, { text: " plain" }]);
 	});
 
 	it("round-trips through the editor html", () => {
 		const spans = [
-			{ text: "Un mot " },
-			{ text: "fort", bold: true },
-			{ text: " et " },
-			{ text: "un lien souligné", underline: true, href: "https://acme.dev" },
+			{ text: "A word " },
+			{ text: "bold", bold: true },
+			{ text: " and " },
+			{ text: "an underlined link", underline: true, href: "https://acme.dev" },
 		];
 
 		expect(

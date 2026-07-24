@@ -37,7 +37,7 @@ function StatBlockView({
 			style={{ textAlign, fontFamily: EMAIL_FONT }}
 		>
 			<BlockTextInput
-				ariaLabel="Valeur"
+				ariaLabel="Value"
 				value={block.value}
 				placeholder="128"
 				onChange={(value) => onChange({ ...block, value })}
@@ -45,9 +45,9 @@ function StatBlockView({
 				style={{ color: EMAIL_COLOR.brand, textAlign }}
 			/>
 			<BlockTextInput
-				ariaLabel="Libellé"
+				ariaLabel="Label"
 				value={block.label}
-				placeholder="Missions pourvues"
+				placeholder="Projects delivered"
 				onChange={(label) => onChange({ ...block, label })}
 				className="font-semibold text-[12px] uppercase leading-[1.4] tracking-[0.04em]"
 				style={{ color: EMAIL_COLOR.muted, textAlign }}
@@ -59,7 +59,7 @@ function StatBlockView({
 				<BlockTextInput
 					ariaLabel="Description"
 					value={block.description}
-					placeholder="Description (optionnelle)"
+					placeholder="Description (optional)"
 					onChange={(description) => onChange({ ...block, description })}
 					className="text-[14px] leading-[1.5]"
 					style={{ color: EMAIL_COLOR.ink, textAlign }}
@@ -75,18 +75,18 @@ function StatBlockSettings({
 }: EmailBlockComponentProps<EmailEditorStatBlock>) {
 	return (
 		<>
-			<BlockOptionSection title="Contenu">
+			<BlockOptionSection title="Content">
 				<TextOption
-					label="Valeur"
+					label="Value"
 					value={block.value}
 					onChange={(value) => onChange({ ...block, value })}
 					placeholder="128"
 				/>
 				<TextOption
-					label="Libellé"
+					label="Label"
 					value={block.label}
 					onChange={(label) => onChange({ ...block, label })}
-					placeholder="Missions pourvues"
+					placeholder="Projects delivered"
 				/>
 				<TextAreaOption
 					label="Description"
@@ -95,7 +95,7 @@ function StatBlockSettings({
 					rows={2}
 				/>
 			</BlockOptionSection>
-			<BlockOptionSection title="Apparence">
+			<BlockOptionSection title="Appearance">
 				<AlignmentOption
 					value={block.align}
 					onChange={(align) => onChange({ ...block, align })}
@@ -106,7 +106,7 @@ function StatBlockSettings({
 }
 
 export const statBlockDefinition: EmailBlockDefinition<EmailEditorStatBlock> = {
-	label: "Chiffre clé",
+	label: "Key figure",
 	icon: ChartBarIcon,
 	View: StatBlockView,
 	Settings: StatBlockSettings,

@@ -21,11 +21,11 @@ export const Default: Story = {};
 export const WithInput: Story = {
 	render: () => (
 		<div className="grid w-72 gap-2">
-			<Label htmlFor="organization-email">Organization email</Label>
+			<Label htmlFor="workspace-email">Workspace email</Label>
 			<Input
-				id="organization-email"
+				id="workspace-email"
 				type="email"
-				placeholder="contact@club.fr"
+				placeholder="contact@example.com"
 			/>
 		</div>
 	),
@@ -34,18 +34,18 @@ export const WithInput: Story = {
 export const WithIconAndRequired: Story = {
 	render: () => (
 		<div className="grid w-72 gap-2">
-			<Label htmlFor="club-email">
+			<Label htmlFor="client-email">
 				<EnvelopeSimpleIcon />
-				Club email
+				Client email
 				<span aria-hidden="true" className="text-destructive">
 					*
 				</span>
 			</Label>
 			<Input
-				id="club-email"
+				id="client-email"
 				type="email"
 				required
-				placeholder="contact@club.fr"
+				placeholder="contact@example.com"
 			/>
 		</div>
 	),
@@ -59,7 +59,7 @@ export const DisabledPeer: Story = {
 					id="disabled-peer-email"
 					className="peer order-2"
 					type="email"
-					placeholder="contact@club.fr"
+					placeholder="contact@example.com"
 					disabled
 				/>
 				<Label htmlFor="disabled-peer-email" className="order-1">
@@ -71,7 +71,7 @@ export const DisabledPeer: Story = {
 				<Input
 					id="disabled-group-email"
 					type="email"
-					placeholder="contact@club.fr"
+					placeholder="contact@example.com"
 					disabled
 				/>
 			</div>

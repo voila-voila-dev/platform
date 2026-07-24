@@ -8,18 +8,18 @@ import {
 import { getInitials } from "#/components/ui/user-avatar.tsx";
 import { cn } from "#/lib/utils.ts";
 
-type ProfileTheme = "provider" | "organization";
+type ProfileTheme = "brand" | "highlight";
 
 // `theme` coordinates the themed children (cover gradient, avatar ring) off
 // the `data-theme` attribute their group root emits.
 
 /** Themed cover gradient used when no `coverImage` is supplied. */
 const coverGradientClasses =
-	"bg-gradient-to-br group-data-[theme=organization]/profile-header-cover:from-organization group-data-[theme=organization]/profile-header-cover:via-organization/80 group-data-[theme=organization]/profile-header-cover:to-organization/40 group-data-[theme=provider]/profile-header-cover:from-provider group-data-[theme=provider]/profile-header-cover:via-provider/80 group-data-[theme=provider]/profile-header-cover:to-provider/40";
+	"bg-gradient-to-br group-data-[theme=highlight]/profile-header-cover:from-highlight group-data-[theme=highlight]/profile-header-cover:via-highlight/80 group-data-[theme=highlight]/profile-header-cover:to-highlight/40 group-data-[theme=brand]/profile-header-cover:from-brand group-data-[theme=brand]/profile-header-cover:via-brand/80 group-data-[theme=brand]/profile-header-cover:to-brand/40";
 
 /** Ring color that frames the overlapping avatar, matched to the theme. */
 const avatarRingClasses =
-	"group-data-[theme=organization]/profile-header:ring-organization/20 group-data-[theme=provider]/profile-header:ring-provider/20";
+	"group-data-[theme=highlight]/profile-header:ring-highlight/20 group-data-[theme=brand]/profile-header:ring-brand/20";
 
 type ProfileHeaderAvatar = { src?: string; name?: string };
 
@@ -36,7 +36,7 @@ function isAvatarDescriptor(
 /** Cover band — renders a `coverImage` (node or src) or a themed gradient. */
 function ProfileHeaderCover({
 	coverImage,
-	theme = "provider",
+	theme = "brand",
 	className,
 	children,
 	...props
@@ -78,7 +78,7 @@ function ProfileHeaderCover({
 }
 
 /**
- * Hero band for a provider or organization profile: a themed cover, an
+ * Hero band for a freelancer or client profile: a themed cover, an
  * overlapping circular avatar, name + optional headline, a trust-badge row
  * and a right-aligned actions slot. Composable — the cover/body sub-parts are
  * exported so consumers can rebuild a custom hero when needed.
@@ -88,7 +88,7 @@ function ProfileHeader({
 	headline,
 	coverImage,
 	avatar,
-	theme = "provider",
+	theme = "brand",
 	badges,
 	actions,
 	className,

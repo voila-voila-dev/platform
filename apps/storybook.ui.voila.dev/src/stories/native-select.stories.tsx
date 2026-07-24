@@ -17,27 +17,25 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<NativeSelect defaultValue="physiotherapist">
-			<NativeSelectOption value="physiotherapist">
-				Physiotherapist
-			</NativeSelectOption>
-			<NativeSelectOption value="osteopath">Osteopath</NativeSelectOption>
-			<NativeSelectOption value="nurse">Nurse</NativeSelectOption>
+		<NativeSelect defaultValue="designer">
+			<NativeSelectOption value="designer">Designer</NativeSelectOption>
+			<NativeSelectOption value="developer">Developer</NativeSelectOption>
+			<NativeSelectOption value="copywriter">Copywriter</NativeSelectOption>
 		</NativeSelect>
 	),
 };
 
 export const Grouped: Story = {
 	render: () => (
-		<NativeSelect defaultValue="rugby">
-			<NativeSelectOptGroup label="Team sports">
-				<NativeSelectOption value="rugby">Rugby</NativeSelectOption>
-				<NativeSelectOption value="football">Football</NativeSelectOption>
-				<NativeSelectOption value="handball">Handball</NativeSelectOption>
+		<NativeSelect defaultValue="branding">
+			<NativeSelectOptGroup label="Design">
+				<NativeSelectOption value="branding">Branding</NativeSelectOption>
+				<NativeSelectOption value="product">Product design</NativeSelectOption>
+				<NativeSelectOption value="motion">Motion design</NativeSelectOption>
 			</NativeSelectOptGroup>
-			<NativeSelectOptGroup label="Individual sports">
-				<NativeSelectOption value="athletics">Athletics</NativeSelectOption>
-				<NativeSelectOption value="tennis">Tennis</NativeSelectOption>
+			<NativeSelectOptGroup label="Engineering">
+				<NativeSelectOption value="frontend">Frontend</NativeSelectOption>
+				<NativeSelectOption value="backend">Backend</NativeSelectOption>
 			</NativeSelectOptGroup>
 		</NativeSelect>
 	),
@@ -45,23 +43,19 @@ export const Grouped: Story = {
 
 export const SmallDisabled: Story = {
 	render: () => (
-		<NativeSelect size="sm" disabled defaultValue="physiotherapist">
-			<NativeSelectOption value="physiotherapist">
-				Physiotherapist
-			</NativeSelectOption>
-			<NativeSelectOption value="osteopath">Osteopath</NativeSelectOption>
+		<NativeSelect size="sm" disabled defaultValue="designer">
+			<NativeSelectOption value="designer">Designer</NativeSelectOption>
+			<NativeSelectOption value="developer">Developer</NativeSelectOption>
 		</NativeSelect>
 	),
 };
 
 export const Invalid: Story = {
 	render: () => (
-		<NativeSelect aria-invalid defaultValue="physiotherapist">
-			<NativeSelectOption value="physiotherapist">
-				Physiotherapist
-			</NativeSelectOption>
-			<NativeSelectOption value="osteopath">Osteopath</NativeSelectOption>
-			<NativeSelectOption value="nurse">Nurse</NativeSelectOption>
+		<NativeSelect aria-invalid defaultValue="designer">
+			<NativeSelectOption value="designer">Designer</NativeSelectOption>
+			<NativeSelectOption value="developer">Developer</NativeSelectOption>
+			<NativeSelectOption value="copywriter">Copywriter</NativeSelectOption>
 		</NativeSelect>
 	),
 };
@@ -69,12 +63,10 @@ export const Invalid: Story = {
 export const FullWidthForm: Story = {
 	render: () => (
 		<div className="w-80">
-			<NativeSelect defaultValue="physiotherapist">
-				<NativeSelectOption value="physiotherapist">
-					Physiotherapist
-				</NativeSelectOption>
-				<NativeSelectOption value="osteopath">Osteopath</NativeSelectOption>
-				<NativeSelectOption value="nurse">Nurse</NativeSelectOption>
+			<NativeSelect defaultValue="designer">
+				<NativeSelectOption value="designer">Designer</NativeSelectOption>
+				<NativeSelectOption value="developer">Developer</NativeSelectOption>
+				<NativeSelectOption value="copywriter">Copywriter</NativeSelectOption>
 			</NativeSelect>
 		</div>
 	),

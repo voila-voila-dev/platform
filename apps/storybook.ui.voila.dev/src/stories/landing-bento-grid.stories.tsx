@@ -32,13 +32,13 @@ export const Values: Story = {
 					<BentoGrid.FeaturedIcon>
 						<HandHeartIcon />
 					</BentoGrid.FeaturedIcon>
-					<BentoGrid.FeaturedLabel>Notre mantra</BentoGrid.FeaturedLabel>
+					<BentoGrid.FeaturedLabel>Our mantra</BentoGrid.FeaturedLabel>
 					<BentoGrid.FeaturedTitle>CARE</BentoGrid.FeaturedTitle>
 				</BentoGrid.FeaturedContent>
 				<BentoGrid.FeaturedDescription>
-					Parce que les enjeux de santé doivent être une source de progrès.
-					Prendre soin de l'ensemble des acteurs du sport, à chaque étape du
-					parcours ACME, est notre priorité.
+					Because great work should be a source of progress. Taking care of
+					every client and every freelancer, at each step of the ACME journey,
+					is our priority.
 				</BentoGrid.FeaturedDescription>
 			</BentoGrid.FeaturedItem>
 

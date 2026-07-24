@@ -49,7 +49,7 @@ describe("Section", () => {
 			<Section>
 				<SectionHeader>
 					<SectionHeading>
-						<SectionTitle>Prochaines missions</SectionTitle>
+						<SectionTitle>Upcoming projects</SectionTitle>
 						<SectionDescription>Cette semaine</SectionDescription>
 					</SectionHeading>
 					<SectionActions>
@@ -61,7 +61,7 @@ describe("Section", () => {
 		);
 		const title = screen.baseElement.querySelector("[data-slot=section-title]");
 		expect(title?.tagName).toBe("H2");
-		expect(title?.textContent).toBe("Prochaines missions");
+		expect(title?.textContent).toBe("Upcoming projects");
 		const description = screen.baseElement.querySelector(
 			"[data-slot=section-description]",
 		);
@@ -86,7 +86,7 @@ describe("Section", () => {
 	it("keeps the heading shrinkable for truncated titles", () => {
 		const screen = render(
 			<SectionHeading>
-				<SectionTitle>Missions</SectionTitle>
+				<SectionTitle>Projects</SectionTitle>
 			</SectionHeading>,
 		);
 		const heading = screen.baseElement.querySelector(
@@ -96,7 +96,7 @@ describe("Section", () => {
 	});
 
 	it("passes native props through", () => {
-		const screen = render(<Section aria-label="Missions">content</Section>);
-		expect(querySection(screen)?.getAttribute("aria-label")).toBe("Missions");
+		const screen = render(<Section aria-label="Projects">content</Section>);
+		expect(querySection(screen)?.getAttribute("aria-label")).toBe("Projects");
 	});
 });

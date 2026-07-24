@@ -7,14 +7,14 @@ import { Chart, type ChartConfig } from "#/components/chart.tsx";
 afterEach(cleanup);
 
 const config: ChartConfig = {
-	missions: { label: "Missions published", color: "var(--chart-1)" },
+	projects: { label: "Projects published", color: "var(--chart-1)" },
 	bookings: { label: "Bookings confirmed", color: "var(--chart-2)" },
 };
 
 const data = [
-	{ month: "January", missions: 24, bookings: 18 },
-	{ month: "February", missions: 31, bookings: 22 },
-	{ month: "March", missions: 28, bookings: 25 },
+	{ month: "January", projects: 24, bookings: 18 },
+	{ month: "February", projects: 31, bookings: 22 },
+	{ month: "March", projects: 28, bookings: 25 },
 ];
 
 const slots = (slot: string): HTMLElement[] =>
@@ -34,7 +34,7 @@ function BarChart(props: { readonly stacked?: boolean } = {}) {
 			config={config}
 			data={data}
 			x={{ key: "month" }}
-			y={{ keys: ["missions", "bookings"], stacked: props.stacked }}
+			y={{ keys: ["projects", "bookings"], stacked: props.stacked }}
 		>
 			<Chart.Grid />
 			<Chart.XAxis />
@@ -53,7 +53,7 @@ describe("Chart.Root", () => {
 		const image = screen.getByRole("img");
 		expect(image.getAttribute("data-slot")).toBe("chart-svg");
 		expect(image.getAttribute("aria-label")).toBe(
-			"Chart of Missions published, Bookings confirmed over 3 points",
+			"Chart of Projects published, Bookings confirmed over 3 points",
 		);
 	});
 
@@ -66,7 +66,7 @@ describe("Chart.Root", () => {
 		);
 		expect(headers).toEqual([
 			"month",
-			"Missions published",
+			"Projects published",
 			"Bookings confirmed",
 		]);
 		const firstRow = Array.from(
@@ -80,7 +80,7 @@ describe("Chart.Root", () => {
 	it("injects a guarded colour variable per configured series", () => {
 		render(<BarChart />);
 		const style = slot("chart-style").innerHTML;
-		expect(style).toContain("--color-missions: var(--chart-1);");
+		expect(style).toContain("--color-projects: var(--chart-1);");
 		expect(style).toContain(".dark [data-chart=");
 	});
 
@@ -109,7 +109,7 @@ describe("Chart.Bars", () => {
 		const bars = slots("chart-bar");
 		const bottom = bars.find(
 			(bar) =>
-				bar.getAttribute("data-series") === "missions" &&
+				bar.getAttribute("data-series") === "projects" &&
 				bar.getAttribute("data-index") === "0",
 		);
 		const top = bars.find(
@@ -161,7 +161,7 @@ describe("keyboard navigation", () => {
 		const tooltip = slot("chart-tooltip-content");
 		expect(tooltip.getAttribute("aria-live")).toBe("polite");
 		expect(tooltip.textContent).toContain("January");
-		expect(tooltip.textContent).toContain("Missions published");
+		expect(tooltip.textContent).toContain("Projects published");
 		expect(tooltip.textContent).toContain("24");
 	});
 
@@ -257,7 +257,7 @@ describe("Chart.Legend", () => {
 	it("lists the series by their configured labels", () => {
 		render(<BarChart />);
 		const labels = slots("chart-legend-item").map((item) => item.textContent);
-		expect(labels).toEqual(["Missions published", "Bookings confirmed"]);
+		expect(labels).toEqual(["Projects published", "Bookings confirmed"]);
 	});
 });
 
@@ -268,10 +268,10 @@ describe("Chart.LabelList", () => {
 				config={config}
 				data={data}
 				x={{ key: "month" }}
-				y={{ keys: ["missions", "bookings"] }}
+				y={{ keys: ["projects", "bookings"] }}
 			>
 				<Chart.Bars />
-				<Chart.LabelList seriesKey="missions" marks={props.marks} />
+				<Chart.LabelList seriesKey="projects" marks={props.marks} />
 			</Chart.Root>
 		);
 	}
@@ -292,7 +292,7 @@ describe("Chart.LabelList", () => {
 
 	it("centres each label on its own bar, not on the group", () => {
 		render(<GroupedBars marks="bars" />);
-		const lefts = barXs("missions");
+		const lefts = barXs("projects");
 		const labels = labelXs();
 		expect(labels).toHaveLength(lefts.length);
 		// Every label sits inside the horizontal span of the bar it describes.

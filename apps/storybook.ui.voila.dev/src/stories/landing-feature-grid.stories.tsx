@@ -40,25 +40,25 @@ type Story = StoryObj<typeof meta>;
 const pains = [
 	{
 		icon: CurrencyEurIcon,
-		title: "Des prix pharmacie élevés",
+		title: "High agency markups",
 		description:
-			"Le matériel médical acheté à l'unité en pharmacie grève le budget des clubs amateurs.",
+			"Booking one-off help through agencies drains the budget of small client teams.",
 	},
 	{
 		icon: PackageIcon,
-		title: "Des trousses incomplètes",
+		title: "Incomplete briefs",
 		description:
-			"Strapping, froid, désinfection : il manque toujours l'essentiel au moment où on en a besoin.",
+			"Scope, assets, access: the essentials are always missing right when the work should start.",
 	},
 	{
 		icon: ShieldWarningIcon,
-		title: "Des sportifs mal protégés",
+		title: "Launches left exposed",
 		description:
-			"Sans matériel adapté, les blessures sont mal prises en charge au bord du terrain.",
+			"Without the right expert on hand, projects get patched together at the last minute.",
 	},
 ];
 
-/** Reproduces the original Astro site's `section-equipment-pains.astro`. */
+/** Reproduces the original Astro site's hiring-pains section. */
 export const Default: Story = {
 	render: (args) => (
 		<FeatureGrid.Root {...args}>

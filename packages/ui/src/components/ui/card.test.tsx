@@ -21,8 +21,8 @@ function FullCard(props: { size?: "default" | "sm" }) {
 	return (
 		<Card size={props.size}>
 			<CardHeader>
-				<CardTitle>Physiotherapist</CardTitle>
-				<CardDescription>Racing Club de Lyon</CardDescription>
+				<CardTitle>Product designer</CardTitle>
+				<CardDescription>Northwind Labs</CardDescription>
 				<CardAction>Open</CardAction>
 			</CardHeader>
 			<CardContent>Pitch-side coverage</CardContent>
@@ -33,15 +33,15 @@ function FullCard(props: { size?: "default" | "sm" }) {
 
 describe("Card", () => {
 	it("renders a card div tagged with data-slot and the default size", () => {
-		const screen = render(<Card>Mission</Card>);
+		const screen = render(<Card>Project</Card>);
 		const card = queryBySlot(screen, "card");
 		expect(card?.tagName).toBe("DIV");
 		expect(card?.getAttribute("data-size")).toBe("default");
-		expect(card?.textContent).toBe("Mission");
+		expect(card?.textContent).toBe("Project");
 	});
 
 	it("exposes size sm as a data attribute that cascades via group/card", () => {
-		const screen = render(<Card size="sm">Mission</Card>);
+		const screen = render(<Card size="sm">Project</Card>);
 		const card = queryBySlot(screen, "card");
 		expect(card?.getAttribute("data-size")).toBe("sm");
 		// The group marker is what lets group-data-[size=sm]/card:* reach children.
@@ -75,21 +75,21 @@ describe("Card", () => {
 	});
 
 	it("lets CardTitle become a semantic heading via the render prop", () => {
-		const screen = render(<CardTitle render={<h2>Match day</h2>} />);
+		const screen = render(<CardTitle render={<h2>Launch day</h2>} />);
 		const title = queryBySlot(screen, "card-title");
 		expect(title?.tagName).toBe("H2");
-		expect(title?.textContent).toBe("Match day");
+		expect(title?.textContent).toBe("Launch day");
 	});
 
 	it("lets the card root render as a different element via render", () => {
-		const screen = render(<Card render={<article />}>Mission</Card>);
+		const screen = render(<Card render={<article />}>Project</Card>);
 		const card = queryBySlot(screen, "card");
 		expect(card?.tagName).toBe("ARTICLE");
 		expect(card?.getAttribute("data-size")).toBe("default");
 	});
 
 	it("merges a consumer className over the base classes", () => {
-		const screen = render(<Card className="custom-card">Mission</Card>);
+		const screen = render(<Card className="custom-card">Project</Card>);
 		const card = queryBySlot(screen, "card");
 		expect(card?.classList.contains("custom-card")).toBe(true);
 		expect(card?.classList.contains("rounded-xl")).toBe(true);

@@ -14,7 +14,7 @@ import {
 import type { EmailEditorBlockType } from "#/document/types.ts";
 
 /**
- * The « Ajouter un bloc » menu, fed by the block registry. The default trigger
+ * The "Add a block" menu, fed by the block registry. The default trigger
  * is the outlined empty-state button; the block toolbar passes its own icon
  * trigger instead.
  */
@@ -35,7 +35,7 @@ export function AddBlockMenu({
 					trigger ?? (
 						<Button variant="outline" size="sm">
 							<PlusIcon aria-hidden />
-							Ajouter un bloc
+							Add a block
 						</Button>
 					)
 				}

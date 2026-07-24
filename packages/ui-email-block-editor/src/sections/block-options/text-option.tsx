@@ -61,12 +61,12 @@ export function TextAreaOption({
 }
 
 /**
- * The one destination-URL control. Always « Lien (URL) », always
+ * The one destination-URL control. Always "Link (URL)", always
  * `type="url"` with the `https://` placeholder, so a link field is
  * recognisable at a glance in any block (§1.2 of the editor plan).
  */
 export function LinkOption({
-	label = "Lien (URL)",
+	label = "Link (URL)",
 	value,
 	onChange,
 	description,

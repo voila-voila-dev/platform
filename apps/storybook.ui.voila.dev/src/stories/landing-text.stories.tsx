@@ -13,7 +13,7 @@ const meta = {
 	tags: ["autodocs"],
 	args: {
 		children:
-			"La plateforme qui met en relation clubs de sport et professionnels de santé pour l'accompagnement santé des sportifs en déplacement.",
+			"The platform that connects client teams with independent freelancers to scope, staff and deliver projects wherever the work happens.",
 	},
 	argTypes: {
 		variant: {
@@ -46,7 +46,7 @@ export const Variants: Story = {
 		<div className="space-y-4">
 			{textVariantOptions.map((variant) => (
 				<Text key={variant} variant={variant}>
-					{variant} — Construisons ensemble un sport amateur plus sain.
+					{variant} — Let's build a fairer way of working together.
 				</Text>
 			))}
 		</div>

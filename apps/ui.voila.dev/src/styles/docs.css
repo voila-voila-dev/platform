@@ -105,13 +105,15 @@
 		color: var(--muted-foreground);
 	}
 
-	& a:not(.heading-anchor) {
+	/* `:not(.not-prose *)` keeps article typography out of live previews, which
+	 * render real components inside a `.not-prose` wrapper. */
+	& a:not(.heading-anchor):not(.not-prose *) {
 		color: var(--primary);
 		text-decoration: underline;
 		text-underline-offset: 3px;
 		text-decoration-color: color-mix(in oklab, var(--primary) 40%, transparent);
 	}
-	.dark & a:not(.heading-anchor) {
+	.dark & a:not(.heading-anchor):not(.not-prose *) {
 		color: oklch(0.78 0.12 275);
 		text-decoration-color: color-mix(
 			in oklab,
@@ -119,21 +121,21 @@
 			transparent
 		);
 	}
-	& a:not(.heading-anchor):hover {
+	& a:not(.heading-anchor):not(.not-prose *):hover {
 		text-decoration-color: currentColor;
 	}
 
-	& ul,
-	& ol {
+	& ul:not(.not-prose *),
+	& ol:not(.not-prose *) {
 		padding-left: 1.5rem;
 	}
-	& ul {
+	& ul:not(.not-prose *) {
 		list-style: disc;
 	}
-	& ol {
+	& ol:not(.not-prose *) {
 		list-style: decimal;
 	}
-	& li + li {
+	& li:not(.not-prose *) + li {
 		margin-top: 0.375rem;
 	}
 

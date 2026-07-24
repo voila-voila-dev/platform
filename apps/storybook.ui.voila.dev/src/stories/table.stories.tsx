@@ -11,34 +11,34 @@ import {
 	TableRow,
 } from "@voila.dev/ui/components/table";
 
-const missions = [
+const projects = [
 	{
-		reference: "MIS-001",
-		club: "Stade Rochelais",
-		specialty: "Physiotherapist",
+		reference: "PRJ-001",
+		client: "Northwind Studio",
+		role: "Designer",
 		status: "Confirmed",
-		amount: "180.00 EUR",
+		amount: "180.00 USD",
 	},
 	{
-		reference: "MIS-002",
-		club: "RC Vannes",
-		specialty: "Osteopath",
+		reference: "PRJ-002",
+		client: "Globex Labs",
+		role: "Developer",
 		status: "Pending",
-		amount: "240.00 EUR",
+		amount: "240.00 USD",
 	},
 	{
-		reference: "MIS-003",
-		club: "US Carcassonne",
-		specialty: "Nurse",
+		reference: "PRJ-003",
+		client: "Initech Media",
+		role: "Copywriter",
 		status: "Confirmed",
-		amount: "150.00 EUR",
+		amount: "150.00 USD",
 	},
 	{
-		reference: "MIS-004",
-		club: "Provence Rugby",
-		specialty: "Physiotherapist",
+		reference: "PRJ-004",
+		client: "Umbrella Digital",
+		role: "Designer",
 		status: "Completed",
-		amount: "210.00 EUR",
+		amount: "210.00 USD",
 	},
 ];
 
@@ -55,24 +55,24 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
 	render: () => (
 		<Table>
-			<TableCaption>Recent missions for your organization.</TableCaption>
+			<TableCaption>Recent projects for your workspace.</TableCaption>
 			<TableHeader>
 				<TableRow>
 					<TableHead>Reference</TableHead>
-					<TableHead>Club</TableHead>
-					<TableHead>Specialty</TableHead>
+					<TableHead>Client</TableHead>
+					<TableHead>Role</TableHead>
 					<TableHead>Status</TableHead>
 					<TableHead className="text-right">Amount</TableHead>
 				</TableRow>
 			</TableHeader>
 			<TableBody>
-				{missions.map((mission) => (
-					<TableRow key={mission.reference}>
-						<TableCell className="font-medium">{mission.reference}</TableCell>
-						<TableCell>{mission.club}</TableCell>
-						<TableCell>{mission.specialty}</TableCell>
-						<TableCell>{mission.status}</TableCell>
-						<TableCell className="text-right">{mission.amount}</TableCell>
+				{projects.map((project) => (
+					<TableRow key={project.reference}>
+						<TableCell className="font-medium">{project.reference}</TableCell>
+						<TableCell>{project.client}</TableCell>
+						<TableCell>{project.role}</TableCell>
+						<TableCell>{project.status}</TableCell>
+						<TableCell className="text-right">{project.amount}</TableCell>
 					</TableRow>
 				))}
 			</TableBody>
@@ -86,23 +86,23 @@ export const WithFooter: Story = {
 			<TableHeader>
 				<TableRow>
 					<TableHead>Reference</TableHead>
-					<TableHead>Club</TableHead>
+					<TableHead>Client</TableHead>
 					<TableHead className="text-right">Amount</TableHead>
 				</TableRow>
 			</TableHeader>
 			<TableBody>
-				{missions.map((mission) => (
-					<TableRow key={mission.reference}>
-						<TableCell className="font-medium">{mission.reference}</TableCell>
-						<TableCell>{mission.club}</TableCell>
-						<TableCell className="text-right">{mission.amount}</TableCell>
+				{projects.map((project) => (
+					<TableRow key={project.reference}>
+						<TableCell className="font-medium">{project.reference}</TableCell>
+						<TableCell>{project.client}</TableCell>
+						<TableCell className="text-right">{project.amount}</TableCell>
 					</TableRow>
 				))}
 			</TableBody>
 			<TableFooter>
 				<TableRow>
 					<TableCell colSpan={2}>Total</TableCell>
-					<TableCell className="text-right">780.00 EUR</TableCell>
+					<TableCell className="text-right">780.00 USD</TableCell>
 				</TableRow>
 			</TableFooter>
 		</Table>
@@ -115,30 +115,30 @@ export const WithSelection: Story = {
 			<TableHeader>
 				<TableRow>
 					<TableHead>
-						<Checkbox aria-label="Select all missions" />
+						<Checkbox aria-label="Select all projects" />
 					</TableHead>
 					<TableHead>Reference</TableHead>
-					<TableHead>Club</TableHead>
+					<TableHead>Client</TableHead>
 					<TableHead className="text-right">Amount</TableHead>
 				</TableRow>
 			</TableHeader>
 			<TableBody>
-				{missions.map((mission, index) => {
+				{projects.map((project, index) => {
 					const selected = index < 2;
 					return (
 						<TableRow
-							key={mission.reference}
+							key={project.reference}
 							data-selected={selected || undefined}
 						>
 							<TableCell>
 								<Checkbox
-									aria-label={`Select ${mission.reference}`}
+									aria-label={`Select ${project.reference}`}
 									defaultChecked={selected}
 								/>
 							</TableCell>
-							<TableCell className="font-medium">{mission.reference}</TableCell>
-							<TableCell>{mission.club}</TableCell>
-							<TableCell className="text-right">{mission.amount}</TableCell>
+							<TableCell className="font-medium">{project.reference}</TableCell>
+							<TableCell>{project.client}</TableCell>
+							<TableCell className="text-right">{project.amount}</TableCell>
 						</TableRow>
 					);
 				})}

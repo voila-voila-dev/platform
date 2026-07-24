@@ -23,15 +23,15 @@ describe("Menubar", () => {
 		const screen = render(
 			<Menubar>
 				<MenubarMenu>
-					<MenubarTrigger>Missions</MenubarTrigger>
+					<MenubarTrigger>Projects</MenubarTrigger>
 					<MenubarContent>
-						<MenubarItem>New mission</MenubarItem>
+						<MenubarItem>New project</MenubarItem>
 					</MenubarContent>
 				</MenubarMenu>
 				<MenubarMenu>
-					<MenubarTrigger>Providers</MenubarTrigger>
+					<MenubarTrigger>Freelancers</MenubarTrigger>
 					<MenubarContent>
-						<MenubarItem>Invite a provider</MenubarItem>
+						<MenubarItem>Invite a freelancer</MenubarItem>
 					</MenubarContent>
 				</MenubarMenu>
 				<MenubarMenu>
@@ -48,7 +48,7 @@ describe("Menubar", () => {
 		// Review fix: the bar must read as a compact widget, not stretch full-width.
 		expect(root?.className).toContain("w-fit");
 
-		for (const label of ["Missions", "Providers", "View"]) {
+		for (const label of ["Projects", "Freelancers", "View"]) {
 			const trigger = screen.getByText(label);
 			expect(trigger.getAttribute("data-slot")).toBe("menubar-trigger");
 			expect(trigger.getAttribute("aria-expanded")).toBe("false");
@@ -59,9 +59,9 @@ describe("Menubar", () => {
 		const screen = render(
 			<Menubar>
 				<MenubarMenu defaultOpen>
-					<MenubarTrigger>Missions</MenubarTrigger>
+					<MenubarTrigger>Projects</MenubarTrigger>
 					<MenubarContent>
-						<MenubarItem>New mission</MenubarItem>
+						<MenubarItem>New project</MenubarItem>
 						<MenubarSeparator />
 						<MenubarSub>
 							<MenubarSubTrigger>Export</MenubarSubTrigger>
@@ -69,17 +69,17 @@ describe("Menubar", () => {
 								<MenubarItem>Export as CSV</MenubarItem>
 							</MenubarSubContent>
 						</MenubarSub>
-						<MenubarItem variant="destructive">Cancel mission</MenubarItem>
+						<MenubarItem variant="destructive">Cancel project</MenubarItem>
 					</MenubarContent>
 				</MenubarMenu>
 			</Menubar>,
 		);
 
-		const item = screen.getByText("New mission");
+		const item = screen.getByText("New project");
 		expect(item.getAttribute("data-slot")).toBe("menubar-item");
 
 		// Destructive variant flows through to the wrapped DropdownMenuItem.
-		const destructive = screen.getByText("Cancel mission");
+		const destructive = screen.getByText("Cancel project");
 		expect(destructive.getAttribute("data-variant")).toBe("destructive");
 
 		const subTrigger = screen.getByText("Export");
@@ -93,7 +93,7 @@ describe("Menubar", () => {
 					<MenubarTrigger>View</MenubarTrigger>
 					<MenubarContent>
 						<MenubarCheckboxItem defaultChecked>
-							Show archived missions
+							Show archived projects
 						</MenubarCheckboxItem>
 						<MenubarRadioGroup defaultValue="week">
 							<MenubarRadioItem value="day">Day</MenubarRadioItem>
@@ -104,7 +104,7 @@ describe("Menubar", () => {
 			</Menubar>,
 		);
 
-		const checkbox = screen.getByText("Show archived missions");
+		const checkbox = screen.getByText("Show archived projects");
 		expect(checkbox.getAttribute("data-slot")).toBe("menubar-checkbox-item");
 		expect(checkbox.getAttribute("role")).toBe("menuitemcheckbox");
 		// Review fix: the indicator now sits on the right like the dropdown menu,
@@ -129,7 +129,7 @@ describe("Menubar", () => {
 					<MenubarTrigger>View</MenubarTrigger>
 					<MenubarContent>
 						<MenubarCheckboxItem defaultChecked>
-							Show archived missions
+							Show archived projects
 						</MenubarCheckboxItem>
 					</MenubarContent>
 				</MenubarMenu>
@@ -137,7 +137,7 @@ describe("Menubar", () => {
 		);
 
 		const checkbox = screen.getByRole("menuitemcheckbox", {
-			name: "Show archived missions",
+			name: "Show archived projects",
 		});
 		expect(checkbox.getAttribute("aria-checked")).toBe("true");
 		// The check indicator (a Phosphor SVG) renders inside the item when checked.

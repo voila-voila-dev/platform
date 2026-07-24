@@ -63,10 +63,10 @@ export const Default: Story = {
 				<div>
 					<DropdownMenu>
 						<DropdownMenuTrigger render={<Button variant="outline" />}>
-							Mission actions
+							Project actions
 						</DropdownMenuTrigger>
 						<DropdownMenuContent dir={args.direction}>
-							<DropdownMenuItem>Edit mission</DropdownMenuItem>
+							<DropdownMenuItem>Edit project</DropdownMenuItem>
 							<DropdownMenuItem>Duplicate</DropdownMenuItem>
 							<DropdownMenuItem variant="destructive">Cancel</DropdownMenuItem>
 						</DropdownMenuContent>
@@ -101,10 +101,10 @@ export const SubmenuPositioning: Story = {
 							<DropdownMenuTrigger
 								render={<Button variant="outline" className="self-start" />}
 							>
-								Mission actions
+								Project actions
 							</DropdownMenuTrigger>
 							<DropdownMenuContent dir={direction}>
-								<DropdownMenuItem>Edit mission</DropdownMenuItem>
+								<DropdownMenuItem>Edit project</DropdownMenuItem>
 								<DropdownMenuSub>
 									<DropdownMenuSubTrigger>Assign to</DropdownMenuSubTrigger>
 									<DropdownMenuSubContent dir={direction}>
@@ -134,7 +134,7 @@ export const SideBySide: Story = {
 				>
 					<p className="text-sm font-medium">Left to right</p>
 					<Button variant="outline" className="self-start">
-						Book a provider
+						Book a freelancer
 					</Button>
 				</div>
 			</DirectionProvider>
@@ -145,7 +145,7 @@ export const SideBySide: Story = {
 				>
 					<p className="text-sm font-medium">Right to left</p>
 					<Button variant="outline" className="self-start">
-						Book a provider
+						Book a freelancer
 					</Button>
 				</div>
 			</DirectionProvider>

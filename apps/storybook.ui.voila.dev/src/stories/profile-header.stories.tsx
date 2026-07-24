@@ -13,13 +13,13 @@ const meta = {
 	argTypes: {
 		theme: {
 			control: "select",
-			options: ["provider", "organization"],
+			options: ["brand", "highlight"],
 		},
 	},
 	args: {
 		name: "Camille Dubois",
-		headline: "Kinésithérapeute du sport",
-		theme: "provider",
+		headline: "Senior product designer",
+		theme: "brand",
 		className: "w-full max-w-2xl rounded-xl border",
 	},
 } satisfies Meta<typeof ProfileHeader>;
@@ -43,19 +43,19 @@ export const WithBadgesAndActions: Story = {
 		avatar: { src: "https://github.com/shadcn.png", name: "Camille Dubois" },
 		badges: (
 			<>
-				<Badge variant="provider">Identité vérifiée</Badge>
-				<Badge variant="secondary">Kinésithérapie</Badge>
+				<Badge variant="brand">Verified freelancer</Badge>
+				<Badge variant="secondary">Product design</Badge>
 			</>
 		),
-		actions: <Button size="sm">Contacter</Button>,
+		actions: <Button size="sm">Contact</Button>,
 	},
 };
 
-export const OrganizationTheme: Story = {
+export const ClientTheme: Story = {
 	args: {
-		name: "Stade Rochelais",
-		headline: "Club de rugby — La Rochelle",
-		theme: "organization",
-		badges: <Badge variant="organization">Club vérifié</Badge>,
+		name: "Northwind Studio",
+		headline: "Design agency — Amsterdam",
+		theme: "highlight",
+		badges: <Badge variant="highlight">Verified client</Badge>,
 	},
 };

@@ -17,7 +17,7 @@ const meta = {
 	},
 	args: {
 		name: "Camille Dubois",
-		description: "Kinésithérapeute du sport",
+		description: "Senior product designer",
 		src: "https://github.com/shadcn.png",
 		size: "default",
 	},
@@ -62,17 +62,17 @@ export const ParticipantList: Story = {
 		<div className="flex max-w-xs flex-col gap-3">
 			<UserAvatar
 				name="Camille Dubois"
-				description="Kinésithérapeute du sport"
+				description="Senior product designer"
 				src="https://github.com/shadcn.png"
 				status="online"
 			/>
 			<UserAvatar
 				name="Nathan Guyot"
-				description="Stade Rochelais"
+				description="Northwind Studio"
 				src="https://github.com/leerob.png"
 				status="busy"
 			/>
-			<UserAvatar name="Léa Martin" description="Ostéopathe" status="offline" />
+			<UserAvatar name="Léa Martin" description="Copywriter" status="offline" />
 		</div>
 	),
 };
@@ -82,7 +82,7 @@ export const Truncation: Story = {
 		<div className="w-44 rounded-lg border p-2">
 			<UserAvatar
 				name="Camille Dubois de la Rochefoucauld"
-				description="Kinésithérapeute du sport et ostéopathe"
+				description="Senior product designer and brand strategist"
 			/>
 		</div>
 	),

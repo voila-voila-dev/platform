@@ -21,8 +21,8 @@ export function Variants() {
 export function SurfaceVariants() {
 	return (
 		<>
-			<Badge variant="provider">Provider</Badge>
-			<Badge variant="organization">Organization</Badge>
+			<Badge variant="brand">Freelancer</Badge>
+			<Badge variant="highlight">Client</Badge>
 		</>
 	);
 }

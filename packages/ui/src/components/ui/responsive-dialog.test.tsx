@@ -79,13 +79,13 @@ function Fixture({
 	return (
 		<ResponsiveDialog onOpenChange={onOpenChange}>
 			<ResponsiveDialogTrigger render={<Button variant="outline" />}>
-				Cancel mission
+				Cancel project
 			</ResponsiveDialogTrigger>
 			<ResponsiveDialogContent {...props}>
 				<ResponsiveDialogHeader>
-					<ResponsiveDialogTitle>Cancel this mission?</ResponsiveDialogTitle>
+					<ResponsiveDialogTitle>Cancel this project?</ResponsiveDialogTitle>
 					<ResponsiveDialogDescription>
-						The assigned provider will be notified immediately.
+						The assigned freelancer will be notified immediately.
 					</ResponsiveDialogDescription>
 				</ResponsiveDialogHeader>
 				<ResponsiveDialogBody>
@@ -93,7 +93,7 @@ function Fixture({
 				</ResponsiveDialogBody>
 				<ResponsiveDialogFooter closeLabel={footerCloseLabel}>
 					<ResponsiveDialogClose render={<Button variant="outline" />}>
-						Keep mission
+						Keep project
 					</ResponsiveDialogClose>
 					<Button variant="destructive">Confirm cancellation</Button>
 				</ResponsiveDialogFooter>
@@ -107,14 +107,14 @@ describe("ResponsiveDialog", () => {
 		it("renders only the trigger while closed", () => {
 			const screen = render(<Fixture />);
 			expect(
-				screen.getByRole("button", { name: "Cancel mission" }),
+				screen.getByRole("button", { name: "Cancel project" }),
 			).toBeTruthy();
 			expect(screen.queryByRole("dialog")).toBeNull();
 		});
 
 		it("opens the dialog half, not the drawer", async () => {
 			const screen = render(<Fixture />);
-			fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+			fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 			await waitFor(() => {
 				expect(
 					screen.baseElement.querySelector("[data-slot=dialog-content]"),
@@ -123,15 +123,17 @@ describe("ResponsiveDialog", () => {
 			expect(
 				screen.baseElement.querySelector("[data-slot=drawer-content]"),
 			).toBeNull();
-			expect(screen.getByText("Cancel this mission?")).toBeTruthy();
+			expect(screen.getByText("Cancel this project?")).toBeTruthy();
 			expect(
-				screen.getByText("The assigned provider will be notified immediately."),
+				screen.getByText(
+					"The assigned freelancer will be notified immediately.",
+				),
 			).toBeTruthy();
 		});
 
 		it("forwards the size to the dialog content", async () => {
 			const screen = render(<Fixture size="lg" />);
-			fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+			fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 			await waitFor(() => {
 				const content = screen.baseElement.querySelector(
 					"[data-slot=dialog-content]",
@@ -141,8 +143,8 @@ describe("ResponsiveDialog", () => {
 		});
 
 		it("renders the footer closeLabel through the dialog footer", async () => {
-			const screen = render(<Fixture footerCloseLabel="Fermer" />);
-			fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+			const screen = render(<Fixture footerCloseLabel="Dismiss" />);
+			fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 			await waitFor(() => {
 				expect(
 					screen.baseElement.querySelector("[data-slot=dialog-footer-close]"),
@@ -152,11 +154,11 @@ describe("ResponsiveDialog", () => {
 
 		it("closes through ResponsiveDialogClose", async () => {
 			const screen = render(<Fixture />);
-			fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+			fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 			await waitFor(() => {
 				expect(screen.getByRole("dialog")).toBeTruthy();
 			});
-			fireEvent.click(screen.getByRole("button", { name: "Keep mission" }));
+			fireEvent.click(screen.getByRole("button", { name: "Keep project" }));
 			await waitFor(() => {
 				expect(screen.queryByRole("dialog")).toBeNull();
 			});
@@ -165,7 +167,7 @@ describe("ResponsiveDialog", () => {
 		it("reports open changes through onOpenChange", async () => {
 			const onOpenChange = vi.fn();
 			const screen = render(<Fixture onOpenChange={onOpenChange} />);
-			fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+			fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 			await waitFor(() => {
 				expect(onOpenChange).toHaveBeenCalledWith(true);
 			});
@@ -179,7 +181,7 @@ describe("ResponsiveDialog", () => {
 
 		it("opens the drawer half, not the dialog", async () => {
 			const screen = render(<Fixture />);
-			fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+			fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 			await waitFor(() => {
 				expect(
 					screen.baseElement.querySelector("[data-slot=drawer-content]"),
@@ -188,18 +190,18 @@ describe("ResponsiveDialog", () => {
 			expect(
 				screen.baseElement.querySelector("[data-slot=dialog-content]"),
 			).toBeNull();
-			expect(screen.getByText("Cancel this mission?")).toBeTruthy();
+			expect(screen.getByText("Cancel this project?")).toBeTruthy();
 		});
 
 		it("renders the footer closeLabel as a drawer close action", async () => {
-			const screen = render(<Fixture footerCloseLabel="Fermer" />);
-			fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+			const screen = render(<Fixture footerCloseLabel="Dismiss" />);
+			fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 			await waitFor(() => {
 				expect(
 					screen.baseElement.querySelector("[data-slot=drawer-footer-close]"),
 				).not.toBeNull();
 			});
-			fireEvent.click(screen.getByRole("button", { name: "Fermer" }));
+			fireEvent.click(screen.getByRole("button", { name: "Dismiss" }));
 			// The drawer is closed once its content is gone, or still mounted with
 			// `data-state="closed"` while an exit transition jsdom never fires plays out.
 			await waitFor(() => {
@@ -214,11 +216,11 @@ describe("ResponsiveDialog", () => {
 
 		it("closes through ResponsiveDialogClose", async () => {
 			const screen = render(<Fixture />);
-			fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+			fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 			await waitFor(() => {
 				expect(screen.getByRole("dialog")).toBeTruthy();
 			});
-			fireEvent.click(screen.getByRole("button", { name: "Keep mission" }));
+			fireEvent.click(screen.getByRole("button", { name: "Keep project" }));
 			// The drawer is closed once its content is gone, or still mounted with
 			// `data-state="closed"` while an exit transition jsdom never fires plays out.
 			await waitFor(() => {
@@ -233,7 +235,7 @@ describe("ResponsiveDialog", () => {
 
 		it("adds the drawer gutter to the body", async () => {
 			const screen = render(<Fixture />);
-			fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+			fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 			await waitFor(() => {
 				const body = screen.baseElement.querySelector(
 					"[data-slot=responsive-dialog-body]",
@@ -245,7 +247,7 @@ describe("ResponsiveDialog", () => {
 
 	it("keeps the open state when crossing the breakpoint", async () => {
 		const screen = render(<Fixture />);
-		fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+		fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 		await waitFor(() => {
 			expect(
 				screen.baseElement.querySelector("[data-slot=dialog-content]"),
@@ -261,7 +263,7 @@ describe("ResponsiveDialog", () => {
 		expect(
 			screen.baseElement.querySelector("[data-slot=dialog-content]"),
 		).toBeNull();
-		expect(screen.getByText("Cancel this mission?")).toBeTruthy();
+		expect(screen.getByText("Cancel this project?")).toBeTruthy();
 
 		resizeViewport(DESKTOP_WIDTH);
 		await waitFor(() => {
@@ -269,7 +271,7 @@ describe("ResponsiveDialog", () => {
 				screen.baseElement.querySelector("[data-slot=dialog-content]"),
 			).not.toBeNull();
 		});
-		expect(screen.getByText("Cancel this mission?")).toBeTruthy();
+		expect(screen.getByText("Cancel this project?")).toBeTruthy();
 	});
 
 	it("throws when a part is used outside the root", () => {

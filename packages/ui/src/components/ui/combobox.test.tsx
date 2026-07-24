@@ -17,12 +17,12 @@ import {
 } from "#/components/ui/combobox.tsx";
 
 const specialties = [
-	"Physiotherapist",
-	"Osteopath",
-	"Nurse",
-	"Sports doctor",
-	"Podiatrist",
-	"Dietitian",
+	"Designer",
+	"Developer",
+	"Copywriter",
+	"Data analyst",
+	"Illustrator",
+	"Consultant",
 ];
 
 function renderCombobox(
@@ -73,10 +73,10 @@ describe("Combobox", () => {
 	it("filters the list down to the matching item as the user types", async () => {
 		const screen = renderCombobox({ defaultOpen: true });
 		fireEvent.change(screen.getByPlaceholderText("Select a specialty"), {
-			target: { value: "os" },
+			target: { value: "dev" },
 		});
 		await waitFor(() => {
-			expect(itemLabels()).toEqual(["Osteopath"]);
+			expect(itemLabels()).toEqual(["Developer"]);
 		});
 	});
 
@@ -92,11 +92,11 @@ describe("Combobox", () => {
 	});
 
 	it("marks the selected item and shows its check indicator", () => {
-		renderCombobox({ defaultValue: "Nurse", defaultOpen: true });
+		renderCombobox({ defaultValue: "Copywriter", defaultOpen: true });
 		const selected = document.querySelector(
 			"[data-slot=combobox-item][data-selected]",
 		);
-		expect(selected?.textContent).toContain("Nurse");
+		expect(selected?.textContent).toContain("Copywriter");
 		expect(selected?.querySelector("svg")).not.toBeNull();
 	});
 
@@ -116,13 +116,13 @@ describe("Combobox", () => {
 	});
 
 	it("does not render a clear button by default", () => {
-		renderCombobox({ defaultValue: "Osteopath" });
+		renderCombobox({ defaultValue: "Developer" });
 		expect(document.querySelector("[data-slot=combobox-clear]")).toBeNull();
 	});
 
 	it("gives the clear button an accessible name when shown", () => {
 		const screen = renderCombobox(
-			{ defaultValue: "Osteopath" },
+			{ defaultValue: "Developer" },
 			{
 				showClear: true,
 			},
@@ -140,7 +140,10 @@ describe("Combobox", () => {
 
 	it("forwards the value and multiple generics through the wrapper", () => {
 		// Compile-time guard: a string-array multi-select keeps its element type.
-		renderCombobox({ multiple: true, defaultValue: ["Osteopath", "Nurse"] });
+		renderCombobox({
+			multiple: true,
+			defaultValue: ["Developer", "Copywriter"],
+		});
 		expect(document.querySelector("[data-slot=input-group]")).not.toBeNull();
 	});
 
@@ -152,7 +155,7 @@ describe("Combobox", () => {
 				<Combobox
 					items={specialties}
 					multiple
-					defaultValue={["Osteopath", "Nurse"]}
+					defaultValue={["Developer", "Copywriter"]}
 				>
 					<ComboboxChips>
 						<ComboboxValue>
@@ -174,8 +177,8 @@ describe("Combobox", () => {
 			renderChips();
 			const chips = document.querySelectorAll("[data-slot=combobox-chip]");
 			expect(Array.from(chips).map((chip) => chip.textContent)).toEqual([
-				"Osteopath",
-				"Nurse",
+				"Developer",
+				"Copywriter",
 			]);
 		});
 
@@ -204,7 +207,7 @@ describe("Combobox", () => {
 				<Combobox
 					items={specialties}
 					multiple
-					defaultValue={["Osteopath", "Nurse"]}
+					defaultValue={["Developer", "Copywriter"]}
 					defaultOpen={defaultOpen}
 				>
 					<ComboboxChips ref={anchor}>
@@ -244,17 +247,17 @@ describe("Combobox", () => {
 			);
 			fireEvent.click(removeButtons[0] as HTMLElement);
 			await waitFor(() => {
-				expect(chipLabels()).toEqual(["Nurse"]);
+				expect(chipLabels()).toEqual(["Copywriter"]);
 			});
 		});
 
 		it("filters the popup list as the user types in the chips input", async () => {
 			const screen = render(<ChipsWithPopup defaultOpen />);
 			fireEvent.change(screen.getByPlaceholderText("Add specialty"), {
-				target: { value: "diet" },
+				target: { value: "cons" },
 			});
 			await waitFor(() => {
-				expect(itemLabels()).toEqual(["Dietitian"]);
+				expect(itemLabels()).toEqual(["Consultant"]);
 			});
 		});
 
@@ -262,11 +265,15 @@ describe("Combobox", () => {
 			render(<ChipsWithPopup defaultOpen />);
 			const podiatrist = Array.from(
 				document.querySelectorAll("[data-slot=combobox-item]"),
-			).find((item) => item.textContent?.includes("Podiatrist"));
+			).find((item) => item.textContent?.includes("Illustrator"));
 			expect(podiatrist).toBeTruthy();
 			fireEvent.click(podiatrist as HTMLElement);
 			await waitFor(() => {
-				expect(chipLabels()).toEqual(["Osteopath", "Nurse", "Podiatrist"]);
+				expect(chipLabels()).toEqual([
+					"Developer",
+					"Copywriter",
+					"Illustrator",
+				]);
 			});
 		});
 

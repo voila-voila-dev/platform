@@ -33,12 +33,12 @@ export const Multiple: Story = {
 	render: () => (
 		<ToggleGroup
 			multiple
-			defaultValue={["physiotherapist", "nurse"]}
+			defaultValue={["designer", "developer"]}
 			variant="outline"
 		>
-			<ToggleGroupItem value="physiotherapist">Physiotherapist</ToggleGroupItem>
-			<ToggleGroupItem value="osteopath">Osteopath</ToggleGroupItem>
-			<ToggleGroupItem value="nurse">Nurse</ToggleGroupItem>
+			<ToggleGroupItem value="designer">Designer</ToggleGroupItem>
+			<ToggleGroupItem value="developer">Developer</ToggleGroupItem>
+			<ToggleGroupItem value="copywriter">Copywriter</ToggleGroupItem>
 		</ToggleGroup>
 	),
 };

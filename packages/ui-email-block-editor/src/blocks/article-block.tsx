@@ -32,18 +32,18 @@ function ArticleBlockView({
 	return (
 		<EmailCardShell image={block.image}>
 			<BlockTextInput
-				ariaLabel="Titre de l'article"
+				ariaLabel="Article title"
 				value={block.title}
-				placeholder="Titre de l'article"
+				placeholder="Article title"
 				onChange={(title) => onChange({ ...block, title })}
 				className="font-bold text-[17px] leading-[1.3]"
 				style={{ color: EMAIL_COLOR.brand }}
 			/>
 			{meta === "" ? null : <EmailCardMeta>{meta}</EmailCardMeta>}
 			<textarea
-				aria-label="Résumé de l'article"
+				aria-label="Article summary"
 				value={block.description}
-				placeholder="Le résumé de l'article."
+				placeholder="The article summary."
 				rows={2}
 				onChange={(event) =>
 					onChange({ ...block, description: event.target.value })
@@ -61,33 +61,33 @@ function ArticleBlockSettings({
 }: EmailBlockComponentProps<EmailEditorArticleBlock>) {
 	return (
 		<>
-			<BlockOptionSection title="Contenu">
+			<BlockOptionSection title="Content">
 				<TextOption
-					label="Titre"
+					label="Title"
 					value={block.title}
 					onChange={(title) => onChange({ ...block, title })}
 				/>
 				<TextAreaOption
-					label="Résumé"
+					label="Summary"
 					value={block.description}
 					onChange={(description) => onChange({ ...block, description })}
 				/>
 				<TextOption
-					label="Auteur"
+					label="Author"
 					value={block.author}
 					onChange={(author) => onChange({ ...block, author })}
 				/>
 				<TextOption
-					label="Date de publication"
+					label="Publication date"
 					value={block.publishDate}
 					onChange={(publishDate) => onChange({ ...block, publishDate })}
 					placeholder="2026-07-20"
-					description="Format AAAA-MM-JJ ; la date est écrite dans la langue du destinataire à l'envoi."
+					description="YYYY-MM-DD format; the date is written in the recipient's language at send time."
 				/>
 			</BlockOptionSection>
-			<BlockOptionSection title="Apparence">
+			<BlockOptionSection title="Appearance">
 				<TextOption
-					label="Adresse de l'image"
+					label="Image URL"
 					value={block.image.src}
 					onChange={(src) =>
 						onChange({ ...block, image: { ...block.image, src } })
@@ -95,18 +95,18 @@ function ArticleBlockSettings({
 					placeholder="https://"
 				/>
 				<TextOption
-					label="Texte alternatif"
+					label="Alt text"
 					value={block.image.alt}
 					onChange={(alt) =>
 						onChange({ ...block, image: { ...block.image, alt } })
 					}
 				/>
 			</BlockOptionSection>
-			<BlockOptionSection title="Lien">
+			<BlockOptionSection title="Link">
 				<LinkOption
 					value={block.href}
 					onChange={(href) => onChange({ ...block, href })}
-					description="La carte entière renvoie vers cette adresse."
+					description="The whole card links to this address."
 				/>
 			</BlockOptionSection>
 		</>

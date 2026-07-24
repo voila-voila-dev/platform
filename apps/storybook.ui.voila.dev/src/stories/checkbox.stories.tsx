@@ -16,11 +16,11 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
 	render: () => (
 		<div className="flex items-start gap-3">
-			<Checkbox id="mission-terms" />
+			<Checkbox id="project-terms" />
 			<div className="grid gap-1 text-sm">
-				<Label htmlFor="mission-terms">Accept mission terms</Label>
+				<Label htmlFor="project-terms">Accept project terms</Label>
 				<p className="text-muted-foreground">
-					You confirm your availability for the full duration of the mission.
+					You confirm your availability for the full duration of the project.
 				</p>
 			</div>
 		</div>
@@ -30,19 +30,19 @@ export const Default: Story = {
 export const Checked: Story = {
 	render: () => (
 		<div className="flex items-center gap-3">
-			<Checkbox id="mission-notifications" defaultChecked />
-			<Label htmlFor="mission-notifications">
-				Notify me about new missions near Lyon
+			<Checkbox id="project-notifications" defaultChecked />
+			<Label htmlFor="project-notifications">
+				Notify me about new projects matching my skills
 			</Label>
 		</div>
 	),
 };
 
 const IndeterminateExample = () => {
-	const [selected, setSelected] = useState<ReadonlyArray<string>>(["kine"]);
+	const [selected, setSelected] = useState<ReadonlyArray<string>>(["design"]);
 	const skills: ReadonlyArray<{ id: string; label: string }> = [
-		{ id: "kine", label: "Kinésithérapeute" },
-		{ id: "osteo", label: "Ostéopathe" },
+		{ id: "design", label: "Design" },
+		{ id: "development", label: "Development" },
 	];
 	const allSelected = selected.length === skills.length;
 	const someSelected = selected.length > 0 && !allSelected;

@@ -24,9 +24,9 @@ export const Default: Story = {};
 export const WithLabel: Story = {
 	render: () => (
 		<div className="flex items-center gap-2">
-			<Switch id="mission-notifications" defaultChecked />
-			<Label htmlFor="mission-notifications">
-				Notify me about new missions
+			<Switch id="project-notifications" defaultChecked />
+			<Label htmlFor="project-notifications">
+				Notify me about new projects
 			</Label>
 		</div>
 	),
@@ -54,7 +54,7 @@ export const Invalid: Story = {
 	render: () => (
 		<div className="flex items-center gap-2">
 			<Switch id="terms" aria-invalid />
-			<Label htmlFor="terms">Accept the staffing agreement</Label>
+			<Label htmlFor="terms">Accept the service agreement</Label>
 		</div>
 	),
 };
@@ -69,7 +69,7 @@ function ControlledSwitch() {
 					checked={checked}
 					onCheckedChange={setChecked}
 				/>
-				<Label htmlFor="availability">Available for missions</Label>
+				<Label htmlFor="availability">Available for projects</Label>
 			</div>
 			<span className="text-sm text-muted-foreground">
 				State: {checked ? "available" : "unavailable"}
@@ -86,12 +86,12 @@ export const WithField: Story = {
 	render: () => (
 		<Field orientation="horizontal" className="max-w-sm">
 			<FieldContent>
-				<FieldLabel htmlFor="match-alerts">Match-day alerts</FieldLabel>
+				<FieldLabel htmlFor="launch-alerts">Launch-day alerts</FieldLabel>
 				<FieldDescription>
-					Get notified when a club nearby posts a last-minute mission.
+					Get notified when a client posts a last-minute project.
 				</FieldDescription>
 			</FieldContent>
-			<Switch id="match-alerts" defaultChecked />
+			<Switch id="launch-alerts" defaultChecked />
 		</Field>
 	),
 };

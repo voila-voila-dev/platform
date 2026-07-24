@@ -8,7 +8,7 @@ export const DEFAULT_STYLE_URL = "https://tiles.openfreemap.org/styles/liberty";
 export const DEFAULT_DARK_STYLE_URL =
 	"https://tiles.openfreemap.org/styles/dark";
 
-/** Metropolitan France — a sensible default frame for the whole dataset. */
+/** Western Europe — a sensible default frame for the whole dataset. */
 const DEFAULT_CENTER: readonly [number, number] = [2.3522, 48.8566];
 const DEFAULT_ZOOM = 5;
 

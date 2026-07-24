@@ -1,9 +1,9 @@
 import { cn } from "@voila.dev/ui/lib/utils";
 
 /**
- * Shared fixtures for the Landing stories: French copy mirroring the live
- * marketing site (the original Astro site) so the stories can be visually diffed
- * against it, plus placeholder assets for app-owned images (logos,
+ * Shared fixtures for the Landing stories: marketing copy for Acme (clients
+ * post projects, independent freelancers deliver them) so the stories read
+ * like the real site, plus placeholder assets for app-owned images (logos,
  * illustrations).
  */
 
@@ -26,12 +26,12 @@ export function partnerLogoDataUri(name: string): string {
 }
 
 export const partnerNames = [
-	"AS Vitré",
-	"CJF Fleury",
-	"FC Nantes",
-	"RC Vannes",
-	"Stade Rennais",
-	"US Concarneau",
+	"Northwind",
+	"Lumon Labs",
+	"Brightloop",
+	"Fjord & Co",
+	"Hexlab",
+	"Marigold",
 ];
 
 /** Stand-in for the app-owned hero/dashboard illustrations. */
@@ -44,52 +44,52 @@ export function IllustrationPlaceholder({ label }: { label: string }) {
 }
 
 export const heroCopy = {
-	badge: "Nouvelle plateforme",
-	titleStart: "Trouvez un",
-	titleHighlight: "pro de santé",
-	titleMiddle: "pour vos",
-	titleHighlightEnd: "événements sportifs",
-	titleEnd: "grâce à notre appli",
+	badge: "New platform",
+	titleStart: "Find a",
+	titleHighlight: "trusted freelancer",
+	titleMiddle: "for your",
+	titleHighlightEnd: "next projects",
+	titleEnd: "right from our app",
 	description:
-		"La plateforme qui met en relation clubs de sport et professionnels de santé pour l'accompagnement santé des sportifs en déplacement.",
-	ctaClub: "Je suis un club",
-	ctaHealthPro: "Je suis professionnel de santé",
+		"The platform that connects client teams with independent freelancers to scope, staff and deliver projects wherever the work happens.",
+	ctaClient: "I'm a client",
+	ctaFreelancer: "I'm a freelancer",
 	stats: [
-		{ value: "20K+", label: "Membres engagés" },
-		{ value: "2000+", label: "Professionnels référencés" },
-		{ value: "700+", label: "Prestations effectuées" },
+		{ value: "20K+", label: "Active members" },
+		{ value: "2000+", label: "Vetted freelancers" },
+		{ value: "700+", label: "Projects delivered" },
 	],
 };
 
 export const performerTrack = {
-	label: "Club",
-	subtitle: "Vous organisez un événement sportif",
+	label: "Client",
+	subtitle: "You have a project to deliver",
 	steps: [
 		{
-			title: "Publiez votre annonce",
+			title: "Post your project",
 			description: (
 				<>
-					Créez une annonce détaillée pour votre besoin -{" "}
-					<strong>match, tournoi, compétition, stage</strong> : date, lieu,
-					horaires et type de professionnel recherché.
+					Create a detailed brief for your need -{" "}
+					<strong>brand refresh, web app, launch campaign, audit</strong>:
+					scope, timeline, budget and the type of expert you're after.
 				</>
 			),
 		},
 		{
-			title: "Sélectionnez votre professionnel de santé",
+			title: "Pick your freelancer",
 			description: (
 				<>
-					Grâce à un <strong>matching intelligent</strong> sur-mesure,
-					choisissez votre praticien parmi les profils intéressés.
+					Thanks to tailored <strong>smart matching</strong>, choose your expert
+					among the profiles that applied.
 				</>
 			),
 		},
 		{
-			title: "Profitez du suivi médical",
+			title: "Enjoy the follow-through",
 			description: (
 				<>
-					Recevez la liste des interventions réalisées et assurez la{" "}
-					<strong>continuité médicale</strong> de vos sportifs.
+					Receive a report of the work delivered and keep{" "}
+					<strong>full continuity</strong> across your projects.
 				</>
 			),
 		},
@@ -97,179 +97,178 @@ export const performerTrack = {
 };
 
 export const helperTrack = {
-	label: "Professionnel de santé",
-	subtitle: "Vous êtes professionnel de santé",
+	label: "Freelancer",
+	subtitle: "You work as an independent expert",
 	steps: [
 		{
-			title: "Restez informé",
+			title: "Stay in the loop",
 			description: (
 				<>
-					Recevez une alerte ciblée, consultez les détails de la mission et{" "}
-					<strong>postulez</strong> si elle vous intéresse.
+					Get a targeted alert, review the project details and{" "}
+					<strong>apply</strong> if it fits.
 				</>
 			),
 		},
 		{
-			title: "Réalisez votre intervention",
+			title: "Deliver the work",
 			description: (
 				<>
-					<strong>Participez</strong> à l'aventure et profitez de l'expérience
-					sur le terrain.
+					<strong>Join</strong> the project and focus on the craft you do best.
 				</>
 			),
 		},
 		{
-			title: "Suivez vos prestations",
+			title: "Track your engagements",
 			description: (
 				<>
-					Facturation, analytics et bien plus encore : nous{" "}
-					<strong>simplifions toute la partie administrative</strong>.
+					Invoicing, analytics and much more: we{" "}
+					<strong>take care of the entire admin side</strong>.
 				</>
 			),
 		},
 	],
 };
 
-export const organizationBenefits = {
-	badge: "Pour les clubs de sport",
-	titleStart: "Vos sportifs se déplacent.",
-	titleHighlight: "Pas votre staff médical.",
-	withoutTitle: "Déplacement classique",
+export const clientBenefits = {
+	badge: "For client teams",
+	titleStart: "Your roadmap moves fast.",
+	titleHighlight: "Your hiring shouldn't lag.",
+	withoutTitle: "Hiring the old way",
 	withoutItems: [
-		"Départ sans staff médical - trop cher à déplacer",
-		"Un professionnel de santé cherché en urgence, sur place",
-		"Blessures gérées avec une trousse incomplète",
-		"Aucun suivi médical après le match",
-		"Aucun soignant disponible dans les déserts médicaux",
+		"Launches shipped without expert support - too slow to hire",
+		"A freelancer found in a rush through cold outreach",
+		"Scope managed with vague briefs and email threads",
+		"No follow-up once the invoice is paid",
+		"No specialists available for niche skills",
 	],
-	withTitle: "Avec Acme",
+	withTitle: "With Acme",
 	withItems: [
-		"Un professionnel vérifié vous attend sur le lieu du match",
-		"Matériel professionnel complet sur place",
-		"Vos sportifs soignés et suivis",
-		"Zéro frais de transport ou d'hébergement",
-		"Des professionnels référencés dans tous les départements de France",
+		"A vetted freelancer ready when your project kicks off",
+		"Clear briefs, milestones and deliverables in one place",
+		"Your projects delivered and documented",
+		"Zero sourcing or agency overhead",
+		"Vetted experts across every discipline and region",
 	],
-	tags: ["Football", "Rugby", "Basketball", "Handball", "Hockey sur glace"],
-	cta: "Trouver un professionnel de santé pour mon club",
+	tags: ["Design", "Development", "Data", "Content", "Marketing"],
+	cta: "Find a freelancer for my team",
 };
 
-export const helperBenefits = {
-	badge: "Pour les professionnels",
-	titleStart: "Cabinet la semaine.",
-	titleHighlight: "Terrain le week-end.",
-	lead: "Acme est né d'une communauté de +40 000 professionnels de santé passionnés de sport. Des gens comme vous.",
-	withoutTitle: "Sans réseau",
+export const freelancerBenefits = {
+	badge: "For freelancers",
+	titleStart: "Your craft all week.",
+	titleHighlight: "New projects every quarter.",
+	lead: "Acme grew out of a community of 40,000+ independents who love their craft. People like you.",
+	withoutTitle: "Without a network",
 	withoutItems: [
-		"Des missions sport trouvées au bouche-à-oreille",
-		"Des heures à démarcher les clubs sans réponse",
-		"Pas (encore) de réseau dans le milieu sportif",
-		"Le terrain reste un rêve à côté du cabinet",
+		"Projects found through word of mouth only",
+		"Hours spent pitching clients with no reply",
+		"No network (yet) among the teams that hire",
+		"Going fully independent stays a distant dream",
 	],
-	withTitle: "Avec Acme",
+	withTitle: "With Acme",
 	withItems: [
-		"Des missions près de chez vous, en quelques clics",
-		"Vous choisissez quand et où vous intervenez",
-		"Un profil vérifié qui inspire confiance aux clubs",
-		"Un réseau dans le sport qui grandit à chaque mission",
+		"Projects that match your skills, in a few clicks",
+		"You choose when and with whom you work",
+		"A verified profile that clients trust",
+		"A network that grows with every project",
 	],
 	tags: [
-		"Kinésithérapeute",
-		"Médecin",
-		"Ostéopathe",
-		"Préparateur physique",
-		"Diététicien",
-		"Infirmier",
+		"Designer",
+		"Developer",
+		"Data analyst",
+		"Copywriter",
+		"Consultant",
+		"Translator",
 	],
-	cta: "Rejoindre le mouvement",
+	cta: "Join the movement",
 };
 
 export const testimonials = [
 	{
 		quote:
-			"Trouver un kiné pour nos matchs relevait du parcours du combattant. Aujourd'hui, on publie notre besoin et on est rappelés dans la journée.",
-		name: "Responsable de club",
-		role: "Football amateur",
+			"Finding a designer for our launches used to be an obstacle course. Now we post the brief and get called back the same day.",
+		name: "Head of product",
+		role: "SaaS startup",
 		accent: "primary",
 	},
 	{
 		quote:
-			"J'interviens sur des événements près de chez moi, avec un cadre clair. Acme m'a permis de développer mon activité dans le sport.",
-		name: "Kinésithérapeute du sport",
-		role: "Membre du réseau",
-		accent: "orange",
+			"I take on projects that fit my skills, with a clear scope. Acme let me grow my independent practice with confidence.",
+		name: "Brand designer",
+		role: "Network member",
+		accent: "highlight",
 	},
 	{
 		quote:
-			"Être suivi par un pro pendant la saison a tout changé : moins de blessures, et le sentiment d'être enfin pris au sérieux.",
-		name: "Joueur semi-pro",
-		role: "Sportif accompagné",
+			"Having an expert embedded all quarter changed everything: fewer reworks, and the feeling of finally being taken seriously.",
+		name: "Marketing lead",
+		role: "Client team",
 		accent: "primary",
 	},
 ] as const;
 
 export const values = [
 	{
-		title: "Réactivité",
+		title: "Responsiveness",
 		description:
-			"Au plus proche de vous, nous sommes réactifs pour cibler et répondre précisément à vos besoins. Des offres sur-mesure pour redonner un élan et bâtir un réel mouvement autour de la santé et combler les manques dans le suivi médical sportif.",
+			"Close to you and your teams, we react fast to target and answer your needs precisely. Tailored offers to build real momentum around independent work and close the gaps in how projects get staffed and delivered.",
 	},
 	{
-		title: "Simplicité",
+		title: "Simplicity",
 		description:
-			"Le circuit médical est un labyrinthe. En proposant cette mise en relation, nous gérons l'entièreté des aspects du processus. De la recherche à la facturation, en passant par le matching intelligent et l'ensemble de l'administratif.",
+			"Hiring independents is a maze. By handling the introduction, we manage every part of the process. From search to invoicing, through smart matching and all of the admin in between.",
 	},
 	{
-		title: "Fidélité",
+		title: "Loyalty",
 		description:
-			"Nous voyons en vous de véritables partenaires et avons à cœur de bâtir une relation de confiance solide et pérenne.",
+			"We see you as true partners and care deeply about building a solid, lasting relationship of trust.",
 	},
 ];
 
 export const ctaBanner = {
-	title: "Rejoignez l'aventure Acme",
+	title: "Join the Acme adventure",
 	description:
-		"Club ou professionnel de santé : construisons ensemble un sport amateur plus sain, mieux accompagné et durable.",
+		"Client or freelancer: let's build a way of working together that is fairer, better supported and built to last.",
 };
 
 export const mainNavigation = [
-	{ title: "Comment ça marche ?", href: "/#how-it-works" },
-	{ title: "Pour les clubs", href: "/#club-benefits" },
-	{ title: "Pour les pros", href: "/#health-pro-benefits" },
-	{ title: "Boutique", href: "https://shop.acme.dev" },
+	{ title: "How it works", href: "/#how-it-works" },
+	{ title: "For clients", href: "/#client-benefits" },
+	{ title: "For freelancers", href: "/#freelancer-benefits" },
+	{ title: "Shop", href: "https://shop.acme.dev" },
 ];
 
 export const footerNavigation = [
 	{
-		title: "Plateforme",
+		title: "Platform",
 		items: [
-			{ title: "Comment ça marche ?", href: "/#how-it-works" },
-			{ title: "Pour les clubs", href: "/#club-benefits" },
-			{ title: "Pour les professionnels", href: "/#health-pro-benefits" },
-			{ title: "Boutique", href: "https://shop.acme.dev" },
+			{ title: "How it works", href: "/#how-it-works" },
+			{ title: "For clients", href: "/#client-benefits" },
+			{ title: "For freelancers", href: "/#freelancer-benefits" },
+			{ title: "Shop", href: "https://shop.acme.dev" },
 		],
 	},
 	{
-		title: "Ressources",
+		title: "Resources",
 		items: [
 			{ title: "Blog", href: "/blog" },
-			{ title: "À propos", href: "/a-propos" },
+			{ title: "About", href: "/about" },
 			{ title: "Contact", href: "/contact" },
 		],
 	},
 	{
-		title: "Légal",
+		title: "Legal",
 		items: [
-			{ title: "Mentions légales", href: "/mentions-legales" },
-			{ title: "Politique de confidentialité", href: "/confidentialite" },
-			{ title: "CGU", href: "/cgu" },
+			{ title: "Legal notice", href: "/legal" },
+			{ title: "Privacy policy", href: "/privacy" },
+			{ title: "Terms of service", href: "/terms" },
 		],
 	},
 	{
 		title: "Contact",
 		items: [
 			{ title: "contact@acme.dev", href: "mailto:contact@acme.dev" },
-			{ title: "+33 6 47 67 24 72", href: "tel:+33647672472" },
+			{ title: "+1 (555) 010-3345", href: "tel:+15550103345" },
 		],
 	},
 ];

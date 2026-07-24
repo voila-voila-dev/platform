@@ -6,10 +6,10 @@ import {
 	EnvelopeSimpleIcon,
 	FacebookLogoIcon,
 	FileTextIcon,
-	HeartbeatIcon,
 	InstagramLogoIcon,
 	LinkedinLogoIcon,
-	StethoscopeIcon,
+	PenNibIcon,
+	RocketLaunchIcon,
 	TrophyIcon,
 	UserCheckIcon,
 } from "@phosphor-icons/react";
@@ -33,14 +33,14 @@ import { Text } from "@voila.dev/ui-landing/components/text";
 import { Fragment } from "react";
 import {
 	BrandLogo,
+	clientBenefits,
 	ctaBanner,
 	footerNavigation,
-	helperBenefits,
+	freelancerBenefits,
 	helperTrack,
 	heroCopy,
 	IllustrationPlaceholder,
 	mainNavigation,
-	organizationBenefits,
 	partnerLogoDataUri,
 	partnerNames,
 	performerTrack,
@@ -62,7 +62,7 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const performerIcons = [FileTextIcon, UserCheckIcon, HeartbeatIcon];
+const performerIcons = [FileTextIcon, UserCheckIcon, RocketLaunchIcon];
 const helperIcons = [BellIcon, TrophyIcon, ChartBarIcon];
 
 function CtaBannerBlock() {
@@ -72,7 +72,7 @@ function CtaBannerBlock() {
 			<CtaBanner.Description>{ctaBanner.description}</CtaBanner.Description>
 			<CtaBanner.Actions>
 				<Button size="lg" variant="secondary" className="group">
-					Je suis un club
+					I'm a client
 					<ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
 				</Button>
 				<Button
@@ -80,7 +80,7 @@ function CtaBannerBlock() {
 					variant="outline"
 					className="border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white"
 				>
-					Je suis professionnel de santé
+					I'm a freelancer
 				</Button>
 			</CtaBanner.Actions>
 		</CtaBanner.Root>
@@ -104,15 +104,15 @@ export const Home: Story = {
 							))}
 						</SiteHeader.NavList>
 						<SiteHeader.Actions>
-							<Button size="sm" variant="provider">
-								Je suis professionnel de santé
+							<Button size="sm" variant="brand">
+								I'm a freelancer
 							</Button>
-							<Button size="sm" variant="organization">
-								Je suis un club
+							<Button size="sm" variant="highlight">
+								I'm a client
 							</Button>
 						</SiteHeader.Actions>
 					</SiteHeader.Nav>
-					<SiteHeader.MobileToggle aria-label="Ouvrir ou fermer le menu" />
+					<SiteHeader.MobileToggle aria-label="Open or close the menu" />
 				</SiteHeader.Bar>
 				<SiteHeader.MobileMenu>
 					{mainNavigation.map((item) => (
@@ -127,31 +127,31 @@ export const Home: Story = {
 				{/* Hero */}
 				<LandingHero.Root>
 					<LandingHero.Content>
-						<Eyebrow.Root tone="provider" className="mb-6">
+						<Eyebrow.Root tone="brand" className="mb-6">
 							<Eyebrow.Dot pulse />
 							<Eyebrow.Label>{heroCopy.badge}</Eyebrow.Label>
 						</Eyebrow.Root>
 						<LandingHero.Title>
 							{heroCopy.titleStart}{" "}
-							<LandingHero.Highlight tone="provider">
+							<LandingHero.Highlight tone="brand">
 								{heroCopy.titleHighlight}
 							</LandingHero.Highlight>{" "}
 							{heroCopy.titleMiddle}{" "}
-							<LandingHero.Highlight tone="organization">
+							<LandingHero.Highlight tone="highlight">
 								{heroCopy.titleHighlightEnd}
 							</LandingHero.Highlight>{" "}
 							{heroCopy.titleEnd}
 						</LandingHero.Title>
 						<LandingHero.Lead>{heroCopy.description}</LandingHero.Lead>
 						<LandingHero.Actions>
-							<Button size="lg" variant="organization" className="group">
+							<Button size="lg" variant="highlight" className="group">
 								<BuildingsIcon className="h-5 w-5" />
-								{heroCopy.ctaClub}
+								{heroCopy.ctaClient}
 								<ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
 							</Button>
-							<Button size="lg" variant="provider" className="group">
-								<StethoscopeIcon className="h-5 w-5" />
-								{heroCopy.ctaHealthPro}
+							<Button size="lg" variant="brand" className="group">
+								<PenNibIcon className="h-5 w-5" />
+								{heroCopy.ctaFreelancer}
 								<ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
 							</Button>
 						</LandingHero.Actions>
@@ -174,7 +174,7 @@ export const Home: Story = {
 
 				{/* Clients bar */}
 				<LogoMarquee.Root>
-					<LogoMarquee.Title>Ils nous font confiance</LogoMarquee.Title>
+					<LogoMarquee.Title>Trusted by teams like yours</LogoMarquee.Title>
 					<LogoMarquee.Viewport>
 						<LogoMarquee.Track>
 							{partnerNames.map((name) => (
@@ -193,19 +193,19 @@ export const Home: Story = {
 					<Container>
 						<SectionIntro.Root>
 							<Eyebrow.Root tone="primary" className="mb-4">
-								<Eyebrow.Label>Comment ça marche ?</Eyebrow.Label>
+								<Eyebrow.Label>How it works</Eyebrow.Label>
 							</Eyebrow.Root>
 							<SectionIntro.Title>
-								Deux parcours, une rencontre
+								Two journeys, one meeting point
 							</SectionIntro.Title>
 							<SectionIntro.Description>
-								Staffez votre événement côté club, trouvez vos missions côté
-								professionnel de santé : trois étapes suffisent.
+								Staff your project on the client side, find your next
+								engagements on the freelancer side: three steps is all it takes.
 							</SectionIntro.Description>
 						</SectionIntro.Root>
 
 						<StepTracks.Root>
-							<StepTracks.Track tone="organization">
+							<StepTracks.Track tone="highlight">
 								<StepTracks.Header>
 									<StepTracks.HeaderIcon>
 										<BuildingsIcon />
@@ -245,12 +245,12 @@ export const Home: Story = {
 							</StepTracks.Track>
 
 							<StepTracks.Track
-								tone="provider"
+								tone="brand"
 								style={{ animationDelay: "0.15s" }}
 							>
 								<StepTracks.Header>
 									<StepTracks.HeaderIcon>
-										<StethoscopeIcon />
+										<PenNibIcon />
 									</StepTracks.HeaderIcon>
 									<StepTracks.HeaderText>
 										<StepTracks.HeaderTitle>
@@ -291,32 +291,32 @@ export const Home: Story = {
 
 				<CtaBannerBlock />
 
-				{/* Organization benefits */}
+				{/* Client benefits */}
 				<ComparisonSection.Root
-					tone="organization"
+					tone="highlight"
 					background="muted"
-					id="club-benefits"
+					id="client-benefits"
 				>
 					<ComparisonSection.Content>
-						<Eyebrow.Root tone="organization" className="mb-4">
+						<Eyebrow.Root tone="highlight" className="mb-4">
 							<Eyebrow.Icon>
 								<BuildingsIcon />
 							</Eyebrow.Icon>
-							<Eyebrow.Label>{organizationBenefits.badge}</Eyebrow.Label>
+							<Eyebrow.Label>{clientBenefits.badge}</Eyebrow.Label>
 						</Eyebrow.Root>
 						<Heading className="mb-8">
-							{organizationBenefits.titleStart}{" "}
-							<span className="text-organization">
-								{organizationBenefits.titleHighlight}
+							{clientBenefits.titleStart}{" "}
+							<span className="text-highlight">
+								{clientBenefits.titleHighlight}
 							</span>
 						</Heading>
 						<ComparisonSection.Panels>
 							<ComparisonSection.Panel variant="without">
 								<ComparisonSection.PanelTitle>
-									{organizationBenefits.withoutTitle}
+									{clientBenefits.withoutTitle}
 								</ComparisonSection.PanelTitle>
 								<ComparisonSection.PanelList>
-									{organizationBenefits.withoutItems.map((item, index) => (
+									{clientBenefits.withoutItems.map((item, index) => (
 										<ComparisonSection.PanelItem
 											key={item}
 											style={{ animationDelay: `${index * 0.08}s` }}
@@ -331,10 +331,10 @@ export const Home: Story = {
 								style={{ animationDelay: "0.3s" }}
 							>
 								<ComparisonSection.PanelTitle>
-									{organizationBenefits.withTitle}
+									{clientBenefits.withTitle}
 								</ComparisonSection.PanelTitle>
 								<ComparisonSection.PanelList>
-									{organizationBenefits.withItems.map((item, index) => (
+									{clientBenefits.withItems.map((item, index) => (
 										<ComparisonSection.PanelItem
 											key={item}
 											style={{ animationDelay: `${0.3 + index * 0.08}s` }}
@@ -346,49 +346,49 @@ export const Home: Story = {
 							</ComparisonSection.Panel>
 						</ComparisonSection.Panels>
 						<ComparisonSection.TagList>
-							{organizationBenefits.tags.map((tag) => (
+							{clientBenefits.tags.map((tag) => (
 								<ComparisonSection.Tag key={tag}>{tag}</ComparisonSection.Tag>
 							))}
 						</ComparisonSection.TagList>
 						<Button
 							size="lg"
-							variant="organization"
+							variant="highlight"
 							className="group h-auto min-h-11 max-w-full whitespace-normal py-2 text-center"
 						>
-							{organizationBenefits.cta}
+							{clientBenefits.cta}
 							<ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
 						</Button>
 					</ComparisonSection.Content>
 					<ComparisonSection.Media>
-						<IllustrationPlaceholder label="OrganizationDashboardIllustration (app-side)" />
+						<IllustrationPlaceholder label="ClientDashboardIllustration (app-side)" />
 					</ComparisonSection.Media>
 				</ComparisonSection.Root>
 
 				{/* Helper benefits */}
-				<ComparisonSection.Root tone="provider" id="health-pro-benefits">
+				<ComparisonSection.Root tone="brand" id="freelancer-benefits">
 					<ComparisonSection.Content>
-						<Eyebrow.Root tone="provider" className="mb-4">
+						<Eyebrow.Root tone="brand" className="mb-4">
 							<Eyebrow.Icon>
-								<StethoscopeIcon />
+								<PenNibIcon />
 							</Eyebrow.Icon>
-							<Eyebrow.Label>{helperBenefits.badge}</Eyebrow.Label>
+							<Eyebrow.Label>{freelancerBenefits.badge}</Eyebrow.Label>
 						</Eyebrow.Root>
 						<Heading className="mb-4">
-							{helperBenefits.titleStart}{" "}
-							<span className="text-provider lg:block">
-								{helperBenefits.titleHighlight}
+							{freelancerBenefits.titleStart}{" "}
+							<span className="text-brand lg:block">
+								{freelancerBenefits.titleHighlight}
 							</span>
 						</Heading>
 						<Text variant="lead" className="mb-8">
-							{helperBenefits.lead}
+							{freelancerBenefits.lead}
 						</Text>
 						<ComparisonSection.Panels>
 							<ComparisonSection.Panel variant="without">
 								<ComparisonSection.PanelTitle>
-									{helperBenefits.withoutTitle}
+									{freelancerBenefits.withoutTitle}
 								</ComparisonSection.PanelTitle>
 								<ComparisonSection.PanelList>
-									{helperBenefits.withoutItems.map((item) => (
+									{freelancerBenefits.withoutItems.map((item) => (
 										<ComparisonSection.PanelItem key={item}>
 											{item}
 										</ComparisonSection.PanelItem>
@@ -397,10 +397,10 @@ export const Home: Story = {
 							</ComparisonSection.Panel>
 							<ComparisonSection.Panel variant="with">
 								<ComparisonSection.PanelTitle>
-									{helperBenefits.withTitle}
+									{freelancerBenefits.withTitle}
 								</ComparisonSection.PanelTitle>
 								<ComparisonSection.PanelList>
-									{helperBenefits.withItems.map((item) => (
+									{freelancerBenefits.withItems.map((item) => (
 										<ComparisonSection.PanelItem key={item}>
 											{item}
 										</ComparisonSection.PanelItem>
@@ -409,12 +409,12 @@ export const Home: Story = {
 							</ComparisonSection.Panel>
 						</ComparisonSection.Panels>
 						<ComparisonSection.TagList>
-							{helperBenefits.tags.map((tag) => (
+							{freelancerBenefits.tags.map((tag) => (
 								<ComparisonSection.Tag key={tag}>{tag}</ComparisonSection.Tag>
 							))}
 						</ComparisonSection.TagList>
-						<Button size="lg" variant="provider" className="group">
-							{helperBenefits.cta}
+						<Button size="lg" variant="brand" className="group">
+							{freelancerBenefits.cta}
 							<ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
 						</Button>
 					</ComparisonSection.Content>
@@ -428,16 +428,16 @@ export const Home: Story = {
 					<Container>
 						<SectionIntro.Root>
 							<Eyebrow.Root tone="primary" className="mb-4">
-								<Eyebrow.Label>Ils en parlent</Eyebrow.Label>
+								<Eyebrow.Label>In their words</Eyebrow.Label>
 							</Eyebrow.Root>
 							<SectionIntro.Title>
-								Une communauté engagée autour d'une{" "}
-								<span className="text-primary">même conviction</span>
+								A committed community around a{" "}
+								<span className="text-primary">shared conviction</span>
 							</SectionIntro.Title>
 							<SectionIntro.Description>
-								Clubs, sportifs et professionnels sont réunis autour d'une
-								vision commune : créer un écosystème plus sûr, plus performant
-								et plus durable.
+								Clients, freelancers and partners are united around a common
+								vision: building a way of working that is fairer, more effective
+								and built to last.
 							</SectionIntro.Description>
 						</SectionIntro.Root>
 
@@ -479,8 +479,8 @@ export const Home: Story = {
 					<SiteFooter.Brand>
 						<BrandLogo className="mb-4 block" />
 						<SiteFooter.BrandDescription>
-							Plateforme qui met en relation clubs de sport et professionnels de
-							santé pour des événements sportifs de qualité.
+							The platform that connects client teams and independent
+							freelancers to deliver quality projects together.
 						</SiteFooter.BrandDescription>
 						<SiteFooter.SocialLinks>
 							<SiteFooter.SocialLink href="#" aria-label="Facebook">
@@ -515,10 +515,10 @@ export const Home: Story = {
 				</SiteFooter.Columns>
 				<SiteFooter.Bottom>
 					<SiteFooter.BottomText>
-						© 2026 acme.dev. Tous droits réservés.
+						© 2026 acme.dev. All rights reserved.
 					</SiteFooter.BottomText>
 					<SiteFooter.BottomText>
-						Fait avec ❤️ pour le sport et la santé
+						Made with ❤️ for independent work
 					</SiteFooter.BottomText>
 				</SiteFooter.Bottom>
 			</SiteFooter.Root>

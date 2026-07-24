@@ -22,14 +22,14 @@ function queryBySlot(screen: ReturnType<typeof render>, slot: string) {
 
 describe("Item", () => {
 	it("renders its children in a div by default", () => {
-		const screen = render(<Item>Mission</Item>);
+		const screen = render(<Item>Project</Item>);
 		const item = queryBySlot(screen, "item");
 		expect(item?.tagName).toBe("DIV");
-		expect(item?.textContent).toBe("Mission");
+		expect(item?.textContent).toBe("Project");
 	});
 
 	it("exposes the default variant and size as data attributes", () => {
-		const screen = render(<Item>Mission</Item>);
+		const screen = render(<Item>Project</Item>);
 		const item = queryBySlot(screen, "item");
 		expect(item?.getAttribute("data-variant")).toBe("default");
 		expect(item?.getAttribute("data-size")).toBe("default");
@@ -40,7 +40,7 @@ describe("Item", () => {
 		"outline",
 		"muted",
 	] as const)("exposes variant %s as a data attribute", (variant) => {
-		const screen = render(<Item variant={variant}>Mission</Item>);
+		const screen = render(<Item variant={variant}>Project</Item>);
 		expect(queryBySlot(screen, "item")?.getAttribute("data-variant")).toBe(
 			variant,
 		);
@@ -51,19 +51,19 @@ describe("Item", () => {
 		"sm",
 		"xs",
 	] as const)("exposes size %s as a data attribute", (size) => {
-		const screen = render(<Item size={size}>Mission</Item>);
+		const screen = render(<Item size={size}>Project</Item>);
 		expect(queryBySlot(screen, "item")?.getAttribute("data-size")).toBe(size);
 	});
 
 	it("gives each size distinct paddings", () => {
-		const defaultItem = render(<Item>Mission</Item>).container.querySelector(
+		const defaultItem = render(<Item>Project</Item>).container.querySelector(
 			"[data-slot=item]",
 		);
 		const smallItem = render(
-			<Item size="sm">Mission</Item>,
+			<Item size="sm">Project</Item>,
 		).container.querySelector("[data-slot=item]");
 		const extraSmallItem = render(
-			<Item size="xs">Mission</Item>,
+			<Item size="xs">Project</Item>,
 		).container.querySelector("[data-slot=item]");
 		expect(defaultItem?.classList.contains("py-2.5")).toBe(true);
 		expect(smallItem?.classList.contains("py-2")).toBe(true);
@@ -73,7 +73,7 @@ describe("Item", () => {
 	});
 
 	it("uses the kit-standard ring-3 focus spelling", () => {
-		const screen = render(<Item>Mission</Item>);
+		const screen = render(<Item>Project</Item>);
 		const item = queryBySlot(screen, "item");
 		expect(item?.classList.contains("focus-visible:ring-3")).toBe(true);
 		for (const itemClass of item?.classList ?? []) {
@@ -82,15 +82,15 @@ describe("Item", () => {
 	});
 
 	it("renders as an anchor via the render prop", () => {
-		const screen = render(<Item render={<a href="/missions">Mission</a>} />);
+		const screen = render(<Item render={<a href="/projects">Project</a>} />);
 		const item = queryBySlot(screen, "item");
 		expect(item?.tagName).toBe("A");
-		expect(item?.getAttribute("href")).toBe("/missions");
+		expect(item?.getAttribute("href")).toBe("/projects");
 		expect(item?.getAttribute("data-variant")).toBe("default");
 	});
 
 	it("merges className over the variant classes", () => {
-		const screen = render(<Item className="custom-item-class">Mission</Item>);
+		const screen = render(<Item className="custom-item-class">Project</Item>);
 		const item = queryBySlot(screen, "item");
 		expect(item?.classList.contains("custom-item-class")).toBe(true);
 		expect(item?.classList.contains("rounded-lg")).toBe(true);
@@ -101,7 +101,7 @@ describe("ItemGroup", () => {
 	it("renders a div with the group scope class", () => {
 		const screen = render(
 			<ItemGroup>
-				<Item>Mission</Item>
+				<Item>Project</Item>
 			</ItemGroup>,
 		);
 		const group = queryBySlot(screen, "item-group");
@@ -166,8 +166,8 @@ describe("Item content slots", () => {
 		const screen = render(
 			<Item>
 				<ItemContent>
-					<ItemTitle>Saturday match coverage</ItemTitle>
-					<ItemDescription>Physiotherapist needed.</ItemDescription>
+					<ItemTitle>Q3 brand refresh</ItemTitle>
+					<ItemDescription>Designer needed.</ItemDescription>
 				</ItemContent>
 			</Item>,
 		);

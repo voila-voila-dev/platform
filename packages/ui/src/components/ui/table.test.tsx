@@ -17,21 +17,21 @@ afterEach(cleanup);
 function Fixture() {
 	return (
 		<Table>
-			<TableCaption>Recent missions for your organization.</TableCaption>
+			<TableCaption>Recent projects for your workspace.</TableCaption>
 			<TableHeader>
 				<TableRow>
 					<TableHead>Reference</TableHead>
-					<TableHead>Club</TableHead>
+					<TableHead>Client</TableHead>
 				</TableRow>
 			</TableHeader>
 			<TableBody>
 				<TableRow data-selected>
-					<TableCell>MIS-001</TableCell>
-					<TableCell>Stade Rochelais</TableCell>
+					<TableCell>PRJ-001</TableCell>
+					<TableCell>Northwind Studio</TableCell>
 				</TableRow>
 				<TableRow>
-					<TableCell>MIS-002</TableCell>
-					<TableCell>RC Vannes</TableCell>
+					<TableCell>PRJ-002</TableCell>
+					<TableCell>Globex Labs</TableCell>
 				</TableRow>
 			</TableBody>
 			<TableFooter>
@@ -81,24 +81,24 @@ describe("Table", () => {
 			expect(element?.tagName).toBe(tagName);
 		}
 		expect(screen.getAllByRole("columnheader").length).toBe(2);
-		expect(screen.getByText("Stade Rochelais").tagName).toBe("TD");
+		expect(screen.getByText("Northwind Studio").tagName).toBe("TD");
 	});
 });
 
 describe("TableRow", () => {
 	it("scopes hover highlighting to body rows", () => {
 		const screen = render(<Fixture />);
-		const row = screen.getByText("MIS-001").closest("tr");
+		const row = screen.getByText("PRJ-001").closest("tr");
 		expect(row?.classList.contains("[tbody_&]:hover:bg-muted/50")).toBe(true);
 		expect(row?.classList.contains("hover:bg-muted/50")).toBe(false);
 	});
 
 	it("highlights rows stamped with data-selected", () => {
 		const screen = render(<Fixture />);
-		const selected = screen.getByText("MIS-001").closest("tr");
+		const selected = screen.getByText("PRJ-001").closest("tr");
 		expect(selected?.hasAttribute("data-selected")).toBe(true);
 		expect(selected?.classList.contains("data-selected:bg-muted")).toBe(true);
-		const unselected = screen.getByText("MIS-002").closest("tr");
+		const unselected = screen.getByText("PRJ-002").closest("tr");
 		expect(unselected?.hasAttribute("data-selected")).toBe(false);
 	});
 
@@ -127,7 +127,7 @@ describe("TableHead and TableCell", () => {
 				<tbody>
 					<tr>
 						<TableCell className="whitespace-normal">
-							A long mission description that should wrap
+							A long project description that should wrap
 						</TableCell>
 					</tr>
 				</tbody>

@@ -30,10 +30,10 @@ describe("Spinner", () => {
 	});
 
 	it("merges className so size and color can be overridden", () => {
-		const screen = render(<Spinner className="size-8 text-provider" />);
+		const screen = render(<Spinner className="size-8 text-brand" />);
 		const spinner = screen.getByRole("status", { name: "Loading" });
 		expect(spinner.classList.contains("size-8")).toBe(true);
 		expect(spinner.classList.contains("size-4")).toBe(false);
-		expect(spinner.classList.contains("text-provider")).toBe(true);
+		expect(spinner.classList.contains("text-brand")).toBe(true);
 	});
 });

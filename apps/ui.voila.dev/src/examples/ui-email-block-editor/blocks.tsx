@@ -27,18 +27,18 @@ const welcomeDocument: EmailEditorDocument = {
 		{
 			id: "heading",
 			type: "heading",
-			text: "Bienvenue {{firstName}} !",
+			text: "Welcome {{firstName}}!",
 			level: 1,
 		},
 		{
 			id: "intro",
 			type: "paragraph",
 			spans: [
-				{ text: "Votre compte est prêt. Publiez votre " },
-				{ text: "première mission", bold: true },
-				{ text: " depuis " },
-				{ text: "votre espace", href: "https://app.acme.dev" },
-				{ text: " et recevez vos premières candidatures cette semaine." },
+				{ text: "Your account is ready. Post your " },
+				{ text: "first project", bold: true },
+				{ text: " from " },
+				{ text: "your workspace", href: "https://app.acme.dev" },
+				{ text: " and receive your first proposals this week." },
 			],
 		},
 		{
@@ -48,18 +48,18 @@ const welcomeDocument: EmailEditorDocument = {
 			mobileColumns: 2,
 			children: [
 				{
-					id: "stat-missions",
+					id: "stat-projects",
 					type: "stat",
-					value: "1 240",
-					label: "Missions pourvues",
+					value: "1,240",
+					label: "Projects staffed",
 					description: "",
 					align: "center",
 				},
 				{
 					id: "stat-note",
 					type: "stat",
-					value: "4,8 / 5",
-					label: "Note moyenne",
+					value: "4.8 / 5",
+					label: "Average rating",
 					description: "",
 					align: "center",
 				},
@@ -68,8 +68,8 @@ const welcomeDocument: EmailEditorDocument = {
 		{
 			id: "cta",
 			type: "button",
-			label: "Publier une mission",
-			href: "https://app.acme.dev/missions",
+			label: "Post a project",
+			href: "https://app.acme.dev/projects",
 			align: "center",
 			variant: "primary",
 		},
@@ -77,11 +77,11 @@ const welcomeDocument: EmailEditorDocument = {
 		{
 			id: "rating",
 			type: "rating",
-			question: [{ text: "Que pensez-vous de votre inscription ?" }],
+			question: [{ text: "How was your onboarding experience?" }],
 			style: "filled",
-			lowLabel: "Pas du tout",
-			highLabel: "Tout à fait",
-			href: "https://acme.dev/avis",
+			lowLabel: "Not at all",
+			highLabel: "Absolutely",
+			href: "https://acme.dev/reviews",
 		},
 	],
 };
@@ -148,7 +148,7 @@ export function Heading() {
 			initial={{
 				id: "heading",
 				type: "heading",
-				text: "Bonjour {{firstName}} !",
+				text: "Hello {{firstName}}!",
 				level: 1,
 			}}
 		/>
@@ -162,10 +162,10 @@ export function Paragraph() {
 				id: "paragraph",
 				type: "paragraph",
 				spans: [
-					{ text: "Découvrez les " },
-					{ text: "nouvelles missions", bold: true },
-					{ text: " disponibles près de chez vous, ou consultez " },
-					{ text: "votre espace", href: "https://app.acme.dev" },
+					{ text: "Browse the " },
+					{ text: "latest projects", bold: true },
+					{ text: " that match your skills, or head to " },
+					{ text: "your workspace", href: "https://app.acme.dev" },
 					{ text: "." },
 				],
 			}}
@@ -179,8 +179,8 @@ export function ButtonBlock() {
 			initial={{
 				id: "button",
 				type: "button",
-				label: "Voir les missions",
-				href: "https://app.acme.dev/missions",
+				label: "Browse projects",
+				href: "https://app.acme.dev/projects",
 				align: "center",
 				variant: "primary",
 			}}
@@ -195,7 +195,7 @@ export function Image() {
 				id: "image",
 				type: "image",
 				src: "https://placehold.co/536x200/png",
-				alt: "Visuel de la campagne",
+				alt: "Campaign visual",
 				href: "",
 				width: "full",
 				overlay: "none",
@@ -236,18 +236,18 @@ export function List() {
 				marker: "badge",
 				items: [
 					{
-						title: "Publiez votre mission",
-						spans: [{ text: "En deux minutes, depuis votre espace." }],
+						title: "Post your project",
+						spans: [{ text: "In two minutes, from your workspace." }],
 					},
 					{
-						title: "Recevez des candidatures",
+						title: "Receive proposals",
 						spans: [
-							{ text: "Des professionnels " },
-							{ text: "vérifiés", bold: true },
-							{ text: " près de chez vous." },
+							{ text: "From " },
+							{ text: "verified", bold: true },
+							{ text: " freelancers, within hours." },
 						],
 					},
-					{ spans: [{ text: "Payez une fois la mission terminée." }] },
+					{ spans: [{ text: "Pay once the project is delivered." }] },
 				],
 			}}
 		/>
@@ -260,9 +260,9 @@ export function Stat() {
 			initial={{
 				id: "stat",
 				type: "stat",
-				value: "1 240",
-				label: "Missions pourvues",
-				description: "Sur les douze derniers mois.",
+				value: "1,240",
+				label: "Projects staffed",
+				description: "Over the last twelve months.",
 				align: "center",
 			}}
 		/>
@@ -277,14 +277,14 @@ export function Table() {
 				type: "table",
 				headerRow: true,
 				columns: [
-					{ label: "Prestation", align: "left" },
-					{ label: "Durée", align: "left" },
-					{ label: "Tarif", align: "right" },
+					{ label: "Service", align: "left" },
+					{ label: "Duration", align: "left" },
+					{ label: "Rate", align: "right" },
 				],
 				rows: [
-					["Kinésithérapie", "1 h", "60,00 €"],
-					["Ostéopathie", "45 min", "55,00 €"],
-					["Bilan postural", "30 min", "40,00 €"],
+					["Design review", "1 h", "$60.00"],
+					["Code audit", "45 min", "$55.00"],
+					["Kickoff call", "30 min", "$40.00"],
 				],
 			}}
 		/>
@@ -297,16 +297,16 @@ export function Article() {
 			initial={{
 				id: "article",
 				type: "article",
-				title: "Bien choisir son kinésithérapeute",
+				title: "How to choose the right freelancer",
 				description:
-					"Diplôme, spécialité, disponibilités : les trois critères qui comptent vraiment.",
+					"Portfolio, reviews, availability: the three criteria that really matter.",
 				image: {
 					src: "https://placehold.co/536x180/png",
-					alt: "Séance de kiné",
+					alt: "Freelancer at work",
 				},
 				author: "Emma Martin",
 				publishDate: "2026-07-20",
-				href: "https://acme.dev/blog/choisir-son-kine",
+				href: "https://acme.dev/blog/choose-a-freelancer",
 			}}
 		/>
 	);
@@ -318,13 +318,13 @@ export function Product() {
 			initial={{
 				id: "product",
 				type: "product",
-				name: "Bande de contention Essity",
-				description: "Boîte de 10, largeur 10 cm.",
-				image: { src: "https://placehold.co/536x180/png", alt: "Bande" },
+				name: "Acme brand kit template",
+				description: "Logo, palette, and type specimen.",
+				image: { src: "https://placehold.co/536x180/png", alt: "Kit" },
 				price: { amountInMinorUnits: 5990, currency: "EUR" },
 				compareAtPrice: { amountInMinorUnits: 7990, currency: "EUR" },
-				href: "https://shop.acme.dev/bande-contention",
-				buttonLabel: "Commander",
+				href: "https://shop.acme.dev/brand-kit-template",
+				buttonLabel: "Buy now",
 			}}
 		/>
 	);
@@ -336,19 +336,19 @@ export function Offer() {
 			initial={{
 				id: "offer",
 				type: "offer",
-				eyebrow: "Le plus choisi",
-				name: "Essentiel",
-				description: "Le socle pour recruter en continu.",
+				eyebrow: "Most popular",
+				name: "Essential",
+				description: "The core plan for hiring on repeat.",
 				image: { src: "", alt: "" },
 				price: { amountInMinorUnits: 2900, currency: "EUR" },
-				period: "par mois",
+				period: "per month",
 				features: [
-					"Missions illimitées",
-					"Professionnels vérifiés",
-					"Support 7j/7",
+					"Unlimited projects",
+					"Verified freelancers",
+					"7-day support",
 				],
-				buttonLabel: "Choisir cette offre",
-				buttonHref: "https://acme.dev/offres",
+				buttonLabel: "Choose this plan",
+				buttonHref: "https://acme.dev/pricing",
 				highlighted: true,
 			}}
 		/>
@@ -361,11 +361,11 @@ export function Rating() {
 			initial={{
 				id: "rating",
 				type: "rating",
-				question: [{ text: "Que pensez-vous de votre dernière mission ?" }],
+				question: [{ text: "How did your latest project go?" }],
 				style: "filled",
-				lowLabel: "Pas du tout",
-				highLabel: "Tout à fait",
-				href: "https://acme.dev/avis",
+				lowLabel: "Not at all",
+				highLabel: "Absolutely",
+				href: "https://acme.dev/reviews",
 			}}
 		/>
 	);
@@ -386,16 +386,16 @@ export function Grid() {
 			{
 				id: "grid-stat-1",
 				type: "stat",
-				value: "1 240",
-				label: "Missions pourvues",
+				value: "1,240",
+				label: "Projects staffed",
 				description: "",
 				align: "center",
 			},
 			{
 				id: "grid-stat-2",
 				type: "stat",
-				value: "4,8 / 5",
-				label: "Note moyenne",
+				value: "4.8 / 5",
+				label: "Average rating",
 				description: "",
 				align: "center",
 			},

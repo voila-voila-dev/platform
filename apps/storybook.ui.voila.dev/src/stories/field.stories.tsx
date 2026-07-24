@@ -30,10 +30,10 @@ export const Default: Story = {
 		<div className="w-96">
 			<FieldGroup>
 				<Field>
-					<FieldLabel htmlFor="organization-name">Club name</FieldLabel>
-					<Input id="organization-name" placeholder="Clermont Rugby Club" />
+					<FieldLabel htmlFor="workspace-name">Workspace name</FieldLabel>
+					<Input id="workspace-name" placeholder="Northwind Studio" />
 					<FieldDescription>
-						Shown to providers on every mission you publish.
+						Shown to freelancers on every project you publish.
 					</FieldDescription>
 				</Field>
 				<Field>
@@ -41,15 +41,15 @@ export const Default: Story = {
 					<Input
 						id="contact-email"
 						type="email"
-						placeholder="staff@club.example"
+						placeholder="team@example.com"
 					/>
 				</Field>
 				<FieldSeparator>Optional</FieldSeparator>
 				<Field>
-					<FieldLabel htmlFor="mission-notes">Mission notes</FieldLabel>
+					<FieldLabel htmlFor="project-notes">Project notes</FieldLabel>
 					<Textarea
-						id="mission-notes"
-						placeholder="Access instructions, parking, equipment..."
+						id="project-notes"
+						placeholder="Goals, scope, links to briefs..."
 					/>
 				</Field>
 			</FieldGroup>
@@ -61,16 +61,16 @@ export const WithError: Story = {
 	render: () => (
 		<div className="w-96">
 			<Field invalid>
-				<FieldLabel htmlFor="rpps-number">RPPS number</FieldLabel>
+				<FieldLabel htmlFor="tax-id">Tax ID</FieldLabel>
 				<Input
-					id="rpps-number"
+					id="tax-id"
 					aria-invalid
-					aria-describedby="rpps-number-error"
+					aria-describedby="tax-id-error"
 					defaultValue="123"
 				/>
 				<FieldError
-					id="rpps-number-error"
-					errors={[{ message: "RPPS number must be 11 digits." }]}
+					id="tax-id-error"
+					errors={[{ message: "Tax ID must be 11 digits." }]}
 				/>
 			</Field>
 		</div>
@@ -108,7 +108,7 @@ export const WithFieldSet: Story = {
 			<FieldSet>
 				<FieldLegend>Availability</FieldLegend>
 				<FieldDescription>
-					Tell clubs when you are available for missions.
+					Tell clients when you are available for projects.
 				</FieldDescription>
 				<FieldGroup>
 					<Field orientation="horizontal">
@@ -135,7 +135,7 @@ export const ResponsiveOrientation: Story = {
 				</Field>
 				<Field orientation="responsive">
 					<FieldLabel htmlFor="responsive-city">City</FieldLabel>
-					<Input id="responsive-city" placeholder="Clermont-Ferrand" />
+					<Input id="responsive-city" placeholder="Rotterdam" />
 				</Field>
 			</FieldGroup>
 		</div>
@@ -148,13 +148,13 @@ export const CheckboxCard: Story = {
 			<FieldSet>
 				<FieldLegend variant="label">Notifications</FieldLegend>
 				<FieldGroup data-slot="checkbox-group">
-					<FieldLabel htmlFor="notify-missions">
+					<FieldLabel htmlFor="notify-projects">
 						<Field orientation="horizontal">
-							<Checkbox id="notify-missions" defaultChecked />
+							<Checkbox id="notify-projects" defaultChecked />
 							<FieldContent>
-								<FieldTitle>New missions</FieldTitle>
+								<FieldTitle>New projects</FieldTitle>
 								<FieldDescription>
-									Get notified when a club publishes a mission matching your
+									Get notified when a client publishes a project matching your
 									skills.
 								</FieldDescription>
 							</FieldContent>
@@ -164,9 +164,9 @@ export const CheckboxCard: Story = {
 						<Field orientation="horizontal">
 							<Checkbox id="notify-reports" />
 							<FieldContent>
-								<FieldTitle>Mission reports</FieldTitle>
+								<FieldTitle>Project reports</FieldTitle>
 								<FieldDescription>
-									Get notified when a fiche de suivi is ready for review.
+									Get notified when a deliverable is ready for review.
 								</FieldDescription>
 							</FieldContent>
 						</Field>
@@ -181,8 +181,12 @@ export const Disabled: Story = {
 	render: () => (
 		<div className="w-96">
 			<Field data-disabled="true">
-				<FieldLabel htmlFor="disabled-siret">SIRET</FieldLabel>
-				<Input id="disabled-siret" disabled defaultValue="123 456 789 00012" />
+				<FieldLabel htmlFor="disabled-business-id">Business ID</FieldLabel>
+				<Input
+					id="disabled-business-id"
+					disabled
+					defaultValue="123 456 789 00012"
+				/>
 				<FieldDescription>
 					Verified automatically — contact support to change it.
 				</FieldDescription>

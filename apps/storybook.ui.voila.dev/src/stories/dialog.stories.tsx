@@ -25,14 +25,14 @@ export const Default: Story = {
 	render: () => (
 		<Dialog>
 			<DialogTrigger render={<Button variant="outline" />}>
-				Invite a provider
+				Invite a freelancer
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Invite a provider</DialogTitle>
+					<DialogTitle>Invite a freelancer</DialogTitle>
 					<DialogDescription>
-						Send an invitation to a healthcare provider so they can apply to
-						your club's missions.
+						Send an invitation to a freelancer so they can apply to your team's
+						projects.
 					</DialogDescription>
 				</DialogHeader>
 				<DialogFooter>
@@ -50,21 +50,21 @@ export const DefaultOpen: Story = {
 	render: () => (
 		<Dialog defaultOpen>
 			<DialogTrigger render={<Button variant="outline" />}>
-				Cancel mission
+				Cancel project
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Cancel this mission?</DialogTitle>
+					<DialogTitle>Cancel this project?</DialogTitle>
 					<DialogDescription>
-						The assigned provider will be notified immediately. This action
+						The assigned freelancer will be notified immediately. This action
 						cannot be undone.
 					</DialogDescription>
 				</DialogHeader>
 				<DialogFooter>
 					<DialogClose render={<Button variant="outline" />}>
-						Keep mission
+						Keep project
 					</DialogClose>
-					<Button variant="destructive">Cancel mission</Button>
+					<Button variant="destructive">Cancel project</Button>
 				</DialogFooter>
 			</DialogContent>
 		</Dialog>
@@ -81,7 +81,7 @@ export const WithoutCloseButton: Story = {
 				<DialogHeader>
 					<DialogTitle>Review the report</DialogTitle>
 					<DialogDescription>
-						Confirm the follow-up report before releasing the payment.
+						Confirm the project report before releasing the payment.
 					</DialogDescription>
 				</DialogHeader>
 				<DialogFooter closeLabel="Close">
@@ -102,7 +102,7 @@ export const Sizes: Story = {
 					</DialogTrigger>
 					<DialogContent size={size}>
 						<DialogHeader>
-							<DialogTitle>Mission details</DialogTitle>
+							<DialogTitle>Project details</DialogTitle>
 							<DialogDescription>
 								This dialog uses the {size} size.
 							</DialogDescription>
@@ -124,16 +124,16 @@ export const LongContent: Story = {
 				<DialogHeader>
 					<DialogTitle>Terms of service</DialogTitle>
 					<DialogDescription>
-						Read the full terms before accepting the mission.
+						Read the full terms before accepting the project.
 					</DialogDescription>
 				</DialogHeader>
 				<div className="grid gap-2">
 					{Array.from({ length: 30 }, (_, index) => (
 						<p key={String(index)}>
-							Clause {index + 1}: the provider commits to arriving on site
-							thirty minutes before the event starts and to carrying valid
+							Clause {index + 1}: the freelancer commits to delivering the
+							agreed work by each milestone date and to carrying valid
 							professional liability insurance for the full duration of the
-							mission.
+							project.
 						</p>
 					))}
 				</div>

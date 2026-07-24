@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import {
+	businessIdMask,
 	FormattedInput,
-	frenchPhoneMask,
-	rppsMask,
-	siretMask,
+	idNumberMask,
+	phoneMask,
 } from "@voila.dev/ui/components/formatted-input";
 import { useState } from "react";
 import { expect, userEvent, waitFor, within } from "storybook/test";
@@ -13,7 +13,7 @@ const meta = {
 	component: FormattedInput,
 	tags: ["autodocs"],
 	args: {
-		mask: siretMask,
+		mask: businessIdMask,
 		placeholder: "123 456 789 00012",
 	},
 } satisfies Meta<typeof FormattedInput>;
@@ -22,19 +22,19 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Siret: Story = {};
+export const BusinessId: Story = {};
 
-export const Rpps: Story = {
+export const IdNumber: Story = {
 	args: {
-		mask: rppsMask,
+		mask: idNumberMask,
 		placeholder: "10003456789",
 		defaultValue: "10003456789",
 	},
 };
 
-export const FrenchPhone: Story = {
+export const Phone: Story = {
 	args: {
-		mask: frenchPhoneMask,
+		mask: phoneMask,
 		placeholder: "06 12 34 56 78",
 		defaultValue: "0612345678",
 	},
@@ -55,25 +55,25 @@ export const Invalid: Story = {
 };
 
 function ControlledExample() {
-	const [siret, setSiret] = useState("");
+	const [businessId, setBusinessId] = useState("");
 	return (
 		<div className="flex w-72 flex-col gap-2">
 			<FormattedInput
-				mask={siretMask}
-				value={siret}
-				onValueChange={setSiret}
+				mask={businessIdMask}
+				value={businessId}
+				onValueChange={setBusinessId}
 				placeholder="123 456 789 00012"
 			/>
 			<p className="text-sm text-muted-foreground" data-testid="raw-value">
-				Raw: {siret || "—"}
+				Raw: {businessId || "—"}
 			</p>
 		</div>
 	);
 }
 
 /**
- * Controlled usage: the component displays the formatted SIRET while the
- * consumer state holds the raw digits. The play function types a full SIRET
+ * Controlled usage: the component displays the formatted business id while the
+ * consumer state holds the raw digits. The play function types a full business id
  * with stray letters mixed in and asserts both sides.
  */
 export const Controlled: Story = {

@@ -96,7 +96,7 @@ describe("Banner", () => {
 	it("allows overriding the dismiss button label", () => {
 		const screen = render(
 			<Banner>
-				<BannerTitle>Nouvelle fonctionnalité</BannerTitle>
+				<BannerTitle>New feature</BannerTitle>
 				<BannerClose aria-label="Fermer" />
 			</Banner>,
 		);

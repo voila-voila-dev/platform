@@ -52,23 +52,23 @@ export function AlertVariants() {
 		<div className="flex w-full flex-col gap-3">
 			<Alert>
 				<InfoIcon />
-				<AlertTitle>Mission updated</AlertTitle>
+				<AlertTitle>Project updated</AlertTitle>
 				<AlertDescription>
-					The club moved Saturday's match to 3:00 PM.
+					The client moved Friday's kickoff call to 3:00 PM.
 				</AlertDescription>
 			</Alert>
 			<Alert variant="success">
 				<CheckCircleIcon />
-				<AlertTitle>Booking confirmed</AlertTitle>
+				<AlertTitle>Proposal accepted</AlertTitle>
 				<AlertDescription>
-					Camille Dubois will cover the match on Saturday.
+					Camille Dubois will start on the project on Monday.
 				</AlertDescription>
 			</Alert>
 			<Alert variant="warning">
 				<WarningIcon />
 				<AlertTitle>Report due soon</AlertTitle>
 				<AlertDescription>
-					Submit the mission report within 48 hours to release the payment.
+					Submit the project report within 48 hours to release the payment.
 				</AlertDescription>
 			</Alert>
 			<Alert variant="destructive">
@@ -88,7 +88,7 @@ export function AlertWithAction() {
 			<Alert>
 				<AlertTitle>Application withdrawn</AlertTitle>
 				<AlertDescription>
-					You withdrew your application for the tournament mission.
+					You withdrew your proposal for the website redesign project.
 				</AlertDescription>
 				<AlertAction>
 					<Button variant="outline" size="xs">
@@ -100,7 +100,7 @@ export function AlertWithAction() {
 				<InfoIcon />
 				<AlertTitle>New feature</AlertTitle>
 				<AlertDescription>
-					You can now message clubs directly from a mission page.
+					You can now message clients directly from a project page.
 				</AlertDescription>
 				<AlertClose />
 			</Alert>
@@ -118,23 +118,25 @@ export function BannerVariants() {
 			<Banner>
 				<MegaphoneIcon />
 				<BannerTitle>
-					La messagerie est disponible — échangez avec les clubs.
+					Messaging is now available — chat with your clients.
 				</BannerTitle>
 				<BannerClose />
 			</Banner>
 			<Banner variant="muted">
-				<BannerTitle>Maintenance planifiée dimanche de 2h à 4h.</BannerTitle>
+				<BannerTitle>
+					Scheduled maintenance Sunday from 2 am to 4 am.
+				</BannerTitle>
 				<BannerClose />
 			</Banner>
 			<Banner variant="warning">
 				<WarningIcon />
 				<BannerTitle>
-					Votre compte Stripe est incomplet — terminez la configuration.
+					Your Stripe account is incomplete — finish the setup.
 				</BannerTitle>
 			</Banner>
 			<Banner variant="destructive">
 				<WarningIcon />
-				<BannerTitle>Le paiement de votre abonnement a échoué.</BannerTitle>
+				<BannerTitle>Your subscription payment has failed.</BannerTitle>
 			</Banner>
 		</div>
 	);
@@ -145,7 +147,7 @@ export function BannerWithAction() {
 		<Banner>
 			<MegaphoneIcon />
 			<BannerTitle>
-				La messagerie est disponible — échangez avec les clubs.
+				Messaging is now available — chat with your clients.
 			</BannerTitle>
 			<BannerAction>
 				<Button
@@ -153,7 +155,7 @@ export function BannerWithAction() {
 					size="xs"
 					className="border-current/30 bg-transparent text-current hover:bg-current/10 hover:text-current"
 				>
-					Découvrir
+					Discover
 				</Button>
 			</BannerAction>
 			<BannerClose />
@@ -192,10 +194,10 @@ export function SpinnerDefault() {
 		<>
 			<Spinner className="size-4" />
 			<Spinner className="size-6" />
-			<Spinner className="size-8 text-provider" />
+			<Spinner className="size-8 text-brand" />
 			<Button disabled>
 				<Spinner />
-				Publishing mission
+				Publishing project
 			</Button>
 		</>
 	);
@@ -220,7 +222,7 @@ export function SkeletonDefault() {
 export function SkeletonCard() {
 	return (
 		<div role="status" className="w-72">
-			<span className="sr-only">Loading mission…</span>
+			<span className="sr-only">Loading project…</span>
 			<Card aria-hidden>
 				<CardHeader>
 					<Skeleton className="h-5 w-44" />
@@ -250,14 +252,14 @@ export function EmptyDefault() {
 					<EmptyMedia variant="icon">
 						<CalendarPlusIcon />
 					</EmptyMedia>
-					<EmptyTitle>No missions yet</EmptyTitle>
+					<EmptyTitle>No projects yet</EmptyTitle>
 					<EmptyDescription>
-						Create your first mission to start receiving applications from
-						healthcare providers.
+						Create your first project to start receiving proposals from
+						independent freelancers.
 					</EmptyDescription>
 				</EmptyHeader>
 				<EmptyContent>
-					<Button>Create a mission</Button>
+					<Button>Create a project</Button>
 				</EmptyContent>
 			</Empty>
 		</div>
@@ -275,8 +277,8 @@ export function SonnerDefault() {
 			<Button
 				variant="outline"
 				onClick={() =>
-					toast("Mission published", {
-						description: "Providers in your area have been notified.",
+					toast("Project published", {
+						description: "Matching freelancers have been notified.",
 					})
 				}
 			>
@@ -284,7 +286,7 @@ export function SonnerDefault() {
 			</Button>
 			<Button
 				variant="outline"
-				onClick={() => toast.success("Booking confirmed")}
+				onClick={() => toast.success("Proposal accepted")}
 			>
 				Success
 			</Button>

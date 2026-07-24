@@ -95,10 +95,10 @@ describe("EmptyMedia", () => {
 
 describe("EmptyTitle", () => {
 	it("renders a heading element for page semantics", () => {
-		const screen = render(<EmptyTitle>No missions yet</EmptyTitle>);
+		const screen = render(<EmptyTitle>No projects yet</EmptyTitle>);
 		const title = querySlot(screen, "empty-title");
 		expect(title?.tagName).toBe("H3");
-		expect(title?.textContent).toBe("No missions yet");
+		expect(title?.textContent).toBe("No projects yet");
 	});
 });
 

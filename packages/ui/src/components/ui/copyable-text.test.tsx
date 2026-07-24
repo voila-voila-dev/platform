@@ -41,12 +41,14 @@ describe("CopyableText", () => {
 			<CopyableText
 				value="camille@example.com"
 				copyLabel="Copier"
-				copiedLabel="Copié"
+				copiedLabel="Copied to clipboard"
 			/>,
 		);
 		fireEvent.click(screen.getByRole("button", { name: "Copier" }));
 		await waitFor(() => {
-			expect(screen.getByRole("button", { name: "Copié" })).toBeTruthy();
+			expect(
+				screen.getByRole("button", { name: "Copied to clipboard" }),
+			).toBeTruthy();
 		});
 	});
 

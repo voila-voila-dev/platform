@@ -1,6 +1,6 @@
 import {
 	CalendarCheckIcon,
-	FirstAidKitIcon,
+	PaletteIcon,
 	UserCircleIcon,
 } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
@@ -27,16 +27,16 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<List aria-label="Open missions" className="max-w-md">
+		<List aria-label="Open projects" className="max-w-md">
 			<ListItem variant="outline">
 				<ItemMedia variant="icon">
 					<CalendarCheckIcon />
 				</ItemMedia>
 				<ItemContent>
-					<ItemTitle>Saturday match coverage</ItemTitle>
+					<ItemTitle>Landing page redesign</ItemTitle>
 					<ItemDescription>
-						Physiotherapist needed for the senior rugby team, June 14 from 14:00
-						to 18:00.
+						Designer needed for a marketing site refresh, kickoff June 14, about
+						two weeks of work.
 					</ItemDescription>
 				</ItemContent>
 				<ItemActions>
@@ -47,12 +47,12 @@ export const Default: Story = {
 			</ListItem>
 			<ListItem variant="outline">
 				<ItemMedia variant="icon">
-					<FirstAidKitIcon />
+					<PaletteIcon />
 				</ItemMedia>
 				<ItemContent>
-					<ItemTitle>Tournament first aid</ItemTitle>
+					<ItemTitle>Launch week support</ItemTitle>
 					<ItemDescription>
-						Two nurses for the youth handball tournament, June 21, full day.
+						Two developers for the launch week push, June 21, full day.
 					</ItemDescription>
 				</ItemContent>
 				<ItemActions>
@@ -67,14 +67,14 @@ export const Default: Story = {
 
 export const WithSeparator: Story = {
 	render: () => (
-		<List aria-label="Providers" className="max-w-md gap-0">
+		<List aria-label="Freelancers" className="max-w-md gap-0">
 			<ListItem>
 				<ItemMedia variant="icon">
 					<UserCircleIcon />
 				</ItemMedia>
 				<ItemContent>
-					<ItemTitle>Dr Dupont</ItemTitle>
-					<ItemDescription>Physiotherapist — Lyon</ItemDescription>
+					<ItemTitle>Nina Dupont</ItemTitle>
+					<ItemDescription>Product designer — Lyon</ItemDescription>
 				</ItemContent>
 			</ListItem>
 			<ListSeparator />
@@ -83,8 +83,8 @@ export const WithSeparator: Story = {
 					<UserCircleIcon />
 				</ItemMedia>
 				<ItemContent>
-					<ItemTitle>Dr Martin</ItemTitle>
-					<ItemDescription>Osteopath — Villeurbanne</ItemDescription>
+					<ItemTitle>Paul Martin</ItemTitle>
+					<ItemDescription>Copywriter — Villeurbanne</ItemDescription>
 				</ItemContent>
 			</ListItem>
 		</List>
@@ -119,13 +119,13 @@ export const Muted: Story = {
 			<ListItem variant="muted">
 				<ItemContent>
 					<ItemTitle>Booking confirmed</ItemTitle>
-					<ItemDescription>FC Lyon — June 14</ItemDescription>
+					<ItemDescription>Northwind — June 14</ItemDescription>
 				</ItemContent>
 			</ListItem>
 			<ListItem variant="muted">
 				<ItemContent>
 					<ItemTitle>Awaiting report</ItemTitle>
-					<ItemDescription>Handball club — June 7</ItemDescription>
+					<ItemDescription>Brightloop — June 7</ItemDescription>
 				</ItemContent>
 			</ListItem>
 		</List>
@@ -139,15 +139,15 @@ export const Muted: Story = {
  */
 export const Accessibility: Story = {
 	render: () => (
-		<List aria-label="Missions">
-			<ListItem>First mission</ListItem>
+		<List aria-label="Projects">
+			<ListItem>First project</ListItem>
 			<ListSeparator />
-			<ListItem>Second mission</ListItem>
+			<ListItem>Second project</ListItem>
 		</List>
 	),
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
-		const list = canvas.getByRole("list", { name: "Missions" });
+		const list = canvas.getByRole("list", { name: "Projects" });
 		expect(list.tagName).toBe("UL");
 		expect(canvas.getAllByRole("listitem")).toHaveLength(2);
 	},

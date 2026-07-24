@@ -21,8 +21,8 @@ const ALIGN_OPTIONS: ReadonlyArray<{
 	readonly value: EmailEditorTableColumn["align"];
 	readonly label: string;
 }> = [
-	{ value: "left", label: "À gauche" },
-	{ value: "right", label: "À droite" },
+	{ value: "left", label: "Left" },
+	{ value: "right", label: "Right" },
 ];
 
 /** Mirrors `emailLineItemsTable`'s `flushEdges`: the first and last columns
@@ -84,9 +84,9 @@ function TableBlockView({
 								}}
 							>
 								<BlockTextInput
-									ariaLabel={`Titre de la colonne ${columnIndex + 1}`}
+									ariaLabel={`Column ${columnIndex + 1} title`}
 									value={column.label}
-									placeholder="Colonne"
+									placeholder="Column"
 									onChange={(label) =>
 										onChange({
 											...block,
@@ -116,7 +116,7 @@ function TableBlockView({
 								style={{ borderBottom: `1px solid ${EMAIL_COLOR.border}` }}
 							>
 								<BlockTextInput
-									ariaLabel={`Ligne ${rowIndex + 1}, colonne ${columnIndex + 1}`}
+									ariaLabel={`Row ${rowIndex + 1}, column ${columnIndex + 1}`}
 									value={cell}
 									onChange={(value) => setCell(rowIndex, columnIndex, value)}
 									className="text-[14px] leading-[1.4]"
@@ -147,7 +147,7 @@ function TableColumnSettings({
 				<div key={index} className="flex items-end gap-2">
 					<div className="flex-1">
 						<SelectOption
-							label={column.label.trim() || `Colonne ${index + 1}`}
+							label={column.label.trim() || `Column ${index + 1}`}
 							value={column.align}
 							options={ALIGN_OPTIONS}
 							onChange={(align) =>
@@ -163,7 +163,7 @@ function TableColumnSettings({
 					<Button
 						variant="ghost"
 						size="icon-sm"
-						aria-label={`Supprimer la colonne ${index + 1}`}
+						aria-label={`Remove column ${index + 1}`}
 						disabled={block.columns.length === 1}
 						onClick={() =>
 							onChange({
@@ -191,7 +191,7 @@ function TableColumnSettings({
 				}
 			>
 				<PlusIcon aria-hidden />
-				Ajouter une colonne
+				Add a column
 			</Button>
 		</>
 	);
@@ -203,16 +203,16 @@ function TableBlockSettings({
 }: EmailBlockComponentProps<EmailEditorTableBlock>) {
 	return (
 		<>
-			<BlockOptionSection title="Contenu">
+			<BlockOptionSection title="Content">
 				<div className="flex items-center justify-between gap-2 text-sm">
 					<span className="text-muted-foreground">
-						{block.rows.length} ligne{block.rows.length > 1 ? "s" : ""}
+						{block.rows.length} row{block.rows.length > 1 ? "s" : ""}
 					</span>
 					<div className="flex gap-1">
 						<Button
 							variant="ghost"
 							size="icon-sm"
-							aria-label="Supprimer la dernière ligne"
+							aria-label="Remove the last row"
 							disabled={block.rows.length === 1}
 							onClick={() =>
 								onChange({ ...block, rows: block.rows.slice(0, -1) })
@@ -231,14 +231,14 @@ function TableBlockSettings({
 							}
 						>
 							<PlusIcon aria-hidden />
-							Ligne
+							Row
 						</Button>
 					</div>
 				</div>
 			</BlockOptionSection>
-			<BlockOptionSection title="Apparence">
+			<BlockOptionSection title="Appearance">
 				<ToggleOption
-					label="Ligne d'en-tête"
+					label="Header row"
 					checked={block.headerRow}
 					onChange={(headerRow) => onChange({ ...block, headerRow })}
 				/>
@@ -250,7 +250,7 @@ function TableBlockSettings({
 
 export const tableBlockDefinition: EmailBlockDefinition<EmailEditorTableBlock> =
 	{
-		label: "Tableau",
+		label: "Table",
 		icon: TableIcon,
 		View: TableBlockView,
 		Settings: TableBlockSettings,

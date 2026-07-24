@@ -21,8 +21,8 @@ const VARIANT_OPTIONS: ReadonlyArray<{
 	readonly value: EmailEditorButtonVariant;
 	readonly label: string;
 }> = [
-	{ value: "primary", label: "Plein (couleur de marque)" },
-	{ value: "secondary", label: "Contour" },
+	{ value: "primary", label: "Filled (brand color)" },
+	{ value: "secondary", label: "Outline" },
 ];
 
 /** Flexbox equivalents of the email's `align` attribute. */
@@ -53,12 +53,12 @@ function ButtonBlockView({
 				}}
 			>
 				<input
-					aria-label="Libellé du bouton"
+					aria-label="Button label"
 					value={block.label}
 					onChange={(event) =>
 						onChange({ ...block, label: event.target.value })
 					}
-					placeholder="Votre bouton"
+					placeholder="Your button"
 					className="min-w-16 max-w-full border-none bg-transparent p-0 text-center font-semibold text-[15px] leading-none outline-none [field-sizing:content] placeholder:opacity-50"
 					style={{
 						fontFamily: EMAIL_FONT,
@@ -76,14 +76,14 @@ function ButtonBlockSettings({
 }: EmailBlockComponentProps<EmailEditorButtonBlock>) {
 	return (
 		<>
-			<BlockOptionSection title="Contenu">
+			<BlockOptionSection title="Content">
 				<TextOption
-					label="Libellé"
+					label="Label"
 					value={block.label}
 					onChange={(label) => onChange({ ...block, label })}
 				/>
 			</BlockOptionSection>
-			<BlockOptionSection title="Apparence">
+			<BlockOptionSection title="Appearance">
 				<AlignmentOption
 					value={block.align}
 					onChange={(align) => onChange({ ...block, align })}
@@ -95,12 +95,12 @@ function ButtonBlockSettings({
 					onChange={(variant) => onChange({ ...block, variant })}
 					description={
 						block.variant === "secondary"
-							? "Outlook (moteur Word) ignore les coins arrondis : le contour y sera à angles droits."
+							? "Outlook (Word engine) ignores rounded corners: the outline will have square corners there."
 							: undefined
 					}
 				/>
 			</BlockOptionSection>
-			<BlockOptionSection title="Lien">
+			<BlockOptionSection title="Link">
 				<LinkOption
 					value={block.href}
 					onChange={(href) => onChange({ ...block, href })}
@@ -112,7 +112,7 @@ function ButtonBlockSettings({
 
 export const buttonBlockDefinition: EmailBlockDefinition<EmailEditorButtonBlock> =
 	{
-		label: "Bouton",
+		label: "Button",
 		icon: CursorClickIcon,
 		View: ButtonBlockView,
 		Settings: ButtonBlockSettings,

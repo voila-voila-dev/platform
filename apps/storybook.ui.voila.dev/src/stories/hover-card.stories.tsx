@@ -23,12 +23,12 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const ProviderPreview = () => (
+const FreelancerPreview = () => (
 	<div className="flex flex-col gap-1">
 		<p className="font-medium">Nathan Guyot</p>
 		<p className="text-muted-foreground">
-			Physiotherapist — covers match days and recovery sessions for rugby clubs
-			around Clermont-Ferrand.
+			Product designer — takes on brand and web design projects for early-stage
+			teams.
 		</p>
 		<p className="text-muted-foreground text-xs">Joined March 2026</p>
 	</div>
@@ -41,7 +41,7 @@ export const Default: Story = {
 				@nathan.guyot
 			</HoverCardTrigger>
 			<HoverCardContent>
-				<ProviderPreview />
+				<FreelancerPreview />
 			</HoverCardContent>
 		</HoverCard>
 	),
@@ -66,7 +66,7 @@ export const DefaultOpen: Story = {
 				@nathan.guyot
 			</HoverCardTrigger>
 			<HoverCardContent side="right">
-				<ProviderPreview />
+				<FreelancerPreview />
 			</HoverCardContent>
 		</HoverCard>
 	),
@@ -76,17 +76,17 @@ export const DefaultOpen: Story = {
 export const InlineLink: Story = {
 	render: () => (
 		<p className="max-w-md text-sm">
-			The mission was accepted by{" "}
+			The project was accepted by{" "}
 			<HoverCard defaultOpen>
 				<HoverCardTrigger
 					render={
-						<a href="#provider-profile" className="underline">
+						<a href="#freelancer-profile" className="underline">
 							Nathan Guyot
 						</a>
 					}
 				/>
 				<HoverCardContent>
-					<ProviderPreview />
+					<FreelancerPreview />
 				</HoverCardContent>
 			</HoverCard>{" "}
 			within an hour of publication.
@@ -111,14 +111,14 @@ export const RichContent: Story = {
 						<div className="flex flex-col">
 							<p className="font-medium">Nathan Guyot</p>
 							<p className="text-muted-foreground text-xs">
-								Physiotherapist · Clermont-Ferrand
+								Product designer · Rotterdam
 							</p>
 						</div>
 					</div>
 					<div className="flex gap-3 text-xs">
 						<span>
 							<span className="font-medium">42</span>{" "}
-							<span className="text-muted-foreground">missions</span>
+							<span className="text-muted-foreground">projects</span>
 						</span>
 						<span>
 							<span className="font-medium">4.9</span>{" "}
@@ -147,7 +147,7 @@ const ControlledExample = () => {
 					@nathan.guyot
 				</HoverCardTrigger>
 				<HoverCardContent>
-					<ProviderPreview />
+					<FreelancerPreview />
 				</HoverCardContent>
 			</HoverCard>
 		</div>
@@ -173,7 +173,7 @@ export const FastDelay: Story = {
 				@nathan.guyot
 			</HoverCardTrigger>
 			<HoverCardContent>
-				<ProviderPreview />
+				<FreelancerPreview />
 			</HoverCardContent>
 		</HoverCard>
 	),

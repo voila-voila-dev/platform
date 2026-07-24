@@ -7,8 +7,8 @@ afterEach(cleanup);
 
 describe("Textarea", () => {
 	it("renders a textarea with its slot attribute", () => {
-		const screen = render(<Textarea placeholder="Describe the mission" />);
-		const textarea = screen.getByPlaceholderText("Describe the mission");
+		const screen = render(<Textarea placeholder="Describe the project" />);
+		const textarea = screen.getByPlaceholderText("Describe the project");
 		expect(textarea.tagName).toBe("TEXTAREA");
 		expect(textarea.getAttribute("data-slot")).toBe("textarea");
 	});

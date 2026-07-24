@@ -118,13 +118,13 @@ describe("ChatMessageList", () => {
 
 	it("preserves the viewport on prepend when native scroll anchoring is missing", () => {
 		const screen = render(
-			<ChatMessageList>{[<p key="a">Ancré</p>]}</ChatMessageList>,
+			<ChatMessageList>{[<p key="a">Anchored</p>]}</ChatMessageList>,
 		);
 		const list = queryBySlot(screen, "chat-message-list") as HTMLDivElement;
 		defineScrollMetrics(list, { scrollHeight: 1000, clientHeight: 200 });
 		// Re-run the effect so it records the 1000px height as the baseline.
 		screen.rerender(
-			<ChatMessageList>{[<p key="a">Ancré</p>]}</ChatMessageList>,
+			<ChatMessageList>{[<p key="a">Anchored</p>]}</ChatMessageList>,
 		);
 		list.scrollTop = 100;
 		fireEvent.scroll(list);
@@ -132,7 +132,7 @@ describe("ChatMessageList", () => {
 		defineScrollMetrics(list, { scrollHeight: 1400, clientHeight: 200 });
 		screen.rerender(
 			<ChatMessageList>
-				{[<p key="older">Plus ancien</p>, <p key="a">Ancré</p>]}
+				{[<p key="older">Older</p>, <p key="a">Anchored</p>]}
 			</ChatMessageList>,
 		);
 		// jsdom (like Safari) lacks overflow-anchor: the list compensates by the
@@ -254,9 +254,9 @@ describe("ChatMessageText", () => {
 	});
 
 	it("renders plain text untouched when there is no URL", () => {
-		const screen = render(<ChatMessageText>Bonjour à tous</ChatMessageText>);
+		const screen = render(<ChatMessageText>Hello everyone</ChatMessageText>);
 		expect(screen.baseElement.querySelector("a")).toBeNull();
-		expect(screen.getByText("Bonjour à tous")).toBeTruthy();
+		expect(screen.getByText("Hello everyone")).toBeTruthy();
 	});
 
 	it("intercepts activation through onLinkClick instead of navigating", () => {
@@ -294,7 +294,7 @@ describe("ChatExternalLinkDialog", () => {
 				url="https://example.com/protocole"
 				onClose={onClose}
 				title="Vous quittez le site"
-				description="Faites-vous confiance à cette destination ?"
+				description="Do you trust this destination?"
 				confirmLabel="Ouvrir"
 				cancelLabel="Annuler"
 			/>,
@@ -607,12 +607,12 @@ describe("ChatConversationItem", () => {
 		const screen = render(
 			<ChatConversationItem
 				title="Support"
-				description="Notre équipe vous répond ici."
+				description="Our team replies to you here."
 				timestamp="09:10"
 			/>,
 		);
 		const item = queryBySlot(screen, "chat-conversation-item");
-		expect(item?.textContent).toContain("Notre équipe vous répond ici.");
+		expect(item?.textContent).toContain("Our team replies to you here.");
 		expect(item?.textContent).toContain("09:10");
 	});
 

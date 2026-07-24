@@ -75,7 +75,7 @@ export const WithIcon: Story = {
 export const InText: Story = {
 	render: () => (
 		<p className="text-muted-foreground text-sm">
-			Press <Kbd>⌘</Kbd> <Kbd>K</Kbd> to search missions and providers.
+			Press <Kbd>⌘</Kbd> <Kbd>K</Kbd> to search projects and freelancers.
 		</p>
 	),
 };
@@ -87,7 +87,7 @@ export const InTooltip: Story = {
 				Search
 			</TooltipTrigger>
 			<TooltipContent>
-				Search missions and providers
+				Search projects and freelancers
 				<KbdGroup>
 					<Kbd>⌘</Kbd>
 					<Kbd>K</Kbd>
@@ -113,7 +113,7 @@ export const InInputGroup: Story = {
 				<InputGroupAddon>
 					<MagnifyingGlassIcon />
 				</InputGroupAddon>
-				<InputGroupInput placeholder="Search providers..." />
+				<InputGroupInput placeholder="Search freelancers..." />
 				<InputGroupAddon align="inline-end">
 					<Kbd>⌘K</Kbd>
 				</InputGroupAddon>

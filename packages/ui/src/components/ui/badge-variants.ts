@@ -16,9 +16,9 @@ export const badgeVariants = cva({
 			default: "bg-primary text-primary-foreground [a]:hover:bg-primary/80",
 			secondary:
 				"bg-secondary text-secondary-foreground [a]:hover:bg-secondary/80",
-			provider: "bg-provider text-provider-foreground [a]:hover:bg-provider/90",
-			organization:
-				"bg-organization text-organization-foreground [a]:hover:bg-organization/90",
+			brand: "bg-brand text-brand-foreground [a]:hover:bg-brand/90",
+			highlight:
+				"bg-highlight text-highlight-foreground [a]:hover:bg-highlight/90",
 			destructive:
 				"bg-destructive/10 text-destructive focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:focus-visible:ring-destructive/40 [a]:hover:bg-destructive/20",
 			outline:
@@ -155,8 +155,8 @@ export const badgeColorForegroundClass: Record<BadgeColor, string> = {
 export const badgeVariantOptions = [
 	"default",
 	"secondary",
-	"provider",
-	"organization",
+	"brand",
+	"highlight",
 	"destructive",
 	"outline",
 	"ghost",

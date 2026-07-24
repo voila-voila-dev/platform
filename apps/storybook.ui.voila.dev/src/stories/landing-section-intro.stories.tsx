@@ -23,12 +23,12 @@ const meta = {
 	render: (args) => (
 		<SectionIntro.Root {...args}>
 			<Eyebrow.Root tone="primary" className="mb-4">
-				<Eyebrow.Label>Comment ça marche ?</Eyebrow.Label>
+				<Eyebrow.Label>How it works</Eyebrow.Label>
 			</Eyebrow.Root>
-			<SectionIntro.Title>Deux parcours, une rencontre</SectionIntro.Title>
+			<SectionIntro.Title>Two journeys, one meeting point</SectionIntro.Title>
 			<SectionIntro.Description>
-				Staffez votre événement côté club, trouvez vos missions côté
-				professionnel de santé : trois étapes suffisent.
+				Staff your project on the client side, find your next engagements on the
+				freelancer side: three steps is all it takes.
 			</SectionIntro.Description>
 		</SectionIntro.Root>
 	),
@@ -44,15 +44,15 @@ export const WithHighlight: Story = {
 	render: () => (
 		<SectionIntro.Root>
 			<Eyebrow.Root tone="primary" className="mb-4">
-				<Eyebrow.Label>Ils en parlent</Eyebrow.Label>
+				<Eyebrow.Label>In their words</Eyebrow.Label>
 			</Eyebrow.Root>
 			<SectionIntro.Title>
-				Une communauté engagée autour d'une{" "}
-				<span className="text-primary">même conviction</span>
+				A committed community around a{" "}
+				<span className="text-primary">shared conviction</span>
 			</SectionIntro.Title>
 			<SectionIntro.Description>
-				Clubs, sportifs et professionnels sont réunis autour d'une vision
-				commune : créer un écosystème plus sûr, plus performant et plus durable.
+				Clients, freelancers and partners are united around a common vision:
+				building a way of working that is fairer, more effective and durable.
 			</SectionIntro.Description>
 		</SectionIntro.Root>
 	),

@@ -1,4 +1,4 @@
-import { BuildingsIcon, StethoscopeIcon } from "@phosphor-icons/react";
+import { BuildingsIcon, PenNibIcon } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import { Eyebrow, toneOptions } from "@voila.dev/ui-landing/components/eyebrow";
 
@@ -17,7 +17,7 @@ const meta = {
 	},
 	render: (args) => (
 		<Eyebrow.Root {...args}>
-			<Eyebrow.Label>Ce en quoi nous croyons</Eyebrow.Label>
+			<Eyebrow.Label>What we believe in</Eyebrow.Label>
 		</Eyebrow.Root>
 	),
 } satisfies Meta<typeof Eyebrow.Root>;
@@ -30,9 +30,9 @@ export const Default: Story = {};
 
 export const WithPulseDot: Story = {
 	render: () => (
-		<Eyebrow.Root tone="provider">
+		<Eyebrow.Root tone="brand">
 			<Eyebrow.Dot pulse />
-			<Eyebrow.Label>Nouvelle plateforme</Eyebrow.Label>
+			<Eyebrow.Label>New platform</Eyebrow.Label>
 		</Eyebrow.Root>
 	),
 };
@@ -40,17 +40,17 @@ export const WithPulseDot: Story = {
 export const WithIcon: Story = {
 	render: () => (
 		<div className="flex flex-wrap gap-4">
-			<Eyebrow.Root tone="organization">
+			<Eyebrow.Root tone="highlight">
 				<Eyebrow.Icon>
 					<BuildingsIcon />
 				</Eyebrow.Icon>
-				<Eyebrow.Label>Pour les clubs de sport</Eyebrow.Label>
+				<Eyebrow.Label>For client teams</Eyebrow.Label>
 			</Eyebrow.Root>
-			<Eyebrow.Root tone="provider">
+			<Eyebrow.Root tone="brand">
 				<Eyebrow.Icon>
-					<StethoscopeIcon />
+					<PenNibIcon />
 				</Eyebrow.Icon>
-				<Eyebrow.Label>Pour les professionnels</Eyebrow.Label>
+				<Eyebrow.Label>For freelancers</Eyebrow.Label>
 			</Eyebrow.Root>
 		</div>
 	),

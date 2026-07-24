@@ -15,12 +15,12 @@ import * as Example from "../../../examples/ui-datatable/tables";
 ```tsx
 <DataTable
 	columns={columns}
-	data={missions}
+	data={projects}
 	toolbar={(table) => (
 		<DataTableToolbar>
 			<DataTableActions>
 				<DataTableViewOptions table={table} />
-				<DataTableExport table={table} filename="missions.csv" />
+				<DataTableExport table={table} filename="projects.csv" />
 			</DataTableActions>
 		</DataTableToolbar>
 	)}

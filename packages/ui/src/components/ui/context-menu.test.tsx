@@ -29,15 +29,15 @@ describe("ContextMenu", () => {
 			<ContextMenu defaultOpen>
 				<ContextMenuTrigger>Right-click here</ContextMenuTrigger>
 				<ContextMenuContent>
-					<ContextMenuLabel>Mission</ContextMenuLabel>
+					<ContextMenuLabel>Project</ContextMenuLabel>
 					<ContextMenuGroup>
-						<ContextMenuItem>Edit mission</ContextMenuItem>
+						<ContextMenuItem>Edit project</ContextMenuItem>
 					</ContextMenuGroup>
 				</ContextMenuContent>
 			</ContextMenu>,
 		);
 
-		const label = screen.getByText("Mission");
+		const label = screen.getByText("Project");
 		expect(label.tagName).toBe("DIV");
 		expect(label.getAttribute("data-slot")).toBe("context-menu-label");
 	});
@@ -48,13 +48,13 @@ describe("ContextMenu", () => {
 				<ContextMenuTrigger>Right-click here</ContextMenuTrigger>
 				<ContextMenuContent>
 					<ContextMenuItem variant="destructive">
-						Cancel mission
+						Cancel project
 					</ContextMenuItem>
 				</ContextMenuContent>
 			</ContextMenu>,
 		);
 
-		const destructive = screen.getByText("Cancel mission");
+		const destructive = screen.getByText("Cancel project");
 		expect(destructive.getAttribute("data-variant")).toBe("destructive");
 	});
 
@@ -64,7 +64,7 @@ describe("ContextMenu", () => {
 				<ContextMenuTrigger>Right-click here</ContextMenuTrigger>
 				<ContextMenuContent>
 					<ContextMenuItem>
-						Edit mission
+						Edit project
 						<ContextMenuShortcut>⌘E</ContextMenuShortcut>
 					</ContextMenuItem>
 				</ContextMenuContent>
@@ -72,7 +72,7 @@ describe("ContextMenu", () => {
 		);
 
 		const item = screen
-			.getByText("Edit mission")
+			.getByText("Edit project")
 			.closest("[data-slot=context-menu-item]");
 		expect(item).not.toBeNull();
 		expect(item?.className).toContain("focus:*:[svg]:text-accent-foreground");
@@ -85,7 +85,7 @@ describe("ContextMenu", () => {
 				<ContextMenuTrigger>Right-click here</ContextMenuTrigger>
 				<ContextMenuContent>
 					<ContextMenuSub>
-						<ContextMenuSubTrigger>Assign provider</ContextMenuSubTrigger>
+						<ContextMenuSubTrigger>Assign freelancer</ContextMenuSubTrigger>
 						<ContextMenuSubContent>
 							<ContextMenuItem>Nathan Guyot</ContextMenuItem>
 						</ContextMenuSubContent>
@@ -94,7 +94,7 @@ describe("ContextMenu", () => {
 			</ContextMenu>,
 		);
 
-		const subTrigger = screen.getByText("Assign provider");
+		const subTrigger = screen.getByText("Assign freelancer");
 		expect(subTrigger.getAttribute("data-slot")).toBe(
 			"context-menu-sub-trigger",
 		);
@@ -110,14 +110,14 @@ describe("ContextMenu", () => {
 				<ContextMenuTrigger>Right-click here</ContextMenuTrigger>
 				<ContextMenuContent>
 					<ContextMenuCheckboxItem defaultChecked>
-						Show confirmed missions
+						Show confirmed projects
 					</ContextMenuCheckboxItem>
 				</ContextMenuContent>
 			</ContextMenu>,
 		);
 
 		const checkbox = screen.getByRole("menuitemcheckbox", {
-			name: "Show confirmed missions",
+			name: "Show confirmed projects",
 		});
 		expect(checkbox.getAttribute("data-slot")).toBe(
 			"context-menu-checkbox-item",
@@ -134,7 +134,7 @@ describe("ContextMenu", () => {
 				<ContextMenuContent>
 					<ContextMenuRadioGroup defaultValue="date">
 						<ContextMenuRadioItem value="date">Date</ContextMenuRadioItem>
-						<ContextMenuRadioItem value="club">Club</ContextMenuRadioItem>
+						<ContextMenuRadioItem value="client">Client</ContextMenuRadioItem>
 					</ContextMenuRadioGroup>
 				</ContextMenuContent>
 			</ContextMenu>,
@@ -151,7 +151,7 @@ describe("ContextMenu", () => {
 			<ContextMenu defaultOpen>
 				<ContextMenuTrigger>Right-click here</ContextMenuTrigger>
 				<ContextMenuContent>
-					<ContextMenuItem>Edit mission</ContextMenuItem>
+					<ContextMenuItem>Edit project</ContextMenuItem>
 					<ContextMenuSeparator />
 					<ContextMenuItem>Duplicate</ContextMenuItem>
 				</ContextMenuContent>
@@ -173,7 +173,7 @@ describe("ContextMenu", () => {
 				<ContextMenuTrigger>Right-click here</ContextMenuTrigger>
 				<ContextMenuContent>
 					<ContextMenuSub defaultOpen>
-						<ContextMenuSubTrigger>Assign provider</ContextMenuSubTrigger>
+						<ContextMenuSubTrigger>Assign freelancer</ContextMenuSubTrigger>
 						<ContextMenuSubContent className="w-64">
 							<ContextMenuItem>Nathan Guyot</ContextMenuItem>
 						</ContextMenuSubContent>

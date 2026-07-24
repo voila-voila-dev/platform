@@ -14,7 +14,7 @@ inputs:
     required: false
     default: ''
   worker-name:
-    description: 'Worker name, used to build the workers.dev grep pattern (e.g. app-tries-care-pr-12)'
+    description: 'Worker name, used to build the workers.dev grep pattern (e.g. app-example-com-pr-12)'
     required: true
 outputs:
   url:

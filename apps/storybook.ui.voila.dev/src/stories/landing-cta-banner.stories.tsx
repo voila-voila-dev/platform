@@ -25,7 +25,7 @@ export const Default: Story = {
 			<CtaBanner.Description>{ctaBanner.description}</CtaBanner.Description>
 			<CtaBanner.Actions>
 				<Button size="lg" variant="secondary" className="group">
-					Je suis un club
+					I'm a client
 					<ArrowRightIcon className="h-4 w-4 transition-transform group-hover:translate-x-1" />
 				</Button>
 				<Button
@@ -33,7 +33,7 @@ export const Default: Story = {
 					variant="outline"
 					className="border-white/40 bg-transparent text-white hover:bg-white/10 hover:text-white"
 				>
-					Je suis professionnel de santé
+					I'm a freelancer
 				</Button>
 			</CtaBanner.Actions>
 		</CtaBanner.Root>

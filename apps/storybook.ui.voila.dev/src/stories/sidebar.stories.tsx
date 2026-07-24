@@ -26,8 +26,8 @@ import {
 
 const navigationItems = [
 	{ title: "Dashboard", icon: HouseIcon, isActive: true },
-	{ title: "Missions", icon: CalendarCheckIcon, badge: "12" },
-	{ title: "Providers", icon: UsersIcon },
+	{ title: "Projects", icon: CalendarCheckIcon, badge: "12" },
+	{ title: "Freelancers", icon: UsersIcon },
 	{ title: "Billing", icon: ReceiptIcon },
 ];
 
@@ -41,7 +41,7 @@ function SidebarDemo({
 			<Sidebar collapsible={collapsible}>
 				<SidebarHeader>
 					<div className="px-2 py-1.5 text-sm font-semibold group-data-[collapsible=icon]:hidden">
-						Stade Rochelais
+						Northwind Studio
 					</div>
 				</SidebarHeader>
 				<SidebarContent>

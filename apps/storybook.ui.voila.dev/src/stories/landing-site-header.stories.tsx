@@ -33,16 +33,16 @@ function HeaderExample() {
 						))}
 					</SiteHeader.NavList>
 					<SiteHeader.Actions>
-						<Button size="sm" variant="provider">
-							Je suis professionnel de santé
+						<Button size="sm" variant="brand">
+							I'm a freelancer
 						</Button>
-						<Button size="sm" variant="organization">
-							Je suis un club
+						<Button size="sm" variant="highlight">
+							I'm a client
 						</Button>
 					</SiteHeader.Actions>
 				</SiteHeader.Nav>
 
-				<SiteHeader.MobileToggle aria-label="Ouvrir ou fermer le menu" />
+				<SiteHeader.MobileToggle aria-label="Open or close the menu" />
 			</SiteHeader.Bar>
 
 			<SiteHeader.MobileMenu>
@@ -52,11 +52,11 @@ function HeaderExample() {
 					</SiteHeader.MobileNavItem>
 				))}
 				<SiteHeader.MobileActions>
-					<Button variant="provider" className="w-full">
-						Je suis professionnel de santé
+					<Button variant="brand" className="w-full">
+						I'm a freelancer
 					</Button>
-					<Button variant="organization" className="w-full">
-						Je suis un club
+					<Button variant="highlight" className="w-full">
+						I'm a client
 					</Button>
 				</SiteHeader.MobileActions>
 			</SiteHeader.MobileMenu>
@@ -70,8 +70,7 @@ export const Default: Story = {
 		<div className="min-h-75">
 			<HeaderExample />
 			<div className="p-8 text-sm text-muted-foreground">
-				Contenu de page — l'en-tête reste collé en haut avec un flou
-				d'arrière-plan.
+				Page content — the header stays pinned to the top with a backdrop blur.
 			</div>
 		</div>
 	),

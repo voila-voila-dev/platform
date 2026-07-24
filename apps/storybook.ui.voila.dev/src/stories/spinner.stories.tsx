@@ -28,7 +28,7 @@ export const InButton: Story = {
 	render: () => (
 		<Button disabled>
 			<Spinner />
-			Publishing mission
+			Publishing project
 		</Button>
 	),
 };
@@ -37,8 +37,8 @@ export const InButton: Story = {
 export const Colors: Story = {
 	render: () => (
 		<div className="flex items-center gap-4">
-			<Spinner className="text-provider" />
-			<Spinner className="text-organization" />
+			<Spinner className="text-brand" />
+			<Spinner className="text-highlight" />
 			<Spinner className="text-destructive" />
 			<Spinner className="text-muted-foreground" />
 		</div>

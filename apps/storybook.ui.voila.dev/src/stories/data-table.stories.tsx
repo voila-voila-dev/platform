@@ -20,96 +20,96 @@ import {
 } from "@voila.dev/ui-datatable/components/data-table";
 import { useMemo, useState } from "react";
 
-interface Mission {
+interface Project {
 	reference: string;
-	club: string;
+	client: string;
 	specialty: string;
 	status: "Confirmed" | "Pending" | "Completed";
 	amount: number;
 }
 
-const missions: Mission[] = [
+const projects: Project[] = [
 	{
-		reference: "MIS-001",
-		club: "Stade Rochelais",
-		specialty: "Physiotherapist",
+		reference: "PRJ-001",
+		client: "Northwind Labs",
+		specialty: "Designer",
 		status: "Confirmed",
 		amount: 180,
 	},
 	{
-		reference: "MIS-002",
-		club: "RC Vannes",
-		specialty: "Osteopath",
+		reference: "PRJ-002",
+		client: "Globex Media",
+		specialty: "Developer",
 		status: "Pending",
 		amount: 240,
 	},
 	{
-		reference: "MIS-003",
-		club: "US Carcassonne",
-		specialty: "Nurse",
+		reference: "PRJ-003",
+		client: "Initech Systems",
+		specialty: "Copywriter",
 		status: "Confirmed",
 		amount: 150,
 	},
 	{
-		reference: "MIS-004",
-		club: "Provence Rugby",
-		specialty: "Physiotherapist",
+		reference: "PRJ-004",
+		client: "Umbrella Retail",
+		specialty: "Designer",
 		status: "Completed",
 		amount: 210,
 	},
 	{
-		reference: "MIS-005",
-		club: "Aviron Bayonnais",
-		specialty: "Sports doctor",
+		reference: "PRJ-005",
+		client: "Stark Industries",
+		specialty: "Data analyst",
 		status: "Pending",
 		amount: 320,
 	},
 	{
-		reference: "MIS-006",
-		club: "Biarritz Olympique",
-		specialty: "Physiotherapist",
+		reference: "PRJ-006",
+		client: "Wayne Ventures",
+		specialty: "Designer",
 		status: "Confirmed",
 		amount: 195,
 	},
 	{
-		reference: "MIS-007",
-		club: "Colomiers Rugby",
-		specialty: "Osteopath",
+		reference: "PRJ-007",
+		client: "Hooli Cloud",
+		specialty: "Developer",
 		status: "Completed",
 		amount: 225,
 	},
 	{
-		reference: "MIS-008",
-		club: "Stade Montois",
-		specialty: "Nurse",
+		reference: "PRJ-008",
+		client: "Pied Piper",
+		specialty: "Copywriter",
 		status: "Pending",
 		amount: 140,
 	},
 	{
-		reference: "MIS-009",
-		club: "USON Nevers",
-		specialty: "Physiotherapist",
+		reference: "PRJ-009",
+		client: "Vandelay Studio",
+		specialty: "Designer",
 		status: "Confirmed",
 		amount: 185,
 	},
 	{
-		reference: "MIS-010",
-		club: "Rouen Normandie",
-		specialty: "Sports doctor",
+		reference: "PRJ-010",
+		client: "Wonka Digital",
+		specialty: "Data analyst",
 		status: "Completed",
 		amount: 300,
 	},
 	{
-		reference: "MIS-011",
-		club: "Soyaux Angoulême",
-		specialty: "Osteopath",
+		reference: "PRJ-011",
+		client: "Dunder Mifflin",
+		specialty: "Developer",
 		status: "Pending",
 		amount: 230,
 	},
 	{
-		reference: "MIS-012",
-		club: "Valence Romans",
-		specialty: "Nurse",
+		reference: "PRJ-012",
+		client: "Massive Dynamic",
+		specialty: "Copywriter",
 		status: "Confirmed",
 		amount: 155,
 	},
@@ -121,9 +121,9 @@ const statusColor = {
 	Completed: "gray",
 } as const;
 
-const columns: ColumnDef<Mission>[] = [
+const columns: ColumnDef<Project>[] = [
 	{ accessorKey: "reference", header: "Reference", size: 110 },
-	{ accessorKey: "club", header: "Club" },
+	{ accessorKey: "client", header: "Client" },
 	{ accessorKey: "specialty", header: "Specialty" },
 	{
 		accessorKey: "status",
@@ -139,7 +139,7 @@ const columns: ColumnDef<Mission>[] = [
 		header: () => <span className="block w-full text-right">Amount</span>,
 		cell: ({ row }) => (
 			<span className="block text-right tabular-nums">
-				{row.original.amount.toFixed(2)} EUR
+				{row.original.amount.toFixed(2)} USD
 			</span>
 		),
 	},
@@ -149,15 +149,15 @@ const meta = {
 	title: "DataTable/DataTable",
 	component: DataTable,
 	tags: ["autodocs"],
-	args: { columns, data: missions },
-} satisfies Meta<typeof DataTable<Mission, unknown>>;
+	args: { columns, data: projects },
+} satisfies Meta<typeof DataTable<Project, unknown>>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-	render: () => <DataTable columns={columns} data={missions.slice(0, 5)} />,
+	render: () => <DataTable columns={columns} data={projects.slice(0, 5)} />,
 };
 
 /**
@@ -174,10 +174,10 @@ function FullRecipeExample() {
 
 	const filtered = useMemo(
 		() =>
-			missions.filter(
-				(mission) =>
-					(status === null || mission.status === status) &&
-					`${mission.reference} ${mission.club} ${mission.specialty}`
+			projects.filter(
+				(project) =>
+					(status === null || project.status === status) &&
+					`${project.reference} ${project.client} ${project.specialty}`
 						.toLowerCase()
 						.includes(search.toLowerCase()),
 			),
@@ -188,19 +188,19 @@ function FullRecipeExample() {
 	return (
 		<DataTable
 			columns={[
-				dataTableSelectionColumn<Mission>({
-					selectAllLabel: "Select all missions",
-					selectRowLabel: (mission) => `Select ${mission.reference}`,
+				dataTableSelectionColumn<Project>({
+					selectAllLabel: "Select all projects",
+					selectRowLabel: (project) => `Select ${project.reference}`,
 				}),
 				...columns,
 			]}
 			data={pageRows}
 			enableRowSelection
-			getRowId={(mission) => mission.reference}
+			getRowId={(project) => project.reference}
 			toolbar={
 				<DataTableToolbar>
 					<DataTableSearch
-						placeholder="Search missions..."
+						placeholder="Search projects..."
 						value={search}
 						onChange={(event) => {
 							setSearch(event.target.value);
@@ -254,7 +254,7 @@ export const StickyHeader: Story = {
 	render: () => (
 		<DataTable
 			columns={columns}
-			data={missions}
+			data={projects}
 			stickyHeader
 			containerClassName="max-h-64"
 		/>
@@ -263,7 +263,7 @@ export const StickyHeader: Story = {
 
 export const Loading: Story = {
 	render: () => (
-		<DataTable columns={columns} data={missions.slice(0, 5)} loading />
+		<DataTable columns={columns} data={projects.slice(0, 5)} loading />
 	),
 };
 
@@ -278,17 +278,17 @@ export const MobileCards: Story = {
 	render: () => (
 		<DataTable
 			columns={columns}
-			data={missions.slice(0, 5)}
-			initialSorting={[{ id: "club", desc: false }]}
-			renderMobileCard={(mission) => (
+			data={projects.slice(0, 5)}
+			initialSorting={[{ id: "client", desc: false }]}
+			renderMobileCard={(project) => (
 				<div className="flex items-center justify-between gap-2">
 					<div>
-						<p className="font-medium">{mission.club}</p>
+						<p className="font-medium">{project.client}</p>
 						<p className="text-muted-foreground text-sm">
-							{mission.reference} · {mission.specialty}
+							{project.reference} · {project.specialty}
 						</p>
 					</div>
-					<Badge color={statusColor[mission.status]}>{mission.status}</Badge>
+					<Badge color={statusColor[project.status]}>{project.status}</Badge>
 				</div>
 			)}
 		/>

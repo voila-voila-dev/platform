@@ -26,7 +26,7 @@ function ControlledDateTimePicker() {
 		<DateTimePicker
 			value={value}
 			onValueChange={setValue}
-			placeholder="Mission start"
+			placeholder="Project start"
 			calendarProps={{ defaultMonth: new Date(2026, 5, 1) }}
 		/>
 	);
@@ -56,7 +56,7 @@ function FrenchLocaleDateTimePicker() {
 			locale="fr-FR"
 			value={value}
 			onValueChange={setValue}
-			placeholder="Début de la mission"
+			placeholder="Project start"
 		/>
 	);
 }
@@ -85,12 +85,12 @@ export const FineStep: Story = {
 };
 
 export const Disabled: Story = {
-	render: () => <DateTimePicker disabled placeholder="Mission start" />,
+	render: () => <DateTimePicker disabled placeholder="Project start" />,
 };
 
 export const Invalid: Story = {
 	render: () => (
-		<DateTimePicker aria-invalid placeholder="Mission start (required)" />
+		<DateTimePicker aria-invalid placeholder="Project start (required)" />
 	),
 };
 
@@ -119,7 +119,7 @@ function ControlledResponsiveDateTimeInput() {
 			<ResponsiveDateTimeInput
 				value={value}
 				onValueChange={setValue}
-				placeholder="Mission start"
+				placeholder="Project start"
 				calendarProps={{ defaultMonth: new Date(2026, 5, 1) }}
 			/>
 		</div>
@@ -138,12 +138,12 @@ function ControlledDateTimeRangeInput() {
 	const [range, setRange] = useState<DateTimeRange>({ start: null, end: null });
 
 	// Picking a start seeds the end an hour later and bounds it to never fall before
-	// the start — the shape a mission's "Début"/"Fin" shift needs.
+	// the start — the shape a project's "Start"/"End" shift needs.
 	return (
 		<div className="w-full max-w-xl">
 			<DateTimeRangeInput
-				startLabel="Début"
-				endLabel="Fin"
+				startLabel="Start"
+				endLabel="End"
 				value={range}
 				onValueChange={setRange}
 			/>
@@ -166,8 +166,8 @@ function FrenchLocaleDateTimeRangeInput() {
 		<div className="w-full max-w-xl">
 			<DateTimeRangeInput
 				locale="fr-FR"
-				startLabel="Début"
-				endLabel="Fin"
+				startLabel="Start"
+				endLabel="End"
 				value={range}
 				onValueChange={setRange}
 			/>
@@ -183,12 +183,11 @@ function ControlledShiftTimeRangeInput() {
 	const [range, setRange] = useState<DateTimeRange>({ start: null, end: null });
 
 	// A single field: pick a day and a start/end time in one popover; an end at or
-	// before the start rolls to the next day (overnight). The shape a mission shift needs.
+	// before the start rolls to the next day (overnight). The shape a project shift needs.
 	return (
 		<div className="w-full max-w-sm">
 			<ShiftTimeRangeInput
-				locale="fr-FR"
-				placeholder="Choisir un jour et un horaire"
+				placeholder="Pick a day and a time slot"
 				value={range}
 				onValueChange={setRange}
 			/>
@@ -209,11 +208,7 @@ function PreselectedShiftTimeRangeInput() {
 
 	return (
 		<div className="w-full max-w-sm">
-			<ShiftTimeRangeInput
-				locale="fr-FR"
-				value={range}
-				onValueChange={setRange}
-			/>
+			<ShiftTimeRangeInput value={range} onValueChange={setRange} />
 		</div>
 	);
 }

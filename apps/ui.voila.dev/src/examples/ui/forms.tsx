@@ -32,10 +32,10 @@ import {
 	FieldSeparator,
 } from "@voila.dev/ui/components/field";
 import {
+	businessIdMask,
 	FormattedInput,
-	frenchPhoneMask,
-	rppsMask,
-	siretMask,
+	idNumberMask,
+	phoneMask,
 } from "@voila.dev/ui/components/formatted-input";
 import { IconPicker } from "@voila.dev/ui/components/icon-picker";
 import { ImageUploadField } from "@voila.dev/ui/components/image-upload-field";
@@ -112,33 +112,31 @@ export function QuickStartHero() {
 	return (
 		<Card className="w-full max-w-md">
 			<CardHeader>
-				<CardTitle>Publish a mission</CardTitle>
+				<CardTitle>Publish a project</CardTitle>
 				<CardDescription>
-					Providers matching the specialty are notified when it goes live.
+					Freelancers matching the role are notified when it goes live.
 				</CardDescription>
 			</CardHeader>
 			<CardContent>
 				<FieldGroup>
 					<Field>
-						<FieldLabel htmlFor="qs-mission-title">Title</FieldLabel>
+						<FieldLabel htmlFor="qs-project-title">Title</FieldLabel>
 						<Input
-							id="qs-mission-title"
-							defaultValue="Physiotherapist — match day"
+							id="qs-project-title"
+							defaultValue="Product designer — launch week"
 						/>
 					</Field>
 					<div className="grid grid-cols-2 gap-4">
 						<Field>
-							<FieldLabel>Specialty</FieldLabel>
-							<Select defaultValue="physiotherapist">
+							<FieldLabel>Role</FieldLabel>
+							<Select defaultValue="designer">
 								<SelectTrigger className="w-full">
 									<SelectValue />
 								</SelectTrigger>
 								<SelectContent>
-									<SelectItem value="physiotherapist">
-										Physiotherapist
-									</SelectItem>
-									<SelectItem value="osteopath">Osteopath</SelectItem>
-									<SelectItem value="nurse">Nurse</SelectItem>
+									<SelectItem value="designer">Designer</SelectItem>
+									<SelectItem value="developer">Developer</SelectItem>
+									<SelectItem value="writer">Copywriter</SelectItem>
 								</SelectContent>
 							</Select>
 						</Field>
@@ -147,14 +145,14 @@ export function QuickStartHero() {
 							<DatePicker
 								value={date}
 								onValueChange={setDate}
-								placeholder="Mission date"
+								placeholder="Project date"
 								calendarProps={{ defaultMonth: new Date(2026, 5, 1) }}
 							/>
 						</Field>
 					</div>
 					<div className="flex items-center gap-2">
-						<Switch id="qs-mission-urgent" defaultChecked />
-						<Label htmlFor="qs-mission-urgent">Mark as urgent</Label>
+						<Switch id="qs-project-urgent" defaultChecked />
+						<Label htmlFor="qs-project-urgent">Mark as urgent</Label>
 					</div>
 				</FieldGroup>
 			</CardContent>
@@ -173,10 +171,10 @@ export function QuickStartHero() {
 export function InputExample() {
 	return (
 		<div className="flex w-full max-w-72 flex-col gap-3">
-			<Input placeholder="Search providers" />
+			<Input placeholder="Search freelancers" />
 			<Input type="email" defaultValue="not-an-email" aria-invalid />
-			<Input readOnly defaultValue="RPPS 10003456789" />
-			<Input disabled placeholder="Mission location" />
+			<Input readOnly defaultValue="INV-2026-00421" />
+			<Input disabled placeholder="Project location" />
 		</div>
 	);
 }
@@ -185,7 +183,7 @@ export function TextareaExample() {
 	return (
 		<Textarea
 			className="w-full max-w-96"
-			defaultValue="Pitch-side physiotherapy cover for the Saturday home match. Arrive one hour before kick-off for taping and warm-up support."
+			defaultValue="On-site design support for the launch week. Join the kickoff call one hour before the demo for briefing and final checks."
 		/>
 	);
 }
@@ -193,12 +191,8 @@ export function TextareaExample() {
 export function LabelExample() {
 	return (
 		<div className="grid w-full max-w-72 gap-2">
-			<Label htmlFor="organization-email">Organization email</Label>
-			<Input
-				id="organization-email"
-				type="email"
-				placeholder="contact@club.fr"
-			/>
+			<Label htmlFor="workspace-email">Workspace email</Label>
+			<Input id="workspace-email" type="email" placeholder="team@example.com" />
 		</div>
 	);
 }
@@ -208,10 +202,10 @@ export function FieldExample() {
 		<div className="w-full max-w-96">
 			<FieldGroup>
 				<Field>
-					<FieldLabel htmlFor="organization-name">Club name</FieldLabel>
-					<Input id="organization-name" placeholder="Clermont Rugby Club" />
+					<FieldLabel htmlFor="workspace-name">Company name</FieldLabel>
+					<Input id="workspace-name" placeholder="Northwind Trading Co." />
 					<FieldDescription>
-						Shown to providers on every mission you publish.
+						Shown to freelancers on every project you publish.
 					</FieldDescription>
 				</Field>
 				<Field data-invalid>
@@ -226,10 +220,10 @@ export function FieldExample() {
 				</Field>
 				<FieldSeparator>Optional</FieldSeparator>
 				<Field>
-					<FieldLabel htmlFor="mission-notes">Mission notes</FieldLabel>
+					<FieldLabel htmlFor="project-notes">Project notes</FieldLabel>
 					<Textarea
-						id="mission-notes"
-						placeholder="Access instructions, parking, equipment…"
+						id="project-notes"
+						placeholder="Access instructions, credentials, tooling…"
 					/>
 				</Field>
 			</FieldGroup>
@@ -244,13 +238,13 @@ export function InputGroupExample() {
 				<InputGroupAddon>
 					<MagnifyingGlassIcon />
 				</InputGroupAddon>
-				<InputGroupInput placeholder="Search providers…" />
+				<InputGroupInput placeholder="Search freelancers…" />
 			</InputGroup>
 			<InputGroup>
 				<InputGroupAddon>
 					<InputGroupText>https://</InputGroupText>
 				</InputGroupAddon>
-				<InputGroupInput placeholder="club-website.example" />
+				<InputGroupInput placeholder="your-company.example" />
 			</InputGroup>
 			<InputGroup>
 				<InputGroupInput readOnly defaultValue="https://acme.dev/invite/8f2a" />
@@ -285,9 +279,9 @@ export function InputOTPExample() {
 export function FormattedInputExample() {
 	return (
 		<div className="flex w-full max-w-72 flex-col gap-3">
-			<FormattedInput mask={siretMask} placeholder="123 456 789 00012" />
-			<FormattedInput mask={rppsMask} defaultValue="10003456789" />
-			<FormattedInput mask={frenchPhoneMask} defaultValue="0612345678" />
+			<FormattedInput mask={businessIdMask} placeholder="123 456 789 00012" />
+			<FormattedInput mask={idNumberMask} defaultValue="10003456789" />
+			<FormattedInput mask={phoneMask} defaultValue="0612345678" />
 		</div>
 	);
 }
@@ -299,7 +293,7 @@ export function MoneyInputExample() {
 			<MoneyInput
 				value={value}
 				onValueChange={setValue}
-				currency="EUR"
+				currency="USD"
 				currencyLabel="Currency"
 			/>
 		</div>
@@ -308,7 +302,7 @@ export function MoneyInputExample() {
 
 export function TranslationInputExample() {
 	const [value, setValue] = useState<Record<string, string>>({
-		"fr-FR": "Couverture kiné du match",
+		"fr-FR": "Refonte de la page d'accueil",
 		"en-GB": "",
 	});
 	const [locale, setLocale] = useState("fr-FR");
@@ -320,7 +314,7 @@ export function TranslationInputExample() {
 				locale={locale}
 				locales={["fr-FR", "en-GB"]}
 				onLocaleChange={setLocale}
-				localeLabel="Langue"
+				localeLabel="Language"
 				localeCodes={{ "fr-FR": "FR", "en-GB": "EN" }}
 			/>
 		</div>
@@ -335,35 +329,35 @@ export function CheckboxExample() {
 	return (
 		<div className="flex flex-col gap-3">
 			<div className="flex items-start gap-3">
-				<Checkbox id="mission-terms" />
+				<Checkbox id="project-terms" />
 				<div className="grid gap-1 text-sm">
-					<Label htmlFor="mission-terms">Accept mission terms</Label>
+					<Label htmlFor="project-terms">Accept project terms</Label>
 					<p className="text-muted-foreground">
 						You confirm your availability for the full duration.
 					</p>
 				</div>
 			</div>
 			<div className="flex items-center gap-3">
-				<Checkbox id="mission-notifications" defaultChecked />
-				<Label htmlFor="mission-notifications">Notify me about missions</Label>
+				<Checkbox id="project-notifications" defaultChecked />
+				<Label htmlFor="project-notifications">Notify me about projects</Label>
 			</div>
 			<div className="flex items-center gap-3">
-				<Checkbox id="mission-partial" indeterminate />
-				<Label htmlFor="mission-partial">Some specialties selected</Label>
+				<Checkbox id="project-partial" indeterminate />
+				<Label htmlFor="project-partial">Some skills selected</Label>
 			</div>
 		</div>
 	);
 }
 
 const skills = [
-	{ name: "physiotherapy", label: "Physiotherapy" },
-	{ name: "osteopathy", label: "Osteopathy" },
-	{ name: "nursing", label: "Nursing" },
+	{ name: "design", label: "Design" },
+	{ name: "development", label: "Development" },
+	{ name: "copywriting", label: "Copywriting" },
 ];
 
 export function CheckboxGroupExample() {
 	return (
-		<CheckboxGroup defaultValue={["physiotherapy"]} className="w-full max-w-64">
+		<CheckboxGroup defaultValue={["design"]} className="w-full max-w-64">
 			{skills.map((skill) => (
 				<div key={skill.name} className="flex items-center gap-2">
 					<Checkbox name={skill.name} id={`skills-${skill.name}`} />
@@ -376,18 +370,15 @@ export function CheckboxGroupExample() {
 
 export function RadioGroupExample() {
 	return (
-		<RadioGroup defaultValue="physiotherapist" className="w-full max-w-64">
+		<RadioGroup defaultValue="designer" className="w-full max-w-64">
 			{[
-				{ value: "physiotherapist", label: "Physiotherapist" },
-				{ value: "osteopath", label: "Osteopath" },
-				{ value: "nurse", label: "Nurse" },
+				{ value: "designer", label: "Designer" },
+				{ value: "developer", label: "Developer" },
+				{ value: "writer", label: "Copywriter" },
 			].map((option) => (
 				<div key={option.value} className="flex items-center gap-2">
-					<RadioGroupItem
-						value={option.value}
-						id={`profession-${option.value}`}
-					/>
-					<Label htmlFor={`profession-${option.value}`}>{option.label}</Label>
+					<RadioGroupItem value={option.value} id={`role-${option.value}`} />
+					<Label htmlFor={`role-${option.value}`}>{option.label}</Label>
 				</div>
 			))}
 		</RadioGroup>
@@ -398,8 +389,8 @@ export function SwitchExample() {
 	return (
 		<div className="flex flex-col gap-4">
 			<div className="flex items-center gap-2">
-				<Switch id="notify-missions" defaultChecked />
-				<Label htmlFor="notify-missions">Notify me about new missions</Label>
+				<Switch id="notify-projects" defaultChecked />
+				<Label htmlFor="notify-projects">Notify me about new projects</Label>
 			</div>
 			<div className="flex items-center gap-4">
 				<Switch size="sm" defaultChecked />
@@ -414,18 +405,18 @@ export function SelectExample() {
 	return (
 		<Select>
 			<SelectTrigger className="w-56">
-				<SelectValue placeholder="Select a specialty" />
+				<SelectValue placeholder="Select a role" />
 			</SelectTrigger>
 			<SelectContent>
 				<SelectGroup>
-					<SelectLabel>Rehabilitation</SelectLabel>
-					<SelectItem value="physiotherapist">Physiotherapist</SelectItem>
-					<SelectItem value="osteopath">Osteopath</SelectItem>
+					<SelectLabel>Creative</SelectLabel>
+					<SelectItem value="designer">Designer</SelectItem>
+					<SelectItem value="writer">Copywriter</SelectItem>
 				</SelectGroup>
 				<SelectGroup>
-					<SelectLabel>Medical</SelectLabel>
-					<SelectItem value="nurse">Nurse</SelectItem>
-					<SelectItem value="sports-doctor">Sports doctor</SelectItem>
+					<SelectLabel>Technical</SelectLabel>
+					<SelectItem value="developer">Developer</SelectItem>
+					<SelectItem value="data-analyst">Data analyst</SelectItem>
 				</SelectGroup>
 			</SelectContent>
 		</Select>
@@ -434,60 +425,64 @@ export function SelectExample() {
 
 export function NativeSelectExample() {
 	return (
-		<NativeSelect defaultValue="rugby" className="w-56">
-			<NativeSelectOptGroup label="Team sports">
-				<NativeSelectOption value="rugby">Rugby</NativeSelectOption>
-				<NativeSelectOption value="football">Football</NativeSelectOption>
+		<NativeSelect defaultValue="branding" className="w-56">
+			<NativeSelectOptGroup label="Creative work">
+				<NativeSelectOption value="branding">Branding</NativeSelectOption>
+				<NativeSelectOption value="illustration">
+					Illustration
+				</NativeSelectOption>
 			</NativeSelectOptGroup>
-			<NativeSelectOptGroup label="Individual sports">
-				<NativeSelectOption value="athletics">Athletics</NativeSelectOption>
-				<NativeSelectOption value="tennis">Tennis</NativeSelectOption>
+			<NativeSelectOptGroup label="Technical work">
+				<NativeSelectOption value="frontend">Frontend</NativeSelectOption>
+				<NativeSelectOption value="data">Data analysis</NativeSelectOption>
 			</NativeSelectOptGroup>
 		</NativeSelect>
 	);
 }
 
 export function ResponsiveSelectExample() {
-	const [value, setValue] = useState("physiotherapist");
+	const [value, setValue] = useState("designer");
 	return (
 		<div className="w-full max-w-72">
 			<ResponsiveSelect.Root value={value} onValueChange={setValue}>
 				<ResponsiveSelect.Trigger className="w-full">
-					<ResponsiveSelect.Value placeholder="Select a specialty" />
+					<ResponsiveSelect.Value placeholder="Select a role" />
 				</ResponsiveSelect.Trigger>
 				<ResponsiveSelect.Content>
-					<ResponsiveSelect.Item value="physiotherapist">
-						Physiotherapist
+					<ResponsiveSelect.Item value="designer">
+						Designer
 					</ResponsiveSelect.Item>
-					<ResponsiveSelect.Item value="osteopath">
-						Osteopath
+					<ResponsiveSelect.Item value="developer">
+						Developer
 					</ResponsiveSelect.Item>
-					<ResponsiveSelect.Item value="nurse">Nurse</ResponsiveSelect.Item>
+					<ResponsiveSelect.Item value="writer">
+						Copywriter
+					</ResponsiveSelect.Item>
 				</ResponsiveSelect.Content>
 			</ResponsiveSelect.Root>
 		</div>
 	);
 }
 
-const specialties = [
-	"Physiotherapist",
-	"Osteopath",
-	"Nurse",
-	"Sports doctor",
-	"Podiatrist",
-	"Dietitian",
+const roles = [
+	"Designer",
+	"Developer",
+	"Copywriter",
+	"Data analyst",
+	"Consultant",
+	"Illustrator",
 ];
 
 export function ComboboxExample() {
 	return (
-		<Combobox items={specialties}>
-			<ComboboxInput placeholder="Select a specialty" className="w-64" />
+		<Combobox items={roles}>
+			<ComboboxInput placeholder="Select a role" className="w-64" />
 			<ComboboxContent>
-				<ComboboxEmpty>No specialty found.</ComboboxEmpty>
+				<ComboboxEmpty>No role found.</ComboboxEmpty>
 				<ComboboxList>
-					{(specialty: string) => (
-						<ComboboxItem key={specialty} value={specialty}>
-							{specialty}
+					{(role: string) => (
+						<ComboboxItem key={role} value={role}>
+							{role}
 						</ComboboxItem>
 					)}
 				</ComboboxList>
@@ -501,7 +496,7 @@ export function SliderExample() {
 		<div className="flex w-full max-w-72 flex-col gap-6">
 			<Slider defaultValue={50} />
 			<div className="space-y-2">
-				<p className="font-medium text-sm">Hourly rate (EUR)</p>
+				<p className="font-medium text-sm">Hourly rate (USD)</p>
 				<Slider defaultValue={[35, 65]} min={20} max={100} />
 			</div>
 		</div>
@@ -511,7 +506,7 @@ export function SliderExample() {
 export function ToggleExample() {
 	return (
 		<>
-			<Toggle aria-label="Mark provider as favorite">
+			<Toggle aria-label="Mark freelancer as favorite">
 				<StarIcon
 					data-icon="inline-start"
 					className="group-data-pressed/toggle:hidden"
@@ -540,14 +535,12 @@ export function ToggleGroupExample() {
 			</ToggleGroup>
 			<ToggleGroup
 				multiple
-				defaultValue={["physiotherapist", "nurse"]}
+				defaultValue={["designer", "writer"]}
 				variant="outline"
 			>
-				<ToggleGroupItem value="physiotherapist">
-					Physiotherapist
-				</ToggleGroupItem>
-				<ToggleGroupItem value="osteopath">Osteopath</ToggleGroupItem>
-				<ToggleGroupItem value="nurse">Nurse</ToggleGroupItem>
+				<ToggleGroupItem value="designer">Designer</ToggleGroupItem>
+				<ToggleGroupItem value="developer">Developer</ToggleGroupItem>
+				<ToggleGroupItem value="writer">Copywriter</ToggleGroupItem>
 			</ToggleGroup>
 		</div>
 	);
@@ -584,7 +577,7 @@ export function ColorPickerExample() {
 }
 
 export function IconPickerExample() {
-	const [iconName, setIconName] = useState<string | null>("FirstAidKitIcon");
+	const [iconName, setIconName] = useState<string | null>("PaletteIcon");
 	return (
 		<div className="w-full max-w-64">
 			<IconPicker
@@ -632,7 +625,7 @@ export function DatePickerExample() {
 		<DatePicker
 			value={date}
 			onValueChange={setDate}
-			placeholder="Mission date"
+			placeholder="Project date"
 			calendarProps={{ defaultMonth: new Date(2026, 5, 1) }}
 		/>
 	);
@@ -644,7 +637,7 @@ export function DateTimePickerExample() {
 		<DateTimePicker
 			value={value}
 			onValueChange={setValue}
-			placeholder="Mission start"
+			placeholder="Project start"
 			calendarProps={{ defaultMonth: new Date(2026, 5, 1) }}
 		/>
 	);
@@ -683,9 +676,9 @@ export function ImageUploadFieldExample() {
 }
 
 const onboardingSteps = [
-	{ step: 1, title: "Profil" },
-	{ step: 2, title: "Disponibilités" },
-	{ step: 3, title: "Validation" },
+	{ step: 1, title: "Profile" },
+	{ step: 2, title: "Availability" },
+	{ step: 3, title: "Review" },
 ];
 
 export function StepperExample() {

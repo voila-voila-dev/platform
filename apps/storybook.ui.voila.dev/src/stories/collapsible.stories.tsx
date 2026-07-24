@@ -44,7 +44,7 @@ export const Default: Story = {
 		<Collapsible {...args} className="flex w-80 flex-col gap-2">
 			<div className="flex items-center justify-between gap-4 px-1">
 				<h4 className="text-sm font-medium">
-					3 providers applied to this mission
+					3 freelancers applied to this project
 				</h4>
 				<CollapsibleTrigger
 					render={<Button variant="ghost" size="icon-sm" />}
@@ -55,14 +55,14 @@ export const Default: Story = {
 				</CollapsibleTrigger>
 			</div>
 			<div className="rounded-lg border px-3 py-2 text-sm">
-				Camille Dubois — Physiotherapist
+				Camille Dubois — Designer
 			</div>
 			<CollapsibleContent className="flex flex-col gap-2">
 				<div className="rounded-lg border px-3 py-2 text-sm">
-					Lea Martin — Osteopath
+					Lea Martin — Developer
 				</div>
 				<div className="rounded-lg border px-3 py-2 text-sm">
-					Hugo Bernard — Nurse
+					Hugo Bernard — Copywriter
 				</div>
 			</CollapsibleContent>
 		</Collapsible>
@@ -73,21 +73,21 @@ export const DefaultOpen: Story = {
 	render: () => (
 		<Collapsible defaultOpen className="flex w-80 flex-col gap-2">
 			<div className="flex items-center justify-between gap-4 px-1">
-				<h4 className="text-sm font-medium">Upcoming missions</h4>
+				<h4 className="text-sm font-medium">Upcoming projects</h4>
 				<CollapsibleTrigger
 					render={<Button variant="ghost" size="icon-sm" />}
 					className="group/collapsible-trigger"
-					aria-label="Toggle missions"
+					aria-label="Toggle projects"
 				>
 					<TriggerIcon />
 				</CollapsibleTrigger>
 			</div>
 			<CollapsibleContent className="flex flex-col gap-2">
 				<div className="rounded-lg border px-3 py-2 text-sm">
-					Match day coverage — June 20
+					Website redesign — June 20
 				</div>
 				<div className="rounded-lg border px-3 py-2 text-sm">
-					Youth tournament — June 27
+					Brand refresh — June 27
 				</div>
 			</CollapsibleContent>
 		</Collapsible>
@@ -99,7 +99,7 @@ function ControlledExample() {
 	return (
 		<div className="flex w-80 flex-col gap-4">
 			<Button variant="outline" size="sm" onClick={() => setOpen(!open)}>
-				{open ? "Hide" : "Show"} mission details from outside
+				{open ? "Hide" : "Show"} project details from outside
 			</Button>
 			<Collapsible
 				open={open}
@@ -107,18 +107,18 @@ function ControlledExample() {
 				className="flex flex-col gap-2"
 			>
 				<div className="flex items-center justify-between gap-4 px-1">
-					<h4 className="text-sm font-medium">Mission details</h4>
+					<h4 className="text-sm font-medium">Project details</h4>
 					<CollapsibleTrigger
 						render={<Button variant="ghost" size="icon-sm" />}
 						className="group/collapsible-trigger"
-						aria-label="Toggle mission details"
+						aria-label="Toggle project details"
 					>
 						<TriggerIcon />
 					</CollapsibleTrigger>
 				</div>
 				<CollapsibleContent className="flex flex-col gap-2">
 					<div className="rounded-lg border px-3 py-2 text-sm">
-						Stade Toulousain — Physiotherapy coverage, June 20
+						Northwind — Design engagement, June 20
 					</div>
 				</CollapsibleContent>
 			</Collapsible>
@@ -145,7 +145,7 @@ export const Disabled: Story = {
 			</div>
 			<CollapsibleContent className="flex flex-col gap-2">
 				<div className="rounded-lg border px-3 py-2 text-sm">
-					Locked while the mission is under review.
+					Locked while the project is under review.
 				</div>
 			</CollapsibleContent>
 		</Collapsible>
@@ -157,12 +157,12 @@ export const KeepMounted: Story = {
 		<Collapsible className="flex w-80 flex-col gap-2">
 			<div className="flex items-center justify-between gap-4 px-1">
 				<h4 className="text-sm font-medium">
-					Mission brief (kept in the DOM when closed)
+					Project brief (kept in the DOM when closed)
 				</h4>
 				<CollapsibleTrigger
 					render={<Button variant="ghost" size="icon-sm" />}
 					className="group/collapsible-trigger"
-					aria-label="Toggle mission brief"
+					aria-label="Toggle project brief"
 				>
 					<TriggerIcon />
 				</CollapsibleTrigger>

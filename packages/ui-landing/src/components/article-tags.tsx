@@ -17,7 +17,7 @@ function Tag({ className, ...props }: React.ComponentProps<"span">) {
 		<span
 			data-slot="article-tag"
 			className={cn(
-				"inline-flex items-center rounded-full bg-provider/10 px-2.5 py-0.5 text-xs font-medium text-provider transition-colors",
+				"inline-flex items-center rounded-full bg-brand/10 px-2.5 py-0.5 text-xs font-medium text-brand transition-colors",
 				className,
 			)}
 			{...props}

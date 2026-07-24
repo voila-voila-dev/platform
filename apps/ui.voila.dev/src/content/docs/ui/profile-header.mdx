@@ -15,13 +15,13 @@ import * as Example from "../../../examples/ui/display";
 ```tsx
 <ProfileHeader
 	name="Camille Dubois"
-	headline="Kinésithérapeute du sport"
-	theme="provider"
+	headline="Senior product designer"
+	theme="brand"
 	avatar={{ src: user.avatarUrl, name: user.name }}
-	badges={<Badge variant="provider">Identité vérifiée</Badge>}
-	actions={<Button size="sm">Contacter</Button>}
+	badges={<Badge variant="brand">Identity verified</Badge>}
+	actions={<Button size="sm">Contact</Button>}
 />
 ```
 
-`theme` picks the product surface — `provider` or `organization` — which tints
+`theme` picks the accent — `brand` or `highlight` — which tints
 the gradient used when there is no cover image.

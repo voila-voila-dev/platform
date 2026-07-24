@@ -11,16 +11,16 @@ import { Chart, type ChartConfig } from "@voila.dev/ui-chart/components/chart";
 import type * as React from "react";
 
 const sparklineData = [
-	{ month: "January", missions: 24, cancellations: 31 },
-	{ month: "February", missions: 31, cancellations: 27 },
-	{ month: "March", missions: 28, cancellations: 24 },
-	{ month: "April", missions: 35, cancellations: 22 },
-	{ month: "May", missions: 42, cancellations: 19 },
-	{ month: "June", missions: 38, cancellations: 17 },
+	{ month: "January", projects: 24, cancellations: 31 },
+	{ month: "February", projects: 31, cancellations: 27 },
+	{ month: "March", projects: 28, cancellations: 24 },
+	{ month: "April", projects: 35, cancellations: 22 },
+	{ month: "May", projects: 42, cancellations: 19 },
+	{ month: "June", projects: 38, cancellations: 17 },
 ];
 
 const sparklineConfig = {
-	missions: { label: "Missions published", color: "var(--chart-1)" },
+	projects: { label: "Projects published", color: "var(--chart-1)" },
 	cancellations: { label: "Cancellations", color: "var(--chart-2)" },
 } satisfies ChartConfig;
 
@@ -42,7 +42,7 @@ const sparklineMarks = {
  * margins collapse to nothing and the card's own padding does the framing.
  */
 function Sparkline({
-	seriesKey = "missions",
+	seriesKey = "projects",
 	mark = "area",
 	interactive = false,
 }: {
@@ -83,7 +83,7 @@ export const Default: Story = {
 		children: (
 			<>
 				<StatCardHeader>
-					<StatCardLabel>Missions published</StatCardLabel>
+					<StatCardLabel>Projects published</StatCardLabel>
 					<StatCardDelta trend="up">+12%</StatCardDelta>
 				</StatCardHeader>
 				<StatCardValue>1,284</StatCardValue>
@@ -98,7 +98,7 @@ export const WithSparkline: Story = {
 		children: (
 			<>
 				<StatCardHeader>
-					<StatCardLabel>Missions published</StatCardLabel>
+					<StatCardLabel>Projects published</StatCardLabel>
 					<StatCardDelta trend="up">+12%</StatCardDelta>
 				</StatCardHeader>
 				<StatCardValue>1,284</StatCardValue>
@@ -115,7 +115,7 @@ export const Dashboard: Story = {
 		<div className="grid w-full max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
 			<StatCard>
 				<StatCardHeader>
-					<StatCardLabel>Missions published</StatCardLabel>
+					<StatCardLabel>Projects published</StatCardLabel>
 					<StatCardDelta trend="up">+12%</StatCardDelta>
 				</StatCardHeader>
 				<StatCardValue>1,284</StatCardValue>
@@ -154,7 +154,7 @@ export const Loading: Story = {
 	render: () => (
 		<StatCard className="w-64">
 			<StatCardHeader>
-				<StatCardLabel>Missions published</StatCardLabel>
+				<StatCardLabel>Projects published</StatCardLabel>
 			</StatCardHeader>
 			<StatCardValue>—</StatCardValue>
 			<StatCardChart className="px-4">
@@ -168,7 +168,7 @@ export const Empty: Story = {
 	render: () => (
 		<StatCard className="w-64">
 			<StatCardHeader>
-				<StatCardLabel>Missions published</StatCardLabel>
+				<StatCardLabel>Projects published</StatCardLabel>
 			</StatCardHeader>
 			<StatCardValue>0</StatCardValue>
 			<StatCardChart className="px-4 pb-4">
@@ -185,7 +185,7 @@ export const SparklineShapes: Story = {
 			{(["area", "line", "bars"] as const).map((mark) => (
 				<StatCard key={mark}>
 					<StatCardHeader>
-						<StatCardLabel>Missions published</StatCardLabel>
+						<StatCardLabel>Projects published</StatCardLabel>
 						<StatCardDelta trend="up">+12%</StatCardDelta>
 					</StatCardHeader>
 					<StatCardValue>1,284</StatCardValue>
@@ -206,7 +206,7 @@ export const InteractiveSparkline: Story = {
 	render: () => (
 		<StatCard className="w-64">
 			<StatCardHeader>
-				<StatCardLabel>Missions published</StatCardLabel>
+				<StatCardLabel>Projects published</StatCardLabel>
 				<StatCardDelta trend="up">+12%</StatCardDelta>
 			</StatCardHeader>
 			<StatCardValue>1,284</StatCardValue>
@@ -265,7 +265,7 @@ export const KpiStrip: Story = {
 		<div className="grid w-full max-w-5xl grid-cols-2 gap-4 lg:grid-cols-3">
 			<StatCard>
 				<StatCardHeader>
-					<StatCardLabel>Missions published</StatCardLabel>
+					<StatCardLabel>Projects published</StatCardLabel>
 					<StatCardDelta trend="up">+12%</StatCardDelta>
 				</StatCardHeader>
 				<StatCardValue>1,284</StatCardValue>

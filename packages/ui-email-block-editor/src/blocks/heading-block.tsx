@@ -19,8 +19,8 @@ export const EMAIL_HEADING_STYLE: {
 		readonly label: string;
 	};
 } = {
-	1: { fontSize: "22px", label: "Titre principal (H1)" },
-	2: { fontSize: "17px", label: "Sous-titre (H2)" },
+	1: { fontSize: "22px", label: "Main title (H1)" },
+	2: { fontSize: "17px", label: "Subtitle (H2)" },
 };
 
 const HEADING_LEVEL_OPTIONS: ReadonlyArray<{
@@ -42,10 +42,10 @@ function HeadingBlockView({
 }: EmailBlockComponentProps<EmailEditorHeadingBlock>) {
 	return (
 		<BlockTextInput
-			ariaLabel="Titre"
+			ariaLabel="Heading"
 			value={block.text}
 			onChange={(text) => onChange({ ...block, text })}
-			placeholder="Votre titre"
+			placeholder="Your heading"
 			className="font-bold leading-[1.3]"
 			style={{
 				fontFamily: EMAIL_FONT,
@@ -63,12 +63,12 @@ function HeadingBlockSettings({
 	return (
 		<>
 			<TextOption
-				label="Texte"
+				label="Text"
 				value={block.text}
 				onChange={(text) => onChange({ ...block, text })}
 			/>
 			<SelectOption
-				label="Niveau"
+				label="Level"
 				value={block.level}
 				options={HEADING_LEVEL_OPTIONS}
 				onChange={(level) => onChange({ ...block, level })}
@@ -79,7 +79,7 @@ function HeadingBlockSettings({
 
 export const headingBlockDefinition: EmailBlockDefinition<EmailEditorHeadingBlock> =
 	{
-		label: "Titre",
+		label: "Heading",
 		icon: TextHIcon,
 		View: HeadingBlockView,
 		Settings: HeadingBlockSettings,

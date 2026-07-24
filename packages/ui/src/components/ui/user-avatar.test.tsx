@@ -43,12 +43,12 @@ describe("UserAvatar", () => {
 
 	it("renders the description line when provided", () => {
 		const screen = render(
-			<UserAvatar name="Camille Dubois" description="Kinésithérapeute" />,
+			<UserAvatar name="Camille Dubois" description="Product designer" />,
 		);
 		expect(
 			queryRow(screen)?.querySelector("[data-slot=user-avatar-description]")
 				?.textContent,
-		).toBe("Kinésithérapeute");
+		).toBe("Product designer");
 	});
 
 	it("omits the description line when not provided", () => {

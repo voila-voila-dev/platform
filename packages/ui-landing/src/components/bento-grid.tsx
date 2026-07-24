@@ -1,6 +1,6 @@
 import { cn } from "@voila.dev/ui/lib/utils";
 
-import { accentOrangeBlobClass, brandGradientClass } from "#/lib/tones.ts";
+import { accentHighlightBlobClass, brandGradientClass } from "#/lib/tones.ts";
 
 /**
  * Bento grid with a featured gradient tile. Compose: Root > FeaturedItem (FeaturedContent >
@@ -38,7 +38,7 @@ function FeaturedItem({
 			<div
 				className={cn(
 					"pointer-events-none absolute -bottom-20 -left-10 h-56 w-56 rounded-full blur-3xl",
-					accentOrangeBlobClass,
+					accentHighlightBlobClass,
 				)}
 			/>
 			{children}

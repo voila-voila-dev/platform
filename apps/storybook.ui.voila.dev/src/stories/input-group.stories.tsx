@@ -27,7 +27,7 @@ export const Default: Story = {
 				<InputGroupAddon>
 					<MagnifyingGlassIcon />
 				</InputGroupAddon>
-				<InputGroupInput placeholder="Search providers..." />
+				<InputGroupInput placeholder="Search freelancers..." />
 			</InputGroup>
 		</div>
 	),
@@ -40,7 +40,7 @@ export const WithPrefixText: Story = {
 				<InputGroupAddon>
 					<InputGroupText>https://</InputGroupText>
 				</InputGroupAddon>
-				<InputGroupInput placeholder="club-website.example" />
+				<InputGroupInput placeholder="your-site.example" />
 			</InputGroup>
 		</div>
 	),
@@ -67,7 +67,7 @@ export const WithTextarea: Story = {
 			<InputGroup>
 				{/* `rows` is inert on the kit Textarea (field-sizing-content) - size with min-h-* instead. */}
 				<InputGroupTextarea
-					placeholder="Describe the mission for providers..."
+					placeholder="Describe the project for freelancers..."
 					className="min-h-24"
 				/>
 				<InputGroupAddon align="block-end">
@@ -83,9 +83,9 @@ export const WithBlockStartAddon: Story = {
 		<div className="w-80">
 			<InputGroup>
 				<InputGroupAddon align="block-start">
-					<InputGroupText>Mission brief</InputGroupText>
+					<InputGroupText>Project brief</InputGroupText>
 				</InputGroupAddon>
-				<InputGroupTextarea placeholder="Describe the mission for providers..." />
+				<InputGroupTextarea placeholder="Describe the project for freelancers..." />
 			</InputGroup>
 		</div>
 	),
@@ -98,7 +98,7 @@ export const WithBothAddons: Story = {
 				<InputGroupAddon>
 					<InputGroupText>https://</InputGroupText>
 				</InputGroupAddon>
-				<InputGroupInput placeholder="club-website" />
+				<InputGroupInput placeholder="your-site" />
 				<InputGroupAddon align="inline-end">
 					<InputGroupText>.example</InputGroupText>
 				</InputGroupAddon>
@@ -114,7 +114,7 @@ export const Disabled: Story = {
 				<InputGroupAddon>
 					<MagnifyingGlassIcon />
 				</InputGroupAddon>
-				<InputGroupInput placeholder="Search providers..." disabled />
+				<InputGroupInput placeholder="Search freelancers..." disabled />
 			</InputGroup>
 		</div>
 	),
@@ -128,7 +128,7 @@ export const Invalid: Story = {
 					<InputGroupText>https://</InputGroupText>
 				</InputGroupAddon>
 				<InputGroupInput
-					placeholder="club-website.example"
+					placeholder="your-site.example"
 					aria-invalid
 					defaultValue="not a url"
 				/>
@@ -148,13 +148,13 @@ export const ClickAddonToFocus: Story = {
 				<InputGroupAddon>
 					<InputGroupText>https://</InputGroupText>
 				</InputGroupAddon>
-				<InputGroupInput placeholder="club-website.example" />
+				<InputGroupInput placeholder="your-site.example" />
 			</InputGroup>
 		</div>
 	),
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
-		const input = canvas.getByPlaceholderText("club-website.example");
+		const input = canvas.getByPlaceholderText("your-site.example");
 
 		await userEvent.click(canvas.getByText("https://"));
 		await waitFor(() => expect(input).toHaveFocus());

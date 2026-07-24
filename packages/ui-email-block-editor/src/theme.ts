@@ -19,8 +19,8 @@ export const EMAIL_FONT =
 /**
  * The locale the canvas previews prices and dates in, mirroring
  * `renderMarketingEmailDocument`'s default. Deliberately not the browser's
- * locale: the canvas shows what the email will look like, and a French author
- * on an English-configured machine would otherwise see a price the recipient
+ * locale: the canvas shows what the email will look like, and an author on a
+ * differently-configured machine would otherwise see a price the recipient
  * never gets. The sent email formats per recipient.
  */
-export const EMAIL_PREVIEW_LOCALE = "fr-FR";
+export const EMAIL_PREVIEW_LOCALE = "en-US";

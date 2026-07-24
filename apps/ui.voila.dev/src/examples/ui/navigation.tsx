@@ -82,11 +82,11 @@ export function BreadcrumbExample() {
 				</BreadcrumbItem>
 				<BreadcrumbSeparator />
 				<BreadcrumbItem>
-					<BreadcrumbLink href="#">Missions</BreadcrumbLink>
+					<BreadcrumbLink href="#">Projects</BreadcrumbLink>
 				</BreadcrumbItem>
 				<BreadcrumbSeparator />
 				<BreadcrumbItem>
-					<BreadcrumbPage>Match day coverage</BreadcrumbPage>
+					<BreadcrumbPage>Landing page redesign</BreadcrumbPage>
 				</BreadcrumbItem>
 			</BreadcrumbList>
 		</Breadcrumb>
@@ -98,15 +98,15 @@ export function NavigationMenuExample() {
 		<NavigationMenu>
 			<NavigationMenuList>
 				<NavigationMenuItem>
-					<NavigationMenuTrigger>Missions</NavigationMenuTrigger>
+					<NavigationMenuTrigger>Projects</NavigationMenuTrigger>
 					<NavigationMenuContent>
 						<ul className="grid w-64 gap-1">
 							<li>
 								<NavigationMenuLink href="#">
 									<div className="flex flex-col gap-0.5">
-										<span className="font-medium">Open missions</span>
+										<span className="font-medium">Open projects</span>
 										<span className="text-muted-foreground text-xs">
-											Missions waiting for a provider.
+											Projects waiting for a freelancer.
 										</span>
 									</div>
 								</NavigationMenuLink>
@@ -114,9 +114,9 @@ export function NavigationMenuExample() {
 							<li>
 								<NavigationMenuLink href="#">
 									<div className="flex flex-col gap-0.5">
-										<span className="font-medium">My bookings</span>
+										<span className="font-medium">My engagements</span>
 										<span className="text-muted-foreground text-xs">
-											Confirmed missions and schedules.
+											Confirmed projects and schedules.
 										</span>
 									</div>
 								</NavigationMenuLink>
@@ -125,7 +125,7 @@ export function NavigationMenuExample() {
 					</NavigationMenuContent>
 				</NavigationMenuItem>
 				<NavigationMenuItem>
-					<NavigationMenuTrigger>Providers</NavigationMenuTrigger>
+					<NavigationMenuTrigger>Freelancers</NavigationMenuTrigger>
 					<NavigationMenuContent>
 						<ul className="grid w-56 gap-1">
 							<li>
@@ -144,20 +144,20 @@ export function NavigationMenuExample() {
 
 export function TabsExample() {
 	return (
-		<Tabs defaultValue="missions" className="w-full max-w-96">
+		<Tabs defaultValue="projects" className="w-full max-w-96">
 			<TabsList>
-				<TabsTrigger value="missions">Missions</TabsTrigger>
-				<TabsTrigger value="providers">Providers</TabsTrigger>
+				<TabsTrigger value="projects">Projects</TabsTrigger>
+				<TabsTrigger value="freelancers">Freelancers</TabsTrigger>
 				<TabsTrigger value="billing">Billing</TabsTrigger>
 			</TabsList>
-			<TabsContent value="missions">
-				Review upcoming missions and their staffing status.
+			<TabsContent value="projects">
+				Review upcoming projects and their staffing status.
 			</TabsContent>
-			<TabsContent value="providers">
-				Browse healthcare providers available in your area.
+			<TabsContent value="freelancers">
+				Browse independent freelancers available for hire.
 			</TabsContent>
 			<TabsContent value="billing">
-				Track invoices and payouts for completed missions.
+				Track invoices and payouts for completed projects.
 			</TabsContent>
 		</Tabs>
 	);
@@ -165,20 +165,20 @@ export function TabsExample() {
 
 export function TabsLine() {
 	return (
-		<Tabs defaultValue="missions" className="w-full max-w-96">
+		<Tabs defaultValue="projects" className="w-full max-w-96">
 			<TabsList variant="line">
-				<TabsTrigger value="missions">Missions</TabsTrigger>
-				<TabsTrigger value="providers">Providers</TabsTrigger>
+				<TabsTrigger value="projects">Projects</TabsTrigger>
+				<TabsTrigger value="freelancers">Freelancers</TabsTrigger>
 				<TabsTrigger value="billing">Billing</TabsTrigger>
 			</TabsList>
-			<TabsContent value="missions">
-				Review upcoming missions and their staffing status.
+			<TabsContent value="projects">
+				Review upcoming projects and their staffing status.
 			</TabsContent>
-			<TabsContent value="providers">
-				Browse healthcare providers available in your area.
+			<TabsContent value="freelancers">
+				Browse independent freelancers available for hire.
 			</TabsContent>
 			<TabsContent value="billing">
-				Track invoices and payouts for completed missions.
+				Track invoices and payouts for completed projects.
 			</TabsContent>
 		</Tabs>
 	);
@@ -219,12 +219,12 @@ export function PaginationExample() {
 const sidebarItems = [
 	{ title: "Dashboard", icon: HouseIcon, isActive: true, badge: undefined },
 	{
-		title: "Missions",
+		title: "Projects",
 		icon: CalendarCheckIcon,
 		isActive: false,
 		badge: "12",
 	},
-	{ title: "Providers", icon: UsersIcon, isActive: false, badge: undefined },
+	{ title: "Freelancers", icon: UsersIcon, isActive: false, badge: undefined },
 	{ title: "Billing", icon: ReceiptIcon, isActive: false, badge: undefined },
 ];
 
@@ -235,7 +235,7 @@ export function SidebarExample() {
 				<Sidebar collapsible="icon">
 					<SidebarHeader>
 						<div className="px-2 py-1.5 font-semibold text-sm group-data-[collapsible=icon]:hidden">
-							Stade Rochelais
+							Northwind Trading
 						</div>
 					</SidebarHeader>
 					<SidebarContent>
@@ -295,30 +295,30 @@ export function AccordionExample() {
 	return (
 		<Accordion className="w-full max-w-96" defaultValue={["publishing"]}>
 			<AccordionItem value="publishing">
-				<AccordionTrigger>How do I publish a mission?</AccordionTrigger>
+				<AccordionTrigger>How do I publish a project?</AccordionTrigger>
 				<AccordionContent>
 					<p>
-						From your club dashboard, create a mission with the date, location
-						and required specialty. Providers in your area are notified as soon
-						as it is published.
+						From your workspace dashboard, create a project with the scope,
+						timeline and required role. Matching freelancers are notified as
+						soon as it is published.
 					</p>
 				</AccordionContent>
 			</AccordionItem>
 			<AccordionItem value="applications">
-				<AccordionTrigger>Who can apply to a mission?</AccordionTrigger>
+				<AccordionTrigger>Who can apply to a project?</AccordionTrigger>
 				<AccordionContent>
 					<p>
-						Any verified health professional whose specialty matches the mission
-						requirements can apply.
+						Any verified freelancer whose skills match the project requirements
+						can apply.
 					</p>
 				</AccordionContent>
 			</AccordionItem>
 			<AccordionItem value="payment">
-				<AccordionTrigger>When is the provider paid?</AccordionTrigger>
+				<AccordionTrigger>When is the freelancer paid?</AccordionTrigger>
 				<AccordionContent>
 					<p>
-						Payment is held when you accept an application and released once the
-						mission report is submitted.
+						Payment is held when you accept a proposal and released once the
+						project report is submitted.
 					</p>
 				</AccordionContent>
 			</AccordionItem>
@@ -331,12 +331,12 @@ export function CollapsibleExample() {
 		<Collapsible className="flex w-full max-w-80 flex-col gap-2">
 			<div className="flex items-center justify-between gap-4 px-1">
 				<h4 className="font-medium text-sm">
-					3 providers applied to this mission
+					3 freelancers applied to this project
 				</h4>
 				<CollapsibleTrigger
 					render={<Button variant="ghost" size="icon-sm" />}
 					className="group/collapsible-trigger"
-					aria-label="Toggle applications"
+					aria-label="Toggle proposals"
 				>
 					<CaretDownIcon className="transition-transform duration-200 group-aria-expanded/collapsible-trigger:rotate-180 motion-reduce:transition-none" />
 				</CollapsibleTrigger>
@@ -358,14 +358,14 @@ export function StickyActionBarExample() {
 			<div className="flex flex-col gap-3 p-4 pb-2">
 				{Array.from({ length: 12 }, (_, index) => (
 					<p key={String(index)} className="text-muted-foreground text-sm">
-						Détail de la mission {index + 1} — couverture kiné du match de
-						samedi, arrivée 30 minutes avant le coup d'envoi.
+						Project detail {index + 1} — landing page redesign for the launch,
+						first drafts due 48 hours after the kickoff call.
 					</p>
 				))}
 			</div>
 			<StickyActionBar hideOnDesktop={false}>
-				<Button variant="outline">Contacter</Button>
-				<Button>Postuler</Button>
+				<Button variant="outline">Contact</Button>
+				<Button>Apply</Button>
 			</StickyActionBar>
 		</div>
 	);

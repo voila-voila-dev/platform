@@ -34,21 +34,21 @@ export const Default: Story = {
 	render: () => (
 		<div className="w-80 rounded-xl border">
 			<Command>
-				<CommandInput placeholder="Search missions, providers..." />
+				<CommandInput placeholder="Search projects, freelancers..." />
 				<CommandList>
 					<CommandEmpty>No results found.</CommandEmpty>
-					<CommandGroup heading="Missions">
+					<CommandGroup heading="Projects">
 						<CommandItem>
 							<CalendarIcon />
-							Match coverage — Saturday
+							Website redesign — kickoff
 						</CommandItem>
 						<CommandItem>
 							<CalendarIcon />
-							Recovery session — Tuesday
+							Design review — Tuesday
 						</CommandItem>
 					</CommandGroup>
 					<CommandSeparator />
-					<CommandGroup heading="Providers">
+					<CommandGroup heading="Freelancers">
 						<CommandItem>
 							<UserIcon />
 							Nathan Guyot
@@ -56,14 +56,14 @@ export const Default: Story = {
 						</CommandItem>
 						<CommandItem>
 							<UsersIcon />
-							All providers
+							All freelancers
 						</CommandItem>
 					</CommandGroup>
 					<CommandSeparator />
 					<CommandGroup heading="Settings">
 						<CommandItem>
 							<GearIcon />
-							Organization settings
+							Workspace settings
 							<CommandShortcut>⌘S</CommandShortcut>
 						</CommandItem>
 					</CommandGroup>
@@ -75,24 +75,24 @@ export const Default: Story = {
 
 /**
  * Types a query via the play function so the cmdk filtering (and the matching
- * `value`/`keywords` levers) are visually exercised: "physio" matches an item
+ * `value`/`keywords` levers) are visually exercised: "design" matches an item
  * only through its keywords.
  */
 export const Filtering: Story = {
 	render: () => (
 		<div className="w-80 rounded-xl border">
 			<Command>
-				<CommandInput placeholder="Search providers..." />
+				<CommandInput placeholder="Search freelancers..." />
 				<CommandList>
 					<CommandEmpty>No results found.</CommandEmpty>
-					<CommandGroup heading="Providers">
-						<CommandItem value="nathan-guyot" keywords={["physio", "founder"]}>
+					<CommandGroup heading="Freelancers">
+						<CommandItem value="nathan-guyot" keywords={["design", "founder"]}>
 							<UserIcon />
 							Nathan Guyot
 						</CommandItem>
-						<CommandItem value="all-providers">
+						<CommandItem value="all-freelancers">
 							<UsersIcon />
-							All providers
+							All freelancers
 						</CommandItem>
 					</CommandGroup>
 				</CommandList>
@@ -101,12 +101,12 @@ export const Filtering: Story = {
 	),
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
-		const input = canvas.getByPlaceholderText("Search providers...");
+		const input = canvas.getByPlaceholderText("Search freelancers...");
 
-		await userEvent.type(input, "physio");
+		await userEvent.type(input, "design");
 		await waitFor(() => {
 			expect(canvas.getByText("Nathan Guyot")).toBeVisible();
-			expect(canvas.queryByText("All providers")).toBeNull();
+			expect(canvas.queryByText("All freelancers")).toBeNull();
 		});
 	},
 };
@@ -118,13 +118,13 @@ export const Empty: Story = {
 	render: () => (
 		<div className="w-80 rounded-xl border">
 			<Command>
-				<CommandInput placeholder="Search missions..." />
+				<CommandInput placeholder="Search projects..." />
 				<CommandList>
 					<CommandEmpty>No results found.</CommandEmpty>
-					<CommandGroup heading="Missions">
+					<CommandGroup heading="Projects">
 						<CommandItem>
 							<CalendarIcon />
-							Match coverage — Saturday
+							Website redesign — kickoff
 						</CommandItem>
 					</CommandGroup>
 				</CommandList>
@@ -133,7 +133,7 @@ export const Empty: Story = {
 	),
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
-		const input = canvas.getByPlaceholderText("Search missions...");
+		const input = canvas.getByPlaceholderText("Search projects...");
 
 		await userEvent.type(input, "zzz");
 		await waitFor(() => {
@@ -155,9 +155,9 @@ export const CheckedAndDisabled: Story = {
 				<CommandList>
 					<CommandEmpty>No results found.</CommandEmpty>
 					<CommandGroup heading="Specialties">
-						<CommandItem data-checked="true">Physiotherapist</CommandItem>
-						<CommandItem>Osteopath</CommandItem>
-						<CommandItem disabled>Nurse (unavailable)</CommandItem>
+						<CommandItem data-checked="true">Designer</CommandItem>
+						<CommandItem>Developer</CommandItem>
+						<CommandItem disabled>Copywriter (unavailable)</CommandItem>
 					</CommandGroup>
 				</CommandList>
 			</Command>
@@ -186,11 +186,11 @@ export const Palette: Story = {
 							<CommandGroup heading="Quick actions">
 								<CommandItem onSelect={() => setOpen(false)}>
 									<CalendarIcon />
-									Create a mission
+									Create a project
 								</CommandItem>
 								<CommandItem onSelect={() => setOpen(false)}>
 									<UserIcon />
-									Invite a provider
+									Invite a freelancer
 								</CommandItem>
 								<CommandItem onSelect={() => setOpen(false)}>
 									<GearIcon />

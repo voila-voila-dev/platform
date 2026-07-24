@@ -18,7 +18,7 @@ describe("ProfileHeader", () => {
 	it("renders the name and theme as data attributes", () => {
 		const screen = render(<ProfileHeader name="Camille Dubois" />);
 		const root = queryBySlot(screen, "profile-header");
-		expect(root?.getAttribute("data-theme")).toBe("provider");
+		expect(root?.getAttribute("data-theme")).toBe("brand");
 		expect(queryBySlot(screen, "profile-header-name")?.textContent).toBe(
 			"Camille Dubois",
 		);
@@ -26,10 +26,10 @@ describe("ProfileHeader", () => {
 
 	it("renders the headline when provided", () => {
 		const screen = render(
-			<ProfileHeader name="Camille Dubois" headline="Kinésithérapeute" />,
+			<ProfileHeader name="Camille Dubois" headline="Product designer" />,
 		);
 		expect(queryBySlot(screen, "profile-header-headline")?.textContent).toBe(
-			"Kinésithérapeute",
+			"Product designer",
 		);
 	});
 
@@ -40,11 +40,11 @@ describe("ProfileHeader", () => {
 
 	it("falls back to a themed gradient cover when no coverImage is given", () => {
 		const screen = render(
-			<ProfileHeader name="Racing Club" theme="organization" />,
+			<ProfileHeader name="Northwind Agency" theme="highlight" />,
 		);
 		const fallback = queryBySlot(screen, "profile-header-cover-fallback");
 		expect(fallback).not.toBeNull();
-		expect(fallback?.className).toContain("from-organization");
+		expect(fallback?.className).toContain("from-highlight");
 	});
 
 	it("renders a string coverImage as an img", () => {
@@ -95,12 +95,12 @@ describe("ProfileHeader", () => {
 		const screen = render(
 			<ProfileHeader
 				name="Camille Dubois"
-				badges={<Badge>Vérifié</Badge>}
+				badges={<Badge>Verified</Badge>}
 				actions={<Button>Contacter</Button>}
 			/>,
 		);
 		expect(queryBySlot(screen, "profile-header-badges")?.textContent).toBe(
-			"Vérifié",
+			"Verified",
 		);
 		expect(queryBySlot(screen, "profile-header-actions")?.textContent).toBe(
 			"Contacter",
@@ -121,11 +121,11 @@ describe("ProfileHeader", () => {
 
 describe("ProfileHeaderCover", () => {
 	it("renders standalone with a themed gradient fallback", () => {
-		const screen = render(<ProfileHeaderCover theme="provider" />);
+		const screen = render(<ProfileHeaderCover theme="brand" />);
 		const cover = queryBySlot(screen, "profile-header-cover");
-		expect(cover?.getAttribute("data-theme")).toBe("provider");
+		expect(cover?.getAttribute("data-theme")).toBe("brand");
 		expect(
 			queryBySlot(screen, "profile-header-cover-fallback")?.className,
-		).toContain("from-provider");
+		).toContain("from-brand");
 	});
 });

@@ -56,7 +56,7 @@ function Fixture(props: React.ComponentProps<typeof Sidebar>) {
 	return (
 		<SidebarProvider>
 			<Sidebar {...props}>
-				<SidebarHeader>Stade Rochelais</SidebarHeader>
+				<SidebarHeader>Acme Studio</SidebarHeader>
 				<SidebarContent>
 					<SidebarGroup>
 						<SidebarGroupLabel>Platform</SidebarGroupLabel>
@@ -221,16 +221,14 @@ describe("Sidebar (mobile)", () => {
 	it("lets consumers localize the sheet title and description", async () => {
 		const screen = render(
 			<Fixture
-				sheetTitle="Barre latérale"
-				sheetDescription="Affiche la barre latérale mobile."
+				sheetTitle="Sidebar"
+				sheetDescription="Shows the mobile sidebar."
 			/>,
 		);
 		fireEvent.click(screen.getByRole("button", { name: "Toggle Sidebar" }));
 		await waitFor(() => {
-			expect(screen.getByText("Barre latérale")).toBeTruthy();
-			expect(
-				screen.getByText("Affiche la barre latérale mobile."),
-			).toBeTruthy();
+			expect(screen.getByText("Sidebar")).toBeTruthy();
+			expect(screen.getByText("Shows the mobile sidebar.")).toBeTruthy();
 		});
 	});
 });
@@ -253,10 +251,10 @@ describe("SidebarTrigger", () => {
 		const screen = render(
 			<SidebarProvider>
 				<Sidebar />
-				<SidebarTrigger>Ouvrir le menu</SidebarTrigger>
+				<SidebarTrigger>Open the menu</SidebarTrigger>
 			</SidebarProvider>,
 		);
-		expect(screen.getByRole("button", { name: "Ouvrir le menu" })).toBeTruthy();
+		expect(screen.getByRole("button", { name: "Open the menu" })).toBeTruthy();
 		expect(screen.queryByText("Toggle Sidebar")).toBeNull();
 	});
 });
@@ -283,16 +281,16 @@ describe("SidebarMenuButton", () => {
 				<Sidebar>
 					<SidebarMenu>
 						<SidebarMenuItem>
-							<SidebarMenuButton render={<RouterLink to="/missions" />}>
-								Missions
+							<SidebarMenuButton render={<RouterLink to="/projects" />}>
+								Projects
 							</SidebarMenuButton>
 						</SidebarMenuItem>
 					</SidebarMenu>
 				</Sidebar>
 			</SidebarProvider>,
 		);
-		const link = screen.getByRole("link", { name: "Missions" });
-		expect(link.getAttribute("href")).toBe("/missions");
+		const link = screen.getByRole("link", { name: "Projects" });
+		expect(link.getAttribute("href")).toBe("/projects");
 		expect(link.getAttribute("data-slot")).toBe("sidebar-menu-button");
 	});
 

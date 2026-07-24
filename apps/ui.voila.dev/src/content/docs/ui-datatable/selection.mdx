@@ -15,15 +15,15 @@ import * as Example from "../../../examples/ui-datatable/tables";
 ```tsx
 <DataTable
 	columns={[
-		dataTableSelectionColumn<Mission>({
-			selectAllLabel: "Select all missions",
-			selectRowLabel: (mission) => `Select ${mission.reference}`,
+		dataTableSelectionColumn<Project>({
+			selectAllLabel: "Select all projects",
+			selectRowLabel: (project) => `Select ${project.reference}`,
 		}),
 		...columns,
 	]}
-	data={missions}
+	data={projects}
 	enableRowSelection
-	getRowId={(mission) => mission.reference}
+	getRowId={(project) => project.reference}
 />;
 ```
 

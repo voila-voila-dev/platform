@@ -28,20 +28,20 @@ beforeAll(() => {
 function renderCommand() {
 	return render(
 		<Command>
-			<CommandInput placeholder="Search providers" />
+			<CommandInput placeholder="Search freelancers" />
 			<CommandList>
 				<CommandEmpty>No results found.</CommandEmpty>
-				<CommandGroup heading="Providers">
-					<CommandItem value="nathan-guyot" keywords={["physio"]}>
+				<CommandGroup heading="Freelancers">
+					<CommandItem value="nathan-guyot" keywords={["design"]}>
 						Nathan Guyot
 						<CommandShortcut>⌘P</CommandShortcut>
 					</CommandItem>
-					<CommandItem value="all-providers">All providers</CommandItem>
+					<CommandItem value="all-freelancers">All freelancers</CommandItem>
 				</CommandGroup>
 				<CommandSeparator />
 				<CommandGroup heading="Settings">
-					<CommandItem value="organization-settings" disabled>
-						Organization settings
+					<CommandItem value="workspace-settings" disabled>
+						Workspace settings
 					</CommandItem>
 				</CommandGroup>
 			</CommandList>
@@ -60,37 +60,37 @@ afterEach(cleanup);
 describe("Command", () => {
 	it("renders the input with its placeholder", () => {
 		const screen = renderCommand();
-		expect(screen.getByPlaceholderText("Search providers")).toBeTruthy();
+		expect(screen.getByPlaceholderText("Search freelancers")).toBeTruthy();
 	});
 
 	it("renders every item with group headings when no query is set", () => {
 		renderCommand();
 		expect(itemLabels()).toEqual([
 			"Nathan Guyot⌘P",
-			"All providers",
-			"Organization settings",
+			"All freelancers",
+			"Workspace settings",
 		]);
 		expect(
 			Array.from(document.querySelectorAll("[cmdk-group-heading]")).map(
 				(heading) => heading.textContent,
 			),
-		).toEqual(["Providers", "Settings"]);
+		).toEqual(["Freelancers", "Settings"]);
 	});
 
 	it("filters the list down to the matching item as the user types", async () => {
 		const screen = renderCommand();
-		fireEvent.change(screen.getByPlaceholderText("Search providers"), {
+		fireEvent.change(screen.getByPlaceholderText("Search freelancers"), {
 			target: { value: "all" },
 		});
 		await waitFor(() => {
-			expect(itemLabels()).toEqual(["All providers"]);
+			expect(itemLabels()).toEqual(["All freelancers"]);
 		});
 	});
 
 	it("matches items through their keywords", async () => {
 		const screen = renderCommand();
-		fireEvent.change(screen.getByPlaceholderText("Search providers"), {
-			target: { value: "physio" },
+		fireEvent.change(screen.getByPlaceholderText("Search freelancers"), {
+			target: { value: "design" },
 		});
 		await waitFor(() => {
 			expect(itemLabels()).toEqual(["Nathan Guyot⌘P"]);
@@ -99,7 +99,7 @@ describe("Command", () => {
 
 	it("shows the muted empty slot when nothing matches", async () => {
 		const screen = renderCommand();
-		fireEvent.change(screen.getByPlaceholderText("Search providers"), {
+		fireEvent.change(screen.getByPlaceholderText("Search freelancers"), {
 			target: { value: "zzz" },
 		});
 		await waitFor(() => {
@@ -115,7 +115,7 @@ describe("Command", () => {
 		const disabled = document.querySelector(
 			"[data-slot=command-item][data-disabled=true]",
 		);
-		expect(disabled?.textContent).toBe("Organization settings");
+		expect(disabled?.textContent).toBe("Workspace settings");
 		expect(disabled?.getAttribute("aria-disabled")).toBe("true");
 	});
 
@@ -137,7 +137,7 @@ describe("CommandDialog", () => {
 					<CommandInput placeholder="Type a command" />
 					<CommandList>
 						<CommandEmpty>No results found.</CommandEmpty>
-						<CommandItem>Create a mission</CommandItem>
+						<CommandItem>Create a project</CommandItem>
 					</CommandList>
 				</Command>
 			</CommandDialog>,

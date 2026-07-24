@@ -24,7 +24,7 @@ const meta = {
 		},
 	},
 	args: {
-		tone: "organization",
+		tone: "highlight",
 	},
 } satisfies Meta<typeof NumberedCards.Root>;
 
@@ -35,25 +35,25 @@ type Story = StoryObj<typeof meta>;
 const steps = [
 	{
 		icon: EnvelopeIcon,
-		title: "Envoyez votre demande",
+		title: "Send your request",
 		description:
-			"Décrivez vos besoins en matériel médical : nous préparons un devis adapté à votre structure.",
+			"Describe what your project needs: we prepare a quote tailored to your team.",
 	},
 	{
 		icon: FileTextIcon,
-		title: "Validez le devis",
+		title: "Approve the quote",
 		description:
-			"Recevez une offre claire et détaillée, sans engagement, sous 48 heures.",
+			"Receive a clear, detailed offer, with no commitment, within 48 hours.",
 	},
 	{
 		icon: TruckIcon,
-		title: "Recevez votre matériel",
+		title: "Receive your deliverables",
 		description:
-			"Livraison directe au club, avec un suivi complet de votre commande.",
+			"Delivered straight to your team, with complete tracking of your order.",
 	},
 ];
 
-/** Reproduces the original Astro site's `section-equipment-how.astro`. */
+/** Reproduces the original Astro site's how-ordering-works section. */
 export const Default: Story = {
 	render: (args) => (
 		<NumberedCards.Root {...args}>
@@ -69,7 +69,7 @@ export const Default: Story = {
 								<Icon />
 							</NumberedCards.CardIcon>
 							<NumberedCards.CardLabel>
-								Étape {index + 1}
+								Step {index + 1}
 							</NumberedCards.CardLabel>
 						</NumberedCards.CardHeader>
 						<NumberedCards.CardTitle>{step.title}</NumberedCards.CardTitle>

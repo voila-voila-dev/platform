@@ -31,7 +31,7 @@ export const useCoarsePointer = (): boolean =>
 
 /**
  * Below Tailwind's `lg`, the 280px settings column no longer fits beside the
- * canvas, so « Réglages du bloc » moves into a bottom sheet reachable from the
+ * canvas, so the block settings panel moves into a bottom sheet reachable from the
  * selected block's toolbar.
  */
 export const useCompactEditorLayout = (): boolean =>

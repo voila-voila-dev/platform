@@ -23,13 +23,13 @@ export const Default: Story = {
 			<ResizablePanelGroup className="rounded-lg border">
 				<ResizablePanel defaultSize={50}>
 					<div className="flex h-full items-center justify-center p-6">
-						<span className="text-sm font-medium">Mission list</span>
+						<span className="text-sm font-medium">Project list</span>
 					</div>
 				</ResizablePanel>
 				<ResizableHandle withHandle />
 				<ResizablePanel defaultSize={50}>
 					<div className="flex h-full items-center justify-center p-6">
-						<span className="text-sm font-medium">Mission details</span>
+						<span className="text-sm font-medium">Project details</span>
 					</div>
 				</ResizablePanel>
 			</ResizablePanelGroup>
@@ -43,7 +43,7 @@ export const Vertical: Story = {
 			<ResizablePanelGroup orientation="vertical" className="rounded-lg border">
 				<ResizablePanel defaultSize={60}>
 					<div className="flex h-full items-center justify-center p-6">
-						<span className="text-sm font-medium">Provider directory</span>
+						<span className="text-sm font-medium">Freelancer directory</span>
 					</div>
 				</ResizablePanel>
 				<ResizableHandle withHandle />
@@ -116,7 +116,7 @@ export const ThreePanel: Story = {
 				<ResizableHandle withHandle />
 				<ResizablePanel defaultSize={50}>
 					<div className="flex h-full items-center justify-center p-6">
-						<span className="text-sm font-medium">Mission list</span>
+						<span className="text-sm font-medium">Project list</span>
 					</div>
 				</ResizablePanel>
 				<ResizableHandle withHandle />

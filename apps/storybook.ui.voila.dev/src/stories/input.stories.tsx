@@ -8,7 +8,7 @@ const meta = {
 	tags: ["autodocs"],
 	args: {
 		type: "text",
-		placeholder: "Search providers",
+		placeholder: "Search freelancers",
 	},
 } satisfies Meta<typeof Input>;
 
@@ -21,7 +21,7 @@ export const Default: Story = {};
 export const Disabled: Story = {
 	args: {
 		disabled: true,
-		placeholder: "Mission location",
+		placeholder: "Project location",
 	},
 };
 
@@ -36,7 +36,7 @@ export const Invalid: Story = {
 export const ReadOnly: Story = {
 	args: {
 		readOnly: true,
-		defaultValue: "RPPS 10003456789",
+		defaultValue: "ACME-10003456789",
 	},
 };
 
@@ -71,7 +71,7 @@ export const File: Story = {
 export const Focused: Story = {
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
-		const input = canvas.getByPlaceholderText("Search providers");
+		const input = canvas.getByPlaceholderText("Search freelancers");
 
 		await userEvent.click(input);
 		await waitFor(() => expect(input).toHaveFocus());

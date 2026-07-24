@@ -26,22 +26,21 @@ export const Default: Story = {
 	render: () => (
 		<Drawer>
 			<DrawerTrigger asChild>
-				<Button variant="outline">View mission details</Button>
+				<Button variant="outline">View project details</Button>
 			</DrawerTrigger>
 			<DrawerContent>
 				<DrawerHeader>
-					<DrawerTitle>Match coverage — Saturday</DrawerTitle>
+					<DrawerTitle>Landing page redesign</DrawerTitle>
 					<DrawerDescription>
-						Stade Marcel Michelin, 14:00 to 18:00. One physiotherapist
-						requested.
+						Remote, kickoff Monday at 14:00. One product designer requested.
 					</DrawerDescription>
 				</DrawerHeader>
 				<div className="px-4 text-sm text-muted-foreground">
-					The provider should arrive 30 minutes before kickoff and report any
-					incident in the follow-up sheet after the match.
+					The freelancer should join the kickoff call a few minutes early and
+					log any blockers in the project report after each milestone.
 				</div>
 				<DrawerFooter>
-					<Button>Apply to this mission</Button>
+					<Button>Apply to this project</Button>
 					<DrawerClose asChild>
 						<Button variant="outline">Close</Button>
 					</DrawerClose>
@@ -59,13 +58,13 @@ export const FromRight: Story = {
 			</DrawerTrigger>
 			<DrawerContent>
 				<DrawerHeader>
-					<DrawerTitle>Provider profile</DrawerTitle>
+					<DrawerTitle>Freelancer profile</DrawerTitle>
 					<DrawerDescription>
-						Nathan Guyot — Physiotherapist, available on weekends.
+						Nathan Guyot — Product designer, available part-time.
 					</DrawerDescription>
 				</DrawerHeader>
 				<DrawerFooter>
-					<Button>Book provider</Button>
+					<Button>Book freelancer</Button>
 					<DrawerClose asChild>
 						<Button variant="outline">Close</Button>
 					</DrawerClose>
@@ -83,9 +82,9 @@ export const FromLeft: Story = {
 			</DrawerTrigger>
 			<DrawerContent>
 				<DrawerHeader>
-					<DrawerTitle>Club menu</DrawerTitle>
+					<DrawerTitle>Workspace menu</DrawerTitle>
 					<DrawerDescription>
-						Browse missions, providers and billing for your club.
+						Browse projects, freelancers and billing for your workspace.
 					</DrawerDescription>
 				</DrawerHeader>
 			</DrawerContent>
@@ -101,9 +100,9 @@ export const FromTop: Story = {
 			</DrawerTrigger>
 			<DrawerContent>
 				<DrawerHeader>
-					<DrawerTitle>New mission published</DrawerTitle>
+					<DrawerTitle>New project published</DrawerTitle>
 					<DrawerDescription>
-						A club near you is looking for a physiotherapist this weekend.
+						A client is looking for a product designer starting this week.
 					</DrawerDescription>
 				</DrawerHeader>
 			</DrawerContent>
@@ -115,13 +114,13 @@ export const ScrollableContent: Story = {
 	render: () => (
 		<Drawer>
 			<DrawerTrigger asChild>
-				<Button variant="outline">Read mission briefing</Button>
+				<Button variant="outline">Read project brief</Button>
 			</DrawerTrigger>
 			<DrawerContent>
 				<DrawerHeader>
-					<DrawerTitle>Mission briefing</DrawerTitle>
+					<DrawerTitle>Project brief</DrawerTitle>
 					<DrawerDescription>
-						Everything to know before Saturday's match.
+						Everything to know before the kickoff call.
 					</DrawerDescription>
 				</DrawerHeader>
 				<div className="overflow-y-auto px-4">
@@ -130,8 +129,8 @@ export const ScrollableContent: Story = {
 							key={index.toString()}
 							className="py-2 text-sm text-muted-foreground"
 						>
-							Briefing item {index + 1} — arrive early, check the first-aid kit,
-							confirm the emergency exit routes with the venue staff.
+							Brief item {index + 1} — review the scope, check the shared
+							assets, confirm the delivery checklist with the client team.
 						</p>
 					))}
 				</div>
@@ -161,7 +160,7 @@ export const SnapPoints: Story = {
 				</DrawerTrigger>
 				<DrawerContent className="h-full data-[vaul-drawer-direction=bottom]:max-h-full">
 					<DrawerHeader>
-						<DrawerTitle>Nearby missions</DrawerTitle>
+						<DrawerTitle>Open projects</DrawerTitle>
 						<DrawerDescription>
 							Drag the handle up to expand the list.
 						</DrawerDescription>
@@ -172,7 +171,7 @@ export const SnapPoints: Story = {
 								key={index.toString()}
 								className="py-2 text-sm text-muted-foreground"
 							>
-								Mission {index + 1} — weekend match coverage.
+								Project {index + 1} — landing page redesign.
 							</p>
 						))}
 					</div>
@@ -195,7 +194,7 @@ export const Controlled: Story = {
 						<DrawerHeader>
 							<DrawerTitle>Application sent</DrawerTitle>
 							<DrawerDescription>
-								The club will get back to you within 48 hours.
+								The client will get back to you within 48 hours.
 							</DrawerDescription>
 						</DrawerHeader>
 						<DrawerFooter>

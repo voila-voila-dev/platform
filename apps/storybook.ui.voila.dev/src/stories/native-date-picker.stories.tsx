@@ -29,7 +29,7 @@ export const DateTime: Story = {
 
 export const WithMinMax: Story = {
 	render: () => (
-		// Constrained to June 2026 — e.g. a mission must start within the month.
+		// Constrained to June 2026 — e.g. a project must start within the month.
 		<NativeDatePicker min="2026-06-01" max="2026-06-30" />
 	),
 };

@@ -7,16 +7,16 @@ import { Chart, type ChartConfig } from "#/components/chart.tsx";
 afterEach(cleanup);
 
 const config: ChartConfig = {
-	physiotherapy: { label: "Physiotherapy", color: "var(--chart-1)" },
-	osteopathy: { label: "Osteopathy", color: "var(--chart-2)" },
-	nursing: { label: "Nursing", color: "var(--chart-3)" },
-	providers: { label: "Providers" },
+	design: { label: "Design", color: "var(--chart-1)" },
+	development: { label: "Development", color: "var(--chart-2)" },
+	writing: { label: "Writing", color: "var(--chart-3)" },
+	freelancers: { label: "Freelancers" },
 };
 
 const data = [
-	{ specialty: "physiotherapy", providers: 50 },
-	{ specialty: "osteopathy", providers: 30 },
-	{ specialty: "nursing", providers: 20 },
+	{ specialty: "design", freelancers: 50 },
+	{ specialty: "development", freelancers: 30 },
+	{ specialty: "writing", freelancers: 20 },
 ];
 
 const slots = (name: string): HTMLElement[] =>
@@ -36,7 +36,7 @@ function Donut() {
 			config={config}
 			data={data}
 			x={{ key: "specialty" }}
-			y={{ keys: ["providers"] }}
+			y={{ keys: ["freelancers"] }}
 			margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
 			interactive={false}
 		>
@@ -53,11 +53,11 @@ describe("Chart.Donut", () => {
 		const wedges = slots("chart-slice");
 		expect(wedges).toHaveLength(3);
 		expect(wedges.map((wedge) => wedge.getAttribute("data-series"))).toEqual([
-			"physiotherapy",
-			"osteopathy",
-			"nursing",
+			"design",
+			"development",
+			"writing",
 		]);
-		expect(wedges[0].getAttribute("fill")).toBe("var(--color-physiotherapy)");
+		expect(wedges[0].getAttribute("fill")).toBe("var(--color-design)");
 	});
 
 	it("leaves a hole in the middle", () => {
@@ -69,7 +69,7 @@ describe("Chart.Donut", () => {
 		render(<Donut />);
 		fireEvent.pointerOver(slots("chart-slice")[1]);
 		const tooltip = slot("chart-tooltip-content");
-		expect(tooltip.textContent).toContain("Osteopathy");
+		expect(tooltip.textContent).toContain("Development");
 		expect(tooltip.textContent).toContain("30");
 		expect(slots("chart-slice")[0].getAttribute("data-state")).toBe("muted");
 	});
@@ -77,9 +77,9 @@ describe("Chart.Donut", () => {
 	it("names the legend entries after the rows", () => {
 		render(<Donut />);
 		expect(slots("chart-legend-item").map((item) => item.textContent)).toEqual([
-			"Physiotherapy",
-			"Osteopathy",
-			"Nursing",
+			"Design",
+			"Development",
+			"Writing",
 		]);
 	});
 });
@@ -143,7 +143,7 @@ describe("horizontal orientation", () => {
 				config={config}
 				data={data}
 				x={{ key: "specialty" }}
-				y={{ keys: ["providers"] }}
+				y={{ keys: ["freelancers"] }}
 				orientation="horizontal"
 			>
 				<Chart.YAxis />
@@ -154,7 +154,7 @@ describe("horizontal orientation", () => {
 			Array.from(
 				slot("chart-y-axis").querySelectorAll('[data-slot="chart-tick-label"]'),
 			).map((label) => label.textContent),
-		).toEqual(["physiotherapy", "osteopathy", "nursing"]);
+		).toEqual(["design", "development", "writing"]);
 		// Every bar starts at the value baseline on the left, not at the top.
 		expect(
 			slots("chart-bar").every((bar) =>

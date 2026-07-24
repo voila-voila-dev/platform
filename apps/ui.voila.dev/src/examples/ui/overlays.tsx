@@ -144,14 +144,14 @@ export function DialogExample() {
 	return (
 		<Dialog>
 			<DialogTrigger render={<Button variant="outline" />}>
-				Invite a provider
+				Invite a freelancer
 			</DialogTrigger>
 			<DialogContent>
 				<DialogHeader>
-					<DialogTitle>Invite a provider</DialogTitle>
+					<DialogTitle>Invite a freelancer</DialogTitle>
 					<DialogDescription>
-						Send an invitation to a healthcare provider so they can apply to
-						your club's missions.
+						Send an invitation to an independent freelancer so they can apply to
+						your workspace's projects.
 					</DialogDescription>
 				</DialogHeader>
 				<DialogFooter>
@@ -169,23 +169,23 @@ export function AlertDialogExample() {
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger render={<Button variant="outline" />}>
-				Cancel mission
+				Cancel project
 			</AlertDialogTrigger>
 			<AlertDialogContent size="sm">
 				<AlertDialogHeader>
 					<AlertDialogMedia>
 						<WarningIcon className="text-destructive" />
 					</AlertDialogMedia>
-					<AlertDialogTitle>Cancel this mission?</AlertDialogTitle>
+					<AlertDialogTitle>Cancel this project?</AlertDialogTitle>
 					<AlertDialogDescription>
-						The provider will be notified and the booking released. This action
-						cannot be undone.
+						The freelancer will be notified and the engagement released. This
+						action cannot be undone.
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>
-					<AlertDialogCancel>Keep mission</AlertDialogCancel>
+					<AlertDialogCancel>Keep project</AlertDialogCancel>
 					<AlertDialogAction variant="destructive">
-						Cancel mission
+						Cancel project
 					</AlertDialogAction>
 				</AlertDialogFooter>
 			</AlertDialogContent>
@@ -197,15 +197,15 @@ export function ConfirmDialogExample() {
 	return (
 		<>
 			<ConfirmDialog
-				trigger={<Button variant="outline">Publish mission</Button>}
-				title="Publish this mission?"
-				description="Providers matching the required skills will be notified and can start applying."
+				trigger={<Button variant="outline">Publish project</Button>}
+				title="Publish this project?"
+				description="Freelancers matching the required skills will be notified and can start applying."
 				confirmLabel="Publish"
 			/>
 			<ConfirmDialog
-				trigger={<Button variant="outline">Archive mission</Button>}
-				title="Archive this mission?"
-				description="The mission will be hidden from the active list. You can restore it at any time."
+				trigger={<Button variant="outline">Archive project</Button>}
+				title="Archive this project?"
+				description="The project will be hidden from the active list. You can restore it at any time."
 				confirmLabel="Archive"
 				onConfirm={() => new Promise((resolve) => setTimeout(resolve, 1500))}
 			/>
@@ -217,26 +217,26 @@ export function ResponsiveDialogExample() {
 	return (
 		<ResponsiveDialog>
 			<ResponsiveDialogTrigger render={<Button variant="outline" />}>
-				Cancel mission
+				Cancel project
 			</ResponsiveDialogTrigger>
 			<ResponsiveDialogContent>
 				<ResponsiveDialogHeader>
-					<ResponsiveDialogTitle>Cancel this mission?</ResponsiveDialogTitle>
+					<ResponsiveDialogTitle>Cancel this project?</ResponsiveDialogTitle>
 					<ResponsiveDialogDescription>
 						Resize the viewport below 768px to get the bottom drawer.
 					</ResponsiveDialogDescription>
 				</ResponsiveDialogHeader>
 				<ResponsiveDialogBody>
 					<p>
-						The held payment is returned to the club's wallet once the
+						The held payment is returned to the client's wallet once the
 						cancellation is confirmed.
 					</p>
 				</ResponsiveDialogBody>
 				<ResponsiveDialogFooter>
 					<ResponsiveDialogClose render={<Button variant="outline" />}>
-						Keep mission
+						Keep project
 					</ResponsiveDialogClose>
-					<Button variant="destructive">Cancel mission</Button>
+					<Button variant="destructive">Cancel project</Button>
 				</ResponsiveDialogFooter>
 			</ResponsiveDialogContent>
 		</ResponsiveDialog>
@@ -247,22 +247,22 @@ export function SheetExample() {
 	return (
 		<Sheet>
 			<SheetTrigger render={<Button variant="outline" />}>
-				Open mission details
+				Open project details
 			</SheetTrigger>
 			<SheetContent>
 				<SheetHeader>
-					<SheetTitle>Mission details</SheetTitle>
+					<SheetTitle>Project details</SheetTitle>
 					<SheetDescription>
-						Pitch-side physiotherapy cover for the Saturday home match.
+						On-site design support for the marketing site launch week.
 					</SheetDescription>
 				</SheetHeader>
 				<div className="grid gap-2 px-4 text-sm">
-					<p>Club: Stade Rochelais</p>
+					<p>Client: Northwind Trading</p>
 					<p>Date: Saturday, June 14 — 2:00 PM</p>
-					<p>Rate: 45 EUR / hour</p>
+					<p>Rate: 45 USD / hour</p>
 				</div>
 				<SheetFooter>
-					<Button>Confirm booking</Button>
+					<Button>Confirm engagement</Button>
 					<SheetClose render={<Button variant="outline" />}>Cancel</SheetClose>
 				</SheetFooter>
 			</SheetContent>
@@ -303,18 +303,17 @@ export function DrawerExample() {
 	return (
 		<Drawer>
 			<DrawerTrigger asChild>
-				<Button variant="outline">View mission details</Button>
+				<Button variant="outline">View project details</Button>
 			</DrawerTrigger>
 			<DrawerContent>
 				<DrawerHeader>
-					<DrawerTitle>Match coverage — Saturday</DrawerTitle>
+					<DrawerTitle>Launch support — Saturday</DrawerTitle>
 					<DrawerDescription>
-						Stade Marcel Michelin, 14:00 to 18:00. One physiotherapist
-						requested.
+						Remote, 14:00 to 18:00. One product designer requested.
 					</DrawerDescription>
 				</DrawerHeader>
 				<DrawerFooter>
-					<Button>Apply to this mission</Button>
+					<Button>Apply to this project</Button>
 					<DrawerClose asChild>
 						<Button variant="outline">Close</Button>
 					</DrawerClose>
@@ -329,17 +328,17 @@ export function PopoverExample() {
 		<>
 			<Popover>
 				<PopoverTrigger
-					render={<Button variant="outline">Mission details</Button>}
+					render={<Button variant="outline">Project details</Button>}
 				/>
 				<PopoverContent>
 					<PopoverHeader>
-						<PopoverTitle>Saturday match coverage</PopoverTitle>
+						<PopoverTitle>Saturday launch support</PopoverTitle>
 						<PopoverDescription>
-							Stade Rennais — June 14, from 14:00 to 18:00.
+							Northwind Trading — June 14, from 14:00 to 18:00.
 						</PopoverDescription>
 					</PopoverHeader>
 					<p className="text-muted-foreground">
-						A physiotherapist is needed pitch-side for the senior rugby team.
+						A product designer is needed on call for the launch-day fixes.
 					</p>
 				</PopoverContent>
 			</Popover>
@@ -350,7 +349,7 @@ export function PopoverExample() {
 						<PopoverTitle>Hourly rate</PopoverTitle>
 					</PopoverHeader>
 					<div className="grid gap-2">
-						<Label htmlFor="hourly-rate">Rate (EUR)</Label>
+						<Label htmlFor="hourly-rate">Rate (USD)</Label>
 						<Input id="hourly-rate" type="number" defaultValue="45" />
 						<Button size="sm">Save</Button>
 					</div>
@@ -370,8 +369,8 @@ export function HoverCardExample() {
 				<div className="flex flex-col gap-1">
 					<p className="font-medium">Nathan Guyot</p>
 					<p className="text-muted-foreground">
-						Physiotherapist — covers match days and recovery sessions for rugby
-						clubs around Clermont-Ferrand.
+						Product designer — covers launch weeks and design sprints for SaaS
+						teams across Europe.
 					</p>
 					<p className="text-muted-foreground text-xs">Joined March 2026</p>
 				</div>
@@ -401,13 +400,13 @@ export function DropdownMenuExample() {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger render={<Button variant="outline" />}>
-				Mission actions
+				Project actions
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-56">
-				<DropdownMenuLabel>Match coverage — Saturday</DropdownMenuLabel>
+				<DropdownMenuLabel>Launch support — Saturday</DropdownMenuLabel>
 				<DropdownMenuGroup>
 					<DropdownMenuItem>
-						Edit mission
+						Edit project
 						<DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
 					</DropdownMenuItem>
 					<DropdownMenuItem>
@@ -417,7 +416,7 @@ export function DropdownMenuExample() {
 				</DropdownMenuGroup>
 				<DropdownMenuSeparator />
 				<DropdownMenuSub>
-					<DropdownMenuSubTrigger>Assign provider</DropdownMenuSubTrigger>
+					<DropdownMenuSubTrigger>Assign freelancer</DropdownMenuSubTrigger>
 					<DropdownMenuSubContent>
 						<DropdownMenuItem>Nathan Guyot</DropdownMenuItem>
 						<DropdownMenuItem>Marie Lefevre</DropdownMenuItem>
@@ -425,7 +424,7 @@ export function DropdownMenuExample() {
 				</DropdownMenuSub>
 				<DropdownMenuSeparator />
 				<DropdownMenuItem variant="destructive">
-					Cancel mission
+					Cancel project
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
@@ -439,22 +438,22 @@ export function ContextMenuExample() {
 				Right-click here
 			</ContextMenuTrigger>
 			<ContextMenuContent>
-				<ContextMenuLabel>Mission</ContextMenuLabel>
+				<ContextMenuLabel>Project</ContextMenuLabel>
 				<ContextMenuItem>
-					Edit mission
+					Edit project
 					<ContextMenuShortcut>⌘E</ContextMenuShortcut>
 				</ContextMenuItem>
 				<ContextMenuItem>Duplicate</ContextMenuItem>
 				<ContextMenuSeparator />
 				<ContextMenuSub>
-					<ContextMenuSubTrigger>Assign provider</ContextMenuSubTrigger>
+					<ContextMenuSubTrigger>Assign freelancer</ContextMenuSubTrigger>
 					<ContextMenuSubContent>
 						<ContextMenuItem>Nathan Guyot</ContextMenuItem>
 						<ContextMenuItem>Marie Lefevre</ContextMenuItem>
 					</ContextMenuSubContent>
 				</ContextMenuSub>
 				<ContextMenuSeparator />
-				<ContextMenuItem variant="destructive">Cancel mission</ContextMenuItem>
+				<ContextMenuItem variant="destructive">Cancel project</ContextMenuItem>
 			</ContextMenuContent>
 		</ContextMenu>
 	);
@@ -464,12 +463,12 @@ export function MenubarExample() {
 	return (
 		<Menubar>
 			<MenubarMenu>
-				<MenubarTrigger>Missions</MenubarTrigger>
+				<MenubarTrigger>Projects</MenubarTrigger>
 				<MenubarContent>
 					<MenubarItem>
-						New mission <MenubarShortcut>⌘N</MenubarShortcut>
+						New project <MenubarShortcut>⌘N</MenubarShortcut>
 					</MenubarItem>
-					<MenubarItem>Duplicate mission</MenubarItem>
+					<MenubarItem>Duplicate project</MenubarItem>
 					<MenubarSeparator />
 					<MenubarSub>
 						<MenubarSubTrigger>Export</MenubarSubTrigger>
@@ -479,14 +478,14 @@ export function MenubarExample() {
 						</MenubarSubContent>
 					</MenubarSub>
 					<MenubarSeparator />
-					<MenubarItem variant="destructive">Cancel mission</MenubarItem>
+					<MenubarItem variant="destructive">Cancel project</MenubarItem>
 				</MenubarContent>
 			</MenubarMenu>
 			<MenubarMenu>
 				<MenubarTrigger>View</MenubarTrigger>
 				<MenubarContent>
 					<MenubarCheckboxItem defaultChecked>
-						Show archived missions
+						Show archived projects
 					</MenubarCheckboxItem>
 					<MenubarSeparator />
 					<MenubarRadioGroup defaultValue="week">
@@ -504,21 +503,21 @@ export function CommandExample() {
 	return (
 		<div className="w-full max-w-80 rounded-xl border">
 			<Command>
-				<CommandInput placeholder="Search missions, providers…" />
+				<CommandInput placeholder="Search projects, freelancers…" />
 				<CommandList>
 					<CommandEmpty>No results found.</CommandEmpty>
-					<CommandGroup heading="Missions">
+					<CommandGroup heading="Projects">
 						<CommandItem>
 							<CalendarIcon />
-							Match coverage — Saturday
+							Launch support — Saturday
 						</CommandItem>
 						<CommandItem>
 							<CalendarIcon />
-							Recovery session — Tuesday
+							Design review — Tuesday
 						</CommandItem>
 					</CommandGroup>
 					<CommandSeparator />
-					<CommandGroup heading="Providers">
+					<CommandGroup heading="Freelancers">
 						<CommandItem>
 							<UserIcon />
 							Nathan Guyot
@@ -529,7 +528,7 @@ export function CommandExample() {
 					<CommandGroup heading="Settings">
 						<CommandItem>
 							<GearIcon />
-							Organization settings
+							Workspace settings
 							<CommandShortcut>⌘S</CommandShortcut>
 						</CommandItem>
 					</CommandGroup>

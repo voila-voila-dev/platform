@@ -27,17 +27,17 @@ describe("DropdownMenu", () => {
 		// throw "MenuGroupContext is missing").
 		const screen = render(
 			<DropdownMenu defaultOpen>
-				<DropdownMenuTrigger>Mission actions</DropdownMenuTrigger>
+				<DropdownMenuTrigger>Project actions</DropdownMenuTrigger>
 				<DropdownMenuContent>
-					<DropdownMenuLabel>Match coverage</DropdownMenuLabel>
+					<DropdownMenuLabel>Brand refresh</DropdownMenuLabel>
 					<DropdownMenuGroup>
-						<DropdownMenuItem>Edit mission</DropdownMenuItem>
+						<DropdownMenuItem>Edit project</DropdownMenuItem>
 					</DropdownMenuGroup>
 				</DropdownMenuContent>
 			</DropdownMenu>,
 		);
 
-		const label = screen.getByText("Match coverage");
+		const label = screen.getByText("Brand refresh");
 		expect(label.tagName).toBe("DIV");
 		expect(label.getAttribute("data-slot")).toBe("dropdown-menu-label");
 	});
@@ -45,9 +45,9 @@ describe("DropdownMenu", () => {
 	it("sizes the content to its items instead of locking to the trigger width", () => {
 		const screen = render(
 			<DropdownMenu defaultOpen>
-				<DropdownMenuTrigger>Mission actions</DropdownMenuTrigger>
+				<DropdownMenuTrigger>Project actions</DropdownMenuTrigger>
 				<DropdownMenuContent>
-					<DropdownMenuItem>Edit mission</DropdownMenuItem>
+					<DropdownMenuItem>Edit project</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>,
 		);
@@ -64,10 +64,10 @@ describe("DropdownMenu", () => {
 	it("scopes the focus text-recolor to icons, not every descendant", () => {
 		const screen = render(
 			<DropdownMenu defaultOpen>
-				<DropdownMenuTrigger>Mission actions</DropdownMenuTrigger>
+				<DropdownMenuTrigger>Project actions</DropdownMenuTrigger>
 				<DropdownMenuContent>
 					<DropdownMenuItem>
-						Edit mission
+						Edit project
 						<DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
 					</DropdownMenuItem>
 				</DropdownMenuContent>
@@ -75,7 +75,7 @@ describe("DropdownMenu", () => {
 		);
 
 		const item = screen
-			.getByText("Edit mission")
+			.getByText("Edit project")
 			.closest("[data-slot=dropdown-menu-item]");
 		expect(item).not.toBeNull();
 		// Review fix: the blanket `focus:**:text-accent-foreground` (which stomped
@@ -87,26 +87,26 @@ describe("DropdownMenu", () => {
 	it("flows the destructive variant through to the item", () => {
 		const screen = render(
 			<DropdownMenu defaultOpen>
-				<DropdownMenuTrigger>Mission actions</DropdownMenuTrigger>
+				<DropdownMenuTrigger>Project actions</DropdownMenuTrigger>
 				<DropdownMenuContent>
 					<DropdownMenuItem variant="destructive">
-						Cancel mission
+						Cancel project
 					</DropdownMenuItem>
 				</DropdownMenuContent>
 			</DropdownMenu>,
 		);
 
-		const destructive = screen.getByText("Cancel mission");
+		const destructive = screen.getByText("Cancel project");
 		expect(destructive.getAttribute("data-variant")).toBe("destructive");
 	});
 
 	it("renders the submenu trigger through the deduplicated SubContent", () => {
 		const screen = render(
 			<DropdownMenu defaultOpen>
-				<DropdownMenuTrigger>Mission actions</DropdownMenuTrigger>
+				<DropdownMenuTrigger>Project actions</DropdownMenuTrigger>
 				<DropdownMenuContent>
 					<DropdownMenuSub>
-						<DropdownMenuSubTrigger>Assign provider</DropdownMenuSubTrigger>
+						<DropdownMenuSubTrigger>Assign freelancer</DropdownMenuSubTrigger>
 						<DropdownMenuSubContent>
 							<DropdownMenuItem>Nathan Guyot</DropdownMenuItem>
 						</DropdownMenuSubContent>
@@ -115,7 +115,7 @@ describe("DropdownMenu", () => {
 			</DropdownMenu>,
 		);
 
-		const subTrigger = screen.getByText("Assign provider");
+		const subTrigger = screen.getByText("Assign freelancer");
 		expect(subTrigger.getAttribute("data-slot")).toBe(
 			"dropdown-menu-sub-trigger",
 		);
@@ -149,11 +149,11 @@ describe("DropdownMenu", () => {
 	it("distinguishes a selected radio item with a filled dot, not a checkmark", () => {
 		const screen = render(
 			<DropdownMenu defaultOpen>
-				<DropdownMenuTrigger>Sort missions</DropdownMenuTrigger>
+				<DropdownMenuTrigger>Sort projects</DropdownMenuTrigger>
 				<DropdownMenuContent>
 					<DropdownMenuRadioGroup defaultValue="date">
 						<DropdownMenuRadioItem value="date">Date</DropdownMenuRadioItem>
-						<DropdownMenuRadioItem value="club">Club</DropdownMenuRadioItem>
+						<DropdownMenuRadioItem value="client">Client</DropdownMenuRadioItem>
 					</DropdownMenuRadioGroup>
 				</DropdownMenuContent>
 			</DropdownMenu>,
@@ -173,9 +173,9 @@ describe("DropdownMenu", () => {
 	it("renders a separator between groups", () => {
 		const screen = render(
 			<DropdownMenu defaultOpen>
-				<DropdownMenuTrigger>Mission actions</DropdownMenuTrigger>
+				<DropdownMenuTrigger>Project actions</DropdownMenuTrigger>
 				<DropdownMenuContent>
-					<DropdownMenuItem>Edit mission</DropdownMenuItem>
+					<DropdownMenuItem>Edit project</DropdownMenuItem>
 					<DropdownMenuSeparator />
 					<DropdownMenuItem>Duplicate</DropdownMenuItem>
 				</DropdownMenuContent>

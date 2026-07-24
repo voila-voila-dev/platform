@@ -34,7 +34,7 @@ const MOBILE_COLUMN_OPTIONS: ReadonlyArray<{
 
 /**
  * The layout shell of a multi-column row. The cells themselves — the child
- * block rows and the « ajouter » slot — are composed by the canvas and slotted
+ * block rows and the add slot — are composed by the canvas and slotted
  * in as `children`, so the grid owns the layout and nothing else.
  *
  * The cells mirror the count the reader will actually get in the previewed
@@ -65,22 +65,22 @@ function GridBlockSettings({
 	onChange,
 }: EmailBlockComponentProps<EmailEditorGridBlock>) {
 	return (
-		<BlockOptionSection title="Apparence">
+		<BlockOptionSection title="Appearance">
 			<SegmentedOption
-				label="Colonnes (ordinateur)"
+				label="Columns (desktop)"
 				value={block.desktopColumns}
 				options={DESKTOP_COLUMN_OPTIONS}
 				onChange={(desktopColumns) => onChange({ ...block, desktopColumns })}
 			/>
 			<SegmentedOption
-				label="Colonnes (mobile)"
+				label="Columns (mobile)"
 				value={block.mobileColumns}
 				options={MOBILE_COLUMN_OPTIONS}
 				onChange={(mobileColumns) => onChange({ ...block, mobileColumns })}
 				description={
 					block.mobileColumns === block.desktopColumns
 						? undefined
-						: "Un nombre de colonnes différent sur mobile repose sur une media query : l'application Gmail sur compte tiers l'ignore et repasse à une colonne."
+						: "A different column count on mobile relies on a media query: the Gmail app on a third-party account ignores it and falls back to one column."
 				}
 			/>
 		</BlockOptionSection>
@@ -88,7 +88,7 @@ function GridBlockSettings({
 }
 
 export const gridBlockDefinition: EmailBlockDefinition<EmailEditorGridBlock> = {
-	label: "Colonnes",
+	label: "Columns",
 	icon: ColumnsIcon,
 	View: GridBlockView,
 	Settings: GridBlockSettings,

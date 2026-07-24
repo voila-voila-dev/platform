@@ -56,9 +56,9 @@ describe("Input", () => {
 		const input = queryInput(screen);
 		if (!input) throw new Error("input not rendered");
 
-		fireEvent.change(input, { target: { value: "rpps-123" } });
+		fireEvent.change(input, { target: { value: "ref-123" } });
 
 		expect(onValueChange).toHaveBeenCalledTimes(1);
-		expect(onValueChange.mock.calls[0]?.[0]).toBe("rpps-123");
+		expect(onValueChange.mock.calls[0]?.[0]).toBe("ref-123");
 	});
 });

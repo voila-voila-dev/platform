@@ -7,7 +7,7 @@ import { cva, type VariantProps } from "#/lib/cva.ts";
  * tailwind-merge-configured `cva` (see `#/lib/cva.ts`).
  *
  * Variant colors map to the design tokens: `default` (primary, black),
- * `provider` (blue), `organization` (orange), plus the neutral/utility roles.
+ * `brand` (violet), `highlight` (teal), plus the neutral/utility roles.
  * `primary` is an alias of `default` for the marketing site, whose buttons
  * default to the `primary` variant name.
  *
@@ -18,7 +18,7 @@ import { cva, type VariantProps } from "#/lib/cva.ts";
 export const buttonVariants = cva({
 	base: "group/button inline-flex shrink-0 cursor-pointer items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
 	variants: {
-		// Solid variants (default/primary/provider/organization) only hover when
+		// Solid variants (default/primary/brand/highlight) only hover when
 		// rendered as an anchor ([a]:hover) - a plain <button> is usually the
 		// page's primary action and gets its feedback from active:translate-y-px
 		// instead, so it stays inert under the cursor. The neutral/utility roles
@@ -29,9 +29,9 @@ export const buttonVariants = cva({
 			primary: "bg-primary text-primary-foreground [a]:hover:bg-primary/80",
 			secondary:
 				"bg-secondary text-secondary-foreground hover:bg-secondary/80 aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
-			provider: "bg-provider text-provider-foreground [a]:hover:bg-provider/90",
-			organization:
-				"bg-organization text-organization-foreground [a]:hover:bg-organization/90",
+			brand: "bg-brand text-brand-foreground [a]:hover:bg-brand/90",
+			highlight:
+				"bg-highlight text-highlight-foreground [a]:hover:bg-highlight/90",
 			outline:
 				"border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
 			ghost:
@@ -79,8 +79,8 @@ export const buttonVariantOptions = [
 	"default",
 	"primary",
 	"secondary",
-	"provider",
-	"organization",
+	"brand",
+	"highlight",
 	"outline",
 	"ghost",
 	"destructive",

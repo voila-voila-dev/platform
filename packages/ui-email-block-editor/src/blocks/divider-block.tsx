@@ -12,7 +12,7 @@ function DividerBlockView() {
 
 export const dividerBlockDefinition: EmailBlockDefinition<EmailEditorDividerBlock> =
 	{
-		label: "Séparateur",
+		label: "Divider",
 		icon: MinusIcon,
 		View: DividerBlockView,
 		Settings: null,

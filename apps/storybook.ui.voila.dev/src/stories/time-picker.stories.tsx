@@ -58,7 +58,7 @@ export const FrenchLocale: Story = {
 function BusinessHoursTimePicker() {
 	const [selectedTime, setSelectedTime] = useState<string | null>(null);
 
-	// 15-minute slots inside business hours — e.g. a mission start time.
+	// 15-minute slots inside business hours — e.g. a project kickoff time.
 	return (
 		<TimePicker
 			min="08:00"
@@ -66,7 +66,7 @@ function BusinessHoursTimePicker() {
 			step={15}
 			value={selectedTime}
 			onValueChange={setSelectedTime}
-			placeholder="Mission start"
+			placeholder="Kickoff time"
 		/>
 	);
 }

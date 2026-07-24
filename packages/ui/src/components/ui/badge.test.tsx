@@ -74,12 +74,12 @@ describe("Badge", () => {
 
 	it("renders as an anchor via the render prop", () => {
 		const screen = render(
-			<Badge render={<a href="/missions">Open missions</a>} />,
+			<Badge render={<a href="/projects">Open projects</a>} />,
 		);
 		const badge = queryBadge(screen);
 		expect(badge?.tagName).toBe("A");
-		expect(badge?.getAttribute("href")).toBe("/missions");
-		expect(badge?.textContent).toBe("Open missions");
+		expect(badge?.getAttribute("href")).toBe("/projects");
+		expect(badge?.textContent).toBe("Open projects");
 		expect(badge?.classList.contains("rounded-4xl")).toBe(true);
 	});
 });

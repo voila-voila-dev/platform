@@ -7,8 +7,8 @@
 
 export const toneOptions = [
 	"primary",
-	"provider",
-	"organization",
+	"brand",
+	"highlight",
 	"destructive",
 	"muted",
 ] as const;
@@ -17,41 +17,40 @@ export type Tone = (typeof toneOptions)[number];
 
 export const toneTextClass: Record<Tone, string> = {
 	primary: "text-primary",
-	provider: "text-provider",
-	organization: "text-organization",
+	brand: "text-brand",
+	highlight: "text-highlight",
 	destructive: "text-destructive",
 	muted: "text-muted-foreground",
 };
 
 export const toneTintBackgroundClass: Record<Tone, string> = {
 	primary: "bg-primary/10",
-	provider: "bg-provider/10",
-	organization: "bg-organization/10",
+	brand: "bg-brand/10",
+	highlight: "bg-highlight/10",
 	destructive: "bg-destructive/10",
 	muted: "bg-muted",
 };
 
 export const toneSolidBackgroundClass: Record<Tone, string> = {
 	primary: "bg-primary",
-	provider: "bg-provider",
-	organization: "bg-organization",
+	brand: "bg-brand",
+	highlight: "bg-highlight",
 	destructive: "bg-destructive",
 	muted: "bg-muted-foreground",
 };
 
 export const toneSolidClass: Record<Tone, string> = {
 	primary: "bg-primary text-primary-foreground",
-	provider: "bg-provider text-provider-foreground",
-	organization: "bg-organization text-organization-foreground",
+	brand: "bg-brand text-brand-foreground",
+	highlight: "bg-highlight text-highlight-foreground",
 	destructive: "bg-destructive text-white",
 	muted: "bg-muted text-muted-foreground",
 };
 
 export const toneConnectorLineClass: Record<Tone, string> = {
 	primary: "bg-gradient-to-b from-primary via-primary/40 to-primary/10",
-	provider: "bg-gradient-to-b from-provider via-provider/40 to-provider/10",
-	organization:
-		"bg-gradient-to-b from-organization via-organization/40 to-organization/10",
+	brand: "bg-gradient-to-b from-brand via-brand/40 to-brand/10",
+	highlight: "bg-gradient-to-b from-highlight via-highlight/40 to-highlight/10",
 	destructive:
 		"bg-gradient-to-b from-destructive via-destructive/40 to-destructive/10",
 	muted: "bg-gradient-to-b from-border via-border/40 to-border/10",
@@ -59,27 +58,26 @@ export const toneConnectorLineClass: Record<Tone, string> = {
 
 export const toneHoverBorderClass: Record<Tone, string> = {
 	primary: "hover:border-primary/40",
-	provider: "hover:border-provider/40",
-	organization: "hover:border-organization/40",
+	brand: "hover:border-brand/40",
+	highlight: "hover:border-highlight/40",
 	destructive: "hover:border-destructive/40",
 	muted: "hover:border-border",
 };
 
 export const tonePanelClass: Record<Tone, string> = {
 	primary: "border-primary/20 bg-primary/5",
-	provider: "border-provider/20 bg-provider/5",
-	organization: "border-organization/20 bg-organization/5",
+	brand: "border-brand/20 bg-brand/5",
+	highlight: "border-highlight/20 bg-highlight/5",
 	destructive: "border-destructive/20 bg-destructive/5",
 	muted: "border-border bg-muted/50",
 };
 
 /*
- * Accent literals carried over from the Astro marketing site for pixel
- * parity. TODO: promote to named tokens in @voila.dev/ui-tokens once the
- * rebuild has shipped (they are close to, but not equal to, the brand roles).
+ * Accent classes for marketing highlights - built on the brand roles from
+ * `@voila.dev/ui-tokens` so a rebrand is a token change, not a find-and-replace.
  */
 
-export const accentOrangeTintClass = "bg-[#FA8424]/10 text-[#FA8424]";
-export const accentOrangeStarClass = "fill-[#FA8424] text-[#FA8424]";
-export const accentOrangeBlobClass = "bg-[#FA8424]/20";
-export const brandGradientClass = "bg-gradient-to-br from-primary to-[#3b5bff]";
+export const accentHighlightTintClass = "bg-highlight/10 text-highlight";
+export const accentHighlightStarClass = "fill-highlight text-highlight";
+export const accentHighlightBlobClass = "bg-highlight/20";
+export const brandGradientClass = "bg-gradient-to-br from-primary to-brand";

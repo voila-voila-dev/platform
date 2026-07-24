@@ -53,7 +53,7 @@ interface CanvasContext {
 	readonly onOpenSettings?: () => void;
 }
 
-/** The dashed « ajouter » slot of a grid cell. */
+/** The dashed add slot of a grid cell. */
 function GridAddCell({
 	gridId,
 	context,
@@ -325,7 +325,7 @@ export function EditorCanvas({
 	preview: EmailEditorPreview;
 	onUploadImage?: (file: File) => Promise<string>;
 	/** Present when the settings live in a sheet rather than in the sidebar;
-	 * each selected block's toolbar then offers a « Réglages » button. */
+	 * each selected block's toolbar then offers a Settings button. */
 	onOpenSettings?: () => void;
 	headerSlot?: ReactNode;
 	footerSlot?: ReactNode;
@@ -387,7 +387,7 @@ export function EditorCanvas({
 									className="text-[14px]"
 									style={{ color: EMAIL_COLOR.muted, fontFamily: EMAIL_FONT }}
 								>
-									Votre email est vide.
+									Your email is empty.
 								</p>
 								<AddBlockMenu
 									onAdd={(type) => dispatch({ type: "add", blockType: type })}

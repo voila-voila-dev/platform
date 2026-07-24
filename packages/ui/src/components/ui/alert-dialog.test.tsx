@@ -20,17 +20,17 @@ function Fixture(props: React.ComponentProps<typeof AlertDialog>) {
 	return (
 		<AlertDialog {...props}>
 			<AlertDialogTrigger render={<Button variant="outline" />}>
-				Cancel mission
+				Cancel project
 			</AlertDialogTrigger>
 			<AlertDialogContent>
 				<AlertDialogHeader>
-					<AlertDialogTitle>Cancel this mission?</AlertDialogTitle>
+					<AlertDialogTitle>Cancel this project?</AlertDialogTitle>
 					<AlertDialogDescription>
 						This action cannot be undone.
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<AlertDialogFooter>
-					<AlertDialogCancel>Keep mission</AlertDialogCancel>
+					<AlertDialogCancel>Keep project</AlertDialogCancel>
 					<AlertDialogAction variant="destructive">Confirm</AlertDialogAction>
 				</AlertDialogFooter>
 			</AlertDialogContent>
@@ -43,23 +43,23 @@ afterEach(cleanup);
 describe("AlertDialog", () => {
 	it("renders only the trigger while closed", () => {
 		const screen = render(<Fixture />);
-		expect(screen.getByRole("button", { name: "Cancel mission" })).toBeTruthy();
+		expect(screen.getByRole("button", { name: "Cancel project" })).toBeTruthy();
 		expect(screen.queryByRole("alertdialog")).toBeNull();
 	});
 
 	it("opens on trigger click with title and description", async () => {
 		const screen = render(<Fixture />);
-		fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+		fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 		await waitFor(() => {
 			expect(screen.getByRole("alertdialog")).toBeTruthy();
-			expect(screen.getByText("Cancel this mission?")).toBeTruthy();
+			expect(screen.getByText("Cancel this project?")).toBeTruthy();
 			expect(screen.getByText("This action cannot be undone.")).toBeTruthy();
 		});
 	});
 
 	it("closes when the action button is clicked", async () => {
 		const screen = render(<Fixture />);
-		fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+		fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 		await waitFor(() => {
 			expect(screen.getByRole("alertdialog")).toBeTruthy();
 		});
@@ -72,12 +72,12 @@ describe("AlertDialog", () => {
 
 	it("closes when the cancel button is clicked", async () => {
 		const screen = render(<Fixture />);
-		fireEvent.click(screen.getByRole("button", { name: "Cancel mission" }));
+		fireEvent.click(screen.getByRole("button", { name: "Cancel project" }));
 		await waitFor(() => {
 			expect(screen.getByRole("alertdialog")).toBeTruthy();
 		});
 
-		fireEvent.click(screen.getByRole("button", { name: "Keep mission" }));
+		fireEvent.click(screen.getByRole("button", { name: "Keep project" }));
 		await waitFor(() => {
 			expect(screen.queryByRole("alertdialog")).toBeNull();
 		});
@@ -102,7 +102,7 @@ describe("AlertDialog", () => {
 				>
 					<AlertDialogContent>
 						<AlertDialogHeader>
-							<AlertDialogTitle>Archive this mission?</AlertDialogTitle>
+							<AlertDialogTitle>Archive this project?</AlertDialogTitle>
 							<AlertDialogDescription>
 								Restorable at any time.
 							</AlertDialogDescription>
@@ -158,7 +158,7 @@ describe("AlertDialog", () => {
 						<AlertDialogMedia>
 							<svg role="img" aria-label="Warning" />
 						</AlertDialogMedia>
-						<AlertDialogTitle>Remove this provider?</AlertDialogTitle>
+						<AlertDialogTitle>Remove this freelancer?</AlertDialogTitle>
 						<AlertDialogDescription>
 							Access will be revoked.
 						</AlertDialogDescription>

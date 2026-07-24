@@ -93,10 +93,10 @@ function FullFeaturedPlayground() {
 			<div className="flex h-[28rem] gap-4">
 				<aside className="hidden w-64 shrink-0 flex-col gap-1 border-r pr-4 sm:flex">
 					<ChatConversationItem
-						leading={senderAvatar("RC")}
-						title="Match RC Toulon — 13 juin"
-						badges={<Badge variant="outline">Événement</Badge>}
-						description="Camille : Petit changement…"
+						leading={senderAvatar("NW")}
+						title="Northwind redesign — June 13"
+						badges={<Badge variant="outline">Project</Badge>}
+						description="Camille: Small change…"
 						timestamp="08:55"
 						unreadCount={2}
 						className="bg-muted"
@@ -106,27 +106,27 @@ function FullFeaturedPlayground() {
 						leading={senderAvatar("SU")}
 						title="Support"
 						badges={<Badge variant="secondary">Support</Badge>}
-						description="Notre équipe vous répond directement ici."
-						timestamp="Hier"
+						description="Our team replies to you right here."
+						timestamp="Yesterday"
 						render={<button type="button" />}
 					/>
 					<ChatConversationItem
-						leading={senderAvatar("T6")}
-						title="Tournoi des 6 stations"
+						leading={senderAvatar("Q3")}
+						title="Q3 brand refresh"
 						badges={
 							<>
-								<Badge variant="outline">Événement</Badge>
-								<Badge variant="secondary">Archivée</Badge>
+								<Badge variant="outline">Project</Badge>
+								<Badge variant="secondary">Archived</Badge>
 							</>
 						}
-						description="Conversation archivée"
+						description="Archived conversation"
 						timestamp="12/04"
 						render={<button type="button" />}
 					/>
 				</aside>
 				<div className="flex min-w-0 flex-1 flex-col gap-3">
 					<ChatMessageList
-						jumpToLatestLabel="Nouveaux messages"
+						jumpToLatestLabel="New messages"
 						onFollowChange={setFollowing}
 						header={
 							historyLoaded ? null : (
@@ -137,7 +137,7 @@ function FullFeaturedPlayground() {
 										size="sm"
 										onClick={() => setHistoryLoaded(true)}
 									>
-										Charger les messages précédents
+										Load earlier messages
 									</Button>
 								</div>
 							)
@@ -145,15 +145,15 @@ function FullFeaturedPlayground() {
 					>
 						{historyLoaded ? (
 							<>
-								<ChatDateSeparator>Lundi</ChatDateSeparator>
+								<ChatDateSeparator>Monday</ChatDateSeparator>
 								<ChatMessageGroup align="start">
 									<ChatMessageSender
 										avatar={senderAvatar("NG")}
 										name="Nathan Guyot"
-										badge={<Badge variant="organization">RC Toulon</Badge>}
+										badge={<Badge variant="highlight">Northwind</Badge>}
 									/>
 									<ChatMessage variant="other">
-										Bienvenue dans la conversation du match !
+										Welcome to the project thread!
 										<ChatMessageTime dateTime="2026-06-08T10:15">
 											10:15
 										</ChatMessageTime>
@@ -161,7 +161,7 @@ function FullFeaturedPlayground() {
 								</ChatMessageGroup>
 								<ChatMessageGroup align="end">
 									<ChatMessage variant="own">
-										Merci, ravi d'être de la partie.
+										Thanks, glad to be on board.
 										<ChatMessageTime dateTime="2026-06-08T10:20">
 											10:20
 										</ChatMessageTime>
@@ -169,21 +169,21 @@ function FullFeaturedPlayground() {
 								</ChatMessageGroup>
 							</>
 						) : null}
-						<ChatDateSeparator>Hier</ChatDateSeparator>
+						<ChatDateSeparator>Yesterday</ChatDateSeparator>
 						<ChatMessageGroup align="start">
 							<ChatMessageSender
 								avatar={senderAvatar("CD")}
 								name="Camille Dubois"
-								badge={<Badge variant="provider">Professionnel de santé</Badge>}
+								badge={<Badge variant="brand">Verified freelancer</Badge>}
 							/>
 							<ChatMessage variant="other">
-								Bonjour, je serai sur place 30 minutes avant le match.
+								Hi, I'll be online 30 minutes before the kickoff call.
 								<ChatMessageTime dateTime="2026-06-11T18:42">
 									18:42
 								</ChatMessageTime>
 							</ChatMessage>
 							<ChatMessage variant="other">
-								Y a-t-il un local pour déposer mon matériel ?
+								Is there a shared folder where I can drop my files?
 								<ChatMessageTime dateTime="2026-06-11T18:43">
 									18:43
 								</ChatMessageTime>
@@ -193,10 +193,10 @@ function FullFeaturedPlayground() {
 							<ChatMessageSender
 								avatar={senderAvatar("NG")}
 								name="Nathan Guyot"
-								badge={<Badge variant="organization">RC Toulon</Badge>}
+								badge={<Badge variant="highlight">Northwind</Badge>}
 							/>
 							<ChatMessage variant="other">
-								Oui, le vestiaire arbitres est réservé pour vous.
+								Yes, the project drive has a folder set up for you.
 								<ChatMessageTime dateTime="2026-06-11T19:05">
 									19:05
 								</ChatMessageTime>
@@ -204,22 +204,22 @@ function FullFeaturedPlayground() {
 						</ChatMessageGroup>
 						<ChatMessageGroup align="end">
 							<ChatMessage variant="own">
-								Parfait, merci ! À samedi.
+								Perfect, thanks! Talk on Monday.
 								<ChatMessageTime dateTime="2026-06-11T19:10">
 									19:10
 								</ChatMessageTime>
 							</ChatMessage>
 						</ChatMessageGroup>
-						<ChatUnreadSeparator>Nouveaux messages</ChatUnreadSeparator>
-						<ChatDateSeparator>Aujourd'hui</ChatDateSeparator>
+						<ChatUnreadSeparator>New messages</ChatUnreadSeparator>
+						<ChatDateSeparator>Today</ChatDateSeparator>
 						<ChatMessageGroup align="start">
 							<ChatMessageSender
 								avatar={senderAvatar("CD")}
 								name="Camille Dubois"
-								badge={<Badge variant="provider">Professionnel de santé</Badge>}
+								badge={<Badge variant="brand">Verified freelancer</Badge>}
 							/>
 							<ChatMessage variant="other">
-								Petit changement : j'arriverai finalement à 13h30.
+								Small change: I'll join at 1:30pm instead.
 								<ChatMessageTime dateTime="2026-06-12T08:55">
 									08:55
 								</ChatMessageTime>
@@ -251,7 +251,7 @@ function FullFeaturedPlayground() {
 									<ChatMessageSender
 										avatar={senderAvatar("NG")}
 										name="Nathan Guyot"
-										badge={<Badge variant="organization">RC Toulon</Badge>}
+										badge={<Badge variant="highlight">Northwind</Badge>}
 									/>
 									{group.map((message) => (
 										<ChatMessage key={message.id} variant="other">
@@ -271,9 +271,9 @@ function FullFeaturedPlayground() {
 						value={draft}
 						onValueChange={setDraft}
 						onSubmit={submitDraft}
-						placeholder="Écrire un message…"
-						sendLabel="Envoyer"
-						hint="⌘↵ pour envoyer"
+						placeholder="Write a message…"
+						sendLabel="Send"
+						hint="⌘↵ to send"
 						maxLength={500}
 						sending={sending}
 					/>
@@ -282,8 +282,8 @@ function FullFeaturedPlayground() {
 			<div className="flex items-center justify-between gap-2 border-t pt-3">
 				<span className="text-muted-foreground text-xs">
 					{following
-						? "Vous suivez la conversation."
-						: "Vous lisez l'historique — un nouveau message affiche le bouton flottant."}
+						? "You are following the conversation."
+						: "You are reading the history — a new message shows the floating button."}
 				</span>
 				<Button
 					type="button"
@@ -295,7 +295,7 @@ function FullFeaturedPlayground() {
 							{
 								id: previous.length,
 								author: "other",
-								text: `Réponse simulée #${
+								text: `Simulated reply #${
 									previous.filter((message) => message.author === "other")
 										.length + 1
 								}`,
@@ -303,16 +303,16 @@ function FullFeaturedPlayground() {
 						])
 					}
 				>
-					Simuler une réponse
+					Simulate a reply
 				</Button>
 			</div>
 			<ChatExternalLinkDialog
 				url={pendingUrl}
 				onClose={() => setPendingUrl(null)}
-				title="Vous quittez acme.dev"
-				description="Ce lien mène vers un site externe. Ouvrez-le uniquement si vous faites confiance à cette destination."
-				confirmLabel="Ouvrir le lien"
-				cancelLabel="Annuler"
+				title="You are leaving acme.dev"
+				description="This link goes to an external site. Only open it if you trust the destination."
+				confirmLabel="Open link"
+				cancelLabel="Cancel"
 			/>
 		</div>
 	);
@@ -334,24 +334,24 @@ export const Thread: Story = {
 				header={
 					<div className="flex justify-center">
 						<Button type="button" variant="ghost" size="sm">
-							Charger les messages précédents
+							Load earlier messages
 						</Button>
 					</div>
 				}
 			>
-				<ChatDateSeparator>Hier</ChatDateSeparator>
+				<ChatDateSeparator>Yesterday</ChatDateSeparator>
 				<ChatMessageGroup align="start">
 					<ChatMessageSender
 						avatar={senderAvatar("CD")}
 						name="Camille Dubois"
-						badge={<Badge variant="provider">Professionnel de santé</Badge>}
+						badge={<Badge variant="brand">Verified freelancer</Badge>}
 					/>
 					<ChatMessage variant="other">
-						Bonjour, je serai sur place 30 minutes avant le match.
+						Hi, I'll be online 30 minutes before the kickoff call.
 						<ChatMessageTime dateTime="2026-06-11T18:42">18:42</ChatMessageTime>
 					</ChatMessage>
 					<ChatMessage variant="other">
-						Y a-t-il un local pour déposer mon matériel ?
+						Is there a shared folder where I can drop my files?
 						<ChatMessageTime dateTime="2026-06-11T18:43">18:43</ChatMessageTime>
 					</ChatMessage>
 				</ChatMessageGroup>
@@ -359,28 +359,28 @@ export const Thread: Story = {
 					<ChatMessageSender
 						avatar={senderAvatar("NG")}
 						name="Nathan Guyot"
-						badge={<Badge variant="organization">RC Toulon</Badge>}
+						badge={<Badge variant="highlight">Northwind</Badge>}
 					/>
 					<ChatMessage variant="other">
-						Oui, le vestiaire arbitres est réservé pour vous.
+						Yes, the project drive has a folder set up for you.
 						<ChatMessageTime dateTime="2026-06-11T19:05">19:05</ChatMessageTime>
 					</ChatMessage>
 				</ChatMessageGroup>
-				<ChatDateSeparator>Aujourd'hui</ChatDateSeparator>
+				<ChatDateSeparator>Today</ChatDateSeparator>
 				<ChatMessageGroup align="start">
 					<ChatMessageSender
 						avatar={senderAvatar("ET")}
 						name="Emilien"
-						badge={<Badge>Équipe Acme</Badge>}
+						badge={<Badge>Acme team</Badge>}
 					/>
 					<ChatMessage variant="other">
-						Bonjour à tous, je reste disponible si besoin.
+						Hi everyone, I'm around if you need anything.
 						<ChatMessageTime dateTime="2026-06-12T09:02">09:02</ChatMessageTime>
 					</ChatMessage>
 				</ChatMessageGroup>
 				<ChatMessageGroup align="end">
 					<ChatMessage variant="own">
-						Parfait, merci ! À samedi.
+						Perfect, thanks! Talk on Monday.
 						<ChatMessageTime dateTime="2026-06-12T09:10">09:10</ChatMessageTime>
 					</ChatMessage>
 				</ChatMessageGroup>
@@ -397,19 +397,19 @@ export const UnreadSeparator: Story = {
 			<ChatMessageList>
 				<ChatMessageGroup align="end">
 					<ChatMessage variant="own">
-						À samedi !
+						Talk on Monday!
 						<ChatMessageTime dateTime="2026-06-11T19:10">19:10</ChatMessageTime>
 					</ChatMessage>
 				</ChatMessageGroup>
-				<ChatUnreadSeparator>Nouveaux messages</ChatUnreadSeparator>
+				<ChatUnreadSeparator>New messages</ChatUnreadSeparator>
 				<ChatMessageGroup align="start">
 					<ChatMessageSender
 						avatar={senderAvatar("CD")}
 						name="Camille Dubois"
-						badge={<Badge variant="provider">Professionnel de santé</Badge>}
+						badge={<Badge variant="brand">Verified freelancer</Badge>}
 					/>
 					<ChatMessage variant="other">
-						Petit changement : j'arriverai finalement à 13h30.
+						Small change: I'll join at 1:30pm instead.
 						<ChatMessageTime dateTime="2026-06-12T08:55">08:55</ChatMessageTime>
 					</ChatMessage>
 				</ChatMessageGroup>
@@ -430,14 +430,14 @@ export const LongWordOverflow: Story = {
 						name="Camille Dubois"
 					/>
 					<ChatMessage variant="other">
-						Voici le lien vers le protocole :
-						https://intranet.acme.dev/protocoles/commotions-cerebrales/procedure-de-retour-au-jeu-progressive-2026
+						Here is the link to the checklist:
+						https://intranet.acme.dev/handbooks/design-reviews/progressive-handoff-checklist-for-launches-2026
 						<ChatMessageTime dateTime="2026-06-12T09:02">09:02</ChatMessageTime>
 					</ChatMessage>
 				</ChatMessageGroup>
 				<ChatMessageGroup align="end">
 					<ChatMessage variant="own">
-						Supercalifragilisticexpialidocious-anticonstitutionnellement-extraordinairement
+						Supercalifragilisticexpialidocious-pneumonoultramicroscopicsilicovolcanoconiosis-extraordinarily
 						<ChatMessageTime dateTime="2026-06-12T09:03">09:03</ChatMessageTime>
 					</ChatMessage>
 				</ChatMessageGroup>
@@ -455,13 +455,13 @@ function MessageLinksPlayground() {
 					<ChatMessageSender
 						avatar={senderAvatar("CD")}
 						name="Camille Dubois"
-						badge={<Badge variant="provider">Professionnel de santé</Badge>}
+						badge={<Badge variant="brand">Verified freelancer</Badge>}
 					/>
 					<ChatMessage variant="other">
 						<ChatMessageText onLinkClick={setPendingUrl}>
-							Voici le protocole :
-							https://www.rugby-protocoles.example.com/commotions. Dites-moi si
-							le lien ne fonctionne pas.
+							Here is the style guide:
+							https://www.brand-guidelines.example.com/handoff. Let me know if
+							the link does not work.
 						</ChatMessageText>
 						<ChatMessageTime dateTime="2026-06-12T09:02">09:02</ChatMessageTime>
 					</ChatMessage>
@@ -469,8 +469,8 @@ function MessageLinksPlayground() {
 				<ChatMessageGroup align="end">
 					<ChatMessage variant="own">
 						<ChatMessageText onLinkClick={setPendingUrl}>
-							Merci ! Je préfère celui-ci :
-							https://passeport.rugby.example.fr/retour-au-jeu
+							Thanks! I prefer this one:
+							https://docs.example.com/brand/asset-delivery
 						</ChatMessageText>
 						<ChatMessageTime dateTime="2026-06-12T09:04">09:04</ChatMessageTime>
 					</ChatMessage>
@@ -479,10 +479,10 @@ function MessageLinksPlayground() {
 			<ChatExternalLinkDialog
 				url={pendingUrl}
 				onClose={() => setPendingUrl(null)}
-				title="Vous quittez acme.dev"
-				description="Ce lien mène vers un site externe. Ouvrez-le uniquement si vous faites confiance à cette destination."
-				confirmLabel="Ouvrir le lien"
-				cancelLabel="Annuler"
+				title="You are leaving acme.dev"
+				description="This link goes to an external site. Only open it if you trust the destination."
+				confirmLabel="Open link"
+				cancelLabel="Cancel"
 			/>
 		</div>
 	);
@@ -501,16 +501,16 @@ export const EmptyThread: Story = {
 		<div className="flex h-72 w-full max-w-xl flex-col gap-3">
 			<ChatMessageList>
 				<div className="flex flex-1 items-center justify-center text-muted-foreground text-sm">
-					Aucun message pour le moment — écrivez le premier !
+					No messages yet — write the first one!
 				</div>
 			</ChatMessageList>
 			<ChatComposer
 				value=""
 				onValueChange={() => {}}
 				onSubmit={() => {}}
-				placeholder="Écrire un message…"
-				sendLabel="Envoyer"
-				hint="⌘↵ pour envoyer"
+				placeholder="Write a message…"
+				sendLabel="Send"
+				hint="⌘↵ to send"
 			/>
 		</div>
 	),
@@ -518,23 +518,20 @@ export const EmptyThread: Story = {
 
 function FollowPlayground() {
 	const [messages, setMessages] = useState(
-		Array.from(
-			{ length: 20 },
-			(_, index) => `Message d'historique #${index + 1}`,
-		),
+		Array.from({ length: 20 }, (_, index) => `History message #${index + 1}`),
 	);
 	const [following, setFollowing] = useState(true);
 	return (
 		<div className="flex h-96 w-full max-w-xl flex-col gap-3">
 			<ChatMessageList
-				jumpToLatestLabel="Nouveaux messages"
+				jumpToLatestLabel="New messages"
 				onFollowChange={setFollowing}
 			>
 				<ChatMessageGroup align="start">
 					<ChatMessageSender
 						avatar={senderAvatar("CD")}
 						name="Camille Dubois"
-						badge={<Badge variant="provider">Professionnel de santé</Badge>}
+						badge={<Badge variant="brand">Verified freelancer</Badge>}
 					/>
 					{messages.map((message) => (
 						<ChatMessage key={message} variant="other">
@@ -546,8 +543,8 @@ function FollowPlayground() {
 			<div className="flex items-center justify-between gap-2">
 				<span className="text-muted-foreground text-xs">
 					{following
-						? "Vous suivez la conversation."
-						: "Vous lisez l'historique — un nouveau message affiche le bouton flottant."}
+						? "You are following the conversation."
+						: "You are reading the history — a new message shows the floating button."}
 				</span>
 				<Button
 					type="button"
@@ -555,11 +552,11 @@ function FollowPlayground() {
 					onClick={() =>
 						setMessages((previous) => [
 							...previous,
-							`Nouveau message #${previous.length + 1}`,
+							`New message #${previous.length + 1}`,
 						])
 					}
 				>
-					Ajouter un message
+					Add a message
 				</Button>
 			</div>
 		</div>
@@ -567,7 +564,7 @@ function FollowPlayground() {
 }
 
 /** Scroll up into the history, then append: the list does not yank you down,
- * and the built-in « Nouveaux messages ↓ » button floats above the thread. */
+ * and the built-in "New messages ↓" button floats above the thread. */
 export const FollowJumpToLatest: Story = {
 	render: () => <FollowPlayground />,
 };
@@ -584,9 +581,9 @@ function ComposerPlayground(props: {
 			value={value}
 			onValueChange={setValue}
 			onSubmit={() => setValue("")}
-			placeholder="Écrire un message…"
-			sendLabel="Envoyer"
-			hint={props.submitOnEnter ? "↵ pour envoyer" : "⌘↵ pour envoyer"}
+			placeholder="Write a message…"
+			sendLabel="Send"
+			hint={props.submitOnEnter ? "↵ to send" : "⌘↵ to send"}
 			disabled={props.disabled}
 			sending={props.sending}
 			submitOnEnter={props.submitOnEnter}
@@ -607,10 +604,10 @@ export const ComposerSending: Story = {
 	render: () => (
 		<div className="w-full max-w-xl">
 			<ChatComposer
-				value="J'arrive dans 10 minutes."
+				value="I'll be online in 10 minutes."
 				onValueChange={() => {}}
 				onSubmit={() => {}}
-				sendLabel="Envoyer"
+				sendLabel="Send"
 				sending
 			/>
 		</div>
@@ -621,13 +618,13 @@ export const ComposerWithError: Story = {
 	render: () => (
 		<div className="w-full max-w-xl">
 			<ChatComposer
-				value={"Un message ".repeat(40)}
+				value={"A message ".repeat(40)}
 				onValueChange={() => {}}
 				onSubmit={() => {}}
-				placeholder="Écrire un message…"
-				sendLabel="Envoyer"
-				error="Le message dépasse la limite de 500 caractères."
-				hint="⌘↵ pour envoyer"
+				placeholder="Write a message…"
+				sendLabel="Send"
+				error="The message exceeds the 500-character limit."
+				hint="⌘↵ to send"
 			/>
 		</div>
 	),
@@ -640,13 +637,13 @@ export const ComposerWithCounter: Story = {
 		<div className="flex w-full max-w-xl flex-col gap-6">
 			<ComposerPlayground maxLength={80} />
 			<ChatComposer
-				value={"Un message vraiment trop long pour la limite fixée. ".repeat(2)}
+				value={"A message far too long for the configured limit. ".repeat(2)}
 				onValueChange={() => {}}
 				onSubmit={() => {}}
-				placeholder="Écrire un message…"
-				sendLabel="Envoyer"
+				placeholder="Write a message…"
+				sendLabel="Send"
 				maxLength={80}
-				error="Le message dépasse la limite de 80 caractères."
+				error="The message exceeds the 80-character limit."
 			/>
 		</div>
 	),
@@ -664,14 +661,14 @@ export const ComposerArchived: Story = {
 	render: () => (
 		<div className="flex w-full max-w-xl flex-col gap-2">
 			<p className="text-muted-foreground text-sm">
-				Cette conversation est archivée.
+				This conversation is archived.
 			</p>
 			<ChatComposer
 				value=""
 				onValueChange={() => {}}
 				onSubmit={() => {}}
-				placeholder="Écrire un message…"
-				sendLabel="Envoyer"
+				placeholder="Write a message…"
+				sendLabel="Send"
 				disabled
 			/>
 		</div>
@@ -685,41 +682,41 @@ export const ConversationListItems: Story = {
 				leading={senderAvatar("SU")}
 				title="Support"
 				badges={<Badge variant="secondary">Support</Badge>}
-				description="Notre équipe vous répond directement ici."
+				description="Our team replies to you right here."
 				timestamp="09:10"
 				unreadCount={2}
 			/>
 			<ChatConversationItem
-				leading={senderAvatar("T6")}
-				title="Tournoi des 6 stations"
-				badges={<Badge variant="outline">Événement</Badge>}
-				description="Dernier message hier"
-				timestamp="Hier"
+				leading={senderAvatar("Q3")}
+				title="Q3 brand refresh"
+				badges={<Badge variant="outline">Project</Badge>}
+				description="Last message yesterday"
+				timestamp="Yesterday"
 			/>
 			<ChatConversationItem
-				leading={senderAvatar("RC")}
-				title="Match RC Toulon — 12 avril"
+				leading={senderAvatar("NW")}
+				title="Northwind redesign — April 12"
 				badges={
 					<>
-						<Badge variant="outline">Événement</Badge>
-						<Badge variant="secondary">Archivée</Badge>
+						<Badge variant="outline">Project</Badge>
+						<Badge variant="secondary">Archived</Badge>
 					</>
 				}
-				description="Conversation archivée"
+				description="Archived conversation"
 				timestamp="12/04"
 			/>
 			{/* unreadCount above 99 renders as the capped « 99+ » badge. */}
 			<ChatConversationItem
 				leading={senderAvatar("DA")}
-				title="Discussion très active avec un titre vraiment long qui doit être tronqué"
-				description="Dernier message à l'instant"
-				timestamp="À l'instant"
+				title="Very active discussion with a really long title that has to be truncated"
+				description="Last message just now"
+				timestamp="Just now"
 				unreadCount={128}
 			/>
 			<ChatConversationItem
 				leading={senderAvatar("CL")}
-				title="Conversation cliquable (lien)"
-				description="Rendue comme un <a> via render — focus clavier et hover actifs."
+				title="Clickable conversation (link)"
+				description="Rendered as an <a> via render — keyboard focus and hover active."
 				timestamp="10:24"
 				unreadCount={1}
 				render={
@@ -733,8 +730,8 @@ export const ConversationListItems: Story = {
 
 function AppendPlayground() {
 	const [messages, setMessages] = useState([
-		"Bonjour, je serai sur place 30 minutes avant le match.",
-		"Y a-t-il un local pour déposer mon matériel ?",
+		"Hi, I'll be online 30 minutes before the kickoff call.",
+		"Is there a shared folder where I can drop my files?",
 	]);
 	return (
 		<div className="flex h-96 w-full max-w-xl flex-col gap-3">
@@ -743,7 +740,7 @@ function AppendPlayground() {
 					<ChatMessageSender
 						avatar={senderAvatar("CD")}
 						name="Camille Dubois"
-						badge={<Badge variant="provider">Professionnel de santé</Badge>}
+						badge={<Badge variant="brand">Verified freelancer</Badge>}
 					/>
 					{messages.map((message, index) => (
 						<ChatMessage key={`${index}-${message}`} variant="other">
@@ -759,11 +756,11 @@ function AppendPlayground() {
 				onClick={() =>
 					setMessages((previous) => [
 						...previous,
-						`Nouveau message #${previous.length + 1}`,
+						`New message #${previous.length + 1}`,
 					])
 				}
 			>
-				Ajouter un message
+				Add a message
 			</Button>
 		</div>
 	);

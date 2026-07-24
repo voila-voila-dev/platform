@@ -10,11 +10,11 @@ describe("LogoMarquee", () => {
 	it("duplicates the track children with the clone hidden from assistive tech", () => {
 		const screen = render(
 			<LogoMarquee.Root>
-				<LogoMarquee.Title>Ils nous font confiance</LogoMarquee.Title>
+				<LogoMarquee.Title>Trusted by leading teams</LogoMarquee.Title>
 				<LogoMarquee.Viewport>
 					<LogoMarquee.Track>
-						<LogoMarquee.Item src="/a.png" alt="Club A" />
-						<LogoMarquee.Item src="/b.png" alt="Club B" />
+						<LogoMarquee.Item src="/a.png" alt="Client A" />
+						<LogoMarquee.Item src="/b.png" alt="Client B" />
 					</LogoMarquee.Track>
 				</LogoMarquee.Viewport>
 			</LogoMarquee.Root>,
@@ -22,7 +22,7 @@ describe("LogoMarquee", () => {
 
 		const images = screen.container.querySelectorAll("img");
 		expect(images.length).toBe(4);
-		expect(screen.getAllByAltText("Club A").length).toBe(2);
+		expect(screen.getAllByAltText("Client A").length).toBe(2);
 
 		const clone = screen.container.querySelector("[aria-hidden=true]");
 		expect(clone?.classList.contains("contents")).toBe(true);
@@ -32,7 +32,7 @@ describe("LogoMarquee", () => {
 	it("honors a custom loop duration", () => {
 		const screen = render(
 			<LogoMarquee.Track duration={12}>
-				<LogoMarquee.Item src="/a.png" alt="Club A" />
+				<LogoMarquee.Item src="/a.png" alt="Client A" />
 			</LogoMarquee.Track>,
 		);
 		const track = screen.container.querySelector(

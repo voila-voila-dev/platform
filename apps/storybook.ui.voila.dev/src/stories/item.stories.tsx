@@ -36,10 +36,10 @@ export const Default: Story = {
 				<CalendarCheckIcon />
 			</ItemMedia>
 			<ItemContent>
-				<ItemTitle>Saturday match coverage</ItemTitle>
+				<ItemTitle>Landing page redesign</ItemTitle>
 				<ItemDescription>
-					Physiotherapist needed for the senior rugby team, June 14 from 14:00
-					to 18:00.
+					Designer needed for a marketing site refresh, kickoff June 14, about
+					two weeks of work.
 				</ItemDescription>
 			</ItemContent>
 			<ItemActions>
@@ -59,7 +59,7 @@ export const Muted: Story = {
 			</ItemMedia>
 			<ItemContent>
 				<ItemTitle>Camille Laurent</ItemTitle>
-				<ItemDescription>Osteopath — Rennes and surroundings.</ItemDescription>
+				<ItemDescription>Copywriter — remote, EU time zones.</ItemDescription>
 			</ItemContent>
 			<ItemActions>
 				<Button size="sm" variant="ghost">
@@ -75,8 +75,10 @@ export const Group: Story = {
 		<ItemGroup className="max-w-md">
 			<Item>
 				<ItemContent>
-					<ItemTitle>Mission published</ItemTitle>
-					<ItemDescription>Stade Rennais — tournament day.</ItemDescription>
+					<ItemTitle>Project published</ItemTitle>
+					<ItemDescription>
+						Northwind Studio — website relaunch.
+					</ItemDescription>
 				</ItemContent>
 			</Item>
 			<ItemSeparator />
@@ -84,7 +86,7 @@ export const Group: Story = {
 				<ItemContent>
 					<ItemTitle>Application received</ItemTitle>
 					<ItemDescription>
-						Camille Laurent applied to your mission.
+						Camille Laurent applied to your project.
 					</ItemDescription>
 				</ItemContent>
 			</Item>
@@ -93,7 +95,7 @@ export const Group: Story = {
 				<ItemContent>
 					<ItemTitle>Booking confirmed</ItemTitle>
 					<ItemDescription>
-						Your provider is booked for June 14.
+						Your freelancer is booked for June 14.
 					</ItemDescription>
 				</ItemContent>
 			</Item>
@@ -119,9 +121,9 @@ export const Sizes: Story = {
 						<CalendarCheckIcon />
 					</ItemMedia>
 					<ItemContent>
-						<ItemTitle>Saturday match coverage ({size})</ItemTitle>
+						<ItemTitle>Landing page redesign ({size})</ItemTitle>
 						<ItemDescription>
-							Physiotherapist needed for the senior rugby team.
+							Designer needed for a marketing site refresh.
 						</ItemDescription>
 					</ItemContent>
 					<ItemActions>
@@ -142,16 +144,16 @@ export const AsLink: Story = {
 			className="max-w-md"
 			render={
 				// biome-ignore lint/a11y/useAnchorContent: Base UI's render prop nests the Item children inside the anchor.
-				<a href="#mission-detail" />
+				<a href="#project-detail" />
 			}
 		>
 			<ItemMedia variant="icon">
 				<CalendarCheckIcon />
 			</ItemMedia>
 			<ItemContent>
-				<ItemTitle>Saturday match coverage</ItemTitle>
+				<ItemTitle>Landing page redesign</ItemTitle>
 				<ItemDescription>
-					Physiotherapist needed for the senior rugby team.
+					Designer needed for a marketing site refresh.
 				</ItemDescription>
 			</ItemContent>
 			<ItemActions>
@@ -172,7 +174,7 @@ export const WithImageMedia: Story = {
 			</ItemMedia>
 			<ItemContent>
 				<ItemTitle>Camille Laurent</ItemTitle>
-				<ItemDescription>Osteopath — Rennes and surroundings.</ItemDescription>
+				<ItemDescription>Copywriter — remote, EU time zones.</ItemDescription>
 			</ItemContent>
 		</Item>
 	),
@@ -182,15 +184,15 @@ export const WithHeaderAndFooter: Story = {
 	render: () => (
 		<Item variant="outline" className="max-w-md">
 			<ItemHeader>
-				<ItemTitle>Saturday match coverage</ItemTitle>
+				<ItemTitle>Landing page redesign</ItemTitle>
 				<Button size="sm" variant="ghost">
 					Edit
 				</Button>
 			</ItemHeader>
 			<ItemContent>
 				<ItemDescription>
-					Physiotherapist needed for the senior rugby team, June 14 from 14:00
-					to 18:00.
+					Designer needed for a marketing site refresh, kickoff June 14, about
+					two weeks of work.
 				</ItemDescription>
 			</ItemContent>
 			<ItemFooter>

@@ -17,9 +17,9 @@ const MARKER_OPTIONS: ReadonlyArray<{
 	readonly value: EmailEditorListMarker;
 	readonly label: string;
 }> = [
-	{ value: "bullet", label: "Puce" },
-	{ value: "number", label: "Numéro" },
-	{ value: "badge", label: "Pastille numérotée" },
+	{ value: "bullet", label: "Bullet" },
+	{ value: "number", label: "Number" },
+	{ value: "badge", label: "Numbered badge" },
 ];
 
 /** The marker shown before an item, mirroring the domain `emailList`. */
@@ -109,9 +109,9 @@ function ListItemRow({
 			<div className="flex min-w-0 flex-1 flex-col">
 				{showTitle ? (
 					<input
-						aria-label={`Titre de l'élément ${index + 1}`}
+						aria-label={`Item ${index + 1} title`}
 						value={item.title ?? ""}
-						placeholder="Titre (optionnel)"
+						placeholder="Title (optional)"
 						onChange={(event) =>
 							onChange({ ...item, title: event.target.value })
 						}
@@ -122,8 +122,8 @@ function ListItemRow({
 				<RichTextEditable
 					spans={item.spans}
 					onChange={(spans) => onChange({ ...item, spans })}
-					ariaLabel={`Élément ${index + 1}`}
-					placeholder="Votre texte"
+					ariaLabel={`Item ${index + 1}`}
+					placeholder="Your text"
 					className="text-[16px] leading-[1.6]"
 					style={{ fontFamily: EMAIL_FONT, color: EMAIL_COLOR.ink }}
 				/>
@@ -139,13 +139,13 @@ function ListBlockSettings({
 	return (
 		<>
 			<SelectOption
-				label="Marqueur"
+				label="Marker"
 				value={block.marker}
 				options={MARKER_OPTIONS}
 				onChange={(marker) => onChange({ ...block, marker })}
 			/>
 			<div className="flex flex-col gap-2">
-				<span className="font-medium text-sm">Éléments</span>
+				<span className="font-medium text-sm">Items</span>
 				{block.items.map((item, index) => (
 					<div
 						key={index}
@@ -157,12 +157,12 @@ function ListBlockSettings({
 									.map((span) => span.text)
 									.join("")
 									.trim() ||
-								`Élément ${index + 1}`}
+								`Item ${index + 1}`}
 						</span>
 						<Button
 							variant="ghost"
 							size="icon-sm"
-							aria-label={`Supprimer l'élément ${index + 1}`}
+							aria-label={`Remove item ${index + 1}`}
 							disabled={block.items.length === 1}
 							onClick={() =>
 								onChange({
@@ -183,19 +183,18 @@ function ListBlockSettings({
 					}
 				>
 					<PlusIcon aria-hidden />
-					Ajouter un élément
+					Add an item
 				</Button>
 			</div>
 			<p className="text-muted-foreground text-xs">
-				Le texte de chaque élément se met en forme depuis la barre d'outils du
-				bloc, comme un paragraphe.
+				Each item's text is formatted from the block toolbar, like a paragraph.
 			</p>
 		</>
 	);
 }
 
 export const listBlockDefinition: EmailBlockDefinition<EmailEditorListBlock> = {
-	label: "Liste",
+	label: "List",
 	icon: ListBulletsIcon,
 	View: ListBlockView,
 	Settings: ListBlockSettings,

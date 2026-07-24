@@ -34,9 +34,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const onboardingSteps = [
-	{ step: 1, title: "Profil", description: "Vos informations" },
-	{ step: 2, title: "Disponibilités", description: "Vos créneaux" },
-	{ step: 3, title: "Validation", description: "Vérification du compte" },
+	{ step: 1, title: "Profile", description: "Your details" },
+	{ step: 2, title: "Availability", description: "Your time slots" },
+	{ step: 3, title: "Review", description: "Account verification" },
 ];
 
 export const Default: Story = {
@@ -120,14 +120,14 @@ export const Interactive: Story = {
 						disabled={value <= 1}
 						onClick={() => setValue((current) => current - 1)}
 					>
-						Précédent
+						Previous
 					</Button>
 					<Button
 						size="sm"
 						disabled={value > onboardingSteps.length}
 						onClick={() => setValue((current) => current + 1)}
 					>
-						{value >= onboardingSteps.length ? "Terminer" : "Suivant"}
+						{value >= onboardingSteps.length ? "Finish" : "Next"}
 					</Button>
 				</div>
 			</div>

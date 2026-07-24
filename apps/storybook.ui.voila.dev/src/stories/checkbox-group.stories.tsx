@@ -15,14 +15,14 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const SKILLS = [
-	{ name: "physiotherapy", label: "Physiotherapy" },
-	{ name: "osteopathy", label: "Osteopathy" },
-	{ name: "nursing", label: "Nursing" },
+	{ name: "design", label: "Design" },
+	{ name: "development", label: "Development" },
+	{ name: "copywriting", label: "Copywriting" },
 ] as const;
 
 export const Default: Story = {
 	render: () => (
-		<CheckboxGroup defaultValue={["physiotherapy"]} className="w-64">
+		<CheckboxGroup defaultValue={["design"]} className="w-64">
 			{SKILLS.map((skill) => (
 				<div key={skill.name} className="flex items-center gap-2">
 					<Checkbox name={skill.name} id={`skills-${skill.name}`} />
@@ -36,7 +36,7 @@ export const Default: Story = {
 // The wrapping-row layout filter bars need.
 export const Horizontal: Story = {
 	render: () => (
-		<CheckboxGroup orientation="horizontal" defaultValue={["osteopathy"]}>
+		<CheckboxGroup orientation="horizontal" defaultValue={["development"]}>
 			{SKILLS.map((skill) => (
 				<div key={skill.name} className="flex items-center gap-2">
 					<Checkbox name={skill.name} id={`filter-${skill.name}`} />
@@ -54,7 +54,7 @@ export const Horizontal: Story = {
 export const WithParentCheckbox: Story = {
 	render: () => (
 		<CheckboxGroup
-			defaultValue={["physiotherapy"]}
+			defaultValue={["design"]}
 			allValues={SKILLS.map((skill) => skill.name)}
 			className="w-64"
 		>
@@ -75,7 +75,7 @@ export const WithParentCheckbox: Story = {
 // Whole group disabled - boxes dim via `data-disabled:` and ticking is blocked.
 export const Disabled: Story = {
 	render: () => (
-		<CheckboxGroup defaultValue={["nursing"]} disabled className="w-64">
+		<CheckboxGroup defaultValue={["copywriting"]} disabled className="w-64">
 			{SKILLS.map((skill) => (
 				<div key={skill.name} className="flex items-center gap-2">
 					<Checkbox name={skill.name} id={`disabled-${skill.name}`} />
@@ -88,7 +88,7 @@ export const Disabled: Story = {
 
 export const Controlled: Story = {
 	render: () => {
-		const [value, setValue] = useState<string[]>(["physiotherapy"]);
+		const [value, setValue] = useState<string[]>(["design"]);
 		return (
 			<div className="flex flex-col gap-3">
 				<CheckboxGroup value={value} onValueChange={setValue} className="w-64">

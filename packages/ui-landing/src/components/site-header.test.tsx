@@ -14,7 +14,7 @@ function renderHeader() {
 				<SiteHeader.Nav>
 					<SiteHeader.NavList>
 						<SiteHeader.NavItem href="/#how-it-works">
-							Comment ça marche ?
+							How it works
 						</SiteHeader.NavItem>
 					</SiteHeader.NavList>
 				</SiteHeader.Nav>
@@ -22,7 +22,7 @@ function renderHeader() {
 			</SiteHeader.Bar>
 			<SiteHeader.MobileMenu>
 				<SiteHeader.MobileNavItem href="/#how-it-works">
-					Comment ça marche ?
+					How it works
 				</SiteHeader.MobileNavItem>
 			</SiteHeader.MobileMenu>
 		</SiteHeader.Root>,
@@ -53,7 +53,7 @@ describe("SiteHeader", () => {
 	it("renders nav items as anchors by default and supports render overrides", () => {
 		const screen = renderHeader();
 		// The label appears twice: desktop nav + mobile menu.
-		const links = screen.getAllByRole("link", { name: "Comment ça marche ?" });
+		const links = screen.getAllByRole("link", { name: "How it works" });
 		expect(links.length).toBe(2);
 		for (const link of links) {
 			expect(link.getAttribute("href")).toBe("/#how-it-works");

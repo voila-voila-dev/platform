@@ -18,10 +18,10 @@ describe("DirectionProvider", () => {
 	it("renders its children unchanged", () => {
 		const screen = render(
 			<DirectionProvider direction="rtl">
-				<button type="button">Book a provider</button>
+				<button type="button">Book a freelancer</button>
 			</DirectionProvider>,
 		);
-		expect(screen.getByRole("button").textContent).toBe("Book a provider");
+		expect(screen.getByRole("button").textContent).toBe("Book a freelancer");
 	});
 
 	it("does not set the dir attribute on the DOM", () => {

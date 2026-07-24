@@ -18,28 +18,28 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
 	render: () => (
 		<ProseArticle>
-			<h2>Pourquoi médicaliser les événements sportifs amateurs ?</h2>
+			<h2>Why every product launch deserves a dedicated designer</h2>
 			<p>
-				Chaque week-end, des milliers de matchs amateurs se jouent sans aucun
-				encadrement médical. Pourtant, la présence d'un{" "}
-				<strong>professionnel de santé</strong> au bord du terrain change tout.
+				Every quarter, thousands of launches ship without a single design
+				review. Yet having a <strong>dedicated freelancer</strong> embedded in
+				the team changes everything.
 			</p>
 			<blockquote>
 				<p>
-					Être suivi par un pro pendant la saison a tout changé : moins de
-					blessures, et le sentiment d'être enfin pris au sérieux.
+					Having an expert embedded all quarter changed everything: fewer
+					reworks, and the feeling of finally being taken seriously.
 				</p>
 			</blockquote>
-			<h3>Ce que dit la réglementation</h3>
+			<h3>What the playbook says</h3>
 			<p>
-				Les fédérations recommandent un encadrement adapté au niveau de
-				pratique. Consultez <a href="https://acme.dev">notre guide complet</a>{" "}
-				pour connaître les obligations de votre discipline.
+				Experienced teams recommend support that matches the scale of the
+				launch. Read <a href="https://acme.dev">our complete guide</a> to find
+				out what your project really needs.
 			</p>
 			<ul>
-				<li>Prévention des blessures avant l'effort</li>
-				<li>Prise en charge immédiate sur le terrain</li>
-				<li>Suivi et continuité médicale après l'événement</li>
+				<li>Reviews that catch issues before the launch</li>
+				<li>Immediate fixes while the work is in flight</li>
+				<li>Follow-up and continuity after the release</li>
 			</ul>
 		</ProseArticle>
 	),

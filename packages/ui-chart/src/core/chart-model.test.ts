@@ -3,9 +3,9 @@ import { describe, expect, it } from "vitest";
 import { buildChartModel, readNumber } from "#/core/chart-model.ts";
 
 const data = [
-	{ month: "January", missions: 24, bookings: 18 },
-	{ month: "February", missions: 31, bookings: 22 },
-	{ month: "March", missions: 28, bookings: 25 },
+	{ month: "January", projects: 24, bookings: 18 },
+	{ month: "February", projects: 31, bookings: 22 },
+	{ month: "March", projects: 28, bookings: 25 },
 ];
 
 const build = (
@@ -14,7 +14,7 @@ const build = (
 	buildChartModel({
 		data,
 		category: { key: "month" },
-		value: { keys: ["missions", "bookings"] },
+		value: { keys: ["projects", "bookings"] },
 		orientation: "vertical",
 		innerWidth: 300,
 		innerHeight: 100,
@@ -54,14 +54,14 @@ describe("buildChartModel", () => {
 
 	it("sums the series when they are stacked", () => {
 		const stacked = build({
-			value: { keys: ["missions", "bookings"], stacked: true },
+			value: { keys: ["projects", "bookings"], stacked: true },
 		});
 		expect(stacked.valueScale.domain).toEqual([0, 60]);
 	});
 
 	it("keeps an explicit domain exactly as given", () => {
 		const pinned = build({
-			value: { keys: ["missions"], domain: [0, 100] },
+			value: { keys: ["projects"], domain: [0, 100] },
 		});
 		expect(pinned.valueScale.domain).toEqual([0, 100]);
 		expect(pinned.valueScale.scale(0)).toBe(100);
@@ -70,7 +70,7 @@ describe("buildChartModel", () => {
 
 	it("skips rounding when asked", () => {
 		expect(
-			build({ value: { keys: ["missions"], nice: false } }).valueScale.domain,
+			build({ value: { keys: ["projects"], nice: false } }).valueScale.domain,
 		).toEqual([0, 31]);
 	});
 
