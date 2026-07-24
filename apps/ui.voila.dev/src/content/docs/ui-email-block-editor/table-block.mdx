@@ -5,11 +5,11 @@ sidebar:
   order: 9
 ---
 
-import Preview from "../../../components/preview.astro";
+import Preview from "@/components/docs/preview";
 import * as Example from "../../../examples/ui-email-block-editor/blocks";
 
 <Preview layout="stack">
-	<Example.Table client:load />
+	<Example.Table />
 </Preview>
 
 ```ts

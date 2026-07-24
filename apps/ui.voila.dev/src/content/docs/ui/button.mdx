@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import Preview from "../../../components/preview.astro";
+import Preview from "@/components/docs/preview";
 import * as Example from "../../../examples/ui/button";
 
 `Button` wraps [Base UI's button](https://base-ui.com/react/components/button),
@@ -20,11 +20,11 @@ import { Button } from "@voila.dev/ui/components/button";
 ## Variants
 
 <Preview label="Semantic variants">
-	<Example.Variants client:load />
+	<Example.Variants />
 </Preview>
 
 <Preview label="Product surfaces">
-	<Example.SurfaceVariants client:load />
+	<Example.SurfaceVariants />
 </Preview>
 
 `provider` and `organization` map to the two product-surface tokens. If your app
@@ -51,7 +51,7 @@ wall in a dialog footer reads as an error message, not a button.
 ## Sizes
 
 <Preview label="Text sizes">
-	<Example.Sizes client:load />
+	<Example.Sizes />
 </Preview>
 
 The scale is `xs < sm < default < lg`, with `default` (32px tall) as the
@@ -61,7 +61,7 @@ almost always stay at `default` or below.
 ### Icon-only
 
 <Preview label="Square sizes, one icon, no label">
-	<Example.IconSizes client:load />
+	<Example.IconSizes />
 </Preview>
 
 An icon-only button has no accessible name of its own. **Always pass
@@ -72,13 +72,13 @@ An icon-only button has no accessible name of its own. **Always pass
 Icons are sized automatically; you do not need to set `size-4` yourself.
 
 <Preview label="Leading and trailing">
-	<Example.WithIcons client:load />
+	<Example.WithIcons />
 </Preview>
 
 ## Loading
 
 <Preview label="loading swaps in a spinner and blocks interaction">
-	<Example.Loading client:load />
+	<Example.Loading />
 </Preview>
 
 `loading` does three things at once: renders a leading `Spinner`, sets
@@ -92,7 +92,7 @@ happening; a bare spinner does not.
 ## Disabled
 
 <Preview label="Disabled">
-	<Example.Disabled client:load />
+	<Example.Disabled />
 </Preview>
 
 A disabled button gives no feedback on hover and cannot be focused, so the
@@ -103,7 +103,7 @@ leaving it enabled and failing with a message instead.
 ## Shape
 
 <Preview label="pill forces a fully-rounded button">
-	<Example.Shapes client:load />
+	<Example.Shapes />
 </Preview>
 
 ## Rendering as something else
@@ -121,7 +121,7 @@ and behaviour. This is how you get a link that looks like a button:
 ```
 
 <Preview label="Rendered as an anchor">
-	<Example.AsAnchor client:load />
+	<Example.AsAnchor />
 </Preview>
 
 Note that solid variants only show a hover state when rendered as an anchor. A

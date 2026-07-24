@@ -5,11 +5,11 @@ sidebar:
   order: 60
 ---
 
-import Preview from "../../../components/preview.astro";
+import Preview from "@/components/docs/preview";
 import * as Example from "../../../examples/ui/display";
 
 <Preview layout="stack">
-	<Example.CardExample client:load />
+	<Example.CardExample />
 </Preview>
 
 ```tsx

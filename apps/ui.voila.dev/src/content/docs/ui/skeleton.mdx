@@ -5,11 +5,11 @@ sidebar:
   order: 24
 ---
 
-import Preview from "../../../components/preview.astro";
+import Preview from "@/components/docs/preview";
 import * as Example from "../../../examples/ui/feedback";
 
 <Preview layout="stack">
-	<Example.SkeletonDefault client:load />
+	<Example.SkeletonDefault />
 </Preview>
 
 ```tsx
@@ -20,7 +20,7 @@ Build the placeholder out of the real layout rather than a generic block, so
 nothing jumps when the data lands.
 
 <Preview layout="stack">
-	<Example.SkeletonCard client:load />
+	<Example.SkeletonCard />
 </Preview>
 
 `Skeleton` is a shape and nothing else. Announcing the wait is the wrapper's

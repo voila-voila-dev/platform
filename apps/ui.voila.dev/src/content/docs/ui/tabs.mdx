@@ -5,11 +5,11 @@ sidebar:
   order: 52
 ---
 
-import Preview from "../../../components/preview.astro";
+import Preview from "@/components/docs/preview";
 import * as Example from "../../../examples/ui/navigation";
 
 <Preview layout="stack">
-	<Example.TabsExample client:load />
+	<Example.TabsExample />
 </Preview>
 
 ```tsx
@@ -27,5 +27,5 @@ import * as Example from "../../../examples/ui/navigation";
 better directly under a page header.
 
 <Preview layout="stack">
-	<Example.TabsLine client:load />
+	<Example.TabsLine />
 </Preview>

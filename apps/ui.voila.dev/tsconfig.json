@@ -1,9 +1,14 @@
 {
-	"extends": "astro/tsconfigs/strict",
+	"extends": "@voila.dev/typescript-config/base.json",
 	"compilerOptions": {
+		"lib": ["ESNext", "DOM", "DOM.Iterable"],
 		"jsx": "react-jsx",
-		"jsxImportSource": "react"
+		"jsxImportSource": "react",
+		"types": ["vite/client"],
+		"paths": {
+			"@/*": ["./src/*"]
+		}
 	},
-	"include": [".astro/types.d.ts", "**/*"],
-	"exclude": ["dist"]
+	"include": ["src", "vite.config.ts"],
+	"exclude": ["dist", "node_modules"]
 }

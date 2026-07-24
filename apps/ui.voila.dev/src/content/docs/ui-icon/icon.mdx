@@ -5,11 +5,11 @@ sidebar:
   order: 1
 ---
 
-import Preview from "../../../components/preview.astro";
+import Preview from "@/components/docs/preview";
 import * as Example from "../../../examples/ui-icon/icons";
 
 <Preview>
-	<Example.Default client:load />
+	<Example.Default />
 </Preview>
 
 ```tsx
@@ -20,13 +20,13 @@ Everything else goes to the underlying Phosphor component, so `weight`, `size`
 and `color` work as they do there.
 
 <Preview>
-	<Example.Weights client:load />
+	<Example.Weights />
 </Preview>
 
 ## Names from data
 
 <Preview layout="stack">
-	<Example.FromData client:load />
+	<Example.FromData />
 </Preview>
 
 ```tsx

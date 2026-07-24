@@ -5,11 +5,11 @@ sidebar:
   order: 9
 ---
 
-import Preview from "../../../components/preview.astro";
+import Preview from "@/components/docs/preview";
 import * as Example from "../../../examples/ui-datatable/tables";
 
 <Preview layout="stack">
-	<Example.Export client:load />
+	<Example.Export />
 </Preview>
 
 ```tsx

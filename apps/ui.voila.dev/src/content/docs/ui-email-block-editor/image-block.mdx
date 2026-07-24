@@ -5,11 +5,11 @@ sidebar:
   order: 4
 ---
 
-import Preview from "../../../components/preview.astro";
+import Preview from "@/components/docs/preview";
 import * as Example from "../../../examples/ui-email-block-editor/blocks";
 
 <Preview layout="stack">
-	<Example.Image client:load />
+	<Example.Image />
 </Preview>
 
 ```ts
@@ -29,7 +29,7 @@ With no `src` the block renders its upload state, which calls the editor's
 `onUploadImage` and expects a URL back.
 
 <Preview layout="stack">
-	<Example.ImageEmpty client:load />
+	<Example.ImageEmpty />
 </Preview>
 
 `overlay: "play"` composites a play badge over the image. No email client plays

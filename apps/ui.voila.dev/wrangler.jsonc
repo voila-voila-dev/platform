@@ -2,9 +2,9 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "ui-voila-dev",
 	"compatibility_date": "2025-10-01",
-	// Static-asset Worker (no `main`): serves the Astro static build.
+	// Static-asset Worker (no `main`): serves the prerendered TanStack Start build.
 	"assets": {
-		"directory": "./dist",
+		"directory": "./dist/client",
 		"not_found_handling": "404-page"
 	},
 	"observability": {

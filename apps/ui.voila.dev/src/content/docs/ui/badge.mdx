@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import Preview from "../../../components/preview.astro";
+import Preview from "@/components/docs/preview";
 import * as Example from "../../../examples/ui/badge";
 
 `Badge` covers two jobs that look the same and are not: labelling **status**
@@ -20,11 +20,11 @@ import { Badge } from "@voila.dev/ui/components/badge";
 ## Variants — when the colour means something
 
 <Preview label="Semantic variants">
-	<Example.Variants client:load />
+	<Example.Variants />
 </Preview>
 
 <Preview label="Product surfaces">
-	<Example.SurfaceVariants client:load />
+	<Example.SurfaceVariants />
 </Preview>
 
 | Variant | Reads as |
@@ -38,7 +38,7 @@ import { Badge } from "@voila.dev/ui/components/badge";
 ## Colours — when the colour is data
 
 <Preview label="The full catalogue palette">
-	<Example.Colors client:load />
+	<Example.Colors />
 </Preview>
 
 Twenty fixed names, each with a `--badge-*` token and a dark override so chips
@@ -66,7 +66,7 @@ import { badgeColors, type BadgeColor } from "@voila.dev/ui/components/badge";
 ## Sizes
 
 <Preview label="Sizes">
-	<Example.Sizes client:load />
+	<Example.Sizes />
 </Preview>
 
 `sm` exists for dense surfaces — inside a table cell, next to a list item's
@@ -75,7 +75,7 @@ title. Below that, use text.
 ## Icons
 
 <Preview label="With a leading icon">
-	<Example.WithIcons client:load />
+	<Example.WithIcons />
 </Preview>
 
 Icons are auto-sized. Keep them to a leading position: a badge is small enough
@@ -84,7 +84,7 @@ that a trailing icon reads as a dismiss button, which it is not.
 ## Interactive badges
 
 <Preview label="Rendered as an anchor">
-	<Example.AsLink client:load />
+	<Example.AsLink />
 </Preview>
 
 Solid variants only hover when rendered as an anchor — a static chip should stay

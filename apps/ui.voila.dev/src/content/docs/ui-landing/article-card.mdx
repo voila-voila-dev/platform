@@ -5,11 +5,11 @@ sidebar:
   order: 21
 ---
 
-import Preview from "../../../components/preview.astro";
+import Preview from "@/components/docs/preview";
 import * as Example from "../../../examples/ui-landing/sections";
 
 <Preview layout="stack">
-	<Example.ArticleCardExample client:load />
+	<Example.ArticleCardExample />
 </Preview>
 
 ```tsx
@@ -38,5 +38,5 @@ import * as Example from "../../../examples/ui-landing/sections";
 neighbours in a grid.
 
 <Preview layout="stack">
-	<Example.ArticleCardFallback client:load />
+	<Example.ArticleCardFallback />
 </Preview>

@@ -3,7 +3,7 @@ title: "Theming and tokens"
 description: "Override the CSS custom properties in @voila.dev/ui-tokens to rebrand the whole system without forking a single component."
 ---
 
-import Preview from "../../../components/preview.astro";
+import Preview from "@/components/docs/preview";
 import * as Example from "../../../examples/theming";
 
 The palette that ships with `@voila.dev/ui-tokens` is a **default, not a
@@ -109,7 +109,7 @@ deliberate exception to "no ad-hoc colour tokens": the names are fixed, and each
 has a dark override so chips stay legible in both themes.
 
 <Preview label="Badges are data-coloured, not semantic">
-	<Example.BadgeColors client:load />
+	<Example.BadgeColors />
 </Preview>
 
 ## Typography
@@ -150,7 +150,7 @@ A minimal but complete rebrand, both themes, roughly twenty lines:
 ```
 
 <Preview label="What moves when --primary and --radius move">
-	<Example.TokenSurface client:load />
+	<Example.TokenSurface />
 </Preview>
 
 ## Checking contrast

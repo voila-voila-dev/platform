@@ -5,11 +5,11 @@ sidebar:
   order: 80
 ---
 
-import Preview from "../../../components/preview.astro";
+import Preview from "@/components/docs/preview";
 import * as Example from "../../../examples/ui/display";
 
 <Preview layout="stack">
-	<Example.ChatExample client:load />
+	<Example.ChatExample />
 </Preview>
 
 ```tsx
@@ -35,7 +35,7 @@ Group consecutive messages from one author into a single `ChatMessageGroup`;
 the sender block is rendered once per group, not once per message.
 
 <Preview layout="stack">
-	<Example.ChatConversations client:load />
+	<Example.ChatConversations />
 </Preview>
 
 `ChatConversationItem` is the list-of-threads row, with `unreadCount` capped at

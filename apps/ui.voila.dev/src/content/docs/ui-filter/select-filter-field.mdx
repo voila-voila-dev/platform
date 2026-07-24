@@ -5,11 +5,11 @@ sidebar:
   order: 11
 ---
 
-import Preview from "../../../components/preview.astro";
+import Preview from "@/components/docs/preview";
 import * as Example from "../../../examples/ui-filter/filters";
 
 <Preview layout="stack">
-	<Example.SelectField client:load />
+	<Example.SelectField />
 </Preview>
 
 ```tsx

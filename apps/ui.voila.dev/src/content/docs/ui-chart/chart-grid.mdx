@@ -5,11 +5,11 @@ sidebar:
   order: 30
 ---
 
-import Preview from "../../../components/preview.astro";
+import Preview from "@/components/docs/preview";
 import * as Example from "../../../examples/ui-chart/chart";
 
 <Preview layout="stack">
-	<Example.Grid client:load />
+	<Example.Grid />
 </Preview>
 
 ```tsx

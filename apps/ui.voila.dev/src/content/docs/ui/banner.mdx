@@ -5,11 +5,11 @@ sidebar:
   order: 21
 ---
 
-import Preview from "../../../components/preview.astro";
+import Preview from "@/components/docs/preview";
 import * as Example from "../../../examples/ui/feedback";
 
 <Preview layout="stack">
-	<Example.BannerVariants client:load />
+	<Example.BannerVariants />
 </Preview>
 
 ```tsx
@@ -25,7 +25,7 @@ about the whole session, which is why it is full-bleed and has no description
 slot.
 
 <Preview layout="stack">
-	<Example.BannerWithAction client:load />
+	<Example.BannerWithAction />
 </Preview>
 
 `BannerClose` does not remove the banner by itself. Wire its `onClick` to
