@@ -2,7 +2,7 @@
 	"name": "@voila.dev/ui-map",
 	"version": "0.0.0",
 	"type": "module",
-	"description": "MapLibre GL map views for @voila.dev/ui \u2014 a lazy-loaded basemap and a draggable radius picker",
+	"description": "Maps and a globe on free vector tiles. No API key, no bundle tax.",
 	"license": "MIT",
 	"homepage": "https://ui.voila.dev/components/map-view",
 	"repository": {

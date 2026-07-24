@@ -1,0 +1,61 @@
+---
+title: "Basemaps"
+description: "Free MapLibre vector tiles, and how to swap in your own."
+sidebar:
+  order: 4
+---
+
+Every map in this package renders on [OpenFreeMap](https://openfreemap.org)
+vector tiles: free, key-less, no usage caps, built from OpenStreetMap data.
+There is no account to create and no environment variable to leak — the
+default works in a fresh clone and in production.
+
+Two styles are wired in:
+
+| Style | URL | Used when |
+| --- | --- | --- |
+| Liberty | `https://tiles.openfreemap.org/styles/liberty` | light theme |
+| Dark | `https://tiles.openfreemap.org/styles/dark` | inside a `.dark` subtree |
+
+`MapView` and `GlobeView` pick between them by looking for a `.dark` ancestor,
+and keep watching: toggling the theme restyles the basemap live. `onReady`
+re-fires after the swap, because a style change drops custom sources and
+layers.
+
+## Bringing your own style
+
+Pass `styleUrl` to opt out of the pair and the theme following in one move.
+Any MapLibre-compatible style JSON works — MapTiler, Stadia, Protomaps, a
+Mapbox style via their compatibility endpoint, or one you host yourself:
+
+```tsx
+<MapView styleUrl={`https://api.maptiler.com/maps/streets-v2/style.json?key=${key}`} />
+```
+
+If you want richer cartography *and* theme following, render the component
+with your own two URLs:
+
+```tsx
+const styleUrl = theme === "dark" ? DARK_STYLE_URL : LIGHT_STYLE_URL;
+<MapView key={styleUrl} styleUrl={styleUrl} />;
+```
+
+The `key` matters: `styleUrl` is read once, on mount, so remounting is how an
+explicit style switches.
+
+## Attribution
+
+MapLibre renders the attribution control by default and the OpenFreeMap styles
+declare their OpenMapTiles and OpenStreetMap credits. Leave it on; it is the
+one thing the free tiles ask of you.
+
+## Own it
+
+The URL constants live in
+`@voila.dev/ui-map/src/components/map-view-implementation.tsx`
+(`DEFAULT_STYLE_URL`, `DEFAULT_DARK_STYLE_URL`) — edit them there to change
+the default pair for every map and globe at once.
+
+## Related
+
+[MapView](/ui-map/map-view) · [GlobeView](/ui-map/globe-view)

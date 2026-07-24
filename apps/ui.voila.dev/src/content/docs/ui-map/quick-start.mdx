@@ -1,14 +1,17 @@
 ---
 title: "Quick start"
-description: "A lazy-loaded MapLibre GL basemap and a draggable radius picker."
+description: "Maps and a globe on free vector tiles. No API key, no bundle tax."
 sidebar:
   order: 0
   label: "Quick start"
 ---
 
+Maps and a globe on free vector tiles. No API key, no bundle tax.
+
 `MapView` owns the canvas, the MapLibre lifecycle and the navigation control,
 and hands you the instance — markers and layers are yours. `RadiusMap` builds on
-it for the common "a place and a radius" case.
+it for the common "a place and a radius" case, and `GlobeView` puts the same
+tiles on MapLibre's globe projection with rotation and markers built in.
 
 MapLibre is about 270 kB gzipped, so the rendering body sits behind
 `React.lazy` and only downloads once a map actually mounts.
@@ -26,6 +29,7 @@ bun add @voila.dev/ui-map
 ## Import
 
 ```ts
+import { GlobeView } from "@voila.dev/ui-map/components/globe-view";
 import { MapView } from "@voila.dev/ui-map/components/map-view";
 import { RadiusMap } from "@voila.dev/ui-map/components/radius-map";
 ```
