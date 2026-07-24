@@ -6,9 +6,23 @@ sidebar:
   label: "Quick start"
 ---
 
-The sections a marketing site repeats: a hero, a feature grid, a comparison
-table, testimonials, a CTA banner, a header and a footer. Each is a compound
-component you compose, not a template you configure.
+import Preview from "@/components/docs/preview";
+import * as Example from "../../../examples/ui-landing/sections";
+
+**Your marketing site, from the same system as your product.**
+
+Most teams ship a polished app and a landing page that looks like it was built
+by a different company, because it was: a template, a site builder, a one-off
+repo that drifts the moment the brand moves. `ui-landing` is the sections a
+marketing site repeats: a hero, a feature grid, a comparison, testimonials, a
+footer, built on the same tokens and the same conventions as everything else
+here. Change `--primary` and both your product and your pitch follow. And like
+the rest of the system it is source-shipped: every section is readable `.tsx`
+you can open, trace and rewrite.
+
+<Preview layout="stack">
+	<Example.Hero />
+</Preview>
 
 ## Install
 
@@ -20,14 +34,101 @@ bun add @voila.dev/ui-landing
 @import "@voila.dev/ui-landing/styles/landing.css";
 ```
 
-## Import
-
-```ts
-import { LandingHero } from "@voila.dev/ui-landing/components/landing-hero";
-import { Section } from "@voila.dev/ui-landing/components/section";
-```
-
-The landing stylesheet already declares the package sources, so that one import
-covers both the marquee keyframes and the Tailwind scan.
+Or copy the source — it's the same files. The landing stylesheet declares the
+package's own Tailwind sources, so the one import covers both the marquee
+keyframes and the class scan.
 
 Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.
+
+## The 3-minute win
+
+A complete section: layout from `Section` and `Container`, an intro, a grid of
+feature cards. This is the shape every marketing page repeats.
+
+```tsx
+import { Container } from "@voila.dev/ui-landing/components/container";
+import { FeatureGrid } from "@voila.dev/ui-landing/components/feature-grid";
+import { Section } from "@voila.dev/ui-landing/components/section";
+import { SectionIntro } from "@voila.dev/ui-landing/components/section-intro";
+
+export function WhyUs() {
+	return (
+		<Section background="muted">
+			<Container size="md">
+				<SectionIntro.Root>
+					<SectionIntro.Title>Why choose us?</SectionIntro.Title>
+					<SectionIntro.Description>
+						Two reasons are enough to start.
+					</SectionIntro.Description>
+				</SectionIntro.Root>
+				<FeatureGrid.Root tone="primary" columns="2" className="mt-10">
+					<FeatureGrid.Card>
+						<FeatureGrid.CardIcon>{/* an icon */}</FeatureGrid.CardIcon>
+						<FeatureGrid.CardTitle>Fast</FeatureGrid.CardTitle>
+						<FeatureGrid.CardDescription>
+							From brief to live page in an afternoon.
+						</FeatureGrid.CardDescription>
+					</FeatureGrid.Card>
+					{/* …more cards */}
+				</FeatureGrid.Root>
+			</Container>
+		</Section>
+	);
+}
+```
+
+<Preview layout="stack">
+	<Example.QuickStartWin />
+</Preview>
+
+## Mental model
+
+Each section is a compound component you compose, not a template you
+configure. `LandingHero.Root` holds `Title`, `Lead`, `Actions`, `Media`; you
+arrange the parts, drop the ones you do not need, and put real elements
+between them. There are no `heroTitle` string props and no slots to fight,
+which also makes the sections predictable for an AI to generate against: the
+pattern it learns from one section holds for all twenty-three. Colour comes
+from the token palette through a small set of `tone` props (`primary`,
+`provider`, `organization`, `destructive`), so a rebrand never touches a
+section file.
+
+## Page map
+
+Proof first: [This site is built with it](/ui-landing/this-site) walks the
+ui.voila.dev homepage section by section.
+
+Layout and typography:
+
+- [Section](/ui-landing/section): vertical rhythm and background bands.
+- [Container](/ui-landing/container): the max-width scale.
+- [Heading](/ui-landing/heading): display headings, `h1` to `h4`.
+- [Text](/ui-landing/text): leads, body copy, muted notes.
+- [Eyebrow](/ui-landing/eyebrow): the small label above a title, with dot or icon.
+- [SectionIntro](/ui-landing/section-intro): centred title and description for a section.
+- [PageHeader](/ui-landing/page-header): the top of an interior page.
+
+Page chrome:
+
+- [SiteHeader](/ui-landing/site-header): sticky header with nav and mobile menu.
+- [SiteFooter](/ui-landing/site-footer): brand, link columns, legal line.
+
+Sections:
+
+- [LandingHero](/ui-landing/landing-hero): the top of the page: title, lead, actions, media.
+- [StatsRow](/ui-landing/stats-row): headline numbers with dividers.
+- [FeatureGrid](/ui-landing/feature-grid): icon cards for benefits or pain points.
+- [BentoGrid](/ui-landing/bento-grid): one featured tile plus supporting tiles.
+- [NumberedCards](/ui-landing/numbered-cards): a step-by-step process.
+- [ComparisonSection](/ui-landing/comparison-section): with and without, side by side.
+- [StepTracks](/ui-landing/step-tracks): two parallel journeys, one per audience.
+- [TestimonialGrid](/ui-landing/testimonial-grid): quotes with avatars and ratings.
+- [LogoMarquee](/ui-landing/logo-marquee): partner logos, scrolling or static.
+- [CtaBanner](/ui-landing/cta-banner): the closing call to action.
+- [ContactCards](/ui-landing/contact-cards): ways to get in touch.
+
+Blog:
+
+- [ArticleCard](/ui-landing/article-card): a post preview with image, tags and meta.
+- [ArticleTags](/ui-landing/article-tags): the tag list on its own.
+- [ProseArticle](/ui-landing/prose-article): typographic styling for article bodies.

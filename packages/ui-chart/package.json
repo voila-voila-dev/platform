@@ -2,7 +2,7 @@
 	"name": "@voila.dev/ui-chart",
 	"version": "0.0.0",
 	"type": "module",
-	"description": "Composable, dependency-free SVG charts for @voila.dev/ui \u2014 scales, ticks and geometry implemented in-house",
+	"description": "Charts with zero charting library. SVG you can read, scales included.",
 	"license": "MIT",
 	"homepage": "https://ui.voila.dev",
 	"repository": {

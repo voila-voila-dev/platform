@@ -1,0 +1,168 @@
+---
+title: "Custom blocks"
+description: "Add your own block type and let the editor pick it up everywhere."
+sidebar:
+  order: 15
+---
+
+The block set is a registry, not a hard-coded list. Every block type is one
+entry in `EMAIL_BLOCK_DEFINITIONS`, and the add-block menu, the canvas, the
+settings sidebar and the drag-and-drop layer all read from it. Adding a block
+is three edits, and the types are arranged so that forgetting one of them is a
+compile error, not a runtime surprise.
+
+This is the ownership argument made concrete: the package ships as source, so
+extending it means opening the same files you have been reading. Copy the
+package into your repo when you are ready to make it yours, and the recipe
+below is the whole job.
+
+Suppose your emails need a pull quote: a line of text with an author, drawn in
+the brand colour.
+
+## 1. Declare the type
+
+In `src/document/types.ts`, add the interface, put it in the
+`EmailEditorLeafBlock` union, and give `createEmailEditorBlock` its empty
+starting state:
+
+```ts
+export interface EmailEditorQuoteBlock {
+	readonly id: string;
+	readonly type: "quote";
+	readonly text: string;
+	readonly author: string;
+}
+
+export type EmailEditorLeafBlock =
+	| EmailEditorHeadingBlock
+	// …the existing blocks…
+	| EmailEditorQuoteBlock;
+
+// in createEmailEditorBlock's switch:
+case "quote":
+	return { id, type, text: "", author: "" };
+```
+
+Leaf blocks can sit inside a grid cell automatically; only the grid itself is
+excluded from nesting.
+
+## 2. Write the definition
+
+One file, `src/blocks/quote-block.tsx`, exporting an `EmailBlockDefinition`:
+a menu label, an icon, the in-place `View` the canvas renders, and an optional
+`Settings` panel for the sidebar. The building parts the built-in blocks use
+(`BlockTextInput`, the option rows, the `EMAIL_COLOR` palette) are all
+exported, so a custom block looks and behaves like a native one.
+
+```tsx
+import { QuotesIcon } from "@phosphor-icons/react";
+import type {
+	EmailBlockComponentProps,
+	EmailBlockDefinition,
+} from "#/blocks/block-definitions.tsx";
+import { BlockTextInput } from "#/blocks/block-text-input.tsx";
+import type { EmailEditorQuoteBlock } from "#/document/types.ts";
+import { TextOption } from "#/sections/block-options/text-option.tsx";
+import { EMAIL_COLOR, EMAIL_FONT } from "#/theme.ts";
+
+function QuoteBlockView({
+	block,
+	onChange,
+}: EmailBlockComponentProps<EmailEditorQuoteBlock>) {
+	return (
+		<figure
+			className="m-0 border-l-2 pl-4"
+			style={{ borderColor: EMAIL_COLOR.brand, fontFamily: EMAIL_FONT }}
+		>
+			<BlockTextInput
+				ariaLabel="Citation"
+				value={block.text}
+				onChange={(text) => onChange({ ...block, text })}
+				placeholder="Votre citation"
+				className="italic leading-[1.5]"
+				style={{ color: EMAIL_COLOR.ink, fontSize: "15px" }}
+			/>
+			<BlockTextInput
+				ariaLabel="Auteur"
+				value={block.author}
+				onChange={(author) => onChange({ ...block, author })}
+				placeholder="Auteur"
+				className="mt-1"
+				style={{ color: EMAIL_COLOR.muted, fontSize: "13px" }}
+			/>
+		</figure>
+	);
+}
+
+function QuoteBlockSettings({
+	block,
+	onChange,
+}: EmailBlockComponentProps<EmailEditorQuoteBlock>) {
+	return (
+		<>
+			<TextOption
+				label="Citation"
+				value={block.text}
+				onChange={(text) => onChange({ ...block, text })}
+			/>
+			<TextOption
+				label="Auteur"
+				value={block.author}
+				onChange={(author) => onChange({ ...block, author })}
+			/>
+		</>
+	);
+}
+
+export const quoteBlockDefinition: EmailBlockDefinition<EmailEditorQuoteBlock> =
+	{
+		label: "Citation",
+		icon: QuotesIcon,
+		View: QuoteBlockView,
+		Settings: QuoteBlockSettings,
+	};
+```
+
+The `View` is the WYSIWYG rendering, edited in place on the canvas; `Settings`
+is the per-block panel (pass `null` when a block has nothing to configure,
+like the divider). The `label` is what the add-block menu shows.
+
+## 3. Register it
+
+In `src/blocks/block-definitions.tsx`:
+
+```ts
+export const EMAIL_BLOCK_DEFINITIONS = {
+	// …the existing entries…
+	quote: quoteBlockDefinition,
+};
+```
+
+The registry is a mapped type over `EmailEditorBlockType`, so as soon as step
+1 lands, this entry is *required*: the package does not compile until every
+type in the union has a definition. From here everything is derived. The menu
+lists the new block, the canvas renders it, the reducer moves and duplicates
+it, `EMAIL_LEAF_BLOCK_TYPES` offers it inside grid cells, and drag-and-drop
+needs no configuration at all.
+
+## 4. Teach your renderer
+
+Your server-side `switch` over `block.type` now has an unhandled case, and if
+you ended it with a `satisfies never` check, that is a compile error too. Add
+the `case "quote"` that emits your email markup, and the round trip is
+complete. See
+[Server-side rendering](/ui-email-block-editor/server-side-rendering).
+
+## Own it
+
+The registry lives in
+`@voila.dev/ui-email-block-editor/src/blocks/block-definitions.tsx`, and every
+built-in block is a sibling file of the one you are adding. Read a couple
+before writing yours: `heading-block.tsx` is the smallest complete example,
+`article-block.tsx` shows the shared card shell.
+
+## Related
+
+[Quick start](/ui-email-block-editor/quick-start) ·
+[Server-side rendering](/ui-email-block-editor/server-side-rendering) ·
+[Theming the canvas](/ui-email-block-editor/theming-the-canvas)

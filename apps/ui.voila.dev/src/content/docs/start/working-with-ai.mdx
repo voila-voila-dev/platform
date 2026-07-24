@@ -1,0 +1,97 @@
+---
+title: "Working with AI"
+description: "Point Claude, Cursor or any coding agent at the source-shipped components and get output that compiles."
+---
+
+Every `@voila.dev` package ships as source. After `bun add @voila.dev/ui`,
+`node_modules/@voila.dev/ui/src` contains the same `.tsx` files the maintainers
+edit: no `dist/`, no minified bundle, no type stubs standing in for the real
+thing. That is a nice property for you. For a coding agent, it changes the
+game.
+
+## Why source makes generation reliable
+
+An agent working against a compiled library has to guess. It saw some version
+of the API during training, the package on disk is opaque, and the gap between
+the two is where hallucinated props and invented imports come from.
+
+An agent working against source-shipped components does not guess. It opens
+`node_modules/@voila.dev/ui/src/components/button.tsx`, reads the props, the
+variants and the cva block, and writes code against what is actually installed.
+The code is the documentation, and it is always the right version. That is what
+we mean by AI-readable.
+
+## Point the agent at the source
+
+Tell your agent where the components live, once, in whatever standing-context
+file your tool uses (`CLAUDE.md` for Claude Code, rules for Cursor, the
+equivalent elsewhere):
+
+```md title="CLAUDE.md"
+## UI components
+
+- UI comes from @voila.dev/ui. The full source is in
+  node_modules/@voila.dev/ui/src. Read the component file before using it.
+- Import one component per path:
+  import { Button } from "@voila.dev/ui/components/button";
+- Styling goes through the tokens. Use semantic classes (bg-primary,
+  text-muted-foreground, border-border), never raw colours.
+```
+
+That is the whole setup. There is no plugin, no MCP server and no index to
+build. The package manager already put the source where the agent can read it.
+
+## Prompts that work
+
+The pattern is always the same: name the component, and tell the agent to read
+the real file first.
+
+> Read `node_modules/@voila.dev/ui/src/components/dialog.tsx`, then build a
+> confirm step for deleting a workspace. Follow the composition the file
+> exports.
+
+> Build the mission form with components from `@voila.dev/ui`. Check each
+> component's source under `node_modules/@voila.dev/ui/src/components/` before
+> using it, and copy the prop names from there, not from memory.
+
+> Restyle this page for our brand. Use the tokens as the contract: `--primary`
+> for the accent, `--muted` for surfaces. Do not hard-code a single colour.
+
+The last one is the trick most people miss. The tokens in
+`@voila.dev/ui-tokens` are the contract between your brand and the components.
+An agent told to "use `--primary`" produces output that follows every future
+rebrand for free; an agent left to pick hex values produces output you will be
+hunting down for months.
+
+## Why the output is predictable
+
+Consistency is what makes a model accurate, and the system is consistent by
+construction:
+
+- **One convention across 85 components.** Every component is built the same
+  way: [Base UI](https://base-ui.com) for behaviour, a cva block for variants,
+  tokens for colour. An agent that has read three components has effectively
+  read all of them.
+- **One import shape.** `@voila.dev/ui/components/<name>`, no barrel export,
+  no ambiguity about where a symbol comes from.
+- **Tokens as the contract.** Semantic custom properties mean the agent never
+  has to invent a palette, and its output survives a rebrand.
+
+Patterns a model can infer from one file and apply to the next 84 are patterns
+it will not get wrong.
+
+## When you want the agent to change a component
+
+Because the source is readable, it is also forkable. If a component needs to
+become something the variants do not cover, have the agent copy the file out
+and own it:
+
+> Copy `node_modules/@voila.dev/ui/src/components/badge.tsx` into
+> `src/components/badge.tsx`, add a `beta` variant to the cva block, and update
+> the imports in this feature to use the local copy.
+
+Same file, same convention, now yours. Everything else stays on the dependency
+and keeps receiving lockstep updates.
+
+Next: [Theming and tokens](/start/theming/), the contract the prompts above
+lean on.

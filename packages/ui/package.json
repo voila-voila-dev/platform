@@ -2,7 +2,7 @@
 	"name": "@voila.dev/ui",
 	"version": "0.0.0",
 	"type": "module",
-	"description": "Source-shipped React component library built on Base UI, Tailwind CSS 4 and Phosphor icons",
+	"description": "85 components, one convention. The floor everything else stands on.",
 	"license": "MIT",
 	"homepage": "https://ui.voila.dev",
 	"repository": {

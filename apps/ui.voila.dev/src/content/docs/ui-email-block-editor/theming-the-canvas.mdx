@@ -1,0 +1,92 @@
+---
+title: "Theming the canvas"
+description: "The editor chrome follows your app tokens; the email card follows your email."
+sidebar:
+  order: 16
+---
+
+The editor is two surfaces with two different loyalties, and the theming story
+is understanding which is which.
+
+## The chrome follows your tokens
+
+Everything around the email (the block toolbar, the settings sidebar, the
+add-block menu, the selection ring, the bottom sheet on small screens) is
+built from `@voila.dev/ui` components and styled with the same token classes
+as the rest of the system: `--ring` for the selection ring, `--border` for the
+dashed drop slots, and so on through the sidebar's inputs and buttons.
+
+There is nothing to configure. If your app imports
+`@voila.dev/ui-tokens` (or defines the same CSS custom properties itself), the
+editor chrome picks your brand up automatically, dark mode included. Change
+`--primary` and the sidebar's controls follow; toggle the theme and the
+toolbar toggles with it.
+
+## The card follows your email
+
+The email card itself (the grey canvas, the white 600px card, the brand blue
+of headings and buttons) deliberately does *not* follow your app theme. An
+email does not have a dark mode toggle, and a canvas that restyled itself with
+the app would stop being an honest preview of what the recipient receives. So
+the card's look is pinned to constants in `src/theme.ts`:
+
+```ts
+export const EMAIL_COLOR = {
+	brand: "#151b77", // headings, filled buttons, highlighted cards
+	ink: "#2a2a33", // body text
+	muted: "#9095a3", // meta lines, placeholders
+	border: "#ececf1", // card borders, dividers
+	card: "#ffffff", // the email card
+	canvas: "#f4f4f7", // the grey behind it
+} as const;
+
+export const EMAIL_FONT =
+	"-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
+```
+
+Every block imports these two values, so the palette is one object, not a
+scatter of hex codes. Your server-side renderer stays the source of truth: the
+constants only need to agree with it closely enough that the canvas is an
+honest preview.
+
+## Rebranding it
+
+There is no theme prop, on purpose: a per-instance theme would invite the
+canvas and the sent email to drift apart. The package is source-shipped, so
+rebranding the canvas is editing `theme.ts`, the same file whether you keep
+the dependency (patch it) or copy the package into your repo and own it
+outright. Change `brand`, change your renderer's matching value in the same
+commit, and every heading, button, offer highlight and rating star follows.
+
+The import path, if you want to reuse the palette in your own surrounding UI:
+
+```ts
+import { EMAIL_COLOR, EMAIL_FONT } from "@voila.dev/ui-email-block-editor/theme";
+```
+
+## Locale, headers and footers
+
+Two neighbours of the palette complete the picture:
+
+- `EMAIL_PREVIEW_LOCALE` (`fr-FR` by default) is the locale the canvas
+  previews prices and dates in. It is deliberately not the browser's locale:
+  the sent email formats per recipient, and an author should see what a
+  recipient gets, not what their own machine is configured for.
+- The header and footer placeholders are neutral stand-ins for the branded
+  chrome your server adds at send time. Pass `headerSlot` and `footerSlot` to
+  `EmailBlockEditor` to preview your real logo and footer in their place.
+
+```tsx
+<EmailBlockEditor
+	document={document}
+	onChange={setDocument}
+	headerSlot={<BrandHeader />}
+	footerSlot={<BrandFooter />}
+/>
+```
+
+## Related
+
+[Quick start](/ui-email-block-editor/quick-start) ·
+[Server-side rendering](/ui-email-block-editor/server-side-rendering) ·
+[Custom blocks](/ui-email-block-editor/custom-blocks)

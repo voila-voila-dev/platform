@@ -2,7 +2,7 @@
 	"name": "@voila.dev/ui-tokens",
 	"version": "0.0.0",
 	"type": "module",
-	"description": "Design tokens for @voila.dev/ui (OKLch palette, radius, typography, motion) as plain CSS custom properties",
+	"description": "Your whole brand in one CSS file. Change it, everything follows.",
 	"license": "MIT",
 	"homepage": "https://ui.voila.dev/start/theming",
 	"repository": {

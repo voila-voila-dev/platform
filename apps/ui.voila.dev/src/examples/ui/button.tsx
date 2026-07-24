@@ -1,6 +1,21 @@
 import { ArrowRightIcon, PlusIcon, TrashIcon } from "@phosphor-icons/react";
 import { Button } from "@voila.dev/ui/components/button";
 
+export function Default() {
+	return <Button>Save changes</Button>;
+}
+
+export function ConfirmDestructive() {
+	return (
+		<>
+			<Button variant="outline">Cancel</Button>
+			<Button variant="destructive">
+				<TrashIcon /> Delete project
+			</Button>
+		</>
+	);
+}
+
 export function Variants() {
 	return (
 		<>

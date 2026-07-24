@@ -5,11 +5,97 @@ import {
 import { gridBlockDefinition } from "@voila.dev/ui-email-block-editor/blocks/grid-block";
 import type {
 	EmailEditorBlock,
+	EmailEditorDocument,
 	EmailEditorGridBlock,
 	EmailEditorLeafBlock,
 } from "@voila.dev/ui-email-block-editor/document/types";
+import { EmailBlockEditor } from "@voila.dev/ui-email-block-editor/email-block-editor";
 import { EMAIL_COLOR } from "@voila.dev/ui-email-block-editor/theme";
 import { type ReactNode, useState } from "react";
+
+/** Fake upload for the docs previews: no backend here, so the picked file is
+ * served from an object URL — a real app returns the uploaded file's URL. */
+const fakeUploadImage = async (file: File) => {
+	await new Promise((resolve) => setTimeout(resolve, 600));
+	return URL.createObjectURL(file);
+};
+
+/** The quick-start hero: a welcome email, in the full composed editor. */
+const welcomeDocument: EmailEditorDocument = {
+	version: 1,
+	blocks: [
+		{
+			id: "heading",
+			type: "heading",
+			text: "Bienvenue {{firstName}} !",
+			level: 1,
+		},
+		{
+			id: "intro",
+			type: "paragraph",
+			spans: [
+				{ text: "Votre compte est prêt. Publiez votre " },
+				{ text: "première mission", bold: true },
+				{ text: " depuis " },
+				{ text: "votre espace", href: "https://app.acme.dev" },
+				{ text: " et recevez vos premières candidatures cette semaine." },
+			],
+		},
+		{
+			id: "stats",
+			type: "grid",
+			desktopColumns: 2,
+			mobileColumns: 2,
+			children: [
+				{
+					id: "stat-missions",
+					type: "stat",
+					value: "1 240",
+					label: "Missions pourvues",
+					description: "",
+					align: "center",
+				},
+				{
+					id: "stat-note",
+					type: "stat",
+					value: "4,8 / 5",
+					label: "Note moyenne",
+					description: "",
+					align: "center",
+				},
+			],
+		},
+		{
+			id: "cta",
+			type: "button",
+			label: "Publier une mission",
+			href: "https://app.acme.dev/missions",
+			align: "center",
+			variant: "primary",
+		},
+		{ id: "divider", type: "divider" },
+		{
+			id: "rating",
+			type: "rating",
+			question: [{ text: "Que pensez-vous de votre inscription ?" }],
+			style: "filled",
+			lowLabel: "Pas du tout",
+			highLabel: "Tout à fait",
+			href: "https://acme.dev/avis",
+		},
+	],
+};
+
+export function Editor() {
+	const [document, setDocument] = useState(welcomeDocument);
+	return (
+		<EmailBlockEditor
+			document={document}
+			onChange={setDocument}
+			onUploadImage={fakeUploadImage}
+		/>
+	);
+}
 
 /** The 600px email card the blocks sit in inside the editor canvas. */
 function EmailCard({ children }: { children: ReactNode }) {
@@ -132,10 +218,7 @@ export function ImageEmpty() {
 				overlay: "none",
 				rounded: true,
 			}}
-			onUploadImage={async (file) => {
-				await new Promise((resolve) => setTimeout(resolve, 600));
-				return URL.createObjectURL(file);
-			}}
+			onUploadImage={fakeUploadImage}
 		/>
 	);
 }

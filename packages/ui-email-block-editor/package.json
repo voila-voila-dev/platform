@@ -2,7 +2,7 @@
 	"name": "@voila.dev/ui-email-block-editor",
 	"version": "0.0.0",
 	"type": "module",
-	"description": "WYSIWYG block editor for marketing emails \u2014 an email-look canvas with drag-and-drop block reordering (dnd-kit)",
+	"description": "The email template editor that lives in your app, not someone else's SaaS.",
 	"license": "MIT",
 	"homepage": "https://ui.voila.dev/components/email-block-editor",
 	"repository": {

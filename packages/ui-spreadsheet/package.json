@@ -2,7 +2,7 @@
 	"name": "@voila.dev/ui-spreadsheet",
 	"version": "0.0.0",
 	"type": "module",
-	"description": "Spreadsheet for @voila.dev/ui \u2014 a virtualized, keyboard-driven editable grid with paste, drag-reorder and column resizing",
+	"description": "An editable, virtualized grid your users will mistake for a native app.",
 	"license": "MIT",
 	"homepage": "https://ui.voila.dev/components/editable-table",
 	"repository": {

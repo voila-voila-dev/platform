@@ -154,6 +154,107 @@ export const ReferenceLine = () => (
 	</Cartesian>
 );
 
+export const Hero = Bars;
+
+export const BarsHorizontal = () => (
+	<Chart.Root
+		config={config}
+		data={data}
+		x={x}
+		y={one}
+		orientation="horizontal"
+		className={FRAME}
+		margin={{ top: 4, right: 48, bottom: 4, left: 80 }}
+	>
+		<Chart.Grid horizontal={false} vertical />
+		<Chart.YAxis />
+		<Chart.Cursor />
+		<Chart.Bars />
+		<Chart.LabelList marks="bars" />
+		<Chart.Tooltip />
+	</Chart.Root>
+);
+
+const walletFlow = [
+	{ month: "January", net: 420 },
+	{ month: "February", net: -180 },
+	{ month: "March", net: 260 },
+	{ month: "April", net: -90 },
+	{ month: "May", net: 540 },
+	{ month: "June", net: 310 },
+];
+
+export const BarsNegative = () => (
+	<Chart.Root
+		config={{ net: { label: "Net wallet flow" } }}
+		data={walletFlow}
+		x={x}
+		y={{ keys: ["net"] }}
+		className={FRAME}
+	>
+		<Chart.Grid />
+		{axes}
+		<Chart.ReferenceLine value={0} label="" />
+		<Chart.Bars
+			fill={(datum) =>
+				Number(datum.net) >= 0 ? "var(--chart-2)" : "var(--chart-5)"
+			}
+		/>
+		<Chart.Tooltip />
+	</Chart.Root>
+);
+
+export const LineStep = () => (
+	<Cartesian>
+		<Chart.Grid />
+		{axes}
+		<Chart.Line curve="step" dots />
+		<Chart.Tooltip />
+	</Cartesian>
+);
+
+export const AreaStacked = () => (
+	<Chart.Root
+		config={config}
+		data={data}
+		x={x}
+		y={{ keys: ["bookings", "missions"], stacked: true }}
+		className={FRAME}
+		margin={LEGEND_MARGIN}
+	>
+		<Chart.Grid />
+		{axes}
+		<Chart.Area gradient={false} />
+		<Chart.Tooltip />
+		<Chart.Legend />
+	</Chart.Root>
+);
+
+const clubData = [
+	{ club: "Alpha", missions: 12, spend: 4200 },
+	{ club: "Bravo", missions: 26, spend: 9100 },
+	{ club: "Charlie", missions: 18, spend: 6400 },
+	{ club: "Delta", missions: 34, spend: 15800 },
+	{ club: "Echo", missions: 9, spend: 2100 },
+];
+
+export const Bubble = () => (
+	<Chart.Root
+		config={{ missions: { label: "Missions", color: "var(--chart-4)" } }}
+		data={clubData}
+		x={{ key: "club", type: "point" }}
+		y={{ keys: ["missions"] }}
+		className={FRAME}
+		margin={{ top: 16, right: 24, bottom: 24, left: 40 }}
+	>
+		<Chart.Grid vertical />
+		<Chart.XAxis />
+		<Chart.YAxis />
+		<Chart.Points sizeKey="spend" />
+		<Chart.Tooltip />
+	</Chart.Root>
+);
+
 // --- polar ---------------------------------------------------------------
 
 const SQUARE = "mx-auto aspect-square w-full max-w-72";

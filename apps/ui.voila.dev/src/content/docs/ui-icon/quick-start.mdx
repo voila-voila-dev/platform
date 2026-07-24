@@ -1,14 +1,29 @@
 ---
 title: "Quick start"
-description: "Render a Phosphor icon by its name."
+description: "Icons by name, safe by default. Store a string, render an icon."
 sidebar:
   order: 0
   label: "Quick start"
 ---
 
+import Preview from "@/components/docs/preview";
+import * as Example from "../../../examples/ui-icon/icons";
+
+**Icons by name, safe by default — store a string, render an icon.**
+
 Most of the time you import the icon you want straight from
 `@phosphor-icons/react` and render it. This package is for the other case: the
-icon name lives in your data, so you only know it at runtime.
+icon name lives in your data, chosen by a user or stored against a category,
+so you only know it at runtime. Instead of hand-rolling a lookup map that goes
+stale (and takes the page down the first time a name in the database does
+not match it), you own one component that resolves any Phosphor name and
+fails soft.
+
+<Preview layout="stack">
+	<Example.FromData />
+</Preview>
+
+The last row is the point: `"NotAnIconName"` renders a fallback, not a crash.
 
 ## Install
 
@@ -20,13 +35,64 @@ bun add @voila.dev/ui-icon
 @import "@voila.dev/ui-icon/styles.css";
 ```
 
-## Import
-
-```ts
-import { Icon } from "@voila.dev/ui-icon/components/icon";
-```
+Or copy the source — it's the same files.
 
 Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.
 
-The package pulls in the whole Phosphor set, which is the point — any name has
-to resolve. Keep it out of bundles that only need a fixed handful of icons.
+## The 3-minute win
+
+Categories in the database store an icon name; the UI renders whatever is
+there:
+
+```tsx title="src/category-list.tsx"
+import { Icon } from "@voila.dev/ui-icon/components/icon";
+
+const categories = [
+	{ name: "Physiotherapy", icon: "HeartbeatIcon" },
+	{ name: "Medicine", icon: "StethoscopeIcon" },
+	{ name: "Emergency", icon: "FirstAidKitIcon" },
+];
+
+export function CategoryList() {
+	return (
+		<ul className="flex flex-col gap-2">
+			{categories.map((category) => (
+				<li key={category.name} className="flex items-center gap-2 text-sm">
+					<Icon name={category.icon} className="size-5" />
+					{category.name}
+				</li>
+			))}
+		</ul>
+	);
+}
+```
+
+A renamed or mistyped icon in the data falls back to `TagIcon` instead of
+throwing, and in development it logs a warning naming the missing icon.
+
+## Mental model
+
+The icon is data, the component is the lookup. `Icon` takes any string,
+resolves it against the full Phosphor set at runtime, and passes everything
+else (`weight`, `size`, `color`) through to the underlying Phosphor component.
+That is also why the package pulls in the whole set: any name has to resolve.
+Keep it out of bundles that only need a fixed handful of icons; import those
+directly from `@phosphor-icons/react` instead.
+
+The list of valid names ships as an exported array and a union type, so you
+can validate input or build a picker without maintaining your own list:
+
+```ts
+import {
+	phosphorIconNames,
+	type PhosphorIconName,
+} from "@voila.dev/ui-icon/components/icon";
+```
+
+## Page map
+
+- [Icon](/ui-icon/icon): the component, its fallback behaviour, weights and
+  accessibility.
+
+For letting a user choose an icon, `@voila.dev/ui` ships an
+[IconPicker](/ui/icon-picker) built on top of this package.

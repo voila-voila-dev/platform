@@ -1,14 +1,31 @@
 ---
 title: "Quick start"
-description: "The core: around 80 React components built on Base UI and Tailwind CSS 4."
+description: "85 components, one convention. The floor everything else stands on."
 sidebar:
   order: 0
   label: "Quick start"
 ---
 
-The core package. Around 80 components, from primitives (`Button`, `Input`,
-`Dialog`) up to composed pieces (`Sidebar`, `Chat`, `ImageCropper`), built on
-[Base UI](https://base-ui.com) for behaviour and Tailwind for styling.
+import Preview from "@/components/docs/preview";
+import * as Example from "../../../examples/ui/forms";
+
+**85 components, one convention. The floor everything else stands on.**
+
+This is the core package: everything from `Button` and `Input` up to `Sidebar`,
+`Chat` and `ImageCropper`, built on [Base UI](https://base-ui.com) for
+behaviour and Tailwind for styling. It ships as source, so every one of those
+85 components is a readable `.tsx` file in `node_modules` that you can open,
+learn from and, when the day comes, copy out and own. One convention runs
+through all of them: Base UI for behaviour, a cva block for variants, tokens
+for colour. Learn it once and you have learnt the whole system, and so has
+your coding agent.
+
+<Preview layout="center">
+	<Example.QuickStartHero />
+</Preview>
+
+Everything above is stock: `Card`, `Field`, `Input`, `Select`, `DatePicker`,
+`Switch`, `Button`, no custom CSS.
 
 ## Install
 
@@ -21,7 +38,47 @@ bun add @voila.dev/ui
 @import "@voila.dev/ui/styles/globals.css";
 ```
 
-## Import
+Or copy the source — it's the same files.
+
+`@voila.dev/ui-tokens` comes along as a dependency, and `styles/globals.css`
+already imports it, so you do not install or import the tokens separately.
+Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.
+
+## The 3-minute win
+
+A labelled, validated field group, wired up the way a real form is:
+
+```tsx title="src/settings-form.tsx"
+import { Button } from "@voila.dev/ui/components/button";
+import {
+	Field,
+	FieldError,
+	FieldGroup,
+	FieldLabel,
+} from "@voila.dev/ui/components/field";
+import { Input } from "@voila.dev/ui/components/input";
+
+export function SettingsForm() {
+	return (
+		<FieldGroup>
+			<Field>
+				<FieldLabel htmlFor="workspace-name">Workspace name</FieldLabel>
+				<Input id="workspace-name" placeholder="Acme Physio" />
+			</Field>
+			<Field data-invalid>
+				<FieldLabel htmlFor="billing-email">Billing email</FieldLabel>
+				<Input id="billing-email" type="email" defaultValue="team@" aria-invalid />
+				<FieldError>Enter a complete email address.</FieldError>
+			</Field>
+			<Button type="submit">Save changes</Button>
+		</FieldGroup>
+	);
+}
+```
+
+## Mental model
+
+Every component is its own entry point, named after its file:
 
 ```ts
 import { Button } from "@voila.dev/ui/components/button";
@@ -29,11 +86,33 @@ import { cn } from "@voila.dev/ui/lib/utils";
 import { useIsMobile } from "@voila.dev/ui/hooks/use-mobile";
 ```
 
-Every component is its own entry point, named after its file. There is no barrel
-export: a barrel would pull all 80 components into the module graph of any file
-that imports one.
+There is no barrel export on purpose: a barrel would pull all 85 components
+into the module graph of any file that imports one. Behind each entry point is
+the same shape. Base UI supplies the behaviour and accessibility, a cva block
+defines the variants, and every colour goes through a semantic token
+(`bg-primary`, `text-muted-foreground`). Restyling means changing a token, not
+forking a component; forking a component means copying one file, not
+untangling a bundle.
 
-`@voila.dev/ui-tokens` comes along as a dependency, and `styles/globals.css`
-already imports it — you do not install or import the tokens separately.
+## Page map
 
-Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.
+Every component has its own page; the sidebar and the search box carry the
+full list. By theme:
+
+- **Forms**: [Input](/ui/input), [Select](/ui/select),
+  [Combobox](/ui/combobox), [DatePicker](/ui/date-picker) and
+  [Field](/ui/field), through to masks, OTP, money and rating inputs.
+- **Overlays**: [Dialog](/ui/dialog), [Sheet](/ui/sheet),
+  [DropdownMenu](/ui/dropdown-menu) and [Command](/ui/command), plus the
+  responsive variants that swap to a drawer on mobile.
+- **Data display**: [Table](/ui/table), [Card](/ui/card),
+  [Avatar](/ui/avatar) and [Chat](/ui/chat), plus stat cards, lists, galleries
+  and the profile header.
+- **Navigation**: [Tabs](/ui/tabs), [Sidebar](/ui/sidebar),
+  [Breadcrumb](/ui/breadcrumb) and [Pagination](/ui/pagination), plus
+  accordions and steppers.
+- **Feedback**: [Alert](/ui/alert), [Sonner](/ui/sonner),
+  [Progress](/ui/progress), [Skeleton](/ui/skeleton) and [Empty](/ui/empty).
+
+Start with [Button](/ui/button): it is the reference page for how every
+component is documented.

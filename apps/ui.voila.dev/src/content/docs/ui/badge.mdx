@@ -1,6 +1,6 @@
 ---
 title: "Badge"
-description: "A small status or category chip — semantic variants for meaning, a fixed palette for data."
+description: "Label a status or a category."
 sidebar:
   order: 2
 ---
@@ -8,101 +8,82 @@ sidebar:
 import Preview from "@/components/docs/preview";
 import * as Example from "../../../examples/ui/badge";
 
-`Badge` covers two jobs that look the same and are not: labelling **status**
-(pending, failed, verified) and labelling **category** (a tag, a skill, a
-department). The first is semantic and uses `variant`; the second is arbitrary
-and uses `color`.
+<Preview layout="row">
+	<Example.Default />
+</Preview>
+
+## Usage
 
 ```ts
 import { Badge } from "@voila.dev/ui/components/badge";
 ```
 
-## Variants — when the colour means something
+```tsx
+<Badge variant="destructive">Failed</Badge>
+```
 
-<Preview label="Semantic variants">
+`Badge` covers two jobs that look the same and are not: labelling **status**
+(pending, failed, verified) and labelling **category** (a tag, a skill, a
+department). The first is semantic and uses `variant`; the second is arbitrary
+and uses `color`.
+
+## Recipes
+
+<Preview layout="row" label="Status, where the colour means something">
 	<Example.Variants />
 </Preview>
 
-<Preview label="Product surfaces">
-	<Example.SurfaceVariants />
-</Preview>
+`default` is neutral emphasis, `secondary` quieter metadata, `outline` the
+quietest of all, `destructive` something failed or expired, `ghost` and `link`
+the interactive chips.
 
-| Variant | Reads as |
-| --- | --- |
-| `default` | Neutral emphasis — the current state, the active plan. |
-| `secondary` | Neutral, quieter. Metadata that is not a status. |
-| `outline` | Quietest of all; a chip that should not compete with its row. |
-| `destructive` | Something failed, expired, or was rejected. |
-| `ghost` / `link` | Interactive chips — a removable filter, a link. |
-
-## Colours — when the colour is data
-
-<Preview label="The full catalogue palette">
+<Preview layout="row" label="Category chips coloured from data">
 	<Example.Colors />
 </Preview>
 
 Twenty fixed names, each with a `--badge-*` token and a dark override so chips
-stay legible in both themes. Use them when the colour is a property of the thing
-being labelled — a skill's colour, a project's colour — and the user chose it or
-it came out of a database.
-
-The set is deliberately closed. Storing `"emerald"` in your data and mapping it
-to a token means a chip renders the same everywhere, and adding a colour is a
-decision made once rather than an ad-hoc `bg-[#10b981]` somewhere in a table.
+stay legible in both themes. Use them when the colour is a property of the
+thing being labelled and it came out of a database:
 
 ```tsx
 <Badge color={skill.color}>{skill.name}</Badge>
 ```
 
-`color` wins over `variant` if you pass both, so you never need to remember to
-drop the variant.
+The set is deliberately closed: storing `"emerald"` in your data and mapping it
+to a token means a chip renders the same everywhere. `color` wins over
+`variant` if you pass both. The names are exported as `badgeColors` with the
+`BadgeColor` type.
 
-The names are exported, which is what the preview above iterates:
-
-```ts
-import { badgeColors, type BadgeColor } from "@voila.dev/ui/components/badge";
-```
-
-## Sizes
-
-<Preview label="Sizes">
-	<Example.Sizes />
-</Preview>
-
-`sm` exists for dense surfaces — inside a table cell, next to a list item's
-title. Below that, use text.
-
-## Icons
-
-<Preview label="With a leading icon">
-	<Example.WithIcons />
-</Preview>
-
-Icons are auto-sized. Keep them to a leading position: a badge is small enough
-that a trailing icon reads as a dismiss button, which it is not.
-
-## Interactive badges
-
-<Preview label="Rendered as an anchor">
+<Preview layout="row" label="A badge that navigates">
 	<Example.AsLink />
 </Preview>
 
-Solid variants only hover when rendered as an anchor — a static chip should stay
-inert under the cursor, so the ones that *are* clickable are distinguishable.
-For a chip the user can remove, reach for `Chip` instead; it has the dismiss affordance built in.
+Solid variants only hover when rendered as an anchor, so the chips that *are*
+clickable are distinguishable. For a chip the user can remove, reach for
+[Chip](/ui/chip) instead; it has the dismiss affordance built in.
 
-## Props
+## API
 
-| Prop | Type | Default | |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "secondary" \| "provider" \| "organization" \| "destructive" \| "outline" \| "ghost" \| "link"` | `"default"` | Semantic role. |
-| `color` | `BadgeColor` | — | Catalogue palette; overrides `variant`. |
-| `size` | `"default" \| "sm"` | `"default"` | |
-| `render` | `ReactElement` | — | Base UI: render as another element. |
+| Prop | Default | |
+| --- | --- | --- |
+| `variant` | `"default"` | `secondary`, `outline`, `destructive`, `ghost`, `link`, plus `provider` and `organization`. |
+| `color` | — | Catalogue palette; overrides `variant`. |
+| `size` | `"default"` | `sm` for dense surfaces such as table cells. Below that, use text. |
+| `render` | — | Base UI: render as another element. |
 
-## A note on status colour
+Colour alone is not an accessible status indicator; the label inside the badge
+is doing the work and the colour is reinforcement. Never ship a badge whose
+only content is a colour.
 
-Colour alone is not an accessible status indicator — roughly one in twelve men
-cannot reliably separate red from green. The label inside the badge is doing the
-work; the colour is reinforcement. Never ship a badge whose only content is a
-colour.
+Every state is in the
+[Storybook story](https://storybook.ui.voila.dev/?path=/story/badge).
+
+## Own it
+
+The source is `@voila.dev/ui/src/components/badge.tsx`. To change the palette
+or the variants, edit the cva block and the `--badge-*` tokens next to it. It
+is the same file whether you keep the package or copy it into your repo.
+
+## Related
+
+[Chip](/ui/chip) · [Button](/ui/button) · [StatCard](/ui/stat-card)

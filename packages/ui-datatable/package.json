@@ -2,7 +2,7 @@
 	"name": "@voila.dev/ui-datatable",
 	"version": "0.0.0",
 	"type": "module",
-	"description": "A full-featured read-only data table for @voila.dev/ui: sorting, selection, resizing, pinning, column visibility, density, expansion and CSV export",
+	"description": "Sorting, pinning, CSV export — the table you keep rebuilding, finished.",
 	"license": "MIT",
 	"homepage": "https://ui.voila.dev/ui-datatable/data-table",
 	"repository": {

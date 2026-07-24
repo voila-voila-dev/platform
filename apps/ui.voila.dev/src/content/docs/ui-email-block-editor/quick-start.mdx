@@ -1,18 +1,30 @@
 ---
 title: "Quick start"
-description: "A drag-and-drop block editor for marketing emails."
+description: "The email template editor that lives in your app, not someone else's SaaS."
 sidebar:
   order: 0
   label: "Quick start"
 ---
 
-An editing surface dressed as the email it produces: a grey canvas, a 600px
-card, and blocks the author drags into place. The document is a plain
-serializable structure, so your server renders the real email from the same
-data.
+import Preview from "@/components/docs/preview";
+import * as Example from "../../../examples/ui-email-block-editor/blocks";
 
-The branded header and footer are placeholders — pass `headerSlot` and
-`footerSlot` to render your own chrome.
+The email template editor that lives in your app, not someone else's SaaS.
+
+Marketing emails are usually the one part of a product designed somewhere
+else, behind someone else's login, in someone else's brand tooling. This
+package puts the whole editing surface inside your own app: a grey canvas, a
+600px card, and thirteen blocks the author drags into place. It is
+source-shipped like everything else here, so the editor is code you can read,
+rebrand and extend, and the document it produces is plain data your server
+renders into the sent email.
+
+<Preview layout="stack" scroll>
+	<Example.Editor />
+</Preview>
+
+This is the real component. Drag a block by its handle, edit the copy in
+place, or select a block and open its settings.
 
 ## Install
 
@@ -24,10 +36,82 @@ bun add @voila.dev/ui-email-block-editor
 @import "@voila.dev/ui-email-block-editor/styles.css";
 ```
 
-## Import
-
-```ts
-import { EmailBlockEditor } from "@voila.dev/ui-email-block-editor/email-block-editor";
-```
+Or copy the source — it's the same files.
 
 Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.
+
+## The 3-minute win
+
+The editor is controlled: you hold the document, it dispatches changes. That
+makes persistence one `JSON.stringify` away, and undo, autosave or drafts a
+matter of what you do with the state.
+
+```tsx
+import {
+	type EmailEditorDocument,
+	emptyEmailEditorDocument,
+} from "@voila.dev/ui-email-block-editor/document/types";
+import { EmailBlockEditor } from "@voila.dev/ui-email-block-editor/email-block-editor";
+import { useState } from "react";
+
+export function CampaignEditor() {
+	const [document, setDocument] = useState<EmailEditorDocument>(
+		emptyEmailEditorDocument,
+	);
+
+	return (
+		<EmailBlockEditor
+			document={document}
+			onChange={setDocument}
+			onUploadImage={async (file) => {
+				// Upload to your own storage, resolve with the public URL.
+				const { url } = await uploadImage(file);
+				return url;
+			}}
+		/>
+	);
+}
+```
+
+Omit `onUploadImage` to disable image uploads. Pass `headerSlot` and
+`footerSlot` to replace the neutral header and footer placeholders with your
+own chrome, and `generateBlockId` for deterministic ids in tests.
+
+## Mental model
+
+The document is plain data; the editor is one view of it. A document is
+`{ version, blocks }`, every block a small readonly object with a `type`
+field, and the whole thing serialises to JSON without ceremony. The editor
+never emits HTML: placeholders like `{{firstName}}` stay as tokens, prices are
+integers in minor units, and rich text is a flat list of spans. Your server
+walks the same structure to produce the sent email, which is why the canvas
+can promise to be an honest preview rather than an approximation.
+
+Every building part is exported individually (the block definitions, the
+sections, the drag-and-drop list, the reducer), so the composed
+`EmailBlockEditor` is a convenience, not a boundary. Read the code, then keep
+it.
+
+## Page map
+
+The blocks:
+
+- [HeadingBlock](/ui-email-block-editor/heading-block): the email's title, or a section heading inside it.
+- [ParagraphBlock](/ui-email-block-editor/paragraph-block): rich text as a flat list of spans.
+- [ButtonBlock](/ui-email-block-editor/button-block): the call to action, filled or outlined.
+- [ImageBlock](/ui-email-block-editor/image-block): an image, optionally linked, with a play-badge overlay for video thumbnails.
+- [ListBlock](/ui-email-block-editor/list-block): bullets, numbers or badges, with an optional bold lead-in per item.
+- [DividerBlock](/ui-email-block-editor/divider-block): the horizontal rule between sections.
+- [GridBlock](/ui-email-block-editor/grid-block): a multi-column row any leaf block can sit in.
+- [StatBlock](/ui-email-block-editor/stat-block): one figure with a label; three of them make a stats row in a grid.
+- [TableBlock](/ui-email-block-editor/table-block): plain-text rows and columns, with an optional header row.
+- [ArticleBlock](/ui-email-block-editor/article-block): a blog post or resource card.
+- [ProductBlock](/ui-email-block-editor/product-block): a product card with price and compare-at price.
+- [OfferBlock](/ui-email-block-editor/offer-block): a plan card with features and an optional highlight.
+- [RatingBlock](/ui-email-block-editor/rating-block): a one-to-five question where each step is its own tracked link.
+
+The features:
+
+- [Server-side rendering](/ui-email-block-editor/server-side-rendering): walk the document to produce the sent email.
+- [Custom blocks](/ui-email-block-editor/custom-blocks): add your own block type in three files.
+- [Theming the canvas](/ui-email-block-editor/theming-the-canvas): the editor chrome follows your tokens; the email card follows your email.

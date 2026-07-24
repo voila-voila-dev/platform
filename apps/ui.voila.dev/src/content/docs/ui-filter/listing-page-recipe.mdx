@@ -1,0 +1,114 @@
+---
+title: "A real listing page"
+description: "Filters, a datatable and a map, all driven by one FilterValues record."
+sidebar:
+  order: 20
+---
+
+import Preview from "@/components/docs/preview";
+import * as Example from "../../../examples/ui-filter/filters";
+
+The page every marketplace ships: a search box, a few filters, a table of
+results, and a map once the user asks "near me". This recipe wires
+`@voila.dev/ui-filter`, `@voila.dev/ui-datatable` and `@voila.dev/ui-map`
+together with one `FilterValues` record as the single source of truth. Pick a
+specialty, set a rate, then add an area filter around Nantes to see the map
+appear. This is live.
+
+<Preview layout="stack" scroll>
+	<Example.Listing />
+</Preview>
+
+## The declaration
+
+Three fields, one of them geo. The geo field geocodes nothing itself; the
+screen supplies `searchPlaces`, here a static list, in production your address
+provider.
+
+```tsx
+const SPECIALTY = {
+	kind: "select",
+	key: "specialty",
+	label: "Specialty",
+	multiple: true,
+	options: [
+		{ value: "physio", label: "Physiotherapist" },
+		{ value: "osteopath", label: "Osteopath" },
+		{ value: "nurse", label: "Nurse" },
+	],
+} as const satisfies FilterDefinition;
+
+const RATE = {
+	kind: "moneyRange",
+	key: "rate",
+	label: "Day rate",
+	currency: "EUR",
+} as const satisfies FilterDefinition;
+
+const AREA = {
+	kind: "geoRadius",
+	key: "area",
+	label: "Area",
+	searchPlaces,
+	defaultKm: 30,
+} as const satisfies FilterDefinition;
+
+const definitions = [SPECIALTY, RATE, AREA];
+```
+
+## One record, three views
+
+The screen holds a `FilterValues` record and a search string. Everything else
+derives from them: the filtered rows, the result count in the bar, and the
+map's centre and radius. In a real product the same record becomes your query
+string or API payload; here the rows are filtered in memory to keep the
+example self-contained.
+
+```tsx
+const [values, setValues] = useState<FilterValues>({});
+const [search, setSearch] = useState("");
+const missions = useMemo(
+	() => MISSIONS.filter((mission) => matchesMission(mission, values, search)),
+	[values, search],
+);
+const area = values.area;
+
+<FilterBar
+	definitions={definitions}
+	values={values}
+	onValuesChange={setValues}
+	searchValue={search}
+	onSearchChange={setSearch}
+	resultCount={missions.length}
+/>
+<DataTable columns={columns} data={missions} />
+{area?.kind === "geoRadius" ? (
+	<RadiusMap
+		center={{
+			latitude: area.place.latitude,
+			longitude: area.place.longitude,
+		}}
+		radiusKm={area.radiusKm}
+	/>
+) : null}
+```
+
+The narrowing on `area?.kind === "geoRadius"` is the whole map wiring: a
+`GeoRadiusFilterValue` carries the chosen place and the radius in kilometres,
+which is exactly what `RadiusMap` takes. Clearing the chip removes the key
+from the record and the map unmounts with it.
+
+Because `FilterValues` never holds an empty filter, there is no cleanup pass
+before serialising: the record you hold is the record you send.
+
+## Own it
+
+The three packages meet only in your screen. The filter source is
+`@voila.dev/ui-filter/src/components/filter-bar.tsx`, the table
+`@voila.dev/ui-datatable/src/components/data-table.tsx`, the map
+`@voila.dev/ui-map/src/components/radius-map.tsx`. To change how a filter kind
+matches your rows, the `matchesMission` function above is yours to begin with.
+
+## Related
+
+[FilterBar](/ui-filter/filter-bar) · [Geo radius](/ui-filter/geo-radius-filter-field) · [RadiusMap](/ui-map/radius-map)

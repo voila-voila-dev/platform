@@ -22,6 +22,7 @@ export const docsSections: DocsSectionConfig[] = [
 		order: [
 			"introduction",
 			"installation",
+			"working-with-ai",
 			"theming",
 			"project-setup",
 			"branding",

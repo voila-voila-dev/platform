@@ -1,19 +1,26 @@
 ---
 title: "Quick start"
-description: "A full-featured read-only data table: sorting, selection, resizing, pinning, visibility, density, expansion and CSV export."
+description: "A read-only data table with sorting, selection, pinning, density and CSV export, finished."
 sidebar:
   order: 0
   label: "Quick start"
 ---
 
-The table you reach for when the rows are read, scanned, sorted and exported —
-not edited. Built on `@tanstack/react-table`, with the classic features behind
-opt-in props so a plain table stays a plain table.
+import Preview from "@/components/docs/preview";
+import * as Example from "../../../examples/ui-datatable/tables";
 
-For editing a grid of values in place, use
-[`@voila.dev/ui-spreadsheet`](/ui-spreadsheet/quick-start/) instead. The two look
-alike and behave nothing alike: this one owns a row model, that one owns a
-keyboard grid.
+Sorting, pinning, CSV export — the table you keep rebuilding, finished.
+
+Every product grows this table eventually: rows the team reads, scans, sorts
+and exports. Most codebases rebuild it from scratch each time, and each copy
+drifts. This one is finished and source-shipped, so when a column needs to
+behave differently you read the code and change it, in `node_modules` or in
+your own repo. Every feature sits behind an opt-in prop, so a plain table
+stays a plain table.
+
+<Preview layout="stack">
+	<Example.Hero />
+</Preview>
 
 ## Install
 
@@ -25,30 +32,61 @@ bun add @voila.dev/ui-datatable
 @import "@voila.dev/ui-datatable/styles.css";
 ```
 
-## Import
+Or copy the source — it's the same files. Peers: `react@19`, `react-dom@19`,
+`tailwindcss@4`.
 
-```ts
+## The 3-minute win
+
+Columns in, rows in, a toolbar with export. Sorting is already on for every
+sortable column.
+
+```tsx
 import {
-	DataTable,
 	type ColumnDef,
+	DataTable,
+	DataTableActions,
+	DataTableExport,
+	DataTableToolbar,
 } from "@voila.dev/ui-datatable/components/data-table";
+
+const columns: ColumnDef<Mission>[] = [
+	{ accessorKey: "reference", header: "Reference", size: 130 },
+	{ accessorKey: "club", header: "Club" },
+	{ accessorKey: "amount", header: "Amount", size: 110 },
+];
+
+<DataTable
+	columns={columns}
+	data={missions}
+	toolbar={(table) => (
+		<DataTableToolbar>
+			<DataTableActions>
+				<DataTableExport table={table} filename="missions.csv" />
+			</DataTableActions>
+		</DataTableToolbar>
+	)}
+/>;
 ```
 
-## What is included
+## Mental model
 
-| Prop | |
-| --- | --- |
-| `enableColumnResizing` | Drag column edges; arrow keys nudge by 16px. |
-| `columnVisibility` | Pair with `DataTableViewOptions` for a columns menu. |
-| `columnPinning` | Freeze columns against either edge. |
-| `density` | `comfortable` or `compact` row heights. |
-| `renderExpandedRow` | A detail panel under any row. |
-| `globalFilter` | Client-side search across visible cells. |
-| `enableRowSelection` | Checkbox column via `dataTableSelectionColumn()`. |
-| `pagination` | Server-side windowed footer. |
-| `renderMobileCard` | A card list below `md` instead of horizontal scroll. |
+The table owns the row model, you own the data. Built on
+`@tanstack/react-table`, it takes your columns and rows and derives everything
+else: sort order, selection state, visibility, pinning, pagination. It never
+edits a value. If your users need to type into the grid, that is a different
+component with a different contract; the page
+[Which one do I need?](/ui-datatable/which-one/) settles it in a minute.
 
-Sorting is always on for sortable columns. CSV export comes from
-`DataTableExport` (or `dataTableToCsv` if you want the bytes yourself).
+## Page map
 
-Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.
+- [DataTable](/ui-datatable/data-table/): the table itself, every extra behind a prop.
+- [Which one do I need?](/ui-datatable/which-one/): read-heavy table or editable grid.
+- [Selection](/ui-datatable/selection/): a checkbox column and row selection state.
+- [Column resizing](/ui-datatable/column-resizing/): drag column edges, arrow keys nudge.
+- [Column pinning](/ui-datatable/column-pinning/): freeze columns against either edge.
+- [Column visibility](/ui-datatable/column-visibility/): a columns menu via `DataTableViewOptions`.
+- [Density](/ui-datatable/density/): comfortable or compact row heights.
+- [Row expansion](/ui-datatable/row-expansion/): a detail panel under any row.
+- [Global filter](/ui-datatable/global-filter/): client-side search across visible cells.
+- [CSV export](/ui-datatable/export/): `DataTableExport`, or `dataTableToCsv` for the bytes.
+- [Pagination](/ui-datatable/pagination/): a server-side windowed footer.

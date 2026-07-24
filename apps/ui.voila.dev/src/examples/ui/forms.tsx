@@ -1,6 +1,15 @@
 import { CopyIcon, MagnifyingGlassIcon, StarIcon } from "@phosphor-icons/react";
 import type { BadgeColor } from "@voila.dev/ui/components/badge";
+import { Button } from "@voila.dev/ui/components/button";
 import { Calendar } from "@voila.dev/ui/components/calendar";
+import {
+	Card,
+	CardContent,
+	CardDescription,
+	CardFooter,
+	CardHeader,
+	CardTitle,
+} from "@voila.dev/ui/components/card";
 import { Checkbox } from "@voila.dev/ui/components/checkbox";
 import { CheckboxGroup } from "@voila.dev/ui/components/checkbox-group";
 import { ColorPicker } from "@voila.dev/ui/components/color-picker";
@@ -93,6 +102,69 @@ import {
 } from "@voila.dev/ui/components/toggle-group";
 import { TranslationInput } from "@voila.dev/ui/components/translation-input";
 import { useState } from "react";
+
+/* -------------------------------------------------------------------------- */
+/* Quick-start hero                                                           */
+/* -------------------------------------------------------------------------- */
+
+export function QuickStartHero() {
+	const [date, setDate] = useState<Date | null>(new Date(2026, 5, 20));
+	return (
+		<Card className="w-full max-w-md">
+			<CardHeader>
+				<CardTitle>Publish a mission</CardTitle>
+				<CardDescription>
+					Providers matching the specialty are notified when it goes live.
+				</CardDescription>
+			</CardHeader>
+			<CardContent>
+				<FieldGroup>
+					<Field>
+						<FieldLabel htmlFor="qs-mission-title">Title</FieldLabel>
+						<Input
+							id="qs-mission-title"
+							defaultValue="Physiotherapist — match day"
+						/>
+					</Field>
+					<div className="grid grid-cols-2 gap-4">
+						<Field>
+							<FieldLabel>Specialty</FieldLabel>
+							<Select defaultValue="physiotherapist">
+								<SelectTrigger className="w-full">
+									<SelectValue />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value="physiotherapist">
+										Physiotherapist
+									</SelectItem>
+									<SelectItem value="osteopath">Osteopath</SelectItem>
+									<SelectItem value="nurse">Nurse</SelectItem>
+								</SelectContent>
+							</Select>
+						</Field>
+						<Field>
+							<FieldLabel>Date</FieldLabel>
+							<DatePicker
+								value={date}
+								onValueChange={setDate}
+								placeholder="Mission date"
+								calendarProps={{ defaultMonth: new Date(2026, 5, 1) }}
+							/>
+						</Field>
+					</div>
+					<div className="flex items-center gap-2">
+						<Switch id="qs-mission-urgent" defaultChecked />
+						<Label htmlFor="qs-mission-urgent">Mark as urgent</Label>
+					</div>
+				</FieldGroup>
+			</CardContent>
+			<CardFooter className="justify-end gap-2">
+				<Button variant="ghost">Save draft</Button>
+				<Button>Publish</Button>
+			</CardFooter>
+		</Card>
+	);
+}
 
 /* -------------------------------------------------------------------------- */
 /* Text inputs                                                                */

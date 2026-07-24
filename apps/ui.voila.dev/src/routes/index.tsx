@@ -12,18 +12,8 @@ import {
 	SwatchesIcon,
 } from "@phosphor-icons/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Badge } from "@voila.dev/ui/components/badge";
 import { Button } from "@voila.dev/ui/components/button";
-import { Input } from "@voila.dev/ui/components/input";
-import { Label } from "@voila.dev/ui/components/label";
 import { Skeleton } from "@voila.dev/ui/components/skeleton";
-import { Switch } from "@voila.dev/ui/components/switch";
-import {
-	Tabs,
-	TabsContent,
-	TabsList,
-	TabsTrigger,
-} from "@voila.dev/ui/components/tabs";
 import { Eyebrow } from "@voila.dev/ui-landing/components/eyebrow";
 import { FeatureGrid } from "@voila.dev/ui-landing/components/feature-grid";
 import { LandingHero } from "@voila.dev/ui-landing/components/landing-hero";
@@ -41,6 +31,7 @@ import {
 } from "react";
 import { SiteHeader } from "@/components/docs/site-header";
 import { Wordmark } from "@/components/docs/wordmark";
+import { ComponentCards } from "@/components/home/component-cards";
 
 export const Route = createFileRoute("/")({
 	head: () => ({
@@ -251,63 +242,6 @@ function EditorPlaceholder() {
 	);
 }
 
-/** Real components from the library, not screenshots. */
-function LiveDemo() {
-	const [notifications, setNotifications] = useState(true);
-	return (
-		<div className="preview mx-auto max-w-3xl text-left">
-			<p className="preview__label">Live — rendered by the library itself</p>
-			<Tabs defaultValue="buttons">
-				<TabsList>
-					<TabsTrigger value="buttons">Buttons</TabsTrigger>
-					<TabsTrigger value="badges">Badges</TabsTrigger>
-					<TabsTrigger value="form">Form</TabsTrigger>
-				</TabsList>
-				<TabsContent value="buttons" className="pt-4">
-					<div className="flex flex-wrap items-center gap-3">
-						<Button>Default</Button>
-						<Button variant="secondary">Secondary</Button>
-						<Button variant="outline">Outline</Button>
-						<Button variant="ghost">Ghost</Button>
-						<Button variant="destructive">Destructive</Button>
-						<Button loading>Saving…</Button>
-					</div>
-				</TabsContent>
-				<TabsContent value="badges" className="pt-4">
-					<div className="flex flex-wrap items-center gap-2">
-						<Badge>Default</Badge>
-						<Badge variant="secondary">Secondary</Badge>
-						<Badge variant="outline">Outline</Badge>
-						<Badge variant="destructive">Destructive</Badge>
-					</div>
-				</TabsContent>
-				<TabsContent value="form" className="pt-4">
-					<div className="grid max-w-sm gap-4">
-						<div className="grid gap-2">
-							<Label htmlFor="home-demo-email">Email</Label>
-							<Input
-								id="home-demo-email"
-								type="email"
-								placeholder="ada@example.com"
-							/>
-						</div>
-						<div className="flex items-center gap-3">
-							<Switch
-								id="home-demo-notifications"
-								checked={notifications}
-								onCheckedChange={setNotifications}
-							/>
-							<Label htmlFor="home-demo-notifications">
-								Email me about releases
-							</Label>
-						</div>
-					</div>
-				</TabsContent>
-			</Tabs>
-		</div>
-	);
-}
-
 function Home() {
 	return (
 		<div className="min-h-svh bg-background text-foreground">
@@ -369,7 +303,33 @@ function Home() {
 					</LandingHero.Content>
 				</LandingHero.Root>
 
-				<section id="email-editor" className="scroll-mt-16 px-6 py-20">
+				<section className="px-6 py-20">
+					<SectionIntro.Root>
+						<SectionIntro.Title>The basics, doing real work</SectionIntro.Title>
+						<SectionIntro.Description>
+							Not a component zoo — product surfaces. Every card below is
+							rendered live by the library: forms, settings, KPIs, teams. Tab
+							through them, they all work.
+						</SectionIntro.Description>
+					</SectionIntro.Root>
+					<div className="mt-10">
+						<ComponentCards />
+					</div>
+					<div className="mt-8 text-center">
+						<Button
+							variant="outline"
+							nativeButton={false}
+							render={<Link to={"/ui/quick-start" as string} />}
+						>
+							Browse all 85 components <ArrowRightIcon />
+						</Button>
+					</div>
+				</section>
+
+				<section
+					id="email-editor"
+					className="scroll-mt-16 border-t border-border px-6 py-20"
+				>
 					<SectionIntro.Root>
 						<SectionIntro.Title>
 							An email editor. On your page. In your codebase.
@@ -422,6 +382,36 @@ function Home() {
 				</section>
 
 				<section className="border-t border-border bg-muted/30 px-6 py-20">
+					<SectionIntro.Root>
+						<SectionIntro.Title>Beyond primitives</SectionIntro.Title>
+						<SectionIntro.Description>
+							Buttons and dialogs are table stakes. These are the product-level
+							surfaces a SaaS actually needs — published in lockstep at one
+							version.
+						</SectionIntro.Description>
+					</SectionIntro.Root>
+					<div className="mx-auto mt-10 grid max-w-5xl gap-3 sm:grid-cols-2 lg:grid-cols-3">
+						{packages.map((pkg) => (
+							<Link
+								key={pkg.name}
+								to={pkg.slug}
+								className="group rounded-xl border border-border bg-card p-4 transition-colors hover:border-primary/40"
+							>
+								<p className="font-mono text-sm font-semibold text-foreground">
+									@voila.dev/{pkg.name}
+								</p>
+								<p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+									{pkg.blurb}
+								</p>
+								<p className="mt-3 flex items-center gap-1 text-xs font-medium text-primary opacity-0 transition-opacity group-hover:opacity-100">
+									Read the docs <ArrowRightIcon aria-hidden />
+								</p>
+							</Link>
+						))}
+					</div>
+				</section>
+
+				<section className="border-t border-border px-6 py-20">
 					<SectionIntro.Root>
 						<SectionIntro.Title>Own it, both ways</SectionIntro.Title>
 						<SectionIntro.Description>
@@ -508,40 +498,6 @@ function Home() {
 							})}
 						</FeatureGrid.Root>
 					</div>
-				</section>
-
-				<section className="border-t border-border bg-muted/30 px-6 py-20">
-					<SectionIntro.Root>
-						<SectionIntro.Title>Beyond primitives</SectionIntro.Title>
-						<SectionIntro.Description>
-							Buttons and dialogs are table stakes. These are the product-level
-							surfaces a SaaS actually needs — published in lockstep at one
-							version.
-						</SectionIntro.Description>
-					</SectionIntro.Root>
-					<div className="mx-auto mt-10 grid max-w-5xl gap-3 sm:grid-cols-2 lg:grid-cols-3">
-						{packages.map((pkg) => (
-							<Link
-								key={pkg.name}
-								to={pkg.slug}
-								className="group rounded-xl border border-border bg-card p-4 transition-colors hover:border-primary/40"
-							>
-								<p className="font-mono text-sm font-semibold text-foreground">
-									@voila.dev/{pkg.name}
-								</p>
-								<p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-									{pkg.blurb}
-								</p>
-								<p className="mt-3 flex items-center gap-1 text-xs font-medium text-primary opacity-0 transition-opacity group-hover:opacity-100">
-									Read the docs <ArrowRightIcon aria-hidden />
-								</p>
-							</Link>
-						))}
-					</div>
-				</section>
-
-				<section className="px-6 py-20">
-					<LiveDemo />
 				</section>
 
 				<section className="px-6 pb-20">

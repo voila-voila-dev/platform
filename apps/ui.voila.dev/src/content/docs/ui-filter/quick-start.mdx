@@ -1,17 +1,26 @@
 ---
 title: "Quick start"
-description: "Declarative, responsive list filters: declare the fields, get the editor, the chips and the trigger."
+description: "Declare which fields are filterable; get the editor, the chips and the trigger."
 sidebar:
   order: 0
   label: "Quick start"
 ---
 
-A screen declares *which fields are filterable*; the package renders the editor,
-the active-filter chips and the search-shaped trigger that opens them.
+import Preview from "@/components/docs/preview";
+import * as Example from "../../../examples/ui-filter/filters";
 
-`FilterValues` never holds an empty filter — clearing a field removes its key —
-so `Object.keys(values).length` is the active count and the record round-trips
-to a query string unchanged.
+Composable filters that survive real product requirements — including geo.
+
+Every listing screen ends up rebuilding the same machinery: a panel of fields,
+chips for what is active, a count of results, a way back to a query string.
+This package ships that machinery as source-shipped `.tsx`. You declare the
+fields; when the product asks for "is not", money in cents or "within 30 km of
+Nantes", the field kinds are already there, and when it asks for something
+stranger, you own the code and can read your way to the change.
+
+<Preview layout="stack">
+	<Example.Bar />
+</Preview>
 
 ## Install
 
@@ -23,14 +32,71 @@ bun add @voila.dev/ui-filter
 @import "@voila.dev/ui-filter/styles.css";
 ```
 
-## Import
-
-```ts
-import { FilterBar } from "@voila.dev/ui-filter/components/filter-bar";
-import type { FilterDefinition, FilterValues } from "@voila.dev/ui-filter/types";
-```
-
-All copy comes from `labels` (English by default) and all formatting from
-`locale`, so the package never needs to know your i18n setup.
+Or copy the source, it's the same files.
 
 Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.
+
+## The 3-minute win
+
+Declare the fields once; `FilterBar` renders the search box, the trigger, the
+editor and the chips from that single declaration.
+
+```tsx
+import { FilterBar } from "@voila.dev/ui-filter/components/filter-bar";
+import type { FilterDefinition, FilterValues } from "@voila.dev/ui-filter/types";
+import { useState } from "react";
+
+const definitions = [
+	{
+		kind: "select",
+		key: "status",
+		label: "Status",
+		multiple: true,
+		options: [
+			{ value: "sent", label: "Sent" },
+			{ value: "failed", label: "Failed" },
+		],
+	},
+	{ kind: "dateRange", key: "sentAt", label: "Sent" },
+] as const satisfies ReadonlyArray<FilterDefinition>;
+
+export function Messages() {
+	const [values, setValues] = useState<FilterValues>({});
+	const [search, setSearch] = useState("");
+	return (
+		<FilterBar
+			definitions={definitions}
+			values={values}
+			onValuesChange={setValues}
+			searchValue={search}
+			onSearchChange={setSearch}
+			resultCount={128}
+		/>
+	);
+}
+```
+
+## Mental model
+
+A screen *declares* which fields are filterable; the editor, the chips and the
+query layer all read the same declaration. `FilterValues` never holds an empty
+filter: clearing a field removes its key, so `Object.keys(values).length` is
+the active count and the record round-trips to a query string unchanged. The
+package is domain-agnostic on purpose. All copy comes from `labels` (English
+by default), all formatting from `locale`, and the geo field geocodes nothing
+itself, so it works against any address provider.
+
+## Page map
+
+- [FilterBar](/ui-filter/filter-bar): the whole surface: search, trigger, editor, chips, result count.
+- [FilterForm](/ui-filter/filter-form): the editor on its own, for a sidebar or a settings sheet.
+- [FilterChips](/ui-filter/filter-chips): the active filters as removable chips.
+- [FilterTrigger](/ui-filter/filter-trigger): the search-shaped button that opens the editor.
+- [Text](/ui-filter/text-filter-field): free text, with "is not".
+- [Select](/ui-filter/select-filter-field): one or several options, with exclusion.
+- [Number](/ui-filter/number-filter-field): a single numeric value.
+- [Money range](/ui-filter/money-range-filter-field): bounds in minor units, formatted per locale.
+- [Date range](/ui-filter/date-range-filter-field): `YYYY-MM-DD` bounds a native input round-trips.
+- [Boolean](/ui-filter/boolean-filter-field): tri-state: true, false, any.
+- [Geo radius](/ui-filter/geo-radius-filter-field): "within N km of a place", against your geocoder.
+- [A real listing page](/ui-filter/listing-page-recipe): filters, a datatable and a map wired to one record.

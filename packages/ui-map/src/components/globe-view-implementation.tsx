@@ -154,7 +154,9 @@ export function GlobeViewImplementation({
 			dot.className =
 				"relative inline-flex size-3 rounded-full bg-primary shadow-[0_0_10px_2px] shadow-primary/50";
 			element.appendChild(dot);
-			new maplibregl.Marker({ element })
+			// Without subpixel positioning MapLibre rounds each marker to whole
+			// pixels, which reads as trembling while the globe auto-rotates.
+			new maplibregl.Marker({ element, subpixelPositioning: true })
 				.setLngLat([marker.lngLat[0], marker.lngLat[1]])
 				.addTo(instance);
 		}

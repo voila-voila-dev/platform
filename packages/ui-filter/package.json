@@ -2,7 +2,7 @@
 	"name": "@voila.dev/ui-filter",
 	"version": "0.0.0",
 	"type": "module",
-	"description": "Composable, responsive list filters for @voila.dev/ui: a screen declares its filterable fields, the package renders the editor, the active-filter chips and the trigger",
+	"description": "Composable filters that survive real product requirements — including geo.",
 	"license": "MIT",
 	"homepage": "https://ui.voila.dev/components/filter-bar",
 	"repository": {

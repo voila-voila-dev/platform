@@ -2,7 +2,7 @@
 	"name": "@voila.dev/ui-icon",
 	"version": "0.0.0",
 	"type": "module",
-	"description": "Render a Phosphor icon by name — the registry behind icon names stored in data",
+	"description": "Icons by name, safe by default — store a string, render an icon.",
 	"license": "MIT",
 	"homepage": "https://ui.voila.dev",
 	"repository": {

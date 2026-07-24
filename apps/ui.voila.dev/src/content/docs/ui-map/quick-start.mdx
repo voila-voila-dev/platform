@@ -1,20 +1,26 @@
 ---
 title: "Quick start"
-description: "Maps and a globe on free vector tiles. No API key, no bundle tax."
+description: "Maps and a globe on free vector tiles, without an API key."
 sidebar:
   order: 0
   label: "Quick start"
 ---
 
+import Preview from "@/components/docs/preview";
+import * as Example from "../../../examples/ui-map/maps";
+
 Maps and a globe on free vector tiles. No API key, no bundle tax.
 
-`MapView` owns the canvas, the MapLibre lifecycle and the navigation control,
-and hands you the instance — markers and layers are yours. `RadiusMap` builds on
-it for the common "a place and a radius" case, and `GlobeView` puts the same
-tiles on MapLibre's globe projection with rotation and markers built in.
+Maps are where ownership usually stops: a hosted provider, a key in an
+environment variable, a bill that scales with your success. This package
+renders on OpenFreeMap vector tiles instead, free and key-less, so a fresh
+clone shows a working map and production never leaks a credential. The
+components are source-shipped `.tsx` on top of MapLibre GL; read the code,
+then keep it.
 
-MapLibre is about 270 kB gzipped, so the rendering body sits behind
-`React.lazy` and only downloads once a map actually mounts.
+<Preview layout="stack">
+	<Example.Globe />
+</Preview>
 
 ## Install
 
@@ -26,12 +32,49 @@ bun add @voila.dev/ui-map
 @import "@voila.dev/ui-map/styles.css";
 ```
 
-## Import
-
-```ts
-import { GlobeView } from "@voila.dev/ui-map/components/globe-view";
-import { MapView } from "@voila.dev/ui-map/components/map-view";
-import { RadiusMap } from "@voila.dev/ui-map/components/radius-map";
-```
+Or copy the source, it's the same files.
 
 Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.
+
+## The 3-minute win
+
+A city map with a marker. `onReady` hands you the live MapLibre instance, so
+markers, sources and layers are ordinary MapLibre code.
+
+```tsx
+import { MapView } from "@voila.dev/ui-map/components/map-view";
+import maplibregl from "maplibre-gl";
+
+export function VenueMap() {
+	return (
+		<MapView
+			className="h-80"
+			center={[2.3522, 48.8566]}
+			zoom={11}
+			onReady={(map) => {
+				new maplibregl.Marker().setLngLat([2.3522, 48.8566]).addTo(map);
+			}}
+			unavailableFallback={<p>This browser has no WebGL.</p>}
+		/>
+	);
+}
+```
+
+## Mental model
+
+`MapView` owns the canvas, the MapLibre lifecycle and the navigation control,
+and hands you the instance; what goes on the map is yours. `RadiusMap` builds
+on it for the common "a place and a radius" case, and `GlobeView` puts the
+same tiles on MapLibre's globe projection with rotation and markers built in.
+The basemap follows your theme: light by default, the dark variant inside a
+`.dark` subtree, restyled live on toggle. MapLibre itself is about 270 kB
+gzipped, so the rendering body sits behind `React.lazy` and only downloads
+once a map actually mounts; until then your bundle carries none of it.
+
+## Page map
+
+- [Quick start](/ui-map/quick-start): this page.
+- [MapView](/ui-map/map-view): the MapLibre basemap that stays out of your bundle until it mounts.
+- [RadiusMap](/ui-map/radius-map): a geodesic circle around a place, viewport included.
+- [GlobeView](/ui-map/globe-view): the planet, spinning, with pulsing markers.
+- [Basemaps](/ui-map/basemaps): the free-tiles story, and how to swap in your own style URL.

@@ -86,6 +86,40 @@ const columns: ColumnDef<Mission>[] = [
 	},
 ];
 
+export function Hero() {
+	const [search, setSearch] = useState("");
+	return (
+		<div className="w-full">
+			<DataTable
+				columns={[
+					dataTableSelectionColumn<Mission>({
+						selectAllLabel: "Select all missions",
+						selectRowLabel: (mission) => `Select ${mission.reference}`,
+					}),
+					...columns,
+				]}
+				data={MISSIONS}
+				enableRowSelection
+				getRowId={(mission) => mission.reference}
+				globalFilter={search}
+				toolbar={(table) => (
+					<DataTableToolbar>
+						<DataTableSearch
+							value={search}
+							onChange={(event) => setSearch(event.target.value)}
+							placeholder="Search missions"
+						/>
+						<DataTableActions>
+							<DataTableViewOptions table={table} />
+							<DataTableExport table={table} filename="missions.csv" />
+						</DataTableActions>
+					</DataTableToolbar>
+				)}
+			/>
+		</div>
+	);
+}
+
 export function Default() {
 	return (
 		<div className="w-full">

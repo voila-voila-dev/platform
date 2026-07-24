@@ -2,7 +2,7 @@
 	"name": "@voila.dev/ui-landing",
 	"version": "0.0.0",
 	"type": "module",
-	"description": "Composable marketing and landing page sections built on @voila.dev/ui",
+	"description": "Your marketing site, from the same system as your product.",
 	"license": "MIT",
 	"homepage": "https://ui.voila.dev",
 	"repository": {

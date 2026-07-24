@@ -1,8 +1,11 @@
 # @voila.dev/ui
 
-A React component system that ships as **source**. No `dist/`, no build step —
-you install the `.tsx` files and your bundler compiles them alongside your own
-code.
+React components that ship as source. Use them as a dependency or make them
+your own — including the hard ones: email editor, spreadsheet, charts, maps.
+
+No `dist/`, no build step — you install the `.tsx` files and your bundler
+compiles them alongside your own code. Your editor and your AI agent both land
+on real source when they open a component.
 
 - **Docs:** [ui.voila.dev](https://ui.voila.dev)
 - **Storybook:** [storybook.ui.voila.dev](https://storybook.ui.voila.dev)
@@ -29,17 +32,18 @@ Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.
 
 ## Packages
 
-| Package | What it is |
+| Package | |
 | --- | --- |
-| `@voila.dev/ui` | The core: ~80 components, from `Button` to `Sidebar`. |
-| `@voila.dev/ui-tokens` | The design tokens, as plain CSS custom properties. |
-| `@voila.dev/ui-chart` | Composable SVG charts, no charting library underneath. |
-| `@voila.dev/ui-datatable` | A full-featured read-only table: sorting, resizing, pinning, export. |
-| `@voila.dev/ui-spreadsheet` | `Spreadsheet`, a virtualized keyboard-driven editable grid. |
-| `@voila.dev/ui-map` | A lazy-loaded MapLibre GL map view. |
-| `@voila.dev/ui-filter` | A filter toolbar and pager for list pages. |
-| `@voila.dev/ui-landing` | Marketing sections: heroes, feature grids, testimonials, footers. |
-| `@voila.dev/ui-email-block-editor` | A drag-and-drop block editor for marketing emails. |
+| `@voila.dev/ui` | 85 components, one convention. The floor everything else stands on. |
+| `@voila.dev/ui-tokens` | Your whole brand in one CSS file. Change it, everything follows. |
+| `@voila.dev/ui-email-block-editor` | The email template editor that lives in your app, not someone else's SaaS. |
+| `@voila.dev/ui-spreadsheet` | An editable, virtualized grid your users will mistake for a native app. |
+| `@voila.dev/ui-datatable` | Sorting, pinning, CSV export — the table you keep rebuilding, finished. |
+| `@voila.dev/ui-chart` | Charts with zero charting library. SVG you can read, scales included. |
+| `@voila.dev/ui-map` | Maps and a globe on free vector tiles. No API key, no bundle tax. |
+| `@voila.dev/ui-filter` | Composable filters that survive real product requirements — including geo. |
+| `@voila.dev/ui-landing` | Your marketing site, from the same system as your product. |
+| `@voila.dev/ui-icon` | Icons by name, safe by default — store a string, render an icon. |
 
 All publish in lockstep at one shared version, so cross-package versions always
 line up.
@@ -83,10 +87,10 @@ hot-reloads in both the Storybook and the docs site with no rebuild.
 ```
 apps/
   storybook.ui.voila.dev   # the component Storybook
-  ui.voila.dev             # the docs site (Astro + Starlight)
+  ui.voila.dev             # the docs site (TanStack Start)
 packages/
   ui, ui-tokens, ui-chart, ui-map, ui-datatable, ui-spreadsheet,
-  ui-filter, ui-landing, ui-email-block-editor
+  ui-filter, ui-landing, ui-email-block-editor, ui-icon
   ui-branding              # private: the voila.dev brand
   typescript-config        # private: shared tsconfig bases
 ```

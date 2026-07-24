@@ -1,0 +1,96 @@
+---
+title: "Gallery"
+description: "Every chart type on one screen."
+sidebar:
+  order: 2
+---
+
+import Preview from "@/components/docs/preview";
+import * as Example from "../../../examples/ui-chart/chart";
+
+Every mark the package draws, on one screen. Each one is live, built from the
+same `Chart.Root` frame with different children. The heading under each
+preview links to the page that takes the mark apart.
+
+## [Bars](/ui-chart/chart-bars/)
+
+<Preview layout="stack" label="Two series side by side">
+	<Example.Bars />
+</Preview>
+
+<Preview layout="stack" label="Horizontal, with values on the bars">
+	<Example.BarsHorizontal />
+</Preview>
+
+<Preview layout="stack" label="Diverging around zero">
+	<Example.BarsNegative />
+</Preview>
+
+## [Stacked bars](/ui-chart/chart-bars-stacked/)
+
+<Preview layout="stack" label="Series stacked in one column">
+	<Example.BarsStacked />
+</Preview>
+
+## [Line](/ui-chart/chart-line/)
+
+<Preview layout="stack" label="One series over time">
+	<Example.Line />
+</Preview>
+
+<Preview layout="stack" label="Step curve with dots">
+	<Example.LineStep />
+</Preview>
+
+## [Area](/ui-chart/chart-area/)
+
+<Preview layout="stack" label="Filled series with a gradient">
+	<Example.Area />
+</Preview>
+
+<Preview layout="stack" label="Stacked, flat fills">
+	<Example.AreaStacked />
+</Preview>
+
+## [Points](/ui-chart/chart-points/)
+
+<Preview layout="stack" label="Bubbles sized by a third value">
+	<Example.Bubble />
+</Preview>
+
+## [Pie](/ui-chart/chart-pie/)
+
+<Preview layout="stack" label="Parts of a whole">
+	<Example.Pie />
+</Preview>
+
+## [Donut](/ui-chart/chart-donut/)
+
+<Preview layout="stack" label="The pie with room for a number">
+	<Example.Donut />
+</Preview>
+
+## [Radar](/ui-chart/chart-radar/)
+
+<Preview layout="stack" label="One shape across five axes">
+	<Example.Radar />
+</Preview>
+
+## [Radial bars](/ui-chart/chart-radial-bar/)
+
+<Preview layout="stack" label="Concentric progress rings">
+	<Example.RadialBar />
+</Preview>
+
+## Own it
+
+Every mark above is drawn by the source in
+`@voila.dev/ui-chart/src/components/` — one file per mark, plain SVG, plain
+arithmetic. To add a mark of your own, read one of the small ones
+(`chart-points.tsx` is a good start) and write a sibling; it is the same file
+whether you keep the package or copy it into your repo.
+
+## Related
+
+[Quick start](/ui-chart/quick-start/) · [Chart.Root](/ui-chart/chart-root/) ·
+[Chart.Tooltip](/ui-chart/chart-tooltip/)

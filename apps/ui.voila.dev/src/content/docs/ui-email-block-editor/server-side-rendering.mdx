@@ -1,0 +1,173 @@
+---
+title: "Server-side rendering"
+description: "Turn the editor's document into the HTML email your server sends."
+sidebar:
+  order: 14
+---
+
+The editor never produces HTML. What it produces is a document: a plain,
+serialisable structure of `{ version, blocks }` that you persist as JSON and
+render on the server when a campaign goes out. That split is deliberate. The
+sent email belongs to your server, which knows the recipient's name, locale
+and unsubscribe link; the editor's job is to guarantee the shape of the input.
+
+The package therefore ships no HTML renderer, and does not pretend to. It
+ships the types, and the types are the contract: every block is a small
+readonly object with a `type` field, the whole document is AI-readable data,
+and a renderer is one exhaustive `switch`. This page walks the shape.
+
+## The document
+
+```ts
+import type {
+	EmailEditorBlock,
+	EmailEditorDocument,
+} from "@voila.dev/ui-email-block-editor/document/types";
+
+// { version: 1, blocks: EmailEditorBlock[] }
+```
+
+The `version` field is your migration hook: documents live in your database
+for years, and a schema change bumps the constant so old documents can be
+upgraded on read. The blocks are a flat list, except for the grid, which holds
+one level of leaf children and can never contain another grid. That single
+rule is what keeps a renderer a plain recursion of depth two.
+
+Three conventions run through every block:
+
+- **Placeholders stay tokens.** Text fields may carry `{{firstName}}`,
+  `{{lastName}}` or `{{email}}`; substitution happens per recipient at render
+  time, never in the editor.
+- **Money is integers.** A price is `{ amountInMinorUnits, currency }`, never
+  a pre-formatted string, so one campaign can go out in several locales.
+  Format with `Intl.NumberFormat` at render.
+- **Rich text is flat spans.** A paragraph is a list of
+  `{ text, bold?, italic?, underline?, href? }` runs, with no nesting. Escape
+  the text, wrap the marks, done.
+
+## Walking it
+
+An honest skeleton, built on the real types. The `switch` is the whole
+architecture: TypeScript narrows each case to its block interface, and the
+`never` check at the end means a document can never contain a block your
+renderer silently drops.
+
+```ts
+import type {
+	EmailEditorBlock,
+	EmailEditorDocument,
+	EmailEditorTextSpan,
+} from "@voila.dev/ui-email-block-editor/document/types";
+
+const escapeHtml = (value: string): string =>
+	value
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&#39;");
+
+const renderSpans = (spans: ReadonlyArray<EmailEditorTextSpan>): string =>
+	spans
+		.map((span) => {
+			let html = escapeHtml(span.text).replaceAll("\n", "<br>");
+			if (span.bold) html = `<b>${html}</b>`;
+			if (span.italic) html = `<i>${html}</i>`;
+			if (span.underline) html = `<u>${html}</u>`;
+			if (span.href !== undefined)
+				html = `<a href="${escapeHtml(span.href)}">${html}</a>`;
+			return html;
+		})
+		.join("");
+
+const renderBlock = (block: EmailEditorBlock): string => {
+	switch (block.type) {
+		case "heading": {
+			const size = block.level === 1 ? "22px" : "17px";
+			return `<h${block.level} style="margin:0 0 12px;font-size:${size};color:#151b77">${escapeHtml(block.text)}</h${block.level}>`;
+		}
+		case "paragraph":
+			return `<p style="margin:0 0 12px;font-size:15px;line-height:1.6;color:#2a2a33">${renderSpans(block.spans)}</p>`;
+		case "button": {
+			const filled = block.variant === "primary";
+			return `<table role="presentation" width="100%"><tr><td align="${block.align}">
+				<a href="${escapeHtml(block.href)}" style="display:inline-block;padding:12px 24px;border-radius:8px;${
+					filled
+						? "background:#151b77;color:#ffffff"
+						: "border:1px solid #151b77;color:#151b77"
+				}">${escapeHtml(block.label)}</a>
+			</td></tr></table>`;
+		}
+		case "divider":
+			return `<hr style="border:none;border-top:1px solid #ececf1;margin:20px 0">`;
+		case "grid": {
+			const width = Math.floor(100 / block.desktopColumns);
+			const cells = block.children
+				.map(
+					(child) =>
+						`<td width="${width}%" style="vertical-align:top;padding:8px">${renderBlock(child)}</td>`,
+				)
+				.join("");
+			return `<table role="presentation" width="100%"><tr>${cells}</tr></table>`;
+		}
+		case "image":
+		case "list":
+		case "stat":
+		case "table":
+		case "article":
+		case "product":
+		case "offer":
+		case "rating":
+			// The remaining blocks follow the same pattern: read the fields,
+			// escape the text, emit table-based markup.
+			return "";
+		default:
+			return block satisfies never;
+	}
+};
+
+export const renderEmailHtml = (document: EmailEditorDocument): string =>
+	document.blocks.map(renderBlock).join("");
+```
+
+Wrap the result in your own chrome: the 600px card, the branded header, the
+footer with contact details and the unsubscribe link. The editor shows neutral
+placeholders for exactly those parts (or your `headerSlot`/`footerSlot`)
+because the server owns them.
+
+## Keeping the preview honest
+
+The canvas colours and font live in `theme.ts` as `EMAIL_COLOR` and
+`EMAIL_FONT`, and the snippet above hard-codes the same values. Your renderer
+stays the source of truth; the constants only need to agree with it closely
+enough that the canvas is an honest preview. If you rebrand the sent email,
+change both in the same commit. See
+[Theming the canvas](/ui-email-block-editor/theming-the-canvas).
+
+Prices and dates in the canvas are previewed in `EMAIL_PREVIEW_LOCALE`
+(`fr-FR` by default), mirroring a renderer that formats per recipient:
+
+```ts
+import type { EmailEditorMoney } from "@voila.dev/ui-email-block-editor/document/types";
+
+const formatPrice = (price: EmailEditorMoney, locale: string): string =>
+	new Intl.NumberFormat(locale, {
+		style: "currency",
+		currency: price.currency,
+	}).format(price.amountInMinorUnits / 100);
+```
+
+Two blocks earn a note:
+
+- **Grid.** `mobileColumns` defaults to 1 because plenty of email clients
+  ignore media queries; render the desktop table and pin the mobile count
+  inside a `@media` block for the clients that honour it.
+- **Rating.** Each of the five steps links to `block.href` with `?rating=N`
+  appended, so the five variants are five separately countable tracked links
+  and the distribution falls out of your click stats.
+
+## Related
+
+[Quick start](/ui-email-block-editor/quick-start) ·
+[Custom blocks](/ui-email-block-editor/custom-blocks) ·
+[GridBlock](/ui-email-block-editor/grid-block)

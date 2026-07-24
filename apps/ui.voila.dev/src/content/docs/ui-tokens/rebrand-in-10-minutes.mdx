@@ -1,0 +1,142 @@
+---
+title: "Rebrand in 10 minutes"
+description: "Take an app from the default palette to your brand by overriding a handful of custom properties."
+sidebar:
+  order: 1
+---
+
+import Preview from "@/components/docs/preview";
+import * as Example from "../../../examples/ui-tokens/tokens";
+
+The default palette is a default, not a brand. This walkthrough takes a whole
+app from stock indigo to your own identity by redefining custom properties in
+one stylesheet. No component is touched, no class is overridden, and the
+result is live at the bottom of this page.
+
+All overrides go in the same place: your `globals.css`, *after* the token
+import.
+
+```css title="globals.css"
+@import "tailwindcss";
+@import "@voila.dev/ui-tokens/design-tokens.css";
+
+/* your overrides below */
+```
+
+## Step 1: the brand colour
+
+`--primary` is every default button, progress fill and active state.
+`--ring` is the focus ring; set it to the same hue so keyboard focus reads as
+branded rather than grey. Always set the `-foreground` partner, it is the
+text that sits on the surface.
+
+```css
+:root {
+	--primary: oklch(0.55 0.21 145);
+	--primary-foreground: oklch(0.99 0 0);
+	--ring: oklch(0.55 0.21 145);
+}
+```
+
+Values are OKLch, a perceptual colour space: lightness is the first number,
+so "the same colour but lighter" is a one-number change rather than a guess.
+Paste a hex value into [oklch.com](https://oklch.com) to convert your
+existing brand colour.
+
+## Step 2: the dark theme
+
+A colour tuned for white backgrounds usually sinks on dark ones. Redefine the
+pair inside `.dark`, lighter and with the foreground flipped:
+
+```css
+.dark {
+	--primary: oklch(0.72 0.18 145);
+	--primary-foreground: oklch(0.16 0.01 145);
+}
+```
+
+If you skip this step the light values still apply in dark mode; they are
+merely worse. Two minutes here is the difference between a rebrand and a
+skin.
+
+## Step 3: status colours
+
+Only if your brand has opinions about them. `--destructive`, `--success` and
+`--warning` are already sensible; most rebrands leave them alone. If yours
+clashes, for instance a red brand next to the default destructive red, shift
+the status hue, not the brand.
+
+```css
+:root {
+	--destructive: oklch(0.58 0.22 15);
+	--destructive-foreground: oklch(0.99 0 0);
+}
+```
+
+## Step 4: radius
+
+`--radius` is a single number the whole corner scale derives from
+(`--radius-sm` through `--radius-xl` are calculated off it), so one line
+takes every button, card and input from soft to sharp:
+
+```css
+:root {
+	--radius: 0.25rem; /* sharp */
+}
+```
+
+## Step 5: typography
+
+The theme names two families, `--font-sans` for body copy and
+`--font-heading` for display text. Point them at yours and load the fonts
+however your framework prefers; the tokens only name them.
+
+```css
+:root {
+	--font-sans: "Your Sans", ui-sans-serif, system-ui, sans-serif;
+	--font-heading: "Your Display", var(--font-sans);
+}
+```
+
+## Step 6: check contrast
+
+The default palette targets WCAG AA. Your overrides are your responsibility:
+run each `-foreground` against its surface through a contrast checker
+(4.5:1 for body text, 3:1 for large text and UI). OKLch makes the fix
+obvious, since lightness is the first number in the value.
+
+## Before and after
+
+The two panels below are the same markup. The second sits inside a wrapper
+that redefines four properties inline, exactly what the stylesheet above does
+app-wide:
+
+```tsx
+const rebrand = {
+	"--primary": "oklch(0.55 0.21 145)",
+	"--primary-foreground": "oklch(0.99 0 0)",
+	"--ring": "oklch(0.55 0.21 145)",
+	"--radius": "0.25rem",
+} as CSSProperties;
+
+<div style={rebrand}>{/* every component inside follows */}</div>;
+```
+
+<Preview label="Same markup, four properties apart">
+	<Example.BrandSwap />
+</Preview>
+
+Because custom properties cascade, this wrapper trick is also how you scope a
+sub-brand to one route, preview a client's colours in a settings page, or
+white-label per tenant with a single inline style.
+
+## Own it
+
+The whole package is one file,
+`@voila.dev/ui-tokens/src/design-tokens.css`. Read it to see every role and
+both themes in about 300 lines; copy it into your repo if you would rather
+edit values than override them. It is the same file either way.
+
+## Related
+
+[Quick start](/ui-tokens/quick-start) · [Theming and tokens](/start/theming)

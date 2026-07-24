@@ -1,0 +1,68 @@
+---
+title: "Which one do I need?"
+description: "Read-heavy table or editable grid: pick between ui-datatable and ui-spreadsheet."
+sidebar:
+  order: 1
+---
+
+import Preview from "@/components/docs/preview";
+import * as Table from "../../../examples/ui-datatable/tables";
+import * as Grid from "../../../examples/ui-spreadsheet/grids";
+
+Two packages, two tables, one question. They look alike and behave nothing
+alike, so choose by what your users do with the rows, not by how the screen
+looks.
+
+**Reading rows? `ui-datatable`. Typing into cells? `ui-spreadsheet`.** That
+one sentence settles most cases. The rest of this page is for the other cases.
+
+## The read-heavy table
+
+<Preview layout="stack" label="ui-datatable">
+	<Table.Default />
+</Preview>
+
+`DataTable` owns a row model. You hand it columns and data; it derives sort
+order, selection, visibility, pinning, pagination and CSV export, and it never
+edits a value. Rows are things your users scan, filter and take away. Think
+back-office lists: orders, invoices, members, logs.
+
+## The editable grid
+
+<Preview layout="stack" label="ui-spreadsheet">
+	<Grid.Grid />
+</Preview>
+
+`Spreadsheet` owns a keyboard grid. Cells hold real inputs, arrow keys and tab
+move focus the way a spreadsheet does, paste accepts a whole block of cells,
+rows drag into a new order, and virtualisation keeps thousands of rows smooth.
+It never sorts or mutates your data; it reports intent and you update the
+array. Think bulk entry: stock counts, price lists, imports someone tidies by
+hand.
+
+## Choose by behaviour
+
+| Your users… | Package |
+| --- | --- |
+| Scan, sort and filter rows | `ui-datatable` |
+| Export to CSV | `ui-datatable` |
+| Expand a row for detail | `ui-datatable` |
+| Type into cells, tab across, paste a block | `ui-spreadsheet` |
+| Reorder rows by hand | `ui-spreadsheet` |
+| Edit thousands of rows without pagination | `ui-spreadsheet` |
+
+## Edge cases
+
+- **A mostly read-only table with one editable column** is still
+  `ui-datatable`: render an input in that column's `cell`. Reach for
+  `ui-spreadsheet` when editing is the point of the screen, not an exception
+  on it.
+- **A small editable table inside a form** is `ui-spreadsheet`, wrapped in
+  [NestedTableInput](/ui-spreadsheet/nested-table-input/).
+- **Both on one screen** is normal: a `DataTable` list that opens into a
+  `Spreadsheet` editor. They share the same tokens, so they already match.
+
+Both ship as source, so if your case sits between the two you can read both
+implementations before you commit. Start from either quick start:
+[ui-datatable](/ui-datatable/quick-start/) ·
+[ui-spreadsheet](/ui-spreadsheet/quick-start/)

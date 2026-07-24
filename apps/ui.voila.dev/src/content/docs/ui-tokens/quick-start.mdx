@@ -6,15 +6,32 @@ sidebar:
   label: "Quick start"
 ---
 
-Every colour, radius and font in the system, as CSS custom properties in the
-OKLch colour space. It is a stylesheet and nothing else — no JavaScript, no
-build step, no config file.
+import Preview from "@/components/docs/preview";
+import * as Example from "../../../examples/ui-tokens/tokens";
 
-You rarely install it directly: `@voila.dev/ui` depends on it and its
-`globals.css` imports it for you. Install it on its own only when you want the
-palette without the components.
+**Your whole brand in one CSS file. Change it, everything follows.**
+
+Every colour, radius and font in the system is a CSS custom property in the
+OKLch colour space, in a single stylesheet. No JavaScript, no build step, no
+theming API. That makes the tokens the contract between you and the
+components: they only ever reference the semantic names, so redefining a
+handful of properties rebrands buttons, tables, charts, the email editor and
+the marketing sections at once. It also makes them the contract between you
+and your AI: tell it to use `--primary` and there is nothing to hallucinate
+around, because the whole theme is one readable file.
+
+<Preview>
+	<Example.BrandSwap />
+</Preview>
+
+The second panel is the first panel plus four custom properties. Nothing else
+changed.
 
 ## Install
+
+You rarely install it directly: `@voila.dev/ui` depends on it and its
+`globals.css` imports it for you. Install it on its own when you want the
+palette without the components.
 
 ```sh
 bun add @voila.dev/ui-tokens
@@ -25,9 +42,50 @@ bun add @voila.dev/ui-tokens
 @import "@voila.dev/ui-tokens/design-tokens.css";
 ```
 
-To rebrand, redefine the properties you care about *after* the import. The
-components follow, because they only ever reference the semantic names.
+Or copy the source — it's the same files. The package is one CSS file,
+`src/design-tokens.css`, and it reads as well in your repo as in
+`node_modules`.
 
-See [Theming and tokens](/start/theming/) for the full map.
+Peers: `tailwindcss@4`.
 
-Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.
+## The 3-minute win
+
+Rebrand the default palette. Redefine the properties you care about *after*
+the import, in both themes:
+
+```css title="globals.css"
+@import "tailwindcss";
+@import "@voila.dev/ui-tokens/design-tokens.css";
+
+:root {
+	--primary: oklch(0.55 0.21 145);       /* your brand green */
+	--primary-foreground: oklch(0.99 0 0);
+	--ring: oklch(0.55 0.21 145);          /* focus rings follow */
+	--radius: 0.25rem;                     /* sharper corners */
+}
+
+.dark {
+	--primary: oklch(0.72 0.18 145);       /* lighter, so it holds up on dark */
+	--primary-foreground: oklch(0.16 0.01 145);
+}
+```
+
+Every component that renders `bg-primary`, `ring` or a rounded corner now
+follows your brand. No component is forked, no class is overridden.
+
+## Mental model
+
+The tokens are roles, not colours. Each role is a `color` plus `-foreground`
+pair: the surface, and the text that goes on it. `--primary` is "the brand
+action", `--muted-foreground` is "secondary text", `--destructive` is "this
+deletes something". Components ask for roles through Tailwind's semantic
+classes (`bg-primary`, `text-muted-foreground`, `border-border`) and never
+name a raw colour, which is why one file can move the whole system. The one
+rule that follows: override tokens, never component classes.
+
+## Page map
+
+- [Rebrand in 10 minutes](/ui-tokens/rebrand-in-10-minutes): the walkthrough,
+  from default palette to your brand, with a live before and after.
+- [Theming and tokens](/start/theming): the full token map, role by role,
+  plus typography and contrast checking.

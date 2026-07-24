@@ -1,6 +1,6 @@
 ---
 title: "Button"
-description: "The primary interactive control — nine variants, eight sizes, and a built-in loading state."
+description: "Trigger an action."
 sidebar:
   order: 1
 ---
@@ -8,160 +8,97 @@ sidebar:
 import Preview from "@/components/docs/preview";
 import * as Example from "../../../examples/ui/button";
 
-`Button` wraps [Base UI's button](https://base-ui.com/react/components/button),
-so keyboard behaviour, focus management and the disabled semantics come from
-there. What this component adds is the variant system, the size scale, and a
-`loading` state that does the right thing for screen readers.
+<Preview layout="row">
+	<Example.Default />
+</Preview>
+
+## Usage
 
 ```ts
 import { Button } from "@voila.dev/ui/components/button";
 ```
 
-## Variants
+```tsx
+<Button variant="outline">Save</Button>
+```
 
-<Preview label="Semantic variants">
-	<Example.Variants />
+`Button` wraps [Base UI's button](https://base-ui.com/react/components/button),
+so keyboard behaviour, focus management and the disabled semantics come from
+there. What this component adds is the variant system, the size scale, and a
+`loading` state that does the right thing for screen readers.
+
+## Recipes
+
+<Preview layout="row" label="Confirm a destructive action">
+	<Example.ConfirmDestructive />
 </Preview>
-
-<Preview label="Product surfaces">
-	<Example.SurfaceVariants />
-</Preview>
-
-`provider` and `organization` map to the two product-surface tokens. If your app
-has one identity rather than two, you will never use them — see
-[Theming](/start/theming/#product-surfaces).
-
-`primary` is an alias of `default`; both exist so that markup ported from a
-design that names the role "primary" keeps working.
-
-### Choosing one
-
-| Variant | Use it for |
-| --- | --- |
-| `default` | The one action the page exists for. At most one per view. |
-| `secondary` | An alternative to the primary action, given equal weight. |
-| `outline` | Toolbar actions, filters, anything that repeats in a row. |
-| `ghost` | Actions inside dense surfaces — table rows, list items, headers. |
-| `destructive` | Deleting, cancelling, anything the user cannot undo. |
-| `link` | An action that reads as navigation. |
 
 `destructive` is deliberately a tinted fill rather than a solid red block: a red
-wall in a dialog footer reads as an error message, not a button.
+wall in a dialog footer reads as an error message, not a button. Pair it with an
+`outline` cancel so the safe way out has weight too.
 
-## Sizes
-
-<Preview label="Text sizes">
-	<Example.Sizes />
-</Preview>
-
-The scale is `xs < sm < default < lg`, with `default` (32px tall) as the
-unmarked middle. `lg` is for landing-page calls to action; application UI should
-almost always stay at `default` or below.
-
-### Icon-only
-
-<Preview label="Square sizes, one icon, no label">
-	<Example.IconSizes />
-</Preview>
-
-An icon-only button has no accessible name of its own. **Always pass
-`aria-label`** — the icon is decorative markup, not text.
-
-## Icons alongside text
-
-Icons are sized automatically; you do not need to set `size-4` yourself.
-
-<Preview label="Leading and trailing">
-	<Example.WithIcons />
-</Preview>
-
-## Loading
-
-<Preview label="loading swaps in a spinner and blocks interaction">
+<Preview layout="row" label="Save while the request is in flight">
 	<Example.Loading />
 </Preview>
 
 `loading` does three things at once: renders a leading `Spinner`, sets
 `disabled`, and sets `aria-busy`. That last one is why you should prefer it over
-rolling your own — a plain disabled button tells assistive technology the action
-is unavailable, not that it is in progress.
+rolling your own. Keep the label meaningful while it spins: "Saving…" tells the
+user what is happening; a bare spinner does not.
 
-Keep the label meaningful while it spins. "Saving…" tells the user what is
-happening; a bare spinner does not.
-
-## Disabled
-
-<Preview label="Disabled">
-	<Example.Disabled />
+<Preview layout="row" label="An icon-only toolbar action">
+	<Example.IconSizes />
 </Preview>
 
-A disabled button gives no feedback on hover and cannot be focused, so the
-reason it is disabled has to be visible somewhere else — helper text, a tooltip
-on a wrapping element, a validation summary. If you cannot say why, consider
-leaving it enabled and failing with a message instead.
+An icon-only button has no accessible name of its own. **Always pass
+`aria-label`**. Icons are auto-sized here and alongside text; you never set
+`size-4` yourself.
 
-## Shape
-
-<Preview label="pill forces a fully-rounded button">
-	<Example.Shapes />
-</Preview>
-
-## Rendering as something else
-
-Base UI's `render` prop swaps the underlying element while keeping the styling
-and behaviour. This is how you get a link that looks like a button:
-
-```tsx
-<Button render={<a href="/pricing">See pricing</a>} />
-```
-
-```tsx
-// With a router
-<Button render={<Link to="/missions/$id" params={{ id }} />}>Open mission</Button>
-```
-
-<Preview label="Rendered as an anchor">
+<Preview layout="row" label="Navigation that reads as a button">
 	<Example.AsAnchor />
 </Preview>
 
-Note that solid variants only show a hover state when rendered as an anchor. A
-plain `<button>` is usually the page's primary action and gets its feedback from
-the press nudge instead, so it stays inert under the cursor.
+Base UI's `render` prop swaps the underlying element while keeping the styling
+and behaviour:
 
-## Props
-
-| Prop | Type | Default | |
-| --- | --- | --- | --- |
-| `variant` | `"default" \| "primary" \| "secondary" \| "provider" \| "organization" \| "outline" \| "ghost" \| "destructive" \| "link"` | `"default"` | Semantic role. |
-| `size` | `"xs" \| "sm" \| "default" \| "lg" \| "icon-xs" \| "icon-sm" \| "icon" \| "icon-lg"` | `"default"` | Height and padding. |
-| `shape` | `"default" \| "pill"` | `"default"` | Corner radius. |
-| `loading` | `boolean` | `false` | Leading spinner, `disabled`, `aria-busy`. |
-| `disabled` | `boolean` | `false` | Standard disabled semantics. |
-| `render` | `ReactElement` | — | Base UI: render as another element. |
-
-All remaining props go to the underlying element.
-
-The variant and size names are also exported as arrays, so a form builder or a
-story can iterate the set instead of hand-copying it:
-
-```ts
-import {
-	buttonVariantOptions,
-	buttonSizeOptions,
-} from "@voila.dev/ui/components/button";
+```tsx
+<Button render={<Link to="/missions/$id" params={{ id }} />}>Open mission</Button>
 ```
 
-## Styling one-offs
+## API
 
-Reach for `className` for layout (`w-full`, `mt-2`), not for colour. If a button
-needs a colour the variants do not have, the token behind the variant is what
-should change — see [Theming](/start/theming/#the-one-rule).
+| Prop | Default | |
+| --- | --- | --- |
+| `variant` | `"default"` | `secondary`, `outline`, `ghost`, `destructive`, `link`, plus the surface variants `provider` and `organization`. |
+| `size` | `"default"` | `xs`, `sm`, `lg`, and the square `icon-*` set. |
+| `shape` | `"default"` | `pill` forces a fully rounded button. |
+| `loading` | `false` | Leading spinner, `disabled`, `aria-busy`. |
+| `render` | — | Base UI: render as another element. |
 
-The `cva` behind the component is exported if you need the classes without the
-component, for instance to style a third-party element:
+All remaining props go to the underlying element. Picking a variant: `default`
+is the one action the page exists for, at most one per view; `secondary` an
+equal-weight alternative; `outline` for toolbars and anything that repeats in a
+row; `ghost` inside dense surfaces; `destructive` for what cannot be undone;
+`link` for an action that reads as navigation.
 
-```ts
-import { buttonVariants } from "@voila.dev/ui/button-variants";
+The variant and size names are also exported as arrays
+(`buttonVariantOptions`, `buttonSizeOptions`), and the `cva` itself as
+`buttonVariants` in `@voila.dev/ui/button-variants` if you need the classes
+without the component.
 
-<SomeThirdPartyLink className={buttonVariants({ variant: "outline" })} />;
-```
+Every state is in the
+[Storybook story](https://storybook.ui.voila.dev/?path=/story/button).
+
+## Own it
+
+The source is `@voila.dev/ui/src/components/button.tsx`. To change the
+variants, edit the cva block. It is the same file whether you keep the package
+or copy it into your repo.
+
+Reach for `className` for layout (`w-full`, `mt-2`), not for colour. If a
+button needs a colour the variants do not have, the token behind the variant is
+what should change; see [Theming](/start/theming/#the-one-rule).
+
+## Related
+
+[ButtonGroup](/ui/button-group) · [DropdownMenu](/ui/dropdown-menu) · [ConfirmDialog](/ui/confirm-dialog)

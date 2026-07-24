@@ -1,19 +1,49 @@
 ---
 title: "Introduction"
-description: "What @voila.dev/ui is, what it assumes about your app, and when it is the wrong choice."
+description: "A source-shipped component system you own, what it assumes about your app, and when it is the wrong choice."
 ---
 
 `@voila.dev/ui` is a React component system distributed as **source**. When you
 install it, `node_modules/@voila.dev/ui/src` contains the same `.tsx` files the
-maintainers edit. There is no `dist/`, no build step, and nothing compiled ahead
-of time.
+maintainers edit. There is no `dist/`, no build step, and nothing compiled
+ahead of time. A compiled bundle is a wall. Source is a door.
+
+> *"We believe your product should own its UI all the way down. Not just the
+> buttons — the email your user receives, the table they export, the map they
+> explore. That's why we build the complex components everyone else tells you
+> to buy as a SaaS: an email template editor that lives inside **your** app, a
+> spreadsheet, a globe. Install them, read them, rebrand them, keep them."*
+
+Three claims follow from shipping source, and everything on this site ladders
+up to them.
+
+**Built for the AI era.** Your coding agent (and you) can read, trace and
+rewrite every component, because the code sitting in `node_modules` is the
+real code. There is no black box for the model to hallucinate around; the code
+is the documentation. Prompts like "make the checkout use our brand" actually
+work, because the component is readable source the agent can open. The
+[Working with AI](/start/working-with-ai/) page shows how to set that up.
+
+**Ownership, both ways.** Use it as a real dependency: one `bun add`, lockstep
+versions across every package, updates for free. Or copy any file into your
+repo and make it yours. It is the same source either way, and you never have to
+choose on day one. The dependency mode is the argument that scales: the moment
+you run more than one product, pasted components become N forks to maintain,
+while a dependency is one version bump for every app you own.
+
+**Beyond primitives.** Buttons and dialogs are table stakes. The add-on
+packages ship the product-level surfaces a SaaS actually needs: a drag-and-drop
+email template editor, an editable spreadsheet, a data table, charts with zero
+charting library, maps and a globe, composable filters, full landing-page
+sections. Build your email templates directly inside your application; that is
+the flagship proof that ownership extends past primitives.
 
 ## What you get
 
-- **~80 components** in the core package, from primitives (`Button`, `Input`,
+- **85 components** in the core package, from primitives (`Button`, `Input`,
   `Dialog`) up to composed pieces (`Sidebar`, `Chat`, `ProfileHeader`,
   `ImageCropper`).
-- **A semantic token layer** — every colour, radius and font is a CSS custom
+- **A semantic token layer.** Every colour, radius and font is a CSS custom
   property, so rebranding does not mean forking components.
 - **Add-on packages** for the heavy things: charts, data grids, maps, filter
   bars, landing sections, an email block editor. Install only what you use.
@@ -26,14 +56,14 @@ of time.
 | Tailwind CSS 4 | Styling is Tailwind utility classes; the tokens are a Tailwind 4 `@theme`. |
 | A bundler | Vite, Rspack, Turbopack, anything that compiles TypeScript and JSX. |
 
-If your setup ticks those three boxes, everything works. If it does not — a
-Webpack 4 app, a Tailwind 3 app, no bundler at all — this is the wrong library
+If your setup ticks those three boxes, everything works. If it does not (a
+Webpack 4 app, a Tailwind 3 app, no bundler at all) this is the wrong library
 and no amount of configuration will make it a good fit.
 
 ## When to reach for something else
 
-- **You want a design system you never touch.** This one is meant to be read and
-  edited. Something compiled and versioned may suit you better.
+- **You want a design system you never touch.** This one is meant to be read
+  and edited. Something compiled and versioned may suit you better.
 - **You need a specific accessibility certification.** The components build on
   [Base UI](https://base-ui.com) and follow its patterns, but no formal audit
   has been done. Verify what you must guarantee.

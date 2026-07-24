@@ -1,17 +1,25 @@
 ---
 title: "Quick start"
-description: "Composable SVG charts with no charting library underneath."
+description: "Charts with zero charting library. SVG you can read, scales included."
 sidebar:
   order: 0
   label: "Quick start"
 ---
 
-`Chart.Root` measures its box, derives the scales and owns the active datum;
-every other part draws into it. No D3, no Recharts — the scales, ticks and
-geometry are a few hundred lines of arithmetic in the package.
+import Preview from "@/components/docs/preview";
+import * as Example from "../../../examples/ui-chart/chart";
 
-Series colours default to the `--chart-1` … `--chart-5` tokens, so charts follow
-a rebrand like everything else.
+Charts with zero charting library. SVG you can read, scales included.
+
+Most chart code in a product is a wrapper around a dependency nobody on the
+team has opened. This package removes the dependency instead of wrapping it:
+the scales, ticks and geometry are a few hundred lines of arithmetic that ship
+as source, so the chart on your dashboard is code you can read, step through
+and rewrite. Own it the same way you own a button.
+
+<Preview layout="stack">
+	<Example.Hero />
+</Preview>
 
 ## Install
 
@@ -23,10 +31,97 @@ bun add @voila.dev/ui-chart
 @import "@voila.dev/ui-chart/styles.css";
 ```
 
-## Import
-
-```ts
-import { Chart, type ChartConfig } from "@voila.dev/ui-chart/components/chart";
-```
+Or copy the source — it's the same files.
 
 Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.
+
+## The 3-minute win
+
+A line chart of monthly bookings, complete: data, config, chart.
+
+<Preview layout="stack">
+	<Example.Line />
+</Preview>
+
+```tsx
+import { Chart, type ChartConfig } from "@voila.dev/ui-chart/components/chart";
+
+const data = [
+	{ month: "January", bookings: 18 },
+	{ month: "February", bookings: 22 },
+	{ month: "March", bookings: 25 },
+	{ month: "April", bookings: 30 },
+	{ month: "May", bookings: 36 },
+	{ month: "June", bookings: 33 },
+];
+
+const config = {
+	bookings: { label: "Bookings confirmed", color: "var(--chart-1)" },
+} satisfies ChartConfig;
+
+export function Bookings() {
+	return (
+		<Chart.Root
+			config={config}
+			data={data}
+			x={{ key: "month" }}
+			y={{ keys: ["bookings"] }}
+			className="w-full"
+		>
+			<Chart.Grid />
+			<Chart.XAxis />
+			<Chart.YAxis />
+			<Chart.Cursor />
+			<Chart.Line />
+			<Chart.Tooltip />
+		</Chart.Root>
+	);
+}
+```
+
+## Mental model
+
+`Chart.Root` measures its box, derives the scales from your data and owns the
+active datum. Every other part draws into that shared frame: marks
+(`Chart.Bars`, `Chart.Line`, `Chart.Pie`, …) render the data, furniture
+(`Chart.Grid`, `Chart.XAxis`, `Chart.Legend`, …) explains it. A chart is
+composed the way the rest of your UI is composed, out of children. Pointer,
+touch and keyboard all drive the same active index, and the numbers are always
+available as a visually hidden data table.
+
+Series colours default to the `--chart-1` … `--chart-5` tokens, so charts
+follow a rebrand like everything else.
+
+## Why no charting library
+
+A charting dependency is a wall between you and your pixels: a renderer you
+cannot step into, a bundle you pay for on every page, an API your agent can
+only guess at. Here the whole pipeline is plain SVG driven by plain
+arithmetic, sitting in `node_modules` as readable `.tsx`. When a tick lands in
+the wrong place you read the function that placed it. That is the AI-readable
+argument in miniature: a model can trace the chart because there is nothing
+underneath to hallucinate around.
+
+## Page map
+
+- [Gallery](/ui-chart/gallery/) — every chart type on one screen.
+- [Chart.Root](/ui-chart/chart-root/) — the frame: data, config, scales, interaction.
+- [Chart.Bars](/ui-chart/chart-bars/) — vertical or horizontal bars.
+- [Stacked bars](/ui-chart/chart-bars-stacked/) — series stacked in one column.
+- [Chart.Area](/ui-chart/chart-area/) — filled series, optional gradient.
+- [Chart.Line](/ui-chart/chart-line/) — lines, curves and steps.
+- [Chart.Points](/ui-chart/chart-points/) — scatter and bubble marks.
+- [Chart.Pie](/ui-chart/chart-pie/) — parts of a whole.
+- [Chart.Donut](/ui-chart/chart-donut/) — the pie with a hole for a number.
+- [Chart.Radar](/ui-chart/chart-radar/) — one shape across several axes.
+- [Chart.RadialBar](/ui-chart/chart-radial-bar/) — concentric progress rings.
+- [Chart.Grid](/ui-chart/chart-grid/) — background rules.
+- [Chart.XAxis](/ui-chart/chart-x-axis/) — bottom ticks and labels.
+- [Chart.YAxis](/ui-chart/chart-y-axis/) — left ticks and labels.
+- [Chart.Cursor](/ui-chart/chart-cursor/) — the hover band or line.
+- [Chart.Tooltip](/ui-chart/chart-tooltip/) — the readout for the active datum.
+- [Chart.Legend](/ui-chart/chart-legend/) — name the series.
+- [Chart.LabelList](/ui-chart/chart-label-list/) — values written on the marks.
+- [Chart.ReferenceLine](/ui-chart/chart-reference-line/) — a target or threshold.
+- [Chart.Skeleton](/ui-chart/chart-skeleton/) — the loading state.
+- [Chart.Empty](/ui-chart/chart-empty/) — the no-data state.

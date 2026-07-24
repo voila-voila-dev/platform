@@ -1,0 +1,82 @@
+---
+title: "This site is built with it"
+description: "The ui.voila.dev homepage, section by section, with the ui-landing components that render it."
+sidebar:
+  order: 0.5
+---
+
+The cheapest way to judge a landing-page kit is to look at the landing page it
+ships with. The [ui.voila.dev homepage](/) is rendered by `ui-landing`, top to
+bottom, from the same published packages you install. The source is one route
+file, `apps/ui.voila.dev/src/routes/index.tsx` in the repo, and this page
+walks it section by section.
+
+## The hero
+
+[LandingHero](/ui-landing/landing-hero) in its `layout="centered"` variant
+with `background="gradient-primary"`. Inside it: an
+[Eyebrow](/ui-landing/eyebrow) with a pulsing dot for the
+"Source-shipped · React 19 · Tailwind 4 · AI-ready" line,
+`LandingHero.Title` with `LandingHero.Highlight` around "actually own",
+`LandingHero.Lead` for the pitch and `LandingHero.Actions` holding two plain
+`Button`s from the core package. The headline numbers underneath are a
+[StatsRow](/ui-landing/stats-row), items separated by `StatsRow.Divider`.
+
+## The email editor demo
+
+Every section below the hero opens with a
+[SectionIntro](/ui-landing/section-intro): centred title, one-paragraph
+description. This one introduces the live `EmailBlockEditor` from
+`@voila.dev/ui-email-block-editor`, lazy-loaded so its drag-and-drop chunk
+only downloads when the section scrolls into view. The editor is not part of
+`ui-landing`; the point is that a marketing section and a product surface sit
+on the same page without a seam.
+
+## The globe
+
+Another [SectionIntro](/ui-landing/section-intro), this time introducing
+`GlobeView` from `@voila.dev/ui-map`. Same pattern: the landing package frames
+the section, a sibling package provides the wow.
+
+## Own it, both ways
+
+A [SectionIntro](/ui-landing/section-intro) followed by two comparison cards,
+then a [FeatureGrid](/ui-landing/feature-grid) with `tone="primary"` and
+`columns="2"` for the "Built on Base UI" and "Yours to rebrand" cards, each a
+`FeatureGrid.Card` with `CardIcon`, `CardTitle` and `CardDescription`. The two
+comparison cards above the grid are hand-written divs rather than a
+[ComparisonSection](/ui-landing/comparison-section), which is the honest
+lesson: when a section needs a shape the package does not have, you write
+twenty lines of Tailwind next to it and nothing fights you.
+
+## Built for the AI workflow
+
+[SectionIntro](/ui-landing/section-intro) plus a
+[FeatureGrid](/ui-landing/feature-grid) at `columns="3"`, with each card in
+its `variant="outline"` style. Three cards, one convention.
+
+## Beyond primitives
+
+[SectionIntro](/ui-landing/section-intro) again, above the packages grid. The
+grid itself is app code: ten router `Link`s styled as cards, because the
+targets are internal routes and the hover states are specific to this site.
+
+## The live demo and the closing CTA
+
+The tabbed primitives demo is pure `@voila.dev/ui`: `Tabs`, `Button`, `Badge`,
+`Input`, `Switch`. The quiet closing card is another hand-rolled section; the
+stock [CtaBanner](/ui-landing/cta-banner) brand gradient shouted too loudly
+against this page, so the site keeps its own surfaces. The components are
+yours to skip as much as yours to use.
+
+## The takeaway
+
+Six sections of chrome from `ui-landing`, two product surfaces from sibling
+packages, and a handful of local divs where the design wanted something
+specific. That is the intended ratio. Read the code: the route file is short
+enough to skim over coffee, and every import in it resolves to readable `.tsx`
+in `node_modules`.
+
+Start with [LandingHero](/ui-landing/landing-hero) and
+[SectionIntro](/ui-landing/section-intro); they carry most pages, including
+this one.
