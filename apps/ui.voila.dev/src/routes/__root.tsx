@@ -24,8 +24,31 @@ export const Route = createRootRoute({
 			{
 				name: "description",
 				content:
-					"A source-shipped React + Tailwind component system. Copy the tokens, keep the components.",
+					"A source-shipped React + Tailwind component system. Copy it, install it, rebrand it — from buttons to a full email editor, it's yours.",
 			},
+			{
+				property: "og:title",
+				content: "Build your SaaS with AI — on components you actually own.",
+			},
+			{
+				property: "og:description",
+				content:
+					"A source-shipped React + Tailwind component system. Copy it, install it, rebrand it — from buttons to a full email editor, it's yours.",
+			},
+			{ property: "og:type", content: "website" },
+			{ property: "og:url", content: "https://ui.voila.dev" },
+			{ property: "og:site_name", content: "ui.voila.dev" },
+			{ property: "og:image", content: "https://ui.voila.dev/og.png" },
+			{ name: "twitter:card", content: "summary_large_image" },
+			{
+				name: "twitter:title",
+				content: "Build your SaaS with AI — on components you actually own.",
+			},
+			{
+				name: "twitter:description",
+				content: "Your AI can't customize what it can't read. Ours, it can.",
+			},
+			{ name: "twitter:image", content: "https://ui.voila.dev/og.png" },
 		],
 		links: [
 			{ rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
