@@ -19,7 +19,6 @@ import {
 	TabsList,
 	TabsTrigger,
 } from "@voila.dev/ui/components/tabs";
-import { CtaBanner } from "@voila.dev/ui-landing/components/cta-banner";
 import { Eyebrow } from "@voila.dev/ui-landing/components/eyebrow";
 import { FeatureGrid } from "@voila.dev/ui-landing/components/feature-grid";
 import { LandingHero } from "@voila.dev/ui-landing/components/landing-hero";
@@ -338,35 +337,45 @@ function Home() {
 					</div>
 				</section>
 
-				<CtaBanner.Root spacing="lg">
-					<CtaBanner.Title>Read the code, then keep it</CtaBanner.Title>
-					<CtaBanner.Description>
-						Install the packages, copy the tokens, and every component is yours
-						to open, step through and rebrand.
-					</CtaBanner.Description>
-					<CtaBanner.Actions>
-						<Button
-							size="lg"
-							variant="secondary"
-							nativeButton={false}
-							render={<Link to={"/start/installation" as string} />}
-						>
-							Install in two minutes
-						</Button>
-						<Button
-							size="lg"
-							variant="ghost"
-							className="text-primary-foreground hover:bg-white/10 hover:text-primary-foreground"
-							nativeButton={false}
-							render={
-								// biome-ignore lint/a11y/useAnchorContent: Button injects the label as children.
-								<a href="https://github.com/voila-voila-dev/ui" />
-							}
-						>
-							Star it on GitHub
-						</Button>
-					</CtaBanner.Actions>
-				</CtaBanner.Root>
+				<section className="px-6 pb-20">
+					{/* Quiet CTA on the site's own surfaces — the stock ui-landing
+					    brand gradient shouts too loudly against this page. */}
+					<div className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl border border-border bg-card px-6 py-14 text-center sm:px-12">
+						<div
+							aria-hidden
+							className="pointer-events-none absolute inset-0 bg-[radial-gradient(36rem_16rem_at_50%_-4rem,color-mix(in_oklab,var(--primary)_14%,transparent),transparent)] dark:bg-[radial-gradient(36rem_16rem_at_50%_-4rem,color-mix(in_oklab,var(--primary)_30%,transparent),transparent)]"
+						/>
+						<div className="relative mx-auto max-w-2xl">
+							<h2 className="font-heading text-3xl font-bold tracking-tight text-foreground">
+								Read the code, then keep it
+							</h2>
+							<p className="mt-3 text-muted-foreground">
+								Install the packages, copy the tokens, and every component is
+								yours to open, step through and rebrand.
+							</p>
+							<div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+								<Button
+									size="lg"
+									nativeButton={false}
+									render={<Link to={"/start/installation" as string} />}
+								>
+									Install in two minutes
+								</Button>
+								<Button
+									size="lg"
+									variant="outline"
+									nativeButton={false}
+									render={
+										// biome-ignore lint/a11y/useAnchorContent: Button injects the label as children.
+										<a href="https://github.com/voila-voila-dev/ui" />
+									}
+								>
+									Star it on GitHub
+								</Button>
+							</div>
+						</div>
+					</div>
+				</section>
 			</main>
 
 			<footer className="border-t border-border px-6 py-10">
