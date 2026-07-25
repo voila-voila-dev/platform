@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Eyebrow } from "@voila.dev/ui-landing/components/eyebrow";
+import { Eyebrow } from "@voila.dev/ui/landing/eyebrow";
 import {
 	SectionIntro,
 	sectionIntroSpacingOptions,
 	sectionIntroWidthOptions,
-} from "@voila.dev/ui-landing/components/section-intro";
+} from "@voila.dev/ui/landing/section-intro";
 
 const meta = {
 	title: "Landing/SectionIntro",

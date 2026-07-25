@@ -25,11 +25,11 @@ then keep it.
 ## Install
 
 ```sh
-bun add @voila.dev/ui-map
+bun add @voila.dev/ui maplibre-gl
 ```
 
 ```css title="globals.css"
-@import "@voila.dev/ui-map/styles.css";
+@import "@voila.dev/ui/styles/sources.css";
 ```
 
 Or copy the source, it's the same files.
@@ -42,7 +42,7 @@ A city map with a marker. `onReady` hands you the live MapLibre instance, so
 markers, sources and layers are ordinary MapLibre code.
 
 ```tsx
-import { MapView } from "@voila.dev/ui-map/components/map-view";
+import { MapView } from "@voila.dev/ui/map/map-view";
 import maplibregl from "maplibre-gl";
 
 export function VenueMap() {

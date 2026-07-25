@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Icon } from "@voila.dev/ui-icon/components/icon";
+import { Icon } from "@voila.dev/ui/icon";
 
 const meta = {
 	title: "UI/Icon",

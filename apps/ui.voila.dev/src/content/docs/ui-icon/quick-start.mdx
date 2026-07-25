@@ -28,11 +28,11 @@ The last row is the point: `"NotAnIconName"` renders a fallback, not a crash.
 ## Install
 
 ```sh
-bun add @voila.dev/ui-icon
+bun add @voila.dev/ui
 ```
 
 ```css title="globals.css"
-@import "@voila.dev/ui-icon/styles.css";
+@import "@voila.dev/ui/styles/sources.css";
 ```
 
 Or copy the source — it's the same files.
@@ -45,7 +45,7 @@ Categories in the database store an icon name; the UI renders whatever is
 there:
 
 ```tsx title="src/category-list.tsx"
-import { Icon } from "@voila.dev/ui-icon/components/icon";
+import { Icon } from "@voila.dev/ui/icon";
 
 const categories = [
 	{ name: "Design", icon: "PenNibIcon" },
@@ -86,7 +86,7 @@ can validate input or build a picker without maintaining your own list:
 import {
 	phosphorIconNames,
 	type PhosphorIconName,
-} from "@voila.dev/ui-icon/components/icon";
+} from "@voila.dev/ui/icon";
 ```
 
 ## Page map

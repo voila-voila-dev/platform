@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
+import { Chart, type ChartConfig } from "@voila.dev/ui/chart/chart";
 import {
 	StatCard,
 	StatCardChart,
@@ -7,7 +8,6 @@ import {
 	StatCardLabel,
 	StatCardValue,
 } from "@voila.dev/ui/components/stat-card";
-import { Chart, type ChartConfig } from "@voila.dev/ui-chart/components/chart";
 import type * as React from "react";
 
 const sparklineData = [

@@ -29,11 +29,11 @@ place, or select a block and open its settings.
 ## Install
 
 ```sh
-bun add @voila.dev/ui-email-block-editor
+bun add @voila.dev/ui @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities
 ```
 
 ```css title="globals.css"
-@import "@voila.dev/ui-email-block-editor/styles.css";
+@import "@voila.dev/ui/styles/sources.css";
 ```
 
 Or copy the source — it's the same files.
@@ -50,8 +50,8 @@ matter of what you do with the state.
 import {
 	type EmailEditorDocument,
 	emptyEmailEditorDocument,
-} from "@voila.dev/ui-email-block-editor/document/types";
-import { EmailBlockEditor } from "@voila.dev/ui-email-block-editor/email-block-editor";
+} from "@voila.dev/ui/email-block-editor/document/types";
+import { EmailBlockEditor } from "@voila.dev/ui/email-block-editor";
 import { useState } from "react";
 
 export function CampaignEditor() {

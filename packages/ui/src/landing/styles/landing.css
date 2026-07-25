@@ -1,0 +1,17 @@
+/*
+ * Side-effect styles for the landing components of @voila.dev/ui. Import once
+ * from the consuming app's global stylesheet, alongside
+ * `@voila.dev/ui/styles/sources.css` so Tailwind emits the classes the components use.
+ */
+
+/* Seamless logo marquee: the track renders its children twice, so sliding by
+ * half its width loops without a visible jump. Used via the arbitrary utility
+ * `animate-[landing-marquee_30s_linear_infinite]` in LogoMarquee. */
+@keyframes landing-marquee {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-50%);
+	}
+}

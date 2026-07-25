@@ -14,7 +14,7 @@ import {
 	Spreadsheet,
 	type SpreadsheetPasteData,
 	type SpreadsheetSort,
-} from "@voila.dev/ui-spreadsheet/components/spreadsheet";
+} from "@voila.dev/ui/spreadsheet/spreadsheet";
 import { type Dispatch, type SetStateAction, useState } from "react";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 

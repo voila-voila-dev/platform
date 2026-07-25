@@ -24,11 +24,11 @@ and rewrite. Own it the same way you own a button.
 ## Install
 
 ```sh
-bun add @voila.dev/ui-chart
+bun add @voila.dev/ui
 ```
 
 ```css title="globals.css"
-@import "@voila.dev/ui-chart/styles.css";
+@import "@voila.dev/ui/styles/sources.css";
 ```
 
 Or copy the source — it's the same files.
@@ -44,7 +44,7 @@ A line chart of monthly bookings, complete: data, config, chart.
 </Preview>
 
 ```tsx
-import { Chart, type ChartConfig } from "@voila.dev/ui-chart/components/chart";
+import { Chart, type ChartConfig } from "@voila.dev/ui/chart/chart";
 
 const data = [
 	{ month: "January", bookings: 18 },

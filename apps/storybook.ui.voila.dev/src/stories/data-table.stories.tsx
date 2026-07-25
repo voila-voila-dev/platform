@@ -17,7 +17,7 @@ import {
 	DataTableSearch,
 	DataTableToolbar,
 	dataTableSelectionColumn,
-} from "@voila.dev/ui-datatable/components/data-table";
+} from "@voila.dev/ui/datatable";
 import { useMemo, useState } from "react";
 
 interface Project {

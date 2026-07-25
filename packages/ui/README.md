@@ -1,11 +1,14 @@
 # @voila.dev/ui
 
-React components that ship as source. Use them as a dependency or make them
-your own — including the hard ones: email editor, spreadsheet, charts, maps.
+React components in one package, `@voila.dev/ui`. Use them as a dependency or
+make them your own — including the hard ones: email editor, spreadsheet,
+charts, maps.
 
-No `dist/`, no build step — you install the `.tsx` files and your bundler
-compiles them alongside your own code. Your editor and your AI agent both land
-on real source when they open a component.
+Every module is its own subpath export (`@voila.dev/ui/components/button`,
+`@voila.dev/ui/chart/chart`, …) and the published output is per-file ESM, so
+you only ever bundle what you import. The `src/` `.tsx` files ship alongside
+`dist/`, so your editor and your AI agent both land on real source when they
+open a component.
 
 - **Docs:** [ui.voila.dev](https://ui.voila.dev)
 - **Storybook:** [storybook.ui.voila.dev](https://storybook.ui.voila.dev)
@@ -14,7 +17,7 @@ on real source when they open a component.
 ## Install
 
 ```sh
-bun add @voila.dev/ui @voila.dev/ui-tokens
+bun add @voila.dev/ui
 ```
 
 ```css
@@ -23,30 +26,31 @@ bun add @voila.dev/ui @voila.dev/ui-tokens
 @import "@voila.dev/ui/styles/globals.css";
 ```
 
-Each package declares its own Tailwind sources relative to itself, so there is
+The package declares its own Tailwind sources relative to itself, so there is
 no `@source` path to write and no difference between a workspace symlink and a
-real `node_modules` install. Add-ons export the same file:
-`@import "@voila.dev/ui-chart/styles.css";`.
+real `node_modules` install.
 
-Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.
+Peers: `react@19`, `react-dom@19`, `tailwindcss@4`. Some domains need an extra
+(optional) peer — install it only if you use them: `maplibre-gl` for `map/*`,
+`@tanstack/react-table` for `datatable`, `@tanstack/react-virtual` for
+`spreadsheet/*`, `@dnd-kit/*` for `email-block-editor`.
 
-## Packages
+## What's inside
 
-| Package | |
+One package, one version — each domain behind its own subpath:
+
+| Subpath | |
 | --- | --- |
-| `@voila.dev/ui` | 85 components, one convention. The floor everything else stands on. |
-| `@voila.dev/ui-tokens` | Your whole brand in one CSS file. Change it, everything follows. |
-| `@voila.dev/ui-email-block-editor` | The email template editor that lives in your app, not someone else's SaaS. |
-| `@voila.dev/ui-spreadsheet` | An editable, virtualized grid your users will mistake for a native app. |
-| `@voila.dev/ui-datatable` | Sorting, pinning, CSV export — the table you keep rebuilding, finished. |
-| `@voila.dev/ui-chart` | Charts with zero charting library. SVG you can read, scales included. |
-| `@voila.dev/ui-map` | Maps and a globe on free vector tiles. No API key, no bundle tax. |
-| `@voila.dev/ui-filter` | Composable filters that survive real product requirements — including geo. |
-| `@voila.dev/ui-landing` | Your marketing site, from the same system as your product. |
-| `@voila.dev/ui-icon` | Icons by name, safe by default — store a string, render an icon. |
-
-All publish in lockstep at one shared version, so cross-package versions always
-line up.
+| `@voila.dev/ui/components/*` | 85 components, one convention. The floor everything else stands on. |
+| `@voila.dev/ui/styles/themes/default.css` | Your whole brand in one CSS file. Change it, everything follows. |
+| `@voila.dev/ui/email-block-editor` | The email template editor that lives in your app, not someone else's SaaS. |
+| `@voila.dev/ui/spreadsheet/*` | An editable, virtualized grid your users will mistake for a native app. |
+| `@voila.dev/ui/datatable` | Sorting, pinning, CSV export — the table you keep rebuilding, finished. |
+| `@voila.dev/ui/chart/*` | Charts with zero charting library. SVG you can read, scales included. |
+| `@voila.dev/ui/map/*` | Maps and a globe on free vector tiles. No API key, no bundle tax. |
+| `@voila.dev/ui/filter/*` | Composable filters that survive real product requirements — including geo. |
+| `@voila.dev/ui/landing/*` | Your marketing site, from the same system as your product. |
+| `@voila.dev/ui/icon` | Icons by name, safe by default — store a string, render an icon. |
 
 `packages/ui-branding` holds the voila.dev brand identity and is deliberately
 **not published** — build your own instead, see
@@ -74,13 +78,14 @@ Full token map: [Theming and tokens](https://ui.voila.dev/start/theming/).
 ```sh
 bun install
 bun run dev            # Storybook (:4003) + docs site (:4004)
-bun run test           # vitest, every package
-bun run check-types    # tsc, every package
+bun run test           # vitest
+bun run check-types    # tsc
 bun run lint           # biome
 ```
 
-The apps consume the packages through workspace links, so editing a component
-hot-reloads in both the Storybook and the docs site with no rebuild.
+The apps consume the package through a workspace link straight into `src/`, so
+editing a component hot-reloads in both the Storybook and the docs site with no
+rebuild.
 
 ### Layout
 
@@ -89,8 +94,8 @@ apps/
   storybook.ui.voila.dev   # the component Storybook
   ui.voila.dev             # the docs site (TanStack Start)
 packages/
-  ui, ui-tokens, ui-chart, ui-map, ui-datatable, ui-spreadsheet,
-  ui-filter, ui-landing, ui-email-block-editor, ui-icon
+  ui                       # the published package: components + one folder per
+                           # domain (chart, map, filter, spreadsheet, …)
   ui-branding              # private: the voila.dev brand
   typescript-config        # private: shared tsconfig bases
 ```
@@ -105,7 +110,7 @@ break in a way that looks like a bug in the component.
 - **Pull requests** run lint, type-check and tests, then deploy both sites to
   isolated per-PR Cloudflare Workers and post the links. Closing the PR tears
   them down.
-- **Merges to `main`** publish every package to public npm at
+- **Merges to `main`** publish `@voila.dev/ui` to public npm at
   `0.0.<run number>` and redeploy both sites to production.
 
 Secrets required: `NPM_TOKEN`, `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.

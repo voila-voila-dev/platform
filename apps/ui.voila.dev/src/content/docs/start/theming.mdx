@@ -1,12 +1,12 @@
 ---
 title: "Theming and tokens"
-description: "Override the CSS custom properties in @voila.dev/ui-tokens to rebrand the whole system without forking a single component."
+description: "Override the CSS custom properties in @voila.dev/ui/styles/themes/default.css to rebrand the whole system without forking a single component."
 ---
 
 import Preview from "@/components/docs/preview";
 import * as Example from "../../../examples/theming";
 
-The palette that ships with `@voila.dev/ui-tokens` is a **default, not a
+The palette that ships with `@voila.dev/ui/styles/themes/default.css` is a **default, not a
 brand**. Every colour, radius and font is a CSS custom property, and every
 component reads them through Tailwind's semantic class names (`bg-primary`,
 `text-muted-foreground`, `border-border`). Redefine the properties and the whole
@@ -97,7 +97,7 @@ system from soft to sharp:
 ### Charts and sidebar
 
 `--chart-1` … `--chart-5` are the categorical series colours used by
-`@voila.dev/ui-chart`. `--sidebar*` is a parallel surface set so the sidebar can
+`@voila.dev/ui/chart`. `--sidebar*` is a parallel surface set so the sidebar can
 sit at a different elevation from the page without every sidebar component
 taking an override.
 

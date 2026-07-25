@@ -5,10 +5,10 @@ import {
 } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import { Button } from "@voila.dev/ui/components/button";
-import { ComparisonSection } from "@voila.dev/ui-landing/components/comparison-section";
-import { Eyebrow } from "@voila.dev/ui-landing/components/eyebrow";
-import { Heading } from "@voila.dev/ui-landing/components/heading";
-import { Text } from "@voila.dev/ui-landing/components/text";
+import { ComparisonSection } from "@voila.dev/ui/landing/comparison-section";
+import { Eyebrow } from "@voila.dev/ui/landing/eyebrow";
+import { Heading } from "@voila.dev/ui/landing/heading";
+import { Text } from "@voila.dev/ui/landing/text";
 import {
 	clientBenefits,
 	freelancerBenefits,

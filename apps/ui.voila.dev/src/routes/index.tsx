@@ -14,12 +14,12 @@ import {
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@voila.dev/ui/components/button";
 import { Skeleton } from "@voila.dev/ui/components/skeleton";
-import { Eyebrow } from "@voila.dev/ui-landing/components/eyebrow";
-import { FeatureGrid } from "@voila.dev/ui-landing/components/feature-grid";
-import { LandingHero } from "@voila.dev/ui-landing/components/landing-hero";
-import { SectionIntro } from "@voila.dev/ui-landing/components/section-intro";
-import { StatsRow } from "@voila.dev/ui-landing/components/stats-row";
-import { GlobeView } from "@voila.dev/ui-map/components/globe-view";
+import { Eyebrow } from "@voila.dev/ui/landing/eyebrow";
+import { FeatureGrid } from "@voila.dev/ui/landing/feature-grid";
+import { LandingHero } from "@voila.dev/ui/landing/landing-hero";
+import { SectionIntro } from "@voila.dev/ui/landing/section-intro";
+import { StatsRow } from "@voila.dev/ui/landing/stats-row";
+import { GlobeView } from "@voila.dev/ui/map/globe-view";
 import {
 	Fragment,
 	lazy,
@@ -92,8 +92,8 @@ const aiCards = [
 ];
 
 /**
- * The packages grid, ordered by wow-factor; blurbs are the canonical taglines
- * from docs/writing-component-pages.md — change them there first.
+ * The packages grid, ordered by wow-factor; blurbs are the canonical
+ * one-liners also used in each package's npm description.
  */
 const packages: { name: string; slug: string; blurb: string }[] = [
 	{
@@ -287,7 +287,7 @@ function Home() {
 							</Button>
 						</LandingHero.Actions>
 						<div className="mt-8">
-							<InstallSnippet command="bun add @voila.dev/ui @voila.dev/ui-tokens" />
+							<InstallSnippet command="bun add @voila.dev/ui" />
 						</div>
 						<StatsRow.Root className="mt-12 justify-center">
 							{stats.map((stat, index) => (
@@ -352,7 +352,7 @@ function Home() {
 							</DeferredMount>
 						</div>
 						<div className="mt-6">
-							<InstallSnippet command="bun add @voila.dev/ui-email-block-editor" />
+							<InstallSnippet command="bun add @voila.dev/ui @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities" />
 						</div>
 					</div>
 				</section>

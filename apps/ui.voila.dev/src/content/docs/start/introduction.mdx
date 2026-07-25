@@ -72,20 +72,22 @@ and no amount of configuration will make it a good fit.
 ## How the pieces fit
 
 ```
-@voila.dev/ui-tokens          the CSS custom properties
+@voila.dev/ui
         │
-        ▼
-@voila.dev/ui                 the components
+        ├── styles/themes/*            the design tokens (colors, type, motion)
+        ├── components/*               the core components
         │
-        ├── @voila.dev/ui-chart
-        ├── @voila.dev/ui-spreadsheet
-        ├── @voila.dev/ui-map
-        ├── @voila.dev/ui-filter
-        ├── @voila.dev/ui-landing
-        └── @voila.dev/ui-email-block-editor
+        ├── chart/*
+        ├── spreadsheet/*
+        ├── map/*
+        ├── filter/*
+        ├── landing/*
+        └── email-block-editor
 ```
 
-A clean line: tokens know nothing about components, components know nothing
-about the add-ons, and each add-on depends only on the core.
+One package, one version — every domain lives behind its own subpath. A clean
+line all the same: the tokens know nothing about components, the core knows
+nothing about the add-on domains, and each domain depends only on the core.
+Import only what you use; nothing else lands in your bundle.
 
 Next: [Installation](/start/installation/).

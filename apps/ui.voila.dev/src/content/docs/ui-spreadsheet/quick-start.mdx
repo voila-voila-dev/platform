@@ -25,11 +25,11 @@ needs a cell type nobody planned for, open the file and add it.
 ## Install
 
 ```sh
-bun add @voila.dev/ui-spreadsheet
+bun add @voila.dev/ui @tanstack/react-virtual
 ```
 
 ```css title="globals.css"
-@import "@voila.dev/ui-spreadsheet/styles.css";
+@import "@voila.dev/ui/styles/sources.css";
 ```
 
 Or copy the source — it's the same files. Peers: `react@19`, `react-dom@19`,
@@ -41,7 +41,7 @@ A three-column stock grid. Your inputs go inside the cells, your state stays
 yours.
 
 ```tsx
-import { Spreadsheet } from "@voila.dev/ui-spreadsheet/components/spreadsheet";
+import { Spreadsheet } from "@voila.dev/ui/spreadsheet/spreadsheet";
 
 <Spreadsheet.Root>
 	<Spreadsheet.Columns>

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { PageHeader } from "@voila.dev/ui-landing/components/page-header";
-import { sectionBackgroundOptions } from "@voila.dev/ui-landing/components/section";
+import { PageHeader } from "@voila.dev/ui/landing/page-header";
+import { sectionBackgroundOptions } from "@voila.dev/ui/landing/section";
 
 const meta = {
 	title: "Landing/PageHeader",

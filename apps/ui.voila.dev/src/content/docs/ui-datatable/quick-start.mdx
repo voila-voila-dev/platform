@@ -25,11 +25,11 @@ stays a plain table.
 ## Install
 
 ```sh
-bun add @voila.dev/ui-datatable
+bun add @voila.dev/ui @tanstack/react-table
 ```
 
 ```css title="globals.css"
-@import "@voila.dev/ui-datatable/styles.css";
+@import "@voila.dev/ui/styles/sources.css";
 ```
 
 Or copy the source — it's the same files. Peers: `react@19`, `react-dom@19`,
@@ -47,7 +47,7 @@ import {
 	DataTableActions,
 	DataTableExport,
 	DataTableToolbar,
-} from "@voila.dev/ui-datatable/components/data-table";
+} from "@voila.dev/ui/datatable";
 
 const columns: ColumnDef<Project>[] = [
 	{ accessorKey: "reference", header: "Reference", size: 130 },

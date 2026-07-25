@@ -10,7 +10,7 @@ import * as Example from "../../../examples/ui-filter/filters";
 
 The page every marketplace ships: a search box, a few filters, a table of
 results, and a map once the user asks "near me". This recipe wires
-`@voila.dev/ui-filter`, `@voila.dev/ui-datatable` and `@voila.dev/ui-map`
+`@voila.dev/ui/filter/*`, `@voila.dev/ui/datatable` and `@voila.dev/ui/map/*`
 together with one `FilterValues` record as the single source of truth. Pick a
 role, set a rate, then add an area filter around Nantes to see the map
 appear. This is live.
@@ -104,9 +104,9 @@ before serialising: the record you hold is the record you send.
 ## Own it
 
 The three packages meet only in your screen. The filter source is
-`@voila.dev/ui-filter/src/components/filter-bar.tsx`, the table
-`@voila.dev/ui-datatable/src/components/data-table.tsx`, the map
-`@voila.dev/ui-map/src/components/radius-map.tsx`. To change how a filter kind
+`@voila.dev/ui/src/filter/components/filter-bar.tsx`, the table
+`@voila.dev/ui/src/datatable/components/data-table.tsx`, the map
+`@voila.dev/ui/src/map/components/radius-map.tsx`. To change how a filter kind
 matches your rows, the `matchesProject` function above is yours to begin with.
 
 ## Related

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { LogoMarquee } from "@voila.dev/ui-landing/components/logo-marquee";
+import { LogoMarquee } from "@voila.dev/ui/landing/logo-marquee";
 import { partnerLogoDataUri, partnerNames } from "./landing-fixtures";
 
 const meta = {

@@ -12,17 +12,17 @@ import { Steps, Tabs, TabItem } from "@/components/docs/starlight";
     <Tabs syncKey="pkg">
     	<TabItem label="bun">
     	```sh
-    	bun add @voila.dev/ui @voila.dev/ui-tokens
+    	bun add @voila.dev/ui
     	```
     	</TabItem>
     	<TabItem label="pnpm">
     	```sh
-    	pnpm add @voila.dev/ui @voila.dev/ui-tokens
+    	pnpm add @voila.dev/ui
     	```
     	</TabItem>
     	<TabItem label="npm">
     	```sh
-    	npm install @voila.dev/ui @voila.dev/ui-tokens
+    	npm install @voila.dev/ui
     	```
     	</TabItem>
     </Tabs>
@@ -41,15 +41,9 @@ import { Steps, Tabs, TabItem } from "@/components/docs/starlight";
 
     That one line covers the tokens, the animation utilities, and — this is the
     part people expect to have to configure — telling Tailwind to scan the
-    package. Each `@voila.dev` package declares its own sources, so you never
-    write a path into `node_modules`.
-
-    Add-on packages each export the same file:
-
-    ```css
-    @import "@voila.dev/ui-chart/styles.css";
-    @import "@voila.dev/ui-spreadsheet/styles.css";
-    ```
+    package. The package declares its own sources, so you never write a path
+    into `node_modules`, and every domain (chart, map, filter…) is covered by
+    the same import.
 
 3.  **Render something.**
 

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { StatsRow } from "@voila.dev/ui-landing/components/stats-row";
+import { StatsRow } from "@voila.dev/ui/landing/stats-row";
 import { Fragment } from "react";
 import { heroCopy } from "./landing-fixtures";
 

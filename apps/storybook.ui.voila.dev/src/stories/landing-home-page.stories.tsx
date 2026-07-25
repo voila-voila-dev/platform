@@ -15,21 +15,21 @@ import {
 } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import { Button } from "@voila.dev/ui/components/button";
-import { ComparisonSection } from "@voila.dev/ui-landing/components/comparison-section";
-import { Container } from "@voila.dev/ui-landing/components/container";
-import { CtaBanner } from "@voila.dev/ui-landing/components/cta-banner";
-import { Eyebrow } from "@voila.dev/ui-landing/components/eyebrow";
-import { Heading } from "@voila.dev/ui-landing/components/heading";
-import { LandingHero } from "@voila.dev/ui-landing/components/landing-hero";
-import { LogoMarquee } from "@voila.dev/ui-landing/components/logo-marquee";
-import { Section } from "@voila.dev/ui-landing/components/section";
-import { SectionIntro } from "@voila.dev/ui-landing/components/section-intro";
-import { SiteFooter } from "@voila.dev/ui-landing/components/site-footer";
-import { SiteHeader } from "@voila.dev/ui-landing/components/site-header";
-import { StatsRow } from "@voila.dev/ui-landing/components/stats-row";
-import { StepTracks } from "@voila.dev/ui-landing/components/step-tracks";
-import { TestimonialGrid } from "@voila.dev/ui-landing/components/testimonial-grid";
-import { Text } from "@voila.dev/ui-landing/components/text";
+import { ComparisonSection } from "@voila.dev/ui/landing/comparison-section";
+import { Container } from "@voila.dev/ui/landing/container";
+import { CtaBanner } from "@voila.dev/ui/landing/cta-banner";
+import { Eyebrow } from "@voila.dev/ui/landing/eyebrow";
+import { Heading } from "@voila.dev/ui/landing/heading";
+import { LandingHero } from "@voila.dev/ui/landing/landing-hero";
+import { LogoMarquee } from "@voila.dev/ui/landing/logo-marquee";
+import { Section } from "@voila.dev/ui/landing/section";
+import { SectionIntro } from "@voila.dev/ui/landing/section-intro";
+import { SiteFooter } from "@voila.dev/ui/landing/site-footer";
+import { SiteHeader } from "@voila.dev/ui/landing/site-header";
+import { StatsRow } from "@voila.dev/ui/landing/stats-row";
+import { StepTracks } from "@voila.dev/ui/landing/step-tracks";
+import { TestimonialGrid } from "@voila.dev/ui/landing/testimonial-grid";
+import { Text } from "@voila.dev/ui/landing/text";
 import { Fragment } from "react";
 import {
 	BrandLogo,
@@ -48,7 +48,7 @@ import {
 } from "./landing-fixtures";
 
 /**
- * The full home page of acme.dev recomposed from @voila.dev/ui-landing —
+ * The full home page of acme.dev recomposed from @voila.dev/ui/landing —
  * the 1:1 validation artifact against http://localhost:4002 (Astro site).
  */
 const meta = {

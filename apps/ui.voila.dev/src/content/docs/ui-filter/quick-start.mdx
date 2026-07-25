@@ -25,11 +25,11 @@ stranger, you own the code and can read your way to the change.
 ## Install
 
 ```sh
-bun add @voila.dev/ui-filter
+bun add @voila.dev/ui
 ```
 
 ```css title="globals.css"
-@import "@voila.dev/ui-filter/styles.css";
+@import "@voila.dev/ui/styles/sources.css";
 ```
 
 Or copy the source, it's the same files.
@@ -42,8 +42,8 @@ Declare the fields once; `FilterBar` renders the search box, the trigger, the
 editor and the chips from that single declaration.
 
 ```tsx
-import { FilterBar } from "@voila.dev/ui-filter/components/filter-bar";
-import type { FilterDefinition, FilterValues } from "@voila.dev/ui-filter/types";
+import { FilterBar } from "@voila.dev/ui/filter/filter-bar";
+import type { FilterDefinition, FilterValues } from "@voila.dev/ui/filter/types";
 import { useState } from "react";
 
 const definitions = [

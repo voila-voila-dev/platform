@@ -20,35 +20,35 @@ import {
 	UserCheckIcon,
 } from "@phosphor-icons/react";
 import { Button } from "@voila.dev/ui/components/button";
-import { cn } from "@voila.dev/ui/lib/utils";
 import {
 	ArticleCard,
 	ArticleTags as ArticleTagsParts,
-} from "@voila.dev/ui-landing/components/article-card";
-import { BentoGrid } from "@voila.dev/ui-landing/components/bento-grid";
-import { ComparisonSection } from "@voila.dev/ui-landing/components/comparison-section";
-import { ContactCards } from "@voila.dev/ui-landing/components/contact-cards";
-import { Container } from "@voila.dev/ui-landing/components/container";
-import { CtaBanner } from "@voila.dev/ui-landing/components/cta-banner";
-import { Eyebrow as EyebrowParts } from "@voila.dev/ui-landing/components/eyebrow";
-import { FeatureGrid } from "@voila.dev/ui-landing/components/feature-grid";
-import { Heading as HeadingComponent } from "@voila.dev/ui-landing/components/heading";
-import { LandingHero } from "@voila.dev/ui-landing/components/landing-hero";
-import { LogoMarquee } from "@voila.dev/ui-landing/components/logo-marquee";
-import { NumberedCards } from "@voila.dev/ui-landing/components/numbered-cards";
-import { PageHeader } from "@voila.dev/ui-landing/components/page-header";
-import { ProseArticle as ProseArticleComponent } from "@voila.dev/ui-landing/components/prose-article";
+} from "@voila.dev/ui/landing/article-card";
+import { BentoGrid } from "@voila.dev/ui/landing/bento-grid";
+import { ComparisonSection } from "@voila.dev/ui/landing/comparison-section";
+import { ContactCards } from "@voila.dev/ui/landing/contact-cards";
+import { Container } from "@voila.dev/ui/landing/container";
+import { CtaBanner } from "@voila.dev/ui/landing/cta-banner";
+import { Eyebrow as EyebrowParts } from "@voila.dev/ui/landing/eyebrow";
+import { FeatureGrid } from "@voila.dev/ui/landing/feature-grid";
+import { Heading as HeadingComponent } from "@voila.dev/ui/landing/heading";
+import { LandingHero } from "@voila.dev/ui/landing/landing-hero";
+import { LogoMarquee } from "@voila.dev/ui/landing/logo-marquee";
+import { NumberedCards } from "@voila.dev/ui/landing/numbered-cards";
+import { PageHeader } from "@voila.dev/ui/landing/page-header";
+import { ProseArticle as ProseArticleComponent } from "@voila.dev/ui/landing/prose-article";
 import {
 	Section as SectionComponent,
 	sectionBackgroundOptions,
-} from "@voila.dev/ui-landing/components/section";
-import { SectionIntro as SectionIntroParts } from "@voila.dev/ui-landing/components/section-intro";
-import { SiteFooter } from "@voila.dev/ui-landing/components/site-footer";
-import { SiteHeader } from "@voila.dev/ui-landing/components/site-header";
-import { StatsRow } from "@voila.dev/ui-landing/components/stats-row";
-import { StepTracks } from "@voila.dev/ui-landing/components/step-tracks";
-import { TestimonialGrid } from "@voila.dev/ui-landing/components/testimonial-grid";
-import { Text as TextComponent } from "@voila.dev/ui-landing/components/text";
+} from "@voila.dev/ui/landing/section";
+import { SectionIntro as SectionIntroParts } from "@voila.dev/ui/landing/section-intro";
+import { SiteFooter } from "@voila.dev/ui/landing/site-footer";
+import { SiteHeader } from "@voila.dev/ui/landing/site-header";
+import { StatsRow } from "@voila.dev/ui/landing/stats-row";
+import { StepTracks } from "@voila.dev/ui/landing/step-tracks";
+import { TestimonialGrid } from "@voila.dev/ui/landing/testimonial-grid";
+import { Text as TextComponent } from "@voila.dev/ui/landing/text";
+import { cn } from "@voila.dev/ui/lib/utils";
 import { Fragment } from "react";
 
 /**

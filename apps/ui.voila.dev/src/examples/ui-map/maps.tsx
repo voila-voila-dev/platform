@@ -1,6 +1,6 @@
-import { GlobeView } from "@voila.dev/ui-map/components/globe-view";
-import { MapView } from "@voila.dev/ui-map/components/map-view";
-import { RadiusMap } from "@voila.dev/ui-map/components/radius-map";
+import { GlobeView } from "@voila.dev/ui/map/globe-view";
+import { MapView } from "@voila.dev/ui/map/map-view";
+import { RadiusMap } from "@voila.dev/ui/map/radius-map";
 
 const FRAME = "h-80 w-full overflow-hidden rounded-lg border";
 const NO_WEBGL = (

@@ -10,7 +10,7 @@ import {
 	DataTableToolbar,
 	DataTableViewOptions,
 	dataTableSelectionColumn,
-} from "@voila.dev/ui-datatable/components/data-table";
+} from "@voila.dev/ui/datatable";
 import { useState } from "react";
 
 interface Project {

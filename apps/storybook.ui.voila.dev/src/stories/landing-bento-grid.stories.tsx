@@ -5,7 +5,7 @@ import {
 	ShieldCheckIcon,
 } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { BentoGrid } from "@voila.dev/ui-landing/components/bento-grid";
+import { BentoGrid } from "@voila.dev/ui/landing/bento-grid";
 import { values } from "./landing-fixtures";
 
 const meta = {

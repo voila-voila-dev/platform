@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { MapView } from "@voila.dev/ui-map/components/map-view";
+import { MapView } from "@voila.dev/ui/map/map-view";
 import maplibregl from "maplibre-gl";
 
 const meta = {

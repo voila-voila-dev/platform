@@ -1,4 +1,4 @@
-import { Icon } from "@voila.dev/ui-icon/components/icon";
+import { Icon } from "@voila.dev/ui/icon";
 
 export function Default() {
 	return (

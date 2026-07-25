@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import {
 	Container,
 	containerSizeOptions,
-} from "@voila.dev/ui-landing/components/container";
+} from "@voila.dev/ui/landing/container";
 
 const meta = {
 	title: "Landing/Container",

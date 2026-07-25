@@ -1,6 +1,6 @@
 import { Input } from "@voila.dev/ui/components/input";
-import { NestedTableInput } from "@voila.dev/ui-spreadsheet/components/nested-table-input";
-import { Spreadsheet } from "@voila.dev/ui-spreadsheet/components/spreadsheet";
+import { NestedTableInput } from "@voila.dev/ui/spreadsheet/nested-table-input";
+import { Spreadsheet } from "@voila.dev/ui/spreadsheet/spreadsheet";
 import { useState } from "react";
 
 interface Variant {

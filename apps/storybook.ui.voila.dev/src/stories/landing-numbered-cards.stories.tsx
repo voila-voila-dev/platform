@@ -3,8 +3,8 @@ import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import {
 	NumberedCards,
 	numberedCardsColumnsOptions,
-} from "@voila.dev/ui-landing/components/numbered-cards";
-import { toneOptions } from "@voila.dev/ui-landing/lib/tones";
+} from "@voila.dev/ui/landing/numbered-cards";
+import { toneOptions } from "@voila.dev/ui/landing/tones";
 
 const meta = {
 	title: "Landing/NumberedCards",

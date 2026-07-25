@@ -1,18 +1,15 @@
-import {
-	type ColumnDef,
-	DataTable,
-} from "@voila.dev/ui-datatable/components/data-table";
-import { FilterBar } from "@voila.dev/ui-filter/components/filter-bar";
-import { FilterChips } from "@voila.dev/ui-filter/components/filter-chips";
-import { FilterForm } from "@voila.dev/ui-filter/components/filter-form";
-import { FilterTrigger } from "@voila.dev/ui-filter/components/filter-trigger";
+import { type ColumnDef, DataTable } from "@voila.dev/ui/datatable";
+import { FilterBar } from "@voila.dev/ui/filter/filter-bar";
+import { FilterChips } from "@voila.dev/ui/filter/filter-chips";
+import { FilterForm } from "@voila.dev/ui/filter/filter-form";
+import { FilterTrigger } from "@voila.dev/ui/filter/filter-trigger";
 import type {
 	FilterDefinition,
 	FilterValues,
 	PlaceSuggestion,
-} from "@voila.dev/ui-filter/types";
-import { defaultFilterLabels } from "@voila.dev/ui-filter/types";
-import { RadiusMap } from "@voila.dev/ui-map/components/radius-map";
+} from "@voila.dev/ui/filter/types";
+import { defaultFilterLabels } from "@voila.dev/ui/filter/types";
+import { RadiusMap } from "@voila.dev/ui/map/radius-map";
 import { useMemo, useState } from "react";
 
 const STATUS = {

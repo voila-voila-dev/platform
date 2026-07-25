@@ -34,17 +34,17 @@ You rarely install it directly: `@voila.dev/ui` depends on it and its
 palette without the components.
 
 ```sh
-bun add @voila.dev/ui-tokens
+bun add @voila.dev/ui
 ```
 
 ```css title="globals.css"
 @import "tailwindcss";
-@import "@voila.dev/ui-tokens/design-tokens.css";
+@import "@voila.dev/ui/styles/themes/default.css";
 ```
 
-Or copy the source — it's the same files. The package is one CSS file,
-`src/design-tokens.css`, and it reads as well in your repo as in
-`node_modules`.
+Or copy the source — it's the same files. A theme is a composition of token
+files (`styles/tokens/colors.css`, `typography.css`, `animations.css`), and it
+reads as well in your repo as in `node_modules`.
 
 Peers: `tailwindcss@4`.
 
@@ -55,7 +55,7 @@ the import, in both themes:
 
 ```css title="globals.css"
 @import "tailwindcss";
-@import "@voila.dev/ui-tokens/design-tokens.css";
+@import "@voila.dev/ui/styles/themes/default.css";
 
 :root {
 	--primary: oklch(0.55 0.21 145);       /* your brand green */

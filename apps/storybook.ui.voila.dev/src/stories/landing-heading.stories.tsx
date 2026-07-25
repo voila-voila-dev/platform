@@ -3,7 +3,7 @@ import {
 	Heading,
 	headingAlignOptions,
 	headingLevelOptions,
-} from "@voila.dev/ui-landing/components/heading";
+} from "@voila.dev/ui/landing/heading";
 
 const meta = {
 	title: "Landing/Heading",

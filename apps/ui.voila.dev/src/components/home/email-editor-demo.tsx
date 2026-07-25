@@ -1,8 +1,8 @@
+import { EmailBlockEditor } from "@voila.dev/ui/email-block-editor";
 import {
 	EMAIL_EDITOR_DOCUMENT_VERSION,
 	type EmailEditorDocument,
-} from "@voila.dev/ui-email-block-editor/document/types";
-import { EmailBlockEditor } from "@voila.dev/ui-email-block-editor/email-block-editor";
+} from "@voila.dev/ui/email-block-editor/document/types";
 import { useState } from "react";
 
 /**

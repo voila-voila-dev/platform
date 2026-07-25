@@ -4,42 +4,23 @@
  */
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "@voila.dev/ui-tokens/design-tokens.css";
-@import "@voila.dev/ui-landing/styles/landing.css";
+@import "@voila.dev/ui/styles/themes/default.css";
+@import "@voila.dev/ui/landing/landing.css";
 
 /*
  * Live previews render real components, so their classes must be generated.
  * Each package declares its own sources, so these are package imports rather
  * than paths into node_modules.
  */
-@import "@voila.dev/ui/styles.css";
+@import "@voila.dev/ui/styles/sources.css";
 @import "@voila.dev/ui-branding/styles.css";
-@import "@voila.dev/ui-chart/styles.css";
-@import "@voila.dev/ui-datatable/styles.css";
-@import "@voila.dev/ui-email-block-editor/styles.css";
-@import "@voila.dev/ui-filter/styles.css";
-@import "@voila.dev/ui-icon/styles.css";
-@import "@voila.dev/ui-map/styles.css";
-@import "@voila.dev/ui-spreadsheet/styles.css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-	/* Code blocks, inline code and the wordmark all share it. */
+	/* Code blocks, inline code and the wordmark all share it. The progress
+	 * keyframes come with the default theme's animation tokens. */
 	--font-mono: "Intel One Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
-
-	/* Indeterminate progress: a half-width bar sweeping across the track. */
-	--animate-progress-indeterminate: progress-indeterminate 1.5s ease-in-out
-		infinite;
-
-	@keyframes progress-indeterminate {
-		from {
-			translate: -100% 0;
-		}
-		to {
-			translate: 200% 0;
-		}
-	}
 }
 
 @layer base {

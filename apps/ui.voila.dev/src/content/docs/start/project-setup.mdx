@@ -55,9 +55,7 @@ maintaining it.
 				"react-dom": "19.2.6"
 			},
 			"voila": {
-				"@voila.dev/ui": "0.4.0",
-				"@voila.dev/ui-tokens": "0.4.0",
-				"@voila.dev/ui-chart": "0.4.0"
+				"@voila.dev/ui": "0.4.0"
 			}
 		}
 	}
@@ -67,8 +65,8 @@ maintaining it.
 **Catalogs are the point.** A workspace member writes `"@voila.dev/ui":
 "catalog:voila"` instead of a version, so every app in the repo is pinned to the
 same one. Upgrading is a one-line edit at the root rather than a hunt through
-five manifests — and because the `@voila.dev/*` packages publish in lockstep,
-one catalog entry per version keeps the cross-package deps consistent too.
+five manifests — and since everything ships in the single `@voila.dev/ui`
+package, that one catalog entry is the whole story.
 
 ## Your theme package
 

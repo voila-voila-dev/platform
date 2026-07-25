@@ -1,3 +1,4 @@
+import { Chart, type ChartConfig } from "@voila.dev/ui/chart/chart";
 import {
 	Avatar,
 	AvatarFallback,
@@ -41,7 +42,6 @@ import {
 	StatCardValue,
 } from "@voila.dev/ui/components/stat-card";
 import { Switch } from "@voila.dev/ui/components/switch";
-import { Chart, type ChartConfig } from "@voila.dev/ui-chart/components/chart";
 import { useState } from "react";
 
 const revenueData = [

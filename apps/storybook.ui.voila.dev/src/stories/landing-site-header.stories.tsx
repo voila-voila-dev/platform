@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import { Button } from "@voila.dev/ui/components/button";
-import { SiteHeader } from "@voila.dev/ui-landing/components/site-header";
+import { SiteHeader } from "@voila.dev/ui/landing/site-header";
 import { BrandLogo, mainNavigation } from "./landing-fixtures";
 
 const meta = {

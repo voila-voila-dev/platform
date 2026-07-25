@@ -1,7 +1,7 @@
 @import "tailwindcss";
-@import "../styles.css";
+@import "./sources.css";
 @import "tw-animate-css";
-@import "@voila.dev/ui-tokens/design-tokens.css";
+@import "./themes/default.css";
 
 @layer base {
 	* {
@@ -9,21 +9,6 @@
 	}
 	body {
 		@apply bg-background text-foreground;
-	}
-}
-
-/* Indeterminate progress: a half-width bar sweeping across the track. */
-@theme {
-	--animate-progress-indeterminate: progress-indeterminate 1.5s ease-in-out
-		infinite;
-
-	@keyframes progress-indeterminate {
-		from {
-			translate: -100% 0;
-		}
-		to {
-			translate: 200% 0;
-		}
 	}
 }
 
