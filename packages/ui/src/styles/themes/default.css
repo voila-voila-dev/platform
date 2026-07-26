@@ -1,0 +1,8 @@
+/*
+ * The default @voila.dev/ui theme - a theme is just a composition of token
+ * files. To ship your own, copy this file next to it, keep the imports you
+ * want to inherit, and override the custom properties you care about.
+ */
+@import "../tokens/colors.css";
+@import "../tokens/typography.css";
+@import "../tokens/animations.css";
