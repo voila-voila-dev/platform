@@ -1,7 +1,7 @@
-import { Badge } from "@voila.dev/ui/components/badge";
-import { Button } from "@voila.dev/ui/components/button";
-import { Input } from "@voila.dev/ui/components/input";
-import { Label } from "@voila.dev/ui/components/label";
+import { Badge } from "@voila.dev/ui/badge";
+import { Button } from "@voila.dev/ui/button";
+import { Input } from "@voila.dev/ui/input";
+import { Label } from "@voila.dev/ui/label";
 import type { CSSProperties } from "react";
 
 /**

@@ -2,7 +2,8 @@
 import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 
-import { Chart, type ChartConfig } from "#/chart/components/chart.tsx";
+import { Chart } from "#/chart/components/chart.tsx";
+import type { ChartConfig } from "#/chart/core/config.ts";
 
 afterEach(cleanup);
 

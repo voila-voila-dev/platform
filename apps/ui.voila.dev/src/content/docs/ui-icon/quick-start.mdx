@@ -45,7 +45,7 @@ Categories in the database store an icon name; the UI renders whatever is
 there:
 
 ```tsx title="src/category-list.tsx"
-import { Icon } from "@voila.dev/ui/icon";
+import { Icon, type PhosphorIconName, phosphorIconNames } from "@voila.dev/ui/icon";
 
 const categories = [
 	{ name: "Design", icon: "PenNibIcon" },
@@ -83,10 +83,6 @@ The list of valid names ships as an exported array and a union type, so you
 can validate input or build a picker without maintaining your own list:
 
 ```ts
-import {
-	phosphorIconNames,
-	type PhosphorIconName,
-} from "@voila.dev/ui/icon";
 ```
 
 ## Page map

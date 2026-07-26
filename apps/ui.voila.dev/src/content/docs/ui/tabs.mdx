@@ -13,14 +13,14 @@ import * as Example from "../../../examples/ui/navigation";
 </Preview>
 
 ```tsx
-<Tabs defaultValue="projects">
-	<TabsList>
-		<TabsTrigger value="projects">Projects</TabsTrigger>
-		<TabsTrigger value="freelancers">Freelancers</TabsTrigger>
-	</TabsList>
-	<TabsContent value="projects">…</TabsContent>
-	<TabsContent value="freelancers">…</TabsContent>
-</Tabs>
+<Tabs.Root defaultValue="projects">
+	<Tabs.List>
+		<Tabs.Trigger value="projects">Projects</Tabs.Trigger>
+		<Tabs.Trigger value="freelancers">Freelancers</Tabs.Trigger>
+	</Tabs.List>
+	<Tabs.Content value="projects">…</Tabs.Content>
+	<Tabs.Content value="freelancers">…</Tabs.Content>
+</Tabs.Root>
 ```
 
 `variant="line"` on the list swaps the filled rail for an underline, which sits

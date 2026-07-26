@@ -41,13 +41,7 @@ Columns in, rows in, a toolbar with export. Sorting is already on for every
 sortable column.
 
 ```tsx
-import {
-	type ColumnDef,
-	DataTable,
-	DataTableActions,
-	DataTableExport,
-	DataTableToolbar,
-} from "@voila.dev/ui/datatable";
+import { type ColumnDef, DataTable } from "@voila.dev/ui/data-table";
 
 const columns: ColumnDef<Project>[] = [
 	{ accessorKey: "reference", header: "Reference", size: 130 },
@@ -55,15 +49,15 @@ const columns: ColumnDef<Project>[] = [
 	{ accessorKey: "amount", header: "Amount", size: 110 },
 ];
 
-<DataTable
+<DataTable.Root
 	columns={columns}
 	data={projects}
 	toolbar={(table) => (
-		<DataTableToolbar>
-			<DataTableActions>
-				<DataTableExport table={table} filename="projects.csv" />
-			</DataTableActions>
-		</DataTableToolbar>
+		<DataTable.Toolbar>
+			<DataTable.Actions>
+				<DataTable.Export table={table} filename="projects.csv" />
+			</DataTable.Actions>
+		</DataTable.Toolbar>
 	)}
 />;
 ```
@@ -84,9 +78,9 @@ component with a different contract; the page
 - [Selection](/ui-datatable/selection/): a checkbox column and row selection state.
 - [Column resizing](/ui-datatable/column-resizing/): drag column edges, arrow keys nudge.
 - [Column pinning](/ui-datatable/column-pinning/): freeze columns against either edge.
-- [Column visibility](/ui-datatable/column-visibility/): a columns menu via `DataTableViewOptions`.
+- [Column visibility](/ui-datatable/column-visibility/): a columns menu via `DataTable.ViewOptions`.
 - [Density](/ui-datatable/density/): comfortable or compact row heights.
 - [Row expansion](/ui-datatable/row-expansion/): a detail panel under any row.
 - [Global filter](/ui-datatable/global-filter/): client-side search across visible cells.
-- [CSV export](/ui-datatable/export/): `DataTableExport`, or `dataTableToCsv` for the bytes.
+- [CSV export](/ui-datatable/export/): `DataTable.Export`, or `dataTableToCsv` for the bytes.
 - [Pagination](/ui-datatable/pagination/): a server-side windowed footer.

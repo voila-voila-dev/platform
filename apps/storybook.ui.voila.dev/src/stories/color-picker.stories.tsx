@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import type { BadgeColor } from "@voila.dev/ui/components/badge";
-import { ColorPicker } from "@voila.dev/ui/components/color-picker";
-import { Field, FieldLabel } from "@voila.dev/ui/components/field";
+import type { BadgeColor } from "@voila.dev/ui/badge";
+import { ColorPicker } from "@voila.dev/ui/color-picker";
+import { Field } from "@voila.dev/ui/field";
 import { useState } from "react";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 
@@ -104,10 +104,10 @@ export const WithFieldLabel: Story = {
 	render: () => {
 		const [color, setColor] = useState<BadgeColor | null>("amber");
 		return (
-			<Field className="w-56">
-				<FieldLabel>Badge color</FieldLabel>
+			<Field.Root className="w-56">
+				<Field.Label>Badge color</Field.Label>
 				<ColorPicker value={color} onValueChange={setColor} />
-			</Field>
+			</Field.Root>
 		);
 	},
 };

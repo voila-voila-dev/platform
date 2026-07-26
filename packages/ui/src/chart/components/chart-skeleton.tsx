@@ -1,6 +1,6 @@
 import type * as React from "react";
-import { Skeleton } from "#/components/skeleton.tsx";
 import { cn } from "#/lib/utils.ts";
+import { Skeleton } from "#/skeleton/components/skeleton.tsx";
 
 /**
  * Loading placeholder shaped like a bar chart. Defaults to the root's
@@ -14,15 +14,15 @@ import { cn } from "#/lib/utils.ts";
 /** Fixed, not random, so the server and the client render the same bars. */
 const BAR_HEIGHTS = [40, 70, 55, 90, 65, 80, 50] as const;
 
-export interface ChartSkeletonProps extends React.ComponentProps<"div"> {
+interface Props extends React.ComponentProps<"div"> {
 	readonly label?: string;
 }
 
-function ChartSkeleton({
+export function ChartSkeleton({
 	className,
 	label = "Loading",
 	...props
-}: ChartSkeletonProps) {
+}: Props) {
 	return (
 		<div
 			data-slot="chart-skeleton"
@@ -41,5 +41,3 @@ function ChartSkeleton({
 		</div>
 	);
 }
-
-export { ChartSkeleton };

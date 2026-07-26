@@ -5,13 +5,8 @@
  * nothing here ever passed.
  */
 
-import {
-	TabsContent,
-	TabsList,
-	TabsTrigger,
-	Tabs as UiTabs,
-} from "@voila.dev/ui/components/tabs";
-import { cn } from "@voila.dev/ui/lib/utils";
+import { Tabs as UiTabs } from "@voila.dev/ui/tabs";
+import { cn } from "@voila.dev/ui/utils";
 import type { ReactNode } from "react";
 
 export function Card({
@@ -60,7 +55,7 @@ interface TabItemProps {
 }
 
 export function TabItem(_props: TabItemProps) {
-	// Rendered by <Tabs>, which reads the props directly.
+	// Rendered by the local <Tabs>, which reads the props directly.
 	return null;
 }
 
@@ -71,19 +66,19 @@ export function Tabs({ children }: { children: ReactNode; syncKey?: string }) {
 	);
 	const first = items[0]?.props.label;
 	return (
-		<UiTabs defaultValue={first} className="my-4">
-			<TabsList>
+		<UiTabs.Root defaultValue={first} className="my-4">
+			<UiTabs.List>
 				{items.map((item) => (
-					<TabsTrigger key={item.props.label} value={item.props.label}>
+					<UiTabs.Trigger key={item.props.label} value={item.props.label}>
 						{item.props.label}
-					</TabsTrigger>
+					</UiTabs.Trigger>
 				))}
-			</TabsList>
+			</UiTabs.List>
 			{items.map((item) => (
-				<TabsContent key={item.props.label} value={item.props.label}>
+				<UiTabs.Content key={item.props.label} value={item.props.label}>
 					{item.props.children}
-				</TabsContent>
+				</UiTabs.Content>
 			))}
-		</UiTabs>
+		</UiTabs.Root>
 	);
 }

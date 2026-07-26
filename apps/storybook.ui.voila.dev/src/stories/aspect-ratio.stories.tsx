@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { AspectRatio } from "@voila.dev/ui/components/aspect-ratio";
+import { AspectRatio } from "@voila.dev/ui/aspect-ratio";
 
 const meta = {
 	title: "UI/AspectRatio",

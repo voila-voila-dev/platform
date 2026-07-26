@@ -13,12 +13,12 @@ import * as Example from "../../../examples/ui/feedback";
 </Preview>
 
 ```tsx
-<Progress value={35}>
-	<ProgressLabel>Profile completion</ProgressLabel>
-	<ProgressValue />
-</Progress>
+<Progress.Root value={35}>
+	<Progress.Label>Profile completion</Progress.Label>
+	<Progress.Value />
+</Progress.Root>
 ```
 
 `value={null}` is the indeterminate state — the bar loops instead of filling.
-`ProgressValue` takes a formatter child when a percentage is not what you want
+`Progress.Value` takes a formatter child when a percentage is not what you want
 to show.

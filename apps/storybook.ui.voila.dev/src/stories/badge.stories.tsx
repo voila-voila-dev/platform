@@ -1,10 +1,6 @@
 import { CheckCircleIcon, ClockIcon } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	Badge,
-	badgeColors,
-	badgeVariantOptions,
-} from "@voila.dev/ui/components/badge";
+import { Badge, badgeColors, badgeVariantOptions } from "@voila.dev/ui/badge";
 
 const meta = {
 	title: "UI/Badge",

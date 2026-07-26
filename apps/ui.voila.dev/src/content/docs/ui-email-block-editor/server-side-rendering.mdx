@@ -19,10 +19,7 @@ and a renderer is one exhaustive `switch`. This page walks the shape.
 ## The document
 
 ```ts
-import type {
-	EmailEditorBlock,
-	EmailEditorDocument,
-} from "@voila.dev/ui/email-block-editor/document/types";
+import type { EmailEditorBlock, EmailEditorDocument, EmailEditorMoney, EmailEditorTextSpan } from "@voila.dev/ui/email-block-editor";
 
 // { version: 1, blocks: EmailEditorBlock[] }
 ```
@@ -53,11 +50,6 @@ architecture: TypeScript narrows each case to its block interface, and the
 renderer silently drops.
 
 ```ts
-import type {
-	EmailEditorBlock,
-	EmailEditorDocument,
-	EmailEditorTextSpan,
-} from "@voila.dev/ui/email-block-editor/document/types";
 
 const escapeHtml = (value: string): string =>
 	value
@@ -148,7 +140,6 @@ Prices and dates in the canvas are previewed in `EMAIL_PREVIEW_LOCALE`
 (`en-US` by default), mirroring a renderer that formats per recipient:
 
 ```ts
-import type { EmailEditorMoney } from "@voila.dev/ui/email-block-editor/document/types";
 
 const formatPrice = (price: EmailEditorMoney, locale: string): string =>
 	new Intl.NumberFormat(locale, {

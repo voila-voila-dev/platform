@@ -1,28 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	Menubar,
-	MenubarCheckboxItem,
-	MenubarContent,
-	MenubarGroup,
-	MenubarItem,
-	MenubarLabel,
-	MenubarMenu,
-	MenubarRadioGroup,
-	MenubarRadioItem,
-	MenubarSeparator,
-	MenubarShortcut,
-	MenubarSub,
-	MenubarSubContent,
-	MenubarSubTrigger,
-	MenubarTrigger,
-} from "@voila.dev/ui/components/menubar";
+import { Menubar } from "@voila.dev/ui/menubar";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 
 const meta = {
 	title: "UI/Menubar",
-	component: Menubar,
+	component: Menubar.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof Menubar>;
+} satisfies Meta<typeof Menubar.Root>;
 
 export default meta;
 
@@ -30,75 +14,75 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<Menubar>
-			<MenubarMenu>
-				<MenubarTrigger>Projects</MenubarTrigger>
-				<MenubarContent>
-					<MenubarItem>
-						New project <MenubarShortcut>⌘N</MenubarShortcut>
-					</MenubarItem>
-					<MenubarItem>Duplicate project</MenubarItem>
-					<MenubarSeparator />
-					<MenubarSub>
-						<MenubarSubTrigger>Export</MenubarSubTrigger>
-						<MenubarSubContent>
-							<MenubarItem>Export as CSV</MenubarItem>
-							<MenubarItem>Export as PDF</MenubarItem>
-						</MenubarSubContent>
-					</MenubarSub>
-					<MenubarSeparator />
-					<MenubarItem variant="destructive">Cancel project</MenubarItem>
-				</MenubarContent>
-			</MenubarMenu>
-			<MenubarMenu>
-				<MenubarTrigger>Freelancers</MenubarTrigger>
-				<MenubarContent>
-					<MenubarItem>Invite a freelancer</MenubarItem>
-					<MenubarItem>Browse directory</MenubarItem>
-				</MenubarContent>
-			</MenubarMenu>
-			<MenubarMenu>
-				<MenubarTrigger>View</MenubarTrigger>
-				<MenubarContent>
-					<MenubarCheckboxItem defaultChecked>
+		<Menubar.Root>
+			<Menubar.Menu>
+				<Menubar.Trigger>Projects</Menubar.Trigger>
+				<Menubar.Content>
+					<Menubar.Item>
+						New project <Menubar.Shortcut>⌘N</Menubar.Shortcut>
+					</Menubar.Item>
+					<Menubar.Item>Duplicate project</Menubar.Item>
+					<Menubar.Separator />
+					<Menubar.Sub>
+						<Menubar.SubTrigger>Export</Menubar.SubTrigger>
+						<Menubar.SubContent>
+							<Menubar.Item>Export as CSV</Menubar.Item>
+							<Menubar.Item>Export as PDF</Menubar.Item>
+						</Menubar.SubContent>
+					</Menubar.Sub>
+					<Menubar.Separator />
+					<Menubar.Item variant="destructive">Cancel project</Menubar.Item>
+				</Menubar.Content>
+			</Menubar.Menu>
+			<Menubar.Menu>
+				<Menubar.Trigger>Freelancers</Menubar.Trigger>
+				<Menubar.Content>
+					<Menubar.Item>Invite a freelancer</Menubar.Item>
+					<Menubar.Item>Browse directory</Menubar.Item>
+				</Menubar.Content>
+			</Menubar.Menu>
+			<Menubar.Menu>
+				<Menubar.Trigger>View</Menubar.Trigger>
+				<Menubar.Content>
+					<Menubar.CheckboxItem defaultChecked>
 						Show archived projects
-					</MenubarCheckboxItem>
-					<MenubarSeparator />
-					<MenubarRadioGroup defaultValue="week">
-						<MenubarRadioItem value="day">Day</MenubarRadioItem>
-						<MenubarRadioItem value="week">Week</MenubarRadioItem>
-						<MenubarRadioItem value="month">Month</MenubarRadioItem>
-					</MenubarRadioGroup>
-				</MenubarContent>
-			</MenubarMenu>
-		</Menubar>
+					</Menubar.CheckboxItem>
+					<Menubar.Separator />
+					<Menubar.RadioGroup defaultValue="week">
+						<Menubar.RadioItem value="day">Day</Menubar.RadioItem>
+						<Menubar.RadioItem value="week">Week</Menubar.RadioItem>
+						<Menubar.RadioItem value="month">Month</Menubar.RadioItem>
+					</Menubar.RadioGroup>
+				</Menubar.Content>
+			</Menubar.Menu>
+		</Menubar.Root>
 	),
 };
 
 /**
- * Exercises the `MenubarLabel` + `MenubarGroup` path (the `GroupLabel`-outside-
+ * Exercises the `Menubar.Label` + `Menubar.Group` path (the `GroupLabel`-outside-
  * `Group` crash pattern from the dropdown/context-menu family), plus inset and
  * disabled items — all absent from the default story.
  */
 export const WithLabelsGroupsAndStates: Story = {
 	render: () => (
-		<Menubar>
-			<MenubarMenu>
-				<MenubarTrigger>Account</MenubarTrigger>
-				<MenubarContent>
-					<MenubarLabel>Signed in as Nathan</MenubarLabel>
-					<MenubarSeparator />
-					<MenubarGroup>
-						<MenubarLabel inset>Workspace</MenubarLabel>
-						<MenubarItem inset>Switch workspace</MenubarItem>
-						<MenubarItem inset>Billing settings</MenubarItem>
-					</MenubarGroup>
-					<MenubarSeparator />
-					<MenubarItem disabled>Invite teammates (soon)</MenubarItem>
-					<MenubarItem variant="destructive">Sign out</MenubarItem>
-				</MenubarContent>
-			</MenubarMenu>
-		</Menubar>
+		<Menubar.Root>
+			<Menubar.Menu>
+				<Menubar.Trigger>Account</Menubar.Trigger>
+				<Menubar.Content>
+					<Menubar.Label>Signed in as Nathan</Menubar.Label>
+					<Menubar.Separator />
+					<Menubar.Group>
+						<Menubar.Label inset>Workspace</Menubar.Label>
+						<Menubar.Item inset>Switch workspace</Menubar.Item>
+						<Menubar.Item inset>Billing settings</Menubar.Item>
+					</Menubar.Group>
+					<Menubar.Separator />
+					<Menubar.Item disabled>Invite teammates (soon)</Menubar.Item>
+					<Menubar.Item variant="destructive">Sign out</Menubar.Item>
+				</Menubar.Content>
+			</Menubar.Menu>
+		</Menubar.Root>
 	),
 };
 

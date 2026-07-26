@@ -1,20 +1,17 @@
 import { TrashIcon } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Button } from "@voila.dev/ui/components/button";
-import { Checkbox } from "@voila.dev/ui/components/checkbox";
-import { Field, FieldError, FieldLabel } from "@voila.dev/ui/components/field";
-import { Input } from "@voila.dev/ui/components/input";
-import { MoneyInput } from "@voila.dev/ui/components/money-input";
-import {
-	NativeSelect,
-	NativeSelectOption,
-} from "@voila.dev/ui/components/native-select";
-import { Switch } from "@voila.dev/ui/components/switch";
+import { Button } from "@voila.dev/ui/button";
+import { Checkbox } from "@voila.dev/ui/checkbox";
+import { Field } from "@voila.dev/ui/field";
+import { Input } from "@voila.dev/ui/input";
+import { MoneyInput } from "@voila.dev/ui/money-input";
+import { NativeSelect } from "@voila.dev/ui/native-select";
 import {
 	Spreadsheet,
 	type SpreadsheetPasteData,
 	type SpreadsheetSort,
-} from "@voila.dev/ui/spreadsheet/spreadsheet";
+} from "@voila.dev/ui/spreadsheet";
+import { Switch } from "@voila.dev/ui/switch";
 import { type Dispatch, type SetStateAction, useState } from "react";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 
@@ -195,15 +192,15 @@ export const MixedControls: Story = {
 							/>
 						</Spreadsheet.Cell>
 						<Spreadsheet.Cell>
-							<NativeSelect
+							<NativeSelect.Root
 								aria-label="Packaging"
 								value={packaging}
 								onChange={(event) => setPackaging(event.target.value)}
 							>
-								<NativeSelectOption value="unit">Unit</NativeSelectOption>
-								<NativeSelectOption value="box">Box</NativeSelectOption>
-								<NativeSelectOption value="carton">Carton</NativeSelectOption>
-							</NativeSelect>
+								<NativeSelect.Option value="unit">Unit</NativeSelect.Option>
+								<NativeSelect.Option value="box">Box</NativeSelect.Option>
+								<NativeSelect.Option value="carton">Carton</NativeSelect.Option>
+							</NativeSelect.Root>
 						</Spreadsheet.Cell>
 						<Spreadsheet.Cell>
 							<Checkbox
@@ -229,13 +226,13 @@ export const MixedControls: Story = {
 /**
  * Error styling happens at two levels: `aria-invalid` on a control tints and
  * rings its own cell, `invalid` on a row tints the whole row. Readable
- * messages stay outside the grid, in a `FieldError` below the table.
+ * messages stay outside the grid, in a `Field.Error` below the table.
  */
 export const InvalidStates: Story = {
 	render: () => (
 		// No `data-invalid` on the Field: it would cascade the destructive text
 		// color into every control, while only two spots are actually invalid.
-		<Field>
+		<Field.Root>
 			<Spreadsheet.Root>
 				<Spreadsheet.Columns>
 					<Spreadsheet.Column />
@@ -270,10 +267,10 @@ export const InvalidStates: Story = {
 					</Spreadsheet.Row>
 				</Spreadsheet.Body>
 			</Spreadsheet.Root>
-			<FieldError>
+			<Field.Error>
 				Row 1 needs a reference and row 2 duplicates ESS-001.
-			</FieldError>
-		</Field>
+			</Field.Error>
+		</Field.Root>
 	),
 };
 
@@ -1179,8 +1176,8 @@ function MobileCardsExample() {
 				}
 				return (
 					<div className="flex flex-col gap-3">
-						<Field>
-							<FieldLabel htmlFor={`mobile-name-${row.id}`}>Name</FieldLabel>
+						<Field.Root>
+							<Field.Label htmlFor={`mobile-name-${row.id}`}>Name</Field.Label>
 							<Input
 								id={`mobile-name-${row.id}`}
 								value={row.name}
@@ -1188,11 +1185,11 @@ function MobileCardsExample() {
 									updateRow(row.id, { name: event.target.value })
 								}
 							/>
-						</Field>
-						<Field>
-							<FieldLabel htmlFor={`mobile-quantity-${row.id}`}>
+						</Field.Root>
+						<Field.Root>
+							<Field.Label htmlFor={`mobile-quantity-${row.id}`}>
 								Units/carton
-							</FieldLabel>
+							</Field.Label>
 							<Input
 								id={`mobile-quantity-${row.id}`}
 								type="number"
@@ -1201,7 +1198,7 @@ function MobileCardsExample() {
 									updateRow(row.id, { quantity: event.target.value })
 								}
 							/>
-						</Field>
+						</Field.Root>
 						<Button
 							variant="outline"
 							size="sm"

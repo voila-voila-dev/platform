@@ -13,11 +13,11 @@ import * as Example from "../../../examples/ui/forms";
 </Preview>
 
 ```tsx
-<RadioGroup defaultValue="designer">
-	<RadioGroupItem value="designer" id="profession-designer" />
+<RadioGroup.Root defaultValue="designer">
+	<RadioGroup.Item value="designer" id="profession-designer" />
 	<Label htmlFor="profession-designer">Designer</Label>
-</RadioGroup>
+</RadioGroup.Root>
 ```
 
-`RadioGroupCard` swaps the dot for a selectable card, for options that need a
+`RadioGroup.Card` swaps the dot for a selectable card, for options that need a
 description rather than a word.

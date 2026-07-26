@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { IconPicker } from "@voila.dev/ui/components/icon-picker";
+import { IconPicker } from "@voila.dev/ui/icon-picker";
 import { useState } from "react";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 

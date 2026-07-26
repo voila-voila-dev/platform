@@ -1,30 +1,29 @@
-import { MapPinIcon, SpinnerGapIcon } from "@phosphor-icons/react";
+import { MapPinIcon } from "@phosphor-icons/react";
 import { useEffect, useId, useState } from "react";
-import { Button } from "#/components/button.tsx";
-import { Input } from "#/components/input.tsx";
-import { Slider } from "#/components/slider.tsx";
-import { FilterFieldFrame } from "#/filter/components/fields/field-frame.tsx";
+import { Button } from "#/button/components/button.tsx";
+import { FilterFieldFrame } from "#/filter/components/fields/filter-field-frame.tsx";
+import { PlaceResults } from "#/filter/components/fields/place-results.tsx";
 import type {
 	FilterLabels,
 	GeoRadiusFilterDefinition,
 	GeoRadiusFilterValue,
 	PlaceSuggestion,
 } from "#/filter/types.ts";
-import { RadiusMap } from "#/map/components/radius-map.tsx";
+import { Input } from "#/input/components/input.tsx";
+import { RadiusMap } from "#/radius-map/components/radius-map.tsx";
+import { Slider } from "#/slider/components/slider.tsx";
 
 const DEFAULT_MIN_KM = 5;
 const DEFAULT_MAX_KM = 200;
 const DEFAULT_STEP_KM = 5;
 const DEFAULT_RADIUS_KM = 30;
-const SEARCH_DEBOUNCE_MS = 300;
-
 /** Debounced place lookup: a keystroke is not a query. */
 function usePlaceSearch(
 	query: string,
 	searchPlaces: GeoRadiusFilterDefinition["searchPlaces"],
 ): {
-	readonly results: ReadonlyArray<PlaceSuggestion>;
-	readonly busy: boolean;
+	results: ReadonlyArray<PlaceSuggestion>;
+	busy: boolean;
 } {
 	const [results, setResults] = useState<ReadonlyArray<PlaceSuggestion>>([]);
 	const [busy, setBusy] = useState(false);
@@ -65,48 +64,11 @@ function usePlaceSearch(
 	return { results, busy };
 }
 
-function PlaceResults({
-	results,
-	busy,
-	query,
-	labels,
-	onPick,
-}: {
-	readonly results: ReadonlyArray<PlaceSuggestion>;
-	readonly busy: boolean;
-	readonly query: string;
-	readonly labels: FilterLabels;
-	readonly onPick: (place: PlaceSuggestion) => void;
-}) {
-	if (busy) {
-		return (
-			<p className="flex items-center gap-2 text-muted-foreground text-sm">
-				<SpinnerGapIcon className="size-4 animate-spin" />
-				{labels.search}
-			</p>
-		);
-	}
-	if (query.trim().length >= 2 && results.length === 0) {
-		return (
-			<p className="text-muted-foreground text-sm">{labels.placeNoResults}</p>
-		);
-	}
-	return (
-		<ul className="flex flex-col gap-1">
-			{results.map((place) => (
-				<li key={place.id}>
-					<button
-						type="button"
-						onClick={() => onPick(place)}
-						className="flex w-full cursor-pointer items-center gap-2 rounded-lg px-2 py-2 text-left text-sm transition-colors hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2"
-					>
-						<MapPinIcon className="size-4 shrink-0 text-muted-foreground" />
-						<span className="truncate">{place.label}</span>
-					</button>
-				</li>
-			))}
-		</ul>
-	);
+interface Props {
+	definition: GeoRadiusFilterDefinition;
+	value: GeoRadiusFilterValue | undefined;
+	onValueChange: (value: GeoRadiusFilterValue | undefined) => void;
+	labels: FilterLabels;
 }
 
 /**
@@ -119,12 +81,7 @@ export function GeoRadiusFilterField({
 	value,
 	onValueChange,
 	labels,
-}: {
-	readonly definition: GeoRadiusFilterDefinition;
-	readonly value: GeoRadiusFilterValue | undefined;
-	readonly onValueChange: (value: GeoRadiusFilterValue | undefined) => void;
-	readonly labels: FilterLabels;
-}) {
+}: Props) {
 	const controlId = useId();
 	const [query, setQuery] = useState("");
 	const { results, busy } = usePlaceSearch(query, definition.searchPlaces);
@@ -192,7 +149,7 @@ export function GeoRadiusFilterField({
 				<span className="shrink-0 text-muted-foreground text-sm">
 					{labels.radius}
 				</span>
-				<Slider
+				<Slider.Root
 					aria-label={labels.radius}
 					className="flex-1"
 					min={minKm}
@@ -213,3 +170,5 @@ export function GeoRadiusFilterField({
 		</FilterFieldFrame>
 	);
 }
+
+export const SEARCH_DEBOUNCE_MS = 300;

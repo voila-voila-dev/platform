@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Gallery } from "@voila.dev/ui/components/gallery";
+import { Gallery } from "@voila.dev/ui/gallery";
 
 const images = [
 	{
@@ -22,12 +22,12 @@ const images = [
 
 const meta = {
 	title: "UI/Gallery",
-	component: Gallery,
+	component: Gallery.Root,
 	tags: ["autodocs"],
 	args: {
 		images,
 	},
-} satisfies Meta<typeof Gallery>;
+} satisfies Meta<typeof Gallery.Root>;
 
 export default meta;
 

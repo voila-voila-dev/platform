@@ -1,15 +1,9 @@
 import { GithubLogoIcon, ListIcon } from "@phosphor-icons/react";
 import { useRouterState } from "@tanstack/react-router";
-import { Button } from "@voila.dev/ui/components/button";
-import {
-	Sheet,
-	SheetContent,
-	SheetDescription,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from "@voila.dev/ui/components/sheet";
+import { Button } from "@voila.dev/ui/button";
+import { Sheet } from "@voila.dev/ui/sheet";
 import { useEffect, useState } from "react";
+import { PaletteSelect } from "@/components/docs/palette-select";
 import { SearchCommand } from "@/components/docs/search-command";
 import { SidebarNav } from "@/components/docs/sidebar-nav";
 import { ThemeToggle } from "@/components/docs/theme-toggle";
@@ -30,8 +24,8 @@ export function SiteHeader({ activeSlug }: { activeSlug?: string }) {
 		<header className="sticky top-0 z-40 border-b border-border bg-background/80 backdrop-blur">
 			<div className="mx-auto flex h-14 max-w-screen-2xl items-center gap-4 px-4 sm:px-6">
 				{activeSlug !== undefined && (
-					<Sheet open={menuOpen} onOpenChange={setMenuOpen}>
-						<SheetTrigger
+					<Sheet.Root open={menuOpen} onOpenChange={setMenuOpen}>
+						<Sheet.Trigger
 							render={
 								<Button
 									variant="ghost"
@@ -42,15 +36,15 @@ export function SiteHeader({ activeSlug }: { activeSlug?: string }) {
 							}
 						>
 							<ListIcon />
-						</SheetTrigger>
-						<SheetContent side="left" className="w-72 overflow-y-auto p-4">
-							<SheetHeader className="sr-only">
-								<SheetTitle>Navigation</SheetTitle>
-								<SheetDescription>Documentation pages</SheetDescription>
-							</SheetHeader>
+						</Sheet.Trigger>
+						<Sheet.Content side="left" className="w-72 overflow-y-auto p-4">
+							<Sheet.Header className="sr-only">
+								<Sheet.Title>Navigation</Sheet.Title>
+								<Sheet.Description>Documentation pages</Sheet.Description>
+							</Sheet.Header>
 							<SidebarNav activeSlug={activeSlug} />
-						</SheetContent>
-					</Sheet>
+						</Sheet.Content>
+					</Sheet.Root>
 				)}
 				<Wordmark />
 				<div className="ml-auto flex items-center gap-2">
@@ -81,6 +75,7 @@ export function SiteHeader({ activeSlug }: { activeSlug?: string }) {
 					>
 						<GithubLogoIcon />
 					</Button>
+					<PaletteSelect />
 					<ThemeToggle />
 				</div>
 			</div>

@@ -1,16 +1,14 @@
-import { EmailBlockEditor } from "@voila.dev/ui/email-block-editor";
 import {
+	EMAIL_BLOCK_DEFINITIONS,
+	EMAIL_COLOR,
 	type EmailBlockComponentProps,
+	EmailBlockEditor,
+	type EmailEditorBlock,
+	type EmailEditorDocument,
+	type EmailEditorGridBlock,
+	type EmailEditorLeafBlock,
 	emailBlockDefinition,
-} from "@voila.dev/ui/email-block-editor/blocks/block-definitions";
-import { gridBlockDefinition } from "@voila.dev/ui/email-block-editor/blocks/grid-block";
-import type {
-	EmailEditorBlock,
-	EmailEditorDocument,
-	EmailEditorGridBlock,
-	EmailEditorLeafBlock,
-} from "@voila.dev/ui/email-block-editor/document/types";
-import { EMAIL_COLOR } from "@voila.dev/ui/email-block-editor/theme";
+} from "@voila.dev/ui/email-block-editor";
 import { type ReactNode, useState } from "react";
 
 /** Fake upload for the docs previews: no backend here, so the picked file is
@@ -403,7 +401,7 @@ export function Grid() {
 	});
 	return (
 		<EmailCard>
-			<gridBlockDefinition.View
+			<EMAIL_BLOCK_DEFINITIONS.grid.View
 				block={block}
 				selected={false}
 				onChange={setBlock}
@@ -411,7 +409,7 @@ export function Grid() {
 				{block.children.map((child) => (
 					<GridCell key={child.id} block={child} />
 				))}
-			</gridBlockDefinition.View>
+			</EMAIL_BLOCK_DEFINITIONS.grid.View>
 		</EmailCard>
 	);
 }

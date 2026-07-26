@@ -13,21 +13,21 @@ import * as Example from "../../../examples/ui/display";
 </Preview>
 
 ```tsx
-<Section>
-	<SectionHeader>
-		<SectionHeading>
-			<SectionTitle>Upcoming projects</SectionTitle>
-			<SectionDescription>This week's projects.</SectionDescription>
-		</SectionHeading>
-		<SectionActions>
+<Section.Root>
+	<Section.Header>
+		<Section.Heading>
+			<Section.Title>Upcoming projects</Section.Title>
+			<Section.Description>This week's projects.</Section.Description>
+		</Section.Heading>
+		<Section.Actions>
 			<Button variant="ghost" size="sm">View all</Button>
-		</SectionActions>
-	</SectionHeader>
-	<Card>…</Card>
-</Section>
+		</Section.Actions>
+	</Section.Header>
+	<Card.Root>…</Card.Root>
+</Section.Root>
 ```
 
-`SectionTitle` renders an `h2`. When sections nest, pass `render={<h3 />}` to
+`Section.Title` renders an `h2`. When sections nest, pass `render={<h3 />}` to
 keep the heading outline honest.
 
 This is the application-side section. Marketing pages have their own, wider one

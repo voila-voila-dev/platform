@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { ResponsiveSelect } from "@voila.dev/ui/components/responsive-select";
+import { ResponsiveSelect } from "@voila.dev/ui/responsive-select";
 import { useState } from "react";
 
 /**

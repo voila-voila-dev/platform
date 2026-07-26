@@ -1,7 +1,7 @@
 import { ArrowRightIcon } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Button } from "@voila.dev/ui/components/button";
-import { CtaBanner } from "@voila.dev/ui/landing/cta-banner";
+import { Button } from "@voila.dev/ui/button";
+import { CtaBanner } from "@voila.dev/ui/landing";
 import { ctaBanner } from "./landing-fixtures";
 
 const meta = {

@@ -1,4 +1,4 @@
-import { Chart, type ChartConfig } from "@voila.dev/ui/chart/chart";
+import { Chart, type ChartConfig } from "@voila.dev/ui/chart";
 import type { ReactNode } from "react";
 
 const data = [

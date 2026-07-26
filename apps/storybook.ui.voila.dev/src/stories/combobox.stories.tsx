@@ -1,17 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	Combobox,
-	ComboboxChip,
-	ComboboxChips,
-	ComboboxChipsInput,
-	ComboboxContent,
-	ComboboxEmpty,
-	ComboboxInput,
-	ComboboxItem,
-	ComboboxList,
-	ComboboxValue,
-	useComboboxAnchor,
-} from "@voila.dev/ui/components/combobox";
+import { Combobox, useComboboxAnchor } from "@voila.dev/ui/combobox";
 import { useState } from "react";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 
@@ -26,9 +14,9 @@ const roles = [
 
 const meta = {
 	title: "UI/Combobox",
-	component: Combobox,
+	component: Combobox.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof Combobox>;
+} satisfies Meta<typeof Combobox.Root>;
 
 export default meta;
 
@@ -36,55 +24,55 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<Combobox items={roles}>
-			<ComboboxInput placeholder="Select a role" className="w-64" />
-			<ComboboxContent>
-				<ComboboxEmpty>No role found.</ComboboxEmpty>
-				<ComboboxList>
+		<Combobox.Root items={roles}>
+			<Combobox.Input placeholder="Select a role" className="w-64" />
+			<Combobox.Content>
+				<Combobox.Empty>No role found.</Combobox.Empty>
+				<Combobox.List>
 					{(role: string) => (
-						<ComboboxItem key={role} value={role}>
+						<Combobox.Item key={role} value={role}>
 							{role}
-						</ComboboxItem>
+						</Combobox.Item>
 					)}
-				</ComboboxList>
-			</ComboboxContent>
-		</Combobox>
+				</Combobox.List>
+			</Combobox.Content>
+		</Combobox.Root>
 	),
 };
 
 export const WithClearButton: Story = {
 	render: () => (
-		<Combobox items={roles} defaultValue="Designer">
-			<ComboboxInput placeholder="Select a role" className="w-64" showClear />
-			<ComboboxContent>
-				<ComboboxEmpty>No role found.</ComboboxEmpty>
-				<ComboboxList>
+		<Combobox.Root items={roles} defaultValue="Designer">
+			<Combobox.Input placeholder="Select a role" className="w-64" showClear />
+			<Combobox.Content>
+				<Combobox.Empty>No role found.</Combobox.Empty>
+				<Combobox.List>
 					{(role: string) => (
-						<ComboboxItem key={role} value={role}>
+						<Combobox.Item key={role} value={role}>
 							{role}
-						</ComboboxItem>
+						</Combobox.Item>
 					)}
-				</ComboboxList>
-			</ComboboxContent>
-		</Combobox>
+				</Combobox.List>
+			</Combobox.Content>
+		</Combobox.Root>
 	),
 };
 
 export const Disabled: Story = {
 	render: () => (
-		<Combobox items={roles} disabled>
-			<ComboboxInput placeholder="Select a role" className="w-64" disabled />
-			<ComboboxContent>
-				<ComboboxEmpty>No role found.</ComboboxEmpty>
-				<ComboboxList>
+		<Combobox.Root items={roles} disabled>
+			<Combobox.Input placeholder="Select a role" className="w-64" disabled />
+			<Combobox.Content>
+				<Combobox.Empty>No role found.</Combobox.Empty>
+				<Combobox.List>
 					{(role: string) => (
-						<ComboboxItem key={role} value={role}>
+						<Combobox.Item key={role} value={role}>
 							{role}
-						</ComboboxItem>
+						</Combobox.Item>
 					)}
-				</ComboboxList>
-			</ComboboxContent>
-		</Combobox>
+				</Combobox.List>
+			</Combobox.Content>
+		</Combobox.Root>
 	),
 };
 
@@ -98,36 +86,36 @@ function MultiSelectChipsExample({
 	const anchor = useComboboxAnchor();
 	const [value, setValue] = useState<string[]>(["Designer", "Copywriter"]);
 	return (
-		<Combobox
+		<Combobox.Root
 			items={roles}
 			multiple
 			value={value}
 			onValueChange={setValue}
 			disabled={disabled}
 		>
-			<ComboboxChips ref={anchor} className="w-96">
-				<ComboboxValue>
+			<Combobox.Chips ref={anchor} className="w-96">
+				<Combobox.Value>
 					{(selected: string[]) =>
 						selected.map((role) => (
-							<ComboboxChip key={role} showRemove={showRemove}>
+							<Combobox.Chip key={role} showRemove={showRemove}>
 								{role}
-							</ComboboxChip>
+							</Combobox.Chip>
 						))
 					}
-				</ComboboxValue>
-				<ComboboxChipsInput placeholder="Add a role" />
-			</ComboboxChips>
-			<ComboboxContent anchor={anchor}>
-				<ComboboxEmpty>No role found.</ComboboxEmpty>
-				<ComboboxList>
+				</Combobox.Value>
+				<Combobox.ChipsInput placeholder="Add a role" />
+			</Combobox.Chips>
+			<Combobox.Content anchor={anchor}>
+				<Combobox.Empty>No role found.</Combobox.Empty>
+				<Combobox.List>
 					{(role: string) => (
-						<ComboboxItem key={role} value={role}>
+						<Combobox.Item key={role} value={role}>
 							{role}
-						</ComboboxItem>
+						</Combobox.Item>
 					)}
-				</ComboboxList>
-			</ComboboxContent>
-		</Combobox>
+				</Combobox.List>
+			</Combobox.Content>
+		</Combobox.Root>
 	);
 }
 

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Button } from "@voila.dev/ui/components/button";
-import { Toaster, toast } from "@voila.dev/ui/components/sonner";
+import { Button } from "@voila.dev/ui/button";
+import { Toaster, toast } from "@voila.dev/ui/sonner";
 
 const meta = {
 	title: "UI/Sonner",

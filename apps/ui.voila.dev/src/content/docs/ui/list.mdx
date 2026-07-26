@@ -13,16 +13,16 @@ import * as Example from "../../../examples/ui/display";
 </Preview>
 
 ```tsx
-<List aria-label="Open projects">
-	<ListItem variant="outline">
-		<ItemMedia variant="icon"><CalendarCheckIcon /></ItemMedia>
-		<ItemContent>
-			<ItemTitle>Landing page redesign</ItemTitle>
-		</ItemContent>
-	</ListItem>
-</List>
+<List.Root aria-label="Open projects">
+	<List.Item variant="outline">
+		<Item.Media variant="icon"><CalendarCheckIcon /></Item.Media>
+		<Item.Content>
+			<Item.Title>Landing page redesign</Item.Title>
+		</Item.Content>
+	</List.Item>
+</List.Root>
 ```
 
-`List` renders a `<ul>` and `ListItem` an `<li>`, taking the same children as
+`List` renders a `<ul>` and `List.Item` an `<li>`, taking the same children as
 [Item](/ui/item/). Give the list an `aria-label` — a screen reader announces
 the count, and "list of 12" is only useful if it says a list of what.

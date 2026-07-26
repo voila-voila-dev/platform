@@ -1,27 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Avatar, AvatarFallback } from "@voila.dev/ui/components/avatar";
-import { Badge } from "@voila.dev/ui/components/badge";
-import { Button } from "@voila.dev/ui/components/button";
-import {
-	ChatComposer,
-	ChatConversationItem,
-	ChatDateSeparator,
-	ChatExternalLinkDialog,
-	ChatMessage,
-	ChatMessageGroup,
-	ChatMessageList,
-	ChatMessageSender,
-	ChatMessageText,
-	ChatMessageTime,
-	ChatUnreadSeparator,
-} from "@voila.dev/ui/components/chat";
+import { Avatar } from "@voila.dev/ui/avatar";
+import { Badge } from "@voila.dev/ui/badge";
+import { Button } from "@voila.dev/ui/button";
+import { Chat } from "@voila.dev/ui/chat";
 import { useState } from "react";
 
 const meta = {
 	title: "UI/Chat",
-	component: ChatMessageList,
+	component: Chat.MessageList,
 	tags: ["autodocs"],
-} satisfies Meta<typeof ChatMessageList>;
+} satisfies Meta<typeof Chat.MessageList>;
 
 export default meta;
 
@@ -29,9 +17,9 @@ type Story = StoryObj<typeof meta>;
 
 function senderAvatar(initials: string) {
 	return (
-		<Avatar size="sm">
-			<AvatarFallback>{initials}</AvatarFallback>
-		</Avatar>
+		<Avatar.Root size="sm">
+			<Avatar.Fallback>{initials}</Avatar.Fallback>
+		</Avatar.Root>
 	);
 }
 
@@ -92,7 +80,7 @@ function FullFeaturedPlayground() {
 		<div className="flex w-full max-w-4xl flex-col gap-3">
 			<div className="flex h-[28rem] gap-4">
 				<aside className="hidden w-64 shrink-0 flex-col gap-1 border-r pr-4 sm:flex">
-					<ChatConversationItem
+					<Chat.ConversationItem
 						leading={senderAvatar("NW")}
 						title="Northwind redesign — June 13"
 						badges={<Badge variant="outline">Project</Badge>}
@@ -102,7 +90,7 @@ function FullFeaturedPlayground() {
 						className="bg-muted"
 						render={<button type="button" />}
 					/>
-					<ChatConversationItem
+					<Chat.ConversationItem
 						leading={senderAvatar("SU")}
 						title="Support"
 						badges={<Badge variant="secondary">Support</Badge>}
@@ -110,7 +98,7 @@ function FullFeaturedPlayground() {
 						timestamp="Yesterday"
 						render={<button type="button" />}
 					/>
-					<ChatConversationItem
+					<Chat.ConversationItem
 						leading={senderAvatar("Q3")}
 						title="Q3 brand refresh"
 						badges={
@@ -125,7 +113,7 @@ function FullFeaturedPlayground() {
 					/>
 				</aside>
 				<div className="flex min-w-0 flex-1 flex-col gap-3">
-					<ChatMessageList
+					<Chat.MessageList
 						jumpToLatestLabel="New messages"
 						onFollowChange={setFollowing}
 						header={
@@ -145,86 +133,86 @@ function FullFeaturedPlayground() {
 					>
 						{historyLoaded ? (
 							<>
-								<ChatDateSeparator>Monday</ChatDateSeparator>
-								<ChatMessageGroup align="start">
-									<ChatMessageSender
+								<Chat.DateSeparator>Monday</Chat.DateSeparator>
+								<Chat.MessageGroup align="start">
+									<Chat.MessageSender
 										avatar={senderAvatar("NG")}
 										name="Nathan Guyot"
 										badge={<Badge variant="highlight">Northwind</Badge>}
 									/>
-									<ChatMessage variant="other">
+									<Chat.Message variant="other">
 										Welcome to the project thread!
-										<ChatMessageTime dateTime="2026-06-08T10:15">
+										<Chat.MessageTime dateTime="2026-06-08T10:15">
 											10:15
-										</ChatMessageTime>
-									</ChatMessage>
-								</ChatMessageGroup>
-								<ChatMessageGroup align="end">
-									<ChatMessage variant="own">
+										</Chat.MessageTime>
+									</Chat.Message>
+								</Chat.MessageGroup>
+								<Chat.MessageGroup align="end">
+									<Chat.Message variant="own">
 										Thanks, glad to be on board.
-										<ChatMessageTime dateTime="2026-06-08T10:20">
+										<Chat.MessageTime dateTime="2026-06-08T10:20">
 											10:20
-										</ChatMessageTime>
-									</ChatMessage>
-								</ChatMessageGroup>
+										</Chat.MessageTime>
+									</Chat.Message>
+								</Chat.MessageGroup>
 							</>
 						) : null}
-						<ChatDateSeparator>Yesterday</ChatDateSeparator>
-						<ChatMessageGroup align="start">
-							<ChatMessageSender
+						<Chat.DateSeparator>Yesterday</Chat.DateSeparator>
+						<Chat.MessageGroup align="start">
+							<Chat.MessageSender
 								avatar={senderAvatar("CD")}
 								name="Camille Dubois"
 								badge={<Badge variant="brand">Verified freelancer</Badge>}
 							/>
-							<ChatMessage variant="other">
+							<Chat.Message variant="other">
 								Hi, I'll be online 30 minutes before the kickoff call.
-								<ChatMessageTime dateTime="2026-06-11T18:42">
+								<Chat.MessageTime dateTime="2026-06-11T18:42">
 									18:42
-								</ChatMessageTime>
-							</ChatMessage>
-							<ChatMessage variant="other">
+								</Chat.MessageTime>
+							</Chat.Message>
+							<Chat.Message variant="other">
 								Is there a shared folder where I can drop my files?
-								<ChatMessageTime dateTime="2026-06-11T18:43">
+								<Chat.MessageTime dateTime="2026-06-11T18:43">
 									18:43
-								</ChatMessageTime>
-							</ChatMessage>
-						</ChatMessageGroup>
-						<ChatMessageGroup align="start">
-							<ChatMessageSender
+								</Chat.MessageTime>
+							</Chat.Message>
+						</Chat.MessageGroup>
+						<Chat.MessageGroup align="start">
+							<Chat.MessageSender
 								avatar={senderAvatar("NG")}
 								name="Nathan Guyot"
 								badge={<Badge variant="highlight">Northwind</Badge>}
 							/>
-							<ChatMessage variant="other">
+							<Chat.Message variant="other">
 								Yes, the project drive has a folder set up for you.
-								<ChatMessageTime dateTime="2026-06-11T19:05">
+								<Chat.MessageTime dateTime="2026-06-11T19:05">
 									19:05
-								</ChatMessageTime>
-							</ChatMessage>
-						</ChatMessageGroup>
-						<ChatMessageGroup align="end">
-							<ChatMessage variant="own">
+								</Chat.MessageTime>
+							</Chat.Message>
+						</Chat.MessageGroup>
+						<Chat.MessageGroup align="end">
+							<Chat.Message variant="own">
 								Perfect, thanks! Talk on Monday.
-								<ChatMessageTime dateTime="2026-06-11T19:10">
+								<Chat.MessageTime dateTime="2026-06-11T19:10">
 									19:10
-								</ChatMessageTime>
-							</ChatMessage>
-						</ChatMessageGroup>
-						<ChatUnreadSeparator>New messages</ChatUnreadSeparator>
-						<ChatDateSeparator>Today</ChatDateSeparator>
-						<ChatMessageGroup align="start">
-							<ChatMessageSender
+								</Chat.MessageTime>
+							</Chat.Message>
+						</Chat.MessageGroup>
+						<Chat.UnreadSeparator>New messages</Chat.UnreadSeparator>
+						<Chat.DateSeparator>Today</Chat.DateSeparator>
+						<Chat.MessageGroup align="start">
+							<Chat.MessageSender
 								avatar={senderAvatar("CD")}
 								name="Camille Dubois"
 								badge={<Badge variant="brand">Verified freelancer</Badge>}
 							/>
-							<ChatMessage variant="other">
+							<Chat.Message variant="other">
 								Small change: I'll join at 1:30pm instead.
-								<ChatMessageTime dateTime="2026-06-12T08:55">
+								<Chat.MessageTime dateTime="2026-06-12T08:55">
 									08:55
-								</ChatMessageTime>
-							</ChatMessage>
-						</ChatMessageGroup>
+								</Chat.MessageTime>
+							</Chat.Message>
+						</Chat.MessageGroup>
 						{liveGroups.map((group) => {
 							const [firstMessage] = group;
 							if (firstMessage === undefined) {
@@ -232,42 +220,42 @@ function FullFeaturedPlayground() {
 							}
 							if (firstMessage.author === "own") {
 								return (
-									<ChatMessageGroup key={firstMessage.id} align="end">
+									<Chat.MessageGroup key={firstMessage.id} align="end">
 										{group.map((message) => (
-											<ChatMessage key={message.id} variant="own">
-												<ChatMessageText onLinkClick={setPendingUrl}>
+											<Chat.Message key={message.id} variant="own">
+												<Chat.MessageText onLinkClick={setPendingUrl}>
 													{message.text}
-												</ChatMessageText>
-												<ChatMessageTime>
+												</Chat.MessageText>
+												<Chat.MessageTime>
 													{liveMessageTime(message.id)}
-												</ChatMessageTime>
-											</ChatMessage>
+												</Chat.MessageTime>
+											</Chat.Message>
 										))}
-									</ChatMessageGroup>
+									</Chat.MessageGroup>
 								);
 							}
 							return (
-								<ChatMessageGroup key={firstMessage.id} align="start">
-									<ChatMessageSender
+								<Chat.MessageGroup key={firstMessage.id} align="start">
+									<Chat.MessageSender
 										avatar={senderAvatar("NG")}
 										name="Nathan Guyot"
 										badge={<Badge variant="highlight">Northwind</Badge>}
 									/>
 									{group.map((message) => (
-										<ChatMessage key={message.id} variant="other">
-											<ChatMessageText onLinkClick={setPendingUrl}>
+										<Chat.Message key={message.id} variant="other">
+											<Chat.MessageText onLinkClick={setPendingUrl}>
 												{message.text}
-											</ChatMessageText>
-											<ChatMessageTime>
+											</Chat.MessageText>
+											<Chat.MessageTime>
 												{liveMessageTime(message.id)}
-											</ChatMessageTime>
-										</ChatMessage>
+											</Chat.MessageTime>
+										</Chat.Message>
 									))}
-								</ChatMessageGroup>
+								</Chat.MessageGroup>
 							);
 						})}
-					</ChatMessageList>
-					<ChatComposer
+					</Chat.MessageList>
+					<Chat.Composer
 						value={draft}
 						onValueChange={setDraft}
 						onSubmit={submitDraft}
@@ -306,7 +294,7 @@ function FullFeaturedPlayground() {
 					Simulate a reply
 				</Button>
 			</div>
-			<ChatExternalLinkDialog
+			<Chat.ExternalLinkDialog
 				url={pendingUrl}
 				onClose={() => setPendingUrl(null)}
 				title="You are leaving acme.dev"
@@ -330,7 +318,7 @@ export const FullFeatured: Story = {
 export const Thread: Story = {
 	render: () => (
 		<div className="flex h-96 w-full max-w-xl flex-col gap-3">
-			<ChatMessageList
+			<Chat.MessageList
 				header={
 					<div className="flex justify-center">
 						<Button type="button" variant="ghost" size="sm">
@@ -339,52 +327,62 @@ export const Thread: Story = {
 					</div>
 				}
 			>
-				<ChatDateSeparator>Yesterday</ChatDateSeparator>
-				<ChatMessageGroup align="start">
-					<ChatMessageSender
+				<Chat.DateSeparator>Yesterday</Chat.DateSeparator>
+				<Chat.MessageGroup align="start">
+					<Chat.MessageSender
 						avatar={senderAvatar("CD")}
 						name="Camille Dubois"
 						badge={<Badge variant="brand">Verified freelancer</Badge>}
 					/>
-					<ChatMessage variant="other">
+					<Chat.Message variant="other">
 						Hi, I'll be online 30 minutes before the kickoff call.
-						<ChatMessageTime dateTime="2026-06-11T18:42">18:42</ChatMessageTime>
-					</ChatMessage>
-					<ChatMessage variant="other">
+						<Chat.MessageTime dateTime="2026-06-11T18:42">
+							18:42
+						</Chat.MessageTime>
+					</Chat.Message>
+					<Chat.Message variant="other">
 						Is there a shared folder where I can drop my files?
-						<ChatMessageTime dateTime="2026-06-11T18:43">18:43</ChatMessageTime>
-					</ChatMessage>
-				</ChatMessageGroup>
-				<ChatMessageGroup align="start">
-					<ChatMessageSender
+						<Chat.MessageTime dateTime="2026-06-11T18:43">
+							18:43
+						</Chat.MessageTime>
+					</Chat.Message>
+				</Chat.MessageGroup>
+				<Chat.MessageGroup align="start">
+					<Chat.MessageSender
 						avatar={senderAvatar("NG")}
 						name="Nathan Guyot"
 						badge={<Badge variant="highlight">Northwind</Badge>}
 					/>
-					<ChatMessage variant="other">
+					<Chat.Message variant="other">
 						Yes, the project drive has a folder set up for you.
-						<ChatMessageTime dateTime="2026-06-11T19:05">19:05</ChatMessageTime>
-					</ChatMessage>
-				</ChatMessageGroup>
-				<ChatDateSeparator>Today</ChatDateSeparator>
-				<ChatMessageGroup align="start">
-					<ChatMessageSender
+						<Chat.MessageTime dateTime="2026-06-11T19:05">
+							19:05
+						</Chat.MessageTime>
+					</Chat.Message>
+				</Chat.MessageGroup>
+				<Chat.DateSeparator>Today</Chat.DateSeparator>
+				<Chat.MessageGroup align="start">
+					<Chat.MessageSender
 						avatar={senderAvatar("ET")}
 						name="Emilien"
 						badge={<Badge>Acme team</Badge>}
 					/>
-					<ChatMessage variant="other">
+					<Chat.Message variant="other">
 						Hi everyone, I'm around if you need anything.
-						<ChatMessageTime dateTime="2026-06-12T09:02">09:02</ChatMessageTime>
-					</ChatMessage>
-				</ChatMessageGroup>
-				<ChatMessageGroup align="end">
-					<ChatMessage variant="own">
+						<Chat.MessageTime dateTime="2026-06-12T09:02">
+							09:02
+						</Chat.MessageTime>
+					</Chat.Message>
+				</Chat.MessageGroup>
+				<Chat.MessageGroup align="end">
+					<Chat.Message variant="own">
 						Perfect, thanks! Talk on Monday.
-						<ChatMessageTime dateTime="2026-06-12T09:10">09:10</ChatMessageTime>
-					</ChatMessage>
-				</ChatMessageGroup>
-			</ChatMessageList>
+						<Chat.MessageTime dateTime="2026-06-12T09:10">
+							09:10
+						</Chat.MessageTime>
+					</Chat.Message>
+				</Chat.MessageGroup>
+			</Chat.MessageList>
 		</div>
 	),
 };
@@ -394,26 +392,30 @@ export const Thread: Story = {
 export const UnreadSeparator: Story = {
 	render: () => (
 		<div className="flex h-72 w-full max-w-xl flex-col gap-3">
-			<ChatMessageList>
-				<ChatMessageGroup align="end">
-					<ChatMessage variant="own">
+			<Chat.MessageList>
+				<Chat.MessageGroup align="end">
+					<Chat.Message variant="own">
 						Talk on Monday!
-						<ChatMessageTime dateTime="2026-06-11T19:10">19:10</ChatMessageTime>
-					</ChatMessage>
-				</ChatMessageGroup>
-				<ChatUnreadSeparator>New messages</ChatUnreadSeparator>
-				<ChatMessageGroup align="start">
-					<ChatMessageSender
+						<Chat.MessageTime dateTime="2026-06-11T19:10">
+							19:10
+						</Chat.MessageTime>
+					</Chat.Message>
+				</Chat.MessageGroup>
+				<Chat.UnreadSeparator>New messages</Chat.UnreadSeparator>
+				<Chat.MessageGroup align="start">
+					<Chat.MessageSender
 						avatar={senderAvatar("CD")}
 						name="Camille Dubois"
 						badge={<Badge variant="brand">Verified freelancer</Badge>}
 					/>
-					<ChatMessage variant="other">
+					<Chat.Message variant="other">
 						Small change: I'll join at 1:30pm instead.
-						<ChatMessageTime dateTime="2026-06-12T08:55">08:55</ChatMessageTime>
-					</ChatMessage>
-				</ChatMessageGroup>
-			</ChatMessageList>
+						<Chat.MessageTime dateTime="2026-06-12T08:55">
+							08:55
+						</Chat.MessageTime>
+					</Chat.Message>
+				</Chat.MessageGroup>
+			</Chat.MessageList>
 		</div>
 	),
 };
@@ -423,25 +425,29 @@ export const UnreadSeparator: Story = {
 export const LongWordOverflow: Story = {
 	render: () => (
 		<div className="flex h-72 w-full max-w-xl flex-col gap-3">
-			<ChatMessageList>
-				<ChatMessageGroup align="start">
-					<ChatMessageSender
+			<Chat.MessageList>
+				<Chat.MessageGroup align="start">
+					<Chat.MessageSender
 						avatar={senderAvatar("CD")}
 						name="Camille Dubois"
 					/>
-					<ChatMessage variant="other">
+					<Chat.Message variant="other">
 						Here is the link to the checklist:
 						https://intranet.acme.dev/handbooks/design-reviews/progressive-handoff-checklist-for-launches-2026
-						<ChatMessageTime dateTime="2026-06-12T09:02">09:02</ChatMessageTime>
-					</ChatMessage>
-				</ChatMessageGroup>
-				<ChatMessageGroup align="end">
-					<ChatMessage variant="own">
+						<Chat.MessageTime dateTime="2026-06-12T09:02">
+							09:02
+						</Chat.MessageTime>
+					</Chat.Message>
+				</Chat.MessageGroup>
+				<Chat.MessageGroup align="end">
+					<Chat.Message variant="own">
 						Supercalifragilisticexpialidocious-pneumonoultramicroscopicsilicovolcanoconiosis-extraordinarily
-						<ChatMessageTime dateTime="2026-06-12T09:03">09:03</ChatMessageTime>
-					</ChatMessage>
-				</ChatMessageGroup>
-			</ChatMessageList>
+						<Chat.MessageTime dateTime="2026-06-12T09:03">
+							09:03
+						</Chat.MessageTime>
+					</Chat.Message>
+				</Chat.MessageGroup>
+			</Chat.MessageList>
 		</div>
 	),
 };
@@ -450,33 +456,37 @@ function MessageLinksPlayground() {
 	const [pendingUrl, setPendingUrl] = useState<string | null>(null);
 	return (
 		<div className="flex h-72 w-full max-w-xl flex-col gap-3">
-			<ChatMessageList>
-				<ChatMessageGroup align="start">
-					<ChatMessageSender
+			<Chat.MessageList>
+				<Chat.MessageGroup align="start">
+					<Chat.MessageSender
 						avatar={senderAvatar("CD")}
 						name="Camille Dubois"
 						badge={<Badge variant="brand">Verified freelancer</Badge>}
 					/>
-					<ChatMessage variant="other">
-						<ChatMessageText onLinkClick={setPendingUrl}>
+					<Chat.Message variant="other">
+						<Chat.MessageText onLinkClick={setPendingUrl}>
 							Here is the style guide:
 							https://www.brand-guidelines.example.com/handoff. Let me know if
 							the link does not work.
-						</ChatMessageText>
-						<ChatMessageTime dateTime="2026-06-12T09:02">09:02</ChatMessageTime>
-					</ChatMessage>
-				</ChatMessageGroup>
-				<ChatMessageGroup align="end">
-					<ChatMessage variant="own">
-						<ChatMessageText onLinkClick={setPendingUrl}>
+						</Chat.MessageText>
+						<Chat.MessageTime dateTime="2026-06-12T09:02">
+							09:02
+						</Chat.MessageTime>
+					</Chat.Message>
+				</Chat.MessageGroup>
+				<Chat.MessageGroup align="end">
+					<Chat.Message variant="own">
+						<Chat.MessageText onLinkClick={setPendingUrl}>
 							Thanks! I prefer this one:
 							https://docs.example.com/brand/asset-delivery
-						</ChatMessageText>
-						<ChatMessageTime dateTime="2026-06-12T09:04">09:04</ChatMessageTime>
-					</ChatMessage>
-				</ChatMessageGroup>
-			</ChatMessageList>
-			<ChatExternalLinkDialog
+						</Chat.MessageText>
+						<Chat.MessageTime dateTime="2026-06-12T09:04">
+							09:04
+						</Chat.MessageTime>
+					</Chat.Message>
+				</Chat.MessageGroup>
+			</Chat.MessageList>
+			<Chat.ExternalLinkDialog
 				url={pendingUrl}
 				onClose={() => setPendingUrl(null)}
 				title="You are leaving acme.dev"
@@ -489,7 +499,7 @@ function MessageLinksPlayground() {
 }
 
 /** URLs inside a message are clickable. Activation is intercepted by
- * ChatExternalLinkDialog: the reader confirms they trust the destination
+ * Chat.ExternalLinkDialog: the reader confirms they trust the destination
  * before the link opens in a new tab. */
 export const MessageLinks: Story = {
 	render: () => <MessageLinksPlayground />,
@@ -499,12 +509,12 @@ export const MessageLinks: Story = {
 export const EmptyThread: Story = {
 	render: () => (
 		<div className="flex h-72 w-full max-w-xl flex-col gap-3">
-			<ChatMessageList>
+			<Chat.MessageList>
 				<div className="flex flex-1 items-center justify-center text-muted-foreground text-sm">
 					No messages yet — write the first one!
 				</div>
-			</ChatMessageList>
-			<ChatComposer
+			</Chat.MessageList>
+			<Chat.Composer
 				value=""
 				onValueChange={() => {}}
 				onSubmit={() => {}}
@@ -523,23 +533,23 @@ function FollowPlayground() {
 	const [following, setFollowing] = useState(true);
 	return (
 		<div className="flex h-96 w-full max-w-xl flex-col gap-3">
-			<ChatMessageList
+			<Chat.MessageList
 				jumpToLatestLabel="New messages"
 				onFollowChange={setFollowing}
 			>
-				<ChatMessageGroup align="start">
-					<ChatMessageSender
+				<Chat.MessageGroup align="start">
+					<Chat.MessageSender
 						avatar={senderAvatar("CD")}
 						name="Camille Dubois"
 						badge={<Badge variant="brand">Verified freelancer</Badge>}
 					/>
 					{messages.map((message) => (
-						<ChatMessage key={message} variant="other">
+						<Chat.Message key={message} variant="other">
 							{message}
-						</ChatMessage>
+						</Chat.Message>
 					))}
-				</ChatMessageGroup>
-			</ChatMessageList>
+				</Chat.MessageGroup>
+			</Chat.MessageList>
 			<div className="flex items-center justify-between gap-2">
 				<span className="text-muted-foreground text-xs">
 					{following
@@ -577,7 +587,7 @@ function ComposerPlayground(props: {
 }) {
 	const [value, setValue] = useState("");
 	return (
-		<ChatComposer
+		<Chat.Composer
 			value={value}
 			onValueChange={setValue}
 			onSubmit={() => setValue("")}
@@ -603,7 +613,7 @@ export const Composer: Story = {
 export const ComposerSending: Story = {
 	render: () => (
 		<div className="w-full max-w-xl">
-			<ChatComposer
+			<Chat.Composer
 				value="I'll be online in 10 minutes."
 				onValueChange={() => {}}
 				onSubmit={() => {}}
@@ -617,7 +627,7 @@ export const ComposerSending: Story = {
 export const ComposerWithError: Story = {
 	render: () => (
 		<div className="w-full max-w-xl">
-			<ChatComposer
+			<Chat.Composer
 				value={"A message ".repeat(40)}
 				onValueChange={() => {}}
 				onSubmit={() => {}}
@@ -636,7 +646,7 @@ export const ComposerWithCounter: Story = {
 	render: () => (
 		<div className="flex w-full max-w-xl flex-col gap-6">
 			<ComposerPlayground maxLength={80} />
-			<ChatComposer
+			<Chat.Composer
 				value={"A message far too long for the configured limit. ".repeat(2)}
 				onValueChange={() => {}}
 				onSubmit={() => {}}
@@ -663,7 +673,7 @@ export const ComposerArchived: Story = {
 			<p className="text-muted-foreground text-sm">
 				This conversation is archived.
 			</p>
-			<ChatComposer
+			<Chat.Composer
 				value=""
 				onValueChange={() => {}}
 				onSubmit={() => {}}
@@ -678,7 +688,7 @@ export const ComposerArchived: Story = {
 export const ConversationListItems: Story = {
 	render: () => (
 		<div className="flex w-full max-w-xl flex-col gap-1">
-			<ChatConversationItem
+			<Chat.ConversationItem
 				leading={senderAvatar("SU")}
 				title="Support"
 				badges={<Badge variant="secondary">Support</Badge>}
@@ -686,14 +696,14 @@ export const ConversationListItems: Story = {
 				timestamp="09:10"
 				unreadCount={2}
 			/>
-			<ChatConversationItem
+			<Chat.ConversationItem
 				leading={senderAvatar("Q3")}
 				title="Q3 brand refresh"
 				badges={<Badge variant="outline">Project</Badge>}
 				description="Last message yesterday"
 				timestamp="Yesterday"
 			/>
-			<ChatConversationItem
+			<Chat.ConversationItem
 				leading={senderAvatar("NW")}
 				title="Northwind redesign — April 12"
 				badges={
@@ -706,21 +716,21 @@ export const ConversationListItems: Story = {
 				timestamp="12/04"
 			/>
 			{/* unreadCount above 99 renders as the capped « 99+ » badge. */}
-			<ChatConversationItem
+			<Chat.ConversationItem
 				leading={senderAvatar("DA")}
 				title="Very active discussion with a really long title that has to be truncated"
 				description="Last message just now"
 				timestamp="Just now"
 				unreadCount={128}
 			/>
-			<ChatConversationItem
+			<Chat.ConversationItem
 				leading={senderAvatar("CL")}
 				title="Clickable conversation (link)"
 				description="Rendered as an <a> via render — keyboard focus and hover active."
 				timestamp="10:24"
 				unreadCount={1}
 				render={
-					// biome-ignore lint/a11y/useAnchorContent: content is merged in from ChatConversationItem
+					// biome-ignore lint/a11y/useAnchorContent: content is merged in from Chat.ConversationItem
 					<a href="#conversation" />
 				}
 			/>
@@ -735,21 +745,21 @@ function AppendPlayground() {
 	]);
 	return (
 		<div className="flex h-96 w-full max-w-xl flex-col gap-3">
-			<ChatMessageList>
-				<ChatMessageGroup align="start">
-					<ChatMessageSender
+			<Chat.MessageList>
+				<Chat.MessageGroup align="start">
+					<Chat.MessageSender
 						avatar={senderAvatar("CD")}
 						name="Camille Dubois"
 						badge={<Badge variant="brand">Verified freelancer</Badge>}
 					/>
 					{messages.map((message, index) => (
-						<ChatMessage key={`${index}-${message}`} variant="other">
+						<Chat.Message key={`${index}-${message}`} variant="other">
 							{message}
-							<ChatMessageTime>09:1{index}</ChatMessageTime>
-						</ChatMessage>
+							<Chat.MessageTime>09:1{index}</Chat.MessageTime>
+						</Chat.Message>
 					))}
-				</ChatMessageGroup>
-			</ChatMessageList>
+				</Chat.MessageGroup>
+			</Chat.MessageList>
 			<Button
 				type="button"
 				size="sm"

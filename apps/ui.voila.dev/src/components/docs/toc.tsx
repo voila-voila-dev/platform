@@ -1,4 +1,4 @@
-import { cn } from "@voila.dev/ui/lib/utils";
+import { cn } from "@voila.dev/ui/utils";
 import { useEffect, useState } from "react";
 import type { TocEntry } from "@/lib/remark-toc-export";
 

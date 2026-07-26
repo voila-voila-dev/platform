@@ -16,7 +16,7 @@ of the API during training, the package on disk is opaque, and the gap between
 the two is where hallucinated props and invented imports come from.
 
 An agent working against source-shipped components does not guess. It opens
-`node_modules/@voila.dev/ui/src/components/button.tsx`, reads the props, the
+`node_modules/@voila.dev/ui/src/button/components/button.tsx`, reads the props, the
 variants and the cva block, and writes code against what is actually installed.
 The code is the documentation, and it is always the right version. That is what
 we mean by AI-readable.
@@ -33,7 +33,7 @@ equivalent elsewhere):
 - UI comes from @voila.dev/ui. The full source is in
   node_modules/@voila.dev/ui/src. Read the component file before using it.
 - Import one component per path:
-  import { Button } from "@voila.dev/ui/components/button";
+  import { Button } from "@voila.dev/ui/button";
 - Styling goes through the tokens. Use semantic classes (bg-primary,
   text-muted-foreground, border-border), never raw colours.
 ```
@@ -46,19 +46,20 @@ build. The package manager already put the source where the agent can read it.
 The pattern is always the same: name the component, and tell the agent to read
 the real file first.
 
-> Read `node_modules/@voila.dev/ui/src/components/dialog.tsx`, then build a
+> Read `node_modules/@voila.dev/ui/src/dialog/components/dialog.tsx`, then build a
 > confirm step for deleting a workspace. Follow the composition the file
 > exports.
 
 > Build the project form with components from `@voila.dev/ui`. Check each
-> component's source under `node_modules/@voila.dev/ui/src/components/` before
+> component's source under `node_modules/@voila.dev/ui/src/<name>/components/` before
 > using it, and copy the prop names from there, not from memory.
 
 > Restyle this page for our brand. Use the tokens as the contract: `--primary`
 > for the accent, `--muted` for surfaces. Do not hard-code a single colour.
 
-The last one is the trick most people miss. The tokens in
-`@voila.dev/ui/styles/themes/default.css` are the contract between your brand and the components.
+The last one is the trick most people miss. The tokens declared in
+`@voila.dev/ui/styles/tokens/*.css` are the contract between your brand and the
+components; a theme is just one set of values for them.
 An agent told to "use `--primary`" produces output that follows every future
 rebrand for free; an agent left to pick hex values produces output you will be
 hunting down for months.
@@ -72,8 +73,8 @@ construction:
   way: [Base UI](https://base-ui.com) for behaviour, a cva block for variants,
   tokens for colour. An agent that has read three components has effectively
   read all of them.
-- **One import shape.** `@voila.dev/ui/components/<name>`, no barrel export,
-  no ambiguity about where a symbol comes from.
+- **One import shape.** `@voila.dev/ui/<name>` — one subpath per component,
+  never deeper, so there is no ambiguity about where a symbol comes from.
 - **Tokens as the contract.** Semantic custom properties mean the agent never
   has to invent a palette, and its output survives a rebrand.
 
@@ -86,7 +87,7 @@ Because the source is readable, it is also forkable. If a component needs to
 become something the variants do not cover, have the agent copy the file out
 and own it:
 
-> Copy `node_modules/@voila.dev/ui/src/components/badge.tsx` into
+> Copy `node_modules/@voila.dev/ui/src/badge/components/badge.tsx` into
 > `src/components/badge.tsx`, add a `beta` variant to the cva block, and update
 > the imports in this feature to use the local copy.
 

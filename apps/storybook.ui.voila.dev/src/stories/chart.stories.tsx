@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Chart, type ChartConfig } from "@voila.dev/ui/chart/chart";
+import { Chart, type ChartConfig } from "@voila.dev/ui/chart";
 import { expect, fireEvent, within } from "storybook/test";
 
 const chartData = [

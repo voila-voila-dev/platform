@@ -13,17 +13,17 @@ import * as Example from "../../../examples/ui/forms";
 </Preview>
 
 ```tsx
-<Select>
-	<SelectTrigger className="w-56">
-		<SelectValue placeholder="Select a specialty" />
-	</SelectTrigger>
-	<SelectContent>
-		<SelectGroup>
-			<SelectLabel>Creative</SelectLabel>
-			<SelectItem value="designer">Designer</SelectItem>
-		</SelectGroup>
-	</SelectContent>
-</Select>
+<Select.Root>
+	<Select.Trigger className="w-56">
+		<Select.Value placeholder="Select a specialty" />
+	</Select.Trigger>
+	<Select.Content>
+		<Select.Group>
+			<Select.Label>Creative</Select.Label>
+			<Select.Item value="designer">Designer</Select.Item>
+		</Select.Group>
+	</Select.Content>
+</Select.Root>
 ```
 
 To show a label rather than the raw value on a controlled select, pass `items`

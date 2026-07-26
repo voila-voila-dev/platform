@@ -39,12 +39,17 @@ bun add @voila.dev/ui
 
 ```css title="globals.css"
 @import "tailwindcss";
+@import "@voila.dev/ui/styles/tokens/colors.css";
+@import "@voila.dev/ui/styles/tokens/typography.css";
+@import "@voila.dev/ui/styles/tokens/animations.css";
 @import "@voila.dev/ui/styles/themes/default.css";
 ```
 
-Or copy the source — it's the same files. A theme is a composition of token
-files (`styles/tokens/colors.css`, `typography.css`, `animations.css`), and it
-reads as well in your repo as in `node_modules`.
+Or copy the source — it's the same files. The token files declare the contract
+(which properties exist, and the Tailwind class names that read them); the theme
+supplies the values. With the components you get all four from
+`styles/globals.css` plus one theme; on its own, list them. Both read as well in
+your repo as in `node_modules`.
 
 Peers: `tailwindcss@4`.
 
@@ -55,6 +60,7 @@ the import, in both themes:
 
 ```css title="globals.css"
 @import "tailwindcss";
+@import "@voila.dev/ui/styles/globals.css";
 @import "@voila.dev/ui/styles/themes/default.css";
 
 :root {

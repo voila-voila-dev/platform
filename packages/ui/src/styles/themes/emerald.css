@@ -1,0 +1,86 @@
+/*
+ * Emerald - the developer-platform look (Supabase): the signature terminal green
+ * over neutrals that stay honestly grey, so the accent never has to compete with
+ * a tinted background. Dark mode is the native habitat here - the green sits at
+ * full strength there and is darkened in light mode so it can carry white text.
+ *
+ * A theme overrides identity tokens only; everything else - charts, badges,
+ * status colours - comes from the default theme it imports.
+ */
+@import "./default.css";
+
+:root {
+	--background: oklch(1 0 0);
+	--foreground: oklch(0.18 0.008 160);
+	--card: oklch(1 0 0);
+	--card-foreground: oklch(0.18 0.008 160);
+	--popover: oklch(1 0 0);
+	--popover-foreground: oklch(0.18 0.008 160);
+
+	--primary: oklch(0.55 0.115 160);
+	--primary-foreground: oklch(0.99 0 0);
+	--secondary: oklch(0.966 0.004 160);
+	--secondary-foreground: oklch(0.26 0.015 160);
+
+	--brand: oklch(0.6 0.13 160);
+	--brand-foreground: oklch(1 0 0);
+	--highlight: oklch(0.762 0.154 159);
+	--highlight-foreground: oklch(0.18 0.008 160);
+
+	--muted: oklch(0.966 0.004 160);
+	--muted-foreground: oklch(0.5 0.01 160);
+	--accent: oklch(0.95 0.014 160);
+	--accent-foreground: oklch(0.3 0.05 160);
+
+	--border: oklch(0.912 0.005 160);
+	--input: oklch(0.912 0.005 160);
+	--ring: oklch(0.6 0.13 160);
+
+	--sidebar: oklch(0.98 0.003 160);
+	--sidebar-foreground: oklch(0.18 0.008 160);
+	--sidebar-primary: oklch(0.55 0.115 160);
+	--sidebar-primary-foreground: oklch(0.99 0 0);
+	--sidebar-accent: oklch(0.95 0.014 160);
+	--sidebar-accent-foreground: oklch(0.3 0.05 160);
+	--sidebar-border: oklch(0.912 0.005 160);
+	--sidebar-ring: oklch(0.6 0.13 160);
+
+	--radius: 0.375rem;
+}
+
+.dark {
+	--background: oklch(0.185 0.002 160);
+	--foreground: oklch(0.965 0.004 160);
+	--card: oklch(0.226 0.003 160);
+	--card-foreground: oklch(0.965 0.004 160);
+	--popover: oklch(0.226 0.003 160);
+	--popover-foreground: oklch(0.965 0.004 160);
+
+	--primary: oklch(0.762 0.154 159);
+	--primary-foreground: oklch(0.185 0.002 160);
+	--secondary: oklch(0.278 0.004 160);
+	--secondary-foreground: oklch(0.965 0.004 160);
+
+	--brand: oklch(0.762 0.154 159);
+	--brand-foreground: oklch(0.185 0.002 160);
+	--highlight: oklch(0.684 0.142 162);
+	--highlight-foreground: oklch(0.185 0.002 160);
+
+	--muted: oklch(0.278 0.004 160);
+	--muted-foreground: oklch(0.72 0.008 160);
+	--accent: oklch(0.31 0.02 160);
+	--accent-foreground: oklch(0.965 0.004 160);
+
+	--border: oklch(0.96 0.01 160 / 12%);
+	--input: oklch(0.96 0.01 160 / 16%);
+	--ring: oklch(0.762 0.154 159);
+
+	--sidebar: oklch(0.208 0.002 160);
+	--sidebar-foreground: oklch(0.965 0.004 160);
+	--sidebar-primary: oklch(0.762 0.154 159);
+	--sidebar-primary-foreground: oklch(0.185 0.002 160);
+	--sidebar-accent: oklch(0.31 0.02 160);
+	--sidebar-accent-foreground: oklch(0.965 0.004 160);
+	--sidebar-border: oklch(0.96 0.01 160 / 12%);
+	--sidebar-ring: oklch(0.762 0.154 159);
+}

@@ -4,7 +4,7 @@ import {
 	FormattedInput,
 	idNumberMask,
 	phoneMask,
-} from "@voila.dev/ui/components/formatted-input";
+} from "@voila.dev/ui/formatted-input";
 import { useState } from "react";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 

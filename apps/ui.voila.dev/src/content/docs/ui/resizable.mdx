@@ -14,14 +14,14 @@ import * as Example from "../../../examples/ui/display";
 
 ```tsx
 <div className="h-48">
-	<ResizablePanelGroup>
-		<ResizablePanel defaultSize={50}>…</ResizablePanel>
-		<ResizableHandle withHandle />
-		<ResizablePanel defaultSize={50}>…</ResizablePanel>
-	</ResizablePanelGroup>
+	<Resizable.PanelGroup>
+		<Resizable.Panel defaultSize={50}>…</Resizable.Panel>
+		<Resizable.Handle withHandle />
+		<Resizable.Panel defaultSize={50}>…</Resizable.Panel>
+	</Resizable.PanelGroup>
 </div>
 ```
 
 The group fills its parent, so the size goes on a wrapper and never on
-`ResizablePanelGroup` itself. A panel with `collapsible` and `collapsedSize={0}`
+`Resizable.PanelGroup` itself. A panel with `collapsible` and `collapsedSize={0}`
 snaps shut when dragged to the edge.

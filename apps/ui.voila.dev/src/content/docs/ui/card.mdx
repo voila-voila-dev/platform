@@ -13,20 +13,20 @@ import * as Example from "../../../examples/ui/display";
 </Preview>
 
 ```tsx
-<Card>
-	<CardHeader>
-		<CardTitle>Brand designer — Launch week</CardTitle>
-		<CardDescription>Northwind Studio · Saturday, June 20</CardDescription>
-		<CardAction><Badge>Open</Badge></CardAction>
-	</CardHeader>
-	<CardContent>…</CardContent>
-	<CardFooter className="justify-end gap-2">
+<Card.Root>
+	<Card.Header>
+		<Card.Title>Brand designer — Launch week</Card.Title>
+		<Card.Description>Northwind Studio · Saturday, June 20</Card.Description>
+		<Card.Action><Badge>Open</Badge></Card.Action>
+	</Card.Header>
+	<Card.Content>…</Card.Content>
+	<Card.Footer className="justify-end gap-2">
 		<Button size="sm">Apply</Button>
-	</CardFooter>
-</Card>
+	</Card.Footer>
+</Card.Root>
 ```
 
-`CardAction` goes inside the header, not after it — the header is a grid and the
+`Card.Action` goes inside the header, not after it — the header is a grid and the
 action occupies its right-hand column.
 
 An `<img>` as the card's first child is detected and bled to the edges, so a

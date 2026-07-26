@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Button } from "@voila.dev/ui/components/button";
-import { Separator } from "@voila.dev/ui/components/separator";
+import { Button } from "@voila.dev/ui/button";
+import { Separator } from "@voila.dev/ui/separator";
 
 const meta = {
 	title: "UI/Separator",

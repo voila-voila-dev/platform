@@ -1,26 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	ContextMenu,
-	ContextMenuCheckboxItem,
-	ContextMenuContent,
-	ContextMenuGroup,
-	ContextMenuItem,
-	ContextMenuLabel,
-	ContextMenuRadioGroup,
-	ContextMenuRadioItem,
-	ContextMenuSeparator,
-	ContextMenuShortcut,
-	ContextMenuSub,
-	ContextMenuSubContent,
-	ContextMenuSubTrigger,
-	ContextMenuTrigger,
-} from "@voila.dev/ui/components/context-menu";
+import { ContextMenu } from "@voila.dev/ui/context-menu";
 
 const meta = {
 	title: "UI/ContextMenu",
-	component: ContextMenu,
+	component: ContextMenu.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof ContextMenu>;
+} satisfies Meta<typeof ContextMenu.Root>;
 
 export default meta;
 
@@ -28,60 +13,62 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<ContextMenu>
-			<ContextMenuTrigger className="flex h-36 w-72 items-center justify-center rounded-xl border border-dashed text-sm text-muted-foreground">
+		<ContextMenu.Root>
+			<ContextMenu.Trigger className="flex h-36 w-72 items-center justify-center rounded-xl border border-dashed text-sm text-muted-foreground">
 				Right-click here
-			</ContextMenuTrigger>
-			<ContextMenuContent>
-				<ContextMenuLabel>Project</ContextMenuLabel>
-				<ContextMenuGroup>
-					<ContextMenuItem>
+			</ContextMenu.Trigger>
+			<ContextMenu.Content>
+				<ContextMenu.Label>Project</ContextMenu.Label>
+				<ContextMenu.Group>
+					<ContextMenu.Item>
 						Edit project
-						<ContextMenuShortcut>⌘E</ContextMenuShortcut>
-					</ContextMenuItem>
-					<ContextMenuItem>
+						<ContextMenu.Shortcut>⌘E</ContextMenu.Shortcut>
+					</ContextMenu.Item>
+					<ContextMenu.Item>
 						Duplicate
-						<ContextMenuShortcut>⌘D</ContextMenuShortcut>
-					</ContextMenuItem>
-				</ContextMenuGroup>
-				<ContextMenuSeparator />
-				<ContextMenuSub>
-					<ContextMenuSubTrigger>Assign freelancer</ContextMenuSubTrigger>
-					<ContextMenuSubContent>
-						<ContextMenuItem>Nathan Guyot</ContextMenuItem>
-						<ContextMenuItem>Marie Lefevre</ContextMenuItem>
-						<ContextMenuItem>Paul Martin</ContextMenuItem>
-					</ContextMenuSubContent>
-				</ContextMenuSub>
-				<ContextMenuSeparator />
-				<ContextMenuItem variant="destructive">Cancel project</ContextMenuItem>
-			</ContextMenuContent>
-		</ContextMenu>
+						<ContextMenu.Shortcut>⌘D</ContextMenu.Shortcut>
+					</ContextMenu.Item>
+				</ContextMenu.Group>
+				<ContextMenu.Separator />
+				<ContextMenu.Sub>
+					<ContextMenu.SubTrigger>Assign freelancer</ContextMenu.SubTrigger>
+					<ContextMenu.SubContent>
+						<ContextMenu.Item>Nathan Guyot</ContextMenu.Item>
+						<ContextMenu.Item>Marie Lefevre</ContextMenu.Item>
+						<ContextMenu.Item>Paul Martin</ContextMenu.Item>
+					</ContextMenu.SubContent>
+				</ContextMenu.Sub>
+				<ContextMenu.Separator />
+				<ContextMenu.Item variant="destructive">
+					Cancel project
+				</ContextMenu.Item>
+			</ContextMenu.Content>
+		</ContextMenu.Root>
 	),
 };
 
 export const WithSelectionItems: Story = {
 	render: () => (
-		<ContextMenu>
-			<ContextMenuTrigger className="flex h-36 w-72 items-center justify-center rounded-xl border border-dashed text-sm text-muted-foreground">
+		<ContextMenu.Root>
+			<ContextMenu.Trigger className="flex h-36 w-72 items-center justify-center rounded-xl border border-dashed text-sm text-muted-foreground">
 				Right-click to configure the planning view
-			</ContextMenuTrigger>
-			<ContextMenuContent>
-				<ContextMenuLabel>Display</ContextMenuLabel>
-				<ContextMenuCheckboxItem defaultChecked>
+			</ContextMenu.Trigger>
+			<ContextMenu.Content>
+				<ContextMenu.Label>Display</ContextMenu.Label>
+				<ContextMenu.CheckboxItem defaultChecked>
 					Show confirmed projects
-				</ContextMenuCheckboxItem>
-				<ContextMenuCheckboxItem>Show drafts</ContextMenuCheckboxItem>
-				<ContextMenuSeparator />
-				<ContextMenuLabel>Sort by</ContextMenuLabel>
-				<ContextMenuRadioGroup defaultValue="date">
-					<ContextMenuRadioItem value="date">Date</ContextMenuRadioItem>
-					<ContextMenuRadioItem value="client">Client</ContextMenuRadioItem>
-					<ContextMenuRadioItem value="freelancer">
+				</ContextMenu.CheckboxItem>
+				<ContextMenu.CheckboxItem>Show drafts</ContextMenu.CheckboxItem>
+				<ContextMenu.Separator />
+				<ContextMenu.Label>Sort by</ContextMenu.Label>
+				<ContextMenu.RadioGroup defaultValue="date">
+					<ContextMenu.RadioItem value="date">Date</ContextMenu.RadioItem>
+					<ContextMenu.RadioItem value="client">Client</ContextMenu.RadioItem>
+					<ContextMenu.RadioItem value="freelancer">
 						Freelancer
-					</ContextMenuRadioItem>
-				</ContextMenuRadioGroup>
-			</ContextMenuContent>
-		</ContextMenu>
+					</ContextMenu.RadioItem>
+				</ContextMenu.RadioGroup>
+			</ContextMenu.Content>
+		</ContextMenu.Root>
 	),
 };

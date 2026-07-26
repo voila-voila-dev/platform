@@ -5,6 +5,16 @@ import {
 	textSpansToPlainText,
 } from "#/email-block-editor/document/rich-text.ts";
 import type { EmailEditorTextSpan } from "#/email-block-editor/document/types.ts";
+import { cn } from "#/lib/utils.ts";
+
+interface Props {
+	spans: ReadonlyArray<EmailEditorTextSpan>;
+	onChange: (spans: ReadonlyArray<EmailEditorTextSpan>) => void;
+	ariaLabel: string;
+	placeholder: string;
+	className?: string;
+	style?: React.CSSProperties;
+}
 
 /**
  * The in-place rich-text surface shared by every block that holds spans (the
@@ -22,14 +32,7 @@ export function RichTextEditable({
 	placeholder,
 	className,
 	style,
-}: {
-	spans: ReadonlyArray<EmailEditorTextSpan>;
-	onChange: (spans: ReadonlyArray<EmailEditorTextSpan>) => void;
-	ariaLabel: string;
-	placeholder: string;
-	className?: string;
-	style?: React.CSSProperties;
-}) {
+}: Props) {
 	const editableRef = useRef<HTMLDivElement>(null);
 	const renderedHtmlRef = useRef<string | null>(null);
 	const html = textSpansToEditorHtml(spans);
@@ -69,19 +72,19 @@ export function RichTextEditable({
 			suppressContentEditableWarning
 			data-placeholder={placeholder}
 			onInput={handleInput}
-			className={
+			className={cn(
 				// `min-h-[1lh]` keeps one line of height while the box is empty: a
 				// collapsed contentEditable would let the absolutely-positioned
 				// placeholder spill over whatever follows the block.
-				`relative min-h-[1lh] w-full whitespace-pre-wrap break-words outline-none [&_a]:text-[#151b77] [&_a]:underline ${className ?? ""} ` +
-				(empty
-					? // `inset-x-0` matters: without horizontal offsets the pseudo-element
-						// takes its static position, which under a centred block starts at
-						// the middle of the line and wraps. Spanning the full width lets it
-						// inherit the block's own text alignment instead.
-						"before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:opacity-40 before:content-[attr(data-placeholder)]"
-					: "")
-			}
+				"relative min-h-[1lh] w-full whitespace-pre-wrap break-words outline-none [&_a]:text-primary [&_a]:underline",
+				className,
+				// `inset-x-0` matters: without horizontal offsets the pseudo-element
+				// takes its static position, which under a centred block starts at the
+				// middle of the line and wraps. Spanning the full width lets it inherit
+				// the block's own text alignment instead.
+				empty &&
+					"before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:opacity-40 before:content-[attr(data-placeholder)]",
+			)}
 			style={style}
 		/>
 	);

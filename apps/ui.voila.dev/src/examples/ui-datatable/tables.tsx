@@ -1,16 +1,10 @@
-import { Badge } from "@voila.dev/ui/components/badge";
+import { Badge } from "@voila.dev/ui/badge";
 import {
 	type ColumnDef,
 	DataTable,
-	DataTableActions,
 	type DataTableDensity,
-	DataTableDensityToggle,
-	DataTableExport,
-	DataTableSearch,
-	DataTableToolbar,
-	DataTableViewOptions,
 	dataTableSelectionColumn,
-} from "@voila.dev/ui/datatable";
+} from "@voila.dev/ui/data-table";
 import { useState } from "react";
 
 interface Project {
@@ -90,7 +84,7 @@ export function Hero() {
 	const [search, setSearch] = useState("");
 	return (
 		<div className="w-full">
-			<DataTable
+			<DataTable.Root
 				columns={[
 					dataTableSelectionColumn<Project>({
 						selectAllLabel: "Select all projects",
@@ -103,17 +97,17 @@ export function Hero() {
 				getRowId={(project) => project.reference}
 				globalFilter={search}
 				toolbar={(table) => (
-					<DataTableToolbar>
-						<DataTableSearch
+					<DataTable.Toolbar>
+						<DataTable.Search
 							value={search}
 							onChange={(event) => setSearch(event.target.value)}
 							placeholder="Search projects"
 						/>
-						<DataTableActions>
-							<DataTableViewOptions table={table} />
-							<DataTableExport table={table} filename="projects.csv" />
-						</DataTableActions>
-					</DataTableToolbar>
+						<DataTable.Actions>
+							<DataTable.ViewOptions table={table} />
+							<DataTable.Export table={table} filename="projects.csv" />
+						</DataTable.Actions>
+					</DataTable.Toolbar>
 				)}
 			/>
 		</div>
@@ -123,7 +117,7 @@ export function Hero() {
 export function Default() {
 	return (
 		<div className="w-full">
-			<DataTable columns={columns} data={PROJECTS} />
+			<DataTable.Root columns={columns} data={PROJECTS} />
 		</div>
 	);
 }
@@ -131,7 +125,7 @@ export function Default() {
 export function Selection() {
 	return (
 		<div className="w-full">
-			<DataTable
+			<DataTable.Root
 				columns={[
 					dataTableSelectionColumn<Project>({
 						selectAllLabel: "Select all projects",
@@ -150,7 +144,7 @@ export function Selection() {
 export function Resizing() {
 	return (
 		<div className="w-full">
-			<DataTable columns={columns} data={PROJECTS} enableColumnResizing />
+			<DataTable.Root columns={columns} data={PROJECTS} enableColumnResizing />
 		</div>
 	);
 }
@@ -159,7 +153,7 @@ export function Pinning() {
 	return (
 		// Narrow on purpose: pinning only shows itself once the table has to pan.
 		<div className="w-full max-w-md">
-			<DataTable
+			<DataTable.Root
 				columns={columns}
 				data={PROJECTS}
 				columnPinning={{ left: ["reference"], right: ["amount"] }}
@@ -171,16 +165,16 @@ export function Pinning() {
 export function ViewOptions() {
 	return (
 		<div className="w-full">
-			<DataTable
+			<DataTable.Root
 				columns={columns}
 				data={PROJECTS}
 				toolbar={(table) => (
-					<DataTableToolbar>
-						<DataTableActions>
-							<DataTableViewOptions table={table} />
-							<DataTableExport table={table} filename="projects.csv" />
-						</DataTableActions>
-					</DataTableToolbar>
+					<DataTable.Toolbar>
+						<DataTable.Actions>
+							<DataTable.ViewOptions table={table} />
+							<DataTable.Export table={table} filename="projects.csv" />
+						</DataTable.Actions>
+					</DataTable.Toolbar>
 				)}
 			/>
 		</div>
@@ -191,19 +185,19 @@ export function Density() {
 	const [density, setDensity] = useState<DataTableDensity>("compact");
 	return (
 		<div className="w-full">
-			<DataTable
+			<DataTable.Root
 				columns={columns}
 				data={PROJECTS}
 				density={density}
 				toolbar={
-					<DataTableToolbar>
-						<DataTableActions>
-							<DataTableDensityToggle
+					<DataTable.Toolbar>
+						<DataTable.Actions>
+							<DataTable.DensityToggle
 								density={density}
 								onDensityChange={setDensity}
 							/>
-						</DataTableActions>
-					</DataTableToolbar>
+						</DataTable.Actions>
+					</DataTable.Toolbar>
 				}
 			/>
 		</div>
@@ -213,7 +207,7 @@ export function Density() {
 export function Expansion() {
 	return (
 		<div className="w-full">
-			<DataTable
+			<DataTable.Root
 				columns={columns}
 				data={PROJECTS}
 				renderExpandedRow={(project) => (
@@ -237,18 +231,18 @@ export function GlobalFilter() {
 	const [search, setSearch] = useState("des");
 	return (
 		<div className="w-full">
-			<DataTable
+			<DataTable.Root
 				columns={columns}
 				data={PROJECTS}
 				globalFilter={search}
 				toolbar={
-					<DataTableToolbar>
-						<DataTableSearch
+					<DataTable.Toolbar>
+						<DataTable.Search
 							value={search}
 							onChange={(event) => setSearch(event.target.value)}
 							placeholder="Search projects"
 						/>
-					</DataTableToolbar>
+					</DataTable.Toolbar>
 				}
 			/>
 		</div>
@@ -258,15 +252,15 @@ export function GlobalFilter() {
 export function Export() {
 	return (
 		<div className="w-full">
-			<DataTable
+			<DataTable.Root
 				columns={columns}
 				data={PROJECTS}
 				toolbar={(table) => (
-					<DataTableToolbar>
-						<DataTableActions>
-							<DataTableExport table={table} filename="projects.csv" />
-						</DataTableActions>
-					</DataTableToolbar>
+					<DataTable.Toolbar>
+						<DataTable.Actions>
+							<DataTable.Export table={table} filename="projects.csv" />
+						</DataTable.Actions>
+					</DataTable.Toolbar>
 				)}
 			/>
 		</div>
@@ -277,7 +271,7 @@ export function Pagination() {
 	const [page, setPage] = useState(0);
 	return (
 		<div className="w-full">
-			<DataTable
+			<DataTable.Root
 				columns={columns}
 				data={PROJECTS.slice(page * 2, page * 2 + 2)}
 				pagination={{

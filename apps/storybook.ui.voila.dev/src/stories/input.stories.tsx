@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Input } from "@voila.dev/ui/components/input";
+import { Input } from "@voila.dev/ui/input";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 
 const meta = {

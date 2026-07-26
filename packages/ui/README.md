@@ -4,8 +4,8 @@ React components in one package, `@voila.dev/ui`. Use them as a dependency or
 make them your own — including the hard ones: email editor, spreadsheet,
 charts, maps.
 
-Every module is its own subpath export (`@voila.dev/ui/components/button`,
-`@voila.dev/ui/chart/chart`, …) and the published output is per-file ESM, so
+Every module is its own subpath export (`@voila.dev/ui/button`,
+`@voila.dev/ui/chart`, …) and the published output is per-file ESM, so
 you only ever bundle what you import. The `src/` `.tsx` files ship alongside
 `dist/`, so your editor and your AI agent both land on real source when they
 open a component.
@@ -24,7 +24,13 @@ bun add @voila.dev/ui
 /* your globals.css */
 @import "tailwindcss";
 @import "@voila.dev/ui/styles/globals.css";
+@import "@voila.dev/ui/styles/themes/default.css";
 ```
+
+Two imports, two jobs: `globals.css` brings the token contract (what a colour is
+called), a theme brings the values (what it is). Swap the second line for
+`indigo`, `iris`, `sand`, `emerald` or `olive` — or your own file — and the
+whole system follows.
 
 The package declares its own Tailwind sources relative to itself, so there is
 no `@source` path to write and no difference between a workspace symlink and a
@@ -41,15 +47,15 @@ One package, one version — each domain behind its own subpath:
 
 | Subpath | |
 | --- | --- |
-| `@voila.dev/ui/components/*` | 85 components, one convention. The floor everything else stands on. |
-| `@voila.dev/ui/styles/themes/default.css` | Your whole brand in one CSS file. Change it, everything follows. |
+| `@voila.dev/ui/<component>` | 85 components, one convention. The floor everything else stands on. |
+| `@voila.dev/ui/styles/themes/*.css` | Your whole brand in one CSS file. Six ship; change it, everything follows. |
 | `@voila.dev/ui/email-block-editor` | The email template editor that lives in your app, not someone else's SaaS. |
-| `@voila.dev/ui/spreadsheet/*` | An editable, virtualized grid your users will mistake for a native app. |
+| `@voila.dev/ui/spreadsheet` | An editable, virtualized grid your users will mistake for a native app. |
 | `@voila.dev/ui/datatable` | Sorting, pinning, CSV export — the table you keep rebuilding, finished. |
-| `@voila.dev/ui/chart/*` | Charts with zero charting library. SVG you can read, scales included. |
-| `@voila.dev/ui/map/*` | Maps and a globe on free vector tiles. No API key, no bundle tax. |
-| `@voila.dev/ui/filter/*` | Composable filters that survive real product requirements — including geo. |
-| `@voila.dev/ui/landing/*` | Your marketing site, from the same system as your product. |
+| `@voila.dev/ui/chart` | Charts with zero charting library. SVG you can read, scales included. |
+| `@voila.dev/ui/map-view`, `@voila.dev/ui/globe-view`, `@voila.dev/ui/radius-map` | Maps and a globe on free vector tiles. No API key, no bundle tax. |
+| `@voila.dev/ui/filter` | Composable filters that survive real product requirements — including geo. |
+| `@voila.dev/ui/landing` | Your marketing site, from the same system as your product. |
 | `@voila.dev/ui/icon` | Icons by name, safe by default — store a string, render an icon. |
 
 `packages/ui-branding` holds the voila.dev brand identity and is deliberately

@@ -1,4 +1,4 @@
-import { cn } from "@voila.dev/ui/lib/utils";
+import { cn } from "@voila.dev/ui/utils";
 
 /**
  * Shared fixtures for the Landing stories: marketing copy for Acme (clients

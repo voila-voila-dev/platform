@@ -19,7 +19,7 @@ const columns: ColumnDef<Project>[] = [
 	{ accessorKey: "amount", header: "Amount", size: 110 },
 ];
 
-<DataTable columns={columns} data={projects} />;
+<DataTable.Root columns={columns} data={projects} />;
 ```
 
 A column with a numeric `size` switches the table to fixed layout, and sized

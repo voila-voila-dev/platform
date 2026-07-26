@@ -1,20 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	Progress,
-	ProgressLabel,
-	ProgressValue,
-} from "@voila.dev/ui/components/progress";
+import { Progress } from "@voila.dev/ui/progress";
 import { expect } from "storybook/test";
 
 const meta = {
 	title: "UI/Progress",
-	component: Progress,
+	component: Progress.Root,
 	tags: ["autodocs"],
 	args: {
 		value: 60,
 		className: "w-80",
 	},
-} satisfies Meta<typeof Progress>;
+} satisfies Meta<typeof Progress.Root>;
 
 export default meta;
 
@@ -39,10 +35,10 @@ export const WithLabelAndValue: Story = {
 		value: 35,
 	},
 	render: (args) => (
-		<Progress {...args}>
-			<ProgressLabel>Profile completion</ProgressLabel>
-			<ProgressValue />
-		</Progress>
+		<Progress.Root {...args}>
+			<Progress.Label>Profile completion</Progress.Label>
+			<Progress.Value />
+		</Progress.Root>
 	),
 };
 
@@ -51,9 +47,9 @@ export const Indeterminate: Story = {
 		value: null,
 	},
 	render: (args) => (
-		<Progress {...args}>
-			<ProgressLabel>Uploading…</ProgressLabel>
-		</Progress>
+		<Progress.Root {...args}>
+			<Progress.Label>Uploading…</Progress.Label>
+		</Progress.Root>
 	),
 };
 
@@ -63,10 +59,10 @@ export const CustomFormat: Story = {
 		max: 2000,
 	},
 	render: (args) => (
-		<Progress {...args}>
-			<ProgressLabel>Storage used</ProgressLabel>
-			<ProgressValue>{(_, value) => `${value} / 2000 MB`}</ProgressValue>
-		</Progress>
+		<Progress.Root {...args}>
+			<Progress.Label>Storage used</Progress.Label>
+			<Progress.Value>{(_, value) => `${value} / 2000 MB`}</Progress.Value>
+		</Progress.Root>
 	),
 };
 

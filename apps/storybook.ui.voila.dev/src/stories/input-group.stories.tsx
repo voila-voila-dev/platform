@@ -1,20 +1,13 @@
 import { CopyIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	InputGroup,
-	InputGroupAddon,
-	InputGroupButton,
-	InputGroupInput,
-	InputGroupText,
-	InputGroupTextarea,
-} from "@voila.dev/ui/components/input-group";
+import { InputGroup } from "@voila.dev/ui/input-group";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 
 const meta = {
 	title: "UI/InputGroup",
-	component: InputGroup,
+	component: InputGroup.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof InputGroup>;
+} satisfies Meta<typeof InputGroup.Root>;
 
 export default meta;
 
@@ -23,12 +16,12 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
 	render: () => (
 		<div className="w-80">
-			<InputGroup>
-				<InputGroupAddon>
+			<InputGroup.Root>
+				<InputGroup.Addon>
 					<MagnifyingGlassIcon />
-				</InputGroupAddon>
-				<InputGroupInput placeholder="Search freelancers..." />
-			</InputGroup>
+				</InputGroup.Addon>
+				<InputGroup.Input placeholder="Search freelancers..." />
+			</InputGroup.Root>
 		</div>
 	),
 };
@@ -36,12 +29,12 @@ export const Default: Story = {
 export const WithPrefixText: Story = {
 	render: () => (
 		<div className="w-80">
-			<InputGroup>
-				<InputGroupAddon>
-					<InputGroupText>https://</InputGroupText>
-				</InputGroupAddon>
-				<InputGroupInput placeholder="your-site.example" />
-			</InputGroup>
+			<InputGroup.Root>
+				<InputGroup.Addon>
+					<InputGroup.Text>https://</InputGroup.Text>
+				</InputGroup.Addon>
+				<InputGroup.Input placeholder="your-site.example" />
+			</InputGroup.Root>
 		</div>
 	),
 };
@@ -49,14 +42,17 @@ export const WithPrefixText: Story = {
 export const WithButton: Story = {
 	render: () => (
 		<div className="w-80">
-			<InputGroup>
-				<InputGroupInput readOnly defaultValue="https://acme.dev/invite/8f2a" />
-				<InputGroupAddon align="inline-end">
-					<InputGroupButton size="icon-xs" aria-label="Copy invite link">
+			<InputGroup.Root>
+				<InputGroup.Input
+					readOnly
+					defaultValue="https://acme.dev/invite/8f2a"
+				/>
+				<InputGroup.Addon align="inline-end">
+					<InputGroup.Button size="icon-xs" aria-label="Copy invite link">
 						<CopyIcon />
-					</InputGroupButton>
-				</InputGroupAddon>
-			</InputGroup>
+					</InputGroup.Button>
+				</InputGroup.Addon>
+			</InputGroup.Root>
 		</div>
 	),
 };
@@ -64,16 +60,16 @@ export const WithButton: Story = {
 export const WithTextarea: Story = {
 	render: () => (
 		<div className="w-80">
-			<InputGroup>
+			<InputGroup.Root>
 				{/* `rows` is inert on the kit Textarea (field-sizing-content) - size with min-h-* instead. */}
-				<InputGroupTextarea
+				<InputGroup.Textarea
 					placeholder="Describe the project for freelancers..."
 					className="min-h-24"
 				/>
-				<InputGroupAddon align="block-end">
-					<InputGroupText>Visible to applicants</InputGroupText>
-				</InputGroupAddon>
-			</InputGroup>
+				<InputGroup.Addon align="block-end">
+					<InputGroup.Text>Visible to applicants</InputGroup.Text>
+				</InputGroup.Addon>
+			</InputGroup.Root>
 		</div>
 	),
 };
@@ -81,12 +77,12 @@ export const WithTextarea: Story = {
 export const WithBlockStartAddon: Story = {
 	render: () => (
 		<div className="w-80">
-			<InputGroup>
-				<InputGroupAddon align="block-start">
-					<InputGroupText>Project brief</InputGroupText>
-				</InputGroupAddon>
-				<InputGroupTextarea placeholder="Describe the project for freelancers..." />
-			</InputGroup>
+			<InputGroup.Root>
+				<InputGroup.Addon align="block-start">
+					<InputGroup.Text>Project brief</InputGroup.Text>
+				</InputGroup.Addon>
+				<InputGroup.Textarea placeholder="Describe the project for freelancers..." />
+			</InputGroup.Root>
 		</div>
 	),
 };
@@ -94,15 +90,15 @@ export const WithBlockStartAddon: Story = {
 export const WithBothAddons: Story = {
 	render: () => (
 		<div className="w-80">
-			<InputGroup>
-				<InputGroupAddon>
-					<InputGroupText>https://</InputGroupText>
-				</InputGroupAddon>
-				<InputGroupInput placeholder="your-site" />
-				<InputGroupAddon align="inline-end">
-					<InputGroupText>.example</InputGroupText>
-				</InputGroupAddon>
-			</InputGroup>
+			<InputGroup.Root>
+				<InputGroup.Addon>
+					<InputGroup.Text>https://</InputGroup.Text>
+				</InputGroup.Addon>
+				<InputGroup.Input placeholder="your-site" />
+				<InputGroup.Addon align="inline-end">
+					<InputGroup.Text>.example</InputGroup.Text>
+				</InputGroup.Addon>
+			</InputGroup.Root>
 		</div>
 	),
 };
@@ -110,12 +106,12 @@ export const WithBothAddons: Story = {
 export const Disabled: Story = {
 	render: () => (
 		<div className="w-80">
-			<InputGroup>
-				<InputGroupAddon>
+			<InputGroup.Root>
+				<InputGroup.Addon>
 					<MagnifyingGlassIcon />
-				</InputGroupAddon>
-				<InputGroupInput placeholder="Search freelancers..." disabled />
-			</InputGroup>
+				</InputGroup.Addon>
+				<InputGroup.Input placeholder="Search freelancers..." disabled />
+			</InputGroup.Root>
 		</div>
 	),
 };
@@ -123,16 +119,16 @@ export const Disabled: Story = {
 export const Invalid: Story = {
 	render: () => (
 		<div className="w-80">
-			<InputGroup>
-				<InputGroupAddon>
-					<InputGroupText>https://</InputGroupText>
-				</InputGroupAddon>
-				<InputGroupInput
+			<InputGroup.Root>
+				<InputGroup.Addon>
+					<InputGroup.Text>https://</InputGroup.Text>
+				</InputGroup.Addon>
+				<InputGroup.Input
 					placeholder="your-site.example"
 					aria-invalid
 					defaultValue="not a url"
 				/>
-			</InputGroup>
+			</InputGroup.Root>
 		</div>
 	),
 };
@@ -144,12 +140,12 @@ export const Invalid: Story = {
 export const ClickAddonToFocus: Story = {
 	render: () => (
 		<div className="w-80">
-			<InputGroup>
-				<InputGroupAddon>
-					<InputGroupText>https://</InputGroupText>
-				</InputGroupAddon>
-				<InputGroupInput placeholder="your-site.example" />
-			</InputGroup>
+			<InputGroup.Root>
+				<InputGroup.Addon>
+					<InputGroup.Text>https://</InputGroup.Text>
+				</InputGroup.Addon>
+				<InputGroup.Input placeholder="your-site.example" />
+			</InputGroup.Root>
 		</div>
 	),
 	play: async ({ canvasElement }) => {

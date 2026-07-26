@@ -1,19 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	Pagination,
-	PaginationContent,
-	PaginationEllipsis,
-	PaginationItem,
-	PaginationLink,
-	PaginationNext,
-	PaginationPrevious,
-} from "@voila.dev/ui/components/pagination";
+import { Pagination } from "@voila.dev/ui/pagination";
 
 const meta = {
 	title: "UI/Pagination",
-	component: Pagination,
+	component: Pagination.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof Pagination>;
+} satisfies Meta<typeof Pagination.Root>;
 
 export default meta;
 
@@ -21,75 +13,75 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<Pagination>
-			<PaginationContent>
-				<PaginationItem>
-					<PaginationPrevious href="#" />
-				</PaginationItem>
-				<PaginationItem>
-					<PaginationLink href="#">1</PaginationLink>
-				</PaginationItem>
-				<PaginationItem>
-					<PaginationLink href="#" isActive>
+		<Pagination.Root>
+			<Pagination.Content>
+				<Pagination.Item>
+					<Pagination.Previous href="#" />
+				</Pagination.Item>
+				<Pagination.Item>
+					<Pagination.Link href="#">1</Pagination.Link>
+				</Pagination.Item>
+				<Pagination.Item>
+					<Pagination.Link href="#" isActive>
 						2
-					</PaginationLink>
-				</PaginationItem>
-				<PaginationItem>
-					<PaginationLink href="#">3</PaginationLink>
-				</PaginationItem>
-				<PaginationItem>
-					<PaginationEllipsis />
-				</PaginationItem>
-				<PaginationItem>
-					<PaginationLink href="#">12</PaginationLink>
-				</PaginationItem>
-				<PaginationItem>
-					<PaginationNext href="#" />
-				</PaginationItem>
-			</PaginationContent>
-		</Pagination>
+					</Pagination.Link>
+				</Pagination.Item>
+				<Pagination.Item>
+					<Pagination.Link href="#">3</Pagination.Link>
+				</Pagination.Item>
+				<Pagination.Item>
+					<Pagination.Ellipsis />
+				</Pagination.Item>
+				<Pagination.Item>
+					<Pagination.Link href="#">12</Pagination.Link>
+				</Pagination.Item>
+				<Pagination.Item>
+					<Pagination.Next href="#" />
+				</Pagination.Item>
+			</Pagination.Content>
+		</Pagination.Root>
 	),
 };
 
 export const PreviousNextOnly: Story = {
 	render: () => (
-		<Pagination>
-			<PaginationContent>
-				<PaginationItem>
-					<PaginationPrevious href="#" />
-				</PaginationItem>
-				<PaginationItem>
-					<PaginationNext href="#" />
-				</PaginationItem>
-			</PaginationContent>
-		</Pagination>
+		<Pagination.Root>
+			<Pagination.Content>
+				<Pagination.Item>
+					<Pagination.Previous href="#" />
+				</Pagination.Item>
+				<Pagination.Item>
+					<Pagination.Next href="#" />
+				</Pagination.Item>
+			</Pagination.Content>
+		</Pagination.Root>
 	),
 };
 
 // First page: Previous is disabled (dimmed, not focusable, no navigation).
 export const FirstPage: Story = {
 	render: () => (
-		<Pagination>
-			<PaginationContent>
-				<PaginationItem>
-					<PaginationPrevious href="#" isDisabled />
-				</PaginationItem>
-				<PaginationItem>
-					<PaginationLink href="#" isActive>
+		<Pagination.Root>
+			<Pagination.Content>
+				<Pagination.Item>
+					<Pagination.Previous href="#" isDisabled />
+				</Pagination.Item>
+				<Pagination.Item>
+					<Pagination.Link href="#" isActive>
 						1
-					</PaginationLink>
-				</PaginationItem>
-				<PaginationItem>
-					<PaginationLink href="#">2</PaginationLink>
-				</PaginationItem>
-				<PaginationItem>
-					<PaginationLink href="#">3</PaginationLink>
-				</PaginationItem>
-				<PaginationItem>
-					<PaginationNext href="#" />
-				</PaginationItem>
-			</PaginationContent>
-		</Pagination>
+					</Pagination.Link>
+				</Pagination.Item>
+				<Pagination.Item>
+					<Pagination.Link href="#">2</Pagination.Link>
+				</Pagination.Item>
+				<Pagination.Item>
+					<Pagination.Link href="#">3</Pagination.Link>
+				</Pagination.Item>
+				<Pagination.Item>
+					<Pagination.Next href="#" />
+				</Pagination.Item>
+			</Pagination.Content>
+		</Pagination.Root>
 	),
 };
 
@@ -97,44 +89,44 @@ export const FirstPage: Story = {
 export const Sizes: Story = {
 	render: () => (
 		<div className="flex flex-col gap-4">
-			<Pagination>
-				<PaginationContent>
-					<PaginationItem>
-						<PaginationLink href="#" size="icon-sm">
+			<Pagination.Root>
+				<Pagination.Content>
+					<Pagination.Item>
+						<Pagination.Link href="#" size="icon-sm">
 							1
-						</PaginationLink>
-					</PaginationItem>
-					<PaginationItem>
-						<PaginationLink href="#" size="icon-sm" isActive>
+						</Pagination.Link>
+					</Pagination.Item>
+					<Pagination.Item>
+						<Pagination.Link href="#" size="icon-sm" isActive>
 							2
-						</PaginationLink>
-					</PaginationItem>
-					<PaginationItem>
-						<PaginationLink href="#" size="icon-sm">
+						</Pagination.Link>
+					</Pagination.Item>
+					<Pagination.Item>
+						<Pagination.Link href="#" size="icon-sm">
 							3
-						</PaginationLink>
-					</PaginationItem>
-				</PaginationContent>
-			</Pagination>
-			<Pagination>
-				<PaginationContent>
-					<PaginationItem>
-						<PaginationLink href="#" size="icon-lg">
+						</Pagination.Link>
+					</Pagination.Item>
+				</Pagination.Content>
+			</Pagination.Root>
+			<Pagination.Root>
+				<Pagination.Content>
+					<Pagination.Item>
+						<Pagination.Link href="#" size="icon-lg">
 							1
-						</PaginationLink>
-					</PaginationItem>
-					<PaginationItem>
-						<PaginationLink href="#" size="icon-lg" isActive>
+						</Pagination.Link>
+					</Pagination.Item>
+					<Pagination.Item>
+						<Pagination.Link href="#" size="icon-lg" isActive>
 							2
-						</PaginationLink>
-					</PaginationItem>
-					<PaginationItem>
-						<PaginationLink href="#" size="icon-lg">
+						</Pagination.Link>
+					</Pagination.Item>
+					<Pagination.Item>
+						<Pagination.Link href="#" size="icon-lg">
 							3
-						</PaginationLink>
-					</PaginationItem>
-				</PaginationContent>
-			</Pagination>
+						</Pagination.Link>
+					</Pagination.Item>
+				</Pagination.Content>
+			</Pagination.Root>
 		</div>
 	),
 };

@@ -13,11 +13,11 @@ import * as Example from "../../../examples/ui/forms";
 </Preview>
 
 ```tsx
-<NativeSelect defaultValue="design">
-	<NativeSelectOptGroup label="Creative">
-		<NativeSelectOption value="design">Design</NativeSelectOption>
-	</NativeSelectOptGroup>
-</NativeSelect>
+<NativeSelect.Root defaultValue="design">
+	<NativeSelect.OptGroup label="Creative">
+		<NativeSelect.Option value="design">Design</NativeSelect.Option>
+	</NativeSelect.OptGroup>
+</NativeSelect.Root>
 ```
 
 No portal, no JavaScript for the popup: the OS draws the list. That makes it

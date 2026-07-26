@@ -1,16 +1,10 @@
 import { CaretDownIcon } from "@phosphor-icons/react";
 import type * as React from "react";
-import {
-	Popover,
-	PopoverContent,
-	PopoverDescription,
-	PopoverHeader,
-	PopoverTitle,
-	PopoverTrigger,
-} from "#/components/popover.tsx";
 import { cn } from "#/lib/utils.ts";
+import { Popover } from "#/popover/components/popover.tsx";
 
-type NestedTableInputProps = {
+interface Props
+	extends Omit<React.ComponentProps<"button">, "children" | "title"> {
 	/**
 	 * What the closed cell reads, e.g. "2 paliers" or an em-dash when empty.
 	 * The cell is a summary; the detail lives in the popover.
@@ -29,7 +23,7 @@ type NestedTableInputProps = {
 	/** Width of the popover; the nested table sets its own column widths. */
 	contentClassName?: string;
 	className?: string;
-} & Omit<React.ComponentProps<"button">, "children" | "title">;
+}
 
 /**
  * A cell whose value is a whole sub-table rather than a scalar: it renders a
@@ -41,7 +35,7 @@ type NestedTableInputProps = {
  * The nested content is passed as children, so this stays agnostic about what
  * it hosts and is reusable for any per-row collection.
  */
-function NestedTableInput({
+export function NestedTableInput({
 	summary,
 	ariaLabel,
 	title,
@@ -51,10 +45,10 @@ function NestedTableInput({
 	contentClassName,
 	className,
 	...props
-}: NestedTableInputProps) {
+}: Props) {
 	return (
-		<Popover>
-			<PopoverTrigger
+		<Popover.Root>
+			<Popover.Trigger
 				data-slot="nested-table-input"
 				aria-label={ariaLabel}
 				aria-invalid={invalid}
@@ -68,18 +62,16 @@ function NestedTableInput({
 			>
 				<span className="truncate">{summary}</span>
 				<CaretDownIcon className="size-3.5 shrink-0 text-muted-foreground" />
-			</PopoverTrigger>
-			<PopoverContent className={cn("w-96", contentClassName)} align="start">
-				<PopoverHeader>
-					<PopoverTitle>{title}</PopoverTitle>
+			</Popover.Trigger>
+			<Popover.Content className={cn("w-96", contentClassName)} align="start">
+				<Popover.Header>
+					<Popover.Title>{title}</Popover.Title>
 					{description === undefined ? null : (
-						<PopoverDescription>{description}</PopoverDescription>
+						<Popover.Description>{description}</Popover.Description>
 					)}
-				</PopoverHeader>
+				</Popover.Header>
 				{children}
-			</PopoverContent>
-		</Popover>
+			</Popover.Content>
+		</Popover.Root>
 	);
 }
-
-export { NestedTableInput, type NestedTableInputProps };

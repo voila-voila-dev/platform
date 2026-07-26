@@ -8,20 +8,20 @@ import { cn } from "#/lib/utils.ts";
  * zero baseline a chart with negative values needs in order to be readable.
  */
 
-export interface ChartReferenceLineProps extends React.ComponentProps<"g"> {
+interface Props extends React.ComponentProps<"g"> {
 	/** Position on the value axis. */
 	readonly value: number;
 	readonly label?: string;
 	readonly strokeDasharray?: string;
 }
 
-function ChartReferenceLine({
+export function ChartReferenceLine({
 	className,
 	value,
 	label,
 	strokeDasharray = "4 4",
 	...props
-}: ChartReferenceLineProps) {
+}: Props) {
 	const { valueScale, orientation, innerWidth, innerHeight } =
 		useChartContext();
 	const offset = valueScale.scale(value);
@@ -55,5 +55,3 @@ function ChartReferenceLine({
 		</g>
 	);
 }
-
-export { ChartReferenceLine };

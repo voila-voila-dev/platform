@@ -1,22 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Button } from "@voila.dev/ui/components/button";
-import {
-	Drawer,
-	DrawerClose,
-	DrawerContent,
-	DrawerDescription,
-	DrawerFooter,
-	DrawerHeader,
-	DrawerTitle,
-	DrawerTrigger,
-} from "@voila.dev/ui/components/drawer";
+import { Button } from "@voila.dev/ui/button";
+import { Drawer } from "@voila.dev/ui/drawer";
 import { useState } from "react";
 
 const meta = {
 	title: "UI/Drawer",
-	component: Drawer,
+	component: Drawer.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof Drawer>;
+} satisfies Meta<typeof Drawer.Root>;
 
 export default meta;
 
@@ -24,105 +15,105 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<Drawer>
-			<DrawerTrigger asChild>
+		<Drawer.Root>
+			<Drawer.Trigger asChild>
 				<Button variant="outline">View project details</Button>
-			</DrawerTrigger>
-			<DrawerContent>
-				<DrawerHeader>
-					<DrawerTitle>Landing page redesign</DrawerTitle>
-					<DrawerDescription>
+			</Drawer.Trigger>
+			<Drawer.Content>
+				<Drawer.Header>
+					<Drawer.Title>Landing page redesign</Drawer.Title>
+					<Drawer.Description>
 						Remote, kickoff Monday at 14:00. One product designer requested.
-					</DrawerDescription>
-				</DrawerHeader>
+					</Drawer.Description>
+				</Drawer.Header>
 				<div className="px-4 text-sm text-muted-foreground">
 					The freelancer should join the kickoff call a few minutes early and
 					log any blockers in the project report after each milestone.
 				</div>
-				<DrawerFooter>
+				<Drawer.Footer>
 					<Button>Apply to this project</Button>
-					<DrawerClose asChild>
+					<Drawer.Close asChild>
 						<Button variant="outline">Close</Button>
-					</DrawerClose>
-				</DrawerFooter>
-			</DrawerContent>
-		</Drawer>
+					</Drawer.Close>
+				</Drawer.Footer>
+			</Drawer.Content>
+		</Drawer.Root>
 	),
 };
 
 export const FromRight: Story = {
 	render: () => (
-		<Drawer direction="right">
-			<DrawerTrigger asChild>
+		<Drawer.Root direction="right">
+			<Drawer.Trigger asChild>
 				<Button variant="outline">Open side drawer</Button>
-			</DrawerTrigger>
-			<DrawerContent>
-				<DrawerHeader>
-					<DrawerTitle>Freelancer profile</DrawerTitle>
-					<DrawerDescription>
+			</Drawer.Trigger>
+			<Drawer.Content>
+				<Drawer.Header>
+					<Drawer.Title>Freelancer profile</Drawer.Title>
+					<Drawer.Description>
 						Nathan Guyot — Product designer, available part-time.
-					</DrawerDescription>
-				</DrawerHeader>
-				<DrawerFooter>
+					</Drawer.Description>
+				</Drawer.Header>
+				<Drawer.Footer>
 					<Button>Book freelancer</Button>
-					<DrawerClose asChild>
+					<Drawer.Close asChild>
 						<Button variant="outline">Close</Button>
-					</DrawerClose>
-				</DrawerFooter>
-			</DrawerContent>
-		</Drawer>
+					</Drawer.Close>
+				</Drawer.Footer>
+			</Drawer.Content>
+		</Drawer.Root>
 	),
 };
 
 export const FromLeft: Story = {
 	render: () => (
-		<Drawer direction="left">
-			<DrawerTrigger asChild>
+		<Drawer.Root direction="left">
+			<Drawer.Trigger asChild>
 				<Button variant="outline">Open navigation drawer</Button>
-			</DrawerTrigger>
-			<DrawerContent>
-				<DrawerHeader>
-					<DrawerTitle>Workspace menu</DrawerTitle>
-					<DrawerDescription>
+			</Drawer.Trigger>
+			<Drawer.Content>
+				<Drawer.Header>
+					<Drawer.Title>Workspace menu</Drawer.Title>
+					<Drawer.Description>
 						Browse projects, freelancers and billing for your workspace.
-					</DrawerDescription>
-				</DrawerHeader>
-			</DrawerContent>
-		</Drawer>
+					</Drawer.Description>
+				</Drawer.Header>
+			</Drawer.Content>
+		</Drawer.Root>
 	),
 };
 
 export const FromTop: Story = {
 	render: () => (
-		<Drawer direction="top">
-			<DrawerTrigger asChild>
+		<Drawer.Root direction="top">
+			<Drawer.Trigger asChild>
 				<Button variant="outline">Open top drawer</Button>
-			</DrawerTrigger>
-			<DrawerContent>
-				<DrawerHeader>
-					<DrawerTitle>New project published</DrawerTitle>
-					<DrawerDescription>
+			</Drawer.Trigger>
+			<Drawer.Content>
+				<Drawer.Header>
+					<Drawer.Title>New project published</Drawer.Title>
+					<Drawer.Description>
 						A client is looking for a product designer starting this week.
-					</DrawerDescription>
-				</DrawerHeader>
-			</DrawerContent>
-		</Drawer>
+					</Drawer.Description>
+				</Drawer.Header>
+			</Drawer.Content>
+		</Drawer.Root>
 	),
 };
 
 export const ScrollableContent: Story = {
 	render: () => (
-		<Drawer>
-			<DrawerTrigger asChild>
+		<Drawer.Root>
+			<Drawer.Trigger asChild>
 				<Button variant="outline">Read project brief</Button>
-			</DrawerTrigger>
-			<DrawerContent>
-				<DrawerHeader>
-					<DrawerTitle>Project brief</DrawerTitle>
-					<DrawerDescription>
+			</Drawer.Trigger>
+			<Drawer.Content>
+				<Drawer.Header>
+					<Drawer.Title>Project brief</Drawer.Title>
+					<Drawer.Description>
 						Everything to know before the kickoff call.
-					</DrawerDescription>
-				</DrawerHeader>
+					</Drawer.Description>
+				</Drawer.Header>
 				<div className="overflow-y-auto px-4">
 					{Array.from({ length: 30 }, (_, index) => (
 						<p
@@ -134,13 +125,13 @@ export const ScrollableContent: Story = {
 						</p>
 					))}
 				</div>
-				<DrawerFooter>
-					<DrawerClose asChild>
+				<Drawer.Footer>
+					<Drawer.Close asChild>
 						<Button variant="outline">Close</Button>
-					</DrawerClose>
-				</DrawerFooter>
-			</DrawerContent>
-		</Drawer>
+					</Drawer.Close>
+				</Drawer.Footer>
+			</Drawer.Content>
+		</Drawer.Root>
 	),
 };
 
@@ -150,21 +141,21 @@ export const SnapPoints: Story = {
 			number | string | null
 		>(0.5);
 		return (
-			<Drawer
+			<Drawer.Root
 				snapPoints={[0.5, 1]}
 				activeSnapPoint={activeSnapPoint}
 				setActiveSnapPoint={setActiveSnapPoint}
 			>
-				<DrawerTrigger asChild>
+				<Drawer.Trigger asChild>
 					<Button variant="outline">Open snap drawer</Button>
-				</DrawerTrigger>
-				<DrawerContent className="h-full data-[vaul-drawer-direction=bottom]:max-h-full">
-					<DrawerHeader>
-						<DrawerTitle>Open projects</DrawerTitle>
-						<DrawerDescription>
+				</Drawer.Trigger>
+				<Drawer.Content className="h-full data-[vaul-drawer-direction=bottom]:max-h-full">
+					<Drawer.Header>
+						<Drawer.Title>Open projects</Drawer.Title>
+						<Drawer.Description>
 							Drag the handle up to expand the list.
-						</DrawerDescription>
-					</DrawerHeader>
+						</Drawer.Description>
+					</Drawer.Header>
 					<div className="overflow-y-auto px-4">
 						{Array.from({ length: 12 }, (_, index) => (
 							<p
@@ -175,8 +166,8 @@ export const SnapPoints: Story = {
 							</p>
 						))}
 					</div>
-				</DrawerContent>
-			</Drawer>
+				</Drawer.Content>
+			</Drawer.Root>
 		);
 	},
 };
@@ -189,19 +180,19 @@ export const Controlled: Story = {
 				<Button variant="outline" onClick={() => setOpen(true)}>
 					Open from outside
 				</Button>
-				<Drawer open={open} onOpenChange={setOpen}>
-					<DrawerContent>
-						<DrawerHeader>
-							<DrawerTitle>Application sent</DrawerTitle>
-							<DrawerDescription>
+				<Drawer.Root open={open} onOpenChange={setOpen}>
+					<Drawer.Content>
+						<Drawer.Header>
+							<Drawer.Title>Application sent</Drawer.Title>
+							<Drawer.Description>
 								The client will get back to you within 48 hours.
-							</DrawerDescription>
-						</DrawerHeader>
-						<DrawerFooter>
+							</Drawer.Description>
+						</Drawer.Header>
+						<Drawer.Footer>
 							<Button onClick={() => setOpen(false)}>Got it</Button>
-						</DrawerFooter>
-					</DrawerContent>
-				</Drawer>
+						</Drawer.Footer>
+					</Drawer.Content>
+				</Drawer.Root>
 			</div>
 		);
 	},

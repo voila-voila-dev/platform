@@ -5,7 +5,7 @@ import {
 	LinkedinLogoIcon,
 } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { SiteFooter } from "@voila.dev/ui/landing/site-footer";
+import { SiteFooter } from "@voila.dev/ui/landing";
 import { BrandLogo, footerNavigation } from "./landing-fixtures";
 
 const meta = {

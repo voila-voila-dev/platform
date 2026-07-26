@@ -3,104 +3,31 @@ import {
 	CalendarIcon,
 	CodeIcon,
 } from "@phosphor-icons/react";
-import { AspectRatio } from "@voila.dev/ui/components/aspect-ratio";
-import {
-	Avatar,
-	AvatarBadge,
-	AvatarFallback,
-	AvatarGroup,
-	AvatarGroupCount,
-	AvatarImage,
-} from "@voila.dev/ui/components/avatar";
-import { Badge } from "@voila.dev/ui/components/badge";
-import { Button } from "@voila.dev/ui/components/button";
-import {
-	ButtonGroup,
-	ButtonGroupSeparator,
-	ButtonGroupText,
-} from "@voila.dev/ui/components/button-group";
-import {
-	Card,
-	CardAction,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@voila.dev/ui/components/card";
-import {
-	Carousel,
-	CarouselContent,
-	CarouselDots,
-	CarouselItem,
-	CarouselNext,
-	CarouselPrevious,
-} from "@voila.dev/ui/components/carousel";
-import {
-	ChatComposer,
-	ChatConversationItem,
-	ChatDateSeparator,
-	ChatMessage,
-	ChatMessageGroup,
-	ChatMessageList,
-	ChatMessageSender,
-	ChatMessageTime,
-} from "@voila.dev/ui/components/chat";
-import { Chip, ChipRemove } from "@voila.dev/ui/components/chip";
-import { CopyableText } from "@voila.dev/ui/components/copyable-text";
-import { DirectionProvider } from "@voila.dev/ui/components/direction";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger,
-} from "@voila.dev/ui/components/dropdown-menu";
-import { Gallery } from "@voila.dev/ui/components/gallery";
-import {
-	Item,
-	ItemActions,
-	ItemContent,
-	ItemDescription,
-	ItemMedia,
-	ItemTitle,
-} from "@voila.dev/ui/components/item";
-import { Kbd, KbdGroup } from "@voila.dev/ui/components/kbd";
-import { List, ListItem } from "@voila.dev/ui/components/list";
-import { ProfileHeader } from "@voila.dev/ui/components/profile-header";
-import {
-	ResizableHandle,
-	ResizablePanel,
-	ResizablePanelGroup,
-} from "@voila.dev/ui/components/resizable";
-import { ScrollArea } from "@voila.dev/ui/components/scroll-area";
-import {
-	Section,
-	SectionActions,
-	SectionDescription,
-	SectionHeader,
-	SectionHeading,
-	SectionTitle,
-} from "@voila.dev/ui/components/section";
-import { Separator } from "@voila.dev/ui/components/separator";
-import { Shortcut } from "@voila.dev/ui/components/shortcut";
-import {
-	StatCard,
-	StatCardDelta,
-	StatCardHeader,
-	StatCardLabel,
-	StatCardValue,
-} from "@voila.dev/ui/components/stat-card";
-import {
-	Table,
-	TableBody,
-	TableCaption,
-	TableCell,
-	TableFooter,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "@voila.dev/ui/components/table";
-import { UserAvatar } from "@voila.dev/ui/components/user-avatar";
+import { AspectRatio } from "@voila.dev/ui/aspect-ratio";
+import { Avatar } from "@voila.dev/ui/avatar";
+import { Badge } from "@voila.dev/ui/badge";
+import { Button } from "@voila.dev/ui/button";
+import { ButtonGroup } from "@voila.dev/ui/button-group";
+import { Card } from "@voila.dev/ui/card";
+import { Carousel } from "@voila.dev/ui/carousel";
+import { Chat } from "@voila.dev/ui/chat";
+import { Chip } from "@voila.dev/ui/chip";
+import { CopyableText } from "@voila.dev/ui/copyable-text";
+import { DirectionProvider } from "@voila.dev/ui/direction";
+import { DropdownMenu } from "@voila.dev/ui/dropdown-menu";
+import { Gallery } from "@voila.dev/ui/gallery";
+import { Item } from "@voila.dev/ui/item";
+import { Kbd } from "@voila.dev/ui/kbd";
+import { List } from "@voila.dev/ui/list";
+import { ProfileHeader } from "@voila.dev/ui/profile-header";
+import { Resizable } from "@voila.dev/ui/resizable";
+import { ScrollArea } from "@voila.dev/ui/scroll-area";
+import { Section } from "@voila.dev/ui/section";
+import { Separator } from "@voila.dev/ui/separator";
+import { Shortcut } from "@voila.dev/ui/shortcut";
+import { StatCard } from "@voila.dev/ui/stat-card";
+import { Table } from "@voila.dev/ui/table";
+import { UserAvatar } from "@voila.dev/ui/user-avatar";
 import { useState } from "react";
 
 const coverImage = `data:image/svg+xml;utf8,${encodeURIComponent(
@@ -113,27 +40,27 @@ const coverImage = `data:image/svg+xml;utf8,${encodeURIComponent(
 
 export function CardExample() {
 	return (
-		<Card className="w-full max-w-96">
-			<CardHeader>
-				<CardTitle>Product designer — Launch week</CardTitle>
-				<CardDescription>Northgate Labs · Saturday, June 20</CardDescription>
-				<CardAction>
+		<Card.Root className="w-full max-w-96">
+			<Card.Header>
+				<Card.Title>Product designer — Launch week</Card.Title>
+				<Card.Description>Northgate Labs · Saturday, June 20</Card.Description>
+				<Card.Action>
 					<Badge>Open</Badge>
-				</CardAction>
-			</CardHeader>
-			<CardContent>
+				</Card.Action>
+			</Card.Header>
+			<Card.Content>
 				<p>
 					End-to-end design support for the launch sprint, including asset
 					production and final design QA.
 				</p>
-			</CardContent>
-			<CardFooter className="justify-end gap-2">
+			</Card.Content>
+			<Card.Footer className="justify-end gap-2">
 				<Button variant="outline" size="sm">
 					View details
 				</Button>
 				<Button size="sm">Apply</Button>
-			</CardFooter>
-		</Card>
+			</Card.Footer>
+		</Card.Root>
 	);
 }
 
@@ -144,29 +71,32 @@ export function CardExample() {
 export function AvatarExample() {
 	return (
 		<>
-			<Avatar size="sm">
-				<AvatarFallback>CD</AvatarFallback>
-			</Avatar>
-			<Avatar>
-				<AvatarImage src="https://github.com/shadcn.png" alt="Camille Dubois" />
-				<AvatarFallback>CD</AvatarFallback>
-			</Avatar>
-			<Avatar size="lg">
-				<AvatarFallback>CD</AvatarFallback>
-				<AvatarBadge />
-			</Avatar>
-			<AvatarGroup>
-				<Avatar>
-					<AvatarFallback>CD</AvatarFallback>
-				</Avatar>
-				<Avatar>
-					<AvatarFallback>NG</AvatarFallback>
-				</Avatar>
-				<Avatar>
-					<AvatarFallback>ML</AvatarFallback>
-				</Avatar>
-				<AvatarGroupCount>+4</AvatarGroupCount>
-			</AvatarGroup>
+			<Avatar.Root size="sm">
+				<Avatar.Fallback>CD</Avatar.Fallback>
+			</Avatar.Root>
+			<Avatar.Root>
+				<Avatar.Image
+					src="https://github.com/shadcn.png"
+					alt="Camille Dubois"
+				/>
+				<Avatar.Fallback>CD</Avatar.Fallback>
+			</Avatar.Root>
+			<Avatar.Root size="lg">
+				<Avatar.Fallback>CD</Avatar.Fallback>
+				<Avatar.Badge />
+			</Avatar.Root>
+			<Avatar.Group>
+				<Avatar.Root>
+					<Avatar.Fallback>CD</Avatar.Fallback>
+				</Avatar.Root>
+				<Avatar.Root>
+					<Avatar.Fallback>NG</Avatar.Fallback>
+				</Avatar.Root>
+				<Avatar.Root>
+					<Avatar.Fallback>ML</Avatar.Fallback>
+				</Avatar.Root>
+				<Avatar.GroupCount>+4</Avatar.GroupCount>
+			</Avatar.Group>
 		</>
 	);
 }
@@ -188,7 +118,7 @@ export function UserAvatarExample() {
 
 export function ProfileHeaderExample() {
 	return (
-		<ProfileHeader
+		<ProfileHeader.Root
 			className="w-full rounded-xl border"
 			name="Camille Dubois"
 			headline="Freelance product designer"
@@ -212,20 +142,20 @@ export function ProfileHeaderExample() {
 export function StatCardExample() {
 	return (
 		<div className="grid w-full gap-4 sm:grid-cols-2">
-			<StatCard>
-				<StatCardHeader>
-					<StatCardLabel>Projects published</StatCardLabel>
-				</StatCardHeader>
-				<StatCardValue>38</StatCardValue>
-				<StatCardDelta trend="up">+12% vs. last month</StatCardDelta>
-			</StatCard>
-			<StatCard>
-				<StatCardHeader>
-					<StatCardLabel>Cancellations</StatCardLabel>
-				</StatCardHeader>
-				<StatCardValue>17</StatCardValue>
-				<StatCardDelta trend="down">-8% vs. last month</StatCardDelta>
-			</StatCard>
+			<StatCard.Root>
+				<StatCard.Header>
+					<StatCard.Label>Projects published</StatCard.Label>
+				</StatCard.Header>
+				<StatCard.Value>38</StatCard.Value>
+				<StatCard.Delta trend="up">+12% vs. last month</StatCard.Delta>
+			</StatCard.Root>
+			<StatCard.Root>
+				<StatCard.Header>
+					<StatCard.Label>Cancellations</StatCard.Label>
+				</StatCard.Header>
+				<StatCard.Value>17</StatCard.Value>
+				<StatCard.Delta trend="down">-8% vs. last month</StatCard.Delta>
+			</StatCard.Root>
 		</div>
 	);
 }
@@ -236,62 +166,62 @@ export function StatCardExample() {
 
 export function ItemExample() {
 	return (
-		<Item variant="outline" className="w-full max-w-md">
-			<ItemMedia variant="icon">
+		<Item.Root variant="outline" className="w-full max-w-md">
+			<Item.Media variant="icon">
 				<CalendarCheckIcon />
-			</ItemMedia>
-			<ItemContent>
-				<ItemTitle>Landing page redesign</ItemTitle>
-				<ItemDescription>
+			</Item.Media>
+			<Item.Content>
+				<Item.Title>Landing page redesign</Item.Title>
+				<Item.Description>
 					Designer needed for the marketing site refresh, June 14 through June
 					18.
-				</ItemDescription>
-			</ItemContent>
-			<ItemActions>
+				</Item.Description>
+			</Item.Content>
+			<Item.Actions>
 				<Button size="sm" variant="outline">
 					Apply
 				</Button>
-			</ItemActions>
-		</Item>
+			</Item.Actions>
+		</Item.Root>
 	);
 }
 
 export function ListExample() {
 	return (
-		<List aria-label="Open projects" className="w-full max-w-md">
-			<ListItem variant="outline">
-				<ItemMedia variant="icon">
+		<List.Root aria-label="Open projects" className="w-full max-w-md">
+			<List.Item variant="outline">
+				<Item.Media variant="icon">
 					<CalendarCheckIcon />
-				</ItemMedia>
-				<ItemContent>
-					<ItemTitle>Landing page redesign</ItemTitle>
-					<ItemDescription>
+				</Item.Media>
+				<Item.Content>
+					<Item.Title>Landing page redesign</Item.Title>
+					<Item.Description>
 						Designer for the marketing site refresh, June 14.
-					</ItemDescription>
-				</ItemContent>
-				<ItemActions>
+					</Item.Description>
+				</Item.Content>
+				<Item.Actions>
 					<Button size="sm" variant="outline">
 						Apply
 					</Button>
-				</ItemActions>
-			</ListItem>
-			<ListItem variant="outline">
-				<ItemMedia variant="icon">
+				</Item.Actions>
+			</List.Item>
+			<List.Item variant="outline">
+				<Item.Media variant="icon">
 					<CodeIcon />
-				</ItemMedia>
-				<ItemContent>
-					<ItemTitle>API integration sprint</ItemTitle>
-					<ItemDescription>
+				</Item.Media>
+				<Item.Content>
+					<Item.Title>API integration sprint</Item.Title>
+					<Item.Description>
 						Two developers for the billing API integration, June 21.
-					</ItemDescription>
-				</ItemContent>
-				<ItemActions>
+					</Item.Description>
+				</Item.Content>
+				<Item.Actions>
 					<Button size="sm" variant="outline">
 						Apply
 					</Button>
-				</ItemActions>
-			</ListItem>
-		</List>
+				</Item.Actions>
+			</List.Item>
+		</List.Root>
 	);
 }
 
@@ -322,33 +252,33 @@ const projects = [
 
 export function TableExample() {
 	return (
-		<Table>
-			<TableCaption>Recent projects for your workspace.</TableCaption>
-			<TableHeader>
-				<TableRow>
-					<TableHead>Reference</TableHead>
-					<TableHead>Client</TableHead>
-					<TableHead>Status</TableHead>
-					<TableHead className="text-right">Amount</TableHead>
-				</TableRow>
-			</TableHeader>
-			<TableBody>
+		<Table.Root>
+			<Table.Caption>Recent projects for your workspace.</Table.Caption>
+			<Table.Header>
+				<Table.Row>
+					<Table.Head>Reference</Table.Head>
+					<Table.Head>Client</Table.Head>
+					<Table.Head>Status</Table.Head>
+					<Table.Head className="text-right">Amount</Table.Head>
+				</Table.Row>
+			</Table.Header>
+			<Table.Body>
 				{projects.map((project) => (
-					<TableRow key={project.reference}>
-						<TableCell className="font-medium">{project.reference}</TableCell>
-						<TableCell>{project.client}</TableCell>
-						<TableCell>{project.status}</TableCell>
-						<TableCell className="text-right">{project.amount}</TableCell>
-					</TableRow>
+					<Table.Row key={project.reference}>
+						<Table.Cell className="font-medium">{project.reference}</Table.Cell>
+						<Table.Cell>{project.client}</Table.Cell>
+						<Table.Cell>{project.status}</Table.Cell>
+						<Table.Cell className="text-right">{project.amount}</Table.Cell>
+					</Table.Row>
 				))}
-			</TableBody>
-			<TableFooter>
-				<TableRow>
-					<TableCell colSpan={3}>Total</TableCell>
-					<TableCell className="text-right">570.00 USD</TableCell>
-				</TableRow>
-			</TableFooter>
-		</Table>
+			</Table.Body>
+			<Table.Footer>
+				<Table.Row>
+					<Table.Cell colSpan={3}>Total</Table.Cell>
+					<Table.Cell className="text-right">570.00 USD</Table.Cell>
+				</Table.Row>
+			</Table.Footer>
+		</Table.Root>
 	);
 }
 
@@ -395,15 +325,15 @@ export function AspectRatioExample() {
 export function ChipExample() {
 	return (
 		<>
-			<Chip variant="secondary">
+			<Chip.Root variant="secondary">
 				Product design
-				<ChipRemove aria-label="Remove Product design" />
-			</Chip>
-			<Chip variant="outline">Development</Chip>
-			<Chip variant="brand" size="sm">
+				<Chip.Remove aria-label="Remove Product design" />
+			</Chip.Root>
+			<Chip.Root variant="outline">Development</Chip.Root>
+			<Chip.Root variant="brand" size="sm">
 				Remote
-				<ChipRemove aria-label="Remove Remote" />
-			</Chip>
+				<Chip.Remove aria-label="Remove Remote" />
+			</Chip.Root>
 		</>
 	);
 }
@@ -411,13 +341,13 @@ export function ChipExample() {
 export function KbdExample() {
 	return (
 		<>
-			<Kbd>⌘K</Kbd>
-			<Kbd size="sm">Esc</Kbd>
-			<KbdGroup>
-				<Kbd>⌘</Kbd>
-				<Kbd>⇧</Kbd>
-				<Kbd>P</Kbd>
-			</KbdGroup>
+			<Kbd.Root>⌘K</Kbd.Root>
+			<Kbd.Root size="sm">Esc</Kbd.Root>
+			<Kbd.Group>
+				<Kbd.Root>⌘</Kbd.Root>
+				<Kbd.Root>⇧</Kbd.Root>
+				<Kbd.Root>P</Kbd.Root>
+			</Kbd.Group>
 		</>
 	);
 }
@@ -453,7 +383,7 @@ export function CopyableTextExample() {
 
 export function ScrollAreaExample() {
 	return (
-		<ScrollArea className="h-56 w-full max-w-72 rounded-lg border">
+		<ScrollArea.Root className="h-56 w-full max-w-72 rounded-lg border">
 			<div className="p-3">
 				<p className="mb-2 font-medium text-sm">Upcoming projects</p>
 				{Array.from({ length: 20 }, (_, index) => (
@@ -465,7 +395,7 @@ export function ScrollAreaExample() {
 					</div>
 				))}
 			</div>
-		</ScrollArea>
+		</ScrollArea.Root>
 	);
 }
 
@@ -493,26 +423,26 @@ const galleryImages = [
 ];
 
 export function GalleryExample() {
-	return <Gallery images={galleryImages} />;
+	return <Gallery.Root images={galleryImages} />;
 }
 
 export function CarouselExample() {
 	return (
 		<div className="mx-12 w-full max-w-xs">
-			<Carousel opts={{ loop: true }}>
-				<CarouselContent>
+			<Carousel.Root opts={{ loop: true }}>
+				<Carousel.Content>
 					{[1, 2, 3, 4, 5].map((slide) => (
-						<CarouselItem key={slide}>
+						<Carousel.Item key={slide}>
 							<div className="flex aspect-square items-center justify-center rounded-xl bg-muted font-semibold text-4xl">
 								{slide}
 							</div>
-						</CarouselItem>
+						</Carousel.Item>
 					))}
-				</CarouselContent>
-				<CarouselPrevious />
-				<CarouselNext />
-				<CarouselDots />
-			</Carousel>
+				</Carousel.Content>
+				<Carousel.Previous />
+				<Carousel.Next />
+				<Carousel.Dots />
+			</Carousel.Root>
 		</div>
 	);
 }
@@ -524,61 +454,61 @@ export function CarouselExample() {
 export function ResizableExample() {
 	return (
 		<div className="h-48 w-full max-w-xl">
-			<ResizablePanelGroup className="rounded-lg border">
-				<ResizablePanel defaultSize={50}>
+			<Resizable.PanelGroup className="rounded-lg border">
+				<Resizable.Panel defaultSize={50}>
 					<div className="flex h-full items-center justify-center p-6">
 						<span className="font-medium text-sm">Project list</span>
 					</div>
-				</ResizablePanel>
-				<ResizableHandle withHandle />
-				<ResizablePanel defaultSize={50}>
+				</Resizable.Panel>
+				<Resizable.Handle withHandle />
+				<Resizable.Panel defaultSize={50}>
 					<div className="flex h-full items-center justify-center p-6">
 						<span className="font-medium text-sm">Project details</span>
 					</div>
-				</ResizablePanel>
-			</ResizablePanelGroup>
+				</Resizable.Panel>
+			</Resizable.PanelGroup>
 		</div>
 	);
 }
 
 export function SectionExample() {
 	return (
-		<Section className="w-full">
-			<SectionHeader>
-				<SectionHeading>
-					<SectionTitle>Upcoming projects</SectionTitle>
-					<SectionDescription>
+		<Section.Root className="w-full">
+			<Section.Header>
+				<Section.Heading>
+					<Section.Title>Upcoming projects</Section.Title>
+					<Section.Description>
 						Your workspace's projects this week.
-					</SectionDescription>
-				</SectionHeading>
-				<SectionActions>
+					</Section.Description>
+				</Section.Heading>
+				<Section.Actions>
 					<Button variant="ghost" size="sm">
 						View all
 					</Button>
-				</SectionActions>
-			</SectionHeader>
-			<Card>
-				<CardContent>Design review — Saturday, June 14, 3:00 pm</CardContent>
-			</Card>
-		</Section>
+				</Section.Actions>
+			</Section.Header>
+			<Card.Root>
+				<Card.Content>Design review — Saturday, June 14, 3:00 pm</Card.Content>
+			</Card.Root>
+		</Section.Root>
 	);
 }
 
 export function ButtonGroupExample() {
 	return (
 		<div className="flex flex-col gap-4">
-			<ButtonGroup>
+			<ButtonGroup.Root>
 				<Button variant="outline">Day</Button>
 				<Button variant="outline">Week</Button>
 				<Button variant="outline">Month</Button>
-			</ButtonGroup>
-			<ButtonGroup>
-				<ButtonGroupText>
+			</ButtonGroup.Root>
+			<ButtonGroup.Root>
+				<ButtonGroup.Text>
 					<CalendarIcon />
-				</ButtonGroupText>
-				<ButtonGroupSeparator />
+				</ButtonGroup.Text>
+				<ButtonGroup.Separator />
 				<Button variant="outline">This week</Button>
-			</ButtonGroup>
+			</ButtonGroup.Root>
 		</div>
 	);
 }
@@ -586,15 +516,15 @@ export function ButtonGroupExample() {
 export function DirectionExample() {
 	return (
 		<DirectionProvider direction="rtl">
-			<DropdownMenu>
-				<DropdownMenuTrigger render={<Button variant="outline" />}>
+			<DropdownMenu.Root>
+				<DropdownMenu.Trigger render={<Button variant="outline" />}>
 					القائمة
-				</DropdownMenuTrigger>
-				<DropdownMenuContent>
-					<DropdownMenuItem>تعديل المهمة</DropdownMenuItem>
-					<DropdownMenuItem>نسخ</DropdownMenuItem>
-				</DropdownMenuContent>
-			</DropdownMenu>
+				</DropdownMenu.Trigger>
+				<DropdownMenu.Content>
+					<DropdownMenu.Item>تعديل المهمة</DropdownMenu.Item>
+					<DropdownMenu.Item>نسخ</DropdownMenu.Item>
+				</DropdownMenu.Content>
+			</DropdownMenu.Root>
 		</DirectionProvider>
 	);
 }
@@ -607,7 +537,7 @@ export function DirectionExample() {
 function Composer() {
 	const [draft, setDraft] = useState("");
 	return (
-		<ChatComposer
+		<Chat.Composer
 			value={draft}
 			onValueChange={setDraft}
 			onSubmit={() => setDraft("")}
@@ -619,39 +549,45 @@ function Composer() {
 
 function senderAvatar(initials: string) {
 	return (
-		<Avatar size="sm">
-			<AvatarFallback>{initials}</AvatarFallback>
-		</Avatar>
+		<Avatar.Root size="sm">
+			<Avatar.Fallback>{initials}</Avatar.Fallback>
+		</Avatar.Root>
 	);
 }
 
 export function ChatExample() {
 	return (
 		<div className="flex h-96 w-full max-w-xl flex-col gap-3">
-			<ChatMessageList>
-				<ChatDateSeparator>Yesterday</ChatDateSeparator>
-				<ChatMessageGroup align="start">
-					<ChatMessageSender
+			<Chat.MessageList>
+				<Chat.DateSeparator>Yesterday</Chat.DateSeparator>
+				<Chat.MessageGroup align="start">
+					<Chat.MessageSender
 						avatar={senderAvatar("CD")}
 						name="Camille Dubois"
 						badge={<Badge variant="brand">Verified freelancer</Badge>}
 					/>
-					<ChatMessage variant="other">
+					<Chat.Message variant="other">
 						Hi, I will share the first drafts before our call tomorrow.
-						<ChatMessageTime dateTime="2026-06-11T18:42">18:42</ChatMessageTime>
-					</ChatMessage>
-					<ChatMessage variant="other">
+						<Chat.MessageTime dateTime="2026-06-11T18:42">
+							18:42
+						</Chat.MessageTime>
+					</Chat.Message>
+					<Chat.Message variant="other">
 						Is there a shared folder where I can drop the files?
-						<ChatMessageTime dateTime="2026-06-11T18:43">18:43</ChatMessageTime>
-					</ChatMessage>
-				</ChatMessageGroup>
-				<ChatMessageGroup align="end">
-					<ChatMessage variant="own">
+						<Chat.MessageTime dateTime="2026-06-11T18:43">
+							18:43
+						</Chat.MessageTime>
+					</Chat.Message>
+				</Chat.MessageGroup>
+				<Chat.MessageGroup align="end">
+					<Chat.Message variant="own">
 						Yes, the project drive is already shared with you.
-						<ChatMessageTime dateTime="2026-06-12T09:10">09:10</ChatMessageTime>
-					</ChatMessage>
-				</ChatMessageGroup>
-			</ChatMessageList>
+						<Chat.MessageTime dateTime="2026-06-12T09:10">
+							09:10
+						</Chat.MessageTime>
+					</Chat.Message>
+				</Chat.MessageGroup>
+			</Chat.MessageList>
 			<Composer />
 		</div>
 	);
@@ -660,7 +596,7 @@ export function ChatExample() {
 export function ChatConversations() {
 	return (
 		<div className="flex w-full max-w-xl flex-col gap-1">
-			<ChatConversationItem
+			<Chat.ConversationItem
 				leading={senderAvatar("SU")}
 				title="Support"
 				badges={<Badge variant="secondary">Support</Badge>}
@@ -668,7 +604,7 @@ export function ChatConversations() {
 				timestamp="09:10"
 				unreadCount={2}
 			/>
-			<ChatConversationItem
+			<Chat.ConversationItem
 				leading={senderAvatar("RC")}
 				title="Website launch — April 12"
 				badges={<Badge variant="outline">Milestone</Badge>}

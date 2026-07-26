@@ -1,18 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Button } from "@voila.dev/ui/components/button";
-import {
-	Stepper,
-	StepperDescription,
-	StepperIndicator,
-	StepperItem,
-	StepperSeparator,
-	StepperTitle,
-} from "@voila.dev/ui/components/stepper";
+import { Button } from "@voila.dev/ui/button";
+import { Stepper } from "@voila.dev/ui/stepper";
 import { useState } from "react";
 
 const meta = {
 	title: "UI/Stepper",
-	component: Stepper,
+	component: Stepper.Root,
 	tags: ["autodocs"],
 	argTypes: {
 		value: {
@@ -27,7 +20,7 @@ const meta = {
 		value: 2,
 		orientation: "horizontal",
 	},
-} satisfies Meta<typeof Stepper>;
+} satisfies Meta<typeof Stepper.Root>;
 
 export default meta;
 
@@ -41,61 +34,61 @@ const onboardingSteps = [
 
 export const Default: Story = {
 	render: (args) => (
-		<Stepper {...args} className="max-w-xl">
+		<Stepper.Root {...args} className="max-w-xl">
 			{onboardingSteps.map(({ step, title }) => (
-				<StepperItem key={step} step={step}>
-					<StepperIndicator />
-					<StepperTitle>{title}</StepperTitle>
-					{step < onboardingSteps.length ? <StepperSeparator /> : null}
-				</StepperItem>
+				<Stepper.Item key={step} step={step}>
+					<Stepper.Indicator />
+					<Stepper.Title>{title}</Stepper.Title>
+					{step < onboardingSteps.length ? <Stepper.Separator /> : null}
+				</Stepper.Item>
 			))}
-		</Stepper>
+		</Stepper.Root>
 	),
 };
 
 export const AllCompleted: Story = {
 	args: { value: 4 },
 	render: (args) => (
-		<Stepper {...args} className="max-w-xl">
+		<Stepper.Root {...args} className="max-w-xl">
 			{onboardingSteps.map(({ step, title }) => (
-				<StepperItem key={step} step={step}>
-					<StepperIndicator />
-					<StepperTitle>{title}</StepperTitle>
-					{step < onboardingSteps.length ? <StepperSeparator /> : null}
-				</StepperItem>
+				<Stepper.Item key={step} step={step}>
+					<Stepper.Indicator />
+					<Stepper.Title>{title}</Stepper.Title>
+					{step < onboardingSteps.length ? <Stepper.Separator /> : null}
+				</Stepper.Item>
 			))}
-		</Stepper>
+		</Stepper.Root>
 	),
 };
 
 export const IndicatorsOnly: Story = {
 	render: (args) => (
-		<Stepper {...args} className="max-w-xs">
+		<Stepper.Root {...args} className="max-w-xs">
 			{onboardingSteps.map(({ step }) => (
-				<StepperItem key={step} step={step}>
-					<StepperIndicator />
-					{step < onboardingSteps.length ? <StepperSeparator /> : null}
-				</StepperItem>
+				<Stepper.Item key={step} step={step}>
+					<Stepper.Indicator />
+					{step < onboardingSteps.length ? <Stepper.Separator /> : null}
+				</Stepper.Item>
 			))}
-		</Stepper>
+		</Stepper.Root>
 	),
 };
 
 export const Vertical: Story = {
 	args: { orientation: "vertical" },
 	render: (args) => (
-		<Stepper {...args} className="max-w-xs">
+		<Stepper.Root {...args} className="max-w-xs">
 			{onboardingSteps.map(({ step, title, description }) => (
-				<StepperItem key={step} step={step}>
-					<StepperIndicator />
+				<Stepper.Item key={step} step={step}>
+					<Stepper.Indicator />
 					<div className="flex flex-col gap-0.5">
-						<StepperTitle>{title}</StepperTitle>
-						<StepperDescription>{description}</StepperDescription>
+						<Stepper.Title>{title}</Stepper.Title>
+						<Stepper.Description>{description}</Stepper.Description>
 					</div>
-					{step < onboardingSteps.length ? <StepperSeparator /> : null}
-				</StepperItem>
+					{step < onboardingSteps.length ? <Stepper.Separator /> : null}
+				</Stepper.Item>
 			))}
-		</Stepper>
+		</Stepper.Root>
 	),
 };
 
@@ -104,15 +97,15 @@ export const Interactive: Story = {
 		const [value, setValue] = useState(1);
 		return (
 			<div className="flex max-w-xl flex-col gap-6">
-				<Stepper value={value}>
+				<Stepper.Root value={value}>
 					{onboardingSteps.map(({ step, title }) => (
-						<StepperItem key={step} step={step}>
-							<StepperIndicator />
-							<StepperTitle>{title}</StepperTitle>
-							{step < onboardingSteps.length ? <StepperSeparator /> : null}
-						</StepperItem>
+						<Stepper.Item key={step} step={step}>
+							<Stepper.Indicator />
+							<Stepper.Title>{title}</Stepper.Title>
+							{step < onboardingSteps.length ? <Stepper.Separator /> : null}
+						</Stepper.Item>
 					))}
-				</Stepper>
+				</Stepper.Root>
 				<div className="flex gap-2">
 					<Button
 						variant="outline"

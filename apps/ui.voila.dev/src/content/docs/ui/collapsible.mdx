@@ -13,12 +13,12 @@ import * as Example from "../../../examples/ui/navigation";
 </Preview>
 
 ```tsx
-<Collapsible>
-	<CollapsibleTrigger render={<Button variant="ghost" size="icon-sm" />}>
+<Collapsible.Root>
+	<Collapsible.Trigger render={<Button variant="ghost" size="icon-sm" />}>
 		<CaretDownIcon />
-	</CollapsibleTrigger>
-	<CollapsibleContent>…</CollapsibleContent>
-</Collapsible>
+	</Collapsible.Trigger>
+	<Collapsible.Content>…</Collapsible.Content>
+</Collapsible.Root>
 ```
 
 One section with your own trigger, where [Accordion](/ui/accordion/) is a set

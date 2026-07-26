@@ -5,18 +5,12 @@ import {
 	WarningIcon,
 } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	Alert,
-	AlertAction,
-	AlertClose,
-	AlertDescription,
-	AlertTitle,
-} from "@voila.dev/ui/components/alert";
-import { Button } from "@voila.dev/ui/components/button";
+import { Alert } from "@voila.dev/ui/alert";
+import { Button } from "@voila.dev/ui/button";
 
 const meta = {
 	title: "UI/Alert",
-	component: Alert,
+	component: Alert.Root,
 	tags: ["autodocs"],
 	argTypes: {
 		variant: {
@@ -27,7 +21,7 @@ const meta = {
 	args: {
 		variant: "default",
 	},
-} satisfies Meta<typeof Alert>;
+} satisfies Meta<typeof Alert.Root>;
 
 export default meta;
 
@@ -35,131 +29,131 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: (args) => (
-		<Alert {...args} className="max-w-md">
+		<Alert.Root {...args} className="max-w-md">
 			<InfoIcon />
-			<AlertTitle>Project updated</AlertTitle>
-			<AlertDescription>
+			<Alert.Title>Project updated</Alert.Title>
+			<Alert.Description>
 				The client moved Friday's review to 3:00 PM. Your booking follows
 				automatically.
-			</AlertDescription>
-		</Alert>
+			</Alert.Description>
+		</Alert.Root>
 	),
 };
 
 export const Destructive: Story = {
 	args: { variant: "destructive" },
 	render: (args) => (
-		<Alert {...args} className="max-w-md">
+		<Alert.Root {...args} className="max-w-md">
 			<WarningCircleIcon />
-			<AlertTitle>Payment failed</AlertTitle>
-			<AlertDescription>
+			<Alert.Title>Payment failed</Alert.Title>
+			<Alert.Description>
 				We could not charge your card. Update your payment method to keep the
 				project booked.
-			</AlertDescription>
-		</Alert>
+			</Alert.Description>
+		</Alert.Root>
 	),
 };
 
 export const Success: Story = {
 	args: { variant: "success" },
 	render: (args) => (
-		<Alert {...args} className="max-w-md">
+		<Alert.Root {...args} className="max-w-md">
 			<CheckCircleIcon />
-			<AlertTitle>Booking confirmed</AlertTitle>
-			<AlertDescription>
+			<Alert.Title>Booking confirmed</Alert.Title>
+			<Alert.Description>
 				Camille Dubois will start the project on Monday, June 22.
-			</AlertDescription>
-		</Alert>
+			</Alert.Description>
+		</Alert.Root>
 	),
 };
 
 export const Warning: Story = {
 	args: { variant: "warning" },
 	render: (args) => (
-		<Alert {...args} className="max-w-md">
+		<Alert.Root {...args} className="max-w-md">
 			<WarningIcon />
-			<AlertTitle>Report due soon</AlertTitle>
-			<AlertDescription>
+			<Alert.Title>Report due soon</Alert.Title>
+			<Alert.Description>
 				Submit the project report within 48 hours to release the payment.
-			</AlertDescription>
-		</Alert>
+			</Alert.Description>
+		</Alert.Root>
 	),
 };
 
 export const TitleOnly: Story = {
 	render: (args) => (
-		<Alert {...args} className="max-w-md">
+		<Alert.Root {...args} className="max-w-md">
 			<CheckCircleIcon />
-			<AlertTitle>Profile saved</AlertTitle>
-		</Alert>
+			<Alert.Title>Profile saved</Alert.Title>
+		</Alert.Root>
 	),
 };
 
 export const DescriptionOnly: Story = {
 	render: (args) => (
-		<Alert {...args} className="max-w-md">
-			<AlertDescription>
+		<Alert.Root {...args} className="max-w-md">
+			<Alert.Description>
 				Applications close 24 hours before the project starts.
-			</AlertDescription>
-		</Alert>
+			</Alert.Description>
+		</Alert.Root>
 	),
 };
 
 export const WithLink: Story = {
 	render: (args) => (
-		<Alert {...args} className="max-w-md">
+		<Alert.Root {...args} className="max-w-md">
 			<InfoIcon />
-			<AlertTitle>Stripe account incomplete</AlertTitle>
-			<AlertDescription>
+			<Alert.Title>Stripe account incomplete</Alert.Title>
+			<Alert.Description>
 				Finish your <a href="#stripe">Stripe onboarding</a> to receive payouts.
-			</AlertDescription>
-		</Alert>
+			</Alert.Description>
+		</Alert.Root>
 	),
 };
 
 export const WithAction: Story = {
 	render: (args) => (
-		<Alert {...args} className="max-w-md">
-			<AlertTitle>Application withdrawn</AlertTitle>
-			<AlertDescription>
+		<Alert.Root {...args} className="max-w-md">
+			<Alert.Title>Application withdrawn</Alert.Title>
+			<Alert.Description>
 				You withdrew your application for the website redesign project.
-			</AlertDescription>
-			<AlertAction>
+			</Alert.Description>
+			<Alert.Action>
 				<Button variant="outline" size="xs">
 					Undo
 				</Button>
-			</AlertAction>
-		</Alert>
+			</Alert.Action>
+		</Alert.Root>
 	),
 };
 
 export const DestructiveWithAction: Story = {
 	args: { variant: "destructive" },
 	render: (args) => (
-		<Alert {...args} className="max-w-md">
+		<Alert.Root {...args} className="max-w-md">
 			<WarningCircleIcon />
-			<AlertTitle>Payment failed</AlertTitle>
-			<AlertDescription>
+			<Alert.Title>Payment failed</Alert.Title>
+			<Alert.Description>
 				We could not charge your card for this project.
-			</AlertDescription>
-			<AlertAction>
+			</Alert.Description>
+			<Alert.Action>
 				<Button variant="outline" size="xs">
 					Withdraw application
 				</Button>
-			</AlertAction>
-		</Alert>
+			</Alert.Action>
+		</Alert.Root>
 	),
 };
 
 export const Dismissible: Story = {
 	render: (args) => (
-		<Alert {...args} className="max-w-md">
+		<Alert.Root {...args} className="max-w-md">
 			<InfoIcon />
-			<AlertTitle>New feature</AlertTitle>
-			<AlertDescription>
+			<Alert.Title>New feature</Alert.Title>
+			<Alert.Description>
 				You can now message clients directly from a project page.
-			</AlertDescription>
-			<AlertClose />
-		</Alert>
+			</Alert.Description>
+			<Alert.Close />
+		</Alert.Root>
 	),
 };

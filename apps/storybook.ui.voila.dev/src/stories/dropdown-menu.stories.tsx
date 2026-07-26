@@ -1,27 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Button } from "@voila.dev/ui/components/button";
-import {
-	DropdownMenu,
-	DropdownMenuCheckboxItem,
-	DropdownMenuContent,
-	DropdownMenuGroup,
-	DropdownMenuItem,
-	DropdownMenuLabel,
-	DropdownMenuRadioGroup,
-	DropdownMenuRadioItem,
-	DropdownMenuSeparator,
-	DropdownMenuShortcut,
-	DropdownMenuSub,
-	DropdownMenuSubContent,
-	DropdownMenuSubTrigger,
-	DropdownMenuTrigger,
-} from "@voila.dev/ui/components/dropdown-menu";
+import { Button } from "@voila.dev/ui/button";
+import { DropdownMenu } from "@voila.dev/ui/dropdown-menu";
 
 const meta = {
 	title: "UI/DropdownMenu",
-	component: DropdownMenu,
+	component: DropdownMenu.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof DropdownMenu>;
+} satisfies Meta<typeof DropdownMenu.Root>;
 
 export default meta;
 
@@ -29,74 +14,74 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<DropdownMenu>
-			<DropdownMenuTrigger render={<Button variant="outline" />}>
+		<DropdownMenu.Root>
+			<DropdownMenu.Trigger render={<Button variant="outline" />}>
 				Project actions
-			</DropdownMenuTrigger>
-			<DropdownMenuContent className="w-56">
-				<DropdownMenuLabel>Landing page redesign</DropdownMenuLabel>
-				<DropdownMenuGroup>
-					<DropdownMenuItem>
+			</DropdownMenu.Trigger>
+			<DropdownMenu.Content className="w-56">
+				<DropdownMenu.Label>Landing page redesign</DropdownMenu.Label>
+				<DropdownMenu.Group>
+					<DropdownMenu.Item>
 						Edit project
-						<DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
-					</DropdownMenuItem>
-					<DropdownMenuItem>
+						<DropdownMenu.Shortcut>⌘E</DropdownMenu.Shortcut>
+					</DropdownMenu.Item>
+					<DropdownMenu.Item>
 						Duplicate
-						<DropdownMenuShortcut>⌘D</DropdownMenuShortcut>
-					</DropdownMenuItem>
-				</DropdownMenuGroup>
-				<DropdownMenuSeparator />
-				<DropdownMenuSub>
-					<DropdownMenuSubTrigger>Assign freelancer</DropdownMenuSubTrigger>
-					<DropdownMenuSubContent>
-						<DropdownMenuItem>Nathan Guyot</DropdownMenuItem>
-						<DropdownMenuItem>Marie Lefevre</DropdownMenuItem>
-						<DropdownMenuItem>Paul Martin</DropdownMenuItem>
-					</DropdownMenuSubContent>
-				</DropdownMenuSub>
-				<DropdownMenuSeparator />
-				<DropdownMenuItem variant="destructive">
+						<DropdownMenu.Shortcut>⌘D</DropdownMenu.Shortcut>
+					</DropdownMenu.Item>
+				</DropdownMenu.Group>
+				<DropdownMenu.Separator />
+				<DropdownMenu.Sub>
+					<DropdownMenu.SubTrigger>Assign freelancer</DropdownMenu.SubTrigger>
+					<DropdownMenu.SubContent>
+						<DropdownMenu.Item>Nathan Guyot</DropdownMenu.Item>
+						<DropdownMenu.Item>Marie Lefevre</DropdownMenu.Item>
+						<DropdownMenu.Item>Paul Martin</DropdownMenu.Item>
+					</DropdownMenu.SubContent>
+				</DropdownMenu.Sub>
+				<DropdownMenu.Separator />
+				<DropdownMenu.Item variant="destructive">
 					Cancel project
-				</DropdownMenuItem>
-			</DropdownMenuContent>
-		</DropdownMenu>
+				</DropdownMenu.Item>
+			</DropdownMenu.Content>
+		</DropdownMenu.Root>
 	),
 };
 
 export const WithCheckboxItems: Story = {
 	render: () => (
-		<DropdownMenu>
-			<DropdownMenuTrigger render={<Button variant="outline" />}>
+		<DropdownMenu.Root>
+			<DropdownMenu.Trigger render={<Button variant="outline" />}>
 				Notification settings
-			</DropdownMenuTrigger>
-			<DropdownMenuContent className="w-56">
-				<DropdownMenuLabel>Notify me about</DropdownMenuLabel>
-				<DropdownMenuCheckboxItem defaultChecked>
+			</DropdownMenu.Trigger>
+			<DropdownMenu.Content className="w-56">
+				<DropdownMenu.Label>Notify me about</DropdownMenu.Label>
+				<DropdownMenu.CheckboxItem defaultChecked>
 					New applications
-				</DropdownMenuCheckboxItem>
-				<DropdownMenuCheckboxItem defaultChecked>
+				</DropdownMenu.CheckboxItem>
+				<DropdownMenu.CheckboxItem defaultChecked>
 					Project reminders
-				</DropdownMenuCheckboxItem>
-				<DropdownMenuCheckboxItem>Weekly digest</DropdownMenuCheckboxItem>
-			</DropdownMenuContent>
-		</DropdownMenu>
+				</DropdownMenu.CheckboxItem>
+				<DropdownMenu.CheckboxItem>Weekly digest</DropdownMenu.CheckboxItem>
+			</DropdownMenu.Content>
+		</DropdownMenu.Root>
 	),
 };
 
 export const WithRadioGroup: Story = {
 	render: () => (
-		<DropdownMenu>
-			<DropdownMenuTrigger render={<Button variant="outline" />}>
+		<DropdownMenu.Root>
+			<DropdownMenu.Trigger render={<Button variant="outline" />}>
 				Sort projects
-			</DropdownMenuTrigger>
-			<DropdownMenuContent className="w-48">
-				<DropdownMenuLabel>Sort by</DropdownMenuLabel>
-				<DropdownMenuRadioGroup defaultValue="date">
-					<DropdownMenuRadioItem value="date">Date</DropdownMenuRadioItem>
-					<DropdownMenuRadioItem value="client">Client</DropdownMenuRadioItem>
-					<DropdownMenuRadioItem value="status">Status</DropdownMenuRadioItem>
-				</DropdownMenuRadioGroup>
-			</DropdownMenuContent>
-		</DropdownMenu>
+			</DropdownMenu.Trigger>
+			<DropdownMenu.Content className="w-48">
+				<DropdownMenu.Label>Sort by</DropdownMenu.Label>
+				<DropdownMenu.RadioGroup defaultValue="date">
+					<DropdownMenu.RadioItem value="date">Date</DropdownMenu.RadioItem>
+					<DropdownMenu.RadioItem value="client">Client</DropdownMenu.RadioItem>
+					<DropdownMenu.RadioItem value="status">Status</DropdownMenu.RadioItem>
+				</DropdownMenu.RadioGroup>
+			</DropdownMenu.Content>
+		</DropdownMenu.Root>
 	),
 };

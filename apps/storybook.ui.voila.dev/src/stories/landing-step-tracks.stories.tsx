@@ -9,7 +9,7 @@ import {
 	UserCheckIcon,
 } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { StepTracks } from "@voila.dev/ui/landing/step-tracks";
+import { StepTracks } from "@voila.dev/ui/landing";
 import { helperTrack, performerTrack } from "./landing-fixtures";
 
 const meta = {

@@ -14,22 +14,24 @@ import {
 	UserCheckIcon,
 } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Button } from "@voila.dev/ui/components/button";
-import { ComparisonSection } from "@voila.dev/ui/landing/comparison-section";
-import { Container } from "@voila.dev/ui/landing/container";
-import { CtaBanner } from "@voila.dev/ui/landing/cta-banner";
-import { Eyebrow } from "@voila.dev/ui/landing/eyebrow";
-import { Heading } from "@voila.dev/ui/landing/heading";
-import { LandingHero } from "@voila.dev/ui/landing/landing-hero";
-import { LogoMarquee } from "@voila.dev/ui/landing/logo-marquee";
-import { Section } from "@voila.dev/ui/landing/section";
-import { SectionIntro } from "@voila.dev/ui/landing/section-intro";
-import { SiteFooter } from "@voila.dev/ui/landing/site-footer";
-import { SiteHeader } from "@voila.dev/ui/landing/site-header";
-import { StatsRow } from "@voila.dev/ui/landing/stats-row";
-import { StepTracks } from "@voila.dev/ui/landing/step-tracks";
-import { TestimonialGrid } from "@voila.dev/ui/landing/testimonial-grid";
-import { Text } from "@voila.dev/ui/landing/text";
+import { Button } from "@voila.dev/ui/button";
+import {
+	ComparisonSection,
+	Container,
+	CtaBanner,
+	Eyebrow,
+	Heading,
+	LandingHero,
+	LogoMarquee,
+	Section,
+	SectionIntro,
+	SiteFooter,
+	SiteHeader,
+	StatsRow,
+	StepTracks,
+	TestimonialGrid,
+	Text,
+} from "@voila.dev/ui/landing";
 import { Fragment } from "react";
 import {
 	BrandLogo,

@@ -4,11 +4,13 @@ import {
 	PenNibIcon,
 } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Button } from "@voila.dev/ui/components/button";
-import { ComparisonSection } from "@voila.dev/ui/landing/comparison-section";
-import { Eyebrow } from "@voila.dev/ui/landing/eyebrow";
-import { Heading } from "@voila.dev/ui/landing/heading";
-import { Text } from "@voila.dev/ui/landing/text";
+import { Button } from "@voila.dev/ui/button";
+import {
+	ComparisonSection,
+	Eyebrow,
+	Heading,
+	Text,
+} from "@voila.dev/ui/landing";
 import {
 	clientBenefits,
 	freelancerBenefits,

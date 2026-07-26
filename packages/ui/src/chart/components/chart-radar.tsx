@@ -4,7 +4,6 @@ import { readNumber } from "#/chart/core/chart-model.ts";
 import { seriesColor } from "#/chart/core/config.ts";
 import { polygonPath } from "#/chart/core/geometry.ts";
 import { axisAngle, polarFrame, polarToCartesian } from "#/chart/core/polar.ts";
-import { cn } from "#/lib/utils.ts";
 
 /**
  * One closed shape per series, with a vertex on every category axis. Radii come
@@ -12,7 +11,7 @@ import { cn } from "#/lib/utils.ts";
  * directly comparable.
  */
 
-export interface ChartRadarProps extends React.ComponentProps<"g"> {
+interface Props extends React.ComponentProps<"g"> {
 	readonly keys?: ReadonlyArray<string>;
 	readonly fillOpacity?: number;
 	readonly strokeWidth?: number;
@@ -22,7 +21,7 @@ export interface ChartRadarProps extends React.ComponentProps<"g"> {
 
 const DOT_RADIUS = 3;
 
-function ChartRadar({
+export function ChartRadar({
 	className,
 	keys,
 	fillOpacity = 0.35,
@@ -30,7 +29,7 @@ function ChartRadar({
 	dots = false,
 	inset = 24,
 	...props
-}: ChartRadarProps) {
+}: Props) {
 	const {
 		data,
 		innerWidth,
@@ -55,7 +54,7 @@ function ChartRadar({
 		span === 0 ? 0 : Math.max(0, ((value - domainStart) / span) * radius);
 
 	return (
-		<g data-slot="chart-radar" className={cn(className)} {...props}>
+		<g data-slot="chart-radar" className={className} {...props}>
 			{drawnKeys.map((key, seriesIndex) => {
 				const color = seriesColor(config, key, seriesIndex);
 				const vertices = data.map((datum, index) =>
@@ -98,5 +97,3 @@ function ChartRadar({
 		</g>
 	);
 }
-
-export { ChartRadar };

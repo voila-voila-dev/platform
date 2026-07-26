@@ -13,18 +13,18 @@ import * as Example from "../../../examples/ui/overlays";
 </Preview>
 
 ```tsx
-<Sheet>
-	<SheetTrigger render={<Button variant="outline" />}>Details</SheetTrigger>
-	<SheetContent side="right" size="lg">
-		<SheetHeader>
-			<SheetTitle>Project details</SheetTitle>
-			<SheetDescription>Design sprint starting Saturday.</SheetDescription>
-		</SheetHeader>
-		<SheetFooter>
+<Sheet.Root>
+	<Sheet.Trigger render={<Button variant="outline" />}>Details</Sheet.Trigger>
+	<Sheet.Content side="right" size="lg">
+		<Sheet.Header>
+			<Sheet.Title>Project details</Sheet.Title>
+			<Sheet.Description>Design sprint starting Saturday.</Sheet.Description>
+		</Sheet.Header>
+		<Sheet.Footer>
 			<Button>Confirm booking</Button>
-		</SheetFooter>
-	</SheetContent>
-</Sheet>
+		</Sheet.Footer>
+	</Sheet.Content>
+</Sheet.Root>
 ```
 
 `side` takes `top`, `right`, `bottom` or `left`; `size` runs `sm` through `full`.

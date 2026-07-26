@@ -2,18 +2,14 @@ import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import {
 	DateTimePicker,
 	type DateTimeRange,
-	DateTimeRangeInput,
-	NativeDateTimeInput,
-	ResponsiveDateTimeInput,
-	ShiftTimeRangeInput,
-} from "@voila.dev/ui/components/date-time-picker";
+} from "@voila.dev/ui/date-time-picker";
 import { useState } from "react";
 
 const meta = {
 	title: "UI/DateTimePicker",
-	component: DateTimePicker,
+	component: DateTimePicker.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof DateTimePicker>;
+} satisfies Meta<typeof DateTimePicker.Root>;
 
 export default meta;
 
@@ -23,7 +19,7 @@ function ControlledDateTimePicker() {
 	const [value, setValue] = useState<Date | null>(null);
 
 	return (
-		<DateTimePicker
+		<DateTimePicker.Root
 			value={value}
 			onValueChange={setValue}
 			placeholder="Project start"
@@ -39,7 +35,7 @@ export const Default: Story = {
 function PreselectedDateTimePicker() {
 	const [value, setValue] = useState<Date | null>(new Date(2026, 5, 20, 9, 30));
 
-	return <DateTimePicker value={value} onValueChange={setValue} />;
+	return <DateTimePicker.Root value={value} onValueChange={setValue} />;
 }
 
 export const WithValue: Story = {
@@ -52,7 +48,7 @@ function FrenchLocaleDateTimePicker() {
 	);
 
 	return (
-		<DateTimePicker
+		<DateTimePicker.Root
 			locale="fr-FR"
 			value={value}
 			onValueChange={setValue}
@@ -70,7 +66,7 @@ function FineStepDateTimePicker() {
 
 	// A 15-minute grid for finer scheduling than the default 30.
 	return (
-		<DateTimePicker
+		<DateTimePicker.Root
 			value={value}
 			onValueChange={setValue}
 			minuteStep={15}
@@ -85,12 +81,12 @@ export const FineStep: Story = {
 };
 
 export const Disabled: Story = {
-	render: () => <DateTimePicker disabled placeholder="Project start" />,
+	render: () => <DateTimePicker.Root disabled placeholder="Project start" />,
 };
 
 export const Invalid: Story = {
 	render: () => (
-		<DateTimePicker aria-invalid placeholder="Project start (required)" />
+		<DateTimePicker.Root aria-invalid placeholder="Project start (required)" />
 	),
 };
 
@@ -98,7 +94,7 @@ function ControlledNativeDateTimeInput() {
 	const [value, setValue] = useState<Date | null>(null);
 
 	return (
-		<NativeDateTimeInput
+		<DateTimePicker.Native
 			value={value}
 			onValueChange={setValue}
 			wrapperClassName="w-72"
@@ -116,7 +112,7 @@ function ControlledResponsiveDateTimeInput() {
 
 	return (
 		<div className="w-72">
-			<ResponsiveDateTimeInput
+			<DateTimePicker.Responsive
 				value={value}
 				onValueChange={setValue}
 				placeholder="Project start"
@@ -141,7 +137,7 @@ function ControlledDateTimeRangeInput() {
 	// the start — the shape a project's "Start"/"End" shift needs.
 	return (
 		<div className="w-full max-w-xl">
-			<DateTimeRangeInput
+			<DateTimePicker.Range
 				startLabel="Start"
 				endLabel="End"
 				value={range}
@@ -164,7 +160,7 @@ function FrenchLocaleDateTimeRangeInput() {
 
 	return (
 		<div className="w-full max-w-xl">
-			<DateTimeRangeInput
+			<DateTimePicker.Range
 				locale="fr-FR"
 				startLabel="Start"
 				endLabel="End"
@@ -186,7 +182,7 @@ function ControlledShiftTimeRangeInput() {
 	// before the start rolls to the next day (overnight). The shape a project shift needs.
 	return (
 		<div className="w-full max-w-sm">
-			<ShiftTimeRangeInput
+			<DateTimePicker.ShiftRange
 				placeholder="Pick a day and a time slot"
 				value={range}
 				onValueChange={setRange}
@@ -208,7 +204,7 @@ function PreselectedShiftTimeRangeInput() {
 
 	return (
 		<div className="w-full max-w-sm">
-			<ShiftTimeRangeInput value={range} onValueChange={setRange} />
+			<DateTimePicker.ShiftRange value={range} onValueChange={setRange} />
 		</div>
 	);
 }

@@ -1,47 +1,18 @@
-import { Chart, type ChartConfig } from "@voila.dev/ui/chart/chart";
-import {
-	Avatar,
-	AvatarFallback,
-	AvatarGroup,
-	AvatarGroupCount,
-} from "@voila.dev/ui/components/avatar";
-import { Badge } from "@voila.dev/ui/components/badge";
-import { Button } from "@voila.dev/ui/components/button";
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@voila.dev/ui/components/card";
-import { Checkbox } from "@voila.dev/ui/components/checkbox";
-import { DatePicker } from "@voila.dev/ui/components/date-picker";
-import { Field, FieldLabel } from "@voila.dev/ui/components/field";
-import { Input } from "@voila.dev/ui/components/input";
-import { Label } from "@voila.dev/ui/components/label";
-import {
-	Progress,
-	ProgressLabel,
-	ProgressValue,
-} from "@voila.dev/ui/components/progress";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@voila.dev/ui/components/select";
-import { Slider } from "@voila.dev/ui/components/slider";
-import {
-	StatCard,
-	StatCardChart,
-	StatCardDelta,
-	StatCardHeader,
-	StatCardLabel,
-	StatCardValue,
-} from "@voila.dev/ui/components/stat-card";
-import { Switch } from "@voila.dev/ui/components/switch";
+import { Avatar } from "@voila.dev/ui/avatar";
+import { Badge } from "@voila.dev/ui/badge";
+import { Button } from "@voila.dev/ui/button";
+import { Card } from "@voila.dev/ui/card";
+import { Chart, type ChartConfig } from "@voila.dev/ui/chart";
+import { Checkbox } from "@voila.dev/ui/checkbox";
+import { DatePicker } from "@voila.dev/ui/date-picker";
+import { Field } from "@voila.dev/ui/field";
+import { Input } from "@voila.dev/ui/input";
+import { Label } from "@voila.dev/ui/label";
+import { Progress } from "@voila.dev/ui/progress";
+import { Select } from "@voila.dev/ui/select";
+import { Slider } from "@voila.dev/ui/slider";
+import { StatCard } from "@voila.dev/ui/stat-card";
+import { Switch } from "@voila.dev/ui/switch";
 import { useState } from "react";
 
 const revenueData = [
@@ -90,68 +61,68 @@ function MilestoneCard() {
 		new Date(2026, 11, 1),
 	);
 	return (
-		<Card>
-			<CardHeader>
-				<CardTitle>Set a new milestone</CardTitle>
-				<CardDescription>
+		<Card.Root>
+			<Card.Header>
+				<Card.Title>Set a new milestone</Card.Title>
+				<Card.Description>
 					Define your target and we'll help you pace it.
-				</CardDescription>
-			</CardHeader>
-			<CardContent className="grid gap-4">
-				<Field>
-					<FieldLabel htmlFor="home-goal-name">Goal name</FieldLabel>
+				</Card.Description>
+			</Card.Header>
+			<Card.Content className="grid gap-4">
+				<Field.Root>
+					<Field.Label htmlFor="home-goal-name">Goal name</Field.Label>
 					<Input id="home-goal-name" placeholder="e.g. Series A runway" />
-				</Field>
+				</Field.Root>
 				<div className="grid gap-4 sm:grid-cols-2">
-					<Field>
-						<FieldLabel htmlFor="home-goal-amount">Target amount</FieldLabel>
+					<Field.Root>
+						<Field.Label htmlFor="home-goal-amount">Target amount</Field.Label>
 						<Input id="home-goal-amount" defaultValue="$15,000" />
-					</Field>
-					<Field>
-						<FieldLabel>Target date</FieldLabel>
-						<DatePicker
+					</Field.Root>
+					<Field.Root>
+						<Field.Label>Target date</Field.Label>
+						<DatePicker.Root
 							value={targetDate}
 							onValueChange={setTargetDate}
 							className="w-full min-w-0"
 							placeholder="Pick a date"
 							calendarProps={{ defaultMonth: new Date(2026, 11, 1) }}
 						/>
-					</Field>
+					</Field.Root>
 				</div>
-				<Field>
-					<FieldLabel>Priority</FieldLabel>
-					<Select defaultValue="high">
-						<SelectTrigger className="w-full">
-							<SelectValue />
-						</SelectTrigger>
-						<SelectContent>
-							<SelectItem value="high">High — check in weekly</SelectItem>
-							<SelectItem value="medium">Medium — monthly review</SelectItem>
-							<SelectItem value="low">Low — best effort</SelectItem>
-						</SelectContent>
-					</Select>
-				</Field>
-			</CardContent>
-			<CardFooter className="grid gap-2">
+				<Field.Root>
+					<Field.Label>Priority</Field.Label>
+					<Select.Root defaultValue="high">
+						<Select.Trigger className="w-full">
+							<Select.Value />
+						</Select.Trigger>
+						<Select.Content>
+							<Select.Item value="high">High — check in weekly</Select.Item>
+							<Select.Item value="medium">Medium — monthly review</Select.Item>
+							<Select.Item value="low">Low — best effort</Select.Item>
+						</Select.Content>
+					</Select.Root>
+				</Field.Root>
+			</Card.Content>
+			<Card.Footer className="grid gap-2">
 				<Button className="w-full">Create goal</Button>
 				<Button variant="ghost" className="w-full">
 					Cancel
 				</Button>
-			</CardFooter>
-		</Card>
+			</Card.Footer>
+		</Card.Root>
 	);
 }
 
 /** A dashboard KPI tile with a live SVG chart from ui-chart underneath. */
 function RevenueCard() {
 	return (
-		<StatCard>
-			<StatCardHeader>
-				<StatCardLabel>Monthly recurring revenue</StatCardLabel>
-				<StatCardDelta trend="up">+12.4%</StatCardDelta>
-			</StatCardHeader>
-			<StatCardValue>$13,600</StatCardValue>
-			<StatCardChart>
+		<StatCard.Root>
+			<StatCard.Header>
+				<StatCard.Label>Monthly recurring revenue</StatCard.Label>
+				<StatCard.Delta trend="up">+12.4%</StatCard.Delta>
+			</StatCard.Header>
+			<StatCard.Value>$13,600</StatCard.Value>
+			<StatCard.Chart>
 				<Chart.Root
 					config={revenueConfig}
 					data={revenueData}
@@ -162,21 +133,21 @@ function RevenueCard() {
 				>
 					<Chart.Bars />
 				</Chart.Root>
-			</StatCardChart>
-		</StatCard>
+			</StatCard.Chart>
+		</StatCard.Root>
 	);
 }
 
 function NotificationsCard() {
 	return (
-		<Card>
-			<CardHeader>
-				<CardTitle>Notifications</CardTitle>
-				<CardDescription>
+		<Card.Root>
+			<Card.Header>
+				<Card.Title>Notifications</Card.Title>
+				<Card.Description>
 					Choose which alerts you want to receive.
-				</CardDescription>
-			</CardHeader>
-			<CardContent className="grid gap-5">
+				</Card.Description>
+			</Card.Header>
+			<Card.Content className="grid gap-5">
 				{alertPreferences.map((preference) => (
 					<div key={preference.id} className="flex items-start gap-3">
 						<Switch
@@ -191,13 +162,13 @@ function NotificationsCard() {
 						</div>
 					</div>
 				))}
-			</CardContent>
-			<CardFooter>
+			</Card.Content>
+			<Card.Footer>
 				<Button variant="outline" className="w-full">
 					Save preferences
 				</Button>
-			</CardFooter>
-		</Card>
+			</Card.Footer>
+		</Card.Root>
 	);
 }
 
@@ -207,19 +178,19 @@ function StorageCard() {
 		? threshold[0]
 		: (threshold as number);
 	return (
-		<Card>
-			<CardHeader>
-				<CardTitle>Payout threshold</CardTitle>
-				<CardDescription>
+		<Card.Root>
+			<Card.Header>
+				<Card.Title>Payout threshold</Card.Title>
+				<Card.Description>
 					Minimum balance required before a payout is triggered.
-				</CardDescription>
-			</CardHeader>
-			<CardContent className="grid gap-6">
+				</Card.Description>
+			</Card.Header>
+			<Card.Content className="grid gap-6">
 				<div className="grid gap-3">
 					<p className="text-2xl font-semibold tracking-tight tabular-nums">
 						${amount.toLocaleString("en-US")}
 					</p>
-					<Slider
+					<Slider.Root
 						value={threshold}
 						onValueChange={setThreshold}
 						min={50}
@@ -231,26 +202,26 @@ function StorageCard() {
 						<span>$10,000 (max)</span>
 					</div>
 				</div>
-				<Progress value={1211} max={2500}>
-					<ProgressLabel>Ready to claim</ProgressLabel>
-					<ProgressValue>{() => "$1,211 / $2,500"}</ProgressValue>
-				</Progress>
-			</CardContent>
-			<CardFooter>
+				<Progress.Root value={1211} max={2500}>
+					<Progress.Label>Ready to claim</Progress.Label>
+					<Progress.Value>{() => "$1,211 / $2,500"}</Progress.Value>
+				</Progress.Root>
+			</Card.Content>
+			<Card.Footer>
 				<Button className="w-full">Save threshold</Button>
-			</CardFooter>
-		</Card>
+			</Card.Footer>
+		</Card.Root>
 	);
 }
 
 function TeamCard() {
 	return (
-		<Card>
-			<CardHeader>
-				<CardTitle>Team</CardTitle>
-				<CardDescription>Invite and manage who has access.</CardDescription>
-			</CardHeader>
-			<CardContent className="grid gap-4">
+		<Card.Root>
+			<Card.Header>
+				<Card.Title>Team</Card.Title>
+				<Card.Description>Invite and manage who has access.</Card.Description>
+			</Card.Header>
+			<Card.Content className="grid gap-4">
 				<div className="flex gap-2">
 					<Input placeholder="teammate@company.com" aria-label="Email" />
 					<Button variant="secondary">Invite</Button>
@@ -258,9 +229,9 @@ function TeamCard() {
 				<div className="grid gap-3">
 					{teammates.map((member) => (
 						<div key={member.name} className="flex items-center gap-3">
-							<Avatar>
-								<AvatarFallback>{member.initials}</AvatarFallback>
-							</Avatar>
+							<Avatar.Root>
+								<Avatar.Fallback>{member.initials}</Avatar.Fallback>
+							</Avatar.Root>
 							<p className="flex-1 truncate text-sm font-medium">
 								{member.name}
 							</p>
@@ -270,21 +241,21 @@ function TeamCard() {
 						</div>
 					))}
 				</div>
-			</CardContent>
-			<CardFooter className="justify-between">
-				<AvatarGroup>
+			</Card.Content>
+			<Card.Footer className="justify-between">
+				<Avatar.Group>
 					{teammates.map((member) => (
-						<Avatar key={member.initials}>
-							<AvatarFallback>{member.initials}</AvatarFallback>
-						</Avatar>
+						<Avatar.Root key={member.initials}>
+							<Avatar.Fallback>{member.initials}</Avatar.Fallback>
+						</Avatar.Root>
 					))}
-					<AvatarGroupCount>+5</AvatarGroupCount>
-				</AvatarGroup>
+					<Avatar.GroupCount>+5</Avatar.GroupCount>
+				</Avatar.Group>
 				<Button variant="ghost" size="sm">
 					Manage roles
 				</Button>
-			</CardFooter>
-		</Card>
+			</Card.Footer>
+		</Card.Root>
 	);
 }
 
@@ -292,14 +263,14 @@ function TeamCard() {
 function PrimitivesCard() {
 	const [agreed, setAgreed] = useState(true);
 	return (
-		<Card>
-			<CardHeader>
-				<CardTitle>The primitives underneath</CardTitle>
-				<CardDescription>
+		<Card.Root>
+			<Card.Header>
+				<Card.Title>The primitives underneath</Card.Title>
+				<Card.Description>
 					Every card on this row is built from these.
-				</CardDescription>
-			</CardHeader>
-			<CardContent className="grid gap-5">
+				</Card.Description>
+			</Card.Header>
+			<Card.Content className="grid gap-5">
 				<div className="flex flex-wrap items-center gap-2">
 					<Button size="sm">Default</Button>
 					<Button size="sm" variant="secondary">
@@ -331,8 +302,8 @@ function PrimitivesCard() {
 						className="ml-auto"
 					/>
 				</div>
-			</CardContent>
-		</Card>
+			</Card.Content>
+		</Card.Root>
 	);
 }
 

@@ -13,17 +13,17 @@ import * as Example from "../../../examples/ui/feedback";
 </Preview>
 
 ```tsx
-<Empty bordered>
-	<EmptyHeader>
-		<EmptyMedia variant="icon"><CalendarPlusIcon /></EmptyMedia>
-		<EmptyTitle>No projects yet</EmptyTitle>
-		<EmptyDescription>Create your first project to…</EmptyDescription>
-	</EmptyHeader>
-	<EmptyContent>
+<Empty.Root bordered>
+	<Empty.Header>
+		<Empty.Media variant="icon"><CalendarPlusIcon /></Empty.Media>
+		<Empty.Title>No projects yet</Empty.Title>
+		<Empty.Description>Create your first project to…</Empty.Description>
+	</Empty.Header>
+	<Empty.Content>
 		<Button>Create a project</Button>
-	</EmptyContent>
-</Empty>
+	</Empty.Content>
+</Empty.Root>
 ```
 
-`EmptyMedia` takes `variant="icon"` for a tinted icon tile, or plain children
+`Empty.Media` takes `variant="icon"` for a tinted icon tile, or plain children
 for anything else — an avatar, an illustration.

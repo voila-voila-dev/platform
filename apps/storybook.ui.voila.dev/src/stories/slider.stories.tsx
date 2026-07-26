@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Slider, SliderValue } from "@voila.dev/ui/components/slider";
+import { Slider } from "@voila.dev/ui/slider";
 import { expect } from "storybook/test";
 
 const meta = {
 	title: "UI/Slider",
-	component: Slider,
+	component: Slider.Root,
 	tags: ["autodocs"],
 	argTypes: {
 		orientation: {
@@ -12,7 +12,7 @@ const meta = {
 			options: ["horizontal", "vertical"],
 		},
 	},
-} satisfies Meta<typeof Slider>;
+} satisfies Meta<typeof Slider.Root>;
 
 export default meta;
 
@@ -29,7 +29,7 @@ function trackRectangle(canvasElement: HTMLElement): DOMRect {
 export const Default: Story = {
 	render: () => (
 		<div className="w-72">
-			<Slider defaultValue={50} />
+			<Slider.Root defaultValue={50} />
 		</div>
 	),
 	play: async ({ canvasElement }) => {
@@ -46,7 +46,7 @@ export const Range: Story = {
 	render: () => (
 		<div className="w-72 space-y-2">
 			<p className="text-sm font-medium">Hourly rate (USD)</p>
-			<Slider defaultValue={[35, 65]} min={20} max={100} />
+			<Slider.Root defaultValue={[35, 65]} min={20} max={100} />
 		</div>
 	),
 };
@@ -54,12 +54,12 @@ export const Range: Story = {
 export const WithValue: Story = {
 	render: () => (
 		<div className="w-72">
-			<Slider defaultValue={[35, 65]} min={20} max={100}>
+			<Slider.Root defaultValue={[35, 65]} min={20} max={100}>
 				<div className="mt-2 flex justify-between">
 					<span className="text-sm font-medium">Hourly rate (USD)</span>
-					<SliderValue />
+					<Slider.Value />
 				</div>
-			</Slider>
+			</Slider.Root>
 		</div>
 	),
 };
@@ -67,12 +67,12 @@ export const WithValue: Story = {
 export const Steps: Story = {
 	render: () => (
 		<div className="w-72">
-			<Slider defaultValue={60} min={0} max={120} step={15}>
+			<Slider.Root defaultValue={60} min={0} max={120} step={15}>
 				<div className="mt-2 flex justify-between">
 					<span className="text-sm font-medium">Meeting duration (min)</span>
-					<SliderValue />
+					<Slider.Value />
 				</div>
-			</Slider>
+			</Slider.Root>
 		</div>
 	),
 };
@@ -80,7 +80,7 @@ export const Steps: Story = {
 export const Vertical: Story = {
 	render: () => (
 		<div className="flex h-48 justify-center">
-			<Slider defaultValue={50} orientation="vertical" />
+			<Slider.Root defaultValue={50} orientation="vertical" />
 		</div>
 	),
 	play: async ({ canvasElement }) => {
@@ -94,7 +94,7 @@ export const Vertical: Story = {
 export const Disabled: Story = {
 	render: () => (
 		<div className="w-72">
-			<Slider defaultValue={30} disabled />
+			<Slider.Root defaultValue={30} disabled />
 		</div>
 	),
 };

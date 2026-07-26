@@ -1,13 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Chart, type ChartConfig } from "@voila.dev/ui/chart/chart";
-import {
-	StatCard,
-	StatCardChart,
-	StatCardDelta,
-	StatCardHeader,
-	StatCardLabel,
-	StatCardValue,
-} from "@voila.dev/ui/components/stat-card";
+import { Chart, type ChartConfig } from "@voila.dev/ui/chart";
+import { StatCard } from "@voila.dev/ui/stat-card";
 import type * as React from "react";
 
 const sparklineData = [
@@ -69,9 +62,9 @@ function Sparkline({
 
 const meta = {
 	title: "UI/StatCard",
-	component: StatCard,
+	component: StatCard.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof StatCard>;
+} satisfies Meta<typeof StatCard.Root>;
 
 export default meta;
 
@@ -82,11 +75,11 @@ export const Default: Story = {
 		className: "w-64",
 		children: (
 			<>
-				<StatCardHeader>
-					<StatCardLabel>Projects published</StatCardLabel>
-					<StatCardDelta trend="up">+12%</StatCardDelta>
-				</StatCardHeader>
-				<StatCardValue>1,284</StatCardValue>
+				<StatCard.Header>
+					<StatCard.Label>Projects published</StatCard.Label>
+					<StatCard.Delta trend="up">+12%</StatCard.Delta>
+				</StatCard.Header>
+				<StatCard.Value>1,284</StatCard.Value>
 			</>
 		),
 	},
@@ -97,14 +90,14 @@ export const WithSparkline: Story = {
 		className: "w-64",
 		children: (
 			<>
-				<StatCardHeader>
-					<StatCardLabel>Projects published</StatCardLabel>
-					<StatCardDelta trend="up">+12%</StatCardDelta>
-				</StatCardHeader>
-				<StatCardValue>1,284</StatCardValue>
-				<StatCardChart>
+				<StatCard.Header>
+					<StatCard.Label>Projects published</StatCard.Label>
+					<StatCard.Delta trend="up">+12%</StatCard.Delta>
+				</StatCard.Header>
+				<StatCard.Value>1,284</StatCard.Value>
+				<StatCard.Chart>
 					<Sparkline />
-				</StatCardChart>
+				</StatCard.Chart>
 			</>
 		),
 	},
@@ -113,68 +106,68 @@ export const WithSparkline: Story = {
 export const Dashboard: Story = {
 	render: () => (
 		<div className="grid w-full max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
-			<StatCard>
-				<StatCardHeader>
-					<StatCardLabel>Projects published</StatCardLabel>
-					<StatCardDelta trend="up">+12%</StatCardDelta>
-				</StatCardHeader>
-				<StatCardValue>1,284</StatCardValue>
-				<StatCardChart>
+			<StatCard.Root>
+				<StatCard.Header>
+					<StatCard.Label>Projects published</StatCard.Label>
+					<StatCard.Delta trend="up">+12%</StatCard.Delta>
+				</StatCard.Header>
+				<StatCard.Value>1,284</StatCard.Value>
+				<StatCard.Chart>
 					<Sparkline />
-				</StatCardChart>
-			</StatCard>
-			<StatCard>
-				<StatCardHeader>
-					<StatCardLabel>Cancellations</StatCardLabel>
+				</StatCard.Chart>
+			</StatCard.Root>
+			<StatCard.Root>
+				<StatCard.Header>
+					<StatCard.Label>Cancellations</StatCard.Label>
 					{/* Down is the good direction here: invert via className. */}
-					<StatCardDelta trend="down" className="text-success">
+					<StatCard.Delta trend="down" className="text-success">
 						-3%
-					</StatCardDelta>
-				</StatCardHeader>
-				<StatCardValue>17</StatCardValue>
-				<StatCardChart>
+					</StatCard.Delta>
+				</StatCard.Header>
+				<StatCard.Value>17</StatCard.Value>
+				<StatCard.Chart>
 					<Sparkline />
-				</StatCardChart>
-			</StatCard>
-			<StatCard>
-				<StatCardHeader>
-					<StatCardLabel>Fill rate</StatCardLabel>
-					<StatCardDelta>0%</StatCardDelta>
-				</StatCardHeader>
-				<StatCardValue>92%</StatCardValue>
-				<StatCardChart>
+				</StatCard.Chart>
+			</StatCard.Root>
+			<StatCard.Root>
+				<StatCard.Header>
+					<StatCard.Label>Fill rate</StatCard.Label>
+					<StatCard.Delta>0%</StatCard.Delta>
+				</StatCard.Header>
+				<StatCard.Value>92%</StatCard.Value>
+				<StatCard.Chart>
 					<Sparkline />
-				</StatCardChart>
-			</StatCard>
+				</StatCard.Chart>
+			</StatCard.Root>
 		</div>
 	),
 };
 
 export const Loading: Story = {
 	render: () => (
-		<StatCard className="w-64">
-			<StatCardHeader>
-				<StatCardLabel>Projects published</StatCardLabel>
-			</StatCardHeader>
-			<StatCardValue>—</StatCardValue>
-			<StatCardChart className="px-4">
+		<StatCard.Root className="w-64">
+			<StatCard.Header>
+				<StatCard.Label>Projects published</StatCard.Label>
+			</StatCard.Header>
+			<StatCard.Value>—</StatCard.Value>
+			<StatCard.Chart className="px-4">
 				<Chart.Skeleton className="h-16" />
-			</StatCardChart>
-		</StatCard>
+			</StatCard.Chart>
+		</StatCard.Root>
 	),
 };
 
 export const Empty: Story = {
 	render: () => (
-		<StatCard className="w-64">
-			<StatCardHeader>
-				<StatCardLabel>Projects published</StatCardLabel>
-			</StatCardHeader>
-			<StatCardValue>0</StatCardValue>
-			<StatCardChart className="px-4 pb-4">
+		<StatCard.Root className="w-64">
+			<StatCard.Header>
+				<StatCard.Label>Projects published</StatCard.Label>
+			</StatCard.Header>
+			<StatCard.Value>0</StatCard.Value>
+			<StatCard.Chart className="px-4 pb-4">
 				<Chart.Empty className="h-16">No data yet</Chart.Empty>
-			</StatCardChart>
-		</StatCard>
+			</StatCard.Chart>
+		</StatCard.Root>
 	),
 };
 
@@ -183,16 +176,16 @@ export const SparklineShapes: Story = {
 	render: () => (
 		<div className="grid w-full max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
 			{(["area", "line", "bars"] as const).map((mark) => (
-				<StatCard key={mark}>
-					<StatCardHeader>
-						<StatCardLabel>Projects published</StatCardLabel>
-						<StatCardDelta trend="up">+12%</StatCardDelta>
-					</StatCardHeader>
-					<StatCardValue>1,284</StatCardValue>
-					<StatCardChart>
+				<StatCard.Root key={mark}>
+					<StatCard.Header>
+						<StatCard.Label>Projects published</StatCard.Label>
+						<StatCard.Delta trend="up">+12%</StatCard.Delta>
+					</StatCard.Header>
+					<StatCard.Value>1,284</StatCard.Value>
+					<StatCard.Chart>
 						<Sparkline mark={mark} />
-					</StatCardChart>
-				</StatCard>
+					</StatCard.Chart>
+				</StatCard.Root>
 			))}
 		</div>
 	),
@@ -204,34 +197,34 @@ export const SparklineShapes: Story = {
  */
 export const InteractiveSparkline: Story = {
 	render: () => (
-		<StatCard className="w-64">
-			<StatCardHeader>
-				<StatCardLabel>Projects published</StatCardLabel>
-				<StatCardDelta trend="up">+12%</StatCardDelta>
-			</StatCardHeader>
-			<StatCardValue>1,284</StatCardValue>
-			<StatCardChart>
+		<StatCard.Root className="w-64">
+			<StatCard.Header>
+				<StatCard.Label>Projects published</StatCard.Label>
+				<StatCard.Delta trend="up">+12%</StatCard.Delta>
+			</StatCard.Header>
+			<StatCard.Value>1,284</StatCard.Value>
+			<StatCard.Chart>
 				<Sparkline interactive />
-			</StatCardChart>
-		</StatCard>
+			</StatCard.Chart>
+		</StatCard.Root>
 	),
 };
 
 /** Down is the good direction here, so the delta is recoloured by hand. */
 export const FallingMetric: Story = {
 	render: () => (
-		<StatCard className="w-64">
-			<StatCardHeader>
-				<StatCardLabel>Cancellations</StatCardLabel>
-				<StatCardDelta trend="down" className="text-success">
+		<StatCard.Root className="w-64">
+			<StatCard.Header>
+				<StatCard.Label>Cancellations</StatCard.Label>
+				<StatCard.Delta trend="down" className="text-success">
 					-45%
-				</StatCardDelta>
-			</StatCardHeader>
-			<StatCardValue>17</StatCardValue>
-			<StatCardChart>
+				</StatCard.Delta>
+			</StatCard.Header>
+			<StatCard.Value>17</StatCard.Value>
+			<StatCard.Chart>
 				<Sparkline seriesKey="cancellations" mark="line" />
-			</StatCardChart>
-		</StatCard>
+			</StatCard.Chart>
+		</StatCard.Root>
 	),
 };
 
@@ -245,15 +238,15 @@ export const Compact: Story = {
 				{ label: "Cancelled", value: "17", mark: "bars" },
 				{ label: "Fill rate", value: "92%", mark: "area" },
 			].map((tile) => (
-				<StatCard key={tile.label} size="sm">
-					<StatCardHeader>
-						<StatCardLabel>{tile.label}</StatCardLabel>
-					</StatCardHeader>
-					<StatCardValue>{tile.value}</StatCardValue>
-					<StatCardChart>
+				<StatCard.Root key={tile.label} size="sm">
+					<StatCard.Header>
+						<StatCard.Label>{tile.label}</StatCard.Label>
+					</StatCard.Header>
+					<StatCard.Value>{tile.value}</StatCard.Value>
+					<StatCard.Chart>
 						<Sparkline mark={tile.mark as "area" | "line" | "bars"} />
-					</StatCardChart>
-				</StatCard>
+					</StatCard.Chart>
+				</StatCard.Root>
 			))}
 		</div>
 	),
@@ -263,66 +256,66 @@ export const Compact: Story = {
 export const KpiStrip: Story = {
 	render: () => (
 		<div className="grid w-full max-w-5xl grid-cols-2 gap-4 lg:grid-cols-3">
-			<StatCard>
-				<StatCardHeader>
-					<StatCardLabel>Projects published</StatCardLabel>
-					<StatCardDelta trend="up">+12%</StatCardDelta>
-				</StatCardHeader>
-				<StatCardValue>1,284</StatCardValue>
-				<StatCardChart>
+			<StatCard.Root>
+				<StatCard.Header>
+					<StatCard.Label>Projects published</StatCard.Label>
+					<StatCard.Delta trend="up">+12%</StatCard.Delta>
+				</StatCard.Header>
+				<StatCard.Value>1,284</StatCard.Value>
+				<StatCard.Chart>
 					<Sparkline interactive />
-				</StatCardChart>
-			</StatCard>
-			<StatCard>
-				<StatCardHeader>
-					<StatCardLabel>Cancellations</StatCardLabel>
-					<StatCardDelta trend="down" className="text-success">
+				</StatCard.Chart>
+			</StatCard.Root>
+			<StatCard.Root>
+				<StatCard.Header>
+					<StatCard.Label>Cancellations</StatCard.Label>
+					<StatCard.Delta trend="down" className="text-success">
 						-45%
-					</StatCardDelta>
-				</StatCardHeader>
-				<StatCardValue>17</StatCardValue>
-				<StatCardChart>
+					</StatCard.Delta>
+				</StatCard.Header>
+				<StatCard.Value>17</StatCard.Value>
+				<StatCard.Chart>
 					<Sparkline seriesKey="cancellations" mark="line" interactive />
-				</StatCardChart>
-			</StatCard>
-			<StatCard>
-				<StatCardHeader>
-					<StatCardLabel>Bookings confirmed</StatCardLabel>
-					<StatCardDelta>0%</StatCardDelta>
-				</StatCardHeader>
-				<StatCardValue>1,102</StatCardValue>
-				<StatCardChart>
+				</StatCard.Chart>
+			</StatCard.Root>
+			<StatCard.Root>
+				<StatCard.Header>
+					<StatCard.Label>Bookings confirmed</StatCard.Label>
+					<StatCard.Delta>0%</StatCard.Delta>
+				</StatCard.Header>
+				<StatCard.Value>1,102</StatCard.Value>
+				<StatCard.Chart>
 					<Sparkline mark="bars" interactive />
-				</StatCardChart>
-			</StatCard>
-			<StatCard>
-				<StatCardHeader>
-					<StatCardLabel>Awaiting data</StatCardLabel>
-				</StatCardHeader>
-				<StatCardValue>—</StatCardValue>
-				<StatCardChart className="px-4">
+				</StatCard.Chart>
+			</StatCard.Root>
+			<StatCard.Root>
+				<StatCard.Header>
+					<StatCard.Label>Awaiting data</StatCard.Label>
+				</StatCard.Header>
+				<StatCard.Value>—</StatCard.Value>
+				<StatCard.Chart className="px-4">
 					<Chart.Skeleton className="h-16" />
-				</StatCardChart>
-			</StatCard>
-			<StatCard>
-				<StatCardHeader>
-					<StatCardLabel>New this week</StatCardLabel>
-				</StatCardHeader>
-				<StatCardValue>0</StatCardValue>
-				<StatCardChart className="px-4 pb-4">
+				</StatCard.Chart>
+			</StatCard.Root>
+			<StatCard.Root>
+				<StatCard.Header>
+					<StatCard.Label>New this week</StatCard.Label>
+				</StatCard.Header>
+				<StatCard.Value>0</StatCard.Value>
+				<StatCard.Chart className="px-4 pb-4">
 					<Chart.Empty className="h-16">No data yet</Chart.Empty>
-				</StatCardChart>
-			</StatCard>
-			<StatCard>
-				<StatCardHeader>
-					<StatCardLabel>Fill rate</StatCardLabel>
-					<StatCardDelta trend="up">+4%</StatCardDelta>
-				</StatCardHeader>
-				<StatCardValue>92%</StatCardValue>
-				<StatCardChart>
+				</StatCard.Chart>
+			</StatCard.Root>
+			<StatCard.Root>
+				<StatCard.Header>
+					<StatCard.Label>Fill rate</StatCard.Label>
+					<StatCard.Delta trend="up">+4%</StatCard.Delta>
+				</StatCard.Header>
+				<StatCard.Value>92%</StatCard.Value>
+				<StatCard.Chart>
 					<Sparkline mark="area" />
-				</StatCardChart>
-			</StatCard>
+				</StatCard.Chart>
+			</StatCard.Root>
 		</div>
 	),
 };

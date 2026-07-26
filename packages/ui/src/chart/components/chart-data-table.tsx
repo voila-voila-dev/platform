@@ -3,6 +3,15 @@ import { type ChartConfig, seriesLabelText } from "#/chart/core/config.ts";
 import { formatTickValue } from "#/chart/core/format.ts";
 import type { ChartDatum } from "#/chart/core/types.ts";
 
+interface Props {
+	readonly caption: string;
+	readonly categoryLabel: string;
+	readonly categories: ReadonlyArray<string>;
+	readonly valueKeys: ReadonlyArray<string>;
+	readonly data: ReadonlyArray<ChartDatum>;
+	readonly config: ChartConfig;
+}
+
 /**
  * The chart's content, as a table, for anyone who cannot read the picture.
  * Visually hidden but present in the accessibility tree, so a screen reader
@@ -15,14 +24,7 @@ export function ChartDataTable({
 	valueKeys,
 	data,
 	config,
-}: {
-	readonly caption: string;
-	readonly categoryLabel: string;
-	readonly categories: ReadonlyArray<string>;
-	readonly valueKeys: ReadonlyArray<string>;
-	readonly data: ReadonlyArray<ChartDatum>;
-	readonly config: ChartConfig;
-}) {
+}: Props) {
 	if (data.length === 0 || valueKeys.length === 0) {
 		return null;
 	}

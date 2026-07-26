@@ -7,7 +7,7 @@ import { cn } from "#/lib/utils.ts";
  * bespoke round chart out of the same part the built-in ones use.
  */
 
-export interface ChartSliceProps
+interface Props
 	extends ArcOptions,
 		Omit<React.ComponentProps<"path">, "d" | "cx" | "cy"> {
 	readonly state?: "idle" | "active" | "muted";
@@ -16,7 +16,7 @@ export interface ChartSliceProps
 /** How far the active wedge lifts out of the ring. */
 const ACTIVE_LIFT = 4;
 
-function ChartSlice({
+export function ChartSlice({
 	cx,
 	cy,
 	innerRadius,
@@ -26,7 +26,7 @@ function ChartSlice({
 	state = "idle",
 	className,
 	...props
-}: ChartSliceProps) {
+}: Props) {
 	const path = arcPath({
 		cx,
 		cy,
@@ -54,5 +54,3 @@ function ChartSlice({
 		/>
 	);
 }
-
-export { ChartSlice };

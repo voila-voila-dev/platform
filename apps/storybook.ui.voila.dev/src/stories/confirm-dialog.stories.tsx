@@ -1,8 +1,8 @@
 import { WarningIcon } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Button } from "@voila.dev/ui/components/button";
-import { ConfirmDialog } from "@voila.dev/ui/components/confirm-dialog";
-import { toast } from "@voila.dev/ui/components/sonner";
+import { Button } from "@voila.dev/ui/button";
+import { ConfirmDialog } from "@voila.dev/ui/confirm-dialog";
+import { toast } from "@voila.dev/ui/sonner";
 import { useState } from "react";
 
 const meta = {

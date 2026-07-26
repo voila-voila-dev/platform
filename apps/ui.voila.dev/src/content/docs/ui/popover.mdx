@@ -13,16 +13,16 @@ import * as Example from "../../../examples/ui/overlays";
 </Preview>
 
 ```tsx
-<Popover>
-	<PopoverTrigger render={<Button variant="outline">Details</Button>} />
-	<PopoverContent>
-		<PopoverHeader>
-			<PopoverTitle>Landing page redesign</PopoverTitle>
-			<PopoverDescription>Northwind Labs — June 14.</PopoverDescription>
-		</PopoverHeader>
+<Popover.Root>
+	<Popover.Trigger render={<Button variant="outline">Details</Button>} />
+	<Popover.Content>
+		<Popover.Header>
+			<Popover.Title>Landing page redesign</Popover.Title>
+			<Popover.Description>Northwind Labs — June 14.</Popover.Description>
+		</Popover.Header>
 		<p className="text-muted-foreground">A product designer is needed…</p>
-	</PopoverContent>
-</Popover>
+	</Popover.Content>
+</Popover.Root>
 ```
 
 A popover can hold focusable content; a [Tooltip](/ui/tooltip/) cannot. If

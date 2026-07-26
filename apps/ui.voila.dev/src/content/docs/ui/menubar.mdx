@@ -13,16 +13,16 @@ import * as Example from "../../../examples/ui/overlays";
 </Preview>
 
 ```tsx
-<Menubar>
-	<MenubarMenu>
-		<MenubarTrigger>Projects</MenubarTrigger>
-		<MenubarContent>
-			<MenubarItem>New project <MenubarShortcut>⌘N</MenubarShortcut></MenubarItem>
-			<MenubarSeparator />
-			<MenubarItem variant="destructive">Cancel project</MenubarItem>
-		</MenubarContent>
-	</MenubarMenu>
-</Menubar>
+<Menubar.Root>
+	<Menubar.Menu>
+		<Menubar.Trigger>Projects</Menubar.Trigger>
+		<Menubar.Content>
+			<Menubar.Item>New project <Menubar.Shortcut>⌘N</Menubar.Shortcut></Menubar.Item>
+			<Menubar.Separator />
+			<Menubar.Item variant="destructive">Cancel project</Menubar.Item>
+		</Menubar.Content>
+	</Menubar.Menu>
+</Menubar.Root>
 ```
 
 Once one menu is open, moving across the bar opens the others on hover.

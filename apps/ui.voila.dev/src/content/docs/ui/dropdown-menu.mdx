@@ -13,24 +13,24 @@ import * as Example from "../../../examples/ui/overlays";
 </Preview>
 
 ```tsx
-<DropdownMenu>
-	<DropdownMenuTrigger render={<Button variant="outline" />}>Actions</DropdownMenuTrigger>
-	<DropdownMenuContent className="w-56">
-		<DropdownMenuLabel>Launch review</DropdownMenuLabel>
-		<DropdownMenuGroup>
-			<DropdownMenuItem>
+<DropdownMenu.Root>
+	<DropdownMenu.Trigger render={<Button variant="outline" />}>Actions</DropdownMenu.Trigger>
+	<DropdownMenu.Content className="w-56">
+		<DropdownMenu.Label>Launch review</DropdownMenu.Label>
+		<DropdownMenu.Group>
+			<DropdownMenu.Item>
 				Edit project
-				<DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
-			</DropdownMenuItem>
-		</DropdownMenuGroup>
-		<DropdownMenuSeparator />
-		<DropdownMenuItem variant="destructive">Cancel project</DropdownMenuItem>
-	</DropdownMenuContent>
-</DropdownMenu>
+				<DropdownMenu.Shortcut>⌘E</DropdownMenu.Shortcut>
+			</DropdownMenu.Item>
+		</DropdownMenu.Group>
+		<DropdownMenu.Separator />
+		<DropdownMenu.Item variant="destructive">Cancel project</DropdownMenu.Item>
+	</DropdownMenu.Content>
+</DropdownMenu.Root>
 ```
 
-`DropdownMenuLabel` has to sit inside a `DropdownMenuGroup` or at the top of the
+`DropdownMenu.Label` has to sit inside a `DropdownMenu.Group` or at the top of the
 content — a label floating between groups throws.
 
-Checkbox and radio items are available as `DropdownMenuCheckboxItem` and
-`DropdownMenuRadioItem` inside a `DropdownMenuRadioGroup`.
+Checkbox and radio items are available as `DropdownMenu.CheckboxItem` and
+`DropdownMenu.RadioItem` inside a `DropdownMenu.RadioGroup`.

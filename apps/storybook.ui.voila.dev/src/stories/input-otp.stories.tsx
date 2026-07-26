@@ -1,23 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	InputOTP,
-	InputOTPGroup,
-	InputOTPSeparator,
-	InputOTPSlot,
-} from "@voila.dev/ui/components/input-otp";
+import { InputOTP } from "@voila.dev/ui/input-otp";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { useState } from "react";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 
 const meta = {
 	title: "UI/InputOTP",
-	component: InputOTP,
+	component: InputOTP.Root,
 	tags: ["autodocs"],
 	args: {
 		maxLength: 6,
 		children: null,
 	},
-} satisfies Meta<typeof InputOTP>;
+} satisfies Meta<typeof InputOTP.Root>;
 
 export default meta;
 
@@ -25,48 +20,48 @@ type Story = StoryObj<typeof meta>;
 
 function SixDigitSlots() {
 	return (
-		<InputOTPGroup>
-			<InputOTPSlot index={0} />
-			<InputOTPSlot index={1} />
-			<InputOTPSlot index={2} />
-			<InputOTPSlot index={3} />
-			<InputOTPSlot index={4} />
-			<InputOTPSlot index={5} />
-		</InputOTPGroup>
+		<InputOTP.Group>
+			<InputOTP.Slot index={0} />
+			<InputOTP.Slot index={1} />
+			<InputOTP.Slot index={2} />
+			<InputOTP.Slot index={3} />
+			<InputOTP.Slot index={4} />
+			<InputOTP.Slot index={5} />
+		</InputOTP.Group>
 	);
 }
 
 export const Default: Story = {
 	render: () => (
-		<InputOTP maxLength={6}>
+		<InputOTP.Root maxLength={6}>
 			<SixDigitSlots />
-		</InputOTP>
+		</InputOTP.Root>
 	),
 };
 
 export const WithSeparator: Story = {
 	render: () => (
-		<InputOTP maxLength={6}>
-			<InputOTPGroup>
-				<InputOTPSlot index={0} />
-				<InputOTPSlot index={1} />
-				<InputOTPSlot index={2} />
-			</InputOTPGroup>
-			<InputOTPSeparator />
-			<InputOTPGroup>
-				<InputOTPSlot index={3} />
-				<InputOTPSlot index={4} />
-				<InputOTPSlot index={5} />
-			</InputOTPGroup>
-		</InputOTP>
+		<InputOTP.Root maxLength={6}>
+			<InputOTP.Group>
+				<InputOTP.Slot index={0} />
+				<InputOTP.Slot index={1} />
+				<InputOTP.Slot index={2} />
+			</InputOTP.Group>
+			<InputOTP.Separator />
+			<InputOTP.Group>
+				<InputOTP.Slot index={3} />
+				<InputOTP.Slot index={4} />
+				<InputOTP.Slot index={5} />
+			</InputOTP.Group>
+		</InputOTP.Root>
 	),
 };
 
 export const Disabled: Story = {
 	render: () => (
-		<InputOTP maxLength={6} disabled>
+		<InputOTP.Root maxLength={6} disabled>
 			<SixDigitSlots />
-		</InputOTP>
+		</InputOTP.Root>
 	),
 };
 
@@ -76,9 +71,9 @@ export const Disabled: Story = {
  */
 export const DigitsOnly: Story = {
 	render: () => (
-		<InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS}>
+		<InputOTP.Root maxLength={6} pattern={REGEXP_ONLY_DIGITS}>
 			<SixDigitSlots />
-		</InputOTP>
+		</InputOTP.Root>
 	),
 	play: async ({ canvasElement }) => {
 		const input = canvasElement.querySelector(
@@ -92,13 +87,13 @@ export const DigitsOnly: Story = {
 
 /**
  * Error state: pass `aria-invalid` to surface the destructive ring/border that
- * `InputOTPGroup`/`InputOTPSlot` already style with `aria-invalid:` variants.
+ * `InputOTP.Group`/`InputOTP.Slot` already style with `aria-invalid:` variants.
  */
 export const Invalid: Story = {
 	render: () => (
-		<InputOTP maxLength={6} aria-invalid defaultValue="123">
+		<InputOTP.Root maxLength={6} aria-invalid defaultValue="123">
 			<SixDigitSlots />
-		</InputOTP>
+		</InputOTP.Root>
 	),
 };
 
@@ -113,14 +108,14 @@ export const Controlled: Story = {
 
 		return (
 			<div className="flex flex-col items-center gap-3">
-				<InputOTP
+				<InputOTP.Root
 					maxLength={6}
 					value={value}
 					onChange={setValue}
 					onComplete={setCompleted}
 				>
 					<SixDigitSlots />
-				</InputOTP>
+				</InputOTP.Root>
 				<p className="text-muted-foreground text-sm" data-testid="status">
 					{completed ? `Completed: ${completed}` : `Typed: ${value || "—"}`}
 				</p>

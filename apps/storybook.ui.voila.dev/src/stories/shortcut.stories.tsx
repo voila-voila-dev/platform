@@ -1,12 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuShortcut,
-	DropdownMenuTrigger,
-} from "@voila.dev/ui/components/dropdown-menu";
-import { Shortcut } from "@voila.dev/ui/components/shortcut";
+import { DropdownMenu } from "@voila.dev/ui/dropdown-menu";
+import { Shortcut } from "@voila.dev/ui/shortcut";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 
 const meta = {
@@ -42,19 +36,19 @@ export const WithKbdKeys: Story = {
 
 export const InDropdownMenu: Story = {
 	render: () => (
-		<DropdownMenu>
-			<DropdownMenuTrigger>Project actions</DropdownMenuTrigger>
-			<DropdownMenuContent>
-				<DropdownMenuItem>
+		<DropdownMenu.Root>
+			<DropdownMenu.Trigger>Project actions</DropdownMenu.Trigger>
+			<DropdownMenu.Content>
+				<DropdownMenu.Item>
 					Edit project
-					<DropdownMenuShortcut>⌘E</DropdownMenuShortcut>
-				</DropdownMenuItem>
-				<DropdownMenuItem>
+					<DropdownMenu.Shortcut>⌘E</DropdownMenu.Shortcut>
+				</DropdownMenu.Item>
+				<DropdownMenu.Item>
 					Duplicate
-					<DropdownMenuShortcut keys={["⌘", "D"]} />
-				</DropdownMenuItem>
-			</DropdownMenuContent>
-		</DropdownMenu>
+					<DropdownMenu.Shortcut keys={["⌘", "D"]} />
+				</DropdownMenu.Item>
+			</DropdownMenu.Content>
+		</DropdownMenu.Root>
 	),
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);

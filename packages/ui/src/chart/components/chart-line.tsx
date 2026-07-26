@@ -4,7 +4,6 @@ import { seriesColor } from "#/chart/core/config.ts";
 import { linePath } from "#/chart/core/geometry.ts";
 import { seriesPoints } from "#/chart/core/series.ts";
 import type { ChartCurve } from "#/chart/core/types.ts";
-import { cn } from "#/lib/utils.ts";
 
 /**
  * One line per series. The active datum grows a dot, so scrubbing with a finger
@@ -12,7 +11,7 @@ import { cn } from "#/lib/utils.ts";
  * time.
  */
 
-export interface ChartLineProps extends React.ComponentProps<"g"> {
+interface Props extends React.ComponentProps<"g"> {
 	readonly keys?: ReadonlyArray<string>;
 	readonly curve?: ChartCurve;
 	readonly strokeWidth?: number;
@@ -23,14 +22,14 @@ export interface ChartLineProps extends React.ComponentProps<"g"> {
 const ACTIVE_DOT_RADIUS = 4;
 const DOT_RADIUS = 2.5;
 
-function ChartLine({
+export function ChartLine({
 	className,
 	keys,
 	curve = "monotone",
 	strokeWidth = 2,
 	dots = false,
 	...props
-}: ChartLineProps) {
+}: Props) {
 	const {
 		data,
 		categories,
@@ -45,7 +44,7 @@ function ChartLine({
 	const drawnKeys = keys ?? valueKeys;
 
 	return (
-		<g data-slot="chart-line" className={cn(className)} {...props}>
+		<g data-slot="chart-line" className={className} {...props}>
 			{drawnKeys.map((key, seriesIndex) => {
 				const points = seriesPoints({
 					data,
@@ -95,5 +94,3 @@ function ChartLine({
 		</g>
 	);
 }
-
-export { ChartLine };

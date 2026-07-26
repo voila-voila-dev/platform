@@ -1,17 +1,12 @@
 import { MegaphoneIcon, WarningIcon } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	Banner,
-	BannerAction,
-	BannerClose,
-	BannerTitle,
-} from "@voila.dev/ui/components/banner";
-import { Button } from "@voila.dev/ui/components/button";
+import { Banner } from "@voila.dev/ui/banner";
+import { Button } from "@voila.dev/ui/button";
 import { useState } from "react";
 
 const meta = {
 	title: "UI/Banner",
-	component: Banner,
+	component: Banner.Root,
 	tags: ["autodocs"],
 	parameters: {
 		layout: "fullscreen",
@@ -25,7 +20,7 @@ const meta = {
 	args: {
 		variant: "default",
 	},
-} satisfies Meta<typeof Banner>;
+} satisfies Meta<typeof Banner.Root>;
 
 export default meta;
 
@@ -33,72 +28,74 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: (args) => (
-		<Banner {...args}>
+		<Banner.Root {...args}>
 			<MegaphoneIcon />
-			<BannerTitle>
+			<Banner.Title>
 				Messaging is here — chat with clients directly from a project page.
-			</BannerTitle>
-			<BannerClose />
-		</Banner>
+			</Banner.Title>
+			<Banner.Close />
+		</Banner.Root>
 	),
 };
 
 export const Muted: Story = {
 	args: { variant: "muted" },
 	render: (args) => (
-		<Banner {...args}>
-			<BannerTitle>
+		<Banner.Root {...args}>
+			<Banner.Title>
 				Scheduled maintenance Sunday from 2 AM to 4 AM — the platform will be
 				unavailable.
-			</BannerTitle>
-			<BannerClose />
-		</Banner>
+			</Banner.Title>
+			<Banner.Close />
+		</Banner.Root>
 	),
 };
 
 export const Success: Story = {
 	args: { variant: "success" },
 	render: (args) => (
-		<Banner {...args}>
-			<BannerTitle>
+		<Banner.Root {...args}>
+			<Banner.Title>
 				Your profile is complete — you can now apply to projects.
-			</BannerTitle>
-			<BannerClose />
-		</Banner>
+			</Banner.Title>
+			<Banner.Close />
+		</Banner.Root>
 	),
 };
 
 export const Warning: Story = {
 	args: { variant: "warning" },
 	render: (args) => (
-		<Banner {...args}>
+		<Banner.Root {...args}>
 			<WarningIcon />
-			<BannerTitle>
+			<Banner.Title>
 				Your Stripe account is incomplete — finish the setup to receive your
 				payouts.
-			</BannerTitle>
-		</Banner>
+			</Banner.Title>
+		</Banner.Root>
 	),
 };
 
 export const Destructive: Story = {
 	args: { variant: "destructive" },
 	render: (args) => (
-		<Banner {...args}>
+		<Banner.Root {...args}>
 			<WarningIcon />
-			<BannerTitle>
+			<Banner.Title>
 				Your subscription payment failed — update your payment method.
-			</BannerTitle>
-		</Banner>
+			</Banner.Title>
+		</Banner.Root>
 	),
 };
 
 export const WithAction: Story = {
 	render: (args) => (
-		<Banner {...args}>
+		<Banner.Root {...args}>
 			<MegaphoneIcon />
-			<BannerTitle>Messaging is here — chat with clients directly.</BannerTitle>
-			<BannerAction>
+			<Banner.Title>
+				Messaging is here — chat with clients directly.
+			</Banner.Title>
+			<Banner.Action>
 				<Button
 					variant="outline"
 					size="xs"
@@ -106,22 +103,22 @@ export const WithAction: Story = {
 				>
 					Learn more
 				</Button>
-			</BannerAction>
-			<BannerClose />
-		</Banner>
+			</Banner.Action>
+			<Banner.Close />
+		</Banner.Root>
 	),
 };
 
 export const WithLink: Story = {
 	args: { variant: "warning" },
 	render: (args) => (
-		<Banner {...args}>
+		<Banner.Root {...args}>
 			<WarningIcon />
-			<BannerTitle>
+			<Banner.Title>
 				Submit the <a href="#report">project report</a> within 48 hours to
 				release the payment.
-			</BannerTitle>
-		</Banner>
+			</Banner.Title>
+		</Banner.Root>
 	),
 };
 
@@ -138,13 +135,13 @@ export const Dismissible: Story = {
 			);
 		}
 		return (
-			<Banner {...args}>
+			<Banner.Root {...args}>
 				<MegaphoneIcon />
-				<BannerTitle>
+				<Banner.Title>
 					Messaging is here — chat with clients directly.
-				</BannerTitle>
-				<BannerClose onClick={() => setOpen(false)} />
-			</Banner>
+				</Banner.Title>
+				<Banner.Close onClick={() => setOpen(false)} />
+			</Banner.Root>
 		);
 	},
 };

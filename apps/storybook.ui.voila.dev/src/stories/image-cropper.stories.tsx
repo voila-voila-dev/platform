@@ -4,23 +4,13 @@ import {
 	TrashIcon,
 } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Button } from "@voila.dev/ui/components/button";
+import { Button } from "@voila.dev/ui/button";
 import {
 	ImageCropper,
-	ImageCropperArea,
 	type ImageCropperCropArea,
-	ImageCropperDropzone,
 	useImageCropper,
-} from "@voila.dev/ui/components/image-cropper";
-import {
-	ResponsiveDialog,
-	ResponsiveDialogBody,
-	ResponsiveDialogContent,
-	ResponsiveDialogDescription,
-	ResponsiveDialogHeader,
-	ResponsiveDialogTitle,
-	ResponsiveDialogTrigger,
-} from "@voila.dev/ui/components/responsive-dialog";
+} from "@voila.dev/ui/image-cropper";
+import { ResponsiveDialog } from "@voila.dev/ui/responsive-dialog";
 import { useState } from "react";
 import { expect, fireEvent, waitFor } from "storybook/test";
 
@@ -30,9 +20,9 @@ const PORTRAIT_IMAGE = "https://github.com/shadcn.png";
 
 const meta = {
 	title: "UI/ImageCropper",
-	component: ImageCropper,
+	component: ImageCropper.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof ImageCropper>;
+} satisfies Meta<typeof ImageCropper.Root>;
 
 export default meta;
 
@@ -41,10 +31,10 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
 	render: () => (
 		<div className="w-96">
-			<ImageCropper>
-				<ImageCropperDropzone />
-				<ImageCropperArea />
-			</ImageCropper>
+			<ImageCropper.Root>
+				<ImageCropper.Dropzone />
+				<ImageCropper.Area />
+			</ImageCropper.Root>
 		</div>
 	),
 };
@@ -52,12 +42,12 @@ export const Default: Story = {
 export const WithImage: Story = {
 	render: () => (
 		<div className="w-96">
-			<ImageCropper defaultImage={LANDSCAPE_IMAGE}>
-				<ImageCropperArea />
+			<ImageCropper.Root defaultImage={LANDSCAPE_IMAGE}>
+				<ImageCropper.Area />
 				<p className="text-center text-muted-foreground text-xs">
 					Drag to reposition, pinch or scroll to zoom, double-tap to toggle.
 				</p>
-			</ImageCropper>
+			</ImageCropper.Root>
 		</div>
 	),
 };
@@ -74,12 +64,12 @@ export const Formats: Story = {
 			].map(({ label, aspectRatio }) => (
 				<div key={label} className="flex flex-col gap-2">
 					<p className="font-medium text-muted-foreground text-xs">{label}</p>
-					<ImageCropper
+					<ImageCropper.Root
 						aspectRatio={aspectRatio}
 						defaultImage={LANDSCAPE_IMAGE}
 					>
-						<ImageCropperArea />
-					</ImageCropper>
+						<ImageCropper.Area />
+					</ImageCropper.Root>
 				</div>
 			))}
 		</div>
@@ -89,12 +79,16 @@ export const Formats: Story = {
 export const CircleAvatar: Story = {
 	render: () => (
 		<div className="w-72">
-			<ImageCropper aspectRatio={1} maxZoom={6} defaultImage={PORTRAIT_IMAGE}>
-				<ImageCropperArea shape="circle" />
+			<ImageCropper.Root
+				aspectRatio={1}
+				maxZoom={6}
+				defaultImage={PORTRAIT_IMAGE}
+			>
+				<ImageCropper.Area shape="circle" />
 				<p className="text-center text-muted-foreground text-xs">
 					Drag to reposition, pinch or scroll to zoom, double-tap to toggle.
 				</p>
-			</ImageCropper>
+			</ImageCropper.Root>
 		</div>
 	),
 };
@@ -139,11 +133,11 @@ function CropperToolbar() {
 export const WithToolbar: Story = {
 	render: () => (
 		<div className="w-96">
-			<ImageCropper defaultImage={LANDSCAPE_IMAGE}>
-				<ImageCropperDropzone />
-				<ImageCropperArea />
+			<ImageCropper.Root defaultImage={LANDSCAPE_IMAGE}>
+				<ImageCropper.Dropzone />
+				<ImageCropper.Area />
 				<CropperToolbar />
-			</ImageCropper>
+			</ImageCropper.Root>
 		</div>
 	),
 };
@@ -178,11 +172,11 @@ export const CroppedResultPreview: Story = {
 		return (
 			<div className="flex items-start gap-6">
 				<div className="w-96">
-					<ImageCropper aspectRatio={4 / 3} defaultImage={LANDSCAPE_IMAGE}>
-						<ImageCropperDropzone />
-						<ImageCropperArea />
+					<ImageCropper.Root aspectRatio={4 / 3} defaultImage={LANDSCAPE_IMAGE}>
+						<ImageCropper.Dropzone />
+						<ImageCropper.Area />
 						<CropToPreviewButton onCropped={setPreview} />
-					</ImageCropper>
+					</ImageCropper.Root>
 				</div>
 				<div className="flex w-48 flex-col gap-2">
 					<p className="font-medium text-sm">Result (320px JPEG)</p>
@@ -235,36 +229,36 @@ export const InResponsiveDialog: Story = {
 					alt="Current avatar"
 					className="size-24 rounded-full border object-cover"
 				/>
-				<ResponsiveDialog open={open} onOpenChange={setOpen}>
-					<ResponsiveDialogTrigger
+				<ResponsiveDialog.Root open={open} onOpenChange={setOpen}>
+					<ResponsiveDialog.Trigger
 						render={<Button variant="outline">Change avatar</Button>}
 					/>
-					<ResponsiveDialogContent>
-						<ResponsiveDialogHeader>
-							<ResponsiveDialogTitle>Change avatar</ResponsiveDialogTitle>
-							<ResponsiveDialogDescription>
+					<ResponsiveDialog.Content>
+						<ResponsiveDialog.Header>
+							<ResponsiveDialog.Title>Change avatar</ResponsiveDialog.Title>
+							<ResponsiveDialog.Description>
 								Pick a photo, then adjust the crop. On mobile this opens as a
 								drawer with pinch-to-zoom gestures.
-							</ResponsiveDialogDescription>
-						</ResponsiveDialogHeader>
-						<ResponsiveDialogBody className="flex flex-col gap-3 pb-4">
-							<ImageCropper
+							</ResponsiveDialog.Description>
+						</ResponsiveDialog.Header>
+						<ResponsiveDialog.Body className="flex flex-col gap-3 pb-4">
+							<ImageCropper.Root
 								aspectRatio={1}
 								maxZoom={6}
 								defaultImage={PORTRAIT_IMAGE}
 							>
-								<ImageCropperDropzone />
-								<ImageCropperArea shape="circle" />
+								<ImageCropper.Dropzone />
+								<ImageCropper.Area shape="circle" />
 								<SaveAvatarButton
 									onSaved={(objectUrl) => {
 										setAvatar(objectUrl);
 										setOpen(false);
 									}}
 								/>
-							</ImageCropper>
-						</ResponsiveDialogBody>
-					</ResponsiveDialogContent>
-				</ResponsiveDialog>
+							</ImageCropper.Root>
+						</ResponsiveDialog.Body>
+					</ResponsiveDialog.Content>
+				</ResponsiveDialog.Root>
 			</div>
 		);
 	},
@@ -275,9 +269,12 @@ export const CropChangeReadout: Story = {
 		const [cropArea, setCropArea] = useState<ImageCropperCropArea | null>(null);
 		return (
 			<div className="flex w-96 flex-col gap-3">
-				<ImageCropper defaultImage={LANDSCAPE_IMAGE} onCropChange={setCropArea}>
-					<ImageCropperArea />
-				</ImageCropper>
+				<ImageCropper.Root
+					defaultImage={LANDSCAPE_IMAGE}
+					onCropChange={setCropArea}
+				>
+					<ImageCropper.Area />
+				</ImageCropper.Root>
 				<p className="text-center font-mono text-muted-foreground text-xs">
 					{cropArea === null
 						? "No crop yet"
@@ -291,13 +288,13 @@ export const CropChangeReadout: Story = {
 export const LocalizedLabels: Story = {
 	render: () => (
 		<div className="w-96">
-			<ImageCropper aspectRatio={16 / 9}>
-				<ImageCropperDropzone
+			<ImageCropper.Root aspectRatio={16 / 9}>
+				<ImageCropper.Dropzone
 					label="Choisir une image"
 					description="Cliquez pour parcourir ou glissez-déposez"
 				/>
-				<ImageCropperArea aria-label="Déplacez l’image, pincez ou faites défiler pour zoomer" />
-			</ImageCropper>
+				<ImageCropper.Area aria-label="Déplacez l’image, pincez ou faites défiler pour zoomer" />
+			</ImageCropper.Root>
 		</div>
 	),
 };
@@ -305,12 +302,12 @@ export const LocalizedLabels: Story = {
 export const Disabled: Story = {
 	render: () => (
 		<div className="flex w-96 flex-col gap-6">
-			<ImageCropper disabled>
-				<ImageCropperDropzone />
-			</ImageCropper>
-			<ImageCropper disabled defaultImage={LANDSCAPE_IMAGE}>
-				<ImageCropperArea />
-			</ImageCropper>
+			<ImageCropper.Root disabled>
+				<ImageCropper.Dropzone />
+			</ImageCropper.Root>
+			<ImageCropper.Root disabled defaultImage={LANDSCAPE_IMAGE}>
+				<ImageCropper.Area />
+			</ImageCropper.Root>
 		</div>
 	),
 };
@@ -318,10 +315,10 @@ export const Disabled: Story = {
 export const UploadFlow: Story = {
 	render: () => (
 		<div className="w-96">
-			<ImageCropper>
-				<ImageCropperDropzone />
-				<ImageCropperArea />
-			</ImageCropper>
+			<ImageCropper.Root>
+				<ImageCropper.Dropzone />
+				<ImageCropper.Area />
+			</ImageCropper.Root>
 		</div>
 	),
 	play: async ({ canvasElement }) => {

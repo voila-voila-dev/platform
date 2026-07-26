@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { ProseArticle } from "@voila.dev/ui/landing/prose-article";
+import { ProseArticle } from "@voila.dev/ui/landing";
 
 const meta = {
 	title: "Landing/ProseArticle",

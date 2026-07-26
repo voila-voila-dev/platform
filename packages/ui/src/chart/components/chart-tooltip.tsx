@@ -1,29 +1,16 @@
 import type * as React from "react";
 import { createPortal } from "react-dom";
+import { ChartTooltipContent } from "#/chart/components/chart-tooltip-content.tsx";
 import { useChartContext } from "#/chart/context/chart-context.tsx";
-import { readNumber } from "#/chart/core/chart-model.ts";
-import { configKeyFor, seriesColor } from "#/chart/core/config.ts";
-import { formatTickValue } from "#/chart/core/format.ts";
 import { cn } from "#/lib/utils.ts";
 
-/**
- * The readout for the active datum. `ChartTooltip` places it; the content is a
- * separate component so a caller can replace the body without reimplementing
- * the positioning, which is the fiddly half.
- *
- * It is announced politely rather than assertively: scrubbing across a chart
- * fires a lot of updates, and interrupting the reader on every one of them
- * would be worse than silence.
- */
-
-export type ChartTooltipIndicator = "dot" | "line" | "dashed";
-
-export interface ChartTooltipProps {
+// `content` is omitted from the base: React declares it on every element as
+// the `<meta content>` string.
+interface Props extends Omit<React.ComponentProps<"div">, "content"> {
 	/** Replaces the default body. */
-	readonly content?: React.ReactNode;
+	content?: React.ReactNode;
 	/** Pixels between the pointer and the panel. */
-	readonly offset?: number;
-	readonly className?: string;
+	offset?: number;
 }
 
 /** Room the panel needs above the pointer before it stops flipping upwards. */
@@ -36,7 +23,17 @@ function clamp(value: number, low: number, high: number): number {
 	return Math.min(Math.max(value, low), high);
 }
 
-function ChartTooltip({ content, offset = 12, className }: ChartTooltipProps) {
+/**
+ * The readout for the active datum. `ChartTooltip` places it; the content is a
+ * separate component so a caller can replace the body without reimplementing
+ * the positioning, which is the fiddly half.
+ */
+export function ChartTooltip({
+	content,
+	offset = 12,
+	className,
+	...props
+}: Props) {
 	const { active, chartId, margin, overlay } = useChartContext();
 
 	if (active === null || overlay === null) {
@@ -74,131 +71,10 @@ function ChartTooltip({ content, offset = 12, className }: ChartTooltipProps) {
 				className,
 			)}
 			style={{ left, top }}
+			{...props}
 		>
 			{content ?? <ChartTooltipContent />}
 		</div>,
 		overlay.ownerDocument.body,
 	);
 }
-
-export interface ChartTooltipContentProps extends React.ComponentProps<"div"> {
-	readonly hideLabel?: boolean;
-	readonly hideIndicator?: boolean;
-	readonly indicator?: ChartTooltipIndicator;
-	/** Field naming the config entry, for charts coloured per row. */
-	readonly nameKey?: string;
-	/** Field holding the panel's heading. Defaults to the category. */
-	readonly labelKey?: string;
-	readonly labelClassName?: string;
-	readonly formatter?: (
-		value: number,
-		name: React.ReactNode,
-		configKey: string,
-	) => React.ReactNode;
-	readonly labelFormatter?: (label: string) => React.ReactNode;
-}
-
-const indicatorClassNames: Record<ChartTooltipIndicator, string> = {
-	dot: "h-2.5 w-2.5 rounded-[2px]",
-	line: "h-2.5 w-1 rounded-[2px]",
-	dashed: "h-2.5 w-0 border-[1.5px] border-dashed bg-transparent",
-};
-
-function ChartTooltipMarker({
-	indicator,
-	color,
-}: {
-	readonly indicator: ChartTooltipIndicator;
-	readonly color: string;
-}) {
-	return (
-		<div
-			data-slot="chart-tooltip-marker"
-			className={cn("shrink-0", indicatorClassNames[indicator])}
-			style={{ backgroundColor: color, borderColor: color }}
-		/>
-	);
-}
-
-function ChartTooltipContent({
-	className,
-	hideLabel = false,
-	hideIndicator = false,
-	indicator = "dot",
-	nameKey,
-	labelKey,
-	labelClassName,
-	formatter,
-	labelFormatter,
-	...props
-}: ChartTooltipContentProps) {
-	const { active, data, categories, valueKeys, config } = useChartContext();
-
-	if (active === null) {
-		return null;
-	}
-	const datum = data[active.index];
-	if (datum === undefined) {
-		return null;
-	}
-
-	const rawLabel =
-		labelKey === undefined
-			? (categories[active.index] ?? "")
-			: String(datum[labelKey] ?? "");
-	const label = labelFormatter ? labelFormatter(rawLabel) : rawLabel;
-
-	return (
-		<div
-			data-slot="chart-tooltip-content"
-			role="status"
-			aria-live="polite"
-			className={cn(
-				"grid min-w-32 items-start gap-1.5 rounded-lg bg-popover px-2.5 py-1.5 text-xs text-popover-foreground shadow-md ring-1 ring-foreground/10",
-				className,
-			)}
-			{...props}
-		>
-			{hideLabel ? null : (
-				<div className={cn("font-medium", labelClassName)}>{label}</div>
-			)}
-			<div className="grid gap-1.5">
-				{valueKeys.map((key, index) => {
-					const configKey = configKeyFor(datum, key, nameKey);
-					const name = config[configKey]?.label ?? configKey;
-					const value = readNumber(datum, key);
-					const Icon = config[configKey]?.icon;
-					return (
-						<div
-							key={key}
-							data-slot="chart-tooltip-row"
-							data-series={key}
-							className="flex w-full items-center gap-2 leading-none"
-						>
-							{hideIndicator ? null : Icon ? (
-								<Icon />
-							) : (
-								<ChartTooltipMarker
-									indicator={indicator}
-									color={seriesColor(config, configKey, index)}
-								/>
-							)}
-							{formatter ? (
-								formatter(value, name, configKey)
-							) : (
-								<div className="flex flex-1 items-center justify-between gap-2">
-									<span className="text-muted-foreground">{name}</span>
-									<span className="font-medium font-mono text-foreground tabular-nums">
-										{formatTickValue(value)}
-									</span>
-								</div>
-							)}
-						</div>
-					);
-				})}
-			</div>
-		</div>
-	);
-}
-
-export { ChartTooltip, ChartTooltipContent };

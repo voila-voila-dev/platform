@@ -9,7 +9,7 @@ import { Steps, Tabs, TabItem } from "@/components/docs/starlight";
 
 1.  **Install the core and the tokens.**
 
-    <Tabs syncKey="pkg">
+    <Tabs.Root syncKey="pkg">
     	<TabItem label="bun">
     	```sh
     	bun add @voila.dev/ui
@@ -25,7 +25,7 @@ import { Steps, Tabs, TabItem } from "@/components/docs/starlight";
     	npm install @voila.dev/ui
     	```
     	</TabItem>
-    </Tabs>
+    </Tabs.Root>
 
     The peers are `react@19`, `react-dom@19` and `tailwindcss@4`. Your app almost
     certainly has the first two already.
@@ -37,18 +37,23 @@ import { Steps, Tabs, TabItem } from "@/components/docs/starlight";
     ```css title="src/styles/globals.css"
     @import "tailwindcss";
     @import "@voila.dev/ui/styles/globals.css";
+    @import "@voila.dev/ui/styles/themes/default.css";
     ```
 
-    That one line covers the tokens, the animation utilities, and — this is the
-    part people expect to have to configure — telling Tailwind to scan the
-    package. The package declares its own sources, so you never write a path
-    into `node_modules`, and every domain (chart, map, filter…) is covered by
-    the same import.
+    The first import covers the token contract, the animation utilities, and —
+    this is the part people expect to have to configure — telling Tailwind to
+    scan the package. The package declares its own sources, so you never write a
+    path into `node_modules`, and every domain (chart, map, filter…) is covered
+    by the same import.
+
+    The second picks the values. `default` is black and white; `indigo`,
+    `iris`, `sand`, `emerald` and `olive` also ship. Exactly one theme,
+    and it comes second — see [Theming](/start/theming/).
 
 3.  **Render something.**
 
     ```tsx title="src/app.tsx"
-    import { Button } from "@voila.dev/ui/components/button";
+    import { Button } from "@voila.dev/ui/button";
 
     export function App() {
     	return <Button>Ship it</Button>;
@@ -62,10 +67,10 @@ import { Steps, Tabs, TabItem } from "@/components/docs/starlight";
 Every component is its own entry point, named after its file:
 
 ```ts
-import { Button } from "@voila.dev/ui/components/button";
-import { Dialog, DialogContent } from "@voila.dev/ui/components/dialog";
-import { cn } from "@voila.dev/ui/lib/utils";
-import { useIsMobile } from "@voila.dev/ui/hooks/use-mobile";
+import { Button } from "@voila.dev/ui/button";
+import { Dialog } from "@voila.dev/ui/dialog";
+import { cn } from "@voila.dev/ui/utils";
+import { useIsMobile } from "@voila.dev/ui/hooks";
 ```
 
 There is no barrel export on purpose. A barrel would pull every component into

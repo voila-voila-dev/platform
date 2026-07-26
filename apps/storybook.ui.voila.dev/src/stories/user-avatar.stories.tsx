@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { UserAvatar } from "@voila.dev/ui/components/user-avatar";
+import { UserAvatar } from "@voila.dev/ui/user-avatar";
 
 const meta = {
 	title: "UI/UserAvatar",

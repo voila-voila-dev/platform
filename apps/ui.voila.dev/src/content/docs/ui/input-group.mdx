@@ -13,16 +13,16 @@ import * as Example from "../../../examples/ui/forms";
 </Preview>
 
 ```tsx
-<InputGroup>
-	<InputGroupAddon>
+<InputGroup.Root>
+	<InputGroup.Addon>
 		<MagnifyingGlassIcon />
-	</InputGroupAddon>
-	<InputGroupInput placeholder="Search freelancers…" />
-</InputGroup>
+	</InputGroup.Addon>
+	<InputGroup.Input placeholder="Search freelancers…" />
+</InputGroup.Root>
 ```
 
 `align="inline-end"` puts an addon on the trailing side. The group owns the
 border and the focus ring, so the input inside it has none of its own — which
-is why it is `InputGroupInput` and not [Input](/ui/input/).
+is why it is `InputGroup.Input` and not [Input](/ui/input/).
 
-`InputGroupTextarea` does the same for a multi-line field.
+`InputGroup.Textarea` does the same for a multi-line field.

@@ -13,19 +13,19 @@ import * as Example from "../../../examples/ui/overlays";
 </Preview>
 
 ```tsx
-<Dialog>
-	<DialogTrigger render={<Button variant="outline" />}>Invite</DialogTrigger>
-	<DialogContent>
-		<DialogHeader>
-			<DialogTitle>Invite a freelancer</DialogTitle>
-			<DialogDescription>Send an invitation so they can…</DialogDescription>
-		</DialogHeader>
-		<DialogFooter>
-			<DialogClose render={<Button variant="outline" />}>Cancel</DialogClose>
+<Dialog.Root>
+	<Dialog.Trigger render={<Button variant="outline" />}>Invite</Dialog.Trigger>
+	<Dialog.Content>
+		<Dialog.Header>
+			<Dialog.Title>Invite a freelancer</Dialog.Title>
+			<Dialog.Description>Send an invitation so they can…</Dialog.Description>
+		</Dialog.Header>
+		<Dialog.Footer>
+			<Dialog.Close render={<Button variant="outline" />}>Cancel</Dialog.Close>
 			<Button>Send invitation</Button>
-		</DialogFooter>
-	</DialogContent>
-</Dialog>
+		</Dialog.Footer>
+	</Dialog.Content>
+</Dialog.Root>
 ```
 
 Triggers take a `render` prop rather than wrapping a button, so the trigger *is*

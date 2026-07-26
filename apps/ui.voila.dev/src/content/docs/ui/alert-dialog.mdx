@@ -13,20 +13,20 @@ import * as Example from "../../../examples/ui/overlays";
 </Preview>
 
 ```tsx
-<AlertDialog>
-	<AlertDialogTrigger render={<Button variant="outline" />}>Cancel</AlertDialogTrigger>
-	<AlertDialogContent size="sm">
-		<AlertDialogHeader>
-			<AlertDialogMedia><WarningIcon className="text-destructive" /></AlertDialogMedia>
-			<AlertDialogTitle>Cancel this project?</AlertDialogTitle>
-			<AlertDialogDescription>The freelancer will be notified.</AlertDialogDescription>
-		</AlertDialogHeader>
-		<AlertDialogFooter>
-			<AlertDialogCancel>Keep project</AlertDialogCancel>
-			<AlertDialogAction variant="destructive">Cancel project</AlertDialogAction>
-		</AlertDialogFooter>
-	</AlertDialogContent>
-</AlertDialog>
+<AlertDialog.Root>
+	<AlertDialog.Trigger render={<Button variant="outline" />}>Cancel</AlertDialog.Trigger>
+	<AlertDialog.Content size="sm">
+		<AlertDialog.Header>
+			<AlertDialog.Media><WarningIcon className="text-destructive" /></AlertDialog.Media>
+			<AlertDialog.Title>Cancel this project?</AlertDialog.Title>
+			<AlertDialog.Description>The freelancer will be notified.</AlertDialog.Description>
+		</AlertDialog.Header>
+		<AlertDialog.Footer>
+			<AlertDialog.Cancel>Keep project</AlertDialog.Cancel>
+			<AlertDialog.Action variant="destructive">Cancel project</AlertDialog.Action>
+		</AlertDialog.Footer>
+	</AlertDialog.Content>
+</AlertDialog.Root>
 ```
 
 Unlike [Dialog](/ui/dialog/) it has no close button and does not dismiss on an

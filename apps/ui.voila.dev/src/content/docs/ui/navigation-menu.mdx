@@ -13,18 +13,18 @@ import * as Example from "../../../examples/ui/navigation";
 </Preview>
 
 ```tsx
-<NavigationMenu>
-	<NavigationMenuList>
-		<NavigationMenuItem>
-			<NavigationMenuTrigger>Projects</NavigationMenuTrigger>
-			<NavigationMenuContent>
+<NavigationMenu.Root>
+	<NavigationMenu.List>
+		<NavigationMenu.Item>
+			<NavigationMenu.Trigger>Projects</NavigationMenu.Trigger>
+			<NavigationMenu.Content>
 				<ul className="grid w-64 gap-1">
-					<li><NavigationMenuLink href="/projects">Open projects</NavigationMenuLink></li>
+					<li><NavigationMenu.Link href="/projects">Open projects</NavigationMenu.Link></li>
 				</ul>
-			</NavigationMenuContent>
-		</NavigationMenuItem>
-	</NavigationMenuList>
-</NavigationMenu>
+			</NavigationMenu.Content>
+		</NavigationMenu.Item>
+	</NavigationMenu.List>
+</NavigationMenu.Root>
 ```
 
 This is for navigation; [DropdownMenu](/ui/dropdown-menu/) is for actions. The
@@ -32,4 +32,4 @@ difference is real to a screen reader, which announces one as a list of links
 and the other as a menu of commands.
 
 A top-level item that goes straight somewhere needs no trigger — use a
-`NavigationMenuLink` with `navigationMenuTriggerStyle()`.
+`NavigationMenu.Link` with `navigationMenuTriggerStyle()`.

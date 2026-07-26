@@ -4,16 +4,13 @@ import {
 	TextAlignRightIcon,
 } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	ToggleGroup,
-	ToggleGroupItem,
-} from "@voila.dev/ui/components/toggle-group";
+import { ToggleGroup } from "@voila.dev/ui/toggle-group";
 
 const meta = {
 	title: "UI/ToggleGroup",
-	component: ToggleGroup,
+	component: ToggleGroup.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof ToggleGroup>;
+} satisfies Meta<typeof ToggleGroup.Root>;
 
 export default meta;
 
@@ -21,50 +18,50 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<ToggleGroup defaultValue={["week"]} variant="outline">
-			<ToggleGroupItem value="day">Day</ToggleGroupItem>
-			<ToggleGroupItem value="week">Week</ToggleGroupItem>
-			<ToggleGroupItem value="month">Month</ToggleGroupItem>
-		</ToggleGroup>
+		<ToggleGroup.Root defaultValue={["week"]} variant="outline">
+			<ToggleGroup.Item value="day">Day</ToggleGroup.Item>
+			<ToggleGroup.Item value="week">Week</ToggleGroup.Item>
+			<ToggleGroup.Item value="month">Month</ToggleGroup.Item>
+		</ToggleGroup.Root>
 	),
 };
 
 export const Multiple: Story = {
 	render: () => (
-		<ToggleGroup
+		<ToggleGroup.Root
 			multiple
 			defaultValue={["designer", "developer"]}
 			variant="outline"
 		>
-			<ToggleGroupItem value="designer">Designer</ToggleGroupItem>
-			<ToggleGroupItem value="developer">Developer</ToggleGroupItem>
-			<ToggleGroupItem value="copywriter">Copywriter</ToggleGroupItem>
-		</ToggleGroup>
+			<ToggleGroup.Item value="designer">Designer</ToggleGroup.Item>
+			<ToggleGroup.Item value="developer">Developer</ToggleGroup.Item>
+			<ToggleGroup.Item value="copywriter">Copywriter</ToggleGroup.Item>
+		</ToggleGroup.Root>
 	),
 };
 
 export const WithIcons: Story = {
 	render: () => (
-		<ToggleGroup defaultValue={["left"]}>
-			<ToggleGroupItem value="left" aria-label="Align left">
+		<ToggleGroup.Root defaultValue={["left"]}>
+			<ToggleGroup.Item value="left" aria-label="Align left">
 				<TextAlignLeftIcon />
-			</ToggleGroupItem>
-			<ToggleGroupItem value="center" aria-label="Align center">
+			</ToggleGroup.Item>
+			<ToggleGroup.Item value="center" aria-label="Align center">
 				<TextAlignCenterIcon />
-			</ToggleGroupItem>
-			<ToggleGroupItem value="right" aria-label="Align right">
+			</ToggleGroup.Item>
+			<ToggleGroup.Item value="right" aria-label="Align right">
 				<TextAlignRightIcon />
-			</ToggleGroupItem>
-		</ToggleGroup>
+			</ToggleGroup.Item>
+		</ToggleGroup.Root>
 	),
 };
 
 export const WithSpacing: Story = {
 	render: () => (
-		<ToggleGroup defaultValue={["week"]} variant="outline" spacing={2}>
-			<ToggleGroupItem value="day">Day</ToggleGroupItem>
-			<ToggleGroupItem value="week">Week</ToggleGroupItem>
-			<ToggleGroupItem value="month">Month</ToggleGroupItem>
-		</ToggleGroup>
+		<ToggleGroup.Root defaultValue={["week"]} variant="outline" spacing={2}>
+			<ToggleGroup.Item value="day">Day</ToggleGroup.Item>
+			<ToggleGroup.Item value="week">Week</ToggleGroup.Item>
+			<ToggleGroup.Item value="month">Month</ToggleGroup.Item>
+		</ToggleGroup.Root>
 	),
 };

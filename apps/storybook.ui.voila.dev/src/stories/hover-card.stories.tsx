@@ -1,23 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	Avatar,
-	AvatarFallback,
-	AvatarImage,
-} from "@voila.dev/ui/components/avatar";
-import { Button } from "@voila.dev/ui/components/button";
-import {
-	HoverCard,
-	HoverCardContent,
-	HoverCardTrigger,
-} from "@voila.dev/ui/components/hover-card";
+import { Avatar } from "@voila.dev/ui/avatar";
+import { Button } from "@voila.dev/ui/button";
+import { HoverCard } from "@voila.dev/ui/hover-card";
 import { useState } from "react";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 
 const meta = {
 	title: "UI/HoverCard",
-	component: HoverCard,
+	component: HoverCard.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof HoverCard>;
+} satisfies Meta<typeof HoverCard.Root>;
 
 export default meta;
 
@@ -36,14 +28,14 @@ const FreelancerPreview = () => (
 
 export const Default: Story = {
 	render: () => (
-		<HoverCard>
-			<HoverCardTrigger render={<Button variant="link" />}>
+		<HoverCard.Root>
+			<HoverCard.Trigger render={<Button variant="link" />}>
 				@nathan.guyot
-			</HoverCardTrigger>
-			<HoverCardContent>
+			</HoverCard.Trigger>
+			<HoverCard.Content>
 				<FreelancerPreview />
-			</HoverCardContent>
-		</HoverCard>
+			</HoverCard.Content>
+		</HoverCard.Root>
 	),
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
@@ -61,14 +53,14 @@ export const Default: Story = {
 
 export const DefaultOpen: Story = {
 	render: () => (
-		<HoverCard defaultOpen>
-			<HoverCardTrigger render={<Button variant="link" />}>
+		<HoverCard.Root defaultOpen>
+			<HoverCard.Trigger render={<Button variant="link" />}>
 				@nathan.guyot
-			</HoverCardTrigger>
-			<HoverCardContent side="right">
+			</HoverCard.Trigger>
+			<HoverCard.Content side="right">
 				<FreelancerPreview />
-			</HoverCardContent>
-		</HoverCard>
+			</HoverCard.Content>
+		</HoverCard.Root>
 	),
 };
 
@@ -77,18 +69,18 @@ export const InlineLink: Story = {
 	render: () => (
 		<p className="max-w-md text-sm">
 			The project was accepted by{" "}
-			<HoverCard defaultOpen>
-				<HoverCardTrigger
+			<HoverCard.Root defaultOpen>
+				<HoverCard.Trigger
 					render={
 						<a href="#freelancer-profile" className="underline">
 							Nathan Guyot
 						</a>
 					}
 				/>
-				<HoverCardContent>
+				<HoverCard.Content>
 					<FreelancerPreview />
-				</HoverCardContent>
-			</HoverCard>{" "}
+				</HoverCard.Content>
+			</HoverCard.Root>{" "}
 			within an hour of publication.
 		</p>
 	),
@@ -97,17 +89,17 @@ export const InlineLink: Story = {
 /** The canonical preview: avatar, identity and a row of stats. */
 export const RichContent: Story = {
 	render: () => (
-		<HoverCard defaultOpen>
-			<HoverCardTrigger render={<Button variant="link" />}>
+		<HoverCard.Root defaultOpen>
+			<HoverCard.Trigger render={<Button variant="link" />}>
 				@nathan.guyot
-			</HoverCardTrigger>
-			<HoverCardContent>
+			</HoverCard.Trigger>
+			<HoverCard.Content>
 				<div className="flex flex-col gap-2.5">
 					<div className="flex items-center gap-2.5">
-						<Avatar>
-							<AvatarImage src="https://i.pravatar.cc/64?img=12" alt="" />
-							<AvatarFallback>NG</AvatarFallback>
-						</Avatar>
+						<Avatar.Root>
+							<Avatar.Image src="https://i.pravatar.cc/64?img=12" alt="" />
+							<Avatar.Fallback>NG</Avatar.Fallback>
+						</Avatar.Root>
 						<div className="flex flex-col">
 							<p className="font-medium">Nathan Guyot</p>
 							<p className="text-muted-foreground text-xs">
@@ -130,8 +122,8 @@ export const RichContent: Story = {
 						</span>
 					</div>
 				</div>
-			</HoverCardContent>
-		</HoverCard>
+			</HoverCard.Content>
+		</HoverCard.Root>
 	),
 };
 
@@ -142,14 +134,14 @@ const ControlledExample = () => {
 			<Button variant="outline" onClick={() => setOpen((value) => !value)}>
 				{open ? "Close" : "Open"} the preview
 			</Button>
-			<HoverCard open={open} onOpenChange={setOpen}>
-				<HoverCardTrigger render={<Button variant="link" />}>
+			<HoverCard.Root open={open} onOpenChange={setOpen}>
+				<HoverCard.Trigger render={<Button variant="link" />}>
 					@nathan.guyot
-				</HoverCardTrigger>
-				<HoverCardContent>
+				</HoverCard.Trigger>
+				<HoverCard.Content>
 					<FreelancerPreview />
-				</HoverCardContent>
-			</HoverCard>
+				</HoverCard.Content>
+			</HoverCard.Root>
 		</div>
 	);
 };
@@ -164,17 +156,17 @@ export const Controlled: Story = {
  */
 export const FastDelay: Story = {
 	render: () => (
-		<HoverCard>
-			<HoverCardTrigger
+		<HoverCard.Root>
+			<HoverCard.Trigger
 				delay={100}
 				closeDelay={100}
 				render={<Button variant="link" />}
 			>
 				@nathan.guyot
-			</HoverCardTrigger>
-			<HoverCardContent>
+			</HoverCard.Trigger>
+			<HoverCard.Content>
 				<FreelancerPreview />
-			</HoverCardContent>
-		</HoverCard>
+			</HoverCard.Content>
+		</HoverCard.Root>
 	),
 };

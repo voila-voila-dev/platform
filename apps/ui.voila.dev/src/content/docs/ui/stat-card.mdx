@@ -13,18 +13,18 @@ import * as Example from "../../../examples/ui/display";
 </Preview>
 
 ```tsx
-<StatCard>
-	<StatCardHeader>
-		<StatCardLabel>Projects published</StatCardLabel>
-	</StatCardHeader>
-	<StatCardValue>38</StatCardValue>
-	<StatCardDelta trend="up">+12% vs. last month</StatCardDelta>
-</StatCard>
+<StatCard.Root>
+	<StatCard.Header>
+		<StatCard.Label>Projects published</StatCard.Label>
+	</StatCard.Header>
+	<StatCard.Value>38</StatCard.Value>
+	<StatCard.Delta trend="up">+12% vs. last month</StatCard.Delta>
+</StatCard.Root>
 ```
 
 `trend` picks the arrow and the colour; it is separate from the text because a
 falling number is not always bad — cancellations going down is a `down` trend
 you would want to read as good.
 
-`StatCardChart` is a full-bleed slot pinned to the bottom edge for a sparkline.
+`StatCard.Chart` is a full-bleed slot pinned to the bottom edge for a sparkline.
 Constrain the chart's height on the `Chart.Root` itself.

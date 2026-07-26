@@ -1,3 +1,4 @@
+import type * as React from "react";
 import { useState } from "react";
 import { FilterChips } from "#/filter/components/filter-chips.tsx";
 import { FilterPanel } from "#/filter/components/filter-panel.tsx";
@@ -9,6 +10,19 @@ import {
 	type FilterLabels,
 	type FilterValues,
 } from "#/filter/types.ts";
+import { cn } from "#/lib/utils.ts";
+
+interface Props extends React.ComponentProps<"div"> {
+	definitions: ReadonlyArray<FilterDefinition>;
+	values: FilterValues;
+	onValuesChange: (values: FilterValues) => void;
+	/** Omit both search props for a list that filters without free text. */
+	searchValue?: string;
+	onSearchChange?: (value: string) => void;
+	resultCount?: number;
+	labels?: Partial<FilterLabels>;
+	locale?: string;
+}
 
 /**
  * The whole filtering surface of a list, in one component: the search-shaped
@@ -26,23 +40,19 @@ export function FilterBar({
 	resultCount,
 	labels: labelOverrides,
 	locale = "en-US",
-}: {
-	readonly definitions: ReadonlyArray<FilterDefinition>;
-	readonly values: FilterValues;
-	readonly onValuesChange: (values: FilterValues) => void;
-	/** Omit both search props for a list that filters without free text. */
-	readonly searchValue?: string;
-	readonly onSearchChange?: (value: string) => void;
-	readonly resultCount?: number;
-	readonly labels?: Partial<FilterLabels>;
-	readonly locale?: string;
-}) {
+	className,
+	...props
+}: Props) {
 	const [open, setOpen] = useState(false);
 	const labels: FilterLabels = { ...defaultFilterLabels, ...labelOverrides };
 	const activeCount = countActiveFilters(values);
 
 	return (
-		<div className="flex w-full min-w-0 flex-col gap-3" data-slot="filter-bar">
+		<div
+			data-slot="filter-bar"
+			className={cn("flex w-full min-w-0 flex-col gap-3", className)}
+			{...props}
+		>
 			{/* `min-w-0` on both children: without it a flex item refuses to shrink
 			    below its content, and the nowrap result count pushes the row past
 			    the viewport — a phone then scrolls sideways. */}

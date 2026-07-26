@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { TimePicker } from "@voila.dev/ui/components/time-picker";
+import { TimePicker } from "@voila.dev/ui/time-picker";
 import { useState } from "react";
 
 const meta = {

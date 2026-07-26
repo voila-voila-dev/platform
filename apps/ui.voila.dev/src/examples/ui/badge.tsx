@@ -1,5 +1,5 @@
 import { CheckIcon, WarningIcon } from "@phosphor-icons/react";
-import { Badge, badgeColors } from "@voila.dev/ui/components/badge";
+import { Badge, badgeColors } from "@voila.dev/ui/badge";
 
 export function Default() {
 	return <Badge>Verified</Badge>;

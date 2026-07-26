@@ -10,7 +10,7 @@ import {
 	it,
 	vi,
 } from "vitest";
-import { Input } from "#/components/input.tsx";
+import { Input } from "#/input/components/input.tsx";
 import {
 	Spreadsheet,
 	type SpreadsheetPasteData,

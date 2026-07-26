@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { EmailBlockEditor } from "@voila.dev/ui/email-block-editor";
 import {
+	EmailBlockEditor,
 	type EmailEditorDocument,
 	emptyEmailEditorDocument,
-} from "@voila.dev/ui/email-block-editor/document/types";
+} from "@voila.dev/ui/email-block-editor";
 import { useState } from "react";
 
 const meta = {

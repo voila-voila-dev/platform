@@ -69,3 +69,15 @@ export interface ChartPoint {
 export type ChartCornerRadius =
 	| number
 	| readonly [number, number, number, number];
+
+/** How a tooltip row marks its series: a dot, a solid rule, or a dashed one. */
+export type ChartTooltipIndicator = "dot" | "line" | "dashed";
+
+/** Where the cursor sits and how far it reaches, in plotting-area pixels. */
+export interface ChartCursorGeometry {
+	readonly offset: number;
+	readonly thickness: number;
+	readonly innerWidth: number;
+	readonly innerHeight: number;
+	readonly orientation: ChartOrientation;
+}

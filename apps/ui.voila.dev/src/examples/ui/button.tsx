@@ -1,5 +1,5 @@
 import { ArrowRightIcon, PlusIcon, TrashIcon } from "@phosphor-icons/react";
-import { Button } from "@voila.dev/ui/components/button";
+import { Button } from "@voila.dev/ui/button";
 
 export function Default() {
 	return <Button>Save changes</Button>;

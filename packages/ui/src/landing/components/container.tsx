@@ -6,10 +6,10 @@ import {
 } from "#/landing/components/container-variants.ts";
 import { cn } from "#/lib/utils.ts";
 
-type ContainerProps = useRender.ComponentProps<"div"> & ContainerVariants;
+interface Props extends useRender.ComponentProps<"div">, ContainerVariants {}
 
 /** Centered max-width column with responsive gutters. */
-function Container({ className, render, size, ...props }: ContainerProps) {
+export function Container({ className, render, size, ...props }: Props) {
 	return useRender({
 		defaultTagName: "div",
 		props: mergeProps<"div">(
@@ -30,4 +30,3 @@ export {
 	containerSizeOptions,
 	containerVariants,
 } from "#/landing/components/container-variants.ts";
-export { Container, type ContainerProps };

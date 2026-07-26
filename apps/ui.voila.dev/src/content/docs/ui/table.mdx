@@ -13,21 +13,21 @@ import * as Example from "../../../examples/ui/display";
 </Preview>
 
 ```tsx
-<Table>
-	<TableCaption>Recent projects for your workspace.</TableCaption>
-	<TableHeader>
-		<TableRow>
-			<TableHead>Reference</TableHead>
-			<TableHead className="text-right">Amount</TableHead>
-		</TableRow>
-	</TableHeader>
-	<TableBody>
-		<TableRow>
-			<TableCell className="font-medium">PRJ-001</TableCell>
-			<TableCell className="text-right">180.00 USD</TableCell>
-		</TableRow>
-	</TableBody>
-</Table>
+<Table.Root>
+	<Table.Caption>Recent projects for your workspace.</Table.Caption>
+	<Table.Header>
+		<Table.Row>
+			<Table.Head>Reference</Table.Head>
+			<Table.Head className="text-right">Amount</Table.Head>
+		</Table.Row>
+	</Table.Header>
+	<Table.Body>
+		<Table.Row>
+			<Table.Cell className="font-medium">PRJ-001</Table.Cell>
+			<Table.Cell className="text-right">180.00 USD</Table.Cell>
+		</Table.Row>
+	</Table.Body>
+</Table.Root>
 ```
 
 Markup and styles, nothing else. For sorting, filtering, selection, pinning and

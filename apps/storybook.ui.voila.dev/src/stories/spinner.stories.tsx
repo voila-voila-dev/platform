@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Button } from "@voila.dev/ui/components/button";
-import { Spinner } from "@voila.dev/ui/components/spinner";
+import { Button } from "@voila.dev/ui/button";
+import { Spinner } from "@voila.dev/ui/spinner";
 
 const meta = {
 	title: "UI/Spinner",

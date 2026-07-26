@@ -9,7 +9,7 @@ import { cn } from "#/lib/utils.ts";
  * overlapping it.
  */
 
-export interface ChartPolarAngleAxisProps extends React.ComponentProps<"g"> {
+interface Props extends React.ComponentProps<"g"> {
 	readonly tickFormatter?: (value: string) => string;
 	/** Pixels between the outer ring and the labels. */
 	readonly tickMargin?: number;
@@ -19,13 +19,13 @@ export interface ChartPolarAngleAxisProps extends React.ComponentProps<"g"> {
 /** Below this much horizontal offset a label is treated as centred. */
 const ANCHOR_EPSILON = 1;
 
-function ChartPolarAngleAxis({
+export function ChartPolarAngleAxis({
 	className,
 	tickFormatter,
 	tickMargin = 10,
 	inset = 24,
 	...props
-}: ChartPolarAngleAxisProps) {
+}: Props) {
 	const { innerWidth, innerHeight, categories } = useChartContext();
 	const { cx, cy, radius } = polarFrame({ innerWidth, innerHeight, inset });
 	const count = categories.length;
@@ -71,5 +71,3 @@ function ChartPolarAngleAxis({
 		</g>
 	);
 }
-
-export { ChartPolarAngleAxis };

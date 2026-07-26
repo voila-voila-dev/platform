@@ -4,7 +4,6 @@ import { seriesColor } from "#/chart/core/config.ts";
 import { areaPath, linePath } from "#/chart/core/geometry.ts";
 import { seriesPoints, stackBases } from "#/chart/core/series.ts";
 import type { ChartCurve } from "#/chart/core/types.ts";
-import { cn } from "#/lib/utils.ts";
 
 /**
  * A filled band under each series, with the same outline the line mark would
@@ -12,7 +11,7 @@ import { cn } from "#/lib/utils.ts";
  * top edge reads as the total rather than as the last series.
  */
 
-export interface ChartAreaProps extends React.ComponentProps<"g"> {
+interface Props extends React.ComponentProps<"g"> {
 	readonly keys?: ReadonlyArray<string>;
 	readonly curve?: ChartCurve;
 	readonly stacked?: boolean;
@@ -22,7 +21,7 @@ export interface ChartAreaProps extends React.ComponentProps<"g"> {
 	readonly gradient?: boolean;
 }
 
-function ChartArea({
+export function ChartArea({
 	className,
 	keys,
 	curve = "monotone",
@@ -31,7 +30,7 @@ function ChartArea({
 	strokeWidth = 2,
 	gradient = true,
 	...props
-}: ChartAreaProps) {
+}: Props) {
 	const {
 		chartId,
 		data,
@@ -50,7 +49,7 @@ function ChartArea({
 	const baseline = valueScale.scale(valueScale.domain[0]);
 
 	return (
-		<g data-slot="chart-area" className={cn(className)} {...props}>
+		<g data-slot="chart-area" className={className} {...props}>
 			{drawnKeys.map((key, seriesIndex) => {
 				const base = bases?.get(key);
 				const points = seriesPoints({
@@ -119,5 +118,3 @@ function ChartArea({
 		</g>
 	);
 }
-
-export { ChartArea };

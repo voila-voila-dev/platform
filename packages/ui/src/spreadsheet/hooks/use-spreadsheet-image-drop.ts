@@ -17,7 +17,7 @@ function firstImageFile(data: DataTransfer | null): File | null {
 	return null;
 }
 
-interface SpreadsheetImageDropProps {
+interface Options {
 	onDragEnter: React.DragEventHandler<HTMLTableCellElement>;
 	onDragOver: React.DragEventHandler<HTMLTableCellElement>;
 	onDragLeave: React.DragEventHandler<HTMLTableCellElement>;
@@ -41,13 +41,13 @@ interface SpreadsheetImageDropProps {
  * depth counter rather than a boolean - a plain toggle flickers off the moment
  * the pointer enters a child.
  */
-function useSpreadsheetImageDrop({
+export function useSpreadsheetImageDrop({
 	onFileSelect,
 	disabled,
 }: {
 	onFileSelect: (file: File) => void;
 	disabled: boolean;
-}): { dragging: boolean; cellProps: SpreadsheetImageDropProps } {
+}): { dragging: boolean; cellProps: Options } {
 	const [dragging, setDragging] = React.useState(false);
 	const depth = React.useRef(0);
 
@@ -110,5 +110,3 @@ function useSpreadsheetImageDrop({
 		},
 	};
 }
-
-export { useSpreadsheetImageDrop };

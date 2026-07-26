@@ -13,14 +13,14 @@ import * as Example from "../../../examples/ui/navigation";
 </Preview>
 
 ```tsx
-<Accordion defaultValue={["publishing"]}>
-	<AccordionItem value="publishing">
-		<AccordionTrigger>How do I publish a project?</AccordionTrigger>
-		<AccordionContent>
+<Accordion.Root defaultValue={["publishing"]}>
+	<Accordion.Item value="publishing">
+		<Accordion.Trigger>How do I publish a project?</Accordion.Trigger>
+		<Accordion.Content>
 			<p>From your client dashboard, create a project with…</p>
-		</AccordionContent>
-	</AccordionItem>
-</Accordion>
+		</Accordion.Content>
+	</Accordion.Item>
+</Accordion.Root>
 ```
 
 `value` is an array even for a single open panel. Pass `multiple` to let several

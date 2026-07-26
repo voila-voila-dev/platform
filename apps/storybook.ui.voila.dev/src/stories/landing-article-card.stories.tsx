@@ -1,6 +1,6 @@
 import { CalendarBlankIcon, ClockIcon } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { ArticleCard, ArticleTags } from "@voila.dev/ui/landing/article-card";
+import { ArticleCard, ArticleTags } from "@voila.dev/ui/landing";
 import { partnerLogoDataUri } from "./landing-fixtures";
 
 const meta = {

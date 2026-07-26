@@ -13,11 +13,11 @@ import * as Example from "../../../examples/ui/display";
 </Preview>
 
 ```tsx
-<ButtonGroup>
+<ButtonGroup.Root>
 	<Button variant="outline">Day</Button>
 	<Button variant="outline">Week</Button>
 	<Button variant="outline">Month</Button>
-</ButtonGroup>
+</ButtonGroup.Root>
 ```
 
 The group strips the inner radii and collapses the shared borders. It groups
@@ -25,5 +25,5 @@ The group strips the inner radii and collapses the shared borders. It groups
 [SegmentedControl](/ui/segmented-control/) or
 [ToggleGroup](/ui/toggle-group/), which carry the selected state.
 
-`ButtonGroupText` and `ButtonGroupSeparator` add a non-interactive label or a
+`ButtonGroup.Text` and `ButtonGroup.Separator` add a non-interactive label or a
 rule inside the group — an input with a prefix, say.

@@ -13,21 +13,21 @@ import * as Example from "../../../examples/ui/forms";
 </Preview>
 
 ```tsx
-<Combobox items={specialties}>
-	<ComboboxInput placeholder="Select a specialty" />
-	<ComboboxContent>
-		<ComboboxEmpty>No specialty found.</ComboboxEmpty>
-		<ComboboxList>
+<Combobox.Root items={specialties}>
+	<Combobox.Input placeholder="Select a specialty" />
+	<Combobox.Content>
+		<Combobox.Empty>No specialty found.</Combobox.Empty>
+		<Combobox.List>
 			{(specialty: string) => (
-				<ComboboxItem key={specialty} value={specialty}>{specialty}</ComboboxItem>
+				<Combobox.Item key={specialty} value={specialty}>{specialty}</Combobox.Item>
 			)}
-		</ComboboxList>
-	</ComboboxContent>
-</Combobox>
+		</Combobox.List>
+	</Combobox.Content>
+</Combobox.Root>
 ```
 
-`ComboboxList` takes a render function rather than elements, so the filtering
+`Combobox.List` takes a render function rather than elements, so the filtering
 stays inside the component instead of being something you reimplement.
 
-`ComboboxChips`, `ComboboxChip` and `ComboboxChipsInput` turn it into a
+`Combobox.Chips`, `Combobox.Chip` and `Combobox.ChipsInput` turn it into a
 multi-select whose picks appear as chips in the field.

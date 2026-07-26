@@ -16,8 +16,8 @@ built from `@voila.dev/ui` components and styled with the same token classes
 as the rest of the system: `--ring` for the selection ring, `--border` for the
 dashed drop slots, and so on through the sidebar's inputs and buttons.
 
-There is nothing to configure. If your app imports
-`@voila.dev/ui/styles/themes/default.css` (or defines the same CSS custom properties itself), the
+There is nothing to configure. If your app imports any
+`@voila.dev/ui/styles/themes/*.css` (or defines the same CSS custom properties itself), the
 editor chrome picks your brand up automatically, dark mode included. Change
 `--primary` and the sidebar's controls follow; toggle the theme and the
 toolbar toggles with it.
@@ -61,7 +61,7 @@ commit, and every heading, button, offer highlight and rating star follows.
 The import path, if you want to reuse the palette in your own surrounding UI:
 
 ```ts
-import { EMAIL_COLOR, EMAIL_FONT } from "@voila.dev/ui/email-block-editor/theme";
+import { EMAIL_COLOR, EMAIL_FONT } from "@voila.dev/ui/email-block-editor";
 ```
 
 ## Locale, headers and footers

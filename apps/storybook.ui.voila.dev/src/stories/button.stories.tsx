@@ -1,10 +1,10 @@
 import { ArrowRightIcon, PlusIcon } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import {
+	Button,
 	buttonSizeOptions,
 	buttonVariantOptions,
-} from "@voila.dev/ui/button-variants";
-import { Button } from "@voila.dev/ui/components/button";
+} from "@voila.dev/ui/button";
 
 const meta = {
 	title: "UI/Button",

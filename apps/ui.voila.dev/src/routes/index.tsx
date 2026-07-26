@@ -12,14 +12,16 @@ import {
 	SwatchesIcon,
 } from "@phosphor-icons/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Button } from "@voila.dev/ui/components/button";
-import { Skeleton } from "@voila.dev/ui/components/skeleton";
-import { Eyebrow } from "@voila.dev/ui/landing/eyebrow";
-import { FeatureGrid } from "@voila.dev/ui/landing/feature-grid";
-import { LandingHero } from "@voila.dev/ui/landing/landing-hero";
-import { SectionIntro } from "@voila.dev/ui/landing/section-intro";
-import { StatsRow } from "@voila.dev/ui/landing/stats-row";
-import { GlobeView } from "@voila.dev/ui/map/globe-view";
+import { Button } from "@voila.dev/ui/button";
+import { GlobeView } from "@voila.dev/ui/globe-view";
+import {
+	Eyebrow,
+	FeatureGrid,
+	LandingHero,
+	SectionIntro,
+	StatsRow,
+} from "@voila.dev/ui/landing";
+import { Skeleton } from "@voila.dev/ui/skeleton";
 import {
 	Fragment,
 	lazy,

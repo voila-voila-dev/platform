@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Button } from "@voila.dev/ui/components/button";
+import { Button } from "@voila.dev/ui/button";
 import { SiteHeader } from "@/components/docs/site-header";
 
 export function NotFound() {

@@ -13,29 +13,29 @@ import * as Example from "../../../examples/ui/navigation";
 </Preview>
 
 ```tsx
-<SidebarProvider>
-	<Sidebar collapsible="icon">
-		<SidebarHeader>…</SidebarHeader>
-		<SidebarContent>
-			<SidebarGroup>
-				<SidebarGroupLabel>Platform</SidebarGroupLabel>
-				<SidebarGroupContent>
-					<SidebarMenu>
-						<SidebarMenuItem>
-							<SidebarMenuButton isActive tooltip="Dashboard">
+<Sidebar.Provider>
+	<Sidebar.Root collapsible="icon">
+		<Sidebar.Header>…</Sidebar.Header>
+		<Sidebar.Content>
+			<Sidebar.Group>
+				<Sidebar.GroupLabel>Platform</Sidebar.GroupLabel>
+				<Sidebar.GroupContent>
+					<Sidebar.Menu>
+						<Sidebar.MenuItem>
+							<Sidebar.MenuButton isActive tooltip="Dashboard">
 								<HouseIcon />
 								<span>Dashboard</span>
-							</SidebarMenuButton>
-						</SidebarMenuItem>
-					</SidebarMenu>
-				</SidebarGroupContent>
-			</SidebarGroup>
-		</SidebarContent>
-	</Sidebar>
-	<SidebarInset>
-		<header><SidebarTrigger /></header>
-	</SidebarInset>
-</SidebarProvider>
+							</Sidebar.MenuButton>
+						</Sidebar.MenuItem>
+					</Sidebar.Menu>
+				</Sidebar.GroupContent>
+			</Sidebar.Group>
+		</Sidebar.Content>
+	</Sidebar.Root>
+	<Sidebar.Inset>
+		<header><Sidebar.Trigger /></header>
+	</Sidebar.Inset>
+</Sidebar.Provider>
 ```
 
 `collapsible` takes `offcanvas` (slides away), `icon` (collapses to a rail of

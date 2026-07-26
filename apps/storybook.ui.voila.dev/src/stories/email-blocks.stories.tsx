@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import {
+	EMAIL_COLOR,
 	type EmailBlockComponentProps,
+	type EmailEditorBlock,
 	emailBlockDefinition,
-} from "@voila.dev/ui/email-block-editor/blocks/block-definitions";
-import type { EmailEditorBlock } from "@voila.dev/ui/email-block-editor/document/types";
-import { EMAIL_COLOR } from "@voila.dev/ui/email-block-editor/theme";
+} from "@voila.dev/ui/email-block-editor";
 import { type ReactNode, useState } from "react";
 
 const meta = {

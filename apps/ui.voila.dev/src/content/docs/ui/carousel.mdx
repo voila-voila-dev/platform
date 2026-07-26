@@ -13,14 +13,14 @@ import * as Example from "../../../examples/ui/display";
 </Preview>
 
 ```tsx
-<Carousel opts={{ loop: true }}>
-	<CarouselContent>
-		<CarouselItem>…</CarouselItem>
-	</CarouselContent>
-	<CarouselPrevious />
-	<CarouselNext />
-	<CarouselDots />
-</Carousel>
+<Carousel.Root opts={{ loop: true }}>
+	<Carousel.Content>
+		<Carousel.Item>…</Carousel.Item>
+	</Carousel.Content>
+	<Carousel.Previous />
+	<Carousel.Next />
+	<Carousel.Dots />
+</Carousel.Root>
 ```
 
 Built on [Embla](https://www.embla-carousel.com/); `opts` goes straight to it.

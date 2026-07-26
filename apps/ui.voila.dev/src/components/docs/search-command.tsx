@@ -1,15 +1,7 @@
 import { FileTextIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { useNavigate } from "@tanstack/react-router";
-import {
-	Command,
-	CommandDialog,
-	CommandEmpty,
-	CommandGroup,
-	CommandInput,
-	CommandItem,
-	CommandList,
-} from "@voila.dev/ui/components/command";
-import { Kbd, KbdGroup } from "@voila.dev/ui/components/kbd";
+import { Command } from "@voila.dev/ui/command";
+import { Kbd } from "@voila.dev/ui/kbd";
 import type MiniSearch from "minisearch";
 import { useEffect, useMemo, useState } from "react";
 import type { DocsSearchDocument } from "@/lib/docs-manifest.types";
@@ -102,33 +94,33 @@ export function SearchCommand() {
 			>
 				<MagnifyingGlassIcon aria-hidden className="size-4 shrink-0" />
 				<span className="flex-1 text-left">Search…</span>
-				<KbdGroup>
-					<Kbd>⌘</Kbd>
-					<Kbd>K</Kbd>
-				</KbdGroup>
+				<Kbd.Group>
+					<Kbd.Root>⌘</Kbd.Root>
+					<Kbd.Root>K</Kbd.Root>
+				</Kbd.Group>
 			</button>
-			<CommandDialog
+			<Command.Dialog
 				open={open}
 				onOpenChange={setOpen}
 				title="Search documentation"
 				description="Search pages, components and guides"
 			>
-				<Command shouldFilter={false}>
-					<CommandInput
+				<Command.Root shouldFilter={false}>
+					<Command.Input
 						placeholder="Search documentation…"
 						value={query}
 						onValueChange={setQuery}
 					/>
-					<CommandList>
-						<CommandEmpty>
+					<Command.List>
+						<Command.Empty>
 							{query.trim().length < 2
 								? "Type to search the docs."
 								: "No results found."}
-						</CommandEmpty>
+						</Command.Empty>
 						{results.map(([section, docs]) => (
-							<CommandGroup key={section} heading={section}>
+							<Command.Group key={section} heading={section}>
 								{docs.map((doc) => (
-									<CommandItem
+									<Command.Item
 										key={doc.slug}
 										value={doc.slug}
 										onSelect={() => {
@@ -145,13 +137,13 @@ export function SearchCommand() {
 												</p>
 											)}
 										</div>
-									</CommandItem>
+									</Command.Item>
 								))}
-							</CommandGroup>
+							</Command.Group>
 						))}
-					</CommandList>
-				</Command>
-			</CommandDialog>
+					</Command.List>
+				</Command.Root>
+			</Command.Dialog>
 		</>
 	);
 }

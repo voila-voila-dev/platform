@@ -1,11 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	Field,
-	FieldDescription,
-	FieldError,
-	FieldLabel,
-} from "@voila.dev/ui/components/field";
-import { Textarea } from "@voila.dev/ui/components/textarea";
+import { Field } from "@voila.dev/ui/field";
+import { Textarea } from "@voila.dev/ui/textarea";
 
 const meta = {
 	title: "UI/Textarea",
@@ -73,21 +68,23 @@ export const Invalid: Story = {
 export const InField: Story = {
 	render: () => (
 		<div className="w-96">
-			<Field invalid>
-				<FieldLabel htmlFor="project-description">
+			<Field.Root invalid>
+				<Field.Label htmlFor="project-description">
 					Project description
-				</FieldLabel>
+				</Field.Label>
 				<Textarea
 					id="project-description"
 					aria-invalid
 					defaultValue="Too short"
 					placeholder="Describe the project for the freelancer..."
 				/>
-				<FieldDescription>
+				<Field.Description>
 					Freelancers see this before applying.
-				</FieldDescription>
-				<FieldError>The description must be at least 80 characters.</FieldError>
-			</Field>
+				</Field.Description>
+				<Field.Error>
+					The description must be at least 80 characters.
+				</Field.Error>
+			</Field.Root>
 		</div>
 	),
 };

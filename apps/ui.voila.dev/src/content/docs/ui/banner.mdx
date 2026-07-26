@@ -13,11 +13,11 @@ import * as Example from "../../../examples/ui/feedback";
 </Preview>
 
 ```tsx
-<Banner variant="warning">
+<Banner.Root variant="warning">
 	<WarningIcon />
-	<BannerTitle>Votre compte Stripe est incomplet.</BannerTitle>
-	<BannerClose />
-</Banner>
+	<Banner.Title>Votre compte Stripe est incomplet.</Banner.Title>
+	<Banner.Close />
+</Banner.Root>
 ```
 
 An [Alert](/ui/alert/) talks about the content it sits next to; a banner talks
@@ -28,5 +28,5 @@ slot.
 	<Example.BannerWithAction />
 </Preview>
 
-`BannerClose` does not remove the banner by itself. Wire its `onClick` to
+`Banner.Close` does not remove the banner by itself. Wire its `onClick` to
 whatever holds the dismissed state, so it stays dismissed on the next page.

@@ -1,10 +1,17 @@
-import { FilterFieldFrame } from "#/filter/components/fields/field-frame.tsx";
+import { FilterFieldFrame } from "#/filter/components/fields/filter-field-frame.tsx";
 import type {
 	BooleanFilterDefinition,
 	BooleanFilterValue,
 	FilterLabels,
 } from "#/filter/types.ts";
 import { cn } from "#/lib/utils.ts";
+
+interface Props {
+	definition: BooleanFilterDefinition;
+	value: BooleanFilterValue | undefined;
+	onValueChange: (value: BooleanFilterValue | undefined) => void;
+	labels: FilterLabels;
+}
 
 /**
  * Three states, not two: yes, no, and "any" (the filter unset). A switch can
@@ -16,12 +23,7 @@ export function BooleanFilterField({
 	value,
 	onValueChange,
 	labels,
-}: {
-	readonly definition: BooleanFilterDefinition;
-	readonly value: BooleanFilterValue | undefined;
-	readonly onValueChange: (value: BooleanFilterValue | undefined) => void;
-	readonly labels: FilterLabels;
-}) {
+}: Props) {
 	const states: ReadonlyArray<{ key: string; label: string; set?: boolean }> = [
 		{ key: "any", label: labels.any },
 		{ key: "true", label: definition.trueLabel, set: true },

@@ -1,12 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	Field,
-	FieldContent,
-	FieldDescription,
-	FieldLabel,
-} from "@voila.dev/ui/components/field";
-import { Label } from "@voila.dev/ui/components/label";
-import { Switch } from "@voila.dev/ui/components/switch";
+import { Field } from "@voila.dev/ui/field";
+import { Label } from "@voila.dev/ui/label";
+import { Switch } from "@voila.dev/ui/switch";
 import { useState } from "react";
 
 const meta = {
@@ -84,14 +79,14 @@ export const Controlled: Story = {
 
 export const WithField: Story = {
 	render: () => (
-		<Field orientation="horizontal" className="max-w-sm">
-			<FieldContent>
-				<FieldLabel htmlFor="launch-alerts">Launch-day alerts</FieldLabel>
-				<FieldDescription>
+		<Field.Root orientation="horizontal" className="max-w-sm">
+			<Field.Content>
+				<Field.Label htmlFor="launch-alerts">Launch-day alerts</Field.Label>
+				<Field.Description>
 					Get notified when a client posts a last-minute project.
-				</FieldDescription>
-			</FieldContent>
+				</Field.Description>
+			</Field.Content>
 			<Switch id="launch-alerts" defaultChecked />
-		</Field>
+		</Field.Root>
 	),
 };

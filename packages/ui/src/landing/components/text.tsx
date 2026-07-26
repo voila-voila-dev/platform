@@ -6,10 +6,10 @@ import {
 } from "#/landing/components/text-variants.ts";
 import { cn } from "#/lib/utils.ts";
 
-type TextProps = useRender.ComponentProps<"p"> & TextVariants;
+interface Props extends useRender.ComponentProps<"p">, TextVariants {}
 
 /** Marketing copy block — renders a `p`; pass `render` for `span`/`div`. */
-function Text({
+export function Text({
 	className,
 	render,
 	variant,
@@ -17,7 +17,7 @@ function Text({
 	align,
 	weight,
 	...props
-}: TextProps) {
+}: Props) {
 	return useRender({
 		defaultTagName: "p",
 		props: mergeProps<"p">(
@@ -44,4 +44,3 @@ export {
 	textVariants,
 	textWeightOptions,
 } from "#/landing/components/text-variants.ts";
-export { Text, type TextProps };

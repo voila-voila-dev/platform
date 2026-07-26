@@ -1,12 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { FilterBar } from "@voila.dev/ui/filter/filter-bar";
-import { FilterForm } from "@voila.dev/ui/filter/filter-form";
-import type {
-	FilterDefinition,
-	FilterValues,
-	PlaceSuggestion,
-} from "@voila.dev/ui/filter/types";
-import { defaultFilterLabels } from "@voila.dev/ui/filter/types";
+import {
+	defaultFilterLabels,
+	Filter,
+	type FilterDefinition,
+	type FilterValues,
+	type PlaceSuggestion,
+} from "@voila.dev/ui/filter";
 import { useState } from "react";
 
 // Stand-in for the app's geocoder: enough French towns to try the field.
@@ -163,7 +162,7 @@ function FilterBarFixture({
 
 	return (
 		<div className="flex max-w-3xl flex-col gap-6">
-			<FilterBar
+			<Filter.Root
 				definitions={definitions}
 				values={values}
 				onValuesChange={setValues}
@@ -207,7 +206,7 @@ export const InlineForm: Story = {
 		const [values, setValues] = useState<FilterValues>({});
 		return (
 			<div className="max-w-xl">
-				<FilterForm
+				<Filter.Form
 					definitions={definitions}
 					values={values}
 					onValuesChange={setValues}
@@ -225,7 +224,7 @@ export const AroundAPlace: Story = {
 		const [values, setValues] = useState<FilterValues>({});
 		return (
 			<div className="flex max-w-xl flex-col gap-4">
-				<FilterForm
+				<Filter.Form
 					definitions={definitions.filter(
 						(definition) => definition.kind === "geoRadius",
 					)}

@@ -1,26 +1,15 @@
 import { WarningIcon } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	AlertDialog,
-	AlertDialogAction,
-	AlertDialogCancel,
-	AlertDialogContent,
-	AlertDialogDescription,
-	AlertDialogFooter,
-	AlertDialogHeader,
-	AlertDialogMedia,
-	AlertDialogTitle,
-	AlertDialogTrigger,
-} from "@voila.dev/ui/components/alert-dialog";
-import { Button } from "@voila.dev/ui/components/button";
-import { Spinner } from "@voila.dev/ui/components/spinner";
+import { AlertDialog } from "@voila.dev/ui/alert-dialog";
+import { Button } from "@voila.dev/ui/button";
+import { Spinner } from "@voila.dev/ui/spinner";
 import { useState } from "react";
 
 const meta = {
 	title: "UI/AlertDialog",
-	component: AlertDialog,
+	component: AlertDialog.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof AlertDialog>;
+} satisfies Meta<typeof AlertDialog.Root>;
 
 export default meta;
 
@@ -28,112 +17,112 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<AlertDialog>
-			<AlertDialogTrigger render={<Button variant="outline" />}>
+		<AlertDialog.Root>
+			<AlertDialog.Trigger render={<Button variant="outline" />}>
 				Cancel project
-			</AlertDialogTrigger>
-			<AlertDialogContent>
-				<AlertDialogHeader>
-					<AlertDialogTitle>Cancel this project?</AlertDialogTitle>
-					<AlertDialogDescription>
+			</AlertDialog.Trigger>
+			<AlertDialog.Content>
+				<AlertDialog.Header>
+					<AlertDialog.Title>Cancel this project?</AlertDialog.Title>
+					<AlertDialog.Description>
 						The freelancer will be notified and the booking will be released.
 						This action cannot be undone.
-					</AlertDialogDescription>
-				</AlertDialogHeader>
-				<AlertDialogFooter>
-					<AlertDialogCancel>Keep project</AlertDialogCancel>
-					<AlertDialogAction variant="destructive">
+					</AlertDialog.Description>
+				</AlertDialog.Header>
+				<AlertDialog.Footer>
+					<AlertDialog.Cancel>Keep project</AlertDialog.Cancel>
+					<AlertDialog.Action variant="destructive">
 						Cancel project
-					</AlertDialogAction>
-				</AlertDialogFooter>
-			</AlertDialogContent>
-		</AlertDialog>
+					</AlertDialog.Action>
+				</AlertDialog.Footer>
+			</AlertDialog.Content>
+		</AlertDialog.Root>
 	),
 };
 
 export const WithMedia: Story = {
 	render: () => (
-		<AlertDialog>
-			<AlertDialogTrigger render={<Button variant="destructive" />}>
+		<AlertDialog.Root>
+			<AlertDialog.Trigger render={<Button variant="destructive" />}>
 				Remove freelancer
-			</AlertDialogTrigger>
-			<AlertDialogContent size="sm">
-				<AlertDialogHeader>
-					<AlertDialogMedia>
+			</AlertDialog.Trigger>
+			<AlertDialog.Content size="sm">
+				<AlertDialog.Header>
+					<AlertDialog.Media>
 						<WarningIcon className="text-destructive" />
-					</AlertDialogMedia>
-					<AlertDialogTitle>Remove this freelancer?</AlertDialogTitle>
-					<AlertDialogDescription>
+					</AlertDialog.Media>
+					<AlertDialog.Title>Remove this freelancer?</AlertDialog.Title>
+					<AlertDialog.Description>
 						Camille Dubois will lose access to all upcoming projects for your
 						team.
-					</AlertDialogDescription>
-				</AlertDialogHeader>
-				<AlertDialogFooter>
-					<AlertDialogCancel>Cancel</AlertDialogCancel>
-					<AlertDialogAction variant="destructive">Remove</AlertDialogAction>
-				</AlertDialogFooter>
-			</AlertDialogContent>
-		</AlertDialog>
+					</AlertDialog.Description>
+				</AlertDialog.Header>
+				<AlertDialog.Footer>
+					<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+					<AlertDialog.Action variant="destructive">Remove</AlertDialog.Action>
+				</AlertDialog.Footer>
+			</AlertDialog.Content>
+		</AlertDialog.Root>
 	),
 };
 
 export const DefaultOpen: Story = {
 	render: () => (
-		<AlertDialog defaultOpen>
-			<AlertDialogTrigger render={<Button variant="outline" />}>
+		<AlertDialog.Root defaultOpen>
+			<AlertDialog.Trigger render={<Button variant="outline" />}>
 				Cancel project
-			</AlertDialogTrigger>
-			<AlertDialogContent>
-				<AlertDialogHeader>
-					<AlertDialogTitle>Cancel this project?</AlertDialogTitle>
-					<AlertDialogDescription>
+			</AlertDialog.Trigger>
+			<AlertDialog.Content>
+				<AlertDialog.Header>
+					<AlertDialog.Title>Cancel this project?</AlertDialog.Title>
+					<AlertDialog.Description>
 						The freelancer will be notified and the booking will be released.
 						This action cannot be undone.
-					</AlertDialogDescription>
-				</AlertDialogHeader>
-				<AlertDialogFooter>
-					<AlertDialogCancel>Keep project</AlertDialogCancel>
-					<AlertDialogAction variant="destructive">
+					</AlertDialog.Description>
+				</AlertDialog.Header>
+				<AlertDialog.Footer>
+					<AlertDialog.Cancel>Keep project</AlertDialog.Cancel>
+					<AlertDialog.Action variant="destructive">
 						Cancel project
-					</AlertDialogAction>
-				</AlertDialogFooter>
-			</AlertDialogContent>
-		</AlertDialog>
+					</AlertDialog.Action>
+				</AlertDialog.Footer>
+			</AlertDialog.Content>
+		</AlertDialog.Root>
 	),
 };
 
 export const SmallWithoutMedia: Story = {
 	render: () => (
-		<AlertDialog>
-			<AlertDialogTrigger render={<Button variant="outline" />}>
+		<AlertDialog.Root>
+			<AlertDialog.Trigger render={<Button variant="outline" />}>
 				Decline application
-			</AlertDialogTrigger>
-			<AlertDialogContent size="sm">
-				<AlertDialogHeader>
-					<AlertDialogTitle>Decline this application?</AlertDialogTitle>
-					<AlertDialogDescription>
+			</AlertDialog.Trigger>
+			<AlertDialog.Content size="sm">
+				<AlertDialog.Header>
+					<AlertDialog.Title>Decline this application?</AlertDialog.Title>
+					<AlertDialog.Description>
 						The freelancer will be notified that their application was declined.
-					</AlertDialogDescription>
-				</AlertDialogHeader>
-				<AlertDialogFooter>
-					<AlertDialogCancel>Cancel</AlertDialogCancel>
-					<AlertDialogAction variant="destructive">Decline</AlertDialogAction>
-				</AlertDialogFooter>
-			</AlertDialogContent>
-		</AlertDialog>
+					</AlertDialog.Description>
+				</AlertDialog.Header>
+				<AlertDialog.Footer>
+					<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+					<AlertDialog.Action variant="destructive">Decline</AlertDialog.Action>
+				</AlertDialog.Footer>
+			</AlertDialog.Content>
+		</AlertDialog.Root>
 	),
 };
 
 export const LongDescription: Story = {
 	render: () => (
-		<AlertDialog>
-			<AlertDialogTrigger render={<Button variant="outline" />}>
+		<AlertDialog.Root>
+			<AlertDialog.Trigger render={<Button variant="outline" />}>
 				Delete workspace
-			</AlertDialogTrigger>
-			<AlertDialogContent>
-				<AlertDialogHeader>
-					<AlertDialogTitle>Delete this workspace?</AlertDialogTitle>
-					<AlertDialogDescription>
+			</AlertDialog.Trigger>
+			<AlertDialog.Content>
+				<AlertDialog.Header>
+					<AlertDialog.Title>Delete this workspace?</AlertDialog.Title>
+					<AlertDialog.Description>
 						Deleting your workspace is permanent and cannot be undone. All
 						projects, bookings, and applications associated with this workspace
 						will be cancelled. Every freelancer with upcoming projects will be
@@ -145,14 +134,14 @@ export const LongDescription: Story = {
 						pause activity, consider archiving the workspace instead — archiving
 						keeps your data and can be reversed at any time by contacting
 						support.
-					</AlertDialogDescription>
-				</AlertDialogHeader>
-				<AlertDialogFooter>
-					<AlertDialogCancel>Keep workspace</AlertDialogCancel>
-					<AlertDialogAction variant="destructive">Delete</AlertDialogAction>
-				</AlertDialogFooter>
-			</AlertDialogContent>
-		</AlertDialog>
+					</AlertDialog.Description>
+				</AlertDialog.Header>
+				<AlertDialog.Footer>
+					<AlertDialog.Cancel>Keep workspace</AlertDialog.Cancel>
+					<AlertDialog.Action variant="destructive">Delete</AlertDialog.Action>
+				</AlertDialog.Footer>
+			</AlertDialog.Content>
+		</AlertDialog.Root>
 	),
 };
 
@@ -160,7 +149,7 @@ function AsyncActionAlertDialog() {
 	const [open, setOpen] = useState(false);
 	const [pending, setPending] = useState(false);
 	return (
-		<AlertDialog
+		<AlertDialog.Root
 			open={open}
 			onOpenChange={(nextOpen) => {
 				if (!pending) {
@@ -168,19 +157,19 @@ function AsyncActionAlertDialog() {
 				}
 			}}
 		>
-			<AlertDialogTrigger render={<Button variant="outline" />}>
+			<AlertDialog.Trigger render={<Button variant="outline" />}>
 				Archive project
-			</AlertDialogTrigger>
-			<AlertDialogContent>
-				<AlertDialogHeader>
-					<AlertDialogTitle>Archive this project?</AlertDialogTitle>
-					<AlertDialogDescription>
+			</AlertDialog.Trigger>
+			<AlertDialog.Content>
+				<AlertDialog.Header>
+					<AlertDialog.Title>Archive this project?</AlertDialog.Title>
+					<AlertDialog.Description>
 						The project will be hidden from the active list. You can restore it
 						from the archive at any time.
-					</AlertDialogDescription>
-				</AlertDialogHeader>
-				<AlertDialogFooter>
-					<AlertDialogCancel disabled={pending}>Cancel</AlertDialogCancel>
+					</AlertDialog.Description>
+				</AlertDialog.Header>
+				<AlertDialog.Footer>
+					<AlertDialog.Cancel disabled={pending}>Cancel</AlertDialog.Cancel>
 					<Button
 						variant="destructive"
 						disabled={pending}
@@ -194,9 +183,9 @@ function AsyncActionAlertDialog() {
 						{pending ? <Spinner /> : null}
 						{pending ? "Archiving…" : "Archive"}
 					</Button>
-				</AlertDialogFooter>
-			</AlertDialogContent>
-		</AlertDialog>
+				</AlertDialog.Footer>
+			</AlertDialog.Content>
+		</AlertDialog.Root>
 	);
 }
 

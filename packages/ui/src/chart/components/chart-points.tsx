@@ -3,11 +3,10 @@ import { useChartContext } from "#/chart/context/chart-context.tsx";
 import { readNumber } from "#/chart/core/chart-model.ts";
 import { seriesColor } from "#/chart/core/config.ts";
 import { seriesPoints } from "#/chart/core/series.ts";
-import { cn } from "#/lib/utils.ts";
 
 /** The scatter mark: one dot per datum per series, optionally sized by a field. */
 
-export interface ChartPointsProps extends React.ComponentProps<"g"> {
+interface Props extends React.ComponentProps<"g"> {
 	readonly keys?: ReadonlyArray<string>;
 	readonly radius?: number;
 	/** Field driving the dot area, for a bubble chart. */
@@ -18,14 +17,14 @@ export interface ChartPointsProps extends React.ComponentProps<"g"> {
 /** Milliseconds each dot waits behind the one before it, on entry. */
 const STAGGER_MS = 16;
 
-function ChartPoints({
+export function ChartPoints({
 	className,
 	keys,
 	radius = 4,
 	sizeKey,
 	maxRadius = 14,
 	...props
-}: ChartPointsProps) {
+}: Props) {
 	const {
 		data,
 		categories,
@@ -53,7 +52,7 @@ function ChartPoints({
 	};
 
 	return (
-		<g data-slot="chart-points" className={cn(className)} {...props}>
+		<g data-slot="chart-points" className={className} {...props}>
 			{drawnKeys.map((key, seriesIndex) => {
 				const color = seriesColor(config, key, seriesIndex);
 				return seriesPoints({
@@ -89,5 +88,3 @@ function ChartPoints({
 		</g>
 	);
 }
-
-export { ChartPoints };

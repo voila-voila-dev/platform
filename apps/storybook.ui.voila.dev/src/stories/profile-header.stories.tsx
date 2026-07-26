@@ -1,14 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Badge } from "@voila.dev/ui/components/badge";
-import { Button } from "@voila.dev/ui/components/button";
-import { ProfileHeader } from "@voila.dev/ui/components/profile-header";
+import { Badge } from "@voila.dev/ui/badge";
+import { Button } from "@voila.dev/ui/button";
+import { ProfileHeader } from "@voila.dev/ui/profile-header";
 
 const COVER_IMAGE =
 	"https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=1200&q=80";
 
 const meta = {
 	title: "UI/ProfileHeader",
-	component: ProfileHeader,
+	component: ProfileHeader.Root,
 	tags: ["autodocs"],
 	argTypes: {
 		theme: {
@@ -22,7 +22,7 @@ const meta = {
 		theme: "brand",
 		className: "w-full max-w-2xl rounded-xl border",
 	},
-} satisfies Meta<typeof ProfileHeader>;
+} satisfies Meta<typeof ProfileHeader.Root>;
 
 export default meta;
 

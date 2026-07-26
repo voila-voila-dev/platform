@@ -1,15 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	ResizableHandle,
-	ResizablePanel,
-	ResizablePanelGroup,
-} from "@voila.dev/ui/components/resizable";
+import { Resizable } from "@voila.dev/ui/resizable";
 
 const meta = {
 	title: "UI/Resizable",
-	component: ResizablePanelGroup,
+	component: Resizable.PanelGroup,
 	tags: ["autodocs"],
-} satisfies Meta<typeof ResizablePanelGroup>;
+} satisfies Meta<typeof Resizable.PanelGroup>;
 
 export default meta;
 
@@ -18,21 +14,21 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
 	render: () => (
 		// The group fills its parent (inline height: 100%), so the size lives on
-		// the wrapper, never on ResizablePanelGroup itself.
+		// the wrapper, never on Resizable.PanelGroup itself.
 		<div className="h-48 max-w-xl">
-			<ResizablePanelGroup className="rounded-lg border">
-				<ResizablePanel defaultSize={50}>
+			<Resizable.PanelGroup className="rounded-lg border">
+				<Resizable.Panel defaultSize={50}>
 					<div className="flex h-full items-center justify-center p-6">
 						<span className="text-sm font-medium">Project list</span>
 					</div>
-				</ResizablePanel>
-				<ResizableHandle withHandle />
-				<ResizablePanel defaultSize={50}>
+				</Resizable.Panel>
+				<Resizable.Handle withHandle />
+				<Resizable.Panel defaultSize={50}>
 					<div className="flex h-full items-center justify-center p-6">
 						<span className="text-sm font-medium">Project details</span>
 					</div>
-				</ResizablePanel>
-			</ResizablePanelGroup>
+				</Resizable.Panel>
+			</Resizable.PanelGroup>
 		</div>
 	),
 };
@@ -40,19 +36,22 @@ export const Default: Story = {
 export const Vertical: Story = {
 	render: () => (
 		<div className="h-64 max-w-xl">
-			<ResizablePanelGroup orientation="vertical" className="rounded-lg border">
-				<ResizablePanel defaultSize={60}>
+			<Resizable.PanelGroup
+				orientation="vertical"
+				className="rounded-lg border"
+			>
+				<Resizable.Panel defaultSize={60}>
 					<div className="flex h-full items-center justify-center p-6">
 						<span className="text-sm font-medium">Freelancer directory</span>
 					</div>
-				</ResizablePanel>
-				<ResizableHandle withHandle />
-				<ResizablePanel defaultSize={40}>
+				</Resizable.Panel>
+				<Resizable.Handle withHandle />
+				<Resizable.Panel defaultSize={40}>
 					<div className="flex h-full items-center justify-center p-6">
 						<span className="text-sm font-medium">Conversation</span>
 					</div>
-				</ResizablePanel>
-			</ResizablePanelGroup>
+				</Resizable.Panel>
+			</Resizable.PanelGroup>
 		</div>
 	),
 };
@@ -60,19 +59,19 @@ export const Vertical: Story = {
 export const WithoutHandle: Story = {
 	render: () => (
 		<div className="h-48 max-w-xl">
-			<ResizablePanelGroup className="rounded-lg border">
-				<ResizablePanel defaultSize={40}>
+			<Resizable.PanelGroup className="rounded-lg border">
+				<Resizable.Panel defaultSize={40}>
 					<div className="flex h-full items-center justify-center p-6">
 						<span className="text-sm font-medium">Filters</span>
 					</div>
-				</ResizablePanel>
-				<ResizableHandle />
-				<ResizablePanel defaultSize={60}>
+				</Resizable.Panel>
+				<Resizable.Handle />
+				<Resizable.Panel defaultSize={60}>
 					<div className="flex h-full items-center justify-center p-6">
 						<span className="text-sm font-medium">Results</span>
 					</div>
-				</ResizablePanel>
-			</ResizablePanelGroup>
+				</Resizable.Panel>
+			</Resizable.PanelGroup>
 		</div>
 	),
 };
@@ -80,8 +79,8 @@ export const WithoutHandle: Story = {
 export const Collapsible: Story = {
 	render: () => (
 		<div className="h-48 max-w-xl">
-			<ResizablePanelGroup className="rounded-lg border">
-				<ResizablePanel
+			<Resizable.PanelGroup className="rounded-lg border">
+				<Resizable.Panel
 					collapsible
 					collapsedSize={0}
 					defaultSize={30}
@@ -90,16 +89,16 @@ export const Collapsible: Story = {
 					<div className="flex h-full items-center justify-center p-6">
 						<span className="text-sm font-medium">Sidebar</span>
 					</div>
-				</ResizablePanel>
-				<ResizableHandle withHandle />
-				<ResizablePanel defaultSize={70}>
+				</Resizable.Panel>
+				<Resizable.Handle withHandle />
+				<Resizable.Panel defaultSize={70}>
 					<div className="flex h-full items-center justify-center p-6">
 						<span className="text-sm font-medium">
 							Drag the handle to the edge to collapse
 						</span>
 					</div>
-				</ResizablePanel>
-			</ResizablePanelGroup>
+				</Resizable.Panel>
+			</Resizable.PanelGroup>
 		</div>
 	),
 };
@@ -107,25 +106,25 @@ export const Collapsible: Story = {
 export const ThreePanel: Story = {
 	render: () => (
 		<div className="h-48 max-w-2xl">
-			<ResizablePanelGroup className="rounded-lg border">
-				<ResizablePanel defaultSize={25}>
+			<Resizable.PanelGroup className="rounded-lg border">
+				<Resizable.Panel defaultSize={25}>
 					<div className="flex h-full items-center justify-center p-6">
 						<span className="text-sm font-medium">Navigation</span>
 					</div>
-				</ResizablePanel>
-				<ResizableHandle withHandle />
-				<ResizablePanel defaultSize={50}>
+				</Resizable.Panel>
+				<Resizable.Handle withHandle />
+				<Resizable.Panel defaultSize={50}>
 					<div className="flex h-full items-center justify-center p-6">
 						<span className="text-sm font-medium">Project list</span>
 					</div>
-				</ResizablePanel>
-				<ResizableHandle withHandle />
-				<ResizablePanel defaultSize={25}>
+				</Resizable.Panel>
+				<Resizable.Handle withHandle />
+				<Resizable.Panel defaultSize={25}>
 					<div className="flex h-full items-center justify-center p-6">
 						<span className="text-sm font-medium">Details</span>
 					</div>
-				</ResizablePanel>
-			</ResizablePanelGroup>
+				</Resizable.Panel>
+			</Resizable.PanelGroup>
 		</div>
 	),
 };

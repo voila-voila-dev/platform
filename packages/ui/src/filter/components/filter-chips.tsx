@@ -1,5 +1,6 @@
 import { XIcon } from "@phosphor-icons/react";
-import { Chip, ChipRemove } from "#/components/chip.tsx";
+import type * as React from "react";
+import { Chip } from "#/chip/components/chip.tsx";
 import {
 	clearFilterValue,
 	describeFilterValue,
@@ -10,6 +11,16 @@ import type {
 	FilterValues,
 } from "#/filter/types.ts";
 import { cn } from "#/lib/utils.ts";
+
+interface Props extends React.ComponentProps<"div"> {
+	definitions: ReadonlyArray<FilterDefinition>;
+	values: FilterValues;
+	onValuesChange: (values: FilterValues) => void;
+	labels: FilterLabels;
+	locale: string;
+	/** Opens the editor, usually scrolled to the clicked filter. */
+	onChipClick?: (key: string) => void;
+}
 
 /**
  * What is currently filtered, stated in full: one removable chip per active
@@ -24,16 +35,8 @@ export function FilterChips({
 	locale,
 	onChipClick,
 	className,
-}: {
-	readonly definitions: ReadonlyArray<FilterDefinition>;
-	readonly values: FilterValues;
-	readonly onValuesChange: (values: FilterValues) => void;
-	readonly labels: FilterLabels;
-	readonly locale: string;
-	/** Opens the editor, usually scrolled to the clicked filter. */
-	readonly onChipClick?: (key: string) => void;
-	readonly className?: string;
-}) {
+	...props
+}: Props) {
 	const entries = Object.entries(values);
 	if (entries.length === 0) {
 		return null;
@@ -43,6 +46,7 @@ export function FilterChips({
 		<div
 			data-slot="filter-chips"
 			className={cn("flex flex-wrap items-center gap-2", className)}
+			{...props}
 		>
 			{entries.map(([key, value]) => {
 				const description = describeFilterValue({
@@ -55,7 +59,7 @@ export function FilterChips({
 					return null;
 				}
 				return (
-					<Chip key={key} variant="outline" className="max-w-full">
+					<Chip.Root key={key} variant="outline" className="max-w-full">
 						<button
 							type="button"
 							className="cursor-pointer truncate text-left"
@@ -63,13 +67,13 @@ export function FilterChips({
 						>
 							{description}
 						</button>
-						<ChipRemove
+						<Chip.Remove
 							aria-label={`${labels.remove}: ${description}`}
 							onClick={() => onValuesChange(clearFilterValue(values, key))}
 						>
 							<XIcon />
-						</ChipRemove>
-					</Chip>
+						</Chip.Remove>
+					</Chip.Root>
 				);
 			})}
 		</div>

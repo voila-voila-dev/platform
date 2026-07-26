@@ -1,15 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Checkbox } from "@voila.dev/ui/components/checkbox";
-import {
-	Table,
-	TableBody,
-	TableCaption,
-	TableCell,
-	TableFooter,
-	TableHead,
-	TableHeader,
-	TableRow,
-} from "@voila.dev/ui/components/table";
+import { Checkbox } from "@voila.dev/ui/checkbox";
+import { Table } from "@voila.dev/ui/table";
 
 const projects = [
 	{
@@ -44,9 +35,9 @@ const projects = [
 
 const meta = {
 	title: "UI/Table",
-	component: Table,
+	component: Table.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof Table>;
+} satisfies Meta<typeof Table.Root>;
 
 export default meta;
 
@@ -54,95 +45,97 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<Table>
-			<TableCaption>Recent projects for your workspace.</TableCaption>
-			<TableHeader>
-				<TableRow>
-					<TableHead>Reference</TableHead>
-					<TableHead>Client</TableHead>
-					<TableHead>Role</TableHead>
-					<TableHead>Status</TableHead>
-					<TableHead className="text-right">Amount</TableHead>
-				</TableRow>
-			</TableHeader>
-			<TableBody>
+		<Table.Root>
+			<Table.Caption>Recent projects for your workspace.</Table.Caption>
+			<Table.Header>
+				<Table.Row>
+					<Table.Head>Reference</Table.Head>
+					<Table.Head>Client</Table.Head>
+					<Table.Head>Role</Table.Head>
+					<Table.Head>Status</Table.Head>
+					<Table.Head className="text-right">Amount</Table.Head>
+				</Table.Row>
+			</Table.Header>
+			<Table.Body>
 				{projects.map((project) => (
-					<TableRow key={project.reference}>
-						<TableCell className="font-medium">{project.reference}</TableCell>
-						<TableCell>{project.client}</TableCell>
-						<TableCell>{project.role}</TableCell>
-						<TableCell>{project.status}</TableCell>
-						<TableCell className="text-right">{project.amount}</TableCell>
-					</TableRow>
+					<Table.Row key={project.reference}>
+						<Table.Cell className="font-medium">{project.reference}</Table.Cell>
+						<Table.Cell>{project.client}</Table.Cell>
+						<Table.Cell>{project.role}</Table.Cell>
+						<Table.Cell>{project.status}</Table.Cell>
+						<Table.Cell className="text-right">{project.amount}</Table.Cell>
+					</Table.Row>
 				))}
-			</TableBody>
-		</Table>
+			</Table.Body>
+		</Table.Root>
 	),
 };
 
 export const WithFooter: Story = {
 	render: () => (
-		<Table>
-			<TableHeader>
-				<TableRow>
-					<TableHead>Reference</TableHead>
-					<TableHead>Client</TableHead>
-					<TableHead className="text-right">Amount</TableHead>
-				</TableRow>
-			</TableHeader>
-			<TableBody>
+		<Table.Root>
+			<Table.Header>
+				<Table.Row>
+					<Table.Head>Reference</Table.Head>
+					<Table.Head>Client</Table.Head>
+					<Table.Head className="text-right">Amount</Table.Head>
+				</Table.Row>
+			</Table.Header>
+			<Table.Body>
 				{projects.map((project) => (
-					<TableRow key={project.reference}>
-						<TableCell className="font-medium">{project.reference}</TableCell>
-						<TableCell>{project.client}</TableCell>
-						<TableCell className="text-right">{project.amount}</TableCell>
-					</TableRow>
+					<Table.Row key={project.reference}>
+						<Table.Cell className="font-medium">{project.reference}</Table.Cell>
+						<Table.Cell>{project.client}</Table.Cell>
+						<Table.Cell className="text-right">{project.amount}</Table.Cell>
+					</Table.Row>
 				))}
-			</TableBody>
-			<TableFooter>
-				<TableRow>
-					<TableCell colSpan={2}>Total</TableCell>
-					<TableCell className="text-right">780.00 USD</TableCell>
-				</TableRow>
-			</TableFooter>
-		</Table>
+			</Table.Body>
+			<Table.Footer>
+				<Table.Row>
+					<Table.Cell colSpan={2}>Total</Table.Cell>
+					<Table.Cell className="text-right">780.00 USD</Table.Cell>
+				</Table.Row>
+			</Table.Footer>
+		</Table.Root>
 	),
 };
 
 export const WithSelection: Story = {
 	render: () => (
-		<Table>
-			<TableHeader>
-				<TableRow>
-					<TableHead>
+		<Table.Root>
+			<Table.Header>
+				<Table.Row>
+					<Table.Head>
 						<Checkbox aria-label="Select all projects" />
-					</TableHead>
-					<TableHead>Reference</TableHead>
-					<TableHead>Client</TableHead>
-					<TableHead className="text-right">Amount</TableHead>
-				</TableRow>
-			</TableHeader>
-			<TableBody>
+					</Table.Head>
+					<Table.Head>Reference</Table.Head>
+					<Table.Head>Client</Table.Head>
+					<Table.Head className="text-right">Amount</Table.Head>
+				</Table.Row>
+			</Table.Header>
+			<Table.Body>
 				{projects.map((project, index) => {
 					const selected = index < 2;
 					return (
-						<TableRow
+						<Table.Row
 							key={project.reference}
 							data-selected={selected || undefined}
 						>
-							<TableCell>
+							<Table.Cell>
 								<Checkbox
 									aria-label={`Select ${project.reference}`}
 									defaultChecked={selected}
 								/>
-							</TableCell>
-							<TableCell className="font-medium">{project.reference}</TableCell>
-							<TableCell>{project.client}</TableCell>
-							<TableCell className="text-right">{project.amount}</TableCell>
-						</TableRow>
+							</Table.Cell>
+							<Table.Cell className="font-medium">
+								{project.reference}
+							</Table.Cell>
+							<Table.Cell>{project.client}</Table.Cell>
+							<Table.Cell className="text-right">{project.amount}</Table.Cell>
+						</Table.Row>
 					);
 				})}
-			</TableBody>
-		</Table>
+			</Table.Body>
+		</Table.Root>
 	),
 };

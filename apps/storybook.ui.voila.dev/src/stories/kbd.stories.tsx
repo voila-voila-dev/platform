@@ -1,27 +1,19 @@
 import { ArrowUUpLeftIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Button } from "@voila.dev/ui/components/button";
-import {
-	InputGroup,
-	InputGroupAddon,
-	InputGroupInput,
-} from "@voila.dev/ui/components/input-group";
-import { Kbd, KbdGroup } from "@voila.dev/ui/components/kbd";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "@voila.dev/ui/components/tooltip";
+import { Button } from "@voila.dev/ui/button";
+import { InputGroup } from "@voila.dev/ui/input-group";
+import { Kbd } from "@voila.dev/ui/kbd";
+import { Tooltip } from "@voila.dev/ui/tooltip";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 
 const meta = {
 	title: "UI/Kbd",
-	component: Kbd,
+	component: Kbd.Root,
 	tags: ["autodocs"],
 	args: {
 		children: "⌘K",
 	},
-} satisfies Meta<typeof Kbd>;
+} satisfies Meta<typeof Kbd.Root>;
 
 export default meta;
 
@@ -32,68 +24,69 @@ export const Default: Story = {};
 export const Sizes: Story = {
 	render: () => (
 		<div className="flex items-center gap-4">
-			<Kbd size="default">⌘K</Kbd>
-			<Kbd size="sm">⌘K</Kbd>
+			<Kbd.Root size="default">⌘K</Kbd.Root>
+			<Kbd.Root size="sm">⌘K</Kbd.Root>
 		</div>
 	),
 };
 
 export const Group: Story = {
 	render: () => (
-		<KbdGroup>
-			<Kbd>⌘</Kbd>
-			<Kbd>⇧</Kbd>
-			<Kbd>P</Kbd>
-		</KbdGroup>
+		<Kbd.Group>
+			<Kbd.Root>⌘</Kbd.Root>
+			<Kbd.Root>⇧</Kbd.Root>
+			<Kbd.Root>P</Kbd.Root>
+		</Kbd.Group>
 	),
 };
 
 export const GroupWithSeparator: Story = {
 	render: () => (
-		<KbdGroup separator="+">
-			<Kbd>⌘</Kbd>
-			<Kbd>⇧</Kbd>
-			<Kbd>P</Kbd>
-		</KbdGroup>
+		<Kbd.Group separator="+">
+			<Kbd.Root>⌘</Kbd.Root>
+			<Kbd.Root>⇧</Kbd.Root>
+			<Kbd.Root>P</Kbd.Root>
+		</Kbd.Group>
 	),
 };
 
 export const WithIcon: Story = {
 	render: () => (
-		<KbdGroup>
-			<Kbd>
+		<Kbd.Group>
+			<Kbd.Root>
 				<MagnifyingGlassIcon />
-			</Kbd>
-			<Kbd>
+			</Kbd.Root>
+			<Kbd.Root>
 				<ArrowUUpLeftIcon />
 				Enter
-			</Kbd>
-		</KbdGroup>
+			</Kbd.Root>
+		</Kbd.Group>
 	),
 };
 
 export const InText: Story = {
 	render: () => (
 		<p className="text-muted-foreground text-sm">
-			Press <Kbd>⌘</Kbd> <Kbd>K</Kbd> to search projects and freelancers.
+			Press <Kbd.Root>⌘</Kbd.Root> <Kbd.Root>K</Kbd.Root> to search projects and
+			freelancers.
 		</p>
 	),
 };
 
 export const InTooltip: Story = {
 	render: () => (
-		<Tooltip>
-			<TooltipTrigger render={<Button variant="outline" />}>
+		<Tooltip.Root>
+			<Tooltip.Trigger render={<Button variant="outline" />}>
 				Search
-			</TooltipTrigger>
-			<TooltipContent>
+			</Tooltip.Trigger>
+			<Tooltip.Content>
 				Search projects and freelancers
-				<KbdGroup>
-					<Kbd>⌘</Kbd>
-					<Kbd>K</Kbd>
-				</KbdGroup>
-			</TooltipContent>
-		</Tooltip>
+				<Kbd.Group>
+					<Kbd.Root>⌘</Kbd.Root>
+					<Kbd.Root>K</Kbd.Root>
+				</Kbd.Group>
+			</Tooltip.Content>
+		</Tooltip.Root>
 	),
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
@@ -109,15 +102,15 @@ export const InTooltip: Story = {
 export const InInputGroup: Story = {
 	render: () => (
 		<div className="w-80">
-			<InputGroup>
-				<InputGroupAddon>
+			<InputGroup.Root>
+				<InputGroup.Addon>
 					<MagnifyingGlassIcon />
-				</InputGroupAddon>
-				<InputGroupInput placeholder="Search freelancers..." />
-				<InputGroupAddon align="inline-end">
-					<Kbd>⌘K</Kbd>
-				</InputGroupAddon>
-			</InputGroup>
+				</InputGroup.Addon>
+				<InputGroup.Input placeholder="Search freelancers..." />
+				<InputGroup.Addon align="inline-end">
+					<Kbd.Root>⌘K</Kbd.Root>
+				</InputGroup.Addon>
+			</InputGroup.Root>
 		</div>
 	),
 };

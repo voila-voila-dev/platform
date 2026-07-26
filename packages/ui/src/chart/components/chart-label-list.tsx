@@ -18,7 +18,7 @@ import { cn } from "#/lib/utils.ts";
  * with the numbers on them than with an axis the reader has to trace back to.
  */
 
-export interface ChartLabelListProps extends React.ComponentProps<"g"> {
+interface Props extends React.ComponentProps<"g"> {
 	/** Series to label. Defaults to the first of the root's value keys. */
 	readonly seriesKey?: string;
 	/**
@@ -102,7 +102,7 @@ function anchorsFor(options: AnchorOptions): ReadonlyArray<ChartPoint> {
 	});
 }
 
-function ChartLabelList({
+export function ChartLabelList({
 	className,
 	seriesKey,
 	marks = "points",
@@ -111,7 +111,7 @@ function ChartLabelList({
 	offset = 8,
 	formatter = formatTickValue,
 	...props
-}: ChartLabelListProps) {
+}: Props) {
 	const {
 		data,
 		categories,
@@ -173,5 +173,3 @@ function ChartLabelList({
 		</g>
 	);
 }
-
-export { ChartLabelList };

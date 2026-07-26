@@ -1,20 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Button } from "@voila.dev/ui/components/button";
-import { Card, CardContent } from "@voila.dev/ui/components/card";
-import {
-	Section,
-	SectionActions,
-	SectionDescription,
-	SectionHeader,
-	SectionHeading,
-	SectionTitle,
-} from "@voila.dev/ui/components/section";
+import { Button } from "@voila.dev/ui/button";
+import { Card } from "@voila.dev/ui/card";
+import { Section } from "@voila.dev/ui/section";
 
 const meta = {
 	title: "UI/Section",
-	component: Section,
+	component: Section.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof Section>;
+} satisfies Meta<typeof Section.Root>;
 
 export default meta;
 
@@ -22,39 +15,39 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<Section>
-			<SectionHeader>
-				<SectionHeading>
-					<SectionTitle>Upcoming projects</SectionTitle>
-					<SectionDescription>
+		<Section.Root>
+			<Section.Header>
+				<Section.Heading>
+					<Section.Title>Upcoming projects</Section.Title>
+					<Section.Description>
 						Your team's projects this week.
-					</SectionDescription>
-				</SectionHeading>
-				<SectionActions>
+					</Section.Description>
+				</Section.Heading>
+				<Section.Actions>
 					<Button variant="ghost" size="sm">
 						View all
 					</Button>
-				</SectionActions>
-			</SectionHeader>
-			<Card>
-				<CardContent>Design review — Saturday June 14, 3:00 PM</CardContent>
-			</Card>
-		</Section>
+				</Section.Actions>
+			</Section.Header>
+			<Card.Root>
+				<Card.Content>Design review — Saturday June 14, 3:00 PM</Card.Content>
+			</Card.Root>
+		</Section.Root>
 	),
 };
 
 export const TitleOnly: Story = {
 	render: () => (
-		<Section>
-			<SectionHeader>
-				<SectionHeading>
-					<SectionTitle>Documents</SectionTitle>
-				</SectionHeading>
-			</SectionHeader>
-			<Card>
-				<CardContent>Statement-of-work.pdf</CardContent>
-			</Card>
-		</Section>
+		<Section.Root>
+			<Section.Header>
+				<Section.Heading>
+					<Section.Title>Documents</Section.Title>
+				</Section.Heading>
+			</Section.Header>
+			<Card.Root>
+				<Card.Content>Statement-of-work.pdf</Card.Content>
+			</Card.Root>
+		</Section.Root>
 	),
 };
 
@@ -65,35 +58,35 @@ export const TitleOnly: Story = {
 export const Stacked: Story = {
 	render: () => (
 		<div className="flex flex-col gap-10">
-			<Section>
-				<SectionHeader>
-					<SectionHeading>
-						<SectionTitle>Profile</SectionTitle>
-						<SectionDescription>
+			<Section.Root>
+				<Section.Header>
+					<Section.Heading>
+						<Section.Title>Profile</Section.Title>
+						<Section.Description>
 							Information visible to clients.
-						</SectionDescription>
-					</SectionHeading>
-				</SectionHeader>
-				<Card>
-					<CardContent>Nathan Guyot — Full-stack developer</CardContent>
-				</Card>
-			</Section>
-			<Section>
-				<SectionHeader>
-					<SectionHeading>
-						{/* biome-ignore lint/a11y/useHeadingContent: Base UI's render prop nests the SectionTitle children inside the heading. */}
-						<SectionTitle render={<h3 />}>Certifications</SectionTitle>
-					</SectionHeading>
-					<SectionActions>
+						</Section.Description>
+					</Section.Heading>
+				</Section.Header>
+				<Card.Root>
+					<Card.Content>Nathan Guyot — Full-stack developer</Card.Content>
+				</Card.Root>
+			</Section.Root>
+			<Section.Root>
+				<Section.Header>
+					<Section.Heading>
+						{/* biome-ignore lint/a11y/useHeadingContent: Base UI's render prop nests the Section.Title children inside the heading. */}
+						<Section.Title render={<h3 />}>Certifications</Section.Title>
+					</Section.Heading>
+					<Section.Actions>
 						<Button variant="outline" size="sm">
 							Add
 						</Button>
-					</SectionActions>
-				</SectionHeader>
-				<Card>
-					<CardContent>AWS Solutions Architect — Associate</CardContent>
-				</Card>
-			</Section>
+					</Section.Actions>
+				</Section.Header>
+				<Card.Root>
+					<Card.Content>AWS Solutions Architect — Associate</Card.Content>
+				</Card.Root>
+			</Section.Root>
 		</div>
 	),
 };

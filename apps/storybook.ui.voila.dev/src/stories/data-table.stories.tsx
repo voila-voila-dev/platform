@@ -1,23 +1,13 @@
 import { ExportIcon } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Badge } from "@voila.dev/ui/components/badge";
-import { Button } from "@voila.dev/ui/components/button";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@voila.dev/ui/components/select";
+import { Badge } from "@voila.dev/ui/badge";
+import { Button } from "@voila.dev/ui/button";
 import {
 	type ColumnDef,
 	DataTable,
-	DataTableActions,
-	DataTableFilters,
-	DataTableSearch,
-	DataTableToolbar,
 	dataTableSelectionColumn,
-} from "@voila.dev/ui/datatable";
+} from "@voila.dev/ui/data-table";
+import { Select } from "@voila.dev/ui/select";
 import { useMemo, useState } from "react";
 
 interface Project {
@@ -147,17 +137,19 @@ const columns: ColumnDef<Project>[] = [
 
 const meta = {
 	title: "DataTable/DataTable",
-	component: DataTable,
+	component: DataTable.Root,
 	tags: ["autodocs"],
 	args: { columns, data: projects },
-} satisfies Meta<typeof DataTable<Project, unknown>>;
+} satisfies Meta<typeof DataTable.Root<Project, unknown>>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-	render: () => <DataTable columns={columns} data={projects.slice(0, 5)} />,
+	render: () => (
+		<DataTable.Root columns={columns} data={projects.slice(0, 5)} />
+	),
 };
 
 /**
@@ -186,7 +178,7 @@ function FullRecipeExample() {
 	const pageRows = filtered.slice(page * pageSize, (page + 1) * pageSize);
 
 	return (
-		<DataTable
+		<DataTable.Root
 			columns={[
 				dataTableSelectionColumn<Project>({
 					selectAllLabel: "Select all projects",
@@ -198,8 +190,8 @@ function FullRecipeExample() {
 			enableRowSelection
 			getRowId={(project) => project.reference}
 			toolbar={
-				<DataTableToolbar>
-					<DataTableSearch
+				<DataTable.Toolbar>
+					<DataTable.Search
 						placeholder="Search projects..."
 						value={search}
 						onChange={(event) => {
@@ -207,32 +199,32 @@ function FullRecipeExample() {
 							setPage(0);
 						}}
 					/>
-					<DataTableFilters>
-						<Select
+					<DataTable.Filters>
+						<Select.Root
 							value={status}
 							onValueChange={(value) => {
 								setStatus(value as string | null);
 								setPage(0);
 							}}
 						>
-							<SelectTrigger className="w-40">
-								<SelectValue placeholder="All statuses" />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectItem value={null}>All statuses</SelectItem>
-								<SelectItem value="Confirmed">Confirmed</SelectItem>
-								<SelectItem value="Pending">Pending</SelectItem>
-								<SelectItem value="Completed">Completed</SelectItem>
-							</SelectContent>
-						</Select>
-					</DataTableFilters>
-					<DataTableActions>
+							<Select.Trigger className="w-40">
+								<Select.Value placeholder="All statuses" />
+							</Select.Trigger>
+							<Select.Content>
+								<Select.Item value={null}>All statuses</Select.Item>
+								<Select.Item value="Confirmed">Confirmed</Select.Item>
+								<Select.Item value="Pending">Pending</Select.Item>
+								<Select.Item value="Completed">Completed</Select.Item>
+							</Select.Content>
+						</Select.Root>
+					</DataTable.Filters>
+					<DataTable.Actions>
 						<Button variant="outline" size="sm">
 							<ExportIcon data-icon="inline-start" />
 							Export
 						</Button>
-					</DataTableActions>
-				</DataTableToolbar>
+					</DataTable.Actions>
+				</DataTable.Toolbar>
 			}
 			pagination={{
 				page,
@@ -252,7 +244,7 @@ export const FullRecipe: Story = {
  * pinned while the body scrolls. */
 export const StickyHeader: Story = {
 	render: () => (
-		<DataTable
+		<DataTable.Root
 			columns={columns}
 			data={projects}
 			stickyHeader
@@ -263,12 +255,12 @@ export const StickyHeader: Story = {
 
 export const Loading: Story = {
 	render: () => (
-		<DataTable columns={columns} data={projects.slice(0, 5)} loading />
+		<DataTable.Root columns={columns} data={projects.slice(0, 5)} loading />
 	),
 };
 
 export const EmptyState: Story = {
-	render: () => <DataTable columns={columns} data={[]} />,
+	render: () => <DataTable.Root columns={columns} data={[]} />,
 };
 
 /** With `renderMobileCard`, the table is replaced below the `md` breakpoint by
@@ -276,7 +268,7 @@ export const EmptyState: Story = {
  * it. */
 export const MobileCards: Story = {
 	render: () => (
-		<DataTable
+		<DataTable.Root
 			columns={columns}
 			data={projects.slice(0, 5)}
 			initialSorting={[{ id: "client", desc: false }]}

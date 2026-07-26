@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Checkbox } from "@voila.dev/ui/components/checkbox";
-import { Label } from "@voila.dev/ui/components/label";
+import { Checkbox } from "@voila.dev/ui/checkbox";
+import { Label } from "@voila.dev/ui/label";
 import { useState } from "react";
 
 const meta = {

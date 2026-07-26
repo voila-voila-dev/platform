@@ -31,7 +31,7 @@ bun add @voila.dev/ui
 ```
 
 ```css title="globals.css"
-@import "@voila.dev/ui/landing/landing.css";
+@import "@voila.dev/ui/styles/landing.css";
 ```
 
 Or copy the source — it's the same files. The landing stylesheet declares the
@@ -46,14 +46,11 @@ A complete section: layout from `Section` and `Container`, an intro, a grid of
 feature cards. This is the shape every marketing page repeats.
 
 ```tsx
-import { Container } from "@voila.dev/ui/landing/container";
-import { FeatureGrid } from "@voila.dev/ui/landing/feature-grid";
-import { Section } from "@voila.dev/ui/landing/section";
-import { SectionIntro } from "@voila.dev/ui/landing/section-intro";
+import { Container, FeatureGrid, Section, SectionIntro } from "@voila.dev/ui/landing";
 
 export function WhyUs() {
 	return (
-		<Section background="muted">
+		<Section.Root background="muted">
 			<Container size="md">
 				<SectionIntro.Root>
 					<SectionIntro.Title>Why choose us?</SectionIntro.Title>
@@ -64,15 +61,15 @@ export function WhyUs() {
 				<FeatureGrid.Root tone="primary" columns="2" className="mt-10">
 					<FeatureGrid.Card>
 						<FeatureGrid.CardIcon>{/* an icon */}</FeatureGrid.CardIcon>
-						<FeatureGrid.CardTitle>Fast</FeatureGrid.CardTitle>
-						<FeatureGrid.CardDescription>
+						<FeatureGrid.Card.Title>Fast</FeatureGrid.Card.Title>
+						<FeatureGrid.Card.Description>
 							From brief to live page in an afternoon.
-						</FeatureGrid.CardDescription>
+						</FeatureGrid.Card.Description>
 					</FeatureGrid.Card>
 					{/* …more cards */}
 				</FeatureGrid.Root>
 			</Container>
-		</Section>
+		</Section.Root>
 	);
 }
 ```

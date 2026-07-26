@@ -4,26 +4,15 @@ import {
 	UserCircleIcon,
 } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Button } from "@voila.dev/ui/components/button";
-import {
-	Item,
-	ItemActions,
-	ItemContent,
-	ItemDescription,
-	ItemFooter,
-	ItemGroup,
-	ItemHeader,
-	ItemMedia,
-	ItemSeparator,
-	ItemTitle,
-} from "@voila.dev/ui/components/item";
+import { Button } from "@voila.dev/ui/button";
+import { Item } from "@voila.dev/ui/item";
 import { expect } from "storybook/test";
 
 const meta = {
 	title: "UI/Item",
-	component: Item,
+	component: Item.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof Item>;
+} satisfies Meta<typeof Item.Root>;
 
 export default meta;
 
@@ -31,75 +20,75 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<Item variant="outline" className="max-w-md">
-			<ItemMedia variant="icon">
+		<Item.Root variant="outline" className="max-w-md">
+			<Item.Media variant="icon">
 				<CalendarCheckIcon />
-			</ItemMedia>
-			<ItemContent>
-				<ItemTitle>Landing page redesign</ItemTitle>
-				<ItemDescription>
+			</Item.Media>
+			<Item.Content>
+				<Item.Title>Landing page redesign</Item.Title>
+				<Item.Description>
 					Designer needed for a marketing site refresh, kickoff June 14, about
 					two weeks of work.
-				</ItemDescription>
-			</ItemContent>
-			<ItemActions>
+				</Item.Description>
+			</Item.Content>
+			<Item.Actions>
 				<Button size="sm" variant="outline">
 					Apply
 				</Button>
-			</ItemActions>
-		</Item>
+			</Item.Actions>
+		</Item.Root>
 	),
 };
 
 export const Muted: Story = {
 	render: () => (
-		<Item variant="muted" className="max-w-md">
-			<ItemMedia variant="icon">
+		<Item.Root variant="muted" className="max-w-md">
+			<Item.Media variant="icon">
 				<UserCircleIcon />
-			</ItemMedia>
-			<ItemContent>
-				<ItemTitle>Camille Laurent</ItemTitle>
-				<ItemDescription>Copywriter — remote, EU time zones.</ItemDescription>
-			</ItemContent>
-			<ItemActions>
+			</Item.Media>
+			<Item.Content>
+				<Item.Title>Camille Laurent</Item.Title>
+				<Item.Description>Copywriter — remote, EU time zones.</Item.Description>
+			</Item.Content>
+			<Item.Actions>
 				<Button size="sm" variant="ghost">
 					View profile
 				</Button>
-			</ItemActions>
-		</Item>
+			</Item.Actions>
+		</Item.Root>
 	),
 };
 
 export const Group: Story = {
 	render: () => (
-		<ItemGroup className="max-w-md">
-			<Item>
-				<ItemContent>
-					<ItemTitle>Project published</ItemTitle>
-					<ItemDescription>
+		<Item.Group className="max-w-md">
+			<Item.Root>
+				<Item.Content>
+					<Item.Title>Project published</Item.Title>
+					<Item.Description>
 						Northwind Studio — website relaunch.
-					</ItemDescription>
-				</ItemContent>
-			</Item>
-			<ItemSeparator />
-			<Item>
-				<ItemContent>
-					<ItemTitle>Application received</ItemTitle>
-					<ItemDescription>
+					</Item.Description>
+				</Item.Content>
+			</Item.Root>
+			<Item.Separator />
+			<Item.Root>
+				<Item.Content>
+					<Item.Title>Application received</Item.Title>
+					<Item.Description>
 						Camille Laurent applied to your project.
-					</ItemDescription>
-				</ItemContent>
-			</Item>
-			<ItemSeparator />
-			<Item>
-				<ItemContent>
-					<ItemTitle>Booking confirmed</ItemTitle>
-					<ItemDescription>
+					</Item.Description>
+				</Item.Content>
+			</Item.Root>
+			<Item.Separator />
+			<Item.Root>
+				<Item.Content>
+					<Item.Title>Booking confirmed</Item.Title>
+					<Item.Description>
 						Your freelancer is booked for June 14.
-					</ItemDescription>
-				</ItemContent>
-			</Item>
-		</ItemGroup>
+					</Item.Description>
+				</Item.Content>
+			</Item.Root>
+		</Item.Group>
 	),
 	play: async ({ canvasElement }) => {
 		const separators = canvasElement.querySelectorAll(
@@ -116,22 +105,22 @@ export const Sizes: Story = {
 	render: () => (
 		<div className="grid max-w-md gap-4">
 			{(["default", "sm", "xs"] as const).map((size) => (
-				<Item key={size} size={size} variant="outline">
-					<ItemMedia variant="icon">
+				<Item.Root key={size} size={size} variant="outline">
+					<Item.Media variant="icon">
 						<CalendarCheckIcon />
-					</ItemMedia>
-					<ItemContent>
-						<ItemTitle>Landing page redesign ({size})</ItemTitle>
-						<ItemDescription>
+					</Item.Media>
+					<Item.Content>
+						<Item.Title>Landing page redesign ({size})</Item.Title>
+						<Item.Description>
 							Designer needed for a marketing site refresh.
-						</ItemDescription>
-					</ItemContent>
-					<ItemActions>
+						</Item.Description>
+					</Item.Content>
+					<Item.Actions>
 						<Button size="sm" variant="outline">
 							Apply
 						</Button>
-					</ItemActions>
-				</Item>
+					</Item.Actions>
+				</Item.Root>
 			))}
 		</div>
 	),
@@ -139,7 +128,7 @@ export const Sizes: Story = {
 
 export const AsLink: Story = {
 	render: () => (
-		<Item
+		<Item.Root
 			variant="outline"
 			className="max-w-md"
 			render={
@@ -147,62 +136,62 @@ export const AsLink: Story = {
 				<a href="#project-detail" />
 			}
 		>
-			<ItemMedia variant="icon">
+			<Item.Media variant="icon">
 				<CalendarCheckIcon />
-			</ItemMedia>
-			<ItemContent>
-				<ItemTitle>Landing page redesign</ItemTitle>
-				<ItemDescription>
+			</Item.Media>
+			<Item.Content>
+				<Item.Title>Landing page redesign</Item.Title>
+				<Item.Description>
 					Designer needed for a marketing site refresh.
-				</ItemDescription>
-			</ItemContent>
-			<ItemActions>
+				</Item.Description>
+			</Item.Content>
+			<Item.Actions>
 				<ArrowRightIcon />
-			</ItemActions>
-		</Item>
+			</Item.Actions>
+		</Item.Root>
 	),
 };
 
 export const WithImageMedia: Story = {
 	render: () => (
-		<Item variant="outline" className="max-w-md">
-			<ItemMedia variant="image">
+		<Item.Root variant="outline" className="max-w-md">
+			<Item.Media variant="image">
 				<img
 					src="https://api.dicebear.com/9.x/initials/svg?seed=Camille+Laurent"
 					alt="Camille Laurent"
 				/>
-			</ItemMedia>
-			<ItemContent>
-				<ItemTitle>Camille Laurent</ItemTitle>
-				<ItemDescription>Copywriter — remote, EU time zones.</ItemDescription>
-			</ItemContent>
-		</Item>
+			</Item.Media>
+			<Item.Content>
+				<Item.Title>Camille Laurent</Item.Title>
+				<Item.Description>Copywriter — remote, EU time zones.</Item.Description>
+			</Item.Content>
+		</Item.Root>
 	),
 };
 
 export const WithHeaderAndFooter: Story = {
 	render: () => (
-		<Item variant="outline" className="max-w-md">
-			<ItemHeader>
-				<ItemTitle>Landing page redesign</ItemTitle>
+		<Item.Root variant="outline" className="max-w-md">
+			<Item.Header>
+				<Item.Title>Landing page redesign</Item.Title>
 				<Button size="sm" variant="ghost">
 					Edit
 				</Button>
-			</ItemHeader>
-			<ItemContent>
-				<ItemDescription>
+			</Item.Header>
+			<Item.Content>
+				<Item.Description>
 					Designer needed for a marketing site refresh, kickoff June 14, about
 					two weeks of work.
-				</ItemDescription>
-			</ItemContent>
-			<ItemFooter>
+				</Item.Description>
+			</Item.Content>
+			<Item.Footer>
 				<span className="text-xs text-muted-foreground">
 					Published 2 days ago
 				</span>
 				<Button size="sm" variant="outline">
 					Apply
 				</Button>
-			</ItemFooter>
-		</Item>
+			</Item.Footer>
+		</Item.Root>
 	),
 };

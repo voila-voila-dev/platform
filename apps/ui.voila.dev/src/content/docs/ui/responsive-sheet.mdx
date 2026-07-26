@@ -13,15 +13,15 @@ import * as Example from "../../../examples/ui/overlays";
 </Preview>
 
 ```tsx
-<ResponsiveSheet>
-	<ResponsiveSheetTrigger render={<Button variant="outline" />}>Open</ResponsiveSheetTrigger>
-	<ResponsiveSheetContent size="xl">
-		<ResponsiveSheetHeader>
-			<ResponsiveSheetTitle>Email details</ResponsiveSheetTitle>
-		</ResponsiveSheetHeader>
-		<ResponsiveSheetBody>…</ResponsiveSheetBody>
-	</ResponsiveSheetContent>
-</ResponsiveSheet>
+<ResponsiveSheet.Root>
+	<ResponsiveSheet.Trigger render={<Button variant="outline" />}>Open</ResponsiveSheet.Trigger>
+	<ResponsiveSheet.Content size="xl">
+		<ResponsiveSheet.Header>
+			<ResponsiveSheet.Title>Email details</ResponsiveSheet.Title>
+		</ResponsiveSheet.Header>
+		<ResponsiveSheet.Body>…</ResponsiveSheet.Body>
+	</ResponsiveSheet.Content>
+</ResponsiveSheet.Root>
 ```
 
 Reach for this over [Sheet](/ui/sheet/) for detail panels, which are the ones

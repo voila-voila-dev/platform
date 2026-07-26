@@ -6,20 +6,20 @@ import {
 } from "#/landing/components/section-variants.ts";
 import { cn } from "#/lib/utils.ts";
 
-type SectionProps = useRender.ComponentProps<"section"> & SectionVariants;
+interface Props extends useRender.ComponentProps<"section">, SectionVariants {}
 
 /**
  * Full-width landing band — vertical rhythm + background treatment. Marketing
  * scale (`py-24`…): not interchangeable with the app-shell `Section` from
  * `@voila.dev/ui`. Renders a `section`; pass `render` to swap the tag.
  */
-function Section({
+export function Section({
 	className,
 	render,
 	spacing,
 	background,
 	...props
-}: SectionProps) {
+}: Props) {
 	return useRender({
 		defaultTagName: "section",
 		props: mergeProps<"section">(
@@ -41,4 +41,3 @@ export {
 	sectionSpacingOptions,
 	sectionVariants,
 } from "#/landing/components/section-variants.ts";
-export { Section, type SectionProps };

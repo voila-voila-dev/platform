@@ -1,15 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	NativeSelect,
-	NativeSelectOptGroup,
-	NativeSelectOption,
-} from "@voila.dev/ui/components/native-select";
+import { NativeSelect } from "@voila.dev/ui/native-select";
 
 const meta = {
 	title: "UI/NativeSelect",
-	component: NativeSelect,
+	component: NativeSelect.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof NativeSelect>;
+} satisfies Meta<typeof NativeSelect.Root>;
 
 export default meta;
 
@@ -17,57 +13,59 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<NativeSelect defaultValue="designer">
-			<NativeSelectOption value="designer">Designer</NativeSelectOption>
-			<NativeSelectOption value="developer">Developer</NativeSelectOption>
-			<NativeSelectOption value="copywriter">Copywriter</NativeSelectOption>
-		</NativeSelect>
+		<NativeSelect.Root defaultValue="designer">
+			<NativeSelect.Option value="designer">Designer</NativeSelect.Option>
+			<NativeSelect.Option value="developer">Developer</NativeSelect.Option>
+			<NativeSelect.Option value="copywriter">Copywriter</NativeSelect.Option>
+		</NativeSelect.Root>
 	),
 };
 
 export const Grouped: Story = {
 	render: () => (
-		<NativeSelect defaultValue="branding">
-			<NativeSelectOptGroup label="Design">
-				<NativeSelectOption value="branding">Branding</NativeSelectOption>
-				<NativeSelectOption value="product">Product design</NativeSelectOption>
-				<NativeSelectOption value="motion">Motion design</NativeSelectOption>
-			</NativeSelectOptGroup>
-			<NativeSelectOptGroup label="Engineering">
-				<NativeSelectOption value="frontend">Frontend</NativeSelectOption>
-				<NativeSelectOption value="backend">Backend</NativeSelectOption>
-			</NativeSelectOptGroup>
-		</NativeSelect>
+		<NativeSelect.Root defaultValue="branding">
+			<NativeSelect.OptGroup label="Design">
+				<NativeSelect.Option value="branding">Branding</NativeSelect.Option>
+				<NativeSelect.Option value="product">
+					Product design
+				</NativeSelect.Option>
+				<NativeSelect.Option value="motion">Motion design</NativeSelect.Option>
+			</NativeSelect.OptGroup>
+			<NativeSelect.OptGroup label="Engineering">
+				<NativeSelect.Option value="frontend">Frontend</NativeSelect.Option>
+				<NativeSelect.Option value="backend">Backend</NativeSelect.Option>
+			</NativeSelect.OptGroup>
+		</NativeSelect.Root>
 	),
 };
 
 export const SmallDisabled: Story = {
 	render: () => (
-		<NativeSelect size="sm" disabled defaultValue="designer">
-			<NativeSelectOption value="designer">Designer</NativeSelectOption>
-			<NativeSelectOption value="developer">Developer</NativeSelectOption>
-		</NativeSelect>
+		<NativeSelect.Root size="sm" disabled defaultValue="designer">
+			<NativeSelect.Option value="designer">Designer</NativeSelect.Option>
+			<NativeSelect.Option value="developer">Developer</NativeSelect.Option>
+		</NativeSelect.Root>
 	),
 };
 
 export const Invalid: Story = {
 	render: () => (
-		<NativeSelect aria-invalid defaultValue="designer">
-			<NativeSelectOption value="designer">Designer</NativeSelectOption>
-			<NativeSelectOption value="developer">Developer</NativeSelectOption>
-			<NativeSelectOption value="copywriter">Copywriter</NativeSelectOption>
-		</NativeSelect>
+		<NativeSelect.Root aria-invalid defaultValue="designer">
+			<NativeSelect.Option value="designer">Designer</NativeSelect.Option>
+			<NativeSelect.Option value="developer">Developer</NativeSelect.Option>
+			<NativeSelect.Option value="copywriter">Copywriter</NativeSelect.Option>
+		</NativeSelect.Root>
 	),
 };
 
 export const FullWidthForm: Story = {
 	render: () => (
 		<div className="w-80">
-			<NativeSelect defaultValue="designer">
-				<NativeSelectOption value="designer">Designer</NativeSelectOption>
-				<NativeSelectOption value="developer">Developer</NativeSelectOption>
-				<NativeSelectOption value="copywriter">Copywriter</NativeSelectOption>
-			</NativeSelect>
+			<NativeSelect.Root defaultValue="designer">
+				<NativeSelect.Option value="designer">Designer</NativeSelect.Option>
+				<NativeSelect.Option value="developer">Developer</NativeSelect.Option>
+				<NativeSelect.Option value="copywriter">Copywriter</NativeSelect.Option>
+			</NativeSelect.Root>
 		</div>
 	),
 };

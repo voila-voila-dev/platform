@@ -4,13 +4,13 @@ import {
 	StethoscopeIcon,
 } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Button } from "@voila.dev/ui/components/button";
-import { Eyebrow } from "@voila.dev/ui/landing/eyebrow";
+import { Button } from "@voila.dev/ui/button";
 import {
+	Eyebrow,
 	LandingHero,
 	landingHeroLayoutOptions,
-} from "@voila.dev/ui/landing/landing-hero";
-import { StatsRow } from "@voila.dev/ui/landing/stats-row";
+	StatsRow,
+} from "@voila.dev/ui/landing";
 import { Fragment } from "react";
 import { heroCopy, IllustrationPlaceholder } from "./landing-fixtures";
 

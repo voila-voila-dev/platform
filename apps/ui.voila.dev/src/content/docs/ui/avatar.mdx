@@ -13,14 +13,14 @@ import * as Example from "../../../examples/ui/display";
 </Preview>
 
 ```tsx
-<Avatar>
-	<AvatarImage src={user.avatarUrl} alt={user.name} />
-	<AvatarFallback>CD</AvatarFallback>
-</Avatar>
+<Avatar.Root>
+	<Avatar.Image src={user.avatarUrl} alt={user.name} />
+	<Avatar.Fallback>CD</Avatar.Fallback>
+</Avatar.Root>
 ```
 
 The fallback shows while the image loads and stays if it fails, so always give
-one. `AvatarGroup` overlaps a row of them and `AvatarGroupCount` closes it with
+one. `Avatar.Group` overlaps a row of them and `Avatar.GroupCount` closes it with
 an overflow count.
 
 For a name and a role next to the picture, [UserAvatar](/ui/user-avatar/) does

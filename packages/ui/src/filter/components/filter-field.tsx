@@ -2,10 +2,8 @@ import { BooleanFilterField } from "#/filter/components/fields/boolean-filter-fi
 import { DateRangeFilterField } from "#/filter/components/fields/date-range-filter-field.tsx";
 import { GeoRadiusFilterField } from "#/filter/components/fields/geo-radius-filter-field.tsx";
 import { MoneyRangeFilterField } from "#/filter/components/fields/money-range-filter-field.tsx";
-import {
-	NumberFilterField,
-	NumberRangeFilterField,
-} from "#/filter/components/fields/number-filter-field.tsx";
+import { NumberFilterField } from "#/filter/components/fields/number-filter-field.tsx";
+import { NumberRangeFilterField } from "#/filter/components/fields/number-range-filter-field.tsx";
 import { SelectFilterField } from "#/filter/components/fields/select-filter-field.tsx";
 import { TextFilterField } from "#/filter/components/fields/text-filter-field.tsx";
 import type {
@@ -13,6 +11,14 @@ import type {
 	FilterLabels,
 	FilterValue,
 } from "#/filter/types.ts";
+
+interface Props {
+	definition: FilterDefinition;
+	value: FilterValue | undefined;
+	onValueChange: (value: FilterValue | undefined) => void;
+	labels: FilterLabels;
+	locale: string;
+}
 
 /**
  * Renders the editor a definition asks for. The value union is discriminated by
@@ -25,13 +31,7 @@ export function FilterField({
 	onValueChange,
 	labels,
 	locale,
-}: {
-	readonly definition: FilterDefinition;
-	readonly value: FilterValue | undefined;
-	readonly onValueChange: (value: FilterValue | undefined) => void;
-	readonly labels: FilterLabels;
-	readonly locale: string;
-}) {
+}: Props) {
 	const valueOfKind = <Kind extends FilterValue["kind"]>(kind: Kind) =>
 		value?.kind === kind
 			? (value as Extract<FilterValue, { kind: Kind }>)

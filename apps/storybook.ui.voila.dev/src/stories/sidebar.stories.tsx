@@ -6,23 +6,8 @@ import {
 	UsersIcon,
 } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Separator } from "@voila.dev/ui/components/separator";
-import {
-	Sidebar,
-	SidebarContent,
-	SidebarFooter,
-	SidebarGroup,
-	SidebarGroupContent,
-	SidebarGroupLabel,
-	SidebarHeader,
-	SidebarInset,
-	SidebarMenu,
-	SidebarMenuBadge,
-	SidebarMenuButton,
-	SidebarMenuItem,
-	SidebarProvider,
-	SidebarTrigger,
-} from "@voila.dev/ui/components/sidebar";
+import { Separator } from "@voila.dev/ui/separator";
+import { Sidebar } from "@voila.dev/ui/sidebar";
 
 const navigationItems = [
 	{ title: "Dashboard", icon: HouseIcon, isActive: true },
@@ -37,50 +22,50 @@ function SidebarDemo({
 	collapsible?: "offcanvas" | "icon" | "none";
 }) {
 	return (
-		<SidebarProvider>
-			<Sidebar collapsible={collapsible}>
-				<SidebarHeader>
+		<Sidebar.Provider>
+			<Sidebar.Root collapsible={collapsible}>
+				<Sidebar.Header>
 					<div className="px-2 py-1.5 text-sm font-semibold group-data-[collapsible=icon]:hidden">
 						Northwind Studio
 					</div>
-				</SidebarHeader>
-				<SidebarContent>
-					<SidebarGroup>
-						<SidebarGroupLabel>Platform</SidebarGroupLabel>
-						<SidebarGroupContent>
-							<SidebarMenu>
+				</Sidebar.Header>
+				<Sidebar.Content>
+					<Sidebar.Group>
+						<Sidebar.GroupLabel>Platform</Sidebar.GroupLabel>
+						<Sidebar.GroupContent>
+							<Sidebar.Menu>
 								{navigationItems.map((item) => (
-									<SidebarMenuItem key={item.title}>
-										<SidebarMenuButton
+									<Sidebar.MenuItem key={item.title}>
+										<Sidebar.MenuButton
 											isActive={item.isActive}
 											tooltip={item.title}
 										>
 											<item.icon />
 											<span>{item.title}</span>
-										</SidebarMenuButton>
+										</Sidebar.MenuButton>
 										{item.badge ? (
-											<SidebarMenuBadge>{item.badge}</SidebarMenuBadge>
+											<Sidebar.MenuBadge>{item.badge}</Sidebar.MenuBadge>
 										) : null}
-									</SidebarMenuItem>
+									</Sidebar.MenuItem>
 								))}
-							</SidebarMenu>
-						</SidebarGroupContent>
-					</SidebarGroup>
-				</SidebarContent>
-				<SidebarFooter>
-					<SidebarMenu>
-						<SidebarMenuItem>
-							<SidebarMenuButton tooltip="Settings">
+							</Sidebar.Menu>
+						</Sidebar.GroupContent>
+					</Sidebar.Group>
+				</Sidebar.Content>
+				<Sidebar.Footer>
+					<Sidebar.Menu>
+						<Sidebar.MenuItem>
+							<Sidebar.MenuButton tooltip="Settings">
 								<GearIcon />
 								<span>Settings</span>
-							</SidebarMenuButton>
-						</SidebarMenuItem>
-					</SidebarMenu>
-				</SidebarFooter>
-			</Sidebar>
-			<SidebarInset>
+							</Sidebar.MenuButton>
+						</Sidebar.MenuItem>
+					</Sidebar.Menu>
+				</Sidebar.Footer>
+			</Sidebar.Root>
+			<Sidebar.Inset>
 				<header className="flex h-12 items-center gap-2 border-b px-4">
-					<SidebarTrigger />
+					<Sidebar.Trigger />
 					{/* Vertical separators self-stretch by default; a fixed height needs
 					    `my-auto` to re-center within the taller header row. */}
 					<Separator orientation="vertical" className="my-auto h-4" />
@@ -94,17 +79,17 @@ function SidebarDemo({
 					</div>
 					<div className="min-h-64 flex-1 rounded-lg bg-muted/50" />
 				</div>
-			</SidebarInset>
-		</SidebarProvider>
+			</Sidebar.Inset>
+		</Sidebar.Provider>
 	);
 }
 
 const meta = {
 	title: "UI/Sidebar",
-	component: Sidebar,
+	component: Sidebar.Root,
 	tags: ["autodocs"],
 	parameters: { layout: "fullscreen" },
-} satisfies Meta<typeof Sidebar>;
+} satisfies Meta<typeof Sidebar.Root>;
 
 export default meta;
 

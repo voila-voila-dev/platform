@@ -1,16 +1,12 @@
 import { CaretDownIcon } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Button } from "@voila.dev/ui/components/button";
-import {
-	Collapsible,
-	CollapsibleContent,
-	CollapsibleTrigger,
-} from "@voila.dev/ui/components/collapsible";
+import { Button } from "@voila.dev/ui/button";
+import { Collapsible } from "@voila.dev/ui/collapsible";
 import { useState } from "react";
 
 const meta = {
 	title: "UI/Collapsible",
-	component: Collapsible,
+	component: Collapsible.Root,
 	tags: ["autodocs"],
 	argTypes: {
 		defaultOpen: {
@@ -27,7 +23,7 @@ const meta = {
 		},
 		onOpenChange: { control: false },
 	},
-} satisfies Meta<typeof Collapsible>;
+} satisfies Meta<typeof Collapsible.Root>;
 
 export default meta;
 
@@ -41,56 +37,56 @@ function TriggerIcon() {
 
 export const Default: Story = {
 	render: (args) => (
-		<Collapsible {...args} className="flex w-80 flex-col gap-2">
+		<Collapsible.Root {...args} className="flex w-80 flex-col gap-2">
 			<div className="flex items-center justify-between gap-4 px-1">
 				<h4 className="text-sm font-medium">
 					3 freelancers applied to this project
 				</h4>
-				<CollapsibleTrigger
+				<Collapsible.Trigger
 					render={<Button variant="ghost" size="icon-sm" />}
 					className="group/collapsible-trigger"
 					aria-label="Toggle applications"
 				>
 					<TriggerIcon />
-				</CollapsibleTrigger>
+				</Collapsible.Trigger>
 			</div>
 			<div className="rounded-lg border px-3 py-2 text-sm">
 				Camille Dubois — Designer
 			</div>
-			<CollapsibleContent className="flex flex-col gap-2">
+			<Collapsible.Content className="flex flex-col gap-2">
 				<div className="rounded-lg border px-3 py-2 text-sm">
 					Lea Martin — Developer
 				</div>
 				<div className="rounded-lg border px-3 py-2 text-sm">
 					Hugo Bernard — Copywriter
 				</div>
-			</CollapsibleContent>
-		</Collapsible>
+			</Collapsible.Content>
+		</Collapsible.Root>
 	),
 };
 
 export const DefaultOpen: Story = {
 	render: () => (
-		<Collapsible defaultOpen className="flex w-80 flex-col gap-2">
+		<Collapsible.Root defaultOpen className="flex w-80 flex-col gap-2">
 			<div className="flex items-center justify-between gap-4 px-1">
 				<h4 className="text-sm font-medium">Upcoming projects</h4>
-				<CollapsibleTrigger
+				<Collapsible.Trigger
 					render={<Button variant="ghost" size="icon-sm" />}
 					className="group/collapsible-trigger"
 					aria-label="Toggle projects"
 				>
 					<TriggerIcon />
-				</CollapsibleTrigger>
+				</Collapsible.Trigger>
 			</div>
-			<CollapsibleContent className="flex flex-col gap-2">
+			<Collapsible.Content className="flex flex-col gap-2">
 				<div className="rounded-lg border px-3 py-2 text-sm">
 					Website redesign — June 20
 				</div>
 				<div className="rounded-lg border px-3 py-2 text-sm">
 					Brand refresh — June 27
 				</div>
-			</CollapsibleContent>
-		</Collapsible>
+			</Collapsible.Content>
+		</Collapsible.Root>
 	),
 };
 
@@ -101,27 +97,27 @@ function ControlledExample() {
 			<Button variant="outline" size="sm" onClick={() => setOpen(!open)}>
 				{open ? "Hide" : "Show"} project details from outside
 			</Button>
-			<Collapsible
+			<Collapsible.Root
 				open={open}
 				onOpenChange={setOpen}
 				className="flex flex-col gap-2"
 			>
 				<div className="flex items-center justify-between gap-4 px-1">
 					<h4 className="text-sm font-medium">Project details</h4>
-					<CollapsibleTrigger
+					<Collapsible.Trigger
 						render={<Button variant="ghost" size="icon-sm" />}
 						className="group/collapsible-trigger"
 						aria-label="Toggle project details"
 					>
 						<TriggerIcon />
-					</CollapsibleTrigger>
+					</Collapsible.Trigger>
 				</div>
-				<CollapsibleContent className="flex flex-col gap-2">
+				<Collapsible.Content className="flex flex-col gap-2">
 					<div className="rounded-lg border px-3 py-2 text-sm">
 						Northwind — Design engagement, June 20
 					</div>
-				</CollapsibleContent>
-			</Collapsible>
+				</Collapsible.Content>
+			</Collapsible.Root>
 		</div>
 	);
 }
@@ -132,47 +128,47 @@ export const Controlled: Story = {
 
 export const Disabled: Story = {
 	render: () => (
-		<Collapsible disabled className="flex w-80 flex-col gap-2">
+		<Collapsible.Root disabled className="flex w-80 flex-col gap-2">
 			<div className="flex items-center justify-between gap-4 px-1">
 				<h4 className="text-sm font-medium">Archived applications</h4>
-				<CollapsibleTrigger
+				<Collapsible.Trigger
 					render={<Button variant="ghost" size="icon-sm" />}
 					className="group/collapsible-trigger"
 					aria-label="Toggle archived applications"
 				>
 					<TriggerIcon />
-				</CollapsibleTrigger>
+				</Collapsible.Trigger>
 			</div>
-			<CollapsibleContent className="flex flex-col gap-2">
+			<Collapsible.Content className="flex flex-col gap-2">
 				<div className="rounded-lg border px-3 py-2 text-sm">
 					Locked while the project is under review.
 				</div>
-			</CollapsibleContent>
-		</Collapsible>
+			</Collapsible.Content>
+		</Collapsible.Root>
 	),
 };
 
 export const KeepMounted: Story = {
 	render: () => (
-		<Collapsible className="flex w-80 flex-col gap-2">
+		<Collapsible.Root className="flex w-80 flex-col gap-2">
 			<div className="flex items-center justify-between gap-4 px-1">
 				<h4 className="text-sm font-medium">
 					Project brief (kept in the DOM when closed)
 				</h4>
-				<CollapsibleTrigger
+				<Collapsible.Trigger
 					render={<Button variant="ghost" size="icon-sm" />}
 					className="group/collapsible-trigger"
 					aria-label="Toggle project brief"
 				>
 					<TriggerIcon />
-				</CollapsibleTrigger>
+				</Collapsible.Trigger>
 			</div>
-			<CollapsibleContent keepMounted className="flex flex-col gap-2">
+			<Collapsible.Content keepMounted className="flex flex-col gap-2">
 				<div className="rounded-lg border px-3 py-2 text-sm">
 					Content stays mounted while hidden — useful for SEO or measuring
 					layout before opening.
 				</div>
-			</CollapsibleContent>
-		</Collapsible>
+			</Collapsible.Content>
+		</Collapsible.Root>
 	),
 };

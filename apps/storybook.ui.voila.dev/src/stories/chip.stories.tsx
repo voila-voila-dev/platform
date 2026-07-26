@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Chip, ChipRemove } from "@voila.dev/ui/components/chip";
+import { Chip } from "@voila.dev/ui/chip";
 import { useState } from "react";
 
 const meta = {
 	title: "UI/Chip",
-	component: Chip,
+	component: Chip.Root,
 	tags: ["autodocs"],
 	argTypes: {
 		variant: {
@@ -27,7 +27,7 @@ const meta = {
 		variant: "secondary",
 		size: "default",
 	},
-} satisfies Meta<typeof Chip>;
+} satisfies Meta<typeof Chip.Root>;
 
 export default meta;
 
@@ -35,36 +35,36 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: (args) => (
-		<Chip {...args}>
+		<Chip.Root {...args}>
 			Product design
-			<ChipRemove aria-label="Remove Product design" />
-		</Chip>
+			<Chip.Remove aria-label="Remove Product design" />
+		</Chip.Root>
 	),
 };
 
 export const Static: Story = {
-	render: (args) => <Chip {...args}>Product design</Chip>,
+	render: (args) => <Chip.Root {...args}>Product design</Chip.Root>,
 };
 
 export const Colors: Story = {
 	render: () => (
 		<div className="flex max-w-md flex-wrap gap-2">
-			<Chip color="blue">
+			<Chip.Root color="blue">
 				Branding
-				<ChipRemove aria-label="Remove Branding" />
-			</Chip>
-			<Chip color="green">
+				<Chip.Remove aria-label="Remove Branding" />
+			</Chip.Root>
+			<Chip.Root color="green">
 				Research
-				<ChipRemove aria-label="Remove Research" />
-			</Chip>
-			<Chip color="amber">
+				<Chip.Remove aria-label="Remove Research" />
+			</Chip.Root>
+			<Chip.Root color="amber">
 				Prototyping
-				<ChipRemove aria-label="Remove Prototyping" />
-			</Chip>
-			<Chip color="violet">
+				<Chip.Remove aria-label="Remove Prototyping" />
+			</Chip.Root>
+			<Chip.Root color="violet">
 				Analytics
-				<ChipRemove aria-label="Remove Analytics" />
-			</Chip>
+				<Chip.Remove aria-label="Remove Analytics" />
+			</Chip.Root>
 		</div>
 	),
 };
@@ -72,20 +72,20 @@ export const Colors: Story = {
 export const Outline: Story = {
 	args: { variant: "outline" },
 	render: (args) => (
-		<Chip {...args}>
+		<Chip.Root {...args}>
 			Web design
-			<ChipRemove aria-label="Remove Web design" />
-		</Chip>
+			<Chip.Remove aria-label="Remove Web design" />
+		</Chip.Root>
 	),
 };
 
 export const Small: Story = {
 	args: { size: "sm" },
 	render: (args) => (
-		<Chip {...args}>
+		<Chip.Root {...args}>
 			SEO
-			<ChipRemove aria-label="Remove SEO" />
-		</Chip>
+			<Chip.Remove aria-label="Remove SEO" />
+		</Chip.Root>
 	),
 };
 
@@ -100,9 +100,9 @@ export const SkillsCatalog: Story = {
 		return (
 			<div className="flex max-w-md flex-wrap gap-2">
 				{skills.map((skill) => (
-					<Chip key={skill}>
+					<Chip.Root key={skill}>
 						{skill}
-						<ChipRemove
+						<Chip.Remove
 							aria-label={`Remove ${skill}`}
 							onClick={() =>
 								setSkills((current) =>
@@ -110,7 +110,7 @@ export const SkillsCatalog: Story = {
 								)
 							}
 						/>
-					</Chip>
+					</Chip.Root>
 				))}
 				{skills.length === 0 ? (
 					<span className="text-sm text-muted-foreground">

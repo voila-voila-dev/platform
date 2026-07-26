@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Button } from "@voila.dev/ui/components/button";
-import { StickyActionBar } from "@voila.dev/ui/components/sticky-action-bar";
+import { Button } from "@voila.dev/ui/button";
+import { StickyActionBar } from "@voila.dev/ui/sticky-action-bar";
 
 const meta = {
 	title: "UI/StickyActionBar",

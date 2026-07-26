@@ -1,16 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	Avatar,
-	AvatarBadge,
-	AvatarFallback,
-	AvatarGroup,
-	AvatarGroupCount,
-	AvatarImage,
-} from "@voila.dev/ui/components/avatar";
+import { Avatar } from "@voila.dev/ui/avatar";
 
 const meta = {
 	title: "UI/Avatar",
-	component: Avatar,
+	component: Avatar.Root,
 	tags: ["autodocs"],
 	argTypes: {
 		size: {
@@ -21,7 +14,7 @@ const meta = {
 	args: {
 		size: "default",
 	},
-} satisfies Meta<typeof Avatar>;
+} satisfies Meta<typeof Avatar.Root>;
 
 export default meta;
 
@@ -29,135 +22,149 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: (args) => (
-		<Avatar {...args}>
-			<AvatarImage src="https://github.com/shadcn.png" alt="Camille Dubois" />
-			<AvatarFallback>CD</AvatarFallback>
-		</Avatar>
+		<Avatar.Root {...args}>
+			<Avatar.Image src="https://github.com/shadcn.png" alt="Camille Dubois" />
+			<Avatar.Fallback>CD</Avatar.Fallback>
+		</Avatar.Root>
 	),
 };
 
 export const Sizes: Story = {
 	render: () => (
 		<div className="flex items-center gap-4">
-			<Avatar size="sm">
-				<AvatarFallback>CD</AvatarFallback>
-			</Avatar>
-			<Avatar size="default">
-				<AvatarFallback>CD</AvatarFallback>
-			</Avatar>
-			<Avatar size="lg">
-				<AvatarFallback>CD</AvatarFallback>
-			</Avatar>
+			<Avatar.Root size="sm">
+				<Avatar.Fallback>CD</Avatar.Fallback>
+			</Avatar.Root>
+			<Avatar.Root size="default">
+				<Avatar.Fallback>CD</Avatar.Fallback>
+			</Avatar.Root>
+			<Avatar.Root size="lg">
+				<Avatar.Fallback>CD</Avatar.Fallback>
+			</Avatar.Root>
 		</div>
 	),
 };
 
 export const Fallback: Story = {
 	render: (args) => (
-		<Avatar {...args}>
-			<AvatarFallback>CD</AvatarFallback>
-		</Avatar>
+		<Avatar.Root {...args}>
+			<Avatar.Fallback>CD</Avatar.Fallback>
+		</Avatar.Root>
 	),
 };
 
 export const BrokenImage: Story = {
 	render: (args) => (
-		<Avatar {...args}>
-			<AvatarImage
+		<Avatar.Root {...args}>
+			<Avatar.Image
 				src="https://acme.dev/this-image-does-not-exist.png"
 				alt="Camille Dubois"
 			/>
-			<AvatarFallback>CD</AvatarFallback>
-		</Avatar>
+			<Avatar.Fallback>CD</Avatar.Fallback>
+		</Avatar.Root>
 	),
 };
 
 export const WithBadge: Story = {
 	render: () => (
-		<Avatar size="lg">
-			<AvatarImage src="https://github.com/shadcn.png" alt="Camille Dubois" />
-			<AvatarFallback>CD</AvatarFallback>
-			<AvatarBadge status="online" />
-		</Avatar>
+		<Avatar.Root size="lg">
+			<Avatar.Image src="https://github.com/shadcn.png" alt="Camille Dubois" />
+			<Avatar.Fallback>CD</Avatar.Fallback>
+			<Avatar.Badge status="online" />
+		</Avatar.Root>
 	),
 };
 
 export const BadgeStatuses: Story = {
 	render: () => (
 		<div className="flex items-center gap-4">
-			<Avatar size="lg">
-				<AvatarImage src="https://github.com/shadcn.png" alt="Camille Dubois" />
-				<AvatarFallback>CD</AvatarFallback>
-				<AvatarBadge status="online" />
-			</Avatar>
-			<Avatar size="lg">
-				<AvatarImage src="https://github.com/leerob.png" alt="Nathan Guyot" />
-				<AvatarFallback>NG</AvatarFallback>
-				<AvatarBadge status="busy" />
-			</Avatar>
-			<Avatar size="lg">
-				<AvatarImage src="https://github.com/evilrabbit.png" alt="Lea Martin" />
-				<AvatarFallback>LM</AvatarFallback>
-				<AvatarBadge status="offline" />
-			</Avatar>
+			<Avatar.Root size="lg">
+				<Avatar.Image
+					src="https://github.com/shadcn.png"
+					alt="Camille Dubois"
+				/>
+				<Avatar.Fallback>CD</Avatar.Fallback>
+				<Avatar.Badge status="online" />
+			</Avatar.Root>
+			<Avatar.Root size="lg">
+				<Avatar.Image src="https://github.com/leerob.png" alt="Nathan Guyot" />
+				<Avatar.Fallback>NG</Avatar.Fallback>
+				<Avatar.Badge status="busy" />
+			</Avatar.Root>
+			<Avatar.Root size="lg">
+				<Avatar.Image
+					src="https://github.com/evilrabbit.png"
+					alt="Lea Martin"
+				/>
+				<Avatar.Fallback>LM</Avatar.Fallback>
+				<Avatar.Badge status="offline" />
+			</Avatar.Root>
 		</div>
 	),
 };
 
 export const Group: Story = {
 	render: () => (
-		<AvatarGroup>
-			<Avatar>
-				<AvatarImage src="https://github.com/shadcn.png" alt="Camille Dubois" />
-				<AvatarFallback>CD</AvatarFallback>
-			</Avatar>
-			<Avatar>
-				<AvatarImage src="https://github.com/leerob.png" alt="Nathan Guyot" />
-				<AvatarFallback>NG</AvatarFallback>
-			</Avatar>
-			<Avatar>
-				<AvatarImage src="https://github.com/evilrabbit.png" alt="Lea Martin" />
-				<AvatarFallback>LM</AvatarFallback>
-			</Avatar>
-			<AvatarGroupCount aria-label="2 more participants">+2</AvatarGroupCount>
-		</AvatarGroup>
+		<Avatar.Group>
+			<Avatar.Root>
+				<Avatar.Image
+					src="https://github.com/shadcn.png"
+					alt="Camille Dubois"
+				/>
+				<Avatar.Fallback>CD</Avatar.Fallback>
+			</Avatar.Root>
+			<Avatar.Root>
+				<Avatar.Image src="https://github.com/leerob.png" alt="Nathan Guyot" />
+				<Avatar.Fallback>NG</Avatar.Fallback>
+			</Avatar.Root>
+			<Avatar.Root>
+				<Avatar.Image
+					src="https://github.com/evilrabbit.png"
+					alt="Lea Martin"
+				/>
+				<Avatar.Fallback>LM</Avatar.Fallback>
+			</Avatar.Root>
+			<Avatar.GroupCount aria-label="2 more participants">+2</Avatar.GroupCount>
+		</Avatar.Group>
 	),
 };
 
 export const GroupSizes: Story = {
 	render: () => (
 		<div className="flex flex-col items-start gap-4">
-			<AvatarGroup>
-				<Avatar size="sm">
-					<AvatarFallback>CD</AvatarFallback>
-				</Avatar>
-				<Avatar size="sm">
-					<AvatarFallback>NG</AvatarFallback>
-				</Avatar>
-				<AvatarGroupCount size="sm" aria-label="2 more participants">
+			<Avatar.Group>
+				<Avatar.Root size="sm">
+					<Avatar.Fallback>CD</Avatar.Fallback>
+				</Avatar.Root>
+				<Avatar.Root size="sm">
+					<Avatar.Fallback>NG</Avatar.Fallback>
+				</Avatar.Root>
+				<Avatar.GroupCount size="sm" aria-label="2 more participants">
 					+2
-				</AvatarGroupCount>
-			</AvatarGroup>
-			<AvatarGroup>
-				<Avatar>
-					<AvatarFallback>CD</AvatarFallback>
-				</Avatar>
-				<Avatar>
-					<AvatarFallback>NG</AvatarFallback>
-				</Avatar>
-				<AvatarGroupCount aria-label="2 more participants">+2</AvatarGroupCount>
-			</AvatarGroup>
-			<AvatarGroup>
-				<Avatar size="lg">
-					<AvatarFallback>CD</AvatarFallback>
-				</Avatar>
-				<Avatar size="lg">
-					<AvatarFallback>NG</AvatarFallback>
-				</Avatar>
-				<AvatarGroupCount size="lg" aria-label="2 more participants">
+				</Avatar.GroupCount>
+			</Avatar.Group>
+			<Avatar.Group>
+				<Avatar.Root>
+					<Avatar.Fallback>CD</Avatar.Fallback>
+				</Avatar.Root>
+				<Avatar.Root>
+					<Avatar.Fallback>NG</Avatar.Fallback>
+				</Avatar.Root>
+				<Avatar.GroupCount aria-label="2 more participants">
 					+2
-				</AvatarGroupCount>
-			</AvatarGroup>
+				</Avatar.GroupCount>
+			</Avatar.Group>
+			<Avatar.Group>
+				<Avatar.Root size="lg">
+					<Avatar.Fallback>CD</Avatar.Fallback>
+				</Avatar.Root>
+				<Avatar.Root size="lg">
+					<Avatar.Fallback>NG</Avatar.Fallback>
+				</Avatar.Root>
+				<Avatar.GroupCount size="lg" aria-label="2 more participants">
+					+2
+				</Avatar.GroupCount>
+			</Avatar.Group>
 		</div>
 	),
 };

@@ -47,13 +47,12 @@ const ENTER_ANIMATION = `
   }
 }`;
 
-export function ChartStyle({
-	id,
-	config,
-}: {
+interface Props {
 	readonly id: string;
 	readonly config: ChartConfig;
-}) {
+}
+
+export function ChartStyle({ id, config }: Props) {
 	const scoped = Object.entries(THEME_SELECTORS)
 		.map(([theme, prefix]) => {
 			const declarations = colorDeclarations(

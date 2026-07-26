@@ -17,7 +17,7 @@ const LONG_PRESS_MOVE_TOLERANCE_PX = 10;
  * inside the scroll container in content coordinates (so it scrolls with the
  * table).
  */
-interface SpreadsheetDropLine {
+export interface SpreadsheetDropLine {
 	left: number;
 	top: number;
 	width: number;
@@ -129,7 +129,7 @@ function computeRowDropTarget(otherRows: HTMLElement[], clientY: number) {
  * `<th>` is measured lazily (on focus or drag start) so unresized columns
  * keep flowing with `table-layout: auto` until the first interaction.
  */
-function useSpreadsheetColumnResize({
+export function useSpreadsheetColumnResize({
 	width,
 	onWidthChange,
 }: {
@@ -219,7 +219,7 @@ function useSpreadsheetColumnResize({
  * Pointer drags starting on interactive content (sort button, resize handle)
  * are left alone, so a sortable column stays reorderable by keyboard only.
  */
-function useSpreadsheetColumnReorder({
+export function useSpreadsheetColumnReorder({
 	columnId,
 	columnOrder,
 	onColumnOrderChange,
@@ -395,7 +395,7 @@ function applyRowGhost(row: HTMLElement, offsetY: number) {
  * end in a single `onRowMove(from, to)` - the consumer applies the move to
  * its own array.
  */
-function useSpreadsheetRowDrag({
+export function useSpreadsheetRowDrag({
 	index,
 	onRowMove,
 	setDropLine,
@@ -608,10 +608,3 @@ function useSpreadsheetRowDrag({
 		},
 	};
 }
-
-export {
-	type SpreadsheetDropLine,
-	useSpreadsheetColumnReorder,
-	useSpreadsheetColumnResize,
-	useSpreadsheetRowDrag,
-};

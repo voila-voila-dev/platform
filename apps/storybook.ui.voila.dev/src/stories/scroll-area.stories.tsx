@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { ScrollArea } from "@voila.dev/ui/components/scroll-area";
+import { ScrollArea } from "@voila.dev/ui/scroll-area";
 
 const meta = {
 	title: "UI/ScrollArea",
-	component: ScrollArea,
+	component: ScrollArea.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof ScrollArea>;
+} satisfies Meta<typeof ScrollArea.Root>;
 
 export default meta;
 
@@ -18,7 +18,7 @@ const projects: ReadonlyArray<string> = Array.from(
 
 export const Default: Story = {
 	render: () => (
-		<ScrollArea className="h-56 w-72 rounded-lg border">
+		<ScrollArea.Root className="h-56 w-72 rounded-lg border">
 			<div className="p-3">
 				<p className="mb-2 text-sm font-medium">Upcoming projects</p>
 				{projects.map((project) => (
@@ -27,6 +27,6 @@ export const Default: Story = {
 					</div>
 				))}
 			</div>
-		</ScrollArea>
+		</ScrollArea.Root>
 	),
 };

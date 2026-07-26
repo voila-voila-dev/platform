@@ -13,15 +13,15 @@ import * as Example from "../../../examples/ui/forms";
 </Preview>
 
 ```tsx
-<InputOTP maxLength={6} pattern={REGEXP_ONLY_DIGITS}>
-	<InputOTPGroup>
-		<InputOTPSlot index={0} />
-		<InputOTPSlot index={1} />
-		<InputOTPSlot index={2} />
-	</InputOTPGroup>
-	<InputOTPSeparator />
-	<InputOTPGroup>…</InputOTPGroup>
-</InputOTP>
+<InputOTP.Root maxLength={6} pattern={REGEXP_ONLY_DIGITS}>
+	<InputOTP.Group>
+		<InputOTP.Slot index={0} />
+		<InputOTP.Slot index={1} />
+		<InputOTP.Slot index={2} />
+	</InputOTP.Group>
+	<InputOTP.Separator />
+	<InputOTP.Group>…</InputOTP.Group>
+</InputOTP.Root>
 ```
 
 Built on [input-otp](https://input-otp.rodz.dev/), so it is one real input

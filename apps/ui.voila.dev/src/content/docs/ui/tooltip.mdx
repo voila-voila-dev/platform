@@ -13,12 +13,12 @@ import * as Example from "../../../examples/ui/overlays";
 </Preview>
 
 ```tsx
-<Tooltip>
-	<TooltipTrigger render={<Button size="icon" aria-label="Save" />}>
+<Tooltip.Root>
+	<Tooltip.Trigger render={<Button size="icon" aria-label="Save" />}>
 		<FloppyDiskIcon />
-	</TooltipTrigger>
-	<TooltipContent>Save report</TooltipContent>
-</Tooltip>
+	</Tooltip.Trigger>
+	<Tooltip.Content>Save report</Tooltip.Content>
+</Tooltip.Root>
 ```
 
 A tooltip is a label, not a place to put content — it cannot hold anything

@@ -8,7 +8,7 @@ import { cn } from "#/lib/utils.ts";
  * with `horizontal` grid lines reads the way it looks.
  */
 
-export interface ChartGridProps extends React.ComponentProps<"g"> {
+interface Props extends React.ComponentProps<"g"> {
 	readonly horizontal?: boolean;
 	readonly vertical?: boolean;
 	readonly tickCount?: number;
@@ -16,14 +16,14 @@ export interface ChartGridProps extends React.ComponentProps<"g"> {
 	readonly strokeDasharray?: string;
 }
 
-function ChartGrid({
+export function ChartGrid({
 	className,
 	horizontal = true,
 	vertical = false,
 	tickCount = 5,
 	strokeDasharray = "3 3",
 	...props
-}: ChartGridProps) {
+}: Props) {
 	const { categoryScale, valueScale, orientation, innerWidth, innerHeight } =
 		useChartContext();
 	const isVertical = orientation === "vertical";
@@ -76,5 +76,3 @@ function ChartGrid({
 		</g>
 	);
 }
-
-export { ChartGrid };

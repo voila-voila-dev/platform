@@ -8,20 +8,25 @@ sidebar:
 import Preview from "@/components/docs/preview";
 import * as Example from "../../../examples/ui-tokens/tokens";
 
-The default palette is a default, not a brand. This walkthrough takes a whole
-app from stock indigo to your own identity by redefining custom properties in
-one stylesheet. No component is touched, no class is overridden, and the
-result is live at the bottom of this page.
+The default theme is black and white on purpose — a default, not a brand. This
+walkthrough takes a whole app from there to your own identity by redefining
+custom properties in one stylesheet. No component is touched, no class is
+overridden, and the result is live at the bottom of this page.
 
-All overrides go in the same place: your `globals.css`, *after* the token
-import.
+All overrides go in the same place: your `globals.css`, *after* the theme you
+start from.
 
 ```css title="globals.css"
 @import "tailwindcss";
+@import "@voila.dev/ui/styles/globals.css";
 @import "@voila.dev/ui/styles/themes/default.css";
 
 /* your overrides below */
 ```
+
+If one of the shipped themes is already close — `indigo`, `iris`, `sand`,
+`emerald`, `olive` — start from that one instead and you will have fewer
+properties to set.
 
 ## Step 1: the brand colour
 
@@ -132,10 +137,12 @@ white-label per tenant with a single inline style.
 
 ## Own it
 
-The whole package is one file,
-`@voila.dev/ui/src/styles/tokens/colors.css`. Read it to see every role and
-both themes in about 300 lines; copy it into your repo if you would rather
-edit values than override them. It is the same file either way.
+Two files tell the whole story:
+`@voila.dev/ui/src/styles/tokens/colors.css` for every role that exists, and
+`@voila.dev/ui/src/styles/themes/default.css` for its light and dark values.
+Copy the theme into your repo if you would rather edit values than override
+them — the sibling themes are exactly that, a copy that overrides a dozen
+properties.
 
 ## Related
 

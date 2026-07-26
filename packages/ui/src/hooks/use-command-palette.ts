@@ -1,7 +1,7 @@
 import * as React from "react";
 
 /**
- * Open/close state for a CommandDialog bound to a global hotkey
+ * Open/close state for a Command.Dialog bound to a global hotkey
  * (⌘+key on macOS, Ctrl+key elsewhere). Defaults to ⌘K / Ctrl+K.
  */
 export function useCommandPalette(key = "k") {

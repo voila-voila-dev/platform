@@ -2,9 +2,17 @@ import {
 	MagnifyingGlassIcon,
 	SlidersHorizontalIcon,
 } from "@phosphor-icons/react";
-import { Badge } from "#/components/badge.tsx";
+import type * as React from "react";
+import { Badge } from "#/badge/components/badge.tsx";
 import type { FilterLabels } from "#/filter/types.ts";
 import { cn } from "#/lib/utils.ts";
+
+interface Props extends React.ComponentProps<"button"> {
+	/** Current search text, or the placeholder when nothing is searched yet. */
+	summary?: string;
+	activeCount: number;
+	labels: FilterLabels;
+}
 
 /**
  * The one control a filtered list shows at rest: a search-field-shaped button.
@@ -18,12 +26,7 @@ export function FilterTrigger({
 	labels,
 	className,
 	...props
-}: React.ComponentProps<"button"> & {
-	/** Current search text, or the placeholder when nothing is searched yet. */
-	readonly summary?: string;
-	readonly activeCount: number;
-	readonly labels: FilterLabels;
-}) {
+}: Props) {
 	return (
 		<button
 			type="button"

@@ -1,17 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	Card,
-	CardContent,
-	CardFooter,
-	CardHeader,
-} from "@voila.dev/ui/components/card";
-import { Skeleton } from "@voila.dev/ui/components/skeleton";
-import {
-	Table,
-	TableBody,
-	TableCell,
-	TableRow,
-} from "@voila.dev/ui/components/table";
+import { Card } from "@voila.dev/ui/card";
+import { Skeleton } from "@voila.dev/ui/skeleton";
+import { Table } from "@voila.dev/ui/table";
 
 const meta = {
 	title: "UI/Skeleton",
@@ -44,41 +34,41 @@ export const ProjectCard: Story = {
 	render: () => (
 		<div role="status" className="w-72">
 			<span className="sr-only">Loading project...</span>
-			<Card aria-hidden>
-				<CardHeader>
+			<Card.Root aria-hidden>
+				<Card.Header>
 					<Skeleton className="h-5 w-44" />
-				</CardHeader>
-				<CardContent className="space-y-2">
+				</Card.Header>
+				<Card.Content className="space-y-2">
 					<Skeleton className="h-4 w-full" />
 					<Skeleton className="h-4 w-3/4" />
-				</CardContent>
-				<CardFooter className="gap-2">
+				</Card.Content>
+				<Card.Footer className="gap-2">
 					<Skeleton className="h-8 w-24" />
 					<Skeleton className="h-8 w-24" />
-				</CardFooter>
-			</Card>
+				</Card.Footer>
+			</Card.Root>
 		</div>
 	),
 };
 
 export const TableRows: Story = {
 	render: () => (
-		<Table className="w-96">
-			<TableBody>
+		<Table.Root className="w-96">
+			<Table.Body>
 				{[0, 1, 2].map((row) => (
-					<TableRow key={row}>
-						<TableCell>
+					<Table.Row key={row}>
+						<Table.Cell>
 							<Skeleton className="h-4 w-32" />
-						</TableCell>
-						<TableCell>
+						</Table.Cell>
+						<Table.Cell>
 							<Skeleton className="h-4 w-20" />
-						</TableCell>
-						<TableCell>
+						</Table.Cell>
+						<Table.Cell>
 							<Skeleton className="h-4 w-12" />
-						</TableCell>
-					</TableRow>
+						</Table.Cell>
+					</Table.Row>
 				))}
-			</TableBody>
-		</Table>
+			</Table.Body>
+		</Table.Root>
 	),
 };

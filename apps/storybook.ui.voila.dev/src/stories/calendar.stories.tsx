@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Calendar } from "@voila.dev/ui/components/calendar";
+import { Calendar } from "@voila.dev/ui/calendar";
 import { useState } from "react";
 
 const meta = {
 	title: "UI/Calendar",
-	component: Calendar,
+	component: Calendar.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof Calendar>;
+} satisfies Meta<typeof Calendar.Root>;
 
 export default meta;
 
@@ -18,7 +18,7 @@ function SingleSelectionCalendar() {
 	);
 
 	return (
-		<Calendar
+		<Calendar.Root
 			mode="single"
 			selected={selectedDate}
 			onSelect={setSelectedDate}
@@ -43,7 +43,7 @@ function RangeSelectionCalendar() {
 	});
 
 	return (
-		<Calendar
+		<Calendar.Root
 			mode="range"
 			selected={selectedRange}
 			onSelect={setSelectedRange}
@@ -67,7 +67,7 @@ function DropdownCaptionCalendar() {
 	// react-day-picker default of ±100 years (1926–2026), which is meaningless
 	// for project scheduling.
 	return (
-		<Calendar
+		<Calendar.Root
 			mode="single"
 			selected={selectedDate}
 			onSelect={setSelectedDate}
@@ -90,7 +90,7 @@ function FrenchLocaleCalendar() {
 	);
 
 	return (
-		<Calendar
+		<Calendar.Root
 			mode="single"
 			locale="fr-FR"
 			selected={selectedDate}
@@ -111,7 +111,7 @@ function DisabledDaysCalendar() {
 	);
 
 	return (
-		<Calendar
+		<Calendar.Root
 			mode="single"
 			selected={selectedDate}
 			onSelect={setSelectedDate}
@@ -133,7 +133,7 @@ function WeekNumbersCalendar() {
 	);
 
 	return (
-		<Calendar
+		<Calendar.Root
 			mode="single"
 			showWeekNumber
 			selected={selectedDate}

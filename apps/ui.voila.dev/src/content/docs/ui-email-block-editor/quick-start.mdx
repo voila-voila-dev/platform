@@ -47,11 +47,7 @@ makes persistence one `JSON.stringify` away, and undo, autosave or drafts a
 matter of what you do with the state.
 
 ```tsx
-import {
-	type EmailEditorDocument,
-	emptyEmailEditorDocument,
-} from "@voila.dev/ui/email-block-editor/document/types";
-import { EmailBlockEditor } from "@voila.dev/ui/email-block-editor";
+import { EmailBlockEditor, type EmailEditorDocument, emptyEmailEditorDocument } from "@voila.dev/ui/email-block-editor";
 import { useState } from "react";
 
 export function CampaignEditor() {

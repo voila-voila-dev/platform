@@ -4,16 +4,13 @@ import {
 	SquaresFourIcon,
 } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	SegmentedControl,
-	SegmentedControlItem,
-} from "@voila.dev/ui/components/segmented-control";
+import { SegmentedControl } from "@voila.dev/ui/segmented-control";
 
 const meta = {
 	title: "UI/SegmentedControl",
-	component: SegmentedControl,
+	component: SegmentedControl.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof SegmentedControl>;
+} satisfies Meta<typeof SegmentedControl.Root>;
 
 export default meta;
 
@@ -21,89 +18,89 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<SegmentedControl defaultValue="week">
-			<SegmentedControlItem value="day">Day</SegmentedControlItem>
-			<SegmentedControlItem value="week">Week</SegmentedControlItem>
-			<SegmentedControlItem value="month">Month</SegmentedControlItem>
-		</SegmentedControl>
+		<SegmentedControl.Root defaultValue="week">
+			<SegmentedControl.Item value="day">Day</SegmentedControl.Item>
+			<SegmentedControl.Item value="week">Week</SegmentedControl.Item>
+			<SegmentedControl.Item value="month">Month</SegmentedControl.Item>
+		</SegmentedControl.Root>
 	),
 };
 
 export const Sizes: Story = {
 	render: () => (
 		<div className="flex flex-col items-start gap-4">
-			<SegmentedControl defaultValue="week" size="sm">
-				<SegmentedControlItem value="day">Day</SegmentedControlItem>
-				<SegmentedControlItem value="week">Week</SegmentedControlItem>
-				<SegmentedControlItem value="month">Month</SegmentedControlItem>
-			</SegmentedControl>
-			<SegmentedControl defaultValue="week">
-				<SegmentedControlItem value="day">Day</SegmentedControlItem>
-				<SegmentedControlItem value="week">Week</SegmentedControlItem>
-				<SegmentedControlItem value="month">Month</SegmentedControlItem>
-			</SegmentedControl>
-			<SegmentedControl defaultValue="week" size="lg">
-				<SegmentedControlItem value="day">Day</SegmentedControlItem>
-				<SegmentedControlItem value="week">Week</SegmentedControlItem>
-				<SegmentedControlItem value="month">Month</SegmentedControlItem>
-			</SegmentedControl>
+			<SegmentedControl.Root defaultValue="week" size="sm">
+				<SegmentedControl.Item value="day">Day</SegmentedControl.Item>
+				<SegmentedControl.Item value="week">Week</SegmentedControl.Item>
+				<SegmentedControl.Item value="month">Month</SegmentedControl.Item>
+			</SegmentedControl.Root>
+			<SegmentedControl.Root defaultValue="week">
+				<SegmentedControl.Item value="day">Day</SegmentedControl.Item>
+				<SegmentedControl.Item value="week">Week</SegmentedControl.Item>
+				<SegmentedControl.Item value="month">Month</SegmentedControl.Item>
+			</SegmentedControl.Root>
+			<SegmentedControl.Root defaultValue="week" size="lg">
+				<SegmentedControl.Item value="day">Day</SegmentedControl.Item>
+				<SegmentedControl.Item value="week">Week</SegmentedControl.Item>
+				<SegmentedControl.Item value="month">Month</SegmentedControl.Item>
+			</SegmentedControl.Root>
 		</div>
 	),
 };
 
 export const WithIcons: Story = {
 	render: () => (
-		<SegmentedControl defaultValue="list">
-			<SegmentedControlItem value="list">
+		<SegmentedControl.Root defaultValue="list">
+			<SegmentedControl.Item value="list">
 				<ListIcon />
 				List
-			</SegmentedControlItem>
-			<SegmentedControlItem value="grid">
+			</SegmentedControl.Item>
+			<SegmentedControl.Item value="grid">
 				<SquaresFourIcon />
 				Grid
-			</SegmentedControlItem>
-			<SegmentedControlItem value="map">
+			</SegmentedControl.Item>
+			<SegmentedControl.Item value="map">
 				<MapTrifoldIcon />
 				Map
-			</SegmentedControlItem>
-		</SegmentedControl>
+			</SegmentedControl.Item>
+		</SegmentedControl.Root>
 	),
 };
 
 export const IconOnly: Story = {
 	render: () => (
-		<SegmentedControl defaultValue="list">
-			<SegmentedControlItem value="list" aria-label="List view">
+		<SegmentedControl.Root defaultValue="list">
+			<SegmentedControl.Item value="list" aria-label="List view">
 				<ListIcon />
-			</SegmentedControlItem>
-			<SegmentedControlItem value="grid" aria-label="Grid view">
+			</SegmentedControl.Item>
+			<SegmentedControl.Item value="grid" aria-label="Grid view">
 				<SquaresFourIcon />
-			</SegmentedControlItem>
-			<SegmentedControlItem value="map" aria-label="Map view">
+			</SegmentedControl.Item>
+			<SegmentedControl.Item value="map" aria-label="Map view">
 				<MapTrifoldIcon />
-			</SegmentedControlItem>
-		</SegmentedControl>
+			</SegmentedControl.Item>
+		</SegmentedControl.Root>
 	),
 };
 
 export const WithDisabledItem: Story = {
 	render: () => (
-		<SegmentedControl defaultValue="week">
-			<SegmentedControlItem value="day">Day</SegmentedControlItem>
-			<SegmentedControlItem value="week">Week</SegmentedControlItem>
-			<SegmentedControlItem value="month" disabled>
+		<SegmentedControl.Root defaultValue="week">
+			<SegmentedControl.Item value="day">Day</SegmentedControl.Item>
+			<SegmentedControl.Item value="week">Week</SegmentedControl.Item>
+			<SegmentedControl.Item value="month" disabled>
 				Month
-			</SegmentedControlItem>
-		</SegmentedControl>
+			</SegmentedControl.Item>
+		</SegmentedControl.Root>
 	),
 };
 
 export const FullWidth: Story = {
 	render: () => (
-		<SegmentedControl defaultValue="week" className="w-full *:flex-1">
-			<SegmentedControlItem value="day">Day</SegmentedControlItem>
-			<SegmentedControlItem value="week">Week</SegmentedControlItem>
-			<SegmentedControlItem value="month">Month</SegmentedControlItem>
-		</SegmentedControl>
+		<SegmentedControl.Root defaultValue="week" className="w-full *:flex-1">
+			<SegmentedControl.Item value="day">Day</SegmentedControl.Item>
+			<SegmentedControl.Item value="week">Week</SegmentedControl.Item>
+			<SegmentedControl.Item value="month">Month</SegmentedControl.Item>
+		</SegmentedControl.Root>
 	),
 };

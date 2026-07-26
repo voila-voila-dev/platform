@@ -13,19 +13,19 @@ import * as Example from "../../../examples/ui/forms";
 </Preview>
 
 ```tsx
-<FieldGroup>
-	<Field>
-		<FieldLabel htmlFor="workspace-name">Client name</FieldLabel>
+<Field.Group>
+	<Field.Root>
+		<Field.Label htmlFor="workspace-name">Client name</Field.Label>
 		<Input id="workspace-name" />
-		<FieldDescription>Shown to freelancers on every project.</FieldDescription>
-	</Field>
-	<Field data-invalid>
-		<FieldLabel htmlFor="contact-email">Contact email</FieldLabel>
+		<Field.Description>Shown to freelancers on every project.</Field.Description>
+	</Field.Root>
+	<Field.Root data-invalid>
+		<Field.Label htmlFor="contact-email">Contact email</Field.Label>
 		<Input id="contact-email" aria-invalid />
-		<FieldError>Enter a complete email address.</FieldError>
-	</Field>
-</FieldGroup>
+		<Field.Error>Enter a complete email address.</Field.Error>
+	</Field.Root>
+</Field.Group>
 ```
 
-`FieldSet` and `FieldLegend` wrap a group of related fields in the right
-semantics; `FieldSeparator` takes a label for an "Optional" divider.
+`Field.Set` and `Field.Legend` wrap a group of related fields in the right
+semantics; `Field.Separator` takes a label for an "Optional" divider.

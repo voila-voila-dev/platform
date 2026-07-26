@@ -4,22 +4,15 @@ import {
 	UsersIcon,
 } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Avatar, AvatarFallback } from "@voila.dev/ui/components/avatar";
-import { Button } from "@voila.dev/ui/components/button";
-import {
-	Empty,
-	EmptyContent,
-	EmptyDescription,
-	EmptyHeader,
-	EmptyMedia,
-	EmptyTitle,
-} from "@voila.dev/ui/components/empty";
+import { Avatar } from "@voila.dev/ui/avatar";
+import { Button } from "@voila.dev/ui/button";
+import { Empty } from "@voila.dev/ui/empty";
 
 const meta = {
 	title: "UI/Empty",
-	component: Empty,
+	component: Empty.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof Empty>;
+} satisfies Meta<typeof Empty.Root>;
 
 export default meta;
 
@@ -28,21 +21,21 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
 	render: () => (
 		<div className="w-96">
-			<Empty bordered>
-				<EmptyHeader>
-					<EmptyMedia variant="icon">
+			<Empty.Root bordered>
+				<Empty.Header>
+					<Empty.Media variant="icon">
 						<CalendarPlusIcon />
-					</EmptyMedia>
-					<EmptyTitle>No projects yet</EmptyTitle>
-					<EmptyDescription>
+					</Empty.Media>
+					<Empty.Title>No projects yet</Empty.Title>
+					<Empty.Description>
 						Create your first project to start receiving applications from
 						freelancers.
-					</EmptyDescription>
-				</EmptyHeader>
-				<EmptyContent>
+					</Empty.Description>
+				</Empty.Header>
+				<Empty.Content>
 					<Button>Create a project</Button>
-				</EmptyContent>
-			</Empty>
+				</Empty.Content>
+			</Empty.Root>
 		</div>
 	),
 };
@@ -50,24 +43,24 @@ export const Default: Story = {
 export const WithSecondaryAction: Story = {
 	render: () => (
 		<div className="w-96">
-			<Empty bordered>
-				<EmptyHeader>
-					<EmptyMedia variant="icon">
+			<Empty.Root bordered>
+				<Empty.Header>
+					<Empty.Media variant="icon">
 						<UsersIcon />
-					</EmptyMedia>
-					<EmptyTitle>No freelancers found</EmptyTitle>
-					<EmptyDescription>
+					</Empty.Media>
+					<Empty.Title>No freelancers found</Empty.Title>
+					<Empty.Description>
 						No freelancer matches your filters. Try widening the search area or
 						removing a skill filter.
-					</EmptyDescription>
-				</EmptyHeader>
-				<EmptyContent>
+					</Empty.Description>
+				</Empty.Header>
+				<Empty.Content>
 					<div className="flex gap-2">
 						<Button variant="outline">Clear filters</Button>
 						<Button>Invite a freelancer</Button>
 					</div>
-				</EmptyContent>
-			</Empty>
+				</Empty.Content>
+			</Empty.Root>
 		</div>
 	),
 };
@@ -75,19 +68,19 @@ export const WithSecondaryAction: Story = {
 export const WithDefaultMedia: Story = {
 	render: () => (
 		<div className="w-96">
-			<Empty bordered>
-				<EmptyHeader>
-					<EmptyMedia>
-						<Avatar>
-							<AvatarFallback>NG</AvatarFallback>
-						</Avatar>
-					</EmptyMedia>
-					<EmptyTitle>No conversation selected</EmptyTitle>
-					<EmptyDescription>
+			<Empty.Root bordered>
+				<Empty.Header>
+					<Empty.Media>
+						<Avatar.Root>
+							<Avatar.Fallback>NG</Avatar.Fallback>
+						</Avatar.Root>
+					</Empty.Media>
+					<Empty.Title>No conversation selected</Empty.Title>
+					<Empty.Description>
 						Pick a conversation from the list to see the messages.
-					</EmptyDescription>
-				</EmptyHeader>
-			</Empty>
+					</Empty.Description>
+				</Empty.Header>
+			</Empty.Root>
 		</div>
 	),
 };
@@ -95,18 +88,18 @@ export const WithDefaultMedia: Story = {
 export const WithLinkInDescription: Story = {
 	render: () => (
 		<div className="w-96">
-			<Empty bordered>
-				<EmptyHeader>
-					<EmptyMedia variant="icon">
+			<Empty.Root bordered>
+				<Empty.Header>
+					<Empty.Media variant="icon">
 						<ChatCircleIcon />
-					</EmptyMedia>
-					<EmptyTitle>No messages yet</EmptyTitle>
-					<EmptyDescription>
+					</Empty.Media>
+					<Empty.Title>No messages yet</Empty.Title>
+					<Empty.Description>
 						Start a conversation with a client, or{" "}
 						<a href="#help">read the messaging guide</a> to learn more.
-					</EmptyDescription>
-				</EmptyHeader>
-			</Empty>
+					</Empty.Description>
+				</Empty.Header>
+			</Empty.Root>
 		</div>
 	),
 };
@@ -115,14 +108,14 @@ export const MediaSizes: Story = {
 	render: () => (
 		<div className="flex w-96 flex-col gap-4">
 			{(["sm", "default", "lg"] as const).map((size) => (
-				<Empty bordered key={size}>
-					<EmptyHeader>
-						<EmptyMedia size={size} variant="icon">
+				<Empty.Root bordered key={size}>
+					<Empty.Header>
+						<Empty.Media size={size} variant="icon">
 							<CalendarPlusIcon />
-						</EmptyMedia>
-						<EmptyTitle>{size}</EmptyTitle>
-					</EmptyHeader>
-				</Empty>
+						</Empty.Media>
+						<Empty.Title>{size}</Empty.Title>
+					</Empty.Header>
+				</Empty.Root>
 			))}
 		</div>
 	),

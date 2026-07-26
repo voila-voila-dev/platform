@@ -13,30 +13,30 @@ import * as Example from "../../../examples/ui/display";
 </Preview>
 
 ```tsx
-<ChatMessageList>
-	<ChatDateSeparator>Hier</ChatDateSeparator>
-	<ChatMessageGroup align="start">
-		<ChatMessageSender avatar={<Avatar …/>} name="Camille Dubois" />
-		<ChatMessage variant="other">
+<Chat.MessageList>
+	<Chat.DateSeparator>Hier</Chat.DateSeparator>
+	<Chat.MessageGroup align="start">
+		<Chat.MessageSender avatar={<Avatar.Root …/>} name="Camille Dubois" />
+		<Chat.Message variant="other">
 			Bonjour, je serai sur place 30 minutes avant le match.
-			<ChatMessageTime dateTime="2026-06-11T18:42">18:42</ChatMessageTime>
-		</ChatMessage>
-	</ChatMessageGroup>
-</ChatMessageList>
+			<Chat.MessageTime dateTime="2026-06-11T18:42">18:42</Chat.MessageTime>
+		</Chat.Message>
+	</Chat.MessageGroup>
+</Chat.MessageList>
 
-<ChatComposer value={draft} onValueChange={setDraft} onSubmit={send} sendLabel="Envoyer" />
+<Chat.Composer value={draft} onValueChange={setDraft} onSubmit={send} sendLabel="Envoyer" />
 ```
 
 The list keeps itself pinned to the newest message while the user is at the
 bottom, and stops following as soon as they scroll up — so an arriving message
 never yanks the view away from what they are reading.
 
-Group consecutive messages from one author into a single `ChatMessageGroup`;
+Group consecutive messages from one author into a single `Chat.MessageGroup`;
 the sender block is rendered once per group, not once per message.
 
 <Preview layout="stack">
 	<Example.ChatConversations />
 </Preview>
 
-`ChatConversationItem` is the list-of-threads row, with `unreadCount` capped at
+`Chat.ConversationItem` is the list-of-threads row, with `unreadCount` capped at
 "99+".

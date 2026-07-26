@@ -13,14 +13,14 @@ import * as Example from "../../../examples/ui/overlays";
 </Preview>
 
 ```tsx
-<ContextMenu>
-	<ContextMenuTrigger className="…">Right-click here</ContextMenuTrigger>
-	<ContextMenuContent>
-		<ContextMenuItem>Edit project</ContextMenuItem>
-		<ContextMenuSeparator />
-		<ContextMenuItem variant="destructive">Cancel project</ContextMenuItem>
-	</ContextMenuContent>
-</ContextMenu>
+<ContextMenu.Root>
+	<ContextMenu.Trigger className="…">Right-click here</ContextMenu.Trigger>
+	<ContextMenu.Content>
+		<ContextMenu.Item>Edit project</ContextMenu.Item>
+		<ContextMenu.Separator />
+		<ContextMenu.Item variant="destructive">Cancel project</ContextMenu.Item>
+	</ContextMenu.Content>
+</ContextMenu.Root>
 ```
 
 There is no right-click on a touchscreen, so anything here needs a second route

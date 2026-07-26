@@ -1,12 +1,8 @@
 import manifest from "virtual:docs-manifest";
 import { CaretRightIcon } from "@phosphor-icons/react";
 import { Link } from "@tanstack/react-router";
-import {
-	Collapsible,
-	CollapsibleContent,
-	CollapsibleTrigger,
-} from "@voila.dev/ui/components/collapsible";
-import { cn } from "@voila.dev/ui/lib/utils";
+import { Collapsible } from "@voila.dev/ui/collapsible";
+import { cn } from "@voila.dev/ui/utils";
 import type { DocsManifestSection } from "@/lib/docs-manifest.types";
 
 function SectionGroup({
@@ -18,15 +14,15 @@ function SectionGroup({
 }) {
 	const isActive = section.items.some((item) => item.slug === activeSlug);
 	return (
-		<Collapsible defaultOpen={isActive || !section.collapsed}>
-			<CollapsibleTrigger className="group flex w-full items-center justify-between rounded-md px-2 py-1.5 text-left text-[0.8125rem] font-semibold text-foreground hover:bg-accent">
+		<Collapsible.Root defaultOpen={isActive || !section.collapsed}>
+			<Collapsible.Trigger className="group flex w-full items-center justify-between rounded-md px-2 py-1.5 text-left text-[0.8125rem] font-semibold text-foreground hover:bg-accent">
 				<span className="truncate font-mono">{section.label}</span>
 				<CaretRightIcon
 					className="size-3 shrink-0 text-muted-foreground transition-transform group-data-[panel-open]:rotate-90"
 					aria-hidden
 				/>
-			</CollapsibleTrigger>
-			<CollapsibleContent>
+			</Collapsible.Trigger>
+			<Collapsible.Content>
 				<ul className="mt-1 mb-3 space-y-px border-l border-border pl-2">
 					{section.items.map((item) => (
 						<li key={item.slug}>
@@ -44,8 +40,8 @@ function SectionGroup({
 						</li>
 					))}
 				</ul>
-			</CollapsibleContent>
-		</Collapsible>
+			</Collapsible.Content>
+		</Collapsible.Root>
 	);
 }
 

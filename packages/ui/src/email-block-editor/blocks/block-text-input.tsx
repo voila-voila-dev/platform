@@ -1,4 +1,14 @@
 import type { CSSProperties } from "react";
+import { cn } from "#/lib/utils.ts";
+
+interface Props {
+	value: string;
+	onChange: (value: string) => void;
+	ariaLabel: string;
+	placeholder?: string;
+	className?: string;
+	style?: CSSProperties;
+}
 
 /**
  * A single-line field that *wraps* instead of clipping. An `<input>` scrolls
@@ -17,14 +27,7 @@ export function BlockTextInput({
 	placeholder,
 	className,
 	style,
-}: {
-	value: string;
-	onChange: (value: string) => void;
-	ariaLabel: string;
-	placeholder?: string;
-	className?: string;
-	style?: CSSProperties;
-}) {
+}: Props) {
 	return (
 		<textarea
 			aria-label={ariaLabel}
@@ -37,7 +40,10 @@ export function BlockTextInput({
 					event.preventDefault();
 				}
 			}}
-			className={`w-full resize-none overflow-hidden border-none bg-transparent p-0 outline-none [field-sizing:content] placeholder:opacity-40 ${className ?? ""}`}
+			className={cn(
+				"w-full resize-none overflow-hidden border-none bg-transparent p-0 outline-none [field-sizing:content] placeholder:opacity-40",
+				className,
+			)}
 			style={style}
 		/>
 	);

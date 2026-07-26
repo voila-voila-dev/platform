@@ -4,7 +4,6 @@ import { readNumber } from "#/chart/core/chart-model.ts";
 import { configKeyFor, seriesColor } from "#/chart/core/config.ts";
 import { arcPath } from "#/chart/core/geometry.ts";
 import { polarFrame } from "#/chart/core/polar.ts";
-import { cn } from "#/lib/utils.ts";
 
 /**
  * Bars bent around the centre — one concentric track per row. Reads as a set of
@@ -12,7 +11,7 @@ import { cn } from "#/lib/utils.ts";
  * rate, a share of a target.
  */
 
-export interface ChartRadialBarProps extends React.ComponentProps<"g"> {
+interface Props extends React.ComponentProps<"g"> {
 	readonly dataKey?: string;
 	readonly nameKey?: string;
 	/** Value that fills a whole track. Defaults to the value axis maximum. */
@@ -28,7 +27,7 @@ export interface ChartRadialBarProps extends React.ComponentProps<"g"> {
 	readonly gap?: number;
 }
 
-function ChartRadialBar({
+export function ChartRadialBar({
 	className,
 	dataKey,
 	nameKey,
@@ -40,7 +39,7 @@ function ChartRadialBar({
 	inset = 8,
 	gap = 4,
 	...props
-}: ChartRadialBarProps) {
+}: Props) {
 	const {
 		data,
 		innerWidth,
@@ -66,7 +65,7 @@ function ChartRadialBar({
 	const span = endAngle - startAngle;
 
 	return (
-		<g data-slot="chart-radial-bar" className={cn(className)} {...props}>
+		<g data-slot="chart-radial-bar" className={className} {...props}>
 			{data.map((datum, index) => {
 				// Track zero is the outermost, so the first row of data reads first.
 				const trackOuter = radius - index * trackDepth;
@@ -117,5 +116,3 @@ function ChartRadialBar({
 		</g>
 	);
 }
-
-export { ChartRadialBar };

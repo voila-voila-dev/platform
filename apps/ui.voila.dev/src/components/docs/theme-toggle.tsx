@@ -1,5 +1,5 @@
 import { MoonIcon, SunIcon } from "@phosphor-icons/react";
-import { Button } from "@voila.dev/ui/components/button";
+import { Button } from "@voila.dev/ui/button";
 import { useEffect, useState } from "react";
 
 /**

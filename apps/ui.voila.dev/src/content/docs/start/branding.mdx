@@ -66,7 +66,7 @@ The single most-copied asset in any product. Make it a component so the sizes
 and the accessible name are decided once:
 
 ```tsx title="packages/branding/src/components/logo.tsx"
-import { cn } from "@voila.dev/ui/lib/utils";
+import { cn } from "@voila.dev/ui/utils";
 import logoUrl from "#/assets/logo.svg";
 
 const sizeClasses = {
@@ -137,7 +137,7 @@ it is branding. If it only makes sense inside one app, it is app code.
 Brand components compose `@voila.dev/ui`, they do not reimplement it:
 
 ```tsx title="packages/branding/src/components/brand-footer.tsx"
-import { Separator } from "@voila.dev/ui/components/separator";
+import { Separator } from "@voila.dev/ui/separator";
 import { Logo } from "#/components/logo.tsx";
 
 export function BrandFooter({ children }: { readonly children?: React.ReactNode }) {

@@ -13,10 +13,10 @@ import * as Example from "../../../examples/ui/forms";
 </Preview>
 
 ```tsx
-<Rating value={4.2} count={128} />
+<Rating.Root value={4.2} count={128} />
 
-<RatingInput value={value} onChange={setValue} />
+<Rating.Input value={value} onChange={setValue} />
 ```
 
-`Rating` displays and accepts fractions; `RatingInput` collects a whole number
-from the user. `ReviewItem` lays out a rating with its author and comment.
+`Rating` displays and accepts fractions; `Rating.Input` collects a whole number
+from the user. `Rating.ReviewItem` lays out a rating with its author and comment.

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { ImageUploadField } from "@voila.dev/ui/components/image-upload-field";
+import { ImageUploadField } from "@voila.dev/ui/image-upload-field";
 import { useState } from "react";
 
 const AVATAR_IMAGE = "https://github.com/shadcn.png";

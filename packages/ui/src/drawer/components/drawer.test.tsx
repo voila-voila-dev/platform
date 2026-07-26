@@ -1,0 +1,256 @@
+// @vitest-environment jsdom
+import { cleanup, fireEvent, render, waitFor } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { Button } from "#/button/components/button.tsx";
+import { Drawer } from "#/drawer/components/drawer.tsx";
+
+function Fixture({
+	direction,
+	...props
+}: React.ComponentProps<typeof Drawer.Content> & {
+	direction?: React.ComponentProps<typeof Drawer.Root>["direction"];
+}) {
+	return (
+		<Drawer.Root direction={direction}>
+			<Drawer.Trigger asChild>
+				<Button variant="outline">View project details</Button>
+			</Drawer.Trigger>
+			<Drawer.Content {...props}>
+				<Drawer.Header>
+					<Drawer.Title>Brand refresh — kickoff</Drawer.Title>
+					<Drawer.Description>
+						One designer requested for the website redesign.
+					</Drawer.Description>
+				</Drawer.Header>
+				<Drawer.Footer>
+					<Button>Apply to this project</Button>
+					<Drawer.Close asChild>
+						<Button variant="outline">Dismiss</Button>
+					</Drawer.Close>
+				</Drawer.Footer>
+			</Drawer.Content>
+		</Drawer.Root>
+	);
+}
+
+beforeEach(() => {
+	// vaul checks the reduced-motion media query; matchMedia is absent in jsdom.
+	vi.stubGlobal(
+		"matchMedia",
+		vi.fn().mockImplementation((query: string) => ({
+			matches: false,
+			media: query,
+			addEventListener: vi.fn(),
+			removeEventListener: vi.fn(),
+		})),
+	);
+});
+
+afterEach(async () => {
+	cleanup();
+	// Radix focus-scope dispatches a CustomEvent from a setTimeout scheduled on
+	// unmount; flush it before jsdom tears down or it fires in a dead realm.
+	await new Promise((resolve) => setTimeout(resolve, 0));
+	vi.unstubAllGlobals();
+});
+
+describe("Drawer", () => {
+	it("renders only the trigger while closed", () => {
+		const screen = render(<Fixture />);
+		expect(
+			screen.getByRole("button", { name: "View project details" }),
+		).toBeTruthy();
+		expect(screen.queryByRole("dialog")).toBeNull();
+	});
+
+	it("opens on trigger click with title and description", async () => {
+		const screen = render(<Fixture />);
+		fireEvent.click(
+			screen.getByRole("button", { name: "View project details" }),
+		);
+		await waitFor(() => {
+			expect(screen.getByRole("dialog")).toBeTruthy();
+			expect(screen.getByText("Brand refresh — kickoff")).toBeTruthy();
+			expect(
+				screen.getByText("One designer requested for the website redesign."),
+			).toBeTruthy();
+		});
+	});
+
+	it("defaults to the bottom direction on the content", async () => {
+		const screen = render(<Fixture />);
+		fireEvent.click(
+			screen.getByRole("button", { name: "View project details" }),
+		);
+		await waitFor(() => {
+			const content = screen.baseElement.querySelector(
+				"[data-slot=drawer-content]",
+			);
+			expect(content?.getAttribute("data-vaul-drawer-direction")).toBe(
+				"bottom",
+			);
+		});
+	});
+
+	it("reflects the direction prop on the content for side drawers", async () => {
+		const screen = render(<Fixture direction="right" />);
+		fireEvent.click(
+			screen.getByRole("button", { name: "View project details" }),
+		);
+		await waitFor(() => {
+			const content = screen.baseElement.querySelector(
+				"[data-slot=drawer-content]",
+			);
+			expect(content?.getAttribute("data-vaul-drawer-direction")).toBe("right");
+		});
+	});
+
+	it("renders the grab handle by default", async () => {
+		const screen = render(<Fixture />);
+		fireEvent.click(
+			screen.getByRole("button", { name: "View project details" }),
+		);
+		await waitFor(() => {
+			expect(
+				screen.baseElement.querySelector("[data-slot=drawer-handle]"),
+			).not.toBeNull();
+		});
+	});
+
+	it("hides the grab handle when showHandle is false", async () => {
+		const screen = render(<Fixture showHandle={false} />);
+		fireEvent.click(
+			screen.getByRole("button", { name: "View project details" }),
+		);
+		await waitFor(() => {
+			expect(screen.getByRole("dialog")).toBeTruthy();
+		});
+		expect(
+			screen.baseElement.querySelector("[data-slot=drawer-handle]"),
+		).toBeNull();
+	});
+
+	it("renders the built-in close button under its own slot, separate from Drawer.Close", async () => {
+		const screen = render(<Fixture />);
+		fireEvent.click(
+			screen.getByRole("button", { name: "View project details" }),
+		);
+		await waitFor(() => {
+			expect(screen.getByRole("dialog")).toBeTruthy();
+		});
+		// The auto X button and the public Drawer.Close must not share a slot, so
+		// styling `[data-slot=drawer-close]` never hits the X button.
+		expect(
+			screen.baseElement.querySelector("[data-slot=drawer-close-button]"),
+		).not.toBeNull();
+		const dismiss = screen.baseElement.querySelector(
+			"[data-slot=drawer-close]",
+		);
+		expect(dismiss?.textContent).toBe("Dismiss");
+	});
+
+	it("closes when the built-in close button is clicked", async () => {
+		const screen = render(<Fixture direction="right" />);
+		fireEvent.click(
+			screen.getByRole("button", { name: "View project details" }),
+		);
+		await waitFor(() => {
+			expect(screen.getByRole("dialog")).toBeTruthy();
+		});
+
+		fireEvent.click(screen.getByRole("button", { name: "Close" }));
+		// The drawer is closed once its content is gone, or still mounted with
+		// `data-state="closed"` while an exit transition jsdom never fires plays out.
+		await waitFor(() => {
+			const content = screen.baseElement.querySelector(
+				"[data-slot=drawer-content]",
+			);
+			expect(
+				content === null || content.getAttribute("data-state") === "closed",
+			).toBe(true);
+		});
+	});
+
+	it("closes when a Drawer.Close action is clicked", async () => {
+		const screen = render(<Fixture />);
+		fireEvent.click(
+			screen.getByRole("button", { name: "View project details" }),
+		);
+		await waitFor(() => {
+			expect(screen.getByRole("dialog")).toBeTruthy();
+		});
+
+		fireEvent.click(screen.getByRole("button", { name: "Dismiss" }));
+		// The drawer is closed once its content is gone, or still mounted with
+		// `data-state="closed"` while an exit transition jsdom never fires plays out.
+		await waitFor(() => {
+			const content = screen.baseElement.querySelector(
+				"[data-slot=drawer-content]",
+			);
+			expect(
+				content === null || content.getAttribute("data-state") === "closed",
+			).toBe(true);
+		});
+	});
+
+	it("overrides the built-in close button label for localization", async () => {
+		const screen = render(<Fixture closeButtonLabel="Close panel" />);
+		fireEvent.click(
+			screen.getByRole("button", { name: "View project details" }),
+		);
+		await waitFor(() => {
+			expect(screen.getByRole("button", { name: "Close panel" })).toBeTruthy();
+		});
+	});
+
+	it("hides the built-in close button when showCloseButton is false", async () => {
+		const screen = render(<Fixture showCloseButton={false} />);
+		fireEvent.click(
+			screen.getByRole("button", { name: "View project details" }),
+		);
+		await waitFor(() => {
+			expect(screen.getByRole("dialog")).toBeTruthy();
+		});
+		expect(
+			screen.baseElement.querySelector("[data-slot=drawer-close-button]"),
+		).toBeNull();
+	});
+
+	it("merges className onto the content", async () => {
+		const screen = render(<Fixture className="custom-drawer" />);
+		fireEvent.click(
+			screen.getByRole("button", { name: "View project details" }),
+		);
+		await waitFor(() => {
+			const content = screen.baseElement.querySelector(
+				"[data-slot=drawer-content]",
+			);
+			expect(content?.classList.contains("custom-drawer")).toBe(true);
+		});
+	});
+
+	it("forwards overlayClassName to the overlay", async () => {
+		const screen = render(<Fixture overlayClassName="custom-overlay" />);
+		fireEvent.click(
+			screen.getByRole("button", { name: "View project details" }),
+		);
+		await waitFor(() => {
+			const overlay = screen.baseElement.querySelector(
+				"[data-slot=drawer-overlay]",
+			);
+			expect(overlay?.classList.contains("custom-overlay")).toBe(true);
+		});
+	});
+});
+
+describe("Drawer.Handle", () => {
+	it("renders standalone for custom layouts and stays out of the a11y tree", () => {
+		const screen = render(<Drawer.Handle className="custom-handle" />);
+		const handle = screen.baseElement.querySelector(
+			"[data-slot=drawer-handle]",
+		);
+		expect(handle).not.toBeNull();
+		expect(handle?.getAttribute("aria-hidden")).toBe("true");
+		expect(handle?.classList.contains("custom-handle")).toBe(true);
+	});
+});

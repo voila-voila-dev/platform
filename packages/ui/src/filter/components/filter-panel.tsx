@@ -1,15 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button } from "#/components/button.tsx";
-import { Input } from "#/components/input.tsx";
-import {
-	ResponsiveDialog,
-	ResponsiveDialogBody,
-	ResponsiveDialogContent,
-	ResponsiveDialogDescription,
-	ResponsiveDialogFooter,
-	ResponsiveDialogHeader,
-	ResponsiveDialogTitle,
-} from "#/components/responsive-dialog.tsx";
+import { Button } from "#/button/components/button.tsx";
 import { FilterForm } from "#/filter/components/filter-form.tsx";
 import { countActiveFilters } from "#/filter/lib/filter-values.ts";
 import type {
@@ -17,6 +7,22 @@ import type {
 	FilterLabels,
 	FilterValues,
 } from "#/filter/types.ts";
+import { Input } from "#/input/components/input.tsx";
+import { ResponsiveDialog } from "#/responsive-dialog/components/responsive-dialog.tsx";
+
+interface Props {
+	open: boolean;
+	onOpenChange: (open: boolean) => void;
+	definitions: ReadonlyArray<FilterDefinition>;
+	values: FilterValues;
+	/** Called once, on apply, with the committed record. */
+	onValuesChange: (values: FilterValues) => void;
+	labels: FilterLabels;
+	locale: string;
+	/** Free-text search, kept beside the filters when the list has one. */
+	searchValue?: string;
+	onSearchChange?: (value: string) => void;
+}
 
 /**
  * The editor as an overlay: a centered dialog on desktop, a bottom drawer on
@@ -34,19 +40,7 @@ export function FilterPanel({
 	locale,
 	searchValue,
 	onSearchChange,
-}: {
-	readonly open: boolean;
-	readonly onOpenChange: (open: boolean) => void;
-	readonly definitions: ReadonlyArray<FilterDefinition>;
-	readonly values: FilterValues;
-	/** Called once, on apply, with the committed record. */
-	readonly onValuesChange: (values: FilterValues) => void;
-	readonly labels: FilterLabels;
-	readonly locale: string;
-	/** Free-text search, kept beside the filters when the list has one. */
-	readonly searchValue?: string;
-	readonly onSearchChange?: (value: string) => void;
-}) {
+}: Props) {
 	const [draft, setDraft] = useState<FilterValues>(values);
 	const [draftSearch, setDraftSearch] = useState(searchValue ?? "");
 
@@ -68,32 +62,32 @@ export function FilterPanel({
 	const draftCount = countActiveFilters(draft);
 
 	return (
-		<ResponsiveDialog open={open} onOpenChange={onOpenChange}>
+		<ResponsiveDialog.Root open={open} onOpenChange={onOpenChange}>
 			{/* No autofocus: the first field is the search box, and focusing it on
 			    open throws the phone keyboard over the filters you came to read. */}
 			{/* `overflow-hidden` on the shell leaves exactly one scroll container —
 			    the body below. The dialog half scrolls itself by default, which
 			    would stack a second scrollbar next to it. */}
-			<ResponsiveDialogContent
+			<ResponsiveDialog.Content
 				size="lg"
 				className="overflow-hidden"
 				closeButtonLabel={labels.close}
 				autoFocus={false}
 			>
-				<ResponsiveDialogHeader>
-					<ResponsiveDialogTitle>{labels.title}</ResponsiveDialogTitle>
+				<ResponsiveDialog.Header>
+					<ResponsiveDialog.Title>{labels.title}</ResponsiveDialog.Title>
 					{labels.description !== undefined && (
-						<ResponsiveDialogDescription>
+						<ResponsiveDialog.Description>
 							{labels.description}
-						</ResponsiveDialogDescription>
+						</ResponsiveDialog.Description>
 					)}
-				</ResponsiveDialogHeader>
+				</ResponsiveDialog.Header>
 
 				{/* The scroll container would clip the focus ring of a field sitting
 				    against its edge (the search box does). The inset gutter gives the
 				    ring its room back without narrowing the fields — the mobile half
 				    already has `px-4` for that. */}
-				<ResponsiveDialogBody className="no-scrollbar flex max-h-[60vh] min-w-0 flex-col gap-5 overflow-x-hidden overflow-y-auto py-1 md:-mx-1 md:px-1">
+				<ResponsiveDialog.Body className="no-scrollbar flex max-h-[60vh] min-w-0 flex-col gap-5 overflow-x-hidden overflow-y-auto py-1 md:-mx-1 md:px-1">
 					{onSearchChange !== undefined && (
 						<Input
 							type="search"
@@ -110,9 +104,9 @@ export function FilterPanel({
 						labels={labels}
 						locale={locale}
 					/>
-				</ResponsiveDialogBody>
+				</ResponsiveDialog.Body>
 
-				<ResponsiveDialogFooter>
+				<ResponsiveDialog.Footer>
 					<Button
 						type="button"
 						variant="ghost"
@@ -127,8 +121,8 @@ export function FilterPanel({
 					<Button type="button" onClick={apply}>
 						{labels.apply}
 					</Button>
-				</ResponsiveDialogFooter>
-			</ResponsiveDialogContent>
-		</ResponsiveDialog>
+				</ResponsiveDialog.Footer>
+			</ResponsiveDialog.Content>
+		</ResponsiveDialog.Root>
 	);
 }

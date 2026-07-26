@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Container } from "@voila.dev/ui/landing/container";
-import { Heading } from "@voila.dev/ui/landing/heading";
 import {
+	Container,
+	Heading,
 	Section,
 	sectionBackgroundOptions,
 	sectionSpacingOptions,
-} from "@voila.dev/ui/landing/section";
-import { Text } from "@voila.dev/ui/landing/text";
+	Text,
+} from "@voila.dev/ui/landing";
 
 const meta = {
 	title: "Landing/Section",

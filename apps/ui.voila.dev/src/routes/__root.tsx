@@ -6,14 +6,24 @@ import {
 	Scripts,
 } from "@tanstack/react-router";
 import type { ReactNode } from "react";
+import {
+	PALETTE_HREFS,
+	PALETTE_LINK_ID,
+	PALETTE_STORAGE_KEY,
+} from "@/lib/palettes";
 import appCss from "@/styles/docs.css?url";
 
 /**
- * Runs before first paint: applies the stored theme (dark by default) to the
- * `.dark` class the whole token system keys off, so there is no light-mode
- * flash on a hard reload.
+ * Runs before first paint: applies the stored light/dark choice to the `.dark`
+ * class the whole token system keys off, and the stored theme by injecting its
+ * stylesheet, so a hard reload flashes neither light mode nor the default
+ * palette. The hrefs are build-time constants, and the palette id is only ever
+ * used as an object key, so nothing here interpolates untrusted input. An id
+ * that no longer ships — a theme retired since the visitor last chose one —
+ * falls back to the default instead of leaving the menu on a dead entry.
  */
-const themeScript = `(()=>{try{var t=localStorage.getItem("theme");document.documentElement.classList.toggle("dark",t!=="light")}catch(e){document.documentElement.classList.add("dark")}})()`;
+const themeScript = `(()=>{try{var t=localStorage.getItem("theme");document.documentElement.classList.toggle("dark",t!=="light")}catch(e){document.documentElement.classList.add("dark")}
+try{var h=${JSON.stringify(PALETTE_HREFS)},p=localStorage.getItem(${JSON.stringify(PALETTE_STORAGE_KEY)});if(p&&(p==="default"||h[p])){document.documentElement.dataset.palette=p;if(h[p]){var l=document.createElement("link");l.id=${JSON.stringify(PALETTE_LINK_ID)};l.rel="stylesheet";l.href=h[p];document.head.appendChild(l)}}}catch(e){}})()`;
 
 export const Route = createRootRoute({
 	head: () => ({
@@ -82,9 +92,11 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
 		// hydrates, so the class attribute intentionally differs from the SSR HTML.
 		<html lang="en" className="dark" suppressHydrationWarning>
 			<head>
-				{/* Static inline script, no user input. */}
-				<script dangerouslySetInnerHTML={{ __html: themeScript }} />
 				<HeadContent />
+				{/* Static inline script, no user input. It runs after HeadContent so the
+				 * palette stylesheet it may inject lands after docs.css — same
+				 * specificity, so the later sheet is the one that wins. */}
+				<script dangerouslySetInnerHTML={{ __html: themeScript }} />
 			</head>
 			<body>
 				{children}

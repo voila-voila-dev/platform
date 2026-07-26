@@ -2,15 +2,13 @@ import { mergeProps } from "@base-ui/react/merge-props";
 import { useRender } from "@base-ui/react/use-render";
 import { cn } from "#/lib/utils.ts";
 
+interface Props extends useRender.ComponentProps<"article"> {}
+
 /**
  * Long-form prose wrapper (blog articles, legal pages). Requires
  * `@plugin "@tailwindcss/typography"` in the consuming app's stylesheet.
  */
-function ProseArticle({
-	className,
-	render,
-	...props
-}: useRender.ComponentProps<"article">) {
+export function ProseArticle({ className, render, ...props }: Props) {
 	return useRender({
 		defaultTagName: "article",
 		props: mergeProps<"article">(
@@ -33,5 +31,3 @@ function ProseArticle({
 		},
 	});
 }
-
-export { ProseArticle };

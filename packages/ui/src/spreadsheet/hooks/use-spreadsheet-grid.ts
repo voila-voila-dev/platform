@@ -41,7 +41,7 @@ interface SpreadsheetGridRect {
 	right: number;
 }
 
-interface SpreadsheetPasteData {
+export interface SpreadsheetPasteData {
 	/** 0-based grid position of the paste target's top-left cell. */
 	startRow: number;
 	startColumn: number;
@@ -394,7 +394,7 @@ function stampGridAttributes(
 	}
 }
 
-interface SpreadsheetGridTableProps {
+interface GridTableOptions {
 	role?: "grid";
 	"aria-multiselectable"?: boolean;
 	onFocus?: React.FocusEventHandler<HTMLTableElement>;
@@ -404,7 +404,7 @@ interface SpreadsheetGridTableProps {
 	onPointerMove?: React.PointerEventHandler<HTMLTableElement>;
 }
 
-function useSpreadsheetGrid({
+export function useSpreadsheetGrid({
 	enabled,
 	onPasteData,
 	virtualRowCount,
@@ -415,7 +415,7 @@ function useSpreadsheetGrid({
 	virtualRowCount: number | null;
 }): {
 	tableRef: React.RefObject<HTMLTableElement | null>;
-	tableProps: SpreadsheetGridTableProps;
+	tableProps: GridTableOptions;
 } {
 	const tableRef = React.useRef<HTMLTableElement | null>(null);
 	const [activePosition, setActivePosition] =
@@ -739,5 +739,3 @@ function useSpreadsheetGrid({
 		},
 	};
 }
-
-export { type SpreadsheetPasteData, useSpreadsheetGrid };

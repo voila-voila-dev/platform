@@ -13,16 +13,16 @@ import * as Example from "../../../examples/ui-datatable/tables";
 </Preview>
 
 ```tsx
-<DataTable
+<DataTable.Root
 	columns={columns}
 	data={projects}
 	toolbar={(table) => (
-		<DataTableToolbar>
-			<DataTableActions>
-				<DataTableViewOptions table={table} />
-				<DataTableExport table={table} filename="projects.csv" />
-			</DataTableActions>
-		</DataTableToolbar>
+		<DataTable.Toolbar>
+			<DataTable.Actions>
+				<DataTable.ViewOptions table={table} />
+				<DataTable.Export table={table} filename="projects.csv" />
+			</DataTable.Actions>
+		</DataTable.Toolbar>
 	)}
 />;
 ```

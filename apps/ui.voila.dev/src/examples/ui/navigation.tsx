@@ -6,213 +6,161 @@ import {
 	ReceiptIcon,
 	UsersIcon,
 } from "@phosphor-icons/react";
-import {
-	Accordion,
-	AccordionContent,
-	AccordionItem,
-	AccordionTrigger,
-} from "@voila.dev/ui/components/accordion";
-import {
-	Breadcrumb,
-	BreadcrumbEllipsis,
-	BreadcrumbItem,
-	BreadcrumbLink,
-	BreadcrumbList,
-	BreadcrumbPage,
-	BreadcrumbSeparator,
-} from "@voila.dev/ui/components/breadcrumb";
-import { Button } from "@voila.dev/ui/components/button";
-import {
-	Collapsible,
-	CollapsibleContent,
-	CollapsibleTrigger,
-} from "@voila.dev/ui/components/collapsible";
-import {
-	NavigationMenu,
-	NavigationMenuContent,
-	NavigationMenuItem,
-	NavigationMenuLink,
-	NavigationMenuList,
-	NavigationMenuTrigger,
-} from "@voila.dev/ui/components/navigation-menu";
-import {
-	Pagination,
-	PaginationContent,
-	PaginationEllipsis,
-	PaginationItem,
-	PaginationLink,
-	PaginationNext,
-	PaginationPrevious,
-} from "@voila.dev/ui/components/pagination";
-import { Separator } from "@voila.dev/ui/components/separator";
-import {
-	Sidebar,
-	SidebarContent,
-	SidebarFooter,
-	SidebarGroup,
-	SidebarGroupContent,
-	SidebarGroupLabel,
-	SidebarHeader,
-	SidebarInset,
-	SidebarMenu,
-	SidebarMenuBadge,
-	SidebarMenuButton,
-	SidebarMenuItem,
-	SidebarProvider,
-	SidebarTrigger,
-} from "@voila.dev/ui/components/sidebar";
-import { StickyActionBar } from "@voila.dev/ui/components/sticky-action-bar";
-import {
-	Tabs,
-	TabsContent,
-	TabsList,
-	TabsTrigger,
-} from "@voila.dev/ui/components/tabs";
+import { Accordion } from "@voila.dev/ui/accordion";
+import { Breadcrumb } from "@voila.dev/ui/breadcrumb";
+import { Button } from "@voila.dev/ui/button";
+import { Collapsible } from "@voila.dev/ui/collapsible";
+import { NavigationMenu } from "@voila.dev/ui/navigation-menu";
+import { Pagination } from "@voila.dev/ui/pagination";
+import { Separator } from "@voila.dev/ui/separator";
+import { Sidebar } from "@voila.dev/ui/sidebar";
+import { StickyActionBar } from "@voila.dev/ui/sticky-action-bar";
+import { Tabs } from "@voila.dev/ui/tabs";
 
 export function BreadcrumbExample() {
 	return (
-		<Breadcrumb>
-			<BreadcrumbList>
-				<BreadcrumbItem>
-					<BreadcrumbLink href="#">Dashboard</BreadcrumbLink>
-				</BreadcrumbItem>
-				<BreadcrumbSeparator />
-				<BreadcrumbItem>
-					<BreadcrumbEllipsis />
-				</BreadcrumbItem>
-				<BreadcrumbSeparator />
-				<BreadcrumbItem>
-					<BreadcrumbLink href="#">Projects</BreadcrumbLink>
-				</BreadcrumbItem>
-				<BreadcrumbSeparator />
-				<BreadcrumbItem>
-					<BreadcrumbPage>Landing page redesign</BreadcrumbPage>
-				</BreadcrumbItem>
-			</BreadcrumbList>
-		</Breadcrumb>
+		<Breadcrumb.Root>
+			<Breadcrumb.List>
+				<Breadcrumb.Item>
+					<Breadcrumb.Link href="#">Dashboard</Breadcrumb.Link>
+				</Breadcrumb.Item>
+				<Breadcrumb.Separator />
+				<Breadcrumb.Item>
+					<Breadcrumb.Ellipsis />
+				</Breadcrumb.Item>
+				<Breadcrumb.Separator />
+				<Breadcrumb.Item>
+					<Breadcrumb.Link href="#">Projects</Breadcrumb.Link>
+				</Breadcrumb.Item>
+				<Breadcrumb.Separator />
+				<Breadcrumb.Item>
+					<Breadcrumb.Page>Landing page redesign</Breadcrumb.Page>
+				</Breadcrumb.Item>
+			</Breadcrumb.List>
+		</Breadcrumb.Root>
 	);
 }
 
 export function NavigationMenuExample() {
 	return (
-		<NavigationMenu>
-			<NavigationMenuList>
-				<NavigationMenuItem>
-					<NavigationMenuTrigger>Projects</NavigationMenuTrigger>
-					<NavigationMenuContent>
+		<NavigationMenu.Root>
+			<NavigationMenu.List>
+				<NavigationMenu.Item>
+					<NavigationMenu.Trigger>Projects</NavigationMenu.Trigger>
+					<NavigationMenu.Content>
 						<ul className="grid w-64 gap-1">
 							<li>
-								<NavigationMenuLink href="#">
+								<NavigationMenu.Link href="#">
 									<div className="flex flex-col gap-0.5">
 										<span className="font-medium">Open projects</span>
 										<span className="text-muted-foreground text-xs">
 											Projects waiting for a freelancer.
 										</span>
 									</div>
-								</NavigationMenuLink>
+								</NavigationMenu.Link>
 							</li>
 							<li>
-								<NavigationMenuLink href="#">
+								<NavigationMenu.Link href="#">
 									<div className="flex flex-col gap-0.5">
 										<span className="font-medium">My engagements</span>
 										<span className="text-muted-foreground text-xs">
 											Confirmed projects and schedules.
 										</span>
 									</div>
-								</NavigationMenuLink>
+								</NavigationMenu.Link>
 							</li>
 						</ul>
-					</NavigationMenuContent>
-				</NavigationMenuItem>
-				<NavigationMenuItem>
-					<NavigationMenuTrigger>Freelancers</NavigationMenuTrigger>
-					<NavigationMenuContent>
+					</NavigationMenu.Content>
+				</NavigationMenu.Item>
+				<NavigationMenu.Item>
+					<NavigationMenu.Trigger>Freelancers</NavigationMenu.Trigger>
+					<NavigationMenu.Content>
 						<ul className="grid w-56 gap-1">
 							<li>
-								<NavigationMenuLink href="#">Directory</NavigationMenuLink>
+								<NavigationMenu.Link href="#">Directory</NavigationMenu.Link>
 							</li>
 							<li>
-								<NavigationMenuLink href="#">Invitations</NavigationMenuLink>
+								<NavigationMenu.Link href="#">Invitations</NavigationMenu.Link>
 							</li>
 						</ul>
-					</NavigationMenuContent>
-				</NavigationMenuItem>
-			</NavigationMenuList>
-		</NavigationMenu>
+					</NavigationMenu.Content>
+				</NavigationMenu.Item>
+			</NavigationMenu.List>
+		</NavigationMenu.Root>
 	);
 }
 
 export function TabsExample() {
 	return (
-		<Tabs defaultValue="projects" className="w-full max-w-96">
-			<TabsList>
-				<TabsTrigger value="projects">Projects</TabsTrigger>
-				<TabsTrigger value="freelancers">Freelancers</TabsTrigger>
-				<TabsTrigger value="billing">Billing</TabsTrigger>
-			</TabsList>
-			<TabsContent value="projects">
+		<Tabs.Root defaultValue="projects" className="w-full max-w-96">
+			<Tabs.List>
+				<Tabs.Trigger value="projects">Projects</Tabs.Trigger>
+				<Tabs.Trigger value="freelancers">Freelancers</Tabs.Trigger>
+				<Tabs.Trigger value="billing">Billing</Tabs.Trigger>
+			</Tabs.List>
+			<Tabs.Content value="projects">
 				Review upcoming projects and their staffing status.
-			</TabsContent>
-			<TabsContent value="freelancers">
+			</Tabs.Content>
+			<Tabs.Content value="freelancers">
 				Browse independent freelancers available for hire.
-			</TabsContent>
-			<TabsContent value="billing">
+			</Tabs.Content>
+			<Tabs.Content value="billing">
 				Track invoices and payouts for completed projects.
-			</TabsContent>
-		</Tabs>
+			</Tabs.Content>
+		</Tabs.Root>
 	);
 }
 
 export function TabsLine() {
 	return (
-		<Tabs defaultValue="projects" className="w-full max-w-96">
-			<TabsList variant="line">
-				<TabsTrigger value="projects">Projects</TabsTrigger>
-				<TabsTrigger value="freelancers">Freelancers</TabsTrigger>
-				<TabsTrigger value="billing">Billing</TabsTrigger>
-			</TabsList>
-			<TabsContent value="projects">
+		<Tabs.Root defaultValue="projects" className="w-full max-w-96">
+			<Tabs.List variant="line">
+				<Tabs.Trigger value="projects">Projects</Tabs.Trigger>
+				<Tabs.Trigger value="freelancers">Freelancers</Tabs.Trigger>
+				<Tabs.Trigger value="billing">Billing</Tabs.Trigger>
+			</Tabs.List>
+			<Tabs.Content value="projects">
 				Review upcoming projects and their staffing status.
-			</TabsContent>
-			<TabsContent value="freelancers">
+			</Tabs.Content>
+			<Tabs.Content value="freelancers">
 				Browse independent freelancers available for hire.
-			</TabsContent>
-			<TabsContent value="billing">
+			</Tabs.Content>
+			<Tabs.Content value="billing">
 				Track invoices and payouts for completed projects.
-			</TabsContent>
-		</Tabs>
+			</Tabs.Content>
+		</Tabs.Root>
 	);
 }
 
 export function PaginationExample() {
 	return (
-		<Pagination>
-			<PaginationContent>
-				<PaginationItem>
-					<PaginationPrevious href="#" />
-				</PaginationItem>
-				<PaginationItem>
-					<PaginationLink href="#">1</PaginationLink>
-				</PaginationItem>
-				<PaginationItem>
-					<PaginationLink href="#" isActive>
+		<Pagination.Root>
+			<Pagination.Content>
+				<Pagination.Item>
+					<Pagination.Previous href="#" />
+				</Pagination.Item>
+				<Pagination.Item>
+					<Pagination.Link href="#">1</Pagination.Link>
+				</Pagination.Item>
+				<Pagination.Item>
+					<Pagination.Link href="#" isActive>
 						2
-					</PaginationLink>
-				</PaginationItem>
-				<PaginationItem>
-					<PaginationLink href="#">3</PaginationLink>
-				</PaginationItem>
-				<PaginationItem>
-					<PaginationEllipsis />
-				</PaginationItem>
-				<PaginationItem>
-					<PaginationLink href="#">12</PaginationLink>
-				</PaginationItem>
-				<PaginationItem>
-					<PaginationNext href="#" />
-				</PaginationItem>
-			</PaginationContent>
-		</Pagination>
+					</Pagination.Link>
+				</Pagination.Item>
+				<Pagination.Item>
+					<Pagination.Link href="#">3</Pagination.Link>
+				</Pagination.Item>
+				<Pagination.Item>
+					<Pagination.Ellipsis />
+				</Pagination.Item>
+				<Pagination.Item>
+					<Pagination.Link href="#">12</Pagination.Link>
+				</Pagination.Item>
+				<Pagination.Item>
+					<Pagination.Next href="#" />
+				</Pagination.Item>
+			</Pagination.Content>
+		</Pagination.Root>
 	);
 }
 
@@ -231,50 +179,50 @@ const sidebarItems = [
 export function SidebarExample() {
 	return (
 		<div className="h-96 w-full overflow-hidden rounded-lg border">
-			<SidebarProvider>
-				<Sidebar collapsible="icon">
-					<SidebarHeader>
+			<Sidebar.Provider>
+				<Sidebar.Root collapsible="icon">
+					<Sidebar.Header>
 						<div className="px-2 py-1.5 font-semibold text-sm group-data-[collapsible=icon]:hidden">
 							Northwind Trading
 						</div>
-					</SidebarHeader>
-					<SidebarContent>
-						<SidebarGroup>
-							<SidebarGroupLabel>Platform</SidebarGroupLabel>
-							<SidebarGroupContent>
-								<SidebarMenu>
+					</Sidebar.Header>
+					<Sidebar.Content>
+						<Sidebar.Group>
+							<Sidebar.GroupLabel>Platform</Sidebar.GroupLabel>
+							<Sidebar.GroupContent>
+								<Sidebar.Menu>
 									{sidebarItems.map((item) => (
-										<SidebarMenuItem key={item.title}>
-											<SidebarMenuButton
+										<Sidebar.MenuItem key={item.title}>
+											<Sidebar.MenuButton
 												isActive={item.isActive}
 												tooltip={item.title}
 											>
 												<item.icon />
 												<span>{item.title}</span>
-											</SidebarMenuButton>
+											</Sidebar.MenuButton>
 											{item.badge ? (
-												<SidebarMenuBadge>{item.badge}</SidebarMenuBadge>
+												<Sidebar.MenuBadge>{item.badge}</Sidebar.MenuBadge>
 											) : null}
-										</SidebarMenuItem>
+										</Sidebar.MenuItem>
 									))}
-								</SidebarMenu>
-							</SidebarGroupContent>
-						</SidebarGroup>
-					</SidebarContent>
-					<SidebarFooter>
-						<SidebarMenu>
-							<SidebarMenuItem>
-								<SidebarMenuButton tooltip="Settings">
+								</Sidebar.Menu>
+							</Sidebar.GroupContent>
+						</Sidebar.Group>
+					</Sidebar.Content>
+					<Sidebar.Footer>
+						<Sidebar.Menu>
+							<Sidebar.MenuItem>
+								<Sidebar.MenuButton tooltip="Settings">
 									<GearIcon />
 									<span>Settings</span>
-								</SidebarMenuButton>
-							</SidebarMenuItem>
-						</SidebarMenu>
-					</SidebarFooter>
-				</Sidebar>
-				<SidebarInset>
+								</Sidebar.MenuButton>
+							</Sidebar.MenuItem>
+						</Sidebar.Menu>
+					</Sidebar.Footer>
+				</Sidebar.Root>
+				<Sidebar.Inset>
 					<header className="flex h-12 items-center gap-2 border-b px-4">
-						<SidebarTrigger />
+						<Sidebar.Trigger />
 						<Separator orientation="vertical" className="my-auto h-4" />
 						<span className="font-medium text-sm">Dashboard</span>
 					</header>
@@ -285,70 +233,70 @@ export function SidebarExample() {
 							<div className="h-16 rounded-lg bg-muted/50" />
 						</div>
 					</div>
-				</SidebarInset>
-			</SidebarProvider>
+				</Sidebar.Inset>
+			</Sidebar.Provider>
 		</div>
 	);
 }
 
 export function AccordionExample() {
 	return (
-		<Accordion className="w-full max-w-96" defaultValue={["publishing"]}>
-			<AccordionItem value="publishing">
-				<AccordionTrigger>How do I publish a project?</AccordionTrigger>
-				<AccordionContent>
+		<Accordion.Root className="w-full max-w-96" defaultValue={["publishing"]}>
+			<Accordion.Item value="publishing">
+				<Accordion.Trigger>How do I publish a project?</Accordion.Trigger>
+				<Accordion.Content>
 					<p>
 						From your workspace dashboard, create a project with the scope,
 						timeline and required role. Matching freelancers are notified as
 						soon as it is published.
 					</p>
-				</AccordionContent>
-			</AccordionItem>
-			<AccordionItem value="applications">
-				<AccordionTrigger>Who can apply to a project?</AccordionTrigger>
-				<AccordionContent>
+				</Accordion.Content>
+			</Accordion.Item>
+			<Accordion.Item value="applications">
+				<Accordion.Trigger>Who can apply to a project?</Accordion.Trigger>
+				<Accordion.Content>
 					<p>
 						Any verified freelancer whose skills match the project requirements
 						can apply.
 					</p>
-				</AccordionContent>
-			</AccordionItem>
-			<AccordionItem value="payment">
-				<AccordionTrigger>When is the freelancer paid?</AccordionTrigger>
-				<AccordionContent>
+				</Accordion.Content>
+			</Accordion.Item>
+			<Accordion.Item value="payment">
+				<Accordion.Trigger>When is the freelancer paid?</Accordion.Trigger>
+				<Accordion.Content>
 					<p>
 						Payment is held when you accept a proposal and released once the
 						project report is submitted.
 					</p>
-				</AccordionContent>
-			</AccordionItem>
-		</Accordion>
+				</Accordion.Content>
+			</Accordion.Item>
+		</Accordion.Root>
 	);
 }
 
 export function CollapsibleExample() {
 	return (
-		<Collapsible className="flex w-full max-w-80 flex-col gap-2">
+		<Collapsible.Root className="flex w-full max-w-80 flex-col gap-2">
 			<div className="flex items-center justify-between gap-4 px-1">
 				<h4 className="font-medium text-sm">
 					3 freelancers applied to this project
 				</h4>
-				<CollapsibleTrigger
+				<Collapsible.Trigger
 					render={<Button variant="ghost" size="icon-sm" />}
 					className="group/collapsible-trigger"
 					aria-label="Toggle proposals"
 				>
 					<CaretDownIcon className="transition-transform duration-200 group-aria-expanded/collapsible-trigger:rotate-180 motion-reduce:transition-none" />
-				</CollapsibleTrigger>
+				</Collapsible.Trigger>
 			</div>
-			<CollapsibleContent className="flex flex-col gap-2">
+			<Collapsible.Content className="flex flex-col gap-2">
 				{["Nathan Guyot", "Marie Lefevre", "Paul Martin"].map((name) => (
 					<div key={name} className="rounded-md border px-3 py-2 text-sm">
 						{name}
 					</div>
 				))}
-			</CollapsibleContent>
-		</Collapsible>
+			</Collapsible.Content>
+		</Collapsible.Root>
 	);
 }
 

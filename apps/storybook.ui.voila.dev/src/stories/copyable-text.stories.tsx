@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { CopyableText } from "@voila.dev/ui/components/copyable-text";
+import { CopyableText } from "@voila.dev/ui/copyable-text";
 
 const meta = {
 	title: "UI/CopyableText",

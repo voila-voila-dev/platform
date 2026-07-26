@@ -4,19 +4,14 @@ import {
 	UsersIcon,
 } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	Tabs,
-	TabsContent,
-	TabsList,
-	TabsTrigger,
-} from "@voila.dev/ui/components/tabs";
+import { Tabs } from "@voila.dev/ui/tabs";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 
 const meta = {
 	title: "UI/Tabs",
-	component: Tabs,
+	component: Tabs.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof Tabs>;
+} satisfies Meta<typeof Tabs.Root>;
 
 export default meta;
 
@@ -24,22 +19,22 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<Tabs defaultValue="projects" className="w-96">
-			<TabsList>
-				<TabsTrigger value="projects">Projects</TabsTrigger>
-				<TabsTrigger value="freelancers">Freelancers</TabsTrigger>
-				<TabsTrigger value="billing">Billing</TabsTrigger>
-			</TabsList>
-			<TabsContent value="projects">
+		<Tabs.Root defaultValue="projects" className="w-96">
+			<Tabs.List>
+				<Tabs.Trigger value="projects">Projects</Tabs.Trigger>
+				<Tabs.Trigger value="freelancers">Freelancers</Tabs.Trigger>
+				<Tabs.Trigger value="billing">Billing</Tabs.Trigger>
+			</Tabs.List>
+			<Tabs.Content value="projects">
 				Review upcoming projects and their delivery status.
-			</TabsContent>
-			<TabsContent value="freelancers">
+			</Tabs.Content>
+			<Tabs.Content value="freelancers">
 				Browse vetted freelancers available for your projects.
-			</TabsContent>
-			<TabsContent value="billing">
+			</Tabs.Content>
+			<Tabs.Content value="billing">
 				Track invoices and payouts for completed projects.
-			</TabsContent>
-		</Tabs>
+			</Tabs.Content>
+		</Tabs.Root>
 	),
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
@@ -61,22 +56,22 @@ export const Default: Story = {
 
 export const LineVariant: Story = {
 	render: () => (
-		<Tabs defaultValue="projects" className="w-96">
-			<TabsList variant="line">
-				<TabsTrigger value="projects">Projects</TabsTrigger>
-				<TabsTrigger value="freelancers">Freelancers</TabsTrigger>
-				<TabsTrigger value="billing">Billing</TabsTrigger>
-			</TabsList>
-			<TabsContent value="projects">
+		<Tabs.Root defaultValue="projects" className="w-96">
+			<Tabs.List variant="line">
+				<Tabs.Trigger value="projects">Projects</Tabs.Trigger>
+				<Tabs.Trigger value="freelancers">Freelancers</Tabs.Trigger>
+				<Tabs.Trigger value="billing">Billing</Tabs.Trigger>
+			</Tabs.List>
+			<Tabs.Content value="projects">
 				Review upcoming projects and their delivery status.
-			</TabsContent>
-			<TabsContent value="freelancers">
+			</Tabs.Content>
+			<Tabs.Content value="freelancers">
 				Browse vetted freelancers available for your projects.
-			</TabsContent>
-			<TabsContent value="billing">
+			</Tabs.Content>
+			<Tabs.Content value="billing">
 				Track invoices and payouts for completed projects.
-			</TabsContent>
-		</Tabs>
+			</Tabs.Content>
+		</Tabs.Root>
 	),
 	play: async ({ canvasElement }) => {
 		const active = canvasElement.querySelector(
@@ -93,22 +88,22 @@ export const LineVariant: Story = {
 
 export const Vertical: Story = {
 	render: () => (
-		<Tabs defaultValue="projects" orientation="vertical" className="w-96">
-			<TabsList>
-				<TabsTrigger value="projects">Projects</TabsTrigger>
-				<TabsTrigger value="freelancers">Freelancers</TabsTrigger>
-				<TabsTrigger value="billing">Billing</TabsTrigger>
-			</TabsList>
-			<TabsContent value="projects">
+		<Tabs.Root defaultValue="projects" orientation="vertical" className="w-96">
+			<Tabs.List>
+				<Tabs.Trigger value="projects">Projects</Tabs.Trigger>
+				<Tabs.Trigger value="freelancers">Freelancers</Tabs.Trigger>
+				<Tabs.Trigger value="billing">Billing</Tabs.Trigger>
+			</Tabs.List>
+			<Tabs.Content value="projects">
 				Review upcoming projects and their delivery status.
-			</TabsContent>
-			<TabsContent value="freelancers">
+			</Tabs.Content>
+			<Tabs.Content value="freelancers">
 				Browse vetted freelancers available for your projects.
-			</TabsContent>
-			<TabsContent value="billing">
+			</Tabs.Content>
+			<Tabs.Content value="billing">
 				Track invoices and payouts for completed projects.
-			</TabsContent>
-		</Tabs>
+			</Tabs.Content>
+		</Tabs.Root>
 	),
 	play: async ({ canvasElement }) => {
 		const [first, second] = canvasElement.querySelectorAll(
@@ -123,53 +118,53 @@ export const Vertical: Story = {
 
 export const WithIcons: Story = {
 	render: () => (
-		<Tabs defaultValue="projects" className="w-96">
-			<TabsList>
-				<TabsTrigger value="projects">
+		<Tabs.Root defaultValue="projects" className="w-96">
+			<Tabs.List>
+				<Tabs.Trigger value="projects">
 					<ClipboardTextIcon data-icon="inline-start" />
 					Projects
-				</TabsTrigger>
-				<TabsTrigger value="freelancers">
+				</Tabs.Trigger>
+				<Tabs.Trigger value="freelancers">
 					<UsersIcon data-icon="inline-start" />
 					Freelancers
-				</TabsTrigger>
-				<TabsTrigger value="billing">
+				</Tabs.Trigger>
+				<Tabs.Trigger value="billing">
 					<ReceiptIcon data-icon="inline-start" />
 					Billing
-				</TabsTrigger>
-			</TabsList>
-			<TabsContent value="projects">
+				</Tabs.Trigger>
+			</Tabs.List>
+			<Tabs.Content value="projects">
 				Review upcoming projects and their delivery status.
-			</TabsContent>
-			<TabsContent value="freelancers">
+			</Tabs.Content>
+			<Tabs.Content value="freelancers">
 				Browse vetted freelancers available for your projects.
-			</TabsContent>
-			<TabsContent value="billing">
+			</Tabs.Content>
+			<Tabs.Content value="billing">
 				Track invoices and payouts for completed projects.
-			</TabsContent>
-		</Tabs>
+			</Tabs.Content>
+		</Tabs.Root>
 	),
 };
 
 export const WithDisabled: Story = {
 	render: () => (
-		<Tabs defaultValue="projects" className="w-96">
-			<TabsList>
-				<TabsTrigger value="projects">Projects</TabsTrigger>
-				<TabsTrigger value="freelancers" disabled>
+		<Tabs.Root defaultValue="projects" className="w-96">
+			<Tabs.List>
+				<Tabs.Trigger value="projects">Projects</Tabs.Trigger>
+				<Tabs.Trigger value="freelancers" disabled>
 					Freelancers
-				</TabsTrigger>
-				<TabsTrigger value="billing">Billing</TabsTrigger>
-			</TabsList>
-			<TabsContent value="projects">
+				</Tabs.Trigger>
+				<Tabs.Trigger value="billing">Billing</Tabs.Trigger>
+			</Tabs.List>
+			<Tabs.Content value="projects">
 				Review upcoming projects and their delivery status.
-			</TabsContent>
-			<TabsContent value="freelancers">
+			</Tabs.Content>
+			<Tabs.Content value="freelancers">
 				Browse vetted freelancers available for your projects.
-			</TabsContent>
-			<TabsContent value="billing">
+			</Tabs.Content>
+			<Tabs.Content value="billing">
 				Track invoices and payouts for completed projects.
-			</TabsContent>
-		</Tabs>
+			</Tabs.Content>
+		</Tabs.Root>
 	),
 };

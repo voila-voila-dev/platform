@@ -5,7 +5,7 @@ import {
 	textSizeOptions,
 	textVariantOptions,
 	textWeightOptions,
-} from "@voila.dev/ui/landing/text";
+} from "@voila.dev/ui/landing";
 
 const meta = {
 	title: "Landing/Text",

@@ -36,8 +36,7 @@ const DEFAULT_MARGIN: ChartMargin = {
 	left: 40,
 };
 
-export interface ChartRootProps
-	extends Omit<React.ComponentProps<"div">, "children"> {
+interface Props extends Omit<React.ComponentProps<"div">, "children"> {
 	/** Per-series labels, colours and icons. */
 	readonly config: ChartConfig;
 	readonly data?: ReadonlyArray<ChartDatum>;
@@ -70,7 +69,7 @@ function describeChart(
 	return `Chart of ${names} over ${count} ${count === 1 ? "point" : "points"}`;
 }
 
-function ChartRoot({
+export function ChartRoot({
 	id,
 	className,
 	config,
@@ -83,7 +82,7 @@ function ChartRoot({
 	children,
 	"aria-label": ariaLabel,
 	...props
-}: ChartRootProps) {
+}: Props) {
 	const generatedId = React.useId();
 	const chartId = `chart-${id ?? generatedId.replace(/:/g, "")}`;
 	const { ref, width, height } = useChartDimensions();
@@ -183,5 +182,3 @@ function ChartRoot({
 		</div>
 	);
 }
-
-export { ChartRoot };

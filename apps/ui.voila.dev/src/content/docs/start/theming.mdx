@@ -6,11 +6,31 @@ description: "Override the CSS custom properties in @voila.dev/ui/styles/themes/
 import Preview from "@/components/docs/preview";
 import * as Example from "../../../examples/theming";
 
-The palette that ships with `@voila.dev/ui/styles/themes/default.css` is a **default, not a
-brand**. Every colour, radius and font is a CSS custom property, and every
-component reads them through Tailwind's semantic class names (`bg-primary`,
-`text-muted-foreground`, `border-border`). Redefine the properties and the whole
-system moves with them — no component is forked, no class is overridden.
+Styling splits in two, and the split is the whole idea:
+
+| File | Job |
+| --- | --- |
+| `styles/globals.css` | The **contract**: which tokens exist, and the Tailwind class names (`bg-primary`, `text-muted-foreground`) that read them. Also the package's Tailwind sources. |
+| `styles/themes/<name>.css` | The **values**: what `--primary` actually is, in light and in dark. |
+
+You import the contract once and exactly one theme. Six themes ship:
+
+| Theme | |
+| --- | --- |
+| `default` | Black and white. Charts, badges and the destructive/success/warning trio keep their hue — everything else is achromatic. |
+| `indigo` | The issue-tracker look (Linear). |
+| `iris` | Payments, electric blurple on navy-tinted greys (Stripe). |
+| `sand` | Paper-warm workspace (Notion, Craft). |
+| `emerald` | Developer platform (Supabase). |
+| `olive` | Fintech: cream, sage charts, ink-black buttons (Mercury, Ramp). |
+
+Try them live with the palette button in this site's header — it is switching the
+same stylesheet you would import.
+
+The shipped palettes are **defaults, not brands**. Every colour, radius and font
+is a CSS custom property, and every component reads them through Tailwind's
+semantic class names. Redefine the properties and the whole system moves with
+them — no component is forked, no class is overridden.
 
 ## The one rule
 
@@ -21,12 +41,12 @@ every other component that uses it stays consistent for free.
 
 ## How to override
 
-Redefine the properties *after* importing the stylesheet. Set both themes.
+Redefine the properties *after* the theme you are starting from. Set both modes.
 
 ```css title="src/styles/globals.css"
 @import "tailwindcss";
 @import "@voila.dev/ui/styles/globals.css";
-@source "./node_modules/@voila.dev/ui/src";
+@import "@voila.dev/ui/styles/themes/default.css";
 
 :root {
 	--primary: oklch(0.52 0.19 24);        /* your brand red */

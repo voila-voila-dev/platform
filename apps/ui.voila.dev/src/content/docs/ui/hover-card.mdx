@@ -13,12 +13,12 @@ import * as Example from "../../../examples/ui/overlays";
 </Preview>
 
 ```tsx
-<HoverCard>
-	<HoverCardTrigger render={<a href={profileUrl} />}>@nathan.guyot</HoverCardTrigger>
-	<HoverCardContent>
+<HoverCard.Root>
+	<HoverCard.Trigger render={<a href={profileUrl} />}>@nathan.guyot</HoverCard.Trigger>
+	<HoverCard.Content>
 		<ProviderPreview />
-	</HoverCardContent>
-</HoverCard>
+	</HoverCard.Content>
+</HoverCard.Root>
 ```
 
 Hover only opens it on a pointer, so nothing here can be the only way to reach

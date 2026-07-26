@@ -1,15 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Badge } from "@voila.dev/ui/components/badge";
-import { Button } from "@voila.dev/ui/components/button";
-import {
-	Card,
-	CardAction,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from "@voila.dev/ui/components/card";
+import { Badge } from "@voila.dev/ui/badge";
+import { Button } from "@voila.dev/ui/button";
+import { Card } from "@voila.dev/ui/card";
 
 // Inline SVG so the image-topped story renders offline (and is a real <img>,
 // which the card's `has-[>img:first-child]` / image-rounding selectors need).
@@ -19,7 +11,7 @@ const coverImage = `data:image/svg+xml;utf8,${encodeURIComponent(
 
 const meta = {
 	title: "UI/Card",
-	component: Card,
+	component: Card.Root,
 	tags: ["autodocs"],
 	argTypes: {
 		size: {
@@ -27,7 +19,7 @@ const meta = {
 			options: ["default", "sm"],
 		},
 	},
-} satisfies Meta<typeof Card>;
+} satisfies Meta<typeof Card.Root>;
 
 export default meta;
 
@@ -35,61 +27,61 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<Card className="w-96">
-			<CardHeader>
-				<CardTitle>Brand designer — Site launch</CardTitle>
-				<CardDescription>
+		<Card.Root className="w-96">
+			<Card.Header>
+				<Card.Title>Brand designer — Site launch</Card.Title>
+				<Card.Description>
 					Northwind Studio · Due Saturday, June 20
-				</CardDescription>
-				<CardAction>
+				</Card.Description>
+				<Card.Action>
 					<Badge>Open</Badge>
-				</CardAction>
-			</CardHeader>
-			<CardContent>
+				</Card.Action>
+			</Card.Header>
+			<Card.Content>
 				<p>
 					Design support for the marketing site launch, including landing page
 					layouts and asset handoff.
 				</p>
-			</CardContent>
-			<CardFooter className="justify-end gap-2">
+			</Card.Content>
+			<Card.Footer className="justify-end gap-2">
 				<Button variant="outline" size="sm">
 					View details
 				</Button>
 				<Button size="sm">Apply</Button>
-			</CardFooter>
-		</Card>
+			</Card.Footer>
+		</Card.Root>
 	),
 };
 
 export const Small: Story = {
 	render: () => (
-		<Card size="sm" className="w-80">
-			<CardHeader>
-				<CardTitle>Project report</CardTitle>
-				<CardDescription>Submitted 2 hours ago</CardDescription>
-			</CardHeader>
-			<CardContent>
+		<Card.Root size="sm" className="w-80">
+			<Card.Header>
+				<Card.Title>Project report</Card.Title>
+				<Card.Description>Submitted 2 hours ago</Card.Description>
+			</Card.Header>
+			<Card.Content>
 				<p>Two revision rounds delivered, no follow-up required.</p>
-			</CardContent>
-		</Card>
+			</Card.Content>
+		</Card.Root>
 	),
 };
 
 /** Exercises a small card *with* a footer (`data-[size=sm]:has-data-[slot=card-footer]:pb-0`). */
 export const SmallWithFooter: Story = {
 	render: () => (
-		<Card size="sm" className="w-80">
-			<CardHeader>
-				<CardTitle>Project report</CardTitle>
-				<CardDescription>Submitted 2 hours ago</CardDescription>
-			</CardHeader>
-			<CardContent>
+		<Card.Root size="sm" className="w-80">
+			<Card.Header>
+				<Card.Title>Project report</Card.Title>
+				<Card.Description>Submitted 2 hours ago</Card.Description>
+			</Card.Header>
+			<Card.Content>
 				<p>Two revision rounds delivered, no follow-up required.</p>
-			</CardContent>
-			<CardFooter className="justify-end gap-2">
+			</Card.Content>
+			<Card.Footer className="justify-end gap-2">
 				<Button size="sm">Acknowledge</Button>
-			</CardFooter>
-		</Card>
+			</Card.Footer>
+		</Card.Root>
 	),
 };
 
@@ -99,66 +91,66 @@ export const SmallWithFooter: Story = {
  */
 export const ImageTopped: Story = {
 	render: () => (
-		<Card className="w-96">
+		<Card.Root className="w-96">
 			<img src={coverImage} alt="Site launch cover" />
-			<CardHeader>
-				<CardTitle>Site launch design</CardTitle>
-				<CardDescription>Northwind Studio</CardDescription>
-			</CardHeader>
-			<CardContent>
+			<Card.Header>
+				<Card.Title>Site launch design</Card.Title>
+				<Card.Description>Northwind Studio</Card.Description>
+			</Card.Header>
+			<Card.Content>
 				<p>Marketing site relaunch — senior brand designer required.</p>
-			</CardContent>
-		</Card>
+			</Card.Content>
+		</Card.Root>
 	),
 };
 
-/** Exercises the `CardHeader` opt-in bottom border (`[.border-b]:pb-4`). */
+/** Exercises the `Card.Header` opt-in bottom border (`[.border-b]:pb-4`). */
 export const HeaderWithBorder: Story = {
 	render: () => (
-		<Card className="w-96">
-			<CardHeader className="border-b">
-				<CardTitle>Brand designer — Site launch</CardTitle>
-				<CardDescription>Northwind Studio</CardDescription>
-			</CardHeader>
-			<CardContent>
+		<Card.Root className="w-96">
+			<Card.Header className="border-b">
+				<Card.Title>Brand designer — Site launch</Card.Title>
+				<Card.Description>Northwind Studio</Card.Description>
+			</Card.Header>
+			<Card.Content>
 				<p>Design support for the marketing site launch.</p>
-			</CardContent>
-		</Card>
+			</Card.Content>
+		</Card.Root>
 	),
 };
 
 /** Footer used as a left-aligned metadata row rather than an action bar. */
 export const FooterMetadata: Story = {
 	render: () => (
-		<Card className="w-96">
-			<CardHeader>
-				<CardTitle>Project report</CardTitle>
-			</CardHeader>
-			<CardContent>
+		<Card.Root className="w-96">
+			<Card.Header>
+				<Card.Title>Project report</Card.Title>
+			</Card.Header>
+			<Card.Content>
 				<p>Two revision rounds delivered, no follow-up required.</p>
-			</CardContent>
-			<CardFooter className="gap-2 text-muted-foreground">
+			</Card.Content>
+			<Card.Footer className="gap-2 text-muted-foreground">
 				<Badge variant="secondary">Closed</Badge>
 				<span className="text-sm">Updated 2 hours ago</span>
-			</CardFooter>
-		</Card>
+			</Card.Footer>
+		</Card.Root>
 	),
 };
 
 /**
- * Demonstrates the `render` prop: `CardTitle` becomes a real `<h2>` for the
+ * Demonstrates the `render` prop: `Card.Title` becomes a real `<h2>` for the
  * document outline without a wrapper, and the card root becomes an `<article>`.
  */
 export const SemanticHeading: Story = {
 	render: () => (
-		<Card render={<article />} className="w-96">
-			<CardHeader>
-				<CardTitle render={<h2>Brand designer — Site launch</h2>} />
-				<CardDescription>Northwind Studio</CardDescription>
-			</CardHeader>
-			<CardContent>
+		<Card.Root render={<article />} className="w-96">
+			<Card.Header>
+				<Card.Title render={<h2>Brand designer — Site launch</h2>} />
+				<Card.Description>Northwind Studio</Card.Description>
+			</Card.Header>
+			<Card.Content>
 				<p>Design support for the marketing site launch.</p>
-			</CardContent>
-		</Card>
+			</Card.Content>
+		</Card.Root>
 	),
 };

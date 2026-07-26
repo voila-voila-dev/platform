@@ -13,16 +13,16 @@ import * as Example from "../../../examples/ui/display";
 </Preview>
 
 ```tsx
-<Item variant="outline">
-	<ItemMedia variant="icon"><CalendarCheckIcon /></ItemMedia>
-	<ItemContent>
-		<ItemTitle>Landing page redesign</ItemTitle>
-		<ItemDescription>Product designer needed for…</ItemDescription>
-	</ItemContent>
-	<ItemActions>
+<Item.Root variant="outline">
+	<Item.Media variant="icon"><CalendarCheckIcon /></Item.Media>
+	<Item.Content>
+		<Item.Title>Landing page redesign</Item.Title>
+		<Item.Description>Product designer needed for…</Item.Description>
+	</Item.Content>
+	<Item.Actions>
 		<Button size="sm" variant="outline">Apply</Button>
-	</ItemActions>
-</Item>
+	</Item.Actions>
+</Item.Root>
 ```
 
 One row on its own. For several, [List](/ui/list/) wraps the same parts in the

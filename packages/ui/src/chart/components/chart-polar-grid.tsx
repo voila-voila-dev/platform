@@ -10,19 +10,19 @@ import { cn } from "#/lib/utils.ts";
  * where the data will.
  */
 
-export interface ChartPolarGridProps extends React.ComponentProps<"g"> {
+interface Props extends React.ComponentProps<"g"> {
 	readonly rings?: number;
 	readonly spokes?: boolean;
 	readonly inset?: number;
 }
 
-function ChartPolarGrid({
+export function ChartPolarGrid({
 	className,
 	rings = 4,
 	spokes = true,
 	inset = 24,
 	...props
-}: ChartPolarGridProps) {
+}: Props) {
 	const { innerWidth, innerHeight, categories } = useChartContext();
 	const { cx, cy, radius } = polarFrame({ innerWidth, innerHeight, inset });
 	const axisCount = categories.length;
@@ -59,5 +59,3 @@ function ChartPolarGrid({
 		</g>
 	);
 }
-
-export { ChartPolarGrid };

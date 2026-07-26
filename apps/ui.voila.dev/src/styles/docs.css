@@ -4,8 +4,11 @@
  */
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "@voila.dev/ui/styles/tokens/colors.css";
+@import "@voila.dev/ui/styles/tokens/typography.css";
+@import "@voila.dev/ui/styles/tokens/animations.css";
 @import "@voila.dev/ui/styles/themes/default.css";
-@import "@voila.dev/ui/landing/landing.css";
+@import "@voila.dev/ui/styles/landing.css";
 
 /*
  * Live previews render real components, so their classes must be generated.

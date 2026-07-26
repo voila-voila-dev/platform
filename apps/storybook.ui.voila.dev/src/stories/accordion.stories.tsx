@@ -1,16 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	Accordion,
-	AccordionContent,
-	AccordionItem,
-	AccordionTrigger,
-} from "@voila.dev/ui/components/accordion";
+import { Accordion } from "@voila.dev/ui/accordion";
 
 const meta = {
 	title: "UI/Accordion",
-	component: Accordion,
+	component: Accordion.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof Accordion>;
+} satisfies Meta<typeof Accordion.Root>;
 
 export default meta;
 
@@ -18,93 +13,93 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<Accordion className="w-96" defaultValue={["publishing"]}>
-			<AccordionItem value="publishing">
-				<AccordionTrigger>How do I publish a project?</AccordionTrigger>
-				<AccordionContent>
+		<Accordion.Root className="w-96" defaultValue={["publishing"]}>
+			<Accordion.Item value="publishing">
+				<Accordion.Trigger>How do I publish a project?</Accordion.Trigger>
+				<Accordion.Content>
 					<p>
 						From your client dashboard, create a project with the deadline,
 						budget and required skills. Freelancers with matching skills are
 						notified as soon as it is published.
 					</p>
-				</AccordionContent>
-			</AccordionItem>
-			<AccordionItem value="applications">
-				<AccordionTrigger>Who can apply to a project?</AccordionTrigger>
-				<AccordionContent>
+				</Accordion.Content>
+			</Accordion.Item>
+			<Accordion.Item value="applications">
+				<Accordion.Trigger>Who can apply to a project?</Accordion.Trigger>
+				<Accordion.Content>
 					<p>
 						Any verified freelancer whose skills match the project requirements
 						can apply. You review applications and pick the best fit.
 					</p>
-				</AccordionContent>
-			</AccordionItem>
-			<AccordionItem value="payment">
-				<AccordionTrigger>When is the freelancer paid?</AccordionTrigger>
-				<AccordionContent>
+				</Accordion.Content>
+			</Accordion.Item>
+			<Accordion.Item value="payment">
+				<Accordion.Trigger>When is the freelancer paid?</Accordion.Trigger>
+				<Accordion.Content>
 					<p>
 						Payment is held when you accept an application and released to the
 						freelancer once the deliverables are submitted.
 					</p>
-				</AccordionContent>
-			</AccordionItem>
-		</Accordion>
+				</Accordion.Content>
+			</Accordion.Item>
+		</Accordion.Root>
 	),
 };
 
 export const Multiple: Story = {
 	render: () => (
-		<Accordion
+		<Accordion.Root
 			className="w-96"
 			multiple
 			defaultValue={["profile", "availability"]}
 		>
-			<AccordionItem value="profile">
-				<AccordionTrigger>Complete your profile</AccordionTrigger>
-				<AccordionContent>
+			<Accordion.Item value="profile">
+				<Accordion.Trigger>Complete your profile</Accordion.Trigger>
+				<Accordion.Content>
 					<p>Add your portfolio and skills to start receiving projects.</p>
-				</AccordionContent>
-			</AccordionItem>
-			<AccordionItem value="availability">
-				<AccordionTrigger>Set your availability</AccordionTrigger>
-				<AccordionContent>
+				</Accordion.Content>
+			</Accordion.Item>
+			<Accordion.Item value="availability">
+				<Accordion.Trigger>Set your availability</Accordion.Trigger>
+				<Accordion.Content>
 					<p>Tell clients which weeks you are available for new engagements.</p>
-				</AccordionContent>
-			</AccordionItem>
-			<AccordionItem value="bank">
-				<AccordionTrigger>Connect your bank account</AccordionTrigger>
-				<AccordionContent>
+				</Accordion.Content>
+			</Accordion.Item>
+			<Accordion.Item value="bank">
+				<Accordion.Trigger>Connect your bank account</Accordion.Trigger>
+				<Accordion.Content>
 					<p>Connect a bank account to withdraw your project earnings.</p>
-				</AccordionContent>
-			</AccordionItem>
-		</Accordion>
+				</Accordion.Content>
+			</Accordion.Item>
+		</Accordion.Root>
 	),
 };
 
 export const Disabled: Story = {
 	render: () => (
-		<Accordion className="w-96">
-			<AccordionItem value="profile">
-				<AccordionTrigger>Complete your profile</AccordionTrigger>
-				<AccordionContent>
+		<Accordion.Root className="w-96">
+			<Accordion.Item value="profile">
+				<Accordion.Trigger>Complete your profile</Accordion.Trigger>
+				<Accordion.Content>
 					<p>Add your portfolio and skills to start receiving projects.</p>
-				</AccordionContent>
-			</AccordionItem>
-			<AccordionItem value="bank" disabled>
-				<AccordionTrigger>Connect your bank account</AccordionTrigger>
-				<AccordionContent>
+				</Accordion.Content>
+			</Accordion.Item>
+			<Accordion.Item value="bank" disabled>
+				<Accordion.Trigger>Connect your bank account</Accordion.Trigger>
+				<Accordion.Content>
 					<p>Connect a bank account to withdraw your project earnings.</p>
-				</AccordionContent>
-			</AccordionItem>
-		</Accordion>
+				</Accordion.Content>
+			</Accordion.Item>
+		</Accordion.Root>
 	),
 };
 
 export const LongContent: Story = {
 	render: () => (
-		<Accordion className="w-96">
-			<AccordionItem value="how-it-works">
-				<AccordionTrigger>How does Acme work?</AccordionTrigger>
-				<AccordionContent>
+		<Accordion.Root className="w-96">
+			<Accordion.Item value="how-it-works">
+				<Accordion.Trigger>How does Acme work?</Accordion.Trigger>
+				<Accordion.Content>
 					<p>
 						Acme connects clients with verified independent freelancers for
 						design, development and consulting work. Clients publish projects
@@ -127,17 +122,17 @@ export const LongContent: Story = {
 					<p>
 						Read more in the <a href="https://acme.dev">documentation</a>.
 					</p>
-				</AccordionContent>
-			</AccordionItem>
-			<AccordionItem value="pricing">
-				<AccordionTrigger>What does it cost?</AccordionTrigger>
-				<AccordionContent>
+				</Accordion.Content>
+			</Accordion.Item>
+			<Accordion.Item value="pricing">
+				<Accordion.Trigger>What does it cost?</Accordion.Trigger>
+				<Accordion.Content>
 					<p>
 						Publishing a project is free. A service fee is added when a
 						freelancer is booked.
 					</p>
-				</AccordionContent>
-			</AccordionItem>
-		</Accordion>
+				</Accordion.Content>
+			</Accordion.Item>
+		</Accordion.Root>
 	),
 };

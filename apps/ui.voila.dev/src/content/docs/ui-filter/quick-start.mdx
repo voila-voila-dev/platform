@@ -42,8 +42,7 @@ Declare the fields once; `FilterBar` renders the search box, the trigger, the
 editor and the chips from that single declaration.
 
 ```tsx
-import { FilterBar } from "@voila.dev/ui/filter/filter-bar";
-import type { FilterDefinition, FilterValues } from "@voila.dev/ui/filter/types";
+import { FilterBar, type FilterDefinition, type FilterValues } from "@voila.dev/ui/filter";
 import { useState } from "react";
 
 const definitions = [
@@ -64,7 +63,7 @@ export function Messages() {
 	const [values, setValues] = useState<FilterValues>({});
 	const [search, setSearch] = useState("");
 	return (
-		<FilterBar
+		<Filter.Root
 			definitions={definitions}
 			values={values}
 			onValuesChange={setValues}

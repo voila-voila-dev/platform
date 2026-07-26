@@ -1,21 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Button } from "@voila.dev/ui/components/button";
-import {
-	ResponsiveSheet,
-	ResponsiveSheetBody,
-	ResponsiveSheetContent,
-	ResponsiveSheetDescription,
-	ResponsiveSheetFooter,
-	ResponsiveSheetHeader,
-	ResponsiveSheetTitle,
-	ResponsiveSheetTrigger,
-} from "@voila.dev/ui/components/responsive-sheet";
+import { Button } from "@voila.dev/ui/button";
+import { ResponsiveSheet } from "@voila.dev/ui/responsive-sheet";
 
 const meta = {
 	title: "UI/ResponsiveSheet",
-	component: ResponsiveSheet,
+	component: ResponsiveSheet.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof ResponsiveSheet>;
+} satisfies Meta<typeof ResponsiveSheet.Root>;
 
 export default meta;
 
@@ -23,18 +14,18 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<ResponsiveSheet>
-			<ResponsiveSheetTrigger render={<Button variant="outline" />}>
+		<ResponsiveSheet.Root>
+			<ResponsiveSheet.Trigger render={<Button variant="outline" />}>
 				Open email details
-			</ResponsiveSheetTrigger>
-			<ResponsiveSheetContent size="xl">
-				<ResponsiveSheetHeader>
-					<ResponsiveSheetTitle>Email details</ResponsiveSheetTitle>
-					<ResponsiveSheetDescription>
+			</ResponsiveSheet.Trigger>
+			<ResponsiveSheet.Content size="xl">
+				<ResponsiveSheet.Header>
+					<ResponsiveSheet.Title>Email details</ResponsiveSheet.Title>
+					<ResponsiveSheet.Description>
 						Resize the viewport below 768px to get the bottom drawer.
-					</ResponsiveSheetDescription>
-				</ResponsiveSheetHeader>
-				<ResponsiveSheetBody>
+					</ResponsiveSheet.Description>
+				</ResponsiveSheet.Header>
+				<ResponsiveSheet.Body>
 					<dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-1.5 text-sm">
 						<dt className="text-muted-foreground">To</dt>
 						<dd>camille@example.com</dd>
@@ -43,11 +34,11 @@ export const Default: Story = {
 						<dt className="text-muted-foreground">Sent at</dt>
 						<dd>22 Jul 2026, 09:00</dd>
 					</dl>
-				</ResponsiveSheetBody>
-				<ResponsiveSheetFooter>
+				</ResponsiveSheet.Body>
+				<ResponsiveSheet.Footer>
 					<Button>Resend</Button>
-				</ResponsiveSheetFooter>
-			</ResponsiveSheetContent>
-		</ResponsiveSheet>
+				</ResponsiveSheet.Footer>
+			</ResponsiveSheet.Content>
+		</ResponsiveSheet.Root>
 	),
 };

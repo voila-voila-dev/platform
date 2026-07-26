@@ -1,19 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import {
 	NavigationMenu,
-	NavigationMenuContent,
-	NavigationMenuItem,
-	NavigationMenuLink,
-	NavigationMenuList,
-	NavigationMenuTrigger,
 	navigationMenuTriggerStyle,
-} from "@voila.dev/ui/components/navigation-menu";
+} from "@voila.dev/ui/navigation-menu";
 
 const meta = {
 	title: "UI/NavigationMenu",
-	component: NavigationMenu,
+	component: NavigationMenu.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof NavigationMenu>;
+} satisfies Meta<typeof NavigationMenu.Root>;
 
 export default meta;
 
@@ -21,64 +16,67 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<NavigationMenu>
-			<NavigationMenuList>
-				<NavigationMenuItem>
-					<NavigationMenuTrigger>Projects</NavigationMenuTrigger>
-					<NavigationMenuContent>
+		<NavigationMenu.Root>
+			<NavigationMenu.List>
+				<NavigationMenu.Item>
+					<NavigationMenu.Trigger>Projects</NavigationMenu.Trigger>
+					<NavigationMenu.Content>
 						<ul className="grid w-64 gap-1">
 							<li>
-								<NavigationMenuLink href="#">
+								<NavigationMenu.Link href="#">
 									<div className="flex flex-col gap-0.5">
 										<span className="font-medium">Open projects</span>
 										<span className="text-muted-foreground text-xs">
 											Projects waiting for a freelancer.
 										</span>
 									</div>
-								</NavigationMenuLink>
+								</NavigationMenu.Link>
 							</li>
 							<li>
-								<NavigationMenuLink href="#">
+								<NavigationMenu.Link href="#">
 									<div className="flex flex-col gap-0.5">
 										<span className="font-medium">My engagements</span>
 										<span className="text-muted-foreground text-xs">
 											Confirmed projects and schedules.
 										</span>
 									</div>
-								</NavigationMenuLink>
+								</NavigationMenu.Link>
 							</li>
 							<li>
-								<NavigationMenuLink href="#">
+								<NavigationMenu.Link href="#">
 									<div className="flex flex-col gap-0.5">
 										<span className="font-medium">Past reports</span>
 										<span className="text-muted-foreground text-xs">
 											Completed projects and deliverables.
 										</span>
 									</div>
-								</NavigationMenuLink>
+								</NavigationMenu.Link>
 							</li>
 						</ul>
-					</NavigationMenuContent>
-				</NavigationMenuItem>
-				<NavigationMenuItem>
-					<NavigationMenuTrigger>Freelancers</NavigationMenuTrigger>
-					<NavigationMenuContent>
+					</NavigationMenu.Content>
+				</NavigationMenu.Item>
+				<NavigationMenu.Item>
+					<NavigationMenu.Trigger>Freelancers</NavigationMenu.Trigger>
+					<NavigationMenu.Content>
 						<ul className="grid w-56 gap-1">
 							<li>
-								<NavigationMenuLink href="#">Directory</NavigationMenuLink>
+								<NavigationMenu.Link href="#">Directory</NavigationMenu.Link>
 							</li>
 							<li>
-								<NavigationMenuLink href="#">Invitations</NavigationMenuLink>
+								<NavigationMenu.Link href="#">Invitations</NavigationMenu.Link>
 							</li>
 						</ul>
-					</NavigationMenuContent>
-				</NavigationMenuItem>
-				<NavigationMenuItem>
-					<NavigationMenuLink href="#" className={navigationMenuTriggerStyle()}>
+					</NavigationMenu.Content>
+				</NavigationMenu.Item>
+				<NavigationMenu.Item>
+					<NavigationMenu.Link
+						href="#"
+						className={navigationMenuTriggerStyle()}
+					>
 						Billing
-					</NavigationMenuLink>
-				</NavigationMenuItem>
-			</NavigationMenuList>
-		</NavigationMenu>
+					</NavigationMenu.Link>
+				</NavigationMenu.Item>
+			</NavigationMenu.List>
+		</NavigationMenu.Root>
 	),
 };

@@ -13,10 +13,10 @@ import * as Example from "../../../examples/ui/forms";
 </Preview>
 
 ```tsx
-<ToggleGroup defaultValue={["week"]} variant="outline">
-	<ToggleGroupItem value="day">Day</ToggleGroupItem>
-	<ToggleGroupItem value="week">Week</ToggleGroupItem>
-</ToggleGroup>
+<ToggleGroup.Root defaultValue={["week"]} variant="outline">
+	<ToggleGroup.Item value="day">Day</ToggleGroup.Item>
+	<ToggleGroup.Item value="week">Week</ToggleGroup.Item>
+</ToggleGroup.Root>
 ```
 
 The value is an array either way; `multiple` is what lets more than one entry

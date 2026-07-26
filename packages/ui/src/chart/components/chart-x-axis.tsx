@@ -6,7 +6,7 @@ import { cn } from "#/lib/utils.ts";
 
 /** The bottom axis: categories on a vertical chart, values on a horizontal one. */
 
-export interface ChartXAxisProps extends React.ComponentProps<"g"> {
+interface Props extends React.ComponentProps<"g"> {
 	readonly tickLine?: boolean;
 	readonly axisLine?: boolean;
 	readonly tickCount?: number;
@@ -21,7 +21,7 @@ export interface ChartXAxisProps extends React.ComponentProps<"g"> {
 
 const TICK_LINE_LENGTH = 4;
 
-function ChartXAxis({
+export function ChartXAxis({
 	className,
 	tickLine = false,
 	axisLine = false,
@@ -31,7 +31,7 @@ function ChartXAxis({
 	tickFormatter,
 	hide = false,
 	...props
-}: ChartXAxisProps) {
+}: Props) {
 	const { xScale, innerWidth, innerHeight } = useChartContext();
 	if (hide) {
 		return null;
@@ -89,5 +89,3 @@ function ChartXAxis({
 		</g>
 	);
 }
-
-export { ChartXAxis };

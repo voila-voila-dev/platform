@@ -13,18 +13,18 @@ import * as Example from "../../../examples/ui/overlays";
 </Preview>
 
 ```tsx
-<ResponsiveDialog>
-	<ResponsiveDialogTrigger render={<Button variant="outline" />}>Open</ResponsiveDialogTrigger>
-	<ResponsiveDialogContent>
-		<ResponsiveDialogHeader>
-			<ResponsiveDialogTitle>Cancel this project?</ResponsiveDialogTitle>
-		</ResponsiveDialogHeader>
-		<ResponsiveDialogBody>…</ResponsiveDialogBody>
-		<ResponsiveDialogFooter>
+<ResponsiveDialog.Root>
+	<ResponsiveDialog.Trigger render={<Button variant="outline" />}>Open</ResponsiveDialog.Trigger>
+	<ResponsiveDialog.Content>
+		<ResponsiveDialog.Header>
+			<ResponsiveDialog.Title>Cancel this project?</ResponsiveDialog.Title>
+		</ResponsiveDialog.Header>
+		<ResponsiveDialog.Body>…</ResponsiveDialog.Body>
+		<ResponsiveDialog.Footer>
 			<Button variant="destructive">Cancel project</Button>
-		</ResponsiveDialogFooter>
-	</ResponsiveDialogContent>
-</ResponsiveDialog>
+		</ResponsiveDialog.Footer>
+	</ResponsiveDialog.Content>
+</ResponsiveDialog.Root>
 ```
 
 The switch happens at 768px. Open the preview and narrow the window to see it.

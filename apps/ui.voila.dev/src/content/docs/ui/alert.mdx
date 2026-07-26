@@ -13,14 +13,14 @@ import * as Example from "../../../examples/ui/feedback";
 </Preview>
 
 ```tsx
-<Alert variant="warning">
+<Alert.Root variant="warning">
 	<WarningIcon />
-	<AlertTitle>Report due soon</AlertTitle>
-	<AlertDescription>Submit the report within 48 hours.</AlertDescription>
-</Alert>
+	<Alert.Title>Report due soon</Alert.Title>
+	<Alert.Description>Submit the report within 48 hours.</Alert.Description>
+</Alert.Root>
 ```
 
-`AlertAction` and `AlertClose` are optional slots the layout knows about, so a
+`Alert.Action` and `Alert.Close` are optional slots the layout knows about, so a
 button or a dismiss control lands in the right place without wrapper markup.
 
 <Preview layout="stack">

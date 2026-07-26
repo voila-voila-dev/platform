@@ -5,25 +5,15 @@ import {
 	MagnifyingGlassIcon,
 } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Button } from "@voila.dev/ui/components/button";
-import {
-	ButtonGroup,
-	ButtonGroupSeparator,
-	ButtonGroupText,
-} from "@voila.dev/ui/components/button-group";
-import { Input } from "@voila.dev/ui/components/input";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@voila.dev/ui/components/select";
+import { Button } from "@voila.dev/ui/button";
+import { ButtonGroup } from "@voila.dev/ui/button-group";
+import { Input } from "@voila.dev/ui/input";
+import { Select } from "@voila.dev/ui/select";
 import { useState } from "react";
 
 const meta = {
 	title: "UI/ButtonGroup",
-	component: ButtonGroup,
+	component: ButtonGroup.Root,
 	tags: ["autodocs"],
 	argTypes: {
 		orientation: {
@@ -31,7 +21,7 @@ const meta = {
 			options: ["horizontal", "vertical"],
 		},
 	},
-} satisfies Meta<typeof ButtonGroup>;
+} satisfies Meta<typeof ButtonGroup.Root>;
 
 export default meta;
 
@@ -39,113 +29,113 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	render: () => (
-		<ButtonGroup>
+		<ButtonGroup.Root>
 			<Button variant="outline">Day</Button>
 			<Button variant="outline">Week</Button>
 			<Button variant="outline">Month</Button>
-		</ButtonGroup>
+		</ButtonGroup.Root>
 	),
 };
 
 export const WithText: Story = {
 	render: () => (
-		<ButtonGroup>
-			<ButtonGroupText>
+		<ButtonGroup.Root>
+			<ButtonGroup.Text>
 				<CalendarIcon />
 				June 2026
-			</ButtonGroupText>
-			<ButtonGroupSeparator />
+			</ButtonGroup.Text>
+			<ButtonGroup.Separator />
 			<Button variant="outline" size="icon" aria-label="Previous month">
 				<CaretLeftIcon />
 			</Button>
 			<Button variant="outline" size="icon" aria-label="Next month">
 				<CaretRightIcon />
 			</Button>
-		</ButtonGroup>
+		</ButtonGroup.Root>
 	),
 };
 
 export const Vertical: Story = {
 	render: () => (
-		<ButtonGroup orientation="vertical">
+		<ButtonGroup.Root orientation="vertical">
 			<Button variant="outline">Accept application</Button>
 			<Button variant="outline">Message freelancer</Button>
 			<Button variant="outline">Decline</Button>
-		</ButtonGroup>
+		</ButtonGroup.Root>
 	),
 };
 
 export const VerticalWithSeparator: Story = {
 	render: () => (
-		<ButtonGroup orientation="vertical">
+		<ButtonGroup.Root orientation="vertical">
 			<Button variant="outline">Accept application</Button>
 			<Button variant="outline">Message freelancer</Button>
-			<ButtonGroupSeparator />
+			<ButtonGroup.Separator />
 			<Button variant="outline">Decline</Button>
-		</ButtonGroup>
+		</ButtonGroup.Root>
 	),
 };
 
 export const WithInput: Story = {
 	render: () => (
-		<ButtonGroup aria-label="Search projects" className="w-80">
+		<ButtonGroup.Root aria-label="Search projects" className="w-80">
 			<Input type="search" placeholder="Search projects…" />
 			<Button variant="outline" size="icon" aria-label="Search">
 				<MagnifyingGlassIcon />
 			</Button>
-		</ButtonGroup>
+		</ButtonGroup.Root>
 	),
 };
 
 export const WithSelect: Story = {
 	render: () => (
-		<ButtonGroup aria-label="Filter by role">
-			<Select defaultValue="designer">
-				<SelectTrigger>
-					<SelectValue placeholder="Role" />
-				</SelectTrigger>
-				<SelectContent>
-					<SelectItem value="designer">Designer</SelectItem>
-					<SelectItem value="developer">Developer</SelectItem>
-					<SelectItem value="copywriter">Copywriter</SelectItem>
-				</SelectContent>
-			</Select>
+		<ButtonGroup.Root aria-label="Filter by role">
+			<Select.Root defaultValue="designer">
+				<Select.Trigger>
+					<Select.Value placeholder="Role" />
+				</Select.Trigger>
+				<Select.Content>
+					<Select.Item value="designer">Designer</Select.Item>
+					<Select.Item value="developer">Developer</Select.Item>
+					<Select.Item value="copywriter">Copywriter</Select.Item>
+				</Select.Content>
+			</Select.Root>
 			<Button variant="outline">Apply</Button>
-		</ButtonGroup>
+		</ButtonGroup.Root>
 	),
 };
 
 export const NestedGroups: Story = {
 	render: () => (
-		<ButtonGroup aria-label="Pagination">
-			<ButtonGroup>
+		<ButtonGroup.Root aria-label="Pagination">
+			<ButtonGroup.Root>
 				<Button variant="outline" size="icon" aria-label="Previous page">
 					<CaretLeftIcon />
 				</Button>
-			</ButtonGroup>
-			<ButtonGroup>
+			</ButtonGroup.Root>
+			<ButtonGroup.Root>
 				<Button variant="outline">1</Button>
 				<Button variant="outline">2</Button>
 				<Button variant="outline">3</Button>
-			</ButtonGroup>
-			<ButtonGroup>
+			</ButtonGroup.Root>
+			<ButtonGroup.Root>
 				<Button variant="outline" size="icon" aria-label="Next page">
 					<CaretRightIcon />
 				</Button>
-			</ButtonGroup>
-		</ButtonGroup>
+			</ButtonGroup.Root>
+		</ButtonGroup.Root>
 	),
 };
 
 export const WithDisabledMember: Story = {
 	render: () => (
-		<ButtonGroup aria-label="Proposal actions">
+		<ButtonGroup.Root aria-label="Proposal actions">
 			<Button variant="outline">Accept</Button>
 			<Button variant="outline" disabled>
 				Message
 			</Button>
 			<Button variant="outline">Decline</Button>
-		</ButtonGroup>
+		</ButtonGroup.Root>
 	),
 };
 
@@ -157,7 +147,7 @@ export const ActiveSegment: Story = {
 	render: function ActiveSegmentStory() {
 		const [period, setPeriod] = useState("Week");
 		return (
-			<ButtonGroup aria-label="Calendar period">
+			<ButtonGroup.Root aria-label="Calendar period">
 				{["Day", "Week", "Month"].map((label) => (
 					<Button
 						key={label}
@@ -168,7 +158,7 @@ export const ActiveSegment: Story = {
 						{label}
 					</Button>
 				))}
-			</ButtonGroup>
+			</ButtonGroup.Root>
 		);
 	},
 };

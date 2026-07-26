@@ -1,6 +1,6 @@
 import { StarIcon } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Toggle } from "@voila.dev/ui/components/toggle";
+import { Toggle } from "@voila.dev/ui/toggle";
 
 const meta = {
 	title: "UI/Toggle",

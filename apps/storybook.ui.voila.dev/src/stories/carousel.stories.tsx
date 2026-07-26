@@ -1,18 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import {
-	Carousel,
-	type CarouselApi,
-	CarouselContent,
-	CarouselDots,
-	CarouselItem,
-	CarouselNext,
-	CarouselPrevious,
-} from "@voila.dev/ui/components/carousel";
+import { Carousel, type CarouselApi } from "@voila.dev/ui/carousel";
 import * as React from "react";
 
 const meta = {
 	title: "UI/Carousel",
-	component: Carousel,
+	component: Carousel.Root,
 	tags: ["autodocs"],
 	argTypes: {
 		orientation: {
@@ -21,7 +13,7 @@ const meta = {
 		},
 		opts: { control: "object" },
 	},
-} satisfies Meta<typeof Carousel>;
+} satisfies Meta<typeof Carousel.Root>;
 
 export default meta;
 
@@ -33,19 +25,19 @@ export const Default: Story = {
 	},
 	render: (args) => (
 		<div className="mx-12 w-full max-w-xs">
-			<Carousel {...args}>
-				<CarouselContent>
+			<Carousel.Root {...args}>
+				<Carousel.Content>
 					{[1, 2, 3, 4, 5].map((slideNumber) => (
-						<CarouselItem key={slideNumber}>
+						<Carousel.Item key={slideNumber}>
 							<div className="flex aspect-square items-center justify-center rounded-xl bg-muted text-4xl font-semibold">
 								{slideNumber}
 							</div>
-						</CarouselItem>
+						</Carousel.Item>
 					))}
-				</CarouselContent>
-				<CarouselPrevious />
-				<CarouselNext />
-			</Carousel>
+				</Carousel.Content>
+				<Carousel.Previous />
+				<Carousel.Next />
+			</Carousel.Root>
 		</div>
 	),
 };
@@ -53,8 +45,8 @@ export const Default: Story = {
 export const MultipleItems: Story = {
 	render: () => (
 		<div className="mx-12 w-full max-w-md">
-			<Carousel opts={{ align: "start" }}>
-				<CarouselContent>
+			<Carousel.Root opts={{ align: "start" }}>
+				<Carousel.Content>
 					{[
 						"Designer",
 						"Developer",
@@ -63,16 +55,16 @@ export const MultipleItems: Story = {
 						"Consultant",
 						"Strategist",
 					].map((role) => (
-						<CarouselItem key={role} className="basis-1/3">
+						<Carousel.Item key={role} className="basis-1/3">
 							<div className="flex aspect-square items-center justify-center rounded-xl bg-muted p-2 text-center text-sm font-medium">
 								{role}
 							</div>
-						</CarouselItem>
+						</Carousel.Item>
 					))}
-				</CarouselContent>
-				<CarouselPrevious />
-				<CarouselNext />
-			</Carousel>
+				</Carousel.Content>
+				<Carousel.Previous />
+				<Carousel.Next />
+			</Carousel.Root>
 		</div>
 	),
 };
@@ -80,19 +72,19 @@ export const MultipleItems: Story = {
 export const Vertical: Story = {
 	render: () => (
 		<div className="my-12 w-full max-w-xs">
-			<Carousel orientation="vertical" className="mx-auto w-48">
-				<CarouselContent className="h-48">
+			<Carousel.Root orientation="vertical" className="mx-auto w-48">
+				<Carousel.Content className="h-48">
 					{[1, 2, 3, 4, 5].map((slideNumber) => (
-						<CarouselItem key={slideNumber}>
+						<Carousel.Item key={slideNumber}>
 							<div className="flex h-44 items-center justify-center rounded-xl bg-muted text-4xl font-semibold">
 								{slideNumber}
 							</div>
-						</CarouselItem>
+						</Carousel.Item>
 					))}
-				</CarouselContent>
-				<CarouselPrevious />
-				<CarouselNext />
-			</Carousel>
+				</Carousel.Content>
+				<Carousel.Previous />
+				<Carousel.Next />
+			</Carousel.Root>
 		</div>
 	),
 };
@@ -100,20 +92,20 @@ export const Vertical: Story = {
 export const WithDots: Story = {
 	render: () => (
 		<div className="mx-12 w-full max-w-xs">
-			<Carousel opts={{ loop: true }}>
-				<CarouselContent>
+			<Carousel.Root opts={{ loop: true }}>
+				<Carousel.Content>
 					{[1, 2, 3, 4, 5].map((slideNumber) => (
-						<CarouselItem key={slideNumber}>
+						<Carousel.Item key={slideNumber}>
 							<div className="flex aspect-square items-center justify-center rounded-xl bg-muted text-4xl font-semibold">
 								{slideNumber}
 							</div>
-						</CarouselItem>
+						</Carousel.Item>
 					))}
-				</CarouselContent>
-				<CarouselPrevious />
-				<CarouselNext />
-				<CarouselDots />
-			</Carousel>
+				</Carousel.Content>
+				<Carousel.Previous />
+				<Carousel.Next />
+				<Carousel.Dots />
+			</Carousel.Root>
 		</div>
 	),
 };
@@ -121,19 +113,19 @@ export const WithDots: Story = {
 export const InsetControls: Story = {
 	render: () => (
 		<div className="w-full max-w-xs">
-			<Carousel>
-				<CarouselContent containerClassName="rounded-xl">
+			<Carousel.Root>
+				<Carousel.Content containerClassName="rounded-xl">
 					{[1, 2, 3, 4, 5].map((slideNumber) => (
-						<CarouselItem key={slideNumber}>
+						<Carousel.Item key={slideNumber}>
 							<div className="flex aspect-square items-center justify-center rounded-xl bg-muted text-4xl font-semibold">
 								{slideNumber}
 							</div>
-						</CarouselItem>
+						</Carousel.Item>
 					))}
-				</CarouselContent>
-				<CarouselPrevious inset />
-				<CarouselNext inset />
-			</Carousel>
+				</Carousel.Content>
+				<Carousel.Previous inset />
+				<Carousel.Next inset />
+			</Carousel.Root>
 		</div>
 	),
 };
@@ -156,19 +148,19 @@ function CurrentSlideExample() {
 
 	return (
 		<div className="mx-12 w-full max-w-xs">
-			<Carousel setApi={setApi}>
-				<CarouselContent>
+			<Carousel.Root setApi={setApi}>
+				<Carousel.Content>
 					{[1, 2, 3, 4, 5].map((slideNumber) => (
-						<CarouselItem key={slideNumber}>
+						<Carousel.Item key={slideNumber}>
 							<div className="flex aspect-square items-center justify-center rounded-xl bg-muted text-4xl font-semibold">
 								{slideNumber}
 							</div>
-						</CarouselItem>
+						</Carousel.Item>
 					))}
-				</CarouselContent>
-				<CarouselPrevious />
-				<CarouselNext />
-			</Carousel>
+				</Carousel.Content>
+				<Carousel.Previous />
+				<Carousel.Next />
+			</Carousel.Root>
 			<p className="pt-2 text-center text-sm text-muted-foreground">
 				Slide {current} of {count}
 			</p>

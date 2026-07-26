@@ -1,7 +1,7 @@
 import { EnvelopeSimpleIcon } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Input } from "@voila.dev/ui/components/input";
-import { Label } from "@voila.dev/ui/components/label";
+import { Input } from "@voila.dev/ui/input";
+import { Label } from "@voila.dev/ui/label";
 
 const meta = {
 	title: "UI/Label",

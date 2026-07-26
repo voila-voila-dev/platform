@@ -15,20 +15,20 @@ import * as Example from "../../../examples/ui-datatable/tables";
 ```tsx
 const [search, setSearch] = useState("");
 
-<DataTable
+<DataTable.Root
 	columns={columns}
 	data={projects}
 	globalFilter={search}
 	toolbar={
-		<DataTableToolbar>
-			<DataTableSearch
+		<DataTable.Toolbar>
+			<DataTable.Search
 				value={search}
 				onChange={(event) => setSearch(event.target.value)}
 			/>
-		</DataTableToolbar>
+		</DataTable.Toolbar>
 	}
 />;
 ```
 
-Leave `globalFilter` undefined for server-side search: drive `DataTableSearch`
+Leave `globalFilter` undefined for server-side search: drive `DataTable.Search`
 yourself and filter in the query.

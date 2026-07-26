@@ -31,17 +31,16 @@ const FALLBACK_ICON = "TagIcon";
 const isDevelopment =
 	(import.meta as unknown as { env?: { DEV?: boolean } }).env?.DEV === true;
 
+interface Props extends ComponentProps<PhosphorIconComponent> {
+	name: PhosphorIconName | (string & {});
+}
+
 /**
  * Renders a Phosphor icon by its export name. Falls back to a neutral icon if
  * the name is unknown, so stale/bad data never crashes the UI. Icons are
  * decorative (`aria-hidden`) unless an `alt` or `aria-label` is provided.
  */
-export function Icon({
-	name,
-	...props
-}: {
-	name: PhosphorIconName | (string & {});
-} & ComponentProps<PhosphorIconComponent>) {
+export function Icon({ name, ...props }: Props) {
 	const Component = icons[name];
 	if (Component === undefined && isDevelopment) {
 		console.warn(

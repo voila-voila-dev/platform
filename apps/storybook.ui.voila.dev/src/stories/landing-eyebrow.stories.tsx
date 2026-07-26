@@ -1,6 +1,6 @@
 import { BuildingsIcon, PenNibIcon } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Eyebrow, toneOptions } from "@voila.dev/ui/landing/eyebrow";
+import { Eyebrow, toneOptions } from "@voila.dev/ui/landing";
 
 const meta = {
 	title: "Landing/Eyebrow",

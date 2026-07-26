@@ -13,19 +13,19 @@ import * as Example from "../../../examples/ui/navigation";
 </Preview>
 
 ```tsx
-<Breadcrumb>
-	<BreadcrumbList>
-		<BreadcrumbItem>
-			<BreadcrumbLink href="/projects">Projects</BreadcrumbLink>
-		</BreadcrumbItem>
-		<BreadcrumbSeparator />
-		<BreadcrumbItem>
-			<BreadcrumbPage>Website redesign</BreadcrumbPage>
-		</BreadcrumbItem>
-	</BreadcrumbList>
-</Breadcrumb>
+<Breadcrumb.Root>
+	<Breadcrumb.List>
+		<Breadcrumb.Item>
+			<Breadcrumb.Link href="/projects">Projects</Breadcrumb.Link>
+		</Breadcrumb.Item>
+		<Breadcrumb.Separator />
+		<Breadcrumb.Item>
+			<Breadcrumb.Page>Website redesign</Breadcrumb.Page>
+		</Breadcrumb.Item>
+	</Breadcrumb.List>
+</Breadcrumb.Root>
 ```
 
-The last crumb is a `BreadcrumbPage`, not a link — it carries `aria-current` and
-is not clickable, because it is where you already are. `BreadcrumbEllipsis`
+The last crumb is a `Breadcrumb.Page`, not a link — it carries `aria-current` and
+is not clickable, because it is where you already are. `Breadcrumb.Ellipsis`
 stands in for collapsed middle levels.

@@ -5,26 +5,16 @@ import {
 	UsersIcon,
 } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Button } from "@voila.dev/ui/components/button";
-import {
-	Command,
-	CommandDialog,
-	CommandEmpty,
-	CommandGroup,
-	CommandInput,
-	CommandItem,
-	CommandList,
-	CommandSeparator,
-	CommandShortcut,
-} from "@voila.dev/ui/components/command";
-import { useCommandPalette } from "@voila.dev/ui/hooks/use-command-palette";
+import { Button } from "@voila.dev/ui/button";
+import { Command } from "@voila.dev/ui/command";
+import { useCommandPalette } from "@voila.dev/ui/hooks";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 
 const meta = {
 	title: "UI/Command",
-	component: Command,
+	component: Command.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof Command>;
+} satisfies Meta<typeof Command.Root>;
 
 export default meta;
 
@@ -33,42 +23,42 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
 	render: () => (
 		<div className="w-80 rounded-xl border">
-			<Command>
-				<CommandInput placeholder="Search projects, freelancers..." />
-				<CommandList>
-					<CommandEmpty>No results found.</CommandEmpty>
-					<CommandGroup heading="Projects">
-						<CommandItem>
+			<Command.Root>
+				<Command.Input placeholder="Search projects, freelancers..." />
+				<Command.List>
+					<Command.Empty>No results found.</Command.Empty>
+					<Command.Group heading="Projects">
+						<Command.Item>
 							<CalendarIcon />
 							Website redesign — kickoff
-						</CommandItem>
-						<CommandItem>
+						</Command.Item>
+						<Command.Item>
 							<CalendarIcon />
 							Design review — Tuesday
-						</CommandItem>
-					</CommandGroup>
-					<CommandSeparator />
-					<CommandGroup heading="Freelancers">
-						<CommandItem>
+						</Command.Item>
+					</Command.Group>
+					<Command.Separator />
+					<Command.Group heading="Freelancers">
+						<Command.Item>
 							<UserIcon />
 							Nathan Guyot
-							<CommandShortcut>⌘P</CommandShortcut>
-						</CommandItem>
-						<CommandItem>
+							<Command.Shortcut>⌘P</Command.Shortcut>
+						</Command.Item>
+						<Command.Item>
 							<UsersIcon />
 							All freelancers
-						</CommandItem>
-					</CommandGroup>
-					<CommandSeparator />
-					<CommandGroup heading="Settings">
-						<CommandItem>
+						</Command.Item>
+					</Command.Group>
+					<Command.Separator />
+					<Command.Group heading="Settings">
+						<Command.Item>
 							<GearIcon />
 							Workspace settings
-							<CommandShortcut>⌘S</CommandShortcut>
-						</CommandItem>
-					</CommandGroup>
-				</CommandList>
-			</Command>
+							<Command.Shortcut>⌘S</Command.Shortcut>
+						</Command.Item>
+					</Command.Group>
+				</Command.List>
+			</Command.Root>
 		</div>
 	),
 };
@@ -81,22 +71,22 @@ export const Default: Story = {
 export const Filtering: Story = {
 	render: () => (
 		<div className="w-80 rounded-xl border">
-			<Command>
-				<CommandInput placeholder="Search freelancers..." />
-				<CommandList>
-					<CommandEmpty>No results found.</CommandEmpty>
-					<CommandGroup heading="Freelancers">
-						<CommandItem value="nathan-guyot" keywords={["design", "founder"]}>
+			<Command.Root>
+				<Command.Input placeholder="Search freelancers..." />
+				<Command.List>
+					<Command.Empty>No results found.</Command.Empty>
+					<Command.Group heading="Freelancers">
+						<Command.Item value="nathan-guyot" keywords={["design", "founder"]}>
 							<UserIcon />
 							Nathan Guyot
-						</CommandItem>
-						<CommandItem value="all-freelancers">
+						</Command.Item>
+						<Command.Item value="all-freelancers">
 							<UsersIcon />
 							All freelancers
-						</CommandItem>
-					</CommandGroup>
-				</CommandList>
-			</Command>
+						</Command.Item>
+					</Command.Group>
+				</Command.List>
+			</Command.Root>
 		</div>
 	),
 	play: async ({ canvasElement }) => {
@@ -112,23 +102,23 @@ export const Filtering: Story = {
 };
 
 /**
- * Types a query matching nothing so the muted CommandEmpty state is visible.
+ * Types a query matching nothing so the muted Command.Empty state is visible.
  */
 export const Empty: Story = {
 	render: () => (
 		<div className="w-80 rounded-xl border">
-			<Command>
-				<CommandInput placeholder="Search projects..." />
-				<CommandList>
-					<CommandEmpty>No results found.</CommandEmpty>
-					<CommandGroup heading="Projects">
-						<CommandItem>
+			<Command.Root>
+				<Command.Input placeholder="Search projects..." />
+				<Command.List>
+					<Command.Empty>No results found.</Command.Empty>
+					<Command.Group heading="Projects">
+						<Command.Item>
 							<CalendarIcon />
 							Website redesign — kickoff
-						</CommandItem>
-					</CommandGroup>
-				</CommandList>
-			</Command>
+						</Command.Item>
+					</Command.Group>
+				</Command.List>
+			</Command.Root>
 		</div>
 	),
 	play: async ({ canvasElement }) => {
@@ -150,17 +140,17 @@ export const Empty: Story = {
 export const CheckedAndDisabled: Story = {
 	render: () => (
 		<div className="w-80 rounded-xl border">
-			<Command>
-				<CommandInput placeholder="Search specialties..." />
-				<CommandList>
-					<CommandEmpty>No results found.</CommandEmpty>
-					<CommandGroup heading="Specialties">
-						<CommandItem data-checked="true">Designer</CommandItem>
-						<CommandItem>Developer</CommandItem>
-						<CommandItem disabled>Copywriter (unavailable)</CommandItem>
-					</CommandGroup>
-				</CommandList>
-			</Command>
+			<Command.Root>
+				<Command.Input placeholder="Search specialties..." />
+				<Command.List>
+					<Command.Empty>No results found.</Command.Empty>
+					<Command.Group heading="Specialties">
+						<Command.Item data-checked="true">Designer</Command.Item>
+						<Command.Item>Developer</Command.Item>
+						<Command.Item disabled>Copywriter (unavailable)</Command.Item>
+					</Command.Group>
+				</Command.List>
+			</Command.Root>
 		</div>
 	),
 };
@@ -176,30 +166,30 @@ export const Palette: Story = {
 			<>
 				<Button variant="outline" onClick={() => setOpen(true)}>
 					Open command palette
-					<CommandShortcut>⌘K</CommandShortcut>
+					<Command.Shortcut>⌘K</Command.Shortcut>
 				</Button>
-				<CommandDialog open={open} onOpenChange={setOpen}>
-					<Command>
-						<CommandInput placeholder="Type a command or search..." />
-						<CommandList>
-							<CommandEmpty>No results found.</CommandEmpty>
-							<CommandGroup heading="Quick actions">
-								<CommandItem onSelect={() => setOpen(false)}>
+				<Command.Dialog open={open} onOpenChange={setOpen}>
+					<Command.Root>
+						<Command.Input placeholder="Type a command or search..." />
+						<Command.List>
+							<Command.Empty>No results found.</Command.Empty>
+							<Command.Group heading="Quick actions">
+								<Command.Item onSelect={() => setOpen(false)}>
 									<CalendarIcon />
 									Create a project
-								</CommandItem>
-								<CommandItem onSelect={() => setOpen(false)}>
+								</Command.Item>
+								<Command.Item onSelect={() => setOpen(false)}>
 									<UserIcon />
 									Invite a freelancer
-								</CommandItem>
-								<CommandItem onSelect={() => setOpen(false)}>
+								</Command.Item>
+								<Command.Item onSelect={() => setOpen(false)}>
 									<GearIcon />
 									Open settings
-								</CommandItem>
-							</CommandGroup>
-						</CommandList>
-					</Command>
-				</CommandDialog>
+								</Command.Item>
+							</Command.Group>
+						</Command.List>
+					</Command.Root>
+				</Command.Dialog>
 			</>
 		);
 	},

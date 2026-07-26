@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { MoneyInput } from "@voila.dev/ui/components/money-input";
+import { MoneyInput } from "@voila.dev/ui/money-input";
 import { useState } from "react";
 
 const meta = {

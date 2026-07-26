@@ -13,11 +13,11 @@ import * as Example from "../../../examples/ui/forms";
 </Preview>
 
 ```tsx
-<SegmentedControl defaultValue="week">
-	<SegmentedControlItem value="day">Day</SegmentedControlItem>
-	<SegmentedControlItem value="week">Week</SegmentedControlItem>
-	<SegmentedControlItem value="month">Month</SegmentedControlItem>
-</SegmentedControl>
+<SegmentedControl.Root defaultValue="week">
+	<SegmentedControl.Item value="day">Day</SegmentedControl.Item>
+	<SegmentedControl.Item value="week">Week</SegmentedControl.Item>
+	<SegmentedControl.Item value="month">Month</SegmentedControl.Item>
+</SegmentedControl.Root>
 ```
 
 Always exactly one selected, so it suits a view switcher rather than a filter.

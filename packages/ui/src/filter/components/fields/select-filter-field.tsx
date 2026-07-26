@@ -1,57 +1,16 @@
-import { CheckIcon } from "@phosphor-icons/react";
 import { useId, useState } from "react";
-import { Input } from "#/components/input.tsx";
-import {
-	FilterFieldFrame,
-	FilterOperatorToggle,
-} from "#/filter/components/fields/field-frame.tsx";
+import { FilterFieldFrame } from "#/filter/components/fields/filter-field-frame.tsx";
+import { FilterOperatorToggle } from "#/filter/components/fields/filter-operator-toggle.tsx";
+import { OptionToggle } from "#/filter/components/fields/option-toggle.tsx";
 import type {
 	FilterLabels,
-	FilterOption,
 	SelectFilterDefinition,
 	SelectFilterValue,
 } from "#/filter/types.ts";
-import { cn } from "#/lib/utils.ts";
+import { Input } from "#/input/components/input.tsx";
 
 /** Past this many options the list gets its own search box. */
 const SEARCHABLE_FROM = 8;
-
-/**
- * One option, as a toggle. Options are pressable pills rather than a dropdown:
- * the whole choice set stays visible while you build a filter, which is what
- * makes multi-select legible — and a pill is the same target size on a phone as
- * a native option row, without the modal picker's round trip.
- */
-function OptionToggle({
-	option,
-	selected,
-	onToggle,
-}: {
-	readonly option: FilterOption;
-	readonly selected: boolean;
-	readonly onToggle: () => void;
-}) {
-	return (
-		<button
-			type="button"
-			role="option"
-			aria-selected={selected}
-			onClick={onToggle}
-			className={cn(
-				"inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors",
-				"focus-visible:outline-2 focus-visible:outline-ring focus-visible:outline-offset-2",
-				selected
-					? "border-primary bg-primary text-primary-foreground"
-					: "border-input bg-background text-foreground hover:bg-accent",
-			)}
-		>
-			{selected && <CheckIcon weight="bold" className="size-3.5 shrink-0" />}
-			{option.icon}
-			{option.label}
-		</button>
-	);
-}
-
 function toggleValue(
 	values: ReadonlyArray<string>,
 	value: string,
@@ -63,18 +22,20 @@ function toggleValue(
 	return multiple ? [...values, value] : [value];
 }
 
+interface Props {
+	definition: SelectFilterDefinition;
+	value: SelectFilterValue | undefined;
+	onValueChange: (value: SelectFilterValue) => void;
+	labels: FilterLabels;
+}
+
 /** Single or multiple choice among a known set, optionally inverted. */
 export function SelectFilterField({
 	definition,
 	value,
 	onValueChange,
 	labels,
-}: {
-	readonly definition: SelectFilterDefinition;
-	readonly value: SelectFilterValue | undefined;
-	readonly onValueChange: (value: SelectFilterValue) => void;
-	readonly labels: FilterLabels;
-}) {
+}: Props) {
 	const searchId = useId();
 	const [query, setQuery] = useState("");
 	const selected = value?.values ?? [];

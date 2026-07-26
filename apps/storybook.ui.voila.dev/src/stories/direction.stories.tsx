@@ -1,15 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Button } from "@voila.dev/ui/components/button";
-import { DirectionProvider } from "@voila.dev/ui/components/direction";
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuSub,
-	DropdownMenuSubContent,
-	DropdownMenuSubTrigger,
-	DropdownMenuTrigger,
-} from "@voila.dev/ui/components/dropdown-menu";
+import { Button } from "@voila.dev/ui/button";
+import { DirectionProvider } from "@voila.dev/ui/direction";
+import { DropdownMenu } from "@voila.dev/ui/dropdown-menu";
 
 const meta = {
 	title: "UI/Direction",
@@ -61,16 +53,18 @@ export const Default: Story = {
 					their content for right-to-left languages.
 				</p>
 				<div>
-					<DropdownMenu>
-						<DropdownMenuTrigger render={<Button variant="outline" />}>
+					<DropdownMenu.Root>
+						<DropdownMenu.Trigger render={<Button variant="outline" />}>
 							Project actions
-						</DropdownMenuTrigger>
-						<DropdownMenuContent dir={args.direction}>
-							<DropdownMenuItem>Edit project</DropdownMenuItem>
-							<DropdownMenuItem>Duplicate</DropdownMenuItem>
-							<DropdownMenuItem variant="destructive">Cancel</DropdownMenuItem>
-						</DropdownMenuContent>
-					</DropdownMenu>
+						</DropdownMenu.Trigger>
+						<DropdownMenu.Content dir={args.direction}>
+							<DropdownMenu.Item>Edit project</DropdownMenu.Item>
+							<DropdownMenu.Item>Duplicate</DropdownMenu.Item>
+							<DropdownMenu.Item variant="destructive">
+								Cancel
+							</DropdownMenu.Item>
+						</DropdownMenu.Content>
+					</DropdownMenu.Root>
 				</div>
 			</div>
 		</DirectionProvider>
@@ -97,26 +91,26 @@ export const SubmenuPositioning: Story = {
 						<p className="text-sm font-medium">
 							{direction === "ltr" ? "Left to right" : "Right to left"}
 						</p>
-						<DropdownMenu>
-							<DropdownMenuTrigger
+						<DropdownMenu.Root>
+							<DropdownMenu.Trigger
 								render={<Button variant="outline" className="self-start" />}
 							>
 								Project actions
-							</DropdownMenuTrigger>
-							<DropdownMenuContent dir={direction}>
-								<DropdownMenuItem>Edit project</DropdownMenuItem>
-								<DropdownMenuSub>
-									<DropdownMenuSubTrigger>Assign to</DropdownMenuSubTrigger>
-									<DropdownMenuSubContent dir={direction}>
-										<DropdownMenuItem>Nathan Guyot</DropdownMenuItem>
-										<DropdownMenuItem>Marie Dupont</DropdownMenuItem>
-									</DropdownMenuSubContent>
-								</DropdownMenuSub>
-								<DropdownMenuItem variant="destructive">
+							</DropdownMenu.Trigger>
+							<DropdownMenu.Content dir={direction}>
+								<DropdownMenu.Item>Edit project</DropdownMenu.Item>
+								<DropdownMenu.Sub>
+									<DropdownMenu.SubTrigger>Assign to</DropdownMenu.SubTrigger>
+									<DropdownMenu.SubContent dir={direction}>
+										<DropdownMenu.Item>Nathan Guyot</DropdownMenu.Item>
+										<DropdownMenu.Item>Marie Dupont</DropdownMenu.Item>
+									</DropdownMenu.SubContent>
+								</DropdownMenu.Sub>
+								<DropdownMenu.Item variant="destructive">
 									Cancel
-								</DropdownMenuItem>
-							</DropdownMenuContent>
-						</DropdownMenu>
+								</DropdownMenu.Item>
+							</DropdownMenu.Content>
+						</DropdownMenu.Root>
 					</div>
 				</DirectionProvider>
 			))}

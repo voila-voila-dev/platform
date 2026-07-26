@@ -67,7 +67,7 @@ function parseStoredSizing(
  * server too, where `localStorage` does not exist, and a first paint at the
  * default widths beats one at zero.
  */
-function useSpreadsheetColumnSizing({
+export function useSpreadsheetColumnSizing({
 	storageKey,
 	columnIds,
 }: {
@@ -116,5 +116,3 @@ function useSpreadsheetColumnSizing({
 		reset: () => write({}),
 	};
 }
-
-export { useSpreadsheetColumnSizing };
