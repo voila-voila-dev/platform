@@ -1,12 +1,10 @@
 ---
 title: "UserAvatar"
 description: "An avatar with the person's name, role and presence beside it."
-sidebar:
-  order: 62
+category: "data-display"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/display";
+import * as Example from "@/examples/ui/user-avatar";
 
 <Preview layout="stack">
 	<Example.UserAvatarExample />
@@ -22,3 +20,7 @@ import * as Example from "../../../examples/ui/display";
 ```
 
 Initials are derived from `name`, so the fallback needs nothing from you.
+
+## API
+
+<PropTable of="UserAvatar" />

@@ -51,6 +51,7 @@
 		"unified": "^11.0.5",
 		"unist-util-visit": "^5.0.0",
 		"vite": "catalog:",
-		"wrangler": "^4.48.0"
+		"wrangler": "^4.48.0",
+		"zod": "^4.4.3"
 	}
 }

@@ -3,11 +3,9 @@ title: "Quick start"
 description: "An editable, virtualized grid: keyboard navigation, paste, drag to reorder."
 sidebar:
   order: 0
-  label: "Quick start"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui-spreadsheet/grids";
+import * as Example from "@/examples/ui-spreadsheet/grids";
 
 An editable, virtualized grid your users will mistake for a native app.
 
@@ -82,10 +80,10 @@ in your code, not in a cell renderer API. The grid never sorts or mutates your
 rows: it reports intent (a paste, a reorder) and you update the array, so the
 data stays the single source of truth. For rows that are read and exported
 rather than edited, the answer is the other package; see
-[Which one do I need?](/ui-datatable/which-one/)
+[Which one do I need?](/ui-datatable/which-one)
 
 ## Page map
 
-- [Spreadsheet](/ui-spreadsheet/spreadsheet/): the grid, its keyboard model, paste and reorder.
-- [Spreadsheet.NestedInput](/ui-spreadsheet/nested-table-input/): a compact grid folded into a form field.
-- [Which one do I need?](/ui-spreadsheet/which-one/): read-heavy table or editable grid.
+- [Spreadsheet](/ui-spreadsheet/spreadsheet): the grid, its keyboard model, paste and reorder.
+- [Spreadsheet.NestedInput](/ui-spreadsheet/nested-table-input): a compact grid folded into a form field.
+- [Which one do I need?](/ui-spreadsheet/which-one): read-heavy table or editable grid.

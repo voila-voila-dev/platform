@@ -1,12 +1,10 @@
 ---
 title: "ImageUploadField"
 description: "Drop an image, crop it, confirm it."
-sidebar:
-  order: 32
+category: "forms"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/forms";
+import * as Example from "@/examples/ui/image-upload-field";
 
 <Preview layout="stack">
 	<Example.ImageUploadFieldExample />
@@ -23,3 +21,7 @@ import * as Example from "../../../examples/ui/forms";
 
 `shape="rectangle"` with an `aspectRatio` covers a banner. `onFileCropped`
 receives the cropped file, so the upload stays yours.
+
+## API
+
+<PropTable of="ImageUploadField" />

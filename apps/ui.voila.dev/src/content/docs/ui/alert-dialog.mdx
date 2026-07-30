@@ -1,12 +1,10 @@
 ---
 title: "AlertDialog"
 description: "A modal that interrupts to confirm something consequential."
-sidebar:
-  order: 31
+category: "overlays"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/overlays";
+import * as Example from "@/examples/ui/alert-dialog";
 
 <Preview layout="center">
 	<Example.AlertDialogExample />
@@ -29,5 +27,59 @@ import * as Example from "../../../examples/ui/overlays";
 </AlertDialog.Root>
 ```
 
-Unlike [Dialog](/ui/dialog/) it has no close button and does not dismiss on an
+Unlike [Dialog](/ui/dialog) it has no close button and does not dismiss on an
 outside click. The user has to answer the question, which is the point.
+
+## API
+
+### AlertDialog.Root
+
+<PropTable of="AlertDialog.Root" />
+
+### AlertDialog.Action
+
+<PropTable of="AlertDialog.Action" />
+
+### AlertDialog.Cancel
+
+<PropTable of="AlertDialog.Cancel" />
+
+### AlertDialog.Close
+
+<PropTable of="AlertDialog.Close" />
+
+### AlertDialog.Content
+
+<PropTable of="AlertDialog.Content" />
+
+### AlertDialog.Description
+
+<PropTable of="AlertDialog.Description" />
+
+### AlertDialog.Footer
+
+<PropTable of="AlertDialog.Footer" />
+
+### AlertDialog.Header
+
+<PropTable of="AlertDialog.Header" />
+
+### AlertDialog.Media
+
+<PropTable of="AlertDialog.Media" />
+
+### AlertDialog.Overlay
+
+<PropTable of="AlertDialog.Overlay" />
+
+### AlertDialog.Portal
+
+<PropTable of="AlertDialog.Portal" />
+
+### AlertDialog.Title
+
+<PropTable of="AlertDialog.Title" />
+
+### AlertDialog.Trigger
+
+<PropTable of="AlertDialog.Trigger" />

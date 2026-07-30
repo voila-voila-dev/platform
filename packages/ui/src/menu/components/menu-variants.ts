@@ -35,11 +35,16 @@ export const menuContentVariants = cva({
 export const menuItemVariants = cva({
 	base: menuItemBase,
 	variants: {
+		/** `destructive` tints the item for an action that cannot be undone. */
 		variant: {
 			default: "",
 			destructive:
 				"text-destructive *:[svg]:text-destructive focus:bg-destructive/10 focus:text-destructive data-highlighted:bg-destructive/10 data-highlighted:text-destructive data-[selected=true]:bg-destructive/10 data-[selected=true]:text-destructive dark:focus:bg-destructive/20 dark:data-highlighted:bg-destructive/20 dark:data-[selected=true]:bg-destructive/20",
 		},
+		/**
+		 * Reserves trailing space for a checkmark or a submenu chevron, so labels
+		 * stay aligned whether or not a given item has one.
+		 */
 		indicator: {
 			none: "",
 			end: "pr-8",

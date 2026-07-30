@@ -1,6 +1,8 @@
 ---
 title: "Installation"
 description: "Install @voila.dev/ui, point Tailwind at it, and render your first component."
+sidebar:
+  order: 2
 ---
 
 import { Steps, Tabs, TabItem } from "@/components/docs/starlight";
@@ -48,7 +50,7 @@ import { Steps, Tabs, TabItem } from "@/components/docs/starlight";
 
     The second picks the values. `default` is black and white; `indigo`,
     `iris`, `sand`, `emerald` and `olive` also ship. Exactly one theme,
-    and it comes second — see [Theming](/start/theming/).
+    and it comes second — see [Theming](/start/theming).
 
 3.  **Render something.**
 
@@ -100,4 +102,4 @@ whose classes are absent has not been imported, so Tailwind never scanned it.
 If the import throws, check that your bundler resolves package `exports`
 (anything modern does) and that TypeScript is on `"moduleResolution": "bundler"`.
 
-Next: [Theming and tokens](/start/theming/).
+Next: [Theming and tokens](/start/theming).

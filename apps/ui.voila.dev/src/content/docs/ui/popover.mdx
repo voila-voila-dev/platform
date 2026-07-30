@@ -1,14 +1,12 @@
 ---
 title: "Popover"
 description: "A small floating panel anchored to its trigger."
-sidebar:
-  order: 37
+category: "overlays"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/overlays";
+import * as Example from "@/examples/ui/popover";
 
-<Preview>
+<Preview layout="row">
 	<Example.PopoverExample />
 </Preview>
 
@@ -25,5 +23,35 @@ import * as Example from "../../../examples/ui/overlays";
 </Popover.Root>
 ```
 
-A popover can hold focusable content; a [Tooltip](/ui/tooltip/) cannot. If
+A popover can hold focusable content; a [Tooltip](/ui/tooltip) cannot. If
 there is a button or an input inside, this is the one you want.
+
+## API
+
+### Popover.Root
+
+<PropTable of="Popover.Root" />
+
+### Popover.Close
+
+<PropTable of="Popover.Close" />
+
+### Popover.Content
+
+<PropTable of="Popover.Content" />
+
+### Popover.Description
+
+<PropTable of="Popover.Description" />
+
+### Popover.Header
+
+<PropTable of="Popover.Header" />
+
+### Popover.Title
+
+<PropTable of="Popover.Title" />
+
+### Popover.Trigger
+
+<PropTable of="Popover.Trigger" />

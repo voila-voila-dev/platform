@@ -1,12 +1,10 @@
 ---
 title: "Skeleton"
 description: "A shimmering placeholder in the shape of the content that is coming."
-sidebar:
-  order: 24
+category: "feedback"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/feedback";
+import * as Example from "@/examples/ui/feedback";
 
 <Preview layout="stack">
 	<Example.SkeletonDefault />
@@ -26,3 +24,7 @@ nothing jumps when the data lands.
 `Skeleton` is a shape and nothing else. Announcing the wait is the wrapper's
 job: `role="status"` plus a sr-only label, with the placeholder itself
 `aria-hidden`.
+
+## API
+
+<PropTable of="Skeleton" />

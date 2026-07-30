@@ -1,12 +1,10 @@
 ---
 title: "InputGroup"
 description: "An input with an icon, prefix text or button attached."
-sidebar:
-  order: 7
+category: "forms"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/forms";
+import * as Example from "@/examples/ui/input-group";
 
 <Preview layout="stack">
 	<Example.InputGroupExample />
@@ -23,6 +21,32 @@ import * as Example from "../../../examples/ui/forms";
 
 `align="inline-end"` puts an addon on the trailing side. The group owns the
 border and the focus ring, so the input inside it has none of its own — which
-is why it is `InputGroup.Input` and not [Input](/ui/input/).
+is why it is `InputGroup.Input` and not [Input](/ui/input).
 
 `InputGroup.Textarea` does the same for a multi-line field.
+
+## API
+
+### InputGroup.Root
+
+<PropTable of="InputGroup.Root" />
+
+### InputGroup.Addon
+
+<PropTable of="InputGroup.Addon" />
+
+### InputGroup.Button
+
+<PropTable of="InputGroup.Button" />
+
+### InputGroup.Input
+
+<PropTable of="InputGroup.Input" />
+
+### InputGroup.Text
+
+<PropTable of="InputGroup.Text" />
+
+### InputGroup.Textarea
+
+<PropTable of="InputGroup.Textarea" />

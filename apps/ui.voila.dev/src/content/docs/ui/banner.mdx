@@ -1,12 +1,10 @@
 ---
 title: "Banner"
 description: "A full-width message about the whole app, pinned above the layout."
-sidebar:
-  order: 21
+category: "feedback"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/feedback";
+import * as Example from "@/examples/ui/feedback";
 
 <Preview layout="stack">
 	<Example.BannerVariants />
@@ -20,7 +18,7 @@ import * as Example from "../../../examples/ui/feedback";
 </Banner.Root>
 ```
 
-An [Alert](/ui/alert/) talks about the content it sits next to; a banner talks
+An [Alert](/ui/alert) talks about the content it sits next to; a banner talks
 about the whole session, which is why it is full-bleed and has no description
 slot.
 
@@ -30,3 +28,21 @@ slot.
 
 `Banner.Close` does not remove the banner by itself. Wire its `onClick` to
 whatever holds the dismissed state, so it stays dismissed on the next page.
+
+## API
+
+### Banner.Root
+
+<PropTable of="Banner.Root" />
+
+### Banner.Action
+
+<PropTable of="Banner.Action" />
+
+### Banner.Close
+
+<PropTable of="Banner.Close" />
+
+### Banner.Title
+
+<PropTable of="Banner.Title" />

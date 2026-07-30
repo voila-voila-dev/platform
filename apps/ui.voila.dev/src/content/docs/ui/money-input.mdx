@@ -1,12 +1,10 @@
 ---
 title: "MoneyInput"
 description: "An amount with its currency."
-sidebar:
-  order: 10
+category: "forms"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/forms";
+import * as Example from "@/examples/ui/money-input";
 
 <Preview layout="stack">
 	<Example.MoneyInputExample />
@@ -24,3 +22,7 @@ import * as Example from "../../../examples/ui/forms";
 With no `onCurrencyChange` the trailing select is locked, for the common case
 of an app that settles in one currency. The amount field stays fully legible
 either way — a disabled currency must not grey out the number next to it.
+
+## API
+
+<PropTable of="MoneyInput" />

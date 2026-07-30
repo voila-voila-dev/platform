@@ -1,14 +1,12 @@
 ---
 title: "Chip"
 description: "A removable token — an applied filter, a selected tag."
-sidebar:
-  order: 70
+category: "data-display"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/display";
+import * as Example from "@/examples/ui/chip";
 
-<Preview>
+<Preview layout="row">
 	<Example.ChipExample />
 </Preview>
 
@@ -20,5 +18,15 @@ import * as Example from "../../../examples/ui/display";
 ```
 
 A chip is something the user put there and can take away; a
-[Badge](/ui/badge/) is something the data says. Give `Chip.Remove` an
+[Badge](/ui/badge) is something the data says. Give `Chip.Remove` an
 `aria-label` naming what it removes — "Remove" alone is useless in a row of six.
+
+## API
+
+### Chip.Root
+
+<PropTable of="Chip.Root" />
+
+### Chip.Remove
+
+<PropTable of="Chip.Remove" />

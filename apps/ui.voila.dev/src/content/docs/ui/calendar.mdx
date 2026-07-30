@@ -1,12 +1,10 @@
 ---
 title: "Calendar"
 description: "A month grid for picking a date or a range."
-sidebar:
-  order: 27
+category: "dates-and-time"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/forms";
+import * as Example from "@/examples/ui/calendar";
 
 <Preview layout="center">
 	<Example.CalendarExample />
@@ -19,4 +17,14 @@ import * as Example from "../../../examples/ui/forms";
 
 Built on [React DayPicker](https://daypicker.dev/), so its `mode`, `disabled`,
 `locale` and the rest apply. Inside a popover trigger, use
-[DatePicker](/ui/date-picker/) instead — this is the bare grid.
+[DatePicker](/ui/date-picker) instead — this is the bare grid.
+
+## API
+
+### Calendar.Root
+
+<PropTable of="Calendar.Root" />
+
+### Calendar.DayButton
+
+<PropTable of="Calendar.DayButton" />

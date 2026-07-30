@@ -3,6 +3,11 @@ import { cva, type VariantProps } from "#/lib/cva.ts";
 export const headingVariants = cva({
 	base: "font-heading font-bold tracking-tight text-foreground",
 	variants: {
+		/**
+		 * The heading element that renders, and its type scale. Pick by document
+		 * outline, not by how large you want the text — reach for `Text` and its
+		 * `size` when you only want bigger copy.
+		 */
 		level: {
 			h1: "text-4xl md:text-5xl lg:text-6xl",
 			h2: "text-3xl md:text-4xl lg:text-5xl",
@@ -11,6 +16,10 @@ export const headingVariants = cva({
 			h5: "text-lg md:text-xl",
 			h6: "text-base md:text-lg",
 		},
+		/**
+		 * Text alignment. `center` suits a section intro; anything longer than a
+		 * line or two reads better left-aligned.
+		 */
 		align: {
 			left: "text-left",
 			center: "text-center",

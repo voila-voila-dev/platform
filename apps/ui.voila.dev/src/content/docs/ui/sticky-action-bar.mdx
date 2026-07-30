@@ -1,12 +1,10 @@
 ---
 title: "StickyActionBar"
 description: "The action bar pinned to the bottom of the viewport on mobile."
-sidebar:
-  order: 57
+category: "actions"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/navigation";
+import * as Example from "@/examples/ui/navigation";
 
 <Preview layout="stack">
 	<Example.StickyActionBarExample />
@@ -22,3 +20,7 @@ import * as Example from "../../../examples/ui/navigation";
 It hides from the `md` breakpoint up, on the assumption that the same actions
 are already visible in the desktop layout. Pass `hideOnDesktop={false}` when
 they are not — which is what the preview above does.
+
+## API
+
+<PropTable of="StickyActionBar" />

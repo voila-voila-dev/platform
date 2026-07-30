@@ -1,12 +1,10 @@
 ---
 title: "CheckboxGroup"
 description: "Several checkboxes sharing one value."
-sidebar:
-  order: 13
+category: "forms"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/forms";
+import * as Example from "@/examples/ui/checkbox-group";
 
 <Preview layout="stack">
 	<Example.CheckboxGroupExample />
@@ -23,3 +21,7 @@ The group's value is the array of ticked `name`s. In parent mode (`parent` plus
 `allValues`) Base UI rewrites the boxes' ids for its `aria-controls` wiring, so
 labels have to *wrap* their checkbox there rather than point at it with
 `htmlFor`.
+
+## API
+
+<PropTable of="CheckboxGroup" />

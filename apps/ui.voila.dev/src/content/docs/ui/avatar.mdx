@@ -1,14 +1,12 @@
 ---
 title: "Avatar"
 description: "A person's picture, with initials as the fallback."
-sidebar:
-  order: 61
+category: "data-display"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/display";
+import * as Example from "@/examples/ui/avatar";
 
-<Preview>
+<Preview layout="row">
 	<Example.AvatarExample />
 </Preview>
 
@@ -23,5 +21,31 @@ The fallback shows while the image loads and stays if it fails, so always give
 one. `Avatar.Group` overlaps a row of them and `Avatar.GroupCount` closes it with
 an overflow count.
 
-For a name and a role next to the picture, [UserAvatar](/ui/user-avatar/) does
+For a name and a role next to the picture, [UserAvatar](/ui/user-avatar) does
 that in one component.
+
+## API
+
+### Avatar.Root
+
+<PropTable of="Avatar.Root" />
+
+### Avatar.Badge
+
+<PropTable of="Avatar.Badge" />
+
+### Avatar.Fallback
+
+<PropTable of="Avatar.Fallback" />
+
+### Avatar.Group
+
+<PropTable of="Avatar.Group" />
+
+### Avatar.GroupCount
+
+<PropTable of="Avatar.GroupCount" />
+
+### Avatar.Image
+
+<PropTable of="Avatar.Image" />

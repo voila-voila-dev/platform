@@ -1,12 +1,10 @@
 ---
 title: "NativeSelect"
 description: "A real <select>, styled to match."
-sidebar:
-  order: 17
+category: "forms"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/forms";
+import * as Example from "@/examples/ui/native-select";
 
 <Preview layout="center">
 	<Example.NativeSelectExample />
@@ -22,3 +20,17 @@ import * as Example from "../../../examples/ui/forms";
 
 No portal, no JavaScript for the popup: the OS draws the list. That makes it
 the right choice on mobile and inside a form that has to work before hydration.
+
+## API
+
+### NativeSelect.Root
+
+<PropTable of="NativeSelect.Root" />
+
+### NativeSelect.OptGroup
+
+<PropTable of="NativeSelect.OptGroup" />
+
+### NativeSelect.Option
+
+<PropTable of="NativeSelect.Option" />

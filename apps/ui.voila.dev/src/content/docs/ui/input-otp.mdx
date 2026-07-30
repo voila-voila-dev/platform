@@ -1,12 +1,10 @@
 ---
 title: "InputOTP"
 description: "A one-time-code field, one box per digit."
-sidebar:
-  order: 8
+category: "forms"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/forms";
+import * as Example from "@/examples/ui/input-otp";
 
 <Preview layout="center">
 	<Example.InputOTPExample />
@@ -26,3 +24,21 @@ import * as Example from "../../../examples/ui/forms";
 
 Built on [input-otp](https://input-otp.rodz.dev/), so it is one real input
 behind the boxes — paste, autofill from an SMS, and select-all all work.
+
+## API
+
+### InputOTP.Root
+
+<PropTable of="InputOTP.Root" />
+
+### InputOTP.Group
+
+<PropTable of="InputOTP.Group" />
+
+### InputOTP.Separator
+
+<PropTable of="InputOTP.Separator" />
+
+### InputOTP.Slot
+
+<PropTable of="InputOTP.Slot" />

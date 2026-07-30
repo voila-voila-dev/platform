@@ -1,3 +1,4 @@
+import manifest from "virtual:docs-manifest";
 import {
 	ArrowDownIcon,
 	ArrowRightIcon,
@@ -90,69 +91,6 @@ const aiCards = [
 		title: "Tokens as the contract",
 		description:
 			"Tell the AI to use --primary and the whole system follows. The tokens are plain CSS custom properties, not a theming API to hallucinate around.",
-	},
-];
-
-/**
- * The packages grid, ordered by wow-factor; blurbs are the canonical
- * one-liners also used in each package's npm description.
- */
-const packages: { name: string; slug: string; blurb: string }[] = [
-	{
-		name: "ui-email-block-editor",
-		slug: "/ui-email-block-editor/quick-start",
-		blurb:
-			"The email template editor that lives in your app, not someone else's SaaS.",
-	},
-	{
-		name: "ui-spreadsheet",
-		slug: "/ui-spreadsheet/quick-start",
-		blurb:
-			"An editable, virtualized grid your users will mistake for a native app.",
-	},
-	{
-		name: "ui-datatable",
-		slug: "/ui-datatable/quick-start",
-		blurb:
-			"Sorting, pinning, CSV export — the table you keep rebuilding, finished.",
-	},
-	{
-		name: "ui-chart",
-		slug: "/ui-chart/quick-start",
-		blurb:
-			"Charts with zero charting library. SVG you can read, scales included.",
-	},
-	{
-		name: "ui-map",
-		slug: "/ui-map/quick-start",
-		blurb: "Maps and a globe on free vector tiles. No API key, no bundle tax.",
-	},
-	{
-		name: "ui-filter",
-		slug: "/ui-filter/quick-start",
-		blurb:
-			"Composable filters that survive real product requirements — including geo.",
-	},
-	{
-		name: "ui-landing",
-		slug: "/ui-landing/quick-start",
-		blurb: "Your marketing site, from the same system as your product.",
-	},
-	{
-		name: "ui-icon",
-		slug: "/ui-icon/quick-start",
-		blurb: "Icons by name, safe by default — store a string, render an icon.",
-	},
-	{
-		name: "ui-tokens",
-		slug: "/ui-tokens/quick-start",
-		blurb: "Your whole brand in one CSS file. Change it, everything follows.",
-	},
-	{
-		name: "ui",
-		slug: "/ui/quick-start",
-		blurb:
-			"…and the 85 components underneath it all. One convention, the floor everything else stands on.",
 	},
 ];
 
@@ -393,7 +331,7 @@ function Home() {
 						</SectionIntro.Description>
 					</SectionIntro.Root>
 					<div className="mx-auto mt-10 grid max-w-5xl gap-3 sm:grid-cols-2 lg:grid-cols-3">
-						{packages.map((pkg) => (
+						{manifest.showcase.map((pkg) => (
 							<Link
 								key={pkg.name}
 								to={pkg.slug}

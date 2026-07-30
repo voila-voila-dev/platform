@@ -6,7 +6,7 @@ runs:
     - name: Setup Bun
       uses: ./.github/actions/setup-bun
 
-    # `astro check` (apps/ui.voila.dev) requires Node >= 22.12.
+    # Vite 7 (apps/ui.voila.dev) requires Node >= 22.12.
     - name: Setup Node
       uses: actions/setup-node@v6
       with:
@@ -22,6 +22,12 @@ runs:
     - name: Type check
       shell: bash
       run: bun run check-types
+
+    # Catches a <PropTable of="…"> that names nothing and internal links that
+    # 404 — the drift the generated tables exist to prevent.
+    - name: Check docs
+      shell: bash
+      run: bun run check-docs
 
     - name: Test
       shell: bash

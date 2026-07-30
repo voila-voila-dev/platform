@@ -1,14 +1,12 @@
 ---
 title: "Toaster"
 description: "Transient notifications, stacked in a corner."
-sidebar:
-  order: 26
+category: "feedback"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/feedback";
+import * as Example from "@/examples/ui/feedback";
 
-<Preview>
+<Preview layout="row">
 	<Example.SonnerDefault />
 </Preview>
 
@@ -23,3 +21,7 @@ toast.success("Booking confirmed");
 Re-exported from [Sonner](https://sonner.emilkowal.ski/) with the kit's tokens
 applied, so `toast`, `toast.success`, `toast.error`, `toast.promise` and the
 rest behave as documented there.
+
+## API
+
+<PropTable of="Toaster" />

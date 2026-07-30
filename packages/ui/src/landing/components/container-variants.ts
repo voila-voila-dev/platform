@@ -3,6 +3,10 @@ import { cva, type VariantProps } from "#/lib/cva.ts";
 export const containerVariants = cva({
 	base: "mx-auto w-full px-4 sm:px-6 lg:px-8",
 	variants: {
+		/**
+		 * Maximum content width. `full` removes the cap and leaves only the page
+		 * gutters.
+		 */
 		size: {
 			sm: "max-w-3xl",
 			md: "max-w-5xl",

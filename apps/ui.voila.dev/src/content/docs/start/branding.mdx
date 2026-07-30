@@ -1,6 +1,8 @@
 ---
 title: "Your branding package"
 description: "Keep your logo and brand components in their own package, on top of the generic ones."
+sidebar:
+  order: 6
 ---
 
 `@voila.dev/ui` deliberately contains no logo, no wordmark and no brand
@@ -153,4 +155,4 @@ export function BrandFooter({ children }: { readonly children?: React.ReactNode 
 
 If you catch yourself rebuilding a `Button` inside the branding package because
 "ours is different", the difference is almost always a token. Go set it in
-[your theme package](/start/theming/) instead — the whole system moves with it.
+[your theme package](/start/theming) instead — the whole system moves with it.

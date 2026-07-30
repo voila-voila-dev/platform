@@ -1,12 +1,10 @@
 ---
 title: "Gallery"
 description: "A grid of thumbnails opening into a swipeable lightbox."
-sidebar:
-  order: 75
+category: "data-display"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/display";
+import * as Example from "@/examples/ui/gallery";
 
 <Preview layout="stack">
 	<Example.GalleryExample />
@@ -18,3 +16,13 @@ import * as Example from "../../../examples/ui/display";
 
 With an empty `images` array it renders its own empty state, which
 `emptyLabel` and `emptyDescription` let you word.
+
+## API
+
+### Gallery.Root
+
+<PropTable of="Gallery.Root" />
+
+### Gallery.Lightbox
+
+<PropTable of="Gallery.Lightbox" />

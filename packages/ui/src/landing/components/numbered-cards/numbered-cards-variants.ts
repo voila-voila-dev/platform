@@ -3,6 +3,10 @@ import { cva, type VariantProps } from "#/lib/cva.ts";
 export const numberedCardsVariants = cva({
 	base: "grid gap-6",
 	variants: {
+		/**
+		 * Columns at the widest breakpoint. Narrower viewports collapse toward a
+		 * single column regardless.
+		 */
 		columns: {
 			"2": "md:grid-cols-2",
 			"3": "md:grid-cols-3",

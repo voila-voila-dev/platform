@@ -1,12 +1,10 @@
 ---
 title: "ColorPicker"
 description: "Pick one of the catalogue colours."
-sidebar:
-  order: 24
+category: "forms"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/forms";
+import * as Example from "@/examples/ui/color-picker";
 
 <Preview layout="center">
 	<Example.ColorPickerExample />
@@ -16,6 +14,10 @@ import * as Example from "../../../examples/ui/forms";
 <ColorPicker value={color} onValueChange={setColor} />
 ```
 
-The palette is the closed [Badge](/ui/badge/) colour set, so a colour picked
+The palette is the closed [Badge](/ui/badge) colour set, so a colour picked
 here is a name you can store and render as a chip anywhere. It is not a
 free-form colour wheel, on purpose.
+
+## API
+
+<PropTable of="ColorPicker" />

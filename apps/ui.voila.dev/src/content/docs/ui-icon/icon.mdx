@@ -5,10 +5,9 @@ sidebar:
   order: 1
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui-icon/icons";
+import * as Example from "@/examples/ui-icon/icons";
 
-<Preview>
+<Preview layout="row">
 	<Example.Default />
 </Preview>
 
@@ -19,7 +18,7 @@ import * as Example from "../../../examples/ui-icon/icons";
 Everything else goes to the underlying Phosphor component, so `weight`, `size`
 and `color` work as they do there.
 
-<Preview>
+<Preview layout="row">
 	<Example.Weights />
 </Preview>
 

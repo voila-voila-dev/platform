@@ -1,12 +1,10 @@
 ---
 title: "Alert"
 description: "An inline message about the thing the user is looking at."
-sidebar:
-  order: 20
+category: "feedback"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/feedback";
+import * as Example from "@/examples/ui/feedback";
 
 <Preview layout="stack">
 	<Example.AlertVariants />
@@ -26,3 +24,25 @@ button or a dismiss control lands in the right place without wrapper markup.
 <Preview layout="stack">
 	<Example.AlertWithAction />
 </Preview>
+
+## API
+
+### Alert.Root
+
+<PropTable of="Alert.Root" />
+
+### Alert.Action
+
+<PropTable of="Alert.Action" />
+
+### Alert.Close
+
+<PropTable of="Alert.Close" />
+
+### Alert.Description
+
+<PropTable of="Alert.Description" />
+
+### Alert.Title
+
+<PropTable of="Alert.Title" />

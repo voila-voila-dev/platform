@@ -1,12 +1,10 @@
 ---
 title: "Rating"
 description: "A star rating, read-only or as an input."
-sidebar:
-  order: 26
+category: "forms"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/forms";
+import * as Example from "@/examples/ui/rating";
 
 <Preview layout="stack">
 	<Example.RatingExample />
@@ -20,3 +18,17 @@ import * as Example from "../../../examples/ui/forms";
 
 `Rating` displays and accepts fractions; `Rating.Input` collects a whole number
 from the user. `Rating.ReviewItem` lays out a rating with its author and comment.
+
+## API
+
+### Rating.Root
+
+<PropTable of="Rating.Root" />
+
+### Rating.Input
+
+<PropTable of="Rating.Input" />
+
+### Rating.ReviewItem
+
+<PropTable of="Rating.ReviewItem" />

@@ -1,12 +1,10 @@
 ---
 title: "HoverCard"
 description: "A preview card that opens on hover, for a link worth previewing."
-sidebar:
-  order: 38
+category: "overlays"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/overlays";
+import * as Example from "@/examples/ui/hover-card";
 
 <Preview layout="center">
 	<Example.HoverCardExample />
@@ -23,3 +21,17 @@ import * as Example from "../../../examples/ui/overlays";
 
 Hover only opens it on a pointer, so nothing here can be the only way to reach
 the information.
+
+## API
+
+### HoverCard.Root
+
+<PropTable of="HoverCard.Root" />
+
+### HoverCard.Content
+
+<PropTable of="HoverCard.Content" />
+
+### HoverCard.Trigger
+
+<PropTable of="HoverCard.Trigger" />

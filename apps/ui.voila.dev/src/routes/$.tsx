@@ -1,3 +1,4 @@
+import manifest from "virtual:docs-manifest";
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import type { MDXComponents } from "mdx/types";
 import { type ComponentType, use } from "react";
@@ -59,15 +60,23 @@ export const Route = createFileRoute("/$")({
 		await loadModule(slug);
 		return { slug };
 	},
+	/**
+	 * Title and description come from the manifest, not from the MDX module.
+	 * The module is lazy, so reading `moduleCache` here raced its own chunk:
+	 * on a client-side navigation `head` ran before the chunk resolved, found
+	 * nothing, and left the tab showing the bare site name with no meta
+	 * description. The manifest is a synchronous import of the same
+	 * frontmatter and is always there.
+	 */
 	head: ({ loaderData }) => {
-		const mod = loaderData
-			? moduleCache.get(loaderData.slug)?.value
+		const page = loaderData
+			? manifest.flat.find((item) => item.slug === loaderData.slug)
 			: undefined;
-		if (!mod) return {};
+		if (!page) return {};
 		return {
 			meta: [
-				{ title: `${mod.frontmatter.title} · ui.voila.dev` },
-				{ name: "description", content: mod.frontmatter.description },
+				{ title: `${page.title} · ui.voila.dev` },
+				{ name: "description", content: page.description },
 			],
 		};
 	},

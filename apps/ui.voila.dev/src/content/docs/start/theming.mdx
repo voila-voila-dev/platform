@@ -1,10 +1,11 @@
 ---
 title: "Theming and tokens"
 description: "Override the CSS custom properties in @voila.dev/ui/styles/themes/default.css to rebrand the whole system without forking a single component."
+sidebar:
+  order: 4
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/theming";
+import * as Example from "@/examples/theming";
 
 Styling splits in two, and the split is the whole idea:
 
@@ -128,7 +129,7 @@ for catalogue-style chips, where the colour is data rather than meaning. It is a
 deliberate exception to "no ad-hoc colour tokens": the names are fixed, and each
 has a dark override so chips stay legible in both themes.
 
-<Preview label="Badges are data-coloured, not semantic">
+<Preview layout="row" label="Badges are data-coloured, not semantic">
 	<Example.BadgeColors />
 </Preview>
 
@@ -169,7 +170,7 @@ A minimal but complete rebrand, both themes, roughly twenty lines:
 }
 ```
 
-<Preview label="What moves when --primary and --radius move">
+<Preview layout="row" label="What moves when --primary and --radius move">
 	<Example.TokenSurface />
 </Preview>
 
@@ -181,4 +182,4 @@ way to ship something genuinely broken. The default palette targets WCAG AA
 contrast checker before shipping — OKLch makes the fix obvious, since lightness
 is the first number.
 
-Next: [Project setup](/start/project-setup/).
+Next: [Project setup](/start/project-setup).

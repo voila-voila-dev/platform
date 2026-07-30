@@ -1,12 +1,10 @@
 ---
 title: "Switch"
 description: "A setting that takes effect immediately."
-sidebar:
-  order: 15
+category: "forms"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/forms";
+import * as Example from "@/examples/ui/switch";
 
 <Preview layout="stack">
 	<Example.SwitchExample />
@@ -17,6 +15,10 @@ import * as Example from "../../../examples/ui/forms";
 <Label htmlFor="notify-projects">Notify me about new projects</Label>
 ```
 
-A switch applies as soon as it is flipped; a [Checkbox](/ui/checkbox/) waits
+A switch applies as soon as it is flipped; a [Checkbox](/ui/checkbox) waits
 for the form to be submitted. If there is a Save button underneath, it is a
 checkbox.
+
+## API
+
+<PropTable of="Switch" />

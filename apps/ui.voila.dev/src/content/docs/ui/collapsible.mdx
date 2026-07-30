@@ -1,12 +1,10 @@
 ---
 title: "Collapsible"
 description: "One region that shows and hides."
-sidebar:
-  order: 56
+category: "layout"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/navigation";
+import * as Example from "@/examples/ui/navigation";
 
 <Preview layout="stack">
 	<Example.CollapsibleExample />
@@ -21,6 +19,20 @@ import * as Example from "../../../examples/ui/navigation";
 </Collapsible.Root>
 ```
 
-One section with your own trigger, where [Accordion](/ui/accordion/) is a set
+One section with your own trigger, where [Accordion](/ui/accordion) is a set
 with a house style. Rotate the caret off the trigger's `aria-expanded` rather
 than tracking the open state yourself.
+
+## API
+
+### Collapsible.Root
+
+<PropTable of="Collapsible.Root" />
+
+### Collapsible.Content
+
+<PropTable of="Collapsible.Content" />
+
+### Collapsible.Trigger
+
+<PropTable of="Collapsible.Trigger" />

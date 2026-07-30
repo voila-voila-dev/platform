@@ -5,8 +5,7 @@ sidebar:
   order: 1
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui-tokens/tokens";
+import * as Example from "@/examples/ui-tokens/tokens";
 
 The default theme is black and white on purpose — a default, not a brand. This
 walkthrough takes a whole app from there to your own identity by redefining
@@ -127,7 +126,7 @@ const rebrand = {
 <div style={rebrand}>{/* every component inside follows */}</div>;
 ```
 
-<Preview label="Same markup, four properties apart">
+<Preview layout="row" label="Same markup, four properties apart">
 	<Example.BrandSwap />
 </Preview>
 

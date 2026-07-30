@@ -1,12 +1,10 @@
 ---
 title: "Input"
 description: "A single-line text field."
-sidebar:
-  order: 3
+category: "forms"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/forms";
+import * as Example from "@/examples/ui/input";
 
 <Preview layout="stack">
 	<Example.InputExample />
@@ -20,4 +18,8 @@ Everything goes to the underlying `<input>`, `aria-invalid` included — that is
 what draws the error ring, so wire it to your validation state rather than
 adding a class.
 
-For a label, description and error around it, use [Field](/ui/field/).
+For a label, description and error around it, use [Field](/ui/field).
+
+## API
+
+<PropTable of="Input" />

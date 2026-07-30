@@ -1,12 +1,10 @@
 ---
 title: "Accordion"
 description: "Stacked sections that expand one at a time."
-sidebar:
-  order: 55
+category: "navigation"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/navigation";
+import * as Example from "@/examples/ui/navigation";
 
 <Preview layout="stack">
 	<Example.AccordionExample />
@@ -25,3 +23,21 @@ import * as Example from "../../../examples/ui/navigation";
 
 `value` is an array even for a single open panel. Pass `multiple` to let several
 stay open at once.
+
+## API
+
+### Accordion.Root
+
+<PropTable of="Accordion.Root" />
+
+### Accordion.Content
+
+<PropTable of="Accordion.Content" />
+
+### Accordion.Item
+
+<PropTable of="Accordion.Item" />
+
+### Accordion.Trigger
+
+<PropTable of="Accordion.Trigger" />

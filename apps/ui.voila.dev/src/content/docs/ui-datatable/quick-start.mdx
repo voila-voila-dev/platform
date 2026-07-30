@@ -3,11 +3,9 @@ title: "Quick start"
 description: "A read-only data table with sorting, selection, pinning, density and CSV export, finished."
 sidebar:
   order: 0
-  label: "Quick start"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui-datatable/tables";
+import * as Example from "@/examples/ui-datatable/tables";
 
 Sorting, pinning, CSV export — the table you keep rebuilding, finished.
 
@@ -69,18 +67,18 @@ The table owns the row model, you own the data. Built on
 else: sort order, selection state, visibility, pinning, pagination. It never
 edits a value. If your users need to type into the grid, that is a different
 component with a different contract; the page
-[Which one do I need?](/ui-datatable/which-one/) settles it in a minute.
+[Which one do I need?](/ui-datatable/which-one) settles it in a minute.
 
 ## Page map
 
-- [DataTable](/ui-datatable/data-table/): the table itself, every extra behind a prop.
-- [Which one do I need?](/ui-datatable/which-one/): read-heavy table or editable grid.
-- [Selection](/ui-datatable/selection/): a checkbox column and row selection state.
-- [Column resizing](/ui-datatable/column-resizing/): drag column edges, arrow keys nudge.
-- [Column pinning](/ui-datatable/column-pinning/): freeze columns against either edge.
-- [Column visibility](/ui-datatable/column-visibility/): a columns menu via `DataTable.ViewOptions`.
-- [Density](/ui-datatable/density/): comfortable or compact row heights.
-- [Row expansion](/ui-datatable/row-expansion/): a detail panel under any row.
-- [Global filter](/ui-datatable/global-filter/): client-side search across visible cells.
-- [CSV export](/ui-datatable/export/): `DataTable.Export`, or `dataTableToCsv` for the bytes.
-- [Pagination](/ui-datatable/pagination/): a server-side windowed footer.
+- [DataTable](/ui-datatable/data-table): the table itself, every extra behind a prop.
+- [Which one do I need?](/ui-datatable/which-one): read-heavy table or editable grid.
+- [Selection](/ui-datatable/selection): a checkbox column and row selection state.
+- [Column resizing](/ui-datatable/column-resizing): drag column edges, arrow keys nudge.
+- [Column pinning](/ui-datatable/column-pinning): freeze columns against either edge.
+- [Column visibility](/ui-datatable/column-visibility): a columns menu via `DataTable.ViewOptions`.
+- [Density](/ui-datatable/density): comfortable or compact row heights.
+- [Row expansion](/ui-datatable/row-expansion): a detail panel under any row.
+- [Global filter](/ui-datatable/global-filter): client-side search across visible cells.
+- [CSV export](/ui-datatable/export): `DataTable.Export`, or `dataTableToCsv` for the bytes.
+- [Pagination](/ui-datatable/pagination): a server-side windowed footer.

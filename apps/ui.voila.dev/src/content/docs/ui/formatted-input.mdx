@@ -1,12 +1,10 @@
 ---
 title: "FormattedInput"
 description: "A text field that formats as you type, from a mask."
-sidebar:
-  order: 9
+category: "forms"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/forms";
+import * as Example from "@/examples/ui/formatted-input";
 
 <Preview layout="stack">
 	<Example.FormattedInputExample />
@@ -19,3 +17,7 @@ import * as Example from "../../../examples/ui/forms";
 `businessIdMask`, `idNumberMask` and `phoneMask` ship with the component. The
 value you get back is unformatted, so what you store is digits and the grouping
 is only ever presentation.
+
+## API
+
+<PropTable of="FormattedInput" />

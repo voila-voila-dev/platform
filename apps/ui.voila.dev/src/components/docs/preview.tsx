@@ -16,7 +16,7 @@ interface PreviewProps {
 	children: ReactNode;
 }
 
-export default function Preview({
+export function Preview({
 	label,
 	layout = "row",
 	scroll = false,

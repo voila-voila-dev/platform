@@ -1,12 +1,10 @@
 ---
 title: "TimePicker"
 description: "A time field with a list of slots."
-sidebar:
-  order: 30
+category: "dates-and-time"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/forms";
+import * as Example from "@/examples/ui/time-picker";
 
 <Preview layout="center">
 	<Example.TimePickerExample />
@@ -19,3 +17,7 @@ import * as Example from "../../../examples/ui/forms";
 The value is a `"HH:mm"` string, not a `Date` — a time with no date attached
 does not need one, and storing it as text avoids a timezone question that has
 no answer.
+
+## API
+
+<PropTable of="TimePicker" />

@@ -1,12 +1,10 @@
 ---
 title: "Badge"
 description: "Label a status or a category."
-sidebar:
-  order: 2
+category: "data-display"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/badge";
+import * as Example from "@/examples/ui/badge";
 
 <Preview layout="row">
 	<Example.Default />
@@ -64,12 +62,7 @@ clickable are distinguishable. For a chip the user can remove, reach for
 
 ## API
 
-| Prop | Default | |
-| --- | --- | --- |
-| `variant` | `"default"` | `secondary`, `outline`, `destructive`, `ghost`, `link`, plus `brand` and `highlight`. |
-| `color` | — | Catalogue palette; overrides `variant`. |
-| `size` | `"default"` | `sm` for dense surfaces such as table cells. Below that, use text. |
-| `render` | — | Base UI: render as another element. |
+<PropTable of="Badge" />
 
 Colour alone is not an accessible status indicator; the label inside the badge
 is doing the work and the colour is reinforcement. Never ship a badge whose

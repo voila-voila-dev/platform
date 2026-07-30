@@ -1,12 +1,10 @@
 ---
 title: "Checkbox"
 description: "An independent on-off box, with an indeterminate state."
-sidebar:
-  order: 12
+category: "forms"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/forms";
+import * as Example from "@/examples/ui/checkbox";
 
 <Preview layout="stack">
 	<Example.CheckboxExample />
@@ -20,3 +18,7 @@ import * as Example from "../../../examples/ui/forms";
 `indeterminate` is the dash for a parent whose children are partly ticked. It
 is separate from `checked`, so the parent can be unchecked and indeterminate at
 the same time — which is what "some of them" means.
+
+## API
+
+<PropTable of="Checkbox" />

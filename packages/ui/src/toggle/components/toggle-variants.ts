@@ -3,10 +3,15 @@ import { cva } from "#/lib/cva.ts";
 export const toggleVariants = cva({
 	base: "group/toggle inline-flex items-center justify-center gap-1 rounded-lg border border-transparent text-sm font-medium whitespace-nowrap transition-all outline-none hover:bg-muted hover:text-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 data-pressed:bg-muted data-pressed:inset-shadow-xs dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
 	variants: {
+		/**
+		 * `outline` gives the toggle a border, so it stays visible against a
+		 * surface that already has a fill.
+		 */
 		variant: {
 			default: "bg-transparent",
 			outline: "border-input bg-transparent hover:bg-muted",
 		},
+		/** Control height. Match it to the controls beside it. */
 		size: {
 			default:
 				"h-8 min-w-8 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2",

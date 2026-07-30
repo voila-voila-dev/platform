@@ -1,6 +1,8 @@
 ---
 title: "Project setup"
 description: "Structure your app as a Bun workspace monorepo so the UI layer stays separable from the product."
+sidebar:
+  order: 5
 ---
 
 You do not need a monorepo to use `@voila.dev/ui`. A single Vite app with two
@@ -29,7 +31,7 @@ Two things earn their own package here, and it is worth being precise about why:
 
 - **`branding`** — your logo, wordmark and brand-specific components. It is the
   thing you would never publish and never share. Keeping it separate is what
-  lets the rest be generic. [Your branding package](/start/branding/)
+  lets the rest be generic. [Your branding package](/start/branding)
 - **`ui-theme`** — one CSS file with your token overrides. Every app imports it,
   so a colour changes in one place.
 
@@ -122,4 +124,4 @@ Do not create a package until two things need it. A `packages/ui-theme` with one
 consumer is a directory with extra ceremony. Start with the CSS file inside the
 app, and promote it the day the second app appears.
 
-Next: [Your branding package](/start/branding/).
+Next: [Your branding package](/start/branding).

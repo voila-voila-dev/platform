@@ -2,12 +2,25 @@ import manifest from "virtual:docs-manifest";
 import { ArrowLeftIcon, ArrowRightIcon } from "@phosphor-icons/react";
 import { Link } from "@tanstack/react-router";
 
-/** Previous/next page cards, following the sidebar's flat order. */
+/**
+ * Previous/next page cards, following the sidebar's order **within the current
+ * section**.
+ *
+ * This used to walk `manifest.flat` end to end, so the last `@voila.dev/ui`
+ * page offered "Next: Quick start" into `ui/icon` — a jump across package
+ * boundaries presented as if it were the next thing to read. A section now
+ * ends where it ends.
+ */
 export function PrevNext({ slug }: { slug: string }) {
 	const index = manifest.flat.findIndex((item) => item.slug === slug);
 	if (index === -1) return null;
-	const prev = manifest.flat[index - 1];
-	const next = manifest.flat[index + 1];
+	const section = manifest.flat[index]?.section;
+	const inSection = (offset: number) => {
+		const item = manifest.flat[index + offset];
+		return item?.section === section ? item : undefined;
+	};
+	const prev = inSection(-1);
+	const next = inSection(1);
 	if (!prev && !next) return null;
 
 	return (

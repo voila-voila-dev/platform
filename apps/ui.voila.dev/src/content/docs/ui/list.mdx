@@ -1,12 +1,10 @@
 ---
 title: "List"
 description: "A semantic list of Item rows."
-sidebar:
-  order: 66
+category: "data-display"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/display";
+import * as Example from "@/examples/ui/list";
 
 <Preview layout="stack">
 	<Example.ListExample />
@@ -24,5 +22,19 @@ import * as Example from "../../../examples/ui/display";
 ```
 
 `List` renders a `<ul>` and `List.Item` an `<li>`, taking the same children as
-[Item](/ui/item/). Give the list an `aria-label` — a screen reader announces
+[Item](/ui/item). Give the list an `aria-label` — a screen reader announces
 the count, and "list of 12" is only useful if it says a list of what.
+
+## API
+
+### List.Root
+
+<PropTable of="List.Root" />
+
+### List.Item
+
+<PropTable of="List.Item" />
+
+### List.Separator
+
+<PropTable of="List.Separator" />

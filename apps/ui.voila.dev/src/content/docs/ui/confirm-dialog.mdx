@@ -1,14 +1,12 @@
 ---
 title: "ConfirmDialog"
 description: "An AlertDialog as a single component, with async confirm handling."
-sidebar:
-  order: 32
+category: "overlays"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/overlays";
+import * as Example from "@/examples/ui/confirm-dialog";
 
-<Preview>
+<Preview layout="row">
 	<Example.ConfirmDialogExample />
 </Preview>
 
@@ -25,3 +23,7 @@ import * as Example from "../../../examples/ui/overlays";
 If `onConfirm` returns a promise the confirm button shows a spinner until it
 settles, and the dialog stays open if it rejects — so a failed request leaves
 the user where they can retry.
+
+## API
+
+<PropTable of="ConfirmDialog" />

@@ -3,6 +3,10 @@ import { cva, type VariantProps } from "#/lib/cva.ts";
 export const badgeVariants = cva({
 	base: "group/badge inline-flex w-fit shrink-0 items-center justify-center overflow-hidden rounded-4xl border border-transparent font-medium whitespace-nowrap transition-all focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&>svg]:pointer-events-none [&>svg:not([class*='size-'])]:size-3",
 	variants: {
+		/**
+		 * Semantic intent, for **status**: pending, failed, verified. For an
+		 * arbitrary category — a tag, a skill, a department — use `color`.
+		 */
 		variant: {
 			default: "bg-primary text-primary-foreground [a]:hover:bg-primary/80",
 			secondary:
@@ -18,6 +22,10 @@ export const badgeVariants = cva({
 				"hover:bg-muted hover:text-muted-foreground dark:hover:bg-muted/50",
 			link: "text-primary underline-offset-4 hover:underline",
 		},
+		/**
+		 * Catalogue palette, for **category** rather than status. Overrides
+		 * `variant` when both are set.
+		 */
 		color: {
 			slate:
 				"bg-badge-slate text-badge-slate-foreground [a]:hover:bg-badge-slate/90",
@@ -50,6 +58,7 @@ export const badgeVariants = cva({
 			pink: "bg-badge-pink text-badge-pink-foreground [a]:hover:bg-badge-pink/90",
 			rose: "bg-badge-rose text-badge-rose-foreground [a]:hover:bg-badge-rose/90",
 		},
+		/** `sm` for dense surfaces such as table cells. Below that, use text. */
 		size: {
 			default:
 				"h-5 gap-1 px-2 py-0.5 text-xs has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5",

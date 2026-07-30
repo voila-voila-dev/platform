@@ -1,12 +1,10 @@
 ---
 title: "Command"
 description: "A filtered command list — the palette behind ⌘K."
-sidebar:
-  order: 43
+category: "overlays"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/overlays";
+import * as Example from "@/examples/ui/command";
 
 <Preview layout="stack">
 	<Example.CommandExample />
@@ -31,3 +29,41 @@ Built on [cmdk](https://cmdk.paco.me/), so an item's `value` and `keywords`
 drive the filtering — set them when the visible label is not what people will
 type. `Command.Dialog` wraps the same list in a modal, and the
 `useCommandPalette` hook wires up the ⌘K shortcut.
+
+## API
+
+### Command.Root
+
+<PropTable of="Command.Root" />
+
+### Command.Dialog
+
+<PropTable of="Command.Dialog" />
+
+### Command.Empty
+
+<PropTable of="Command.Empty" />
+
+### Command.Group
+
+<PropTable of="Command.Group" />
+
+### Command.Input
+
+<PropTable of="Command.Input" />
+
+### Command.Item
+
+<PropTable of="Command.Item" />
+
+### Command.List
+
+<PropTable of="Command.List" />
+
+### Command.Separator
+
+<PropTable of="Command.Separator" />
+
+### Command.Shortcut
+
+<PropTable of="Command.Shortcut" />

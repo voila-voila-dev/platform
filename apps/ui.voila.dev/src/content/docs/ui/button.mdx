@@ -1,12 +1,10 @@
 ---
 title: "Button"
 description: "Trigger an action."
-sidebar:
-  order: 1
+category: "actions"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/button";
+import * as Example from "@/examples/ui/button";
 
 <Preview layout="row">
 	<Example.Default />
@@ -67,19 +65,7 @@ and behaviour:
 
 ## API
 
-| Prop | Default | |
-| --- | --- | --- |
-| `variant` | `"default"` | `secondary`, `outline`, `ghost`, `destructive`, `link`, plus the surface variants `brand` and `highlight`. |
-| `size` | `"default"` | `xs`, `sm`, `lg`, and the square `icon-*` set. |
-| `shape` | `"default"` | `pill` forces a fully rounded button. |
-| `loading` | `false` | Leading spinner, `disabled`, `aria-busy`. |
-| `render` | — | Base UI: render as another element. |
-
-All remaining props go to the underlying element. Picking a variant: `default`
-is the one action the page exists for, at most one per view; `secondary` an
-equal-weight alternative; `outline` for toolbars and anything that repeats in a
-row; `ghost` inside dense surfaces; `destructive` for what cannot be undone;
-`link` for an action that reads as navigation.
+<PropTable of="Button" />
 
 The variant and size names are also exported as arrays
 (`buttonVariantOptions`, `buttonSizeOptions`), and the `cva` itself as
@@ -97,7 +83,7 @@ or copy it into your repo.
 
 Reach for `className` for layout (`w-full`, `mt-2`), not for colour. If a
 button needs a colour the variants do not have, the token behind the variant is
-what should change; see [Theming](/start/theming/#the-one-rule).
+what should change; see [Theming](/start/theming#the-one-rule).
 
 ## Related
 

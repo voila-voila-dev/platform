@@ -1,12 +1,10 @@
 ---
 title: "ProfileHeader"
 description: "The cover, avatar, name and actions at the top of a profile."
-sidebar:
-  order: 63
+category: "data-display"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/display";
+import * as Example from "@/examples/ui/profile-header";
 
 <Preview layout="stack">
 	<Example.ProfileHeaderExample />
@@ -25,3 +23,13 @@ import * as Example from "../../../examples/ui/display";
 
 `theme` picks the accent — `brand` or `highlight` — which tints
 the gradient used when there is no cover image.
+
+## API
+
+### ProfileHeader.Root
+
+<PropTable of="ProfileHeader.Root" />
+
+### ProfileHeader.Cover
+
+<PropTable of="ProfileHeader.Cover" />

@@ -3,11 +3,10 @@ title: "Quick start"
 description: "Composable marketing sections: heroes, feature grids, testimonials, footers."
 sidebar:
   order: 0
-  label: "Quick start"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui-landing/sections";
+import { Hero } from "@/examples/ui-landing/landing-hero";
+import { QuickStartWin } from "@/examples/ui-landing/quick-start";
 
 **Your marketing site, from the same system as your product.**
 
@@ -21,7 +20,7 @@ the rest of the system it is source-shipped: every section is readable `.tsx`
 you can open, trace and rewrite.
 
 <Preview layout="stack">
-	<Example.Hero />
+	<Hero />
 </Preview>
 
 ## Install
@@ -75,7 +74,7 @@ export function WhyUs() {
 ```
 
 <Preview layout="stack">
-	<Example.QuickStartWin />
+	<QuickStartWin />
 </Preview>
 
 ## Mental model

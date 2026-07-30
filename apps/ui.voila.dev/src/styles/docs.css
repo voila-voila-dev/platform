@@ -172,6 +172,49 @@
 	& :is(th, td):first-child:not(.not-prose *) {
 		padding-left: 0;
 	}
+
+	/*
+	 * Generated prop tables (`remark-prop-table`). Always Prop / Type / Default
+	 * / description, so the columns get fixed proportions. Under `auto`, one
+	 * 20-member union claimed 60% of the table and the description column
+	 * collapsed to a 126px ribbon four lines tall.
+	 *
+	 * Only from `md` up. Narrower than that there is no width to divide: fixed
+	 * columns broke `color` into "colo/r" and `"emerald"` across two lines. On
+	 * a phone the table keeps `auto` layout and scrolls inside its own frame,
+	 * which is what the wrapper is there for.
+	 */
+	@media (width >= 48rem) {
+		& table.prop-table {
+			table-layout: fixed;
+		}
+		& .prop-table :is(th, td) {
+			overflow-wrap: anywhere;
+		}
+		/*
+		 * Inline code is `nowrap` everywhere else so a token never breaks
+		 * mid-word. In a type cell that is the wrong trade:
+		 * `ReactElement<unknown, string | JSXElementConstructor<any>>` is one
+		 * unbreakable token wider than the column, and it overprinted the
+		 * description beside it.
+		 */
+		& .prop-table :is(code, code span) {
+			white-space: normal;
+			overflow-wrap: anywhere;
+		}
+		& .prop-table :is(th, td):nth-child(1) {
+			width: 17%;
+		}
+		& .prop-table :is(th, td):nth-child(2) {
+			width: 30%;
+		}
+		& .prop-table :is(th, td):nth-child(3) {
+			width: 15%;
+		}
+		& .prop-table :is(th, td):nth-child(4) {
+			width: 38%;
+		}
+	}
 }
 
 /* --- Code blocks (rehype-pretty-code / shiki) ----------------------------- */

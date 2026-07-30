@@ -1,12 +1,10 @@
 ---
 title: "Progress"
 description: "A determinate or indeterminate progress bar, with an optional label."
-sidebar:
-  order: 22
+category: "feedback"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/feedback";
+import * as Example from "@/examples/ui/feedback";
 
 <Preview layout="stack">
 	<Example.ProgressDefault />
@@ -22,3 +20,17 @@ import * as Example from "../../../examples/ui/feedback";
 `value={null}` is the indeterminate state — the bar loops instead of filling.
 `Progress.Value` takes a formatter child when a percentage is not what you want
 to show.
+
+## API
+
+### Progress.Root
+
+<PropTable of="Progress.Root" />
+
+### Progress.Label
+
+<PropTable of="Progress.Label" />
+
+### Progress.Value
+
+<PropTable of="Progress.Value" />

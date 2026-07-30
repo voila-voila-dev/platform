@@ -3,11 +3,19 @@ import { cva } from "#/lib/cva.ts";
 export const sidebarMenuButtonVariants = cva({
 	base: "peer/menu-button group/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left text-sm ring-sidebar-ring outline-hidden transition-[width,height,padding] group-has-data-[sidebar=menu-action]/menu-item:pr-8 group-data-[collapsible=icon]:size-8! group-data-[collapsible=icon]:p-2! hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:ring-2 active:bg-sidebar-accent active:text-sidebar-accent-foreground disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 data-popup-open:hover:bg-sidebar-accent data-popup-open:hover:text-sidebar-accent-foreground data-panel-open:hover:bg-sidebar-accent data-panel-open:hover:text-sidebar-accent-foreground data-active:bg-sidebar-accent data-active:font-medium data-active:text-sidebar-accent-foreground [&_svg]:size-4 [&_svg]:shrink-0 [&>span:last-child]:truncate",
 	variants: {
+		/**
+		 * `outline` gives the item its own border, for a button that is not part
+		 * of the navigation list.
+		 */
 		variant: {
 			default: "",
 			outline:
 				"bg-background shadow-[0_0_0_1px_var(--sidebar-border)] hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_var(--sidebar-accent)]",
 		},
+		/**
+		 * Row height. `sm` for a dense secondary list, `lg` for a top-level entry
+		 * with a description.
+		 */
 		size: {
 			default: "h-8 text-sm",
 			sm: "h-7 text-xs",

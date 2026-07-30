@@ -8,6 +8,7 @@ import { cva } from "#/lib/cva.ts";
 export const segmentedControlVariants = cva({
 	base: "group/segmented-control relative isolate inline-flex w-fit items-center justify-center rounded-lg bg-muted p-[3px] text-muted-foreground",
 	variants: {
+		/** Control height and label size. Match it to the controls beside it. */
 		size: {
 			default: "h-8",
 			sm: "h-7 rounded-[min(var(--radius-md),12px)]",

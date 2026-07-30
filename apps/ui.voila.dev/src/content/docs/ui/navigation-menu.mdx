@@ -1,12 +1,10 @@
 ---
 title: "NavigationMenu"
 description: "A horizontal menu whose items open panels of links."
-sidebar:
-  order: 51
+category: "navigation"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/navigation";
+import * as Example from "@/examples/ui/navigation";
 
 <Preview layout="stack">
 	<Example.NavigationMenuExample />
@@ -27,9 +25,43 @@ import * as Example from "../../../examples/ui/navigation";
 </NavigationMenu.Root>
 ```
 
-This is for navigation; [DropdownMenu](/ui/dropdown-menu/) is for actions. The
+This is for navigation; [DropdownMenu](/ui/dropdown-menu) is for actions. The
 difference is real to a screen reader, which announces one as a list of links
 and the other as a menu of commands.
 
 A top-level item that goes straight somewhere needs no trigger — use a
 `NavigationMenu.Link` with `navigationMenuTriggerStyle()`.
+
+## API
+
+### NavigationMenu.Root
+
+<PropTable of="NavigationMenu.Root" />
+
+### NavigationMenu.Content
+
+<PropTable of="NavigationMenu.Content" />
+
+### NavigationMenu.Indicator
+
+<PropTable of="NavigationMenu.Indicator" />
+
+### NavigationMenu.Item
+
+<PropTable of="NavigationMenu.Item" />
+
+### NavigationMenu.Link
+
+<PropTable of="NavigationMenu.Link" />
+
+### NavigationMenu.List
+
+<PropTable of="NavigationMenu.List" />
+
+### NavigationMenu.Positioner
+
+<PropTable of="NavigationMenu.Positioner" />
+
+### NavigationMenu.Trigger
+
+<PropTable of="NavigationMenu.Trigger" />

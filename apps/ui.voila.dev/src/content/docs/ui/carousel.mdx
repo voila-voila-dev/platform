@@ -1,12 +1,10 @@
 ---
 title: "Carousel"
 description: "A swipeable track of slides."
-sidebar:
-  order: 76
+category: "data-display"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/display";
+import * as Example from "@/examples/ui/carousel";
 
 <Preview layout="center">
 	<Example.CarouselExample />
@@ -29,3 +27,29 @@ or they will clip.
 
 `basis-1/3` on the items shows three at a time — the track does not have a
 "slides per view" prop because that is what the width is for.
+
+## API
+
+### Carousel.Root
+
+<PropTable of="Carousel.Root" />
+
+### Carousel.Content
+
+<PropTable of="Carousel.Content" />
+
+### Carousel.Dots
+
+<PropTable of="Carousel.Dots" />
+
+### Carousel.Item
+
+<PropTable of="Carousel.Item" />
+
+### Carousel.Next
+
+<PropTable of="Carousel.Next" />
+
+### Carousel.Previous
+
+<PropTable of="Carousel.Previous" />

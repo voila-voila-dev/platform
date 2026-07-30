@@ -1,14 +1,12 @@
 ---
 title: "Kbd"
 description: "A keyboard key, rendered as a key."
-sidebar:
-  order: 71
+category: "actions"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/display";
+import * as Example from "@/examples/ui/kbd";
 
-<Preview>
+<Preview layout="row">
 	<Example.KbdExample />
 </Preview>
 
@@ -21,3 +19,13 @@ import * as Example from "../../../examples/ui/display";
 	<Kbd.Root>P</Kbd.Root>
 </Kbd.Group>
 ```
+
+## API
+
+### Kbd.Root
+
+<PropTable of="Kbd.Root" />
+
+### Kbd.Group
+
+<PropTable of="Kbd.Group" />

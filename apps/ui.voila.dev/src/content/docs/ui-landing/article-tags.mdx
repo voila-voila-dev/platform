@@ -2,13 +2,12 @@
 title: "ArticleTags"
 description: "The tag chips on a blog card or article header."
 sidebar:
-  order: 22
+  order: 23
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui-landing/sections";
+import * as Example from "@/examples/ui-landing/article-tags";
 
-<Preview>
+<Preview layout="row">
 	<Example.ArticleTags />
 </Preview>
 
@@ -19,5 +18,5 @@ import * as Example from "../../../examples/ui-landing/sections";
 </ArticleTags.Root>
 ```
 
-Inside an [ArticleCard](/ui-landing/article-card/) the row is
+Inside an [ArticleCard](/ui-landing/article-card) the row is
 `ArticleCard.Tags`; the tags themselves come from here either way.

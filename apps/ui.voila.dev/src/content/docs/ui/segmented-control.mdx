@@ -1,12 +1,10 @@
 ---
 title: "SegmentedControl"
 description: "One-of-a-few, as a filled track with a sliding thumb."
-sidebar:
-  order: 23
+category: "actions"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/forms";
+import * as Example from "@/examples/ui/segmented-control";
 
 <Preview layout="stack">
 	<Example.SegmentedControlExample />
@@ -22,3 +20,13 @@ import * as Example from "../../../examples/ui/forms";
 
 Always exactly one selected, so it suits a view switcher rather than a filter.
 Keep it to a handful of short labels — the segments share the width evenly.
+
+## API
+
+### SegmentedControl.Root
+
+<PropTable of="SegmentedControl.Root" />
+
+### SegmentedControl.Item
+
+<PropTable of="SegmentedControl.Item" />

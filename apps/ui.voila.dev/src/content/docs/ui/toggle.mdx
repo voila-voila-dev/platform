@@ -1,14 +1,12 @@
 ---
 title: "Toggle"
 description: "A button that stays pressed."
-sidebar:
-  order: 21
+category: "actions"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/forms";
+import * as Example from "@/examples/ui/toggle";
 
-<Preview>
+<Preview layout="row">
 	<Example.ToggleExample />
 </Preview>
 
@@ -22,3 +20,7 @@ import * as Example from "../../../examples/ui/forms";
 
 Colour alone is a weak pressed state. Swapping an outline icon for a filled one
 off `group-data-pressed` is the pattern the component is built for.
+
+## API
+
+<PropTable of="Toggle" />

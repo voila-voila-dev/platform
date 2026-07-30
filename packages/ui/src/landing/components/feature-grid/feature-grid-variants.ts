@@ -3,6 +3,10 @@ import { cva, type VariantProps } from "#/lib/cva.ts";
 export const featureGridVariants = cva({
 	base: "grid gap-6",
 	variants: {
+		/**
+		 * Columns at the widest breakpoint. Narrower viewports collapse toward a
+		 * single column regardless.
+		 */
 		columns: {
 			"2": "md:grid-cols-2",
 			"3": "md:grid-cols-3",
@@ -17,6 +21,10 @@ export const featureGridVariants = cva({
 export const featureGridCardVariants = cva({
 	base: "h-full rounded-2xl bg-card text-card-foreground transition-all duration-200",
 	variants: {
+		/**
+		 * How each cell separates from the page: a raised surface, or a plain
+		 * border.
+		 */
 		variant: {
 			elevated: "border border-transparent p-8 shadow-lg",
 			outline: "border border-border p-8",

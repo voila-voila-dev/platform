@@ -1,12 +1,10 @@
 ---
 title: "Resizable"
 description: "Panels the user can drag to resize."
-sidebar:
-  order: 77
+category: "layout"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/display";
+import * as Example from "@/examples/ui/resizable";
 
 <Preview layout="stack">
 	<Example.ResizableExample />
@@ -25,3 +23,21 @@ import * as Example from "../../../examples/ui/display";
 The group fills its parent, so the size goes on a wrapper and never on
 `Resizable.PanelGroup` itself. A panel with `collapsible` and `collapsedSize={0}`
 snaps shut when dragged to the edge.
+
+## API
+
+### Resizable.Root
+
+<PropTable of="Resizable.Root" />
+
+### Resizable.Handle
+
+<PropTable of="Resizable.Handle" />
+
+### Resizable.Panel
+
+<PropTable of="Resizable.Panel" />
+
+### Resizable.PanelGroup
+
+<PropTable of="Resizable.PanelGroup" />

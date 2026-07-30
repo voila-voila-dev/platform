@@ -1,12 +1,10 @@
 ---
 title: "TranslationInput"
 description: "One field per locale, with a switcher."
-sidebar:
-  order: 11
+category: "forms"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/forms";
+import * as Example from "@/examples/ui/translation-input";
 
 <Preview layout="stack">
 	<Example.TranslationInputExample />
@@ -27,3 +25,7 @@ import * as Example from "../../../examples/ui/forms";
 Typing into a locale copies the text into every locale that is still empty, so
 a value written once is complete in all of them. Locales that already hold their
 own wording are never overwritten.
+
+## API
+
+<PropTable of="TranslationInput" />

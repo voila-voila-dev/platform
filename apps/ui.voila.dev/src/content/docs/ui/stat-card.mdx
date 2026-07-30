@@ -1,12 +1,10 @@
 ---
 title: "StatCard"
 description: "One metric, its change, and an optional sparkline."
-sidebar:
-  order: 64
+category: "data-display"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/display";
+import * as Example from "@/examples/ui/stat-card";
 
 <Preview layout="stack">
 	<Example.StatCardExample />
@@ -28,3 +26,29 @@ you would want to read as good.
 
 `StatCard.Chart` is a full-bleed slot pinned to the bottom edge for a sparkline.
 Constrain the chart's height on the `Chart.Root` itself.
+
+## API
+
+### StatCard.Root
+
+<PropTable of="StatCard.Root" />
+
+### StatCard.Chart
+
+<PropTable of="StatCard.Chart" />
+
+### StatCard.Delta
+
+<PropTable of="StatCard.Delta" />
+
+### StatCard.Header
+
+<PropTable of="StatCard.Header" />
+
+### StatCard.Label
+
+<PropTable of="StatCard.Label" />
+
+### StatCard.Value
+
+<PropTable of="StatCard.Value" />

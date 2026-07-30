@@ -1,12 +1,10 @@
 ---
 title: "DatePicker"
 description: "A date field opening a calendar."
-sidebar:
-  order: 28
+category: "dates-and-time"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/forms";
+import * as Example from "@/examples/ui/date-picker";
 
 <Preview layout="center">
 	<Example.DatePickerExample />
@@ -21,6 +19,20 @@ import * as Example from "../../../examples/ui/forms";
 />
 ```
 
-`calendarProps` passes through to the [Calendar](/ui/calendar/) underneath —
+`calendarProps` passes through to the [Calendar](/ui/calendar) underneath —
 `defaultMonth`, `disabled`, and so on. `DatePicker.Range` is the two-date
 version, and `DatePicker.Trigger` is the field on its own.
+
+## API
+
+### DatePicker.Root
+
+<PropTable of="DatePicker.Root" />
+
+### DatePicker.Range
+
+<PropTable of="DatePicker.Range" />
+
+### DatePicker.Trigger
+
+<PropTable of="DatePicker.Trigger" />

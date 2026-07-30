@@ -1,6 +1,8 @@
 ---
 title: "Introduction"
 description: "A source-shipped component system you own, what it assumes about your app, and when it is the wrong choice."
+sidebar:
+  order: 1
 ---
 
 `@voila.dev/ui` is a React component system distributed as **source**. When you
@@ -22,7 +24,7 @@ rewrite every component, because the code sitting in `node_modules` is the
 real code. There is no black box for the model to hallucinate around; the code
 is the documentation. Prompts like "make the checkout use our brand" actually
 work, because the component is readable source the agent can open. The
-[Working with AI](/start/working-with-ai/) page shows how to set that up.
+[Working with AI](/start/working-with-ai) page shows how to set that up.
 
 **Ownership, both ways.** Use it as a real dependency: one `bun add`, lockstep
 versions across every package, updates for free. Or copy any file into your
@@ -91,4 +93,4 @@ line all the same: the tokens know nothing about components, the core knows
 nothing about the add-on domains, and each domain depends only on the core.
 Import only what you use; nothing else lands in your bundle.
 
-Next: [Installation](/start/installation/).
+Next: [Installation](/start/installation).

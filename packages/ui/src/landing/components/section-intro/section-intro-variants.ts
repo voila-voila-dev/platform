@@ -3,10 +3,15 @@ import { cva, type VariantProps } from "#/lib/cva.ts";
 export const sectionIntroVariants = cva({
 	base: "mx-auto text-center",
 	variants: {
+		/**
+		 * Measure of the intro copy. `md` holds a comfortable line length; `lg`
+		 * for a longer standfirst.
+		 */
 		width: {
 			md: "max-w-2xl",
 			lg: "max-w-3xl",
 		},
+		/** Gap between the intro and the section body beneath it. */
 		spacing: {
 			md: "mb-12",
 			lg: "mb-16",

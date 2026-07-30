@@ -1,12 +1,10 @@
 ---
 title: "ToggleGroup"
 description: "A set of toggles sharing one value."
-sidebar:
-  order: 22
+category: "actions"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/forms";
+import * as Example from "@/examples/ui/toggle-group";
 
 <Preview layout="stack">
 	<Example.ToggleGroupExample />
@@ -23,4 +21,14 @@ The value is an array either way; `multiple` is what lets more than one entry
 into it. Icon-only items need an `aria-label`.
 
 For the single-choice view switcher with a sliding thumb, use
-[SegmentedControl](/ui/segmented-control/).
+[SegmentedControl](/ui/segmented-control).
+
+## API
+
+### ToggleGroup.Root
+
+<PropTable of="ToggleGroup.Root" />
+
+### ToggleGroup.Item
+
+<PropTable of="ToggleGroup.Item" />

@@ -1,12 +1,10 @@
 ---
 title: "Chat"
 description: "Message threads, bubbles and a composer."
-sidebar:
-  order: 80
+category: "data-display"
 ---
 
-import Preview from "@/components/docs/preview";
-import * as Example from "../../../examples/ui/display";
+import * as Example from "@/examples/ui/chat";
 
 <Preview layout="stack">
 	<Example.ChatExample />
@@ -40,3 +38,49 @@ the sender block is rendered once per group, not once per message.
 
 `Chat.ConversationItem` is the list-of-threads row, with `unreadCount` capped at
 "99+".
+
+## API
+
+### Chat.Composer
+
+<PropTable of="Chat.Composer" />
+
+### Chat.ConversationItem
+
+<PropTable of="Chat.ConversationItem" />
+
+### Chat.DateSeparator
+
+<PropTable of="Chat.DateSeparator" />
+
+### Chat.ExternalLinkDialog
+
+<PropTable of="Chat.ExternalLinkDialog" />
+
+### Chat.Message
+
+<PropTable of="Chat.Message" />
+
+### Chat.MessageGroup
+
+<PropTable of="Chat.MessageGroup" />
+
+### Chat.MessageList
+
+<PropTable of="Chat.MessageList" />
+
+### Chat.MessageSender
+
+<PropTable of="Chat.MessageSender" />
+
+### Chat.MessageText
+
+<PropTable of="Chat.MessageText" />
+
+### Chat.MessageTime
+
+<PropTable of="Chat.MessageTime" />
+
+### Chat.UnreadSeparator
+
+<PropTable of="Chat.UnreadSeparator" />
