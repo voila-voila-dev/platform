@@ -1,4 +1,3 @@
-import { CheckIcon, WarningIcon } from "@phosphor-icons/react";
 import { Badge, badgeColors } from "@voila.dev/ui/badge";
 
 export function Default() {
@@ -18,24 +17,6 @@ export function Variants() {
 	);
 }
 
-export function SurfaceVariants() {
-	return (
-		<>
-			<Badge variant="brand">Freelancer</Badge>
-			<Badge variant="highlight">Client</Badge>
-		</>
-	);
-}
-
-export function Sizes() {
-	return (
-		<>
-			<Badge size="default">Default</Badge>
-			<Badge size="sm">Small</Badge>
-		</>
-	);
-}
-
 export function Colors() {
 	return (
 		<>
@@ -44,19 +25,6 @@ export function Colors() {
 					{color}
 				</Badge>
 			))}
-		</>
-	);
-}
-
-export function WithIcons() {
-	return (
-		<>
-			<Badge>
-				<CheckIcon /> Verified
-			</Badge>
-			<Badge variant="destructive">
-				<WarningIcon /> Expired
-			</Badge>
 		</>
 	);
 }

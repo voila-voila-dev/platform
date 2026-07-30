@@ -1,6 +1,6 @@
 ---
 title: "A real listing page"
-description: "Filters, a datatable and a map, all driven by one FilterValues record."
+description: "Filters, a data table and a map, all driven by one FilterValues record."
 sidebar:
   order: 20
 ---
@@ -105,10 +105,10 @@ before serialising: the record you hold is the record you send.
 
 The three packages meet only in your screen. The filter source is
 `@voila.dev/ui/src/filter/components/filter-bar.tsx`, the table
-`@voila.dev/ui/src/datatable/components/data-table.tsx`, the map
+`@voila.dev/ui/src/data-table/components/data-table.tsx`, the map
 `@voila.dev/ui/src/radius-map/components/radius-map.tsx`. To change how a filter kind
 matches your rows, the `matchesProject` function above is yours to begin with.
 
 ## Related
 
-[FilterBar](/ui-filter/filter-bar) · [Geo radius](/ui-filter/geo-radius-filter-field) · [RadiusMap](/ui-map/radius-map)
+[Filter.Root](/ui-filter/filter-root) · [Geo radius](/ui-filter/geo-radius-filter-field) · [RadiusMap](/ui-map/radius-map)

@@ -16,39 +16,6 @@ export function ConfirmDestructive() {
 	);
 }
 
-export function Variants() {
-	return (
-		<>
-			<Button variant="default">Default</Button>
-			<Button variant="secondary">Secondary</Button>
-			<Button variant="outline">Outline</Button>
-			<Button variant="ghost">Ghost</Button>
-			<Button variant="destructive">Destructive</Button>
-			<Button variant="link">Link</Button>
-		</>
-	);
-}
-
-export function SurfaceVariants() {
-	return (
-		<>
-			<Button variant="brand">Freelancer</Button>
-			<Button variant="highlight">Client</Button>
-		</>
-	);
-}
-
-export function Sizes() {
-	return (
-		<>
-			<Button size="xs">Extra small</Button>
-			<Button size="sm">Small</Button>
-			<Button size="default">Default</Button>
-			<Button size="lg">Large</Button>
-		</>
-	);
-}
-
 export function IconSizes() {
 	return (
 		<>
@@ -68,22 +35,6 @@ export function IconSizes() {
 	);
 }
 
-export function WithIcons() {
-	return (
-		<>
-			<Button>
-				<PlusIcon /> New project
-			</Button>
-			<Button variant="outline">
-				Continue <ArrowRightIcon />
-			</Button>
-			<Button variant="destructive">
-				<TrashIcon /> Delete
-			</Button>
-		</>
-	);
-}
-
 export function Loading() {
 	return (
 		<>
@@ -93,34 +44,6 @@ export function Loading() {
 			</Button>
 			<Button variant="destructive" loading>
 				Deleting
-			</Button>
-		</>
-	);
-}
-
-export function Disabled() {
-	return (
-		<>
-			<Button disabled>Default</Button>
-			<Button variant="secondary" disabled>
-				Secondary
-			</Button>
-			<Button variant="outline" disabled>
-				Outline
-			</Button>
-		</>
-	);
-}
-
-export function Shapes() {
-	return (
-		<>
-			<Button shape="pill">Get started</Button>
-			<Button shape="pill" variant="outline">
-				Learn more
-			</Button>
-			<Button shape="pill" size="lg">
-				Book a demo
 			</Button>
 		</>
 	);

@@ -14,6 +14,10 @@ import { cva } from "#/lib/cva.ts";
  * style every state selector at once — only the one matching the rendering
  * primitive ever activates — and gate disabled styles behind
  * `not-data-[disabled=false]` so cmdk's enabled items are unaffected.
+ *
+ * Internal: the folder has no `index.ts` and no subpath in the `exports` map on
+ * purpose. Cross-component class strings are an implementation detail — reach
+ * for the components, or copy the recipe.
  */
 
 const menuItemBase =

@@ -38,11 +38,11 @@ Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.
 
 ## The 3-minute win
 
-Declare the fields once; `FilterBar` renders the search box, the trigger, the
+Declare the fields once; `Filter.Root` renders the search box, the trigger, the
 editor and the chips from that single declaration.
 
 ```tsx
-import { FilterBar, type FilterDefinition, type FilterValues } from "@voila.dev/ui/filter";
+import { Filter, type FilterDefinition, type FilterValues } from "@voila.dev/ui/filter";
 import { useState } from "react";
 
 const definitions = [
@@ -87,10 +87,10 @@ itself, so it works against any address provider.
 
 ## Page map
 
-- [FilterBar](/ui-filter/filter-bar): the whole surface: search, trigger, editor, chips, result count.
-- [FilterForm](/ui-filter/filter-form): the editor on its own, for a sidebar or a settings sheet.
-- [FilterChips](/ui-filter/filter-chips): the active filters as removable chips.
-- [FilterTrigger](/ui-filter/filter-trigger): the search-shaped button that opens the editor.
+- [Filter.Root](/ui-filter/filter-root): the whole surface: search, trigger, editor, chips, result count.
+- [Filter.Form](/ui-filter/filter-form): the editor on its own, for a sidebar or a settings sheet.
+- [Filter.Chips](/ui-filter/filter-chips): the active filters as removable chips.
+- [Filter.Trigger](/ui-filter/filter-trigger): the search-shaped button that opens the editor.
 - [Text](/ui-filter/text-filter-field): free text, with "is not".
 - [Select](/ui-filter/select-filter-field): one or several options, with exclusion.
 - [Number](/ui-filter/number-filter-field): a single numeric value.

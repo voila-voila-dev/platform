@@ -97,7 +97,6 @@
 		"./landing": "./src/landing/index.ts",
 		"./list": "./src/list/index.ts",
 		"./map-view": "./src/map-view/index.ts",
-		"./menu": "./src/menu/index.ts",
 		"./menubar": "./src/menubar/index.ts",
 		"./money-input": "./src/money-input/index.ts",
 		"./native-date-picker": "./src/native-date-picker/index.ts",

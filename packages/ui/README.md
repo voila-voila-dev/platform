@@ -37,13 +37,19 @@ no `@source` path to write and no difference between a workspace symlink and a
 real `node_modules` install.
 
 Peers: `react@19`, `react-dom@19`, `tailwindcss@4`. Some domains need an extra
-(optional) peer — install it only if you use them: `maplibre-gl` for `map/*`,
-`@tanstack/react-table` for `datatable`, `@tanstack/react-virtual` for
-`spreadsheet/*`, `@dnd-kit/*` for `email-block-editor`.
+(optional) peer — install it only if you use them: `maplibre-gl` for `map-view`,
+`globe-view` and `radius-map`, `@tanstack/react-table` for `data-table`,
+`@tanstack/react-virtual` for `spreadsheet`, `@dnd-kit/*` for
+`email-block-editor`.
 
 ## What's inside
 
-One package, one version — each domain behind its own subpath:
+One package, one version — each domain behind its own subpath. There is
+deliberately **no root export**: `import { Button } from "@voila.dev/ui"` does
+not resolve, and is not meant to. A barrel would put every domain — maps,
+spreadsheet, the email editor and their optional peers — into one module graph,
+which is the bundle tax the subpaths exist to avoid. Import
+`@voila.dev/ui/button`.
 
 | Subpath | |
 | --- | --- |
@@ -51,7 +57,7 @@ One package, one version — each domain behind its own subpath:
 | `@voila.dev/ui/styles/themes/*.css` | Your whole brand in one CSS file. Six ship; change it, everything follows. |
 | `@voila.dev/ui/email-block-editor` | The email template editor that lives in your app, not someone else's SaaS. |
 | `@voila.dev/ui/spreadsheet` | An editable, virtualized grid your users will mistake for a native app. |
-| `@voila.dev/ui/datatable` | Sorting, pinning, CSV export — the table you keep rebuilding, finished. |
+| `@voila.dev/ui/data-table` | Sorting, pinning, CSV export — the table you keep rebuilding, finished. |
 | `@voila.dev/ui/chart` | Charts with zero charting library. SVG you can read, scales included. |
 | `@voila.dev/ui/map-view`, `@voila.dev/ui/globe-view`, `@voila.dev/ui/radius-map` | Maps and a globe on free vector tiles. No API key, no bundle tax. |
 | `@voila.dev/ui/filter` | Composable filters that survive real product requirements — including geo. |
