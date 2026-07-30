@@ -149,25 +149,27 @@
 		white-space: nowrap;
 	}
 
-	/* Tables. */
-	& table {
+	/* Tables. Guarded like the links and lists above: a previewed Table,
+	 * DataTable or Spreadsheet brings its own cell padding, and the
+	 * `:first-child { padding-left: 0 }` rule below was knocking that first
+	 * column out of line with the rest. */
+	& table:not(.not-prose *) {
 		width: 100%;
 		font-size: 0.875rem;
 		border-collapse: collapse;
 	}
-	& th {
+	& th:not(.not-prose *) {
 		text-align: left;
 		font-weight: 600;
 		border-bottom: 1px solid var(--border);
 		padding: 0.5rem 0.75rem;
 	}
-	& td {
+	& td:not(.not-prose *) {
 		border-bottom: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
 		padding: 0.5rem 0.75rem;
 		vertical-align: top;
 	}
-	& th:first-child,
-	& td:first-child {
+	& :is(th, td):first-child:not(.not-prose *) {
 		padding-left: 0;
 	}
 }
