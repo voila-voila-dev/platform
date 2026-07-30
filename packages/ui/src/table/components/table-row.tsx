@@ -9,7 +9,7 @@ export function TableRow({ className, ...props }: Props) {
 		<tr
 			data-slot="table-row"
 			className={cn(
-				"border-b transition-colors has-aria-expanded:bg-muted/50 data-selected:bg-muted [tbody_&]:hover:bg-muted/50",
+				"border-b transition-colors has-aria-expanded:bg-muted/50 data-selected:bg-muted in-[tbody]:hover:bg-muted/50",
 				className,
 			)}
 			{...props}

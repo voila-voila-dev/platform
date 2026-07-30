@@ -80,7 +80,7 @@ describe("Table.Row", () => {
 	it("scopes hover highlighting to body rows", () => {
 		const screen = render(<Fixture />);
 		const row = screen.getByText("PRJ-001").closest("tr");
-		expect(row?.classList.contains("[tbody_&]:hover:bg-muted/50")).toBe(true);
+		expect(row?.classList.contains("in-[tbody]:hover:bg-muted/50")).toBe(true);
 		expect(row?.classList.contains("hover:bg-muted/50")).toBe(false);
 	});
 
