@@ -1,10 +1,10 @@
 import { AlertDialog as AlertDialogPrimitive } from "@base-ui/react/alert-dialog";
-import type * as React from "react";
 import { Button } from "#/button/components/button.tsx";
+import type { ButtonVariants } from "#/button/components/button-variants.ts";
 
 interface Props
 	extends AlertDialogPrimitive.Close.Props,
-		Pick<React.ComponentProps<typeof Button>, "variant" | "size"> {}
+		Pick<ButtonVariants, "variant" | "size"> {}
 
 export function AlertDialogAction({
 	className,

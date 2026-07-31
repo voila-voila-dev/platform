@@ -1,9 +1,10 @@
 import type * as React from "react";
 import { Button } from "#/button/components/button.tsx";
+import type { ButtonVariants } from "#/button/components/button-variants.ts";
 import { cn } from "#/lib/utils.ts";
 
 interface Props
-	extends Pick<React.ComponentProps<typeof Button>, "size" | "variant">,
+	extends Pick<ButtonVariants, "size" | "variant">,
 		React.ComponentProps<"a"> {
 	isActive?: boolean;
 	/**
