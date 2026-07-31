@@ -1,6 +1,6 @@
 import { Kbd } from "@voila.dev/ui/kbd";
 
-export function KbdExample() {
+export function Default() {
 	return (
 		<>
 			<Kbd.Root>⌘K</Kbd.Root>

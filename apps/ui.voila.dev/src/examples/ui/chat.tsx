@@ -25,7 +25,7 @@ function senderAvatar(initials: string) {
 	);
 }
 
-export function ChatExample() {
+export function Default() {
 	return (
 		<div className="flex h-96 w-full max-w-xl flex-col gap-3">
 			<Chat.MessageList>
@@ -63,7 +63,7 @@ export function ChatExample() {
 	);
 }
 
-export function ChatConversations() {
+export function Conversations() {
 	return (
 		<div className="flex w-full max-w-xl flex-col gap-1">
 			<Chat.ConversationItem

@@ -7,17 +7,44 @@ category: "dates-and-time"
 import * as Example from "@/examples/ui/calendar";
 
 <Preview layout="center">
-	<Example.CalendarExample />
+	<Example.Default />
 </Preview>
 
-```tsx
-<Calendar.Root mode="single" selected={date} onSelect={setDate} />
-<Calendar.Root mode="range" selected={range} onSelect={setRange} />
+## Usage
+
+```ts
+import { Calendar } from "@voila.dev/ui/calendar";
 ```
 
+The bare month grid, always visible and always taking the space of a month.
+That is the reason to choose it: a booking screen where the dates *are* the page
+wants the grid open, not a field that hides it. Anywhere the date is one field
+among many, reach for [DatePicker](/ui/date-picker) — it wraps this same grid in
+a popover and gives you a labelled trigger for free. On a phone,
+[NativeDatePicker](/ui/native-date-picker) hands the job to the OS, which draws a
+better picker than anything in the page.
+
 Built on [React DayPicker](https://daypicker.dev/), so its `mode`, `disabled`,
-`locale` and the rest apply. Inside a popover trigger, use
-[DatePicker](/ui/date-picker) instead — this is the bare grid.
+`locale` and the rest apply unchanged.
+
+## Recipes
+
+<Preview layout="center" label="A range, in one grid">
+	<Example.Range />
+</Preview>
+
+`mode="range"` swaps the selection model: `selected` becomes `{ from, to }` and
+the grid tracks the hover edge as the range is drawn. The `DateRange` type comes
+from `@voila.dev/ui/date-picker`, which is where the range-shaped pickers live.
+
+<Preview layout="center" label="Weekends and past dates ruled out">
+	<Example.Bounded />
+</Preview>
+
+`disabled` takes DayPicker's matchers, and they compose — `{ before: … }` with
+`{ dayOfWeek: [0, 6] }` blocks the past *and* weekends. Blocking a day in the
+grid is not the same as validating it on submit: a matcher stops the click, it
+does not stop a value arriving from a query string.
 
 ## API
 
@@ -28,3 +55,11 @@ Built on [React DayPicker](https://daypicker.dev/), so its `mode`, `disabled`,
 ### Calendar.DayButton
 
 <PropTable of="Calendar.DayButton" />
+
+The individual day cell, exposed so a custom `components.DayButton` can build on
+it. You rarely render it directly.
+
+## Related
+
+[DatePicker](/ui/date-picker) · [DateTimePicker](/ui/date-time-picker) ·
+[NativeDatePicker](/ui/native-date-picker)

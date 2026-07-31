@@ -5,7 +5,7 @@ sidebar:
   order: 10
 ---
 
-import * as Example from "@/examples/ui-chart/chart";
+import * as Example from "@/examples/ui-chart/chart-bars";
 
 <Preview layout="stack">
 	<Example.Bars />
@@ -17,3 +17,11 @@ import * as Example from "@/examples/ui-chart/chart";
 
 Pass `stacked: true` on the y axis to stack them instead — worth it only when
 the series sum to a meaningful total.
+
+## API
+
+<PropTable of="Chart.Bars" />
+
+`stacked` here mirrors the y axis: set it on both, or the bars and the scale
+will disagree about the maximum. `fill` is the escape hatch for a chart coloured
+by row rather than by series — a ranking where each bar is its own thing.

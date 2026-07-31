@@ -5,7 +5,7 @@ sidebar:
   order: 11
 ---
 
-import * as Example from "@/examples/ui-chart/chart";
+import * as Example from "@/examples/ui-chart/chart-bars-stacked";
 
 <Preview layout="stack">
 	<Example.BarsStacked />
@@ -14,3 +14,11 @@ import * as Example from "@/examples/ui-chart/chart";
 ```tsx
 y={{ keys: ["projects", "bookings"], stacked: true }}
 ```
+
+## API
+
+Stacked bars are [Chart.Bars](/ui-chart/chart-bars) with `stacked` set on both
+the mark and the value axis; there is no separate component, so the props are
+the same ones.
+
+<PropTable of="Chart.Bars" />

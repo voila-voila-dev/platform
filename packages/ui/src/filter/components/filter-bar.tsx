@@ -13,14 +13,41 @@ import {
 import { cn } from "#/lib/utils.ts";
 
 interface Props extends React.ComponentProps<"div"> {
+	/**
+	 * The filters this screen offers, in the order the editor shows them. The
+	 * same array drives the editor, the chips and your own query layer.
+	 */
 	definitions: ReadonlyArray<FilterDefinition>;
+	/**
+	 * The applied filters, keyed by `definition.key`. Never holds an empty
+	 * filter — clearing one deletes its key — so `Object.keys(values).length` is
+	 * the active count and the record round-trips to a query string unchanged.
+	 */
 	values: FilterValues;
+	/**
+	 * Called with the new applied record: once when the editor is applied, and
+	 * immediately when a chip is removed. Drafts inside the editor do not reach
+	 * it, so this is safe to use as a fetch key.
+	 */
 	onValuesChange: (values: FilterValues) => void;
 	/** Omit both search props for a list that filters without free text. */
 	searchValue?: string;
+	/** Called on every keystroke, unlike `onValuesChange`. Debounce your query. */
 	onSearchChange?: (value: string) => void;
+	/**
+	 * How many rows the current filters matched, shown next to the trigger. Omit
+	 * it while the count is unknown rather than passing `0`.
+	 */
 	resultCount?: number;
+	/**
+	 * Overrides for the strings the surface shows. Merged over
+	 * `defaultFilterLabels` (English), so a partial is enough.
+	 */
 	labels?: Partial<FilterLabels>;
+	/**
+	 * BCP 47 tag used to format the numbers, money and dates in the chips and
+	 * the editor.
+	 */
 	locale?: string;
 }
 

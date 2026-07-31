@@ -12,8 +12,11 @@ import type { ChartCurve } from "#/chart/core/types.ts";
  */
 
 interface Props extends React.ComponentProps<"g"> {
+	/** Series to draw. Defaults to the root's value keys. */
 	readonly keys?: ReadonlyArray<string>;
+	/** How points are joined: `linear`, `monotone` or `step`. */
 	readonly curve?: ChartCurve;
+	/** Width of the line, in pixels. */
 	readonly strokeWidth?: number;
 	/** Draw a dot on every point, not only the active one. */
 	readonly dots?: boolean;

@@ -1,7 +1,7 @@
 import { TranslationInput } from "@voila.dev/ui/translation-input";
 import { useState } from "react";
 
-export function TranslationInputExample() {
+export function Default() {
 	const [value, setValue] = useState<Record<string, string>>({
 		"fr-FR": "Refonte de la page d'accueil",
 		"en-GB": "",
@@ -21,7 +21,3 @@ export function TranslationInputExample() {
 		</div>
 	);
 }
-
-/* -------------------------------------------------------------------------- */
-/* Choice                                                                     */
-/* -------------------------------------------------------------------------- */

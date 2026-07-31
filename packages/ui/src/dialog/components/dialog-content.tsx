@@ -7,9 +7,13 @@ import { DialogPortal } from "#/dialog/components/dialog-portal.tsx";
 import { cn } from "#/lib/utils.ts";
 
 interface Props extends DialogPrimitive.Popup.Props {
+	/** Width of the panel. Pick by the content, not by the importance of the task. */
 	size?: DialogContentSize;
+	/** Draws the X in the corner. */
 	showCloseButton?: boolean;
+	/** Accessible name for that X. This package ships no translations. */
 	closeButtonLabel?: string;
+	/** Classes for the backdrop behind the panel. `className` styles the panel itself. */
 	overlayClassName?: string;
 }
 

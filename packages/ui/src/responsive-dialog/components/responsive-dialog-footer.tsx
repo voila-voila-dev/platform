@@ -5,6 +5,7 @@ import { Drawer } from "#/drawer/components/drawer.tsx";
 import { useResponsiveDialogIsMobile } from "#/responsive-dialog/context/responsive-dialog-context.ts";
 
 interface Props extends React.ComponentProps<"div"> {
+	/** Text of the built-in dismiss button. Omit the prop to render no dismiss at all. */
 	closeLabel?: string;
 }
 

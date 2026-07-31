@@ -1,7 +1,7 @@
 import { StarIcon } from "@phosphor-icons/react";
 import { Toggle } from "@voila.dev/ui/toggle";
 
-export function ToggleExample() {
+export function Default() {
 	return (
 		<>
 			<Toggle aria-label="Mark freelancer as favorite">

@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import * as Example from "@/examples/ui-spreadsheet/grids";
+import * as Example from "@/examples/ui-spreadsheet/quick-start";
 
 <Preview layout="stack">
 	<Example.Grid />
@@ -40,3 +40,93 @@ import * as Example from "@/examples/ui-spreadsheet/grids";
 
 The grid never sorts or reorders your rows itself — it reports the intent and
 you reorder the array, so the data stays the single source of truth.
+
+## API
+
+### Spreadsheet.Root
+
+<PropTable of="Spreadsheet.Root" />
+
+Sorting, resizing and reordering are all reported, never applied: the table
+hands you the intent and you reorder the array. A sorted view over indexed form
+rows would break their binding, which is why this is a rule rather than a
+default.
+
+### Spreadsheet.Columns
+
+<PropTable of="Spreadsheet.Columns" />
+
+### Spreadsheet.Column
+
+<PropTable of="Spreadsheet.Column" />
+
+Widths live on `<col>` elements rather than header classes, so resizing and
+`table-layout: fixed` have one place to write to.
+
+### Spreadsheet.Header
+
+<PropTable of="Spreadsheet.Header" />
+
+### Spreadsheet.Head
+
+<PropTable of="Spreadsheet.Head" />
+
+### Spreadsheet.Body
+
+<PropTable of="Spreadsheet.Body" />
+
+### Spreadsheet.Row
+
+<PropTable of="Spreadsheet.Row" />
+
+### Spreadsheet.Cell
+
+<PropTable of="Spreadsheet.Cell" />
+
+### Spreadsheet.CellText
+
+<PropTable of="Spreadsheet.CellText" />
+
+A read-only cell. Use it for the first column when `stickyFirstColumn` is on —
+a grid panning under a pinned *editable* cell is disorienting.
+
+### Spreadsheet.CellImage
+
+<PropTable of="Spreadsheet.CellImage" />
+
+Imports a file three ways: click, drop onto the cell, or paste while the cell is
+focused. It neither uploads nor holds the file — `onFileSelect` hands you the
+`File` and you feed the resulting URL back as `src`.
+
+### Spreadsheet.DragHandle
+
+<PropTable of="Spreadsheet.DragHandle" />
+
+Render it as the row's first cell. Keyboard: Space grabs, arrows pick the
+position, Space drops, Escape cancels.
+
+### Spreadsheet.RowActions
+
+<PropTable of="Spreadsheet.RowActions" />
+
+### Spreadsheet.AddRow
+
+<PropTable of="Spreadsheet.AddRow" />
+
+### Spreadsheet.MobileAddRow
+
+<PropTable of="Spreadsheet.MobileAddRow" />
+
+### Spreadsheet.VirtualRows
+
+<PropTable of="Spreadsheet.VirtualRows" />
+
+Worth it from about a hundred rows. It rules out row dragging — positional drop
+targets do not survive windowing — and needs fixed-height rows plus a bounded
+`containerClassName`.
+
+### Spreadsheet.Skeleton
+
+<PropTable of="Spreadsheet.Skeleton" />
+
+Sized to the real rows (32px + 1px) so the swap to live data shifts nothing.

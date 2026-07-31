@@ -5,8 +5,15 @@ import { Button } from "#/button/components/button.tsx";
 import { dataTableToCsv } from "#/data-table/lib/to-csv.ts";
 
 interface Props<TData> extends React.ComponentProps<typeof Button> {
+	/**
+	 * The live table instance, from `DataTable.Root`'s `toolbar` render prop.
+	 * What gets exported is the current view — sorted, filtered, visible columns
+	 * only — not the whole `data` array.
+	 */
 	table: TanstackTable<TData>;
+	/** Name of the downloaded file. */
 	filename?: string;
+	/** Text on the button. This package ships no translations. */
 	label?: string;
 }
 

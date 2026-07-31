@@ -5,7 +5,7 @@ sidebar:
   order: 34
 ---
 
-import * as Example from "@/examples/ui-chart/chart";
+import * as Example from "@/examples/ui-chart/chart-tooltip";
 
 <Preview layout="stack">
 	<Example.Tooltip />
@@ -15,3 +15,17 @@ import * as Example from "@/examples/ui-chart/chart";
 <Chart.Tooltip />
 <Chart.Tooltip content={<Chart.Tooltip.Content nameKey="role" hideLabel />} />
 ```
+
+## API
+
+### Chart.Tooltip
+
+<PropTable of="Chart.Tooltip" />
+
+### Chart.TooltipContent
+
+<PropTable of="Chart.TooltipContent" />
+
+The default body, split out so you can restyle the rows without reimplementing
+the portal. On a chart coloured per row — a pie — pass `nameKey`, or the panel
+lists the series instead of the wedge under the pointer.

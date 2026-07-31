@@ -5,7 +5,7 @@ sidebar:
   order: 12
 ---
 
-import * as Example from "@/examples/ui-chart/chart";
+import * as Example from "@/examples/ui-chart/chart-area";
 
 <Preview layout="stack">
 	<Example.Area />
@@ -14,3 +14,11 @@ import * as Example from "@/examples/ui-chart/chart";
 ```tsx
 <Chart.Area />
 ```
+
+## API
+
+<PropTable of="Chart.Area" />
+
+An area claims the space under the line means something, so reach for it on
+totals and volumes rather than on rates. Stacked areas compound that claim —
+only stack series that genuinely sum.

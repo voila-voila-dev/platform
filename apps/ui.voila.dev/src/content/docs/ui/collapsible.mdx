@@ -4,11 +4,17 @@ description: "One region that shows and hides."
 category: "layout"
 ---
 
-import * as Example from "@/examples/ui/navigation";
+import * as Example from "@/examples/ui/collapsible";
 
 <Preview layout="stack">
-	<Example.CollapsibleExample />
+	<Example.Default />
 </Preview>
+
+## Usage
+
+```ts
+import { Collapsible } from "@voila.dev/ui/collapsible";
+```
 
 ```tsx
 <Collapsible.Root>
@@ -19,9 +25,33 @@ import * as Example from "@/examples/ui/navigation";
 </Collapsible.Root>
 ```
 
-One section with your own trigger, where [Accordion](/ui/accordion) is a set
-with a house style. Rotate the caret off the trigger's `aria-expanded` rather
-than tracking the open state yourself.
+One region with a trigger you design yourself, where [Accordion](/ui/accordion)
+is a *set* of them with a house style and single-open behaviour. If you are
+writing the same collapsible three times down a page, you wanted Accordion. If
+the hidden content should cover the page rather than push it down, that is a
+[Popover](/ui/popover) or a [Dialog](/ui/dialog) — a collapsible always takes
+its space in the flow.
+
+The trigger carries `aria-expanded`, so rotate the caret off that rather than
+tracking the open state in React. `Collapsible.Root` is uncontrolled by default;
+pass `open` and `onOpenChange` only when something outside the component has to
+close it.
+
+## Recipes
+
+<Preview layout="stack" label="Trigger below the content">
+	<Example.ShowMore />
+</Preview>
+
+Nothing requires the trigger to sit above the content — `Collapsible.Root` is a
+plain wrapper and the parts can be ordered however the layout reads best. A
+"show more" link under a truncated paragraph is the common second shape.
+
+Content that is closed is removed from the DOM. Two props change that, and they
+solve different problems: `keepMounted` keeps it mounted but hidden, for
+measuring or for children that must not lose their state; `hiddenUntilFound`
+uses `hidden="until-found"` so the browser's find-in-page can open the section
+when the match is inside it, which is what you want for FAQ-shaped content.
 
 ## API
 
@@ -36,3 +66,7 @@ than tracking the open state yourself.
 ### Collapsible.Trigger
 
 <PropTable of="Collapsible.Trigger" />
+
+## Related
+
+[Accordion](/ui/accordion) · [Section](/ui/section) · [Popover](/ui/popover)

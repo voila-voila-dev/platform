@@ -5,6 +5,7 @@ import { Button } from "#/button/components/button.tsx";
 import { cn } from "#/lib/utils.ts";
 
 interface Props extends useRender.ComponentProps<"div"> {
+	/** Text of the built-in dismiss button. Omit the prop to render no dismiss at all. */
 	closeLabel?: string;
 }
 

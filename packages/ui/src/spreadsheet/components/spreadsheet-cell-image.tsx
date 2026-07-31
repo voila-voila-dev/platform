@@ -11,14 +11,19 @@ interface Props extends Omit<React.ComponentProps<"td">, "onDrop" | "onPaste"> {
 	alt?: string;
 	/** What `gridNavigation` copy serializes for this cell. */
 	value?: string;
+	/** Hands over the picked `File`. Upload it, then feed the URL back as `src`. */
 	onFileSelect: (file: File) => void;
 	/** Omit to make the image non-clearable (no remove affordance is drawn). */
 	onRemove?: () => void;
+	/** Swaps the thumbnail for a spinner while your upload runs. */
 	uploading?: boolean;
+	/** Blocks all three import paths: the picker, the drop and the paste. */
 	disabled?: boolean;
+	/** `accept` for the hidden file input, e.g. `"image/png,image/jpeg"`. */
 	accept?: string;
 	/** Accessible name of the picker button, e.g. "Import an image, row 3". */
 	pickLabel: string;
+	/** Accessible name of the remove button. Only drawn when `onRemove` is passed. */
 	removeLabel?: string;
 }
 

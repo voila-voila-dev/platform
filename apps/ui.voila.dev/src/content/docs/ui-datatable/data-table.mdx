@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import * as Example from "@/examples/ui-datatable/tables";
+import * as Example from "@/examples/ui-datatable/data-table";
 
 <Preview layout="stack">
 	<Example.Default />
@@ -23,3 +23,47 @@ const columns: ColumnDef<Project>[] = [
 
 A column with a numeric `size` switches the table to fixed layout, and sized
 cells truncate instead of stretching.
+
+## API
+
+### DataTable.Root
+
+<PropTable of="DataTable.Root" />
+
+Every extra is opt-in and every piece of state is optionally controlled: pass
+nothing and the table owns it, pass the value and you do. The `on*Change`
+callbacks fire either way, so they double as listeners when you only want to
+persist a user's layout.
+
+### DataTable.Toolbar
+
+<PropTable of="DataTable.Toolbar" />
+
+The strip above the table. It is a layout slot, not a behaviour —
+[Search](/ui-datatable/global-filter), `DataTable.Filters` and
+`DataTable.Actions` go inside it. Pass `toolbar` a function instead of a node
+when a control inside needs the table instance;
+[the column menu and the exporter both do](/ui-datatable/column-visibility).
+
+### DataTable.Actions
+
+<PropTable of="DataTable.Actions" />
+
+The right-hand end of the toolbar, where the controls that act on the whole
+table live.
+
+### DataTable.Filters
+
+<PropTable of="DataTable.Filters" />
+
+The left-hand end, for the filter controls themselves. For a full filtering
+surface rather than a few selects, [ui-filter](/ui-filter/quick-start) composes
+with this.
+
+### DataTable.Empty
+
+<PropTable of="DataTable.Empty" />
+
+What renders in place of rows when nothing matched. `DataTable.Root` shows a
+generic one already; reach for this when you want to name the filter to clear,
+and pass it through Root's `emptyState`.

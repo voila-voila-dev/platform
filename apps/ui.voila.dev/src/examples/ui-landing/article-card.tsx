@@ -5,7 +5,7 @@ import {
 } from "@voila.dev/ui/landing";
 import { partnerLogoDataUri } from "./fixtures";
 
-export function ArticleCardExample() {
+export function Default() {
 	return (
 		<div className="max-w-md">
 			<ArticleCard.Root href="#">
@@ -42,7 +42,7 @@ export function ArticleCardExample() {
 	);
 }
 
-export function ArticleCardFallback() {
+export function Fallback() {
 	return (
 		<div className="max-w-md">
 			<ArticleCard.Root href="#">

@@ -2,7 +2,7 @@ import { CalendarCheckIcon } from "@phosphor-icons/react";
 import { Button } from "@voila.dev/ui/button";
 import { Item } from "@voila.dev/ui/item";
 
-export function ItemExample() {
+export function Default() {
 	return (
 		<Item.Root variant="outline" className="w-full max-w-md">
 			<Item.Media variant="icon">

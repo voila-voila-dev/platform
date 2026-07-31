@@ -12,19 +12,25 @@ import { cn } from "#/lib/utils.ts";
 interface Props {
 	/** Controlled range; both sides may be `null` independently. */
 	value?: DateTimeRange;
+	/** Initial range when uncontrolled. */
 	defaultValue?: DateTimeRange;
+	/** Called with the whole `{ start, end }` after either side changes. */
 	onValueChange?: (range: DateTimeRange) => void;
 	/** Label above the start field. Defaults to "Start". */
 	startLabel?: React.ReactNode;
 	/** Label above the end field. Defaults to "End". */
 	endLabel?: React.ReactNode;
+	/** Placeholder for the start field while it is empty. */
 	startPlaceholder?: string;
+	/** Placeholder for the end field while it is empty. */
 	endPlaceholder?: string;
 	/** id for the start field; the end field derives `${startId}-end` when `endId` is omitted. */
 	startId?: string;
+	/** id for the end field. Derived from `startId` when omitted. */
 	endId?: string;
 	/** BCP-47 locale (e.g. "fr-FR"), applied to both fields' labels, calendars, and time lists. */
 	locale?: string;
+	/** Blocks both fields. */
 	disabled?: boolean;
 	/** Minutes between two options in each time list. Defaults to 30. */
 	minuteStep?: number;
@@ -38,6 +44,7 @@ interface Props {
 	formatOptions?: Intl.DateTimeFormatOptions;
 	/** Styles the wrapping grid (e.g. `md:col-span-2`). */
 	className?: string;
+	/** Marks both fields invalid. Pair it with your own message. */
 	"aria-invalid"?: React.AriaAttributes["aria-invalid"];
 }
 

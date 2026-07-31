@@ -1,6 +1,6 @@
 import { Separator } from "@voila.dev/ui/separator";
 
-export function SeparatorExample() {
+export function Default() {
 	return (
 		<div className="w-full max-w-72">
 			<div className="space-y-1">

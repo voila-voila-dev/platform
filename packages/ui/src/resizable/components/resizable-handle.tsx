@@ -3,6 +3,11 @@ import * as ResizablePrimitive from "react-resizable-panels";
 import { cn } from "#/lib/utils.ts";
 
 interface Props extends ResizablePrimitive.SeparatorProps {
+	/**
+	 * Draw a grip in the middle of the handle. The drag target is the same
+	 * either way — the grip only makes it visible on a surface where the hairline
+	 * alone would not read as draggable.
+	 */
 	withHandle?: boolean;
 }
 

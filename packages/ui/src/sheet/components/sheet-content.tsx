@@ -10,10 +10,15 @@ import { SheetPortal } from "#/sheet/components/sheet-portal.tsx";
 export type SheetContentSize = "sm" | "default" | "lg" | "xl" | "full";
 
 interface Props extends SheetPrimitive.Popup.Props {
+	/** Edge the panel slides in from. */
 	side?: "top" | "right" | "bottom" | "left";
+	/** Thickness of the panel along the axis it slides on, `sm` through `full`. */
 	size?: SheetContentSize;
+	/** Draws the X in the corner. */
 	showCloseButton?: boolean;
+	/** Accessible name for that X. This package ships no translations. */
 	closeButtonLabel?: string;
+	/** Classes for the backdrop behind the panel. `className` styles the panel itself. */
 	overlayClassName?: string;
 }
 

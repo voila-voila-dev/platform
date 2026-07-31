@@ -22,8 +22,11 @@ interface Props
 	> {
 	/** Controlled "HH:mm" value; pass `null` for a controlled empty selection. */
 	value?: string | null;
+	/** Initial `"HH:mm"` value when uncontrolled. */
 	defaultValue?: string;
+	/** Called with the picked `"HH:mm"`, or `null` when cleared. Never a `Date`. */
 	onValueChange?: (time: string | null) => void;
+	/** Shown on the trigger while nothing is selected. */
 	placeholder?: string;
 	/**
 	 * `Intl.DateTimeFormat` options for the labels. Defaults to a short localized
@@ -40,8 +43,11 @@ interface Props
 	max?: string;
 	/** Name for the hidden form input; the value is serialized as HH:mm. */
 	name?: string;
+	/** Whether the list starts open. Uncontrolled — for the controlled form use `open`. */
 	defaultOpen?: boolean;
+	/** Controlled open state. Pair it with `onOpenChange`. */
 	open?: boolean;
+	/** Called when the list opens or closes. */
 	onOpenChange?: (open: boolean) => void;
 }
 

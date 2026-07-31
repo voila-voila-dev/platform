@@ -1,7 +1,7 @@
 import { Checkbox } from "@voila.dev/ui/checkbox";
 import { Label } from "@voila.dev/ui/label";
 
-export function CheckboxExample() {
+export function Default() {
 	return (
 		<div className="flex flex-col gap-3">
 			<div className="flex items-start gap-3">

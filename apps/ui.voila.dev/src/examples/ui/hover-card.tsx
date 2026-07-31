@@ -1,7 +1,7 @@
 import { Button } from "@voila.dev/ui/button";
 import { HoverCard } from "@voila.dev/ui/hover-card";
 
-export function HoverCardExample() {
+export function Default() {
 	return (
 		<HoverCard.Root>
 			<HoverCard.Trigger render={<Button variant="link" />}>

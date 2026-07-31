@@ -11,7 +11,9 @@ import { cn } from "#/lib/utils.ts";
 interface Props extends React.ComponentProps<"g"> {
 	/** Position on the value axis. */
 	readonly value: number;
+	/** Text drawn beside the line — a target, a threshold, an average. */
 	readonly label?: string;
+	/** Dash pattern for the line. Pass `undefined` for solid. */
 	readonly strokeDasharray?: string;
 }
 

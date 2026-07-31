@@ -5,7 +5,7 @@ sidebar:
   order: 10
 ---
 
-import * as Example from "@/examples/ui-datatable/tables";
+import * as Example from "@/examples/ui-datatable/export";
 
 <Preview layout="stack">
 	<Example.Export />
@@ -27,3 +27,11 @@ import * as Example from "@/examples/ui-datatable/tables";
 
 `dataTableToCsv(table)` returns the same string if you want to send it
 somewhere other than a download. Fields are RFC 4180 quoted.
+
+## API
+
+<PropTable of="DataTable.Export" />
+
+`table` is the live instance, so what lands in the file is the current view —
+sorted, filtered, visible columns only — not the `data` array. That is the whole
+point of taking the instance rather than the rows.

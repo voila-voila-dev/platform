@@ -4,6 +4,7 @@ import { cn } from "#/lib/utils.ts";
 import { menuSubTriggerVariants } from "#/menu/components/menu-variants.ts";
 
 interface Props extends MenuPrimitive.SubmenuTrigger.Props {
+	/** Indents the item to line up with siblings that have an icon or a checkmark. */
 	inset?: boolean;
 }
 

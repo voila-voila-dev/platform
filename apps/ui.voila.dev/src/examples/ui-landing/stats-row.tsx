@@ -2,7 +2,7 @@ import { StatsRow } from "@voila.dev/ui/landing";
 import { Fragment } from "react";
 import { stats } from "./fixtures";
 
-export function StatsRowExample() {
+export function Default() {
 	return (
 		<StatsRow.Root>
 			{stats.map((stat, index) => (

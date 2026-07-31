@@ -13,14 +13,22 @@ import type {
 import { useCompactEditorLayout } from "#/email-block-editor/lib/use-media-query.ts";
 
 interface Props {
+	/**
+	 * The template being edited: `{ version, blocks }`, plain serialisable data.
+	 * Controlled — the editor holds no copy of it, so persistence is one
+	 * `JSON.stringify` away and undo is whatever you do with the state.
+	 */
 	document: EmailEditorDocument;
+	/** Called with the whole next document on every edit, keystrokes included. */
 	onChange: (document: EmailEditorDocument) => void;
 	/** Delegated image upload: receives the picked file, resolves with its
 	 * public URL. Omit to disable image uploads. */
 	onUploadImage?: (file: File) => Promise<string>;
 	/** Block-id factory, injectable for deterministic tests. */
 	generateBlockId?: () => string;
+	/** Replaces the neutral header placeholder above the canvas with your own chrome. */
 	headerSlot?: ReactNode;
+	/** Replaces the neutral footer placeholder below the canvas. */
 	footerSlot?: ReactNode;
 }
 

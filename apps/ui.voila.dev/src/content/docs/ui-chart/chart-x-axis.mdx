@@ -5,7 +5,7 @@ sidebar:
   order: 31
 ---
 
-import * as Example from "@/examples/ui-chart/chart";
+import * as Example from "@/examples/ui-chart/chart-x-axis";
 
 <Preview layout="stack">
 	<Example.XAxis />
@@ -14,3 +14,11 @@ import * as Example from "@/examples/ui-chart/chart";
 ```tsx
 <Chart.XAxis tickFormatter={(value) => `${value}`.slice(0, 3)} />
 ```
+
+## API
+
+<PropTable of="Chart.XAxis" />
+
+Ticks are dropped rather than rotated when labels would collide, which is what
+`minTickGap` controls. If labels are being clipped instead, the fix is `margin`
+on [Chart.Root](/ui-chart/chart-root) — the axes draw inside the root's box.

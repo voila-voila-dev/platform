@@ -1,6 +1,6 @@
 import { NativeSelect } from "@voila.dev/ui/native-select";
 
-export function NativeSelectExample() {
+export function Default() {
 	return (
 		<NativeSelect.Root defaultValue="branding" className="w-56">
 			<NativeSelect.OptGroup label="Creative work">

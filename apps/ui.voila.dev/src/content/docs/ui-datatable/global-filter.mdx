@@ -5,7 +5,7 @@ sidebar:
   order: 9
 ---
 
-import * as Example from "@/examples/ui-datatable/tables";
+import * as Example from "@/examples/ui-datatable/global-filter";
 
 <Preview layout="stack">
 	<Example.GlobalFilter />
@@ -31,3 +31,11 @@ const [search, setSearch] = useState("");
 
 Leave `globalFilter` undefined for server-side search: drive `DataTable.Search`
 yourself and filter in the query.
+
+## API
+
+<PropTable of="DataTable.Search" />
+
+The input is a plain search field, so its value is yours. What decides whether
+search is client- or server-side is `globalFilter` on
+[DataTable.Root](/ui-datatable/data-table), not anything here.

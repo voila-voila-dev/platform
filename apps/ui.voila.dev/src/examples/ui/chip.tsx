@@ -1,6 +1,6 @@
 import { Chip } from "@voila.dev/ui/chip";
 
-export function ChipExample() {
+export function Default() {
 	return (
 		<>
 			<Chip.Root variant="secondary">

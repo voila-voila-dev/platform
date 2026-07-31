@@ -1,6 +1,6 @@
 import { CopyableText } from "@voila.dev/ui/copyable-text";
 
-export function CopyableTextExample() {
+export function Default() {
 	return (
 		<div className="flex flex-col gap-2">
 			<CopyableText value="camille@example.com" />

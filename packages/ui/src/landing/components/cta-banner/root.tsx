@@ -8,6 +8,7 @@ import {
 import { cn } from "#/lib/utils.ts";
 
 interface Props extends React.ComponentProps<typeof Section> {
+	/** Width of the content column inside the banner. Same sizes as `Container`. */
 	containerSize?: React.ComponentProps<typeof Container>["size"];
 }
 

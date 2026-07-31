@@ -7,8 +7,14 @@ category: "overlays"
 import * as Example from "@/examples/ui/responsive-dialog";
 
 <Preview layout="center">
-	<Example.ResponsiveDialogExample />
+	<Example.Default />
 </Preview>
+
+## Usage
+
+```ts
+import { ResponsiveDialog } from "@voila.dev/ui/responsive-dialog";
+```
 
 ```tsx
 <ResponsiveDialog.Root>
@@ -25,7 +31,24 @@ import * as Example from "@/examples/ui/responsive-dialog";
 </ResponsiveDialog.Root>
 ```
 
-The switch happens at 768px. Open the preview and narrow the window to see it.
+A [Dialog](/ui/dialog) on desktop and a bottom [Drawer](/ui/drawer) below
+768px, behind one set of parts. A centred modal on a phone is the wrong shape —
+it fights the keyboard and puts its buttons where thumbs are not — so this
+switches rather than scaling. Use it for anything a phone user will meet; keep
+plain Dialog for desktop-only surfaces like an admin console.
+
+## Recipes
+
+The switch happens at 768px. Open the preview above and narrow the window to
+see it.
+
+The root owns the open state deliberately: the two halves are different
+component trees, so uncontrolled state would reset when the viewport crosses the
+breakpoint mid-interaction.
+
+`autoFocus={false}` is worth knowing about when the first field is a text input.
+Focusing it on open raises the keyboard over the content the user just asked to
+see; the content stays reachable by tab either way.
 
 ## API
 
@@ -64,3 +87,8 @@ The switch happens at 768px. Open the preview and narrow the window to see it.
 ### ResponsiveDialog.Trigger
 
 <PropTable of="ResponsiveDialog.Trigger" />
+
+## Related
+
+[Dialog](/ui/dialog) · [ResponsiveSheet](/ui/responsive-sheet) ·
+[Drawer](/ui/drawer)

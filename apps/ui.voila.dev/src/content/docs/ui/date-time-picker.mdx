@@ -7,17 +7,49 @@ category: "dates-and-time"
 import * as Example from "@/examples/ui/date-time-picker";
 
 <Preview layout="center">
-	<Example.DateTimePickerExample />
+	<Example.Default />
 </Preview>
 
-```tsx
-<DateTimePicker.Root value={value} onValueChange={setValue} placeholder="Project start" />
+## Usage
+
+```ts
+import { DateTimePicker } from "@voila.dev/ui/date-time-picker";
 ```
 
-The namespace also carries `DateTimePicker.Range` for a start and an end,
-`DateTimePicker.ShiftRange` for a shift that can cross midnight, and
-`DateTimePicker.Native` / `DateTimePicker.Responsive` for the native-picker
-variants.
+One field for a moment: a calendar sets the day, a scrollable list sets the
+time, and the trigger shows both. Use it when the two halves belong to one
+answer — when a meeting starts, when a job is due. When they are genuinely
+separate questions, two fields read better: a
+[DatePicker](/ui/date-picker) and a [TimePicker](/ui/time-picker) side by side.
+
+The value is a single `Date`, in the viewer's local clock. Picking a day before
+any time exists fills the time in at 09:00 rather than handing you a date at
+midnight — midnight is almost never what someone meant by "Tuesday".
+
+## Recipes
+
+<Preview layout="center" label="A start and an end">
+	<Example.Range />
+</Preview>
+
+`DateTimePicker.Range` is two bound fields sharing one `{ start, end }` value.
+Picking a start seeds the end an hour later, and pushes it forward if a new start
+would overtake it, so the range cannot go backwards without you writing that
+rule yourself.
+
+<Preview layout="center" label="A shift that crosses midnight">
+	<Example.Shift />
+</Preview>
+
+`DateTimePicker.ShiftRange` is one trigger with a Start/End tab inside. Because
+each end carries its own date, 20:00 → 02:00 the next day is picked directly —
+no "add a day if the end is smaller" trick, which is the bug every hand-rolled
+shift field eventually ships.
+
+`DateTimePicker.Responsive` switches surfaces at the mobile breakpoint: the
+popover on desktop, the OS picker below it. `DateTimePicker.Native` is that OS
+picker on its own, with the same `Date | null` value model as the rest, so the
+choice of surface never changes your state.
 
 ## API
 
@@ -40,3 +72,8 @@ variants.
 ### DateTimePicker.ShiftRange
 
 <PropTable of="DateTimePicker.ShiftRange" />
+
+## Related
+
+[DatePicker](/ui/date-picker) · [TimePicker](/ui/time-picker) ·
+[NativeDatePicker](/ui/native-date-picker) · [Calendar](/ui/calendar)

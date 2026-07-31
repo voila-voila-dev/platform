@@ -7,18 +7,48 @@ category: "dates-and-time"
 import * as Example from "@/examples/ui/native-date-picker";
 
 <Preview layout="stack">
-	<Example.NativeDatePickerExample />
+	<Example.Default />
 </Preview>
 
-```tsx
-<NativeDatePicker.Date defaultValue="2026-06-20" min="2026-06-01" max="2026-06-30" />
-<NativeDatePicker.Time defaultValue="14:30" />
-<NativeDatePicker.DateTime defaultValue="2026-06-20T14:30" />
+## Usage
+
+```ts
+import { NativeDatePicker } from "@voila.dev/ui/native-date-picker";
 ```
 
-Real `<input type="date">` elements, so the OS draws the picker and the value
-is an ISO string. On a phone that is a better picker than anything drawn in the
-page.
+Real `<input type="date">` elements wearing the kit's field styling. The OS
+draws the picker, so on a phone this is the best date input you can ship — a
+wheel the user already knows, in their language, with their calendar system.
+The trade is control: you cannot disable individual days, mark a range, or
+style the popup at all. When you need any of that, use
+[DatePicker](/ui/date-picker), which draws its own grid; when you want the
+native surface on mobile and the drawn one on desktop, `DateTimePicker.Responsive`
+switches between them for you.
+
+The value is an ISO string, not a `Date` — `"2026-06-20"` for a date,
+`"14:30"` for a time, `"2026-06-20T14:30"` for both. That is what the DOM gives,
+and it is what a form post sends.
+
+## Recipes
+
+<Preview layout="stack" label="Bounded to one month">
+	<Example.Bounded />
+</Preview>
+
+`min` and `max` are the DOM's own attributes and take the same ISO strings.
+Browsers grey out the dates outside them, but a value can still arrive from a
+query string or a paste — treat these as help, not as validation.
+
+<Preview layout="stack" label="Dense fields">
+	<Example.Small />
+</Preview>
+
+`size="sm"` matches the compact form controls elsewhere in the kit, for table
+cells and toolbars where the default height is too tall.
+
+Clicking anywhere in the field opens the picker, not just the small OS
+indicator, which is hidden — the whole control is the affordance, the same as the
+drawn [DatePicker](/ui/date-picker).
 
 ## API
 
@@ -33,3 +63,11 @@ page.
 ### NativeDatePicker.Time
 
 <PropTable of="NativeDatePicker.Time" />
+
+All three take the rest of the `<input>` props, so `required`, `name`, `min` and
+`max` behave exactly as they do on a bare element.
+
+## Related
+
+[DatePicker](/ui/date-picker) · [DateTimePicker](/ui/date-time-picker) ·
+[TimePicker](/ui/time-picker) · [Input](/ui/input)

@@ -41,6 +41,16 @@ runs:
       shell: bash
       run: bun run --filter @voila.dev/${{ inputs.app }} build
 
+    # `check-docs` reads the MDX; this reads the HTML that came out of it, which
+    # is the only artefact that cannot lie. A dropped example still builds — the
+    # preview renders an empty stage and the response is 200 — and an `## API`
+    # heading whose `of=` names nothing ships with no table under it. Between the
+    # build and the deploy is the last place to catch either.
+    - name: Check the built docs
+      if: inputs.app == 'ui.voila.dev'
+      shell: bash
+      run: bun scripts/check-docs-output.mjs
+
     # Per-PR previews get a derived config: the worker is renamed (so it never
     # touches production) and `routes` are stripped, leaving the workers.dev URL.
     - name: Generate preview wrangler config

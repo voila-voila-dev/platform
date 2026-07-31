@@ -18,7 +18,15 @@ import * as React from "react";
 
 /** The table-state slice of `DataTable.Root`'s props. */
 export interface UseDataTableOptions<TData, TValue> {
+	/**
+	 * TanStack column definitions. A numeric `size` on any column switches the
+	 * table to fixed layout, and sized cells truncate instead of stretching.
+	 */
 	columns: ColumnDef<TData, TValue>[];
+	/**
+	 * The rows to render, already fetched and in the order you want them. The
+	 * table sorts and filters its own view of this array but never mutates it.
+	 */
 	data: readonly TData[];
 	/** Sorting is managed internally; this seeds the initial column order. */
 	initialSorting?: SortingState;
@@ -26,6 +34,7 @@ export interface UseDataTableOptions<TData, TValue> {
 	enableRowSelection?: boolean | ((row: Row<TData>) => boolean);
 	/** Controlled selection state; omit to let the table own it. */
 	rowSelection?: RowSelectionState;
+	/** Fires whether or not `rowSelection` is passed, so it works as a listener too. */
 	onRowSelectionChange?: (state: RowSelectionState) => void;
 	/** Stable row ids for selection across pages; defaults to the row index. */
 	getRowId?: (row: TData, index: number) => string;
@@ -34,16 +43,20 @@ export interface UseDataTableOptions<TData, TValue> {
 	 * `onColumnSizingChange` is only needed to persist them across mounts.
 	 */
 	enableColumnResizing?: boolean;
+	/** Seeded widths by column id. Only needed to restore a persisted layout. */
 	columnSizing?: ColumnSizingState;
+	/** Fires on every drag frame; debounce before writing it to storage. */
 	onColumnSizingChange?: (state: ColumnSizingState) => void;
 	/** Controlled column visibility; pair with `DataTable.ViewOptions`. */
 	columnVisibility?: VisibilityState;
+	/** Fires whether or not `columnVisibility` is passed. Persist it to remember a user's columns. */
 	onColumnVisibilityChange?: (state: VisibilityState) => void;
 	/**
 	 * Columns frozen against an edge while the rest pans horizontally, by id:
 	 * `{ left: ["name"], right: ["actions"] }`.
 	 */
 	columnPinning?: ColumnPinningState;
+	/** Fires whether or not `columnPinning` is passed. */
 	onColumnPinningChange?: (state: ColumnPinningState) => void;
 	/**
 	 * Detail panel for an expanded row, rendered as a full-width row beneath it.

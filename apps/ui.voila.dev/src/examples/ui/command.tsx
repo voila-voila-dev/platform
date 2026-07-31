@@ -1,7 +1,7 @@
 import { CalendarIcon, GearIcon, UserIcon } from "@phosphor-icons/react";
 import { Command } from "@voila.dev/ui/command";
 
-export function CommandExample() {
+export function Default() {
 	return (
 		<div className="w-full max-w-80 rounded-xl border">
 			<Command.Root>

@@ -1,7 +1,7 @@
 import { Button } from "@voila.dev/ui/button";
 import { ResponsiveDialog } from "@voila.dev/ui/responsive-dialog";
 
-export function ResponsiveDialogExample() {
+export function Default() {
 	return (
 		<ResponsiveDialog.Root>
 			<ResponsiveDialog.Trigger render={<Button variant="outline" />}>

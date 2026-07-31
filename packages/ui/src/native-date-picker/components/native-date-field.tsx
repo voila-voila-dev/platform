@@ -6,6 +6,7 @@ interface Props extends Omit<React.ComponentProps<"input">, "type" | "size"> {
 	/** Base for the part's `data-slot` attributes; not the DOM `slot`. */
 	slotName: string;
 	icon: React.ReactNode;
+	/** Field height. `sm` for dense surfaces such as table cells and toolbars. */
 	size?: "sm" | "default";
 	/**
 	 * Classes for the wrapper `<div>` that hosts the leading icon. Use this for

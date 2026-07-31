@@ -13,7 +13,9 @@ import { Popover } from "#/popover/components/popover.tsx";
 interface Props extends DatePickerBase {
 	/** Controlled value; pass `null` for a controlled empty selection. */
 	value?: Date | null;
+	/** Initial selection when uncontrolled. */
 	defaultValue?: Date;
+	/** Called with the picked day, or `null` when the selection is cleared. */
 	onValueChange?: (date: Date | null) => void;
 }
 

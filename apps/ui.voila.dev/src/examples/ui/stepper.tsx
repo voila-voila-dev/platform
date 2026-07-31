@@ -6,7 +6,7 @@ const onboardingSteps = [
 	{ step: 3, title: "Review" },
 ];
 
-export function StepperExample() {
+export function Default() {
 	return (
 		<Stepper.Root value={2} className="w-full max-w-xl">
 			{onboardingSteps.map(({ step, title }) => (

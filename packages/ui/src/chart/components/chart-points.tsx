@@ -7,10 +7,13 @@ import { seriesPoints } from "#/chart/core/series.ts";
 /** The scatter mark: one dot per datum per series, optionally sized by a field. */
 
 interface Props extends React.ComponentProps<"g"> {
+	/** Series to draw. Defaults to the root's value keys. */
 	readonly keys?: ReadonlyArray<string>;
+	/** Dot radius in pixels, when `sizeKey` is not driving it. */
 	readonly radius?: number;
 	/** Field driving the dot area, for a bubble chart. */
 	readonly sizeKey?: string;
+	/** Largest radius `sizeKey` may reach. The scale maps the data onto it by area. */
 	readonly maxRadius?: number;
 }
 

@@ -1,6 +1,6 @@
 import { ToggleGroup } from "@voila.dev/ui/toggle-group";
 
-export function ToggleGroupExample() {
+export function Default() {
 	return (
 		<div className="flex flex-col gap-4">
 			<ToggleGroup.Root defaultValue={["week"]} variant="outline">

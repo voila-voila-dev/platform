@@ -3,6 +3,7 @@ import { cn } from "#/lib/utils.ts";
 import { menuLabelVariants } from "#/menu/components/menu-variants.ts";
 
 interface Props extends React.ComponentProps<"div"> {
+	/** Indents the item to line up with siblings that have an icon or a checkmark. */
 	inset?: boolean;
 }
 

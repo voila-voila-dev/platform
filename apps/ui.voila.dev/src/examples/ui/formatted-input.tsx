@@ -5,7 +5,7 @@ import {
 	phoneMask,
 } from "@voila.dev/ui/formatted-input";
 
-export function FormattedInputExample() {
+export function Default() {
 	return (
 		<div className="flex w-full max-w-72 flex-col gap-3">
 			<FormattedInput mask={businessIdMask} placeholder="123 456 789 00012" />

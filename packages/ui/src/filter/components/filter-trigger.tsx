@@ -10,7 +10,15 @@ import { cn } from "#/lib/utils.ts";
 interface Props extends React.ComponentProps<"button"> {
 	/** Current search text, or the placeholder when nothing is searched yet. */
 	summary?: string;
+	/**
+	 * Number of active filters, shown as a badge. Keeps a filtered list from
+	 * reading as a short one; pass `countActiveFilters(values)`.
+	 */
 	activeCount: number;
+	/**
+	 * Every string this button shows. `Filter.Root` supplies it; standalone, pass
+	 * `defaultFilterLabels` or your own.
+	 */
 	labels: FilterLabels;
 }
 

@@ -4,6 +4,7 @@ import { SpreadsheetContext } from "#/spreadsheet/context/spreadsheet-context.ts
 interface Props extends React.ComponentProps<"col"> {
 	/** Matches the `columnId` of the header cell that resizes this column. */
 	columnId?: string;
+	/** Starting width. A resize writes over it, matched by `columnId`. */
 	width?: number | string;
 }
 

@@ -7,8 +7,14 @@ category: "overlays"
 import * as Example from "@/examples/ui/dropdown-menu";
 
 <Preview layout="center">
-	<Example.DropdownMenuExample />
+	<Example.Default />
 </Preview>
+
+## Usage
+
+```ts
+import { DropdownMenu } from "@voila.dev/ui/dropdown-menu";
+```
 
 ```tsx
 <DropdownMenu.Root>
@@ -27,11 +33,24 @@ import * as Example from "@/examples/ui/dropdown-menu";
 </DropdownMenu.Root>
 ```
 
-`DropdownMenu.Label` has to sit inside a `DropdownMenu.Group` or at the top of the
-content — a label floating between groups throws.
+A menu of actions hanging off a button. Use it when the items *do* things;
+when they set a value that stays set, a [Select](/ui/select) is the honest
+control, because a menu that closes gives no sense of current state. For the
+same menu opened by right-click, [ContextMenu](/ui/context-menu) is the same
+parts with a different trigger.
 
-Checkbox and radio items are available as `DropdownMenu.CheckboxItem` and
-`DropdownMenu.RadioItem` inside a `DropdownMenu.RadioGroup`.
+## Recipes
+
+Items compose: `Group` and `Separator` for structure, `Sub` and `SubTrigger`
+for nesting, `CheckboxItem` and `RadioItem` for state, `Shortcut` for the key
+hint. `variant="destructive"` tints the one item that deletes something — one
+per menu, at the bottom, behind a separator.
+
+`inset` indents an item so it lines up with siblings that have an icon or a
+checkmark; without it a mixed menu's labels sit at two different left edges.
+
+`Shortcut` takes either children (`⌘K`) or a `keys` array, which renders each
+key as its own [Kbd](/ui/kbd) chip.
 
 ## API
 
@@ -94,3 +113,8 @@ Checkbox and radio items are available as `DropdownMenu.CheckboxItem` and
 ### DropdownMenu.Trigger
 
 <PropTable of="DropdownMenu.Trigger" />
+
+## Related
+
+[ContextMenu](/ui/context-menu) · [Menubar](/ui/menubar) ·
+[Select](/ui/select) · [Popover](/ui/popover)

@@ -5,6 +5,10 @@ import { useChartContext } from "#/chart/context/chart-context.tsx";
 import type { ChartCursorGeometry } from "#/chart/core/types.ts";
 
 interface Props extends React.ComponentProps<"g"> {
+	/**
+	 * Which mark to draw. Defaults to the one that suits the scale: a band on a
+	 * bar chart, a line on a line chart.
+	 */
 	readonly variant?: "band" | "line";
 }
 

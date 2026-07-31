@@ -7,13 +7,17 @@ import { cn } from "#/lib/utils.ts";
 /** The bottom axis: categories on a vertical chart, values on a horizontal one. */
 
 interface Props extends React.ComponentProps<"g"> {
+	/** Draw the short mark beside each label. */
 	readonly tickLine?: boolean;
+	/** Draw the line along the axis itself. */
 	readonly axisLine?: boolean;
+	/** Target number of ticks. The scale rounds it to readable intervals. */
 	readonly tickCount?: number;
 	/** Minimum pixels between two labels before ticks start being dropped. */
 	readonly minTickGap?: number;
 	/** Gap between the axis and its labels. */
 	readonly tickMargin?: number;
+	/** Formats each label. Use it for units, dates and locale. */
 	readonly tickFormatter?: (value: number | string) => string;
 	/** Keeps the scale but draws nothing — useful behind a bar's own labels. */
 	readonly hide?: boolean;

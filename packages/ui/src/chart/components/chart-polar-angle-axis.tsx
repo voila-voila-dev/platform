@@ -10,9 +10,11 @@ import { cn } from "#/lib/utils.ts";
  */
 
 interface Props extends React.ComponentProps<"g"> {
+	/** Formats each spoke label. */
 	readonly tickFormatter?: (value: string) => string;
 	/** Pixels between the outer ring and the labels. */
 	readonly tickMargin?: number;
+	/** Pixels kept clear inside the plot edge, so labels are not clipped. */
 	readonly inset?: number;
 }
 

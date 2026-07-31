@@ -1,7 +1,7 @@
 import { CopyIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 import { InputGroup } from "@voila.dev/ui/input-group";
 
-export function InputGroupExample() {
+export function Default() {
 	return (
 		<div className="flex w-full max-w-80 flex-col gap-3">
 			<InputGroup.Root>

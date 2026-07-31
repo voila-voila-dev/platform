@@ -5,7 +5,7 @@ sidebar:
   order: 14
 ---
 
-import * as Example from "@/examples/ui-chart/chart";
+import * as Example from "@/examples/ui-chart/chart-points";
 
 <Preview layout="stack">
 	<Example.Points />
@@ -15,3 +15,10 @@ import * as Example from "@/examples/ui-chart/chart";
 <Chart.Line />
 <Chart.Points />
 ```
+
+## API
+
+<PropTable of="Chart.Points" />
+
+`sizeKey` turns the dots into a bubble chart, mapped by area rather than radius
+so a value twice as large looks twice as large.

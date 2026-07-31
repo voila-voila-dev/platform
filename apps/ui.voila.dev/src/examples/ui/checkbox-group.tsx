@@ -3,7 +3,7 @@ import { CheckboxGroup } from "@voila.dev/ui/checkbox-group";
 import { Label } from "@voila.dev/ui/label";
 import { skills } from "./fixtures";
 
-export function CheckboxGroupExample() {
+export function Default() {
 	return (
 		<CheckboxGroup defaultValue={["design"]} className="w-full max-w-64">
 			{skills.map((skill) => (

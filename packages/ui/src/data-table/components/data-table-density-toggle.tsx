@@ -5,9 +5,13 @@ import type { DataTableDensity } from "#/data-table/lib/density.ts";
 import { DropdownMenu } from "#/dropdown-menu/components/dropdown-menu.tsx";
 
 interface Props extends Omit<React.ComponentProps<typeof Button>, "onChange"> {
+	/** The current row height. Controlled — this toggle holds no state. */
 	density: DataTableDensity;
+	/** Called with the picked density. Pass the same value to `DataTable.Root`. */
 	onDensityChange: (density: DataTableDensity) => void;
+	/** Text on the trigger. This package ships no translations. */
 	label?: string;
+	/** Names for the two options, as shown in the menu. */
 	labels?: Record<DataTableDensity, string>;
 }
 

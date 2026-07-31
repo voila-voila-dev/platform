@@ -47,7 +47,7 @@ const freelancerSteps = [
 	},
 ];
 
-export function StepTracksExample() {
+export function Default() {
 	return (
 		<StepTracks.Root>
 			<StepTracks.Track tone="highlight">

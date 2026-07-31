@@ -2,6 +2,7 @@ import type * as React from "react";
 import { cn } from "#/lib/utils.ts";
 
 interface Props extends React.ComponentProps<"img"> {
+	/** Required, not optional: a card image carries the article's subject. */
 	alt: string;
 }
 

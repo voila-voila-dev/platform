@@ -22,6 +22,7 @@ interface Props
 	invalid?: boolean;
 	/** Width of the popover; the nested table sets its own column widths. */
 	contentClassName?: string;
+	/** Classes for the trigger button that sits in the cell. */
 	className?: string;
 }
 

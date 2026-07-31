@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import * as Example from "@/examples/ui-chart/chart";
+import * as Example from "@/examples/ui-chart/chart-root";
 
 <Preview layout="stack">
 	<Example.Root />
@@ -32,3 +32,20 @@ import * as Example from "@/examples/ui-chart/chart";
 `margin` is manual: axes and the legend are drawn **inside** the root's box, so
 leave about 40px left for a y axis, 28px bottom for an x axis, and 24px more for
 a bottom legend.
+
+## API
+
+### Chart.Root
+
+<PropTable of="Chart.Root" />
+
+`x` and `y` are what turn your rows into scales; everything drawn inside reads
+them. `data` is plotted in the order you give it — the root never sorts.
+
+### Chart.Style
+
+<PropTable of="Chart.Style" />
+
+Emits the `--color-*` custom properties for a chart's series, scoped to that one
+instance. `Chart.Root` renders it for you; you only need it directly when
+building a mark of your own outside the root.

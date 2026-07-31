@@ -5,7 +5,7 @@ import {
 	Text as TextComponent,
 } from "@voila.dev/ui/landing";
 
-export function SectionExample() {
+export function Default() {
 	return (
 		<div className="w-full">
 			{sectionBackgroundOptions.map((background) => (

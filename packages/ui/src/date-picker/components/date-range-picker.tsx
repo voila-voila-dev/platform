@@ -24,7 +24,12 @@ function isRangeSelectionComplete(range: DateRange | undefined): boolean {
 interface Props extends DatePickerBase {
 	/** Controlled value; pass `null` for a controlled empty selection. */
 	value?: DateRange | null;
+	/** Initial selection when uncontrolled. */
 	defaultValue?: DateRange;
+	/**
+	 * Called as the range is built, so it fires once with only `from` set before
+	 * firing again with both. Guard on `to` before querying.
+	 */
 	onValueChange?: (range: DateRange | null) => void;
 }
 

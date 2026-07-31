@@ -4,6 +4,12 @@ import type * as React from "react";
 import { cn } from "#/lib/utils.ts";
 
 interface Props extends useRender.ComponentProps<"div"> {
+	/**
+	 * The width-to-height ratio to hold, as a number (`16 / 9`) or as any string
+	 * CSS `aspect-ratio` accepts (`"3/4"`).
+	 *
+	 * @default 1
+	 */
 	ratio?: number | string;
 }
 

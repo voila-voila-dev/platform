@@ -7,8 +7,14 @@ category: "layout"
 import * as Example from "@/examples/ui/aspect-ratio";
 
 <Preview layout="stack">
-	<Example.AspectRatioExample />
+	<Example.Default />
 </Preview>
+
+## Usage
+
+```ts
+import { AspectRatio } from "@voila.dev/ui/aspect-ratio";
+```
 
 ```tsx
 <AspectRatio ratio={16 / 9}>
@@ -16,8 +22,32 @@ import * as Example from "@/examples/ui/aspect-ratio";
 </AspectRatio>
 ```
 
-The width comes from the parent, so the ratio has something to work against.
+Reach for it when a box has to keep its shape while its width is decided by
+something else — a card cover in a responsive grid, a video embed, an image
+placeholder that must not shift the page as it loads. The width comes from the
+parent, so the ratio has something to work against; inside a box that already
+has both dimensions there is nothing for it to do.
+
+If all you need is the grey box while data loads, that is
+[Skeleton](/ui/skeleton).
+
+## Recipes
+
+<Preview layout="stack" label="Numbers and CSS strings both work">
+	<Example.Ratios />
+</Preview>
+
+`ratio` takes a number, which is why `16 / 9` is written as the division rather
+than as `1.778`, and it also takes any string CSS `aspect-ratio` accepts — so
+`"3/4"` is available without doing the arithmetic.
+
+The child is not stretched for you. It has to fill the box itself: `size-full`
+with `object-cover` on an image, `size-full` on a wrapper.
 
 ## API
 
 <PropTable of="AspectRatio" />
+
+## Related
+
+[Gallery](/ui/gallery) · [Card](/ui/card) · [Skeleton](/ui/skeleton)

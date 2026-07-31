@@ -3,7 +3,7 @@ import { Input } from "@voila.dev/ui/input";
 import { Label } from "@voila.dev/ui/label";
 import { Popover } from "@voila.dev/ui/popover";
 
-export function PopoverExample() {
+export function Default() {
 	return (
 		<>
 			<Popover.Root>
@@ -38,5 +38,20 @@ export function PopoverExample() {
 				</Popover.Content>
 			</Popover.Root>
 		</>
+	);
+}
+
+export function Placement() {
+	return (
+		<Popover.Root>
+			<Popover.Trigger
+				render={<Button variant="outline">Above, aligned left</Button>}
+			/>
+			<Popover.Content side="top" align="start" sideOffset={8}>
+				<p className="text-muted-foreground">
+					Flips to the other side when there is no room.
+				</p>
+			</Popover.Content>
+		</Popover.Root>
 	);
 }

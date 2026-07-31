@@ -4,6 +4,7 @@ import { Button } from "#/button/components/button.tsx";
 import { cn } from "#/lib/utils.ts";
 
 interface Props extends React.ComponentProps<typeof DayButton> {
+	/** BCP-47 tag used to format the `data-day` attribute on each cell. */
 	locale?: string;
 }
 

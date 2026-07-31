@@ -19,7 +19,12 @@ interface Props
 		React.ComponentProps<typeof MapView>,
 		"center" | "zoom" | "onReady"
 	> {
+	/**
+	 * The place the circle is drawn around. Unlike `MapView`'s `center` this is
+	 * live: moving it redraws the circle and re-frames the viewport.
+	 */
 	center: GeoPoint;
+	/** Circle radius in kilometres, measured geodesically. Live, like `center`. */
 	radiusKm: number;
 	/** Circle fill/stroke colour. Defaults to the kit's deep blue. */
 	color?: string;

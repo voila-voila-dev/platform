@@ -12,7 +12,9 @@ import { useSpreadsheetColumnReorder } from "#/spreadsheet/hooks/use-spreadsheet
 interface Props extends React.ComponentProps<"th"> {
 	/** Stable column identifier for sorting/resizing/reordering. */
 	columnId?: string;
+	/** Turns the header into a tri-state sort button. Needs `columnId`. */
 	sortable?: boolean;
+	/** Adds a resize handle on the right edge. Needs `columnId`. */
 	resizable?: boolean;
 }
 

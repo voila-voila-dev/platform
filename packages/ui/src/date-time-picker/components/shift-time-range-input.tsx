@@ -19,19 +19,27 @@ import { Popover } from "#/popover/components/popover.tsx";
 interface Props {
 	/** Controlled range; both sides may be `null` independently. */
 	value?: DateTimeRange;
+	/** Initial range when uncontrolled. */
 	defaultValue?: DateTimeRange;
+	/** Called with the whole `{ start, end }` after either side changes. */
 	onValueChange?: (range: DateTimeRange) => void;
+	/** Shown on the single trigger while the shift is empty. */
 	placeholder?: string;
+	/** Ties the trigger to a `<label>`. */
 	id?: string;
 	/** BCP-47 locale (e.g. "fr-FR") for the trigger label, calendar, and time lists. */
 	locale?: string;
+	/** Blocks the trigger, so the popover cannot be opened. */
 	disabled?: boolean;
 	/** Minutes between two options in each time list. Defaults to 30. */
 	minuteStep?: number;
 	/** Duration (minutes) seeding the end when only a start exists. Defaults to 60. */
 	defaultDurationMinutes?: number;
+	/** Classes for the trigger. */
 	className?: string;
+	/** Marks the trigger invalid. Pair it with your own message. */
 	"aria-invalid"?: React.AriaAttributes["aria-invalid"];
+	/** Accessible name, for when there is no visible label. */
 	"aria-label"?: string;
 }
 

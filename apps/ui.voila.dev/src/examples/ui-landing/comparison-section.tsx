@@ -19,7 +19,7 @@ const withItems = [
 	"Zero overhead on contracts or invoicing",
 ];
 
-export function ComparisonSectionExample() {
+export function Default() {
 	return (
 		<ComparisonSection.Root tone="highlight" background="muted">
 			<ComparisonSection.Content>

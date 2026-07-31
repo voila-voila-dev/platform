@@ -3,7 +3,9 @@ import type * as React from "react";
 import { Empty } from "#/empty/components/empty.tsx";
 
 interface Props extends React.ComponentProps<typeof Empty.Root> {
+	/** Headline of the block. Defaults to a generic "No results". */
 	title?: string;
+	/** One line under the title — the place to suggest clearing a filter. */
 	description?: string;
 }
 

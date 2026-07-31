@@ -3,6 +3,11 @@ import { useRender } from "@base-ui/react/use-render";
 import { cn } from "#/lib/utils.ts";
 
 interface Props extends useRender.ComponentProps<"div"> {
+	/**
+	 * Draws a dashed frame around the block, for an empty state standing on its
+	 * own. Leave it off inside something that already has a border — a card, or a
+	 * table body.
+	 */
 	bordered?: boolean;
 }
 

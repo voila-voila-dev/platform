@@ -47,3 +47,14 @@ import { type PhosphorIconName, phosphorIconNames } from "@voila.dev/ui/icon";
 
 For letting a user choose one, `@voila.dev/ui` has an `IconPicker` built on top
 of this.
+
+## API
+
+<PropTable of="Icon" />
+
+`name` is the only prop this component adds. The rest are Phosphor's own, which
+is why they carry no description here: `size` and `color` accept any CSS length
+and colour but are better left to `className` so a rebrand reaches them,
+`weight` picks the stroke style (`thin` through `fill`, `regular` by default),
+`mirrored` flips the glyph for right-to-left layouts, and `alt` is what turns a
+decorative icon into a labelled one.

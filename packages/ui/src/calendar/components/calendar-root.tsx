@@ -23,6 +23,7 @@ type Props = DistributiveOmit<
 	React.ComponentProps<typeof DayPicker>,
 	"locale"
 > & {
+	/** Button variant for the previous/next month arrows. */
 	navButtonVariant?: React.ComponentProps<typeof Button>["variant"];
 	/** BCP-47 locale (e.g. "fr-FR") applied to the month, weekday, and day labels. */
 	locale?: string;

@@ -1,7 +1,7 @@
 import { Rating } from "@voila.dev/ui/rating";
 import { useState } from "react";
 
-export function RatingExample() {
+export function Default() {
 	return (
 		<div className="flex flex-col items-start gap-4">
 			<Rating.Root value={4} count={128} />

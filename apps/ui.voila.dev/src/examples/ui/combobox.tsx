@@ -9,7 +9,7 @@ const roles = [
 	"Illustrator",
 ];
 
-export function ComboboxExample() {
+export function Default() {
 	return (
 		<Combobox.Root items={roles}>
 			<Combobox.Input placeholder="Select a role" className="w-64" />

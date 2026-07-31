@@ -2,7 +2,7 @@ import { WarningIcon } from "@phosphor-icons/react";
 import { AlertDialog } from "@voila.dev/ui/alert-dialog";
 import { Button } from "@voila.dev/ui/button";
 
-export function AlertDialogExample() {
+export function Default() {
 	return (
 		<AlertDialog.Root>
 			<AlertDialog.Trigger render={<Button variant="outline" />}>

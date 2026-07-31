@@ -13,10 +13,18 @@ import type {
 } from "#/filter/types.ts";
 
 interface Props {
+	/** The one filter to render. Its `kind` picks the editor. */
 	definition: FilterDefinition;
+	/** The current value, or `undefined` when this filter is not active. */
 	value: FilterValue | undefined;
+	/** Called with `undefined` when the field is cleared, which is how a filter is removed. */
 	onValueChange: (value: FilterValue | undefined) => void;
+	/**
+	 * Every string this field shows. `Filter.Form` supplies it; standalone, pass
+	 * `defaultFilterLabels` or your own.
+	 */
 	labels: FilterLabels;
+	/** BCP 47 tag used to format this field's numbers, money and dates. */
 	locale: string;
 }
 

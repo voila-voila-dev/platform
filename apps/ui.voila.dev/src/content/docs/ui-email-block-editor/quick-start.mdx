@@ -5,7 +5,7 @@ sidebar:
   order: 0
 ---
 
-import * as Example from "@/examples/ui-email-block-editor/blocks";
+import * as Example from "@/examples/ui-email-block-editor/quick-start";
 
 The email template editor that lives in your app, not someone else's SaaS.
 
@@ -85,6 +85,16 @@ Every building part is exported individually (the block definitions, the
 sections, the drag-and-drop list, the reducer), so the composed
 `EmailBlockEditor` is a convenience, not a boundary. Read the code, then keep
 it.
+
+## API
+
+<PropTable of="EmailBlockEditor" />
+
+This is the only component the package exports. Everything else on the pages
+below is a *block* — a plain readonly object with a `type` field, not a
+component with props — so those pages document a data shape instead of a table.
+The registry behind them, `EMAIL_BLOCK_DEFINITIONS`, is public too, so a host can
+render the same blocks outside the editor.
 
 ## Page map
 

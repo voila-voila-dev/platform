@@ -26,9 +26,12 @@ interface Props extends Omit<ComponentProps<"div">, "children"> {
 	 * following theme switches. An explicit URL opts out of theme following.
 	 */
 	readonly styleUrl?: string;
-	/** Initial center `[longitude, latitude]`. Read once, on mount. */
+	/**
+	 * Initial center `[longitude, latitude]`. Read once, on mount; defaults to
+	 * `[2.3522, 48.8566]`.
+	 */
 	readonly center?: readonly [number, number];
-	/** Initial zoom. Read once, on mount. */
+	/** Initial zoom. Read once, on mount; defaults to `5`. */
 	readonly zoom?: number;
 	/**
 	 * Extra MapLibre constructor options (`maxBounds`, `cooperativeGestures`,

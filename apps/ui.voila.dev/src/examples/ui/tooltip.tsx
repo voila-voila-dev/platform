@@ -1,7 +1,7 @@
 import { Button } from "@voila.dev/ui/button";
 import { Tooltip } from "@voila.dev/ui/tooltip";
 
-export function TooltipExample() {
+export function Default() {
 	return (
 		<>
 			{(["top", "right", "bottom", "left"] as const).map((side) => (

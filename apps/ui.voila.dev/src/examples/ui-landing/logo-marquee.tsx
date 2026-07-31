@@ -3,7 +3,7 @@ import { partnerLogoDataUri } from "./fixtures";
 
 const partnerNames = ["Northwind", "Globex", "Initech", "Contoso"];
 
-export function LogoMarqueeExample() {
+export function Default() {
 	return (
 		<LogoMarquee.Root>
 			<LogoMarquee.Title>Trusted by teams at</LogoMarquee.Title>
@@ -22,7 +22,7 @@ export function LogoMarqueeExample() {
 	);
 }
 
-export function LogoMarqueeStatic() {
+export function Static() {
 	return (
 		<LogoMarquee.Root>
 			<LogoMarquee.Title>Reference brands</LogoMarquee.Title>

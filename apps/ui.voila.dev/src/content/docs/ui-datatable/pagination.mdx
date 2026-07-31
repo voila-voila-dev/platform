@@ -5,7 +5,7 @@ sidebar:
   order: 11
 ---
 
-import * as Example from "@/examples/ui-datatable/tables";
+import * as Example from "@/examples/ui-datatable/pagination";
 
 <Preview layout="stack">
 	<Example.Pagination />
@@ -21,3 +21,12 @@ import * as Example from "@/examples/ui-datatable/tables";
 
 The footer is server-shaped: it never slices your rows, it reports the page you
 should fetch.
+
+## API
+
+<PropTable of="DataTable.Pagination" />
+
+`page` is zero-based, `total` is the row count across every page, and neither is
+optional: this footer computes the page count rather than counting the rows it
+was given, which is what lets it work against a server that sent only one page.
+The text props exist because the package ships no translations.

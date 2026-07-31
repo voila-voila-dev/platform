@@ -5,7 +5,7 @@ sidebar:
   order: 23
 ---
 
-import * as Example from "@/examples/ui-chart/chart";
+import * as Example from "@/examples/ui-chart/chart-radial-bar";
 
 <Preview layout="stack">
 	<Example.RadialBar />
@@ -14,3 +14,11 @@ import * as Example from "@/examples/ui-chart/chart";
 ```tsx
 <Chart.RadialBar />
 ```
+
+## API
+
+<PropTable of="Chart.RadialBar" />
+
+`max` is what makes a radial bar readable as a proportion — without it the
+tracks are scaled to the largest value present, so "full" means nothing fixed.
+Set it when the chart is a gauge.

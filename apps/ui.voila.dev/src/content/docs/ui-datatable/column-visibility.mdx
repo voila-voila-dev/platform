@@ -5,7 +5,7 @@ sidebar:
   order: 6
 ---
 
-import * as Example from "@/examples/ui-datatable/tables";
+import * as Example from "@/examples/ui-datatable/column-visibility";
 
 <Preview layout="stack">
 	<Example.ViewOptions />
@@ -28,3 +28,11 @@ import * as Example from "@/examples/ui-datatable/tables";
 
 `toolbar` takes a render prop when a control needs the table instance — the
 column menu and the exporter both do.
+
+## API
+
+<PropTable of="DataTable.ViewOptions" />
+
+`table` is the live instance, which is why `toolbar` has to be a render prop
+here: the menu builds itself from the column list at render time, so a column
+added later appears without touching this.

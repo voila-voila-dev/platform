@@ -8,6 +8,7 @@ import { cn } from "#/lib/utils.ts";
 interface Props extends DateTimeShared {
 	/** `Intl.DateTimeFormat` options for the desktop trigger label. */
 	formatOptions?: Intl.DateTimeFormatOptions;
+	/** Escape hatch for the desktop Calendar. Ignored on the native surface. */
 	calendarProps?: React.ComponentProps<
 		typeof DateTimePickerRoot
 	>["calendarProps"];

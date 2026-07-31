@@ -148,7 +148,7 @@ const frenchLabels = {
 	selectedCount: (count: number) => `${count} sélectionnés`,
 };
 
-function FilterBarFixture({
+function FilterRootFixture({
 	labels,
 	locale,
 }: {
@@ -182,10 +182,10 @@ function FilterBarFixture({
 // The stories drive a stateful fixture (a filter bar owns applied values), so
 // the meta is typed against it rather than the bare component.
 const meta = {
-	title: "UI Filters/FilterBar",
-	component: FilterBarFixture,
+	title: "UI Filters/Filter.Root",
+	component: FilterRootFixture,
 	tags: ["autodocs"],
-} satisfies Meta<typeof FilterBarFixture>;
+} satisfies Meta<typeof FilterRootFixture>;
 
 export default meta;
 
@@ -193,11 +193,11 @@ type Story = StoryObj<typeof meta>;
 
 /** Resize below 768px to get the bottom drawer and the native date pickers. */
 export const Default: Story = {
-	render: () => <FilterBarFixture />,
+	render: () => <FilterRootFixture />,
 };
 
 export const French: Story = {
-	render: () => <FilterBarFixture labels={frenchLabels} locale="fr-FR" />,
+	render: () => <FilterRootFixture labels={frenchLabels} locale="fr-FR" />,
 };
 
 /** The editor on its own, for a screen that shows filters inline. */

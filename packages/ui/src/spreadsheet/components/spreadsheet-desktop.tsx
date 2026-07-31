@@ -11,6 +11,10 @@ import { useSpreadsheetScrolledX } from "#/spreadsheet/hooks/use-spreadsheet-scr
 import { editableTableClassName } from "#/spreadsheet/lib/spreadsheet-styles.ts";
 
 interface Props extends React.ComponentProps<"table"> {
+	/**
+	 * Classes for the scroll container around the table, which is where a bounded
+	 * height belongs — `className` goes to the `<table>` itself and cannot scroll.
+	 */
 	containerClassName?: string;
 	/**
 	 * Pins the header row while the body scrolls. Only useful together with a
@@ -31,6 +35,7 @@ interface Props extends React.ComponentProps<"table"> {
 	 * over indexed form rows would break their binding).
 	 */
 	sort?: SpreadsheetSort | null;
+	/** Called with the next sort, or `null` at the end of the tri-state cycle. */
 	onSortChange?: (sort: SpreadsheetSort | null) => void;
 	/**
 	 * Column widths by `columnId`, written by `resizable` header cells. Leave
@@ -39,6 +44,7 @@ interface Props extends React.ComponentProps<"table"> {
 	 * `table-layout: fixed`.
 	 */
 	columnSizing?: Record<string, number>;
+	/** Called on every drag frame of a resize; debounce before persisting. */
 	onColumnSizingChange?: (sizing: Record<string, number>) => void;
 	/**
 	 * Controlled column order, as the list of `columnId`s currently rendered.
@@ -47,6 +53,7 @@ interface Props extends React.ComponentProps<"table"> {
 	 * and body cells alike, in the received order.
 	 */
 	columnOrder?: string[];
+	/** Called with the new `columnId` order once a drag or Alt+arrow move lands. */
 	onColumnOrderChange?: (order: string[]) => void;
 	/**
 	 * Enables `SpreadsheetDragHandle` cells: called with the dragged row's

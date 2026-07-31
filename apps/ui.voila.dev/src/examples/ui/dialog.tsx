@@ -1,7 +1,7 @@
 import { Button } from "@voila.dev/ui/button";
 import { Dialog } from "@voila.dev/ui/dialog";
 
-export function DialogExample() {
+export function Default() {
 	return (
 		<Dialog.Root>
 			<Dialog.Trigger render={<Button variant="outline" />}>
@@ -23,5 +23,27 @@ export function DialogExample() {
 				</Dialog.Footer>
 			</Dialog.Content>
 		</Dialog.Root>
+	);
+}
+
+export function Sizes() {
+	return (
+		<>
+			{(["sm", "default", "lg", "xl"] as const).map((size) => (
+				<Dialog.Root key={size}>
+					<Dialog.Trigger render={<Button variant="outline" />}>
+						{size}
+					</Dialog.Trigger>
+					<Dialog.Content size={size}>
+						<Dialog.Header>
+							<Dialog.Title>Size “{size}”</Dialog.Title>
+							<Dialog.Description>
+								The panel grows; the padding and type scale stay put.
+							</Dialog.Description>
+						</Dialog.Header>
+					</Dialog.Content>
+				</Dialog.Root>
+			))}
+		</>
 	);
 }

@@ -4,6 +4,7 @@ import { AlertDialogPortal } from "#/alert-dialog/components/alert-dialog-portal
 import { cn } from "#/lib/utils.ts";
 
 interface Props extends AlertDialogPrimitive.Popup.Props {
+	/** Width of the panel. `sm` suits a one-line confirmation. */
 	size?: "default" | "sm";
 }
 

@@ -7,18 +7,58 @@ category: "layout"
 import * as Example from "@/examples/ui/separator";
 
 <Preview layout="stack">
-	<Example.SeparatorExample />
+	<Example.Default />
 </Preview>
+
+## Usage
+
+```ts
+import { Separator } from "@voila.dev/ui/separator";
+```
 
 ```tsx
 <Separator />
 <Separator orientation="vertical" />
-<Separator>OU</Separator>
+<Separator>OR</Separator>
 ```
 
-A vertical separator stretches to its container by default. Inside a taller
-row, give it a height and `my-auto` to re-centre it.
+A rule between things that belong to the same group — menu items, toolbar
+clusters, the two halves of a sign-in form. Reach for it when the space alone
+is not doing the work. When the two blocks have their own titles, the heading is
+already the boundary and a rule on top of it is noise; that is
+[Section](/ui/section)'s job, not a separator's.
+
+Separators inside a menu or a sidebar come with those components
+([DropdownMenu.Separator](/ui/dropdown-menu),
+[Sidebar.Separator](/ui/sidebar)) and are already spaced for their surface — use
+those rather than dropping a bare `Separator` in.
+
+## Recipes
+
+The default preview above carries all three shapes; the notes worth having are
+about the ones that surprise people.
+
+A vertical separator stretches to its container, which means it is invisible
+when the container has no height of its own. In a flex row, `h-5` on the
+separator — or `items-stretch` on the row — is what makes it appear. Inside a
+taller row, give it a height and `my-auto` to re-centre it.
+
+Children turn it into a labelled divider, the "OR" between a form and its
+social-login buttons. The rule is drawn on both sides of the label
+automatically; do not render two separators around a `<span>`.
+
+Base UI marks it `role="separator"`, so it is announced. When it is purely
+decorative — a hairline between two cards that are already distinct — pass
+`aria-hidden` and let the layout carry the meaning.
 
 ## API
 
 <PropTable of="Separator" />
+
+`orientation` and the state-function forms of `className` and `style` come from
+[Base UI's Separator](https://base-ui.com/react/components/separator).
+
+## Related
+
+[Section](/ui/section) · [DropdownMenu](/ui/dropdown-menu) ·
+[ButtonGroup](/ui/button-group)

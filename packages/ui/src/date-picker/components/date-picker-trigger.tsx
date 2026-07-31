@@ -5,7 +5,9 @@ import { cn } from "#/lib/utils.ts";
 import { Popover } from "#/popover/components/popover.tsx";
 
 interface Props extends React.ComponentProps<typeof Button> {
+	/** Whether nothing is selected, which is what renders the muted placeholder. */
 	empty: boolean;
+	/** Leading icon. Defaults to a calendar glyph. */
 	icon?: React.ReactNode;
 	/** Base for the part's `data-slot` attribute; not the DOM `slot`. */
 	slotName?: string;

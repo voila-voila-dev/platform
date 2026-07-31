@@ -1,7 +1,7 @@
 import { Button } from "@voila.dev/ui/button";
 import { Sheet } from "@voila.dev/ui/sheet";
 
-export function SheetExample() {
+export function Default() {
 	return (
 		<Sheet.Root>
 			<Sheet.Trigger render={<Button variant="outline" />}>
@@ -27,5 +27,27 @@ export function SheetExample() {
 				</Sheet.Footer>
 			</Sheet.Content>
 		</Sheet.Root>
+	);
+}
+
+export function Sides() {
+	return (
+		<>
+			{(["top", "right", "bottom", "left"] as const).map((side) => (
+				<Sheet.Root key={side}>
+					<Sheet.Trigger render={<Button variant="outline" />}>
+						{side}
+					</Sheet.Trigger>
+					<Sheet.Content side={side}>
+						<Sheet.Header>
+							<Sheet.Title>From the {side}</Sheet.Title>
+							<Sheet.Description>
+								`size` measures across the edge it entered from.
+							</Sheet.Description>
+						</Sheet.Header>
+					</Sheet.Content>
+				</Sheet.Root>
+			))}
+		</>
 	);
 }

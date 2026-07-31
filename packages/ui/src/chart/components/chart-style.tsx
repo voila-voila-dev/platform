@@ -48,7 +48,9 @@ const ENTER_ANIMATION = `
 }`;
 
 interface Props {
+	/** The chart instance this stylesheet belongs to, so its variables stay scoped. */
 	readonly id: string;
+	/** The series config to emit `--color-*` custom properties from. */
 	readonly config: ChartConfig;
 }
 

@@ -7,8 +7,14 @@ category: "layout"
 import * as Example from "@/examples/ui/direction";
 
 <Preview layout="center">
-	<Example.DirectionExample />
+	<Example.Default />
 </Preview>
+
+## Usage
+
+```ts
+import { DirectionProvider } from "@voila.dev/ui/direction";
+```
 
 ```tsx
 <DirectionProvider direction="rtl">
@@ -16,7 +22,35 @@ import * as Example from "@/examples/ui/direction";
 </DirectionProvider>
 ```
 
-This only informs Base UI's logical positioning and keyboard navigation. It
-does not set `dir` on the DOM, so text alignment and portaled popups still
-follow the nearest `dir` ancestor. Localising to a right-to-left language means
-setting `dir="rtl"` on `<html>` as well as rendering this provider.
+Render it once, at the root, when the app ships a right-to-left locale. It is
+not a per-component prop and not something to reach for on a single subtree —
+the components read it from context, and a provider around half a page gives you
+a menu that opens the wrong way relative to the text beside it.
+
+This only informs Base UI's logical positioning and keyboard navigation: which
+side a submenu opens on, which arrow key moves forward. It does not set `dir` on
+the DOM, so text alignment and portaled popups still follow the nearest `dir`
+ancestor. Localising to a right-to-left language means setting `dir="rtl"` on
+`<html>` as well as rendering this provider — the provider alone is the common
+half-done version of this.
+
+## API
+
+{/* no-prop-table: a re-export of Base UI's provider, so there is no source in
+    packages/ui for the extractor to read props from. */}
+
+`@voila.dev/ui/direction` is a re-export, not a component of its own, so there
+is no generated table for it: the props are Base UI's and are documented with
+[the provider itself](https://base-ui.com/react/utils/direction-provider). It
+takes one, `direction`, which is `"ltr"` or `"rtl"`.
+
+The module also re-exports `useDirection`, for reading the current direction
+inside a component, and the `Direction` type.
+
+```ts
+import { type Direction, DirectionProvider, useDirection } from "@voila.dev/ui/direction";
+```
+
+## Related
+
+[Sidebar](/ui/sidebar) · [Menubar](/ui/menubar) · [Tabs](/ui/tabs)

@@ -7,8 +7,14 @@ category: "overlays"
 import * as Example from "@/examples/ui/command";
 
 <Preview layout="stack">
-	<Example.CommandExample />
+	<Example.Default />
 </Preview>
+
+## Usage
+
+```ts
+import { Command } from "@voila.dev/ui/command";
+```
 
 ```tsx
 <Command.Root>
@@ -25,16 +31,32 @@ import * as Example from "@/examples/ui/command";
 </Command.Root>
 ```
 
-Built on [cmdk](https://cmdk.paco.me/), so an item's `value` and `keywords`
-drive the filtering — set them when the visible label is not what people will
-type. `Command.Dialog` wraps the same list in a modal, and the
-`useCommandPalette` hook wires up the ⌘K shortcut.
+A filterable list of commands — the ⌘K palette. It is worth adding once an app
+has more actions than a person can find by looking, and it is dead weight before
+that. `Command.Dialog` is the palette in a modal, which is how it is almost
+always used; the bare `Command` embeds the same list in a page or a
+[Popover](/ui/popover), which is what [Combobox](/ui/combobox) is built on.
+
+## Recipes
+
+`Command.Dialog` takes a `title` and `description` that are visually hidden and
+read by screen readers — the input is the visible cue, but the dialog still needs
+naming. It is controlled the same way as [Dialog](/ui/dialog), so binding it to
+⌘K is a key handler and an `open` prop.
+
+Group items with `Command.Group`, and give each a `Command.Shortcut` where a
+direct key exists, so the palette teaches the shortcuts rather than replacing
+them.
 
 ## API
 
 ### Command.Root
 
 <PropTable of="Command.Root" />
+
+The undescribed props here come from [cmdk](https://cmdk.paco.me/), which this
+is built on; its documentation covers `filter`, `shouldFilter`, `loop` and the
+others.
 
 ### Command.Dialog
 
@@ -67,3 +89,8 @@ type. `Command.Dialog` wraps the same list in a modal, and the
 ### Command.Shortcut
 
 <PropTable of="Command.Shortcut" />
+
+## Related
+
+[Combobox](/ui/combobox) · [Dialog](/ui/dialog) · [Kbd](/ui/kbd) ·
+[DropdownMenu](/ui/dropdown-menu)

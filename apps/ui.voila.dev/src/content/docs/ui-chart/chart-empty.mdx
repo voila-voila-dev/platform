@@ -5,7 +5,7 @@ sidebar:
   order: 41
 ---
 
-import * as Example from "@/examples/ui-chart/chart";
+import * as Example from "@/examples/ui-chart/chart-empty";
 
 <Preview layout="stack">
 	<Example.Empty />
@@ -14,3 +14,10 @@ import * as Example from "@/examples/ui-chart/chart";
 ```tsx
 <Chart.Empty className="h-56 w-full">No data for this period</Chart.Empty>
 ```
+
+## API
+
+<PropTable of="Chart.Empty" />
+
+Size it like the chart it stands in for, or the layout jumps when data arrives.
+Pass localized content as children; this package ships no translations.

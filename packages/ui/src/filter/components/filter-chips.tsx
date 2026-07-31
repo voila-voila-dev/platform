@@ -13,10 +13,21 @@ import type {
 import { cn } from "#/lib/utils.ts";
 
 interface Props extends React.ComponentProps<"div"> {
+	/**
+	 * The same array the editor reads. A chip needs its definition to render a
+	 * label, so a value with no matching definition is skipped.
+	 */
 	definitions: ReadonlyArray<FilterDefinition>;
+	/** The applied filters. One chip per key present. */
 	values: FilterValues;
+	/** Called with the record minus the removed filter, as the chip is dismissed. */
 	onValuesChange: (values: FilterValues) => void;
+	/**
+	 * Every string the chips show. `Filter.Root` supplies it; standalone, pass
+	 * `defaultFilterLabels` or your own.
+	 */
 	labels: FilterLabels;
+	/** BCP 47 tag used to format the numbers, money and dates inside the chips. */
 	locale: string;
 	/** Opens the editor, usually scrolled to the clicked filter. */
 	onChipClick?: (key: string) => void;

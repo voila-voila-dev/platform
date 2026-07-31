@@ -12,16 +12,21 @@ import { polarFrame } from "#/chart/core/polar.ts";
  */
 
 interface Props extends React.ComponentProps<"g"> {
+	/** Field holding each track's value. Defaults to the first value key. */
 	readonly dataKey?: string;
+	/** Field naming each track's config entry. Defaults to the category field. */
 	readonly nameKey?: string;
 	/** Value that fills a whole track. Defaults to the value axis maximum. */
 	readonly max?: number;
+	/** Where a full track begins, in radians clockwise from 12 o'clock. */
 	readonly startAngle?: number;
+	/** Where a full track ends. A partial sweep draws a gauge rather than a ring. */
 	readonly endAngle?: number;
 	/** Fraction of the radius left hollow in the middle. */
 	readonly innerRadiusRatio?: number;
 	/** Draw the unfilled remainder of each track. */
 	readonly background?: boolean;
+	/** Pixels kept clear inside the plot edge. */
 	readonly inset?: number;
 	/** Pixels between two tracks. */
 	readonly gap?: number;

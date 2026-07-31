@@ -11,8 +11,11 @@ import { cn } from "#/lib/utils.ts";
  */
 
 interface Props extends React.ComponentProps<"g"> {
+	/** How many concentric rings to draw. */
 	readonly rings?: number;
+	/** Draw the radial lines out to each category. */
 	readonly spokes?: boolean;
+	/** Pixels kept clear inside the plot edge. */
 	readonly inset?: number;
 }
 

@@ -4,6 +4,7 @@ import { cn } from "#/lib/utils.ts";
 import { menuShortcutVariants } from "#/menu/components/menu-variants.ts";
 
 interface Props extends React.ComponentProps<"span"> {
+	/** Render each key as a small `Kbd` chip. Omit it and children are shown as plain text. */
 	keys?: ReadonlyArray<string>;
 }
 

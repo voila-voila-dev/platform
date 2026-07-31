@@ -15,7 +15,7 @@
  * the repo root: `bun scripts/check-docs.mjs` (bun, so the TypeScript extractor
  * imports directly).
  */
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { readPropsManifest } from "../apps/ui.voila.dev/src/lib/props-extract.ts";
 
@@ -80,6 +80,73 @@ for (const page of pages) {
 }
 console.log(`checked internal links across ${pages.length} pages`);
 
+const srcDir = path.join(repoRoot, "apps/ui.voila.dev/src");
+let memberChecks = 0;
+
+/** Resolves an `@/…` specifier to the file it names, or undefined for a package. */
+function resolveLocalModule(specifier) {
+	if (!specifier.startsWith("@/")) return undefined;
+	const base = path.join(srcDir, specifier.slice(2));
+	for (const candidate of [
+		`${base}.tsx`,
+		`${base}.ts`,
+		path.join(base, "index.tsx"),
+		path.join(base, "index.ts"),
+	]) {
+		if (existsSync(candidate)) return candidate;
+	}
+	return undefined;
+}
+
+const exportCache = new Map();
+
+/**
+ * The names a module exports. Read with regexes rather than the type checker:
+ * these are the docs app's own example files, which are plain `export function`
+ * declarations by convention, and the sync TypeScript API is unavailable under
+ * Bun anyway (see `props-extract.ts`). `export * from` is followed one level so
+ * a barrel still resolves.
+ */
+function moduleExports(file, seen = new Set()) {
+	const cached = exportCache.get(file);
+	if (cached) return cached;
+	if (seen.has(file)) return new Set();
+	seen.add(file);
+	const text = readFileSync(file, "utf8");
+	const names = new Set();
+	for (const match of text.matchAll(
+		/^export\s+(?:async\s+)?(?:function|const|let|class|type|interface)\s+([A-Za-z_$][\w$]*)/gm,
+	)) {
+		names.add(match[1]);
+	}
+	for (const match of text.matchAll(/^export\s*\{([^}]*)\}/gm)) {
+		for (const part of match[1].split(",")) {
+			const name = part
+				.replace(/^\s*type\s+/, "")
+				.split(/\s+as\s+/)
+				.pop()
+				.trim();
+			if (name) names.add(name);
+		}
+	}
+	for (const match of text.matchAll(
+		/^export\s+\*\s+from\s+["'](\.[^"']+)["']/gm,
+	)) {
+		const base = path.join(path.dirname(file), match[1]);
+		for (const candidate of [
+			`${base}.tsx`,
+			`${base}.ts`,
+			path.join(base, "index.ts"),
+		]) {
+			if (!existsSync(candidate)) continue;
+			for (const name of moduleExports(candidate, seen)) names.add(name);
+			break;
+		}
+	}
+	exportCache.set(file, names);
+	return names;
+}
+
 /**
  * Names the MDX provider supplies to every page, so using them needs no import.
  * `PropTable` is expanded by the remark transform before React ever sees it;
@@ -111,8 +178,32 @@ for (const page of pages) {
 			`${path.relative(repoRoot, page.file)}:${prose.slice(0, match.index).split("\n").length} — <${base}${match[2] ?? ""}> is used but never imported.`,
 		);
 	}
+
+	// Knowing the import resolves is not enough: `<Example.Default />` where the
+	// module exports no `Default` renders nothing, and the page still builds — it
+	// just ships with an empty preview frame. Every namespace import in these
+	// pages is a local `@/…` module, so its exports can be read off the file
+	// instead of resolved through the type checker.
+	const namespaces = new Map();
+	for (const match of prose.matchAll(
+		/^import\s+\*\s+as\s+([\w$]+)\s+from\s+["']([^"']+)["']/gm,
+	)) {
+		const file = resolveLocalModule(match[2]);
+		if (file) namespaces.set(match[1], file);
+	}
+	for (const match of prose.matchAll(/<([A-Z][\w]*)\.([\w]+)[\s/>]/g)) {
+		const file = namespaces.get(match[1]);
+		if (!file) continue;
+		memberChecks += 1;
+		if (moduleExports(file).has(match[2])) continue;
+		problems.push(
+			`${path.relative(repoRoot, page.file)}:${prose.slice(0, match.index).split("\n").length} — <${match[1]}.${match[2]}> is not exported by ${path.relative(repoRoot, file)}.`,
+		);
+	}
 }
-console.log(`checked JSX references across ${pages.length} pages`);
+console.log(
+	`checked JSX references across ${pages.length} pages, including ${memberChecks} namespace member(s)`,
+);
 
 if (problems.length) {
 	console.error(`\n${problems.length} problem(s):`);

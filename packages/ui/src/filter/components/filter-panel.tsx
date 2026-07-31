@@ -11,16 +11,26 @@ import { Input } from "#/input/components/input.tsx";
 import { ResponsiveDialog } from "#/responsive-dialog/components/responsive-dialog.tsx";
 
 interface Props {
+	/** Whether the overlay is open. Controlled; pair it with `onOpenChange`. */
 	open: boolean;
+	/** Called when the overlay is dismissed or applied. Dismissing discards the draft. */
 	onOpenChange: (open: boolean) => void;
+	/** The filters to edit, in the order they are rendered. */
 	definitions: ReadonlyArray<FilterDefinition>;
+	/** The applied record the draft starts from, re-read each time the panel opens. */
 	values: FilterValues;
 	/** Called once, on apply, with the committed record. */
 	onValuesChange: (values: FilterValues) => void;
+	/**
+	 * Every string the overlay shows, including the apply and clear buttons.
+	 * `Filter.Root` supplies it; standalone, pass `defaultFilterLabels`.
+	 */
 	labels: FilterLabels;
+	/** BCP 47 tag used to format the numbers, money and dates in the fields. */
 	locale: string;
 	/** Free-text search, kept beside the filters when the list has one. */
 	searchValue?: string;
+	/** Called on every keystroke — search is not part of the apply-on-commit draft. */
 	onSearchChange?: (value: string) => void;
 }
 

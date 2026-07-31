@@ -10,6 +10,10 @@ import { cn } from "#/lib/utils.ts";
 interface Props
 	extends ArcOptions,
 		Omit<React.ComponentProps<"path">, "d" | "cx" | "cy"> {
+	/**
+	 * How this wedge relates to the pointer: `active` lifts it out of the ring,
+	 * `muted` fades the ones it is being compared against.
+	 */
 	readonly state?: "idle" | "active" | "muted";
 }
 

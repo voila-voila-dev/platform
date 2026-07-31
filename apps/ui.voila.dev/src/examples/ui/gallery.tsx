@@ -19,6 +19,6 @@ const galleryImages = [
 	},
 ];
 
-export function GalleryExample() {
+export function Default() {
 	return <Gallery.Root images={galleryImages} />;
 }

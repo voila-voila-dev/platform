@@ -2,7 +2,7 @@ import { Field } from "@voila.dev/ui/field";
 import { Input } from "@voila.dev/ui/input";
 import { Textarea } from "@voila.dev/ui/textarea";
 
-export function FieldExample() {
+export function Default() {
 	return (
 		<div className="w-full max-w-96">
 			<Field.Group>

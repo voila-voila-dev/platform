@@ -13,7 +13,9 @@ import { roundedBarPath } from "#/chart/core/geometry.ts";
 interface Props extends Omit<React.ComponentProps<"g">, "fill"> {
 	/** Series to draw. Defaults to the root's value keys. */
 	readonly keys?: ReadonlyArray<string>;
+	/** Stacks the series into one bar per category instead of grouping them side by side. */
 	readonly stacked?: boolean;
+	/** Corner radius of each bar, in pixels. */
 	readonly radius?: number;
 	/** Pixels between two bars of the same category. */
 	readonly gap?: number;

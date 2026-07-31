@@ -2,7 +2,7 @@ import { Button } from "@voila.dev/ui/button";
 import { DirectionProvider } from "@voila.dev/ui/direction";
 import { DropdownMenu } from "@voila.dev/ui/dropdown-menu";
 
-export function DirectionExample() {
+export function Default() {
 	return (
 		<DirectionProvider direction="rtl">
 			<DropdownMenu.Root>
@@ -17,7 +17,3 @@ export function DirectionExample() {
 		</DirectionProvider>
 	);
 }
-
-/* -------------------------------------------------------------------------- */
-/* Chat                                                                       */
-/* -------------------------------------------------------------------------- */

@@ -5,7 +5,7 @@ sidebar:
   order: 36
 ---
 
-import * as Example from "@/examples/ui-chart/chart";
+import * as Example from "@/examples/ui-chart/chart-label-list";
 
 <Preview layout="stack">
 	<Example.LabelList />
@@ -14,3 +14,12 @@ import * as Example from "@/examples/ui-chart/chart";
 ```tsx
 <Chart.LabelList marks="bars" />
 ```
+
+## API
+
+<PropTable of="Chart.LabelList" />
+
+`marks` is the prop that catches people out: labels anchor to the series point
+by default, which is right for lines and areas but lands over the middle of a
+grouped bar chart rather than over the bar being described. Pass `bars` beside
+any [Chart.Bars](/ui-chart/chart-bars), mirroring its `stacked` and `gap`.

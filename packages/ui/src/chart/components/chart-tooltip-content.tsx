@@ -8,19 +8,25 @@ import type { ChartTooltipIndicator } from "#/chart/core/types.ts";
 import { cn } from "#/lib/utils.ts";
 
 interface Props extends React.ComponentProps<"div"> {
+	/** Drops the heading, leaving the series rows. */
 	readonly hideLabel?: boolean;
+	/** Drops the colour swatch from each row. */
 	readonly hideIndicator?: boolean;
+	/** Shape of that swatch: a dot, a line or a filled block. */
 	readonly indicator?: ChartTooltipIndicator;
 	/** Field naming the config entry, for charts coloured per row. */
 	readonly nameKey?: string;
 	/** Field holding the panel's heading. Defaults to the category. */
 	readonly labelKey?: string;
+	/** Classes for the heading row only. */
 	readonly labelClassName?: string;
+	/** Formats one series row. Use it for units and locale. */
 	readonly formatter?: (
 		value: number,
 		name: React.ReactNode,
 		configKey: string,
 	) => React.ReactNode;
+	/** Formats the heading — usually where a raw date becomes a readable one. */
 	readonly labelFormatter?: (label: string) => React.ReactNode;
 }
 

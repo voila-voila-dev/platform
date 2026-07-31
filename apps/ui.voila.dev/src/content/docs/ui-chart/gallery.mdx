@@ -5,7 +5,15 @@ sidebar:
   order: 2
 ---
 
-import * as Example from "@/examples/ui-chart/chart";
+import { Area } from "@/examples/ui-chart/chart-area";
+import { Bars } from "@/examples/ui-chart/chart-bars";
+import { BarsStacked } from "@/examples/ui-chart/chart-bars-stacked";
+import { Donut } from "@/examples/ui-chart/chart-donut";
+import { Line } from "@/examples/ui-chart/chart-line";
+import { Pie } from "@/examples/ui-chart/chart-pie";
+import { Radar } from "@/examples/ui-chart/chart-radar";
+import { RadialBar } from "@/examples/ui-chart/chart-radial-bar";
+import { AreaStacked, BarsHorizontal, BarsNegative, Bubble, LineStep } from "@/examples/ui-chart/gallery";
 
 Every mark the package draws, on one screen. Each one is live, built from the
 same `Chart.Root` frame with different children. The heading under each
@@ -14,71 +22,71 @@ preview links to the page that takes the mark apart.
 ## [Bars](/ui-chart/chart-bars)
 
 <Preview layout="stack" label="Two series side by side">
-	<Example.Bars />
+	<Bars />
 </Preview>
 
 <Preview layout="stack" label="Horizontal, with values on the bars">
-	<Example.BarsHorizontal />
+	<BarsHorizontal />
 </Preview>
 
 <Preview layout="stack" label="Diverging around zero">
-	<Example.BarsNegative />
+	<BarsNegative />
 </Preview>
 
 ## [Stacked bars](/ui-chart/chart-bars-stacked)
 
 <Preview layout="stack" label="Series stacked in one column">
-	<Example.BarsStacked />
+	<BarsStacked />
 </Preview>
 
 ## [Line](/ui-chart/chart-line)
 
 <Preview layout="stack" label="One series over time">
-	<Example.Line />
+	<Line />
 </Preview>
 
 <Preview layout="stack" label="Step curve with dots">
-	<Example.LineStep />
+	<LineStep />
 </Preview>
 
 ## [Area](/ui-chart/chart-area)
 
 <Preview layout="stack" label="Filled series with a gradient">
-	<Example.Area />
+	<Area />
 </Preview>
 
 <Preview layout="stack" label="Stacked, flat fills">
-	<Example.AreaStacked />
+	<AreaStacked />
 </Preview>
 
 ## [Points](/ui-chart/chart-points)
 
 <Preview layout="stack" label="Bubbles sized by a third value">
-	<Example.Bubble />
+	<Bubble />
 </Preview>
 
 ## [Pie](/ui-chart/chart-pie)
 
 <Preview layout="stack" label="Parts of a whole">
-	<Example.Pie />
+	<Pie />
 </Preview>
 
 ## [Donut](/ui-chart/chart-donut)
 
 <Preview layout="stack" label="The pie with room for a number">
-	<Example.Donut />
+	<Donut />
 </Preview>
 
 ## [Radar](/ui-chart/chart-radar)
 
 <Preview layout="stack" label="One shape across five axes">
-	<Example.Radar />
+	<Radar />
 </Preview>
 
 ## [Radial bars](/ui-chart/chart-radial-bar)
 
 <Preview layout="stack" label="Concentric progress rings">
-	<Example.RadialBar />
+	<RadialBar />
 </Preview>
 
 ## Own it

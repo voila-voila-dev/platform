@@ -7,8 +7,14 @@ category: "overlays"
 import * as Example from "@/examples/ui/popover";
 
 <Preview layout="row">
-	<Example.PopoverExample />
+	<Example.Default />
 </Preview>
+
+## Usage
+
+```ts
+import { Popover } from "@voila.dev/ui/popover";
+```
 
 ```tsx
 <Popover.Root>
@@ -23,8 +29,27 @@ import * as Example from "@/examples/ui/popover";
 </Popover.Root>
 ```
 
-A popover can hold focusable content; a [Tooltip](/ui/tooltip) cannot. If
-there is a button or an input inside, this is the one you want.
+A small panel anchored to its trigger, for content that belongs *next to*
+something rather than over everything. It does not block the page, which is what
+separates it from [Dialog](/ui/dialog). If the content is a menu of actions, use
+[DropdownMenu](/ui/dropdown-menu) — it has the roving focus and typeahead a
+popover full of buttons will not. If it is a definition or a preview that
+appears on hover, that is [HoverCard](/ui/hover-card); if it is one line of
+help, [Tooltip](/ui/tooltip).
+
+## Recipes
+
+<Preview layout="center" label="Placed above, aligned to the start">
+	<Example.Placement />
+</Preview>
+
+`side`, `align`, `sideOffset` and `alignOffset` are surfaced directly; anything
+else the positioner takes — `collisionPadding`, `sticky`, `anchor` — goes through
+`positionerProps`.
+
+Placement is a preference, not a guarantee: the popover flips and shifts to stay
+on screen, so a `top` popover near the top of the viewport renders below the
+trigger instead.
 
 ## API
 
@@ -55,3 +80,8 @@ there is a button or an input inside, this is the one you want.
 ### Popover.Trigger
 
 <PropTable of="Popover.Trigger" />
+
+## Related
+
+[HoverCard](/ui/hover-card) · [Tooltip](/ui/tooltip) ·
+[DropdownMenu](/ui/dropdown-menu) · [Dialog](/ui/dialog)

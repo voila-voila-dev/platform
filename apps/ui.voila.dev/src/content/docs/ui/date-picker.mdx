@@ -7,21 +7,47 @@ category: "dates-and-time"
 import * as Example from "@/examples/ui/date-picker";
 
 <Preview layout="center">
-	<Example.DatePickerExample />
+	<Example.Default />
 </Preview>
 
-```tsx
-<DatePicker.Root
-	value={date}
-	onValueChange={setDate}
-	placeholder="Project date"
-	locale="en-GB"
-/>
+## Usage
+
+```ts
+import { DatePicker } from "@voila.dev/ui/date-picker";
 ```
 
-`calendarProps` passes through to the [Calendar](/ui/calendar) underneath —
-`defaultMonth`, `disabled`, and so on. `DatePicker.Range` is the two-date
-version, and `DatePicker.Trigger` is the field on its own.
+A field that looks like the rest of your form and opens a
+[Calendar](/ui/calendar) when clicked. This is the default choice for a date in
+a form: it costs one line of vertical space instead of a month. Reach past it
+when the date needs a time beside it — that is
+[DateTimePicker](/ui/date-time-picker) — or when the grid should always be
+visible, which is [Calendar](/ui/calendar) on its own.
+
+The value is a `Date`, and `null` means empty. `calendarProps` passes through to
+the grid underneath, so `defaultMonth`, `disabled` and the rest are set there
+rather than duplicated onto this component.
+
+## Recipes
+
+<Preview layout="center" label="Two dates, one field">
+	<Example.Range />
+</Preview>
+
+`DatePicker.Range` selects `{ from, to }`. Its `onValueChange` fires while the
+range is still half-drawn — once with `from` set and `to` undefined, then again
+when the second date lands. Guard on `to` before you turn it into a query, or
+the first click will fetch an open-ended range.
+
+<Preview layout="center" label="A different locale">
+	<Example.Localized />
+</Preview>
+
+`locale` reaches both the trigger label and the calendar, so the month names and
+the formatted date agree. For the label's format specifically, `formatOptions`
+takes `Intl.DateTimeFormat` options.
+
+Set `name` and the picker writes a hidden input serialized as `yyyy-MM-dd`, which
+is what makes it work in a plain form post with no JavaScript on your side.
 
 ## API
 
@@ -36,3 +62,11 @@ version, and `DatePicker.Trigger` is the field on its own.
 ### DatePicker.Trigger
 
 <PropTable of="DatePicker.Trigger" />
+
+The field on its own, without the popover. Use it when you are building a picker
+whose surface is not a calendar and you want the trigger to match the others.
+
+## Related
+
+[Calendar](/ui/calendar) · [DateTimePicker](/ui/date-time-picker) ·
+[TimePicker](/ui/time-picker) · [Field](/ui/field)

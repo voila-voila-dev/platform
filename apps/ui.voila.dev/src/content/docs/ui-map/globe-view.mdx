@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import * as Example from "@/examples/ui-map/maps";
+import * as Example from "@/examples/ui-map/globe-view";
 
 <Preview layout="stack">
 	<Example.Globe />
@@ -45,22 +45,19 @@ write it as "make the globe look like this", not "do this once".
 
 ## API
 
-| Prop | Default | |
-| --- | --- | --- |
-| `spin` | `0` | degrees of longitude per second |
-| `markers` | `[]` | `{ lngLat: [lng, lat], pulse? }`, coloured from the tokens |
-| `styleUrl` | OpenFreeMap | see [Basemaps](/ui-map/basemaps) |
-| `center` | `[2.35, 30]` | read once, on mount |
-| `zoom` | `1.4` | read once, on mount |
-| `onReady` | | the MapLibre instance, re-fired after a basemap swap |
-| `unavailableFallback` | outline | rendered when WebGL is missing |
+<PropTable of="GlobeView" />
+
+Every prop marked "read once, on mount" is exactly that: changing `center`,
+`zoom` or `spin` after the globe mounts does nothing. Drive the camera through
+the instance `onReady` hands you instead. For a `styleUrl` of your own, see
+[Basemaps](/ui-map/basemaps).
 
 ## Own it
 
-The source is `@voila.dev/ui/src/globe-view/components/globe-view.tsx`, with the
-MapLibre runtime in `globe-view-implementation.tsx` next to it. The most likely
-customisation is the atmosphere: edit the two `color-mix` expressions in
-`handleReady` to change what the halo is tinted from.
+The MapLibre runtime sits in `globe-view-implementation.tsx` next to the
+component. The most likely customisation is the atmosphere: edit the two
+`color-mix` expressions in `handleReady` to change what the halo is tinted
+from.
 
 ## Related
 

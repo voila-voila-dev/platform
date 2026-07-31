@@ -24,9 +24,12 @@ interface Props extends Omit<ComponentProps<"div">, "children"> {
 	 * following theme switches. An explicit URL opts out of theme following.
 	 */
 	readonly styleUrl?: string;
-	/** Initial center `[longitude, latitude]`. Read once, on mount. */
+	/**
+	 * Initial center `[longitude, latitude]`. Read once, on mount; defaults to
+	 * `[2.3522, 30]`, which puts the prime meridian mid-frame.
+	 */
 	readonly center?: readonly [number, number];
-	/** Initial zoom. Read once, on mount. */
+	/** Initial zoom. Read once, on mount; defaults to `1.4`, the whole globe. */
 	readonly zoom?: number;
 	/**
 	 * Auto-rotation speed in degrees of longitude per second; `0` (the default)
@@ -34,7 +37,10 @@ interface Props extends Omit<ComponentProps<"div">, "children"> {
 	 * entirely under `prefers-reduced-motion`. Read once, on mount.
 	 */
 	readonly spin?: number;
-	/** Markers to place, coloured from the token palette. Read once, on mount. */
+	/**
+	 * Markers to place, coloured from the token palette. Read once, on mount;
+	 * defaults to none.
+	 */
 	readonly markers?: ReadonlyArray<GlobeMarker>;
 	/**
 	 * Extra MapLibre constructor options (`cooperativeGestures`,

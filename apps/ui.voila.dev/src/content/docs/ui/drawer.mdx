@@ -7,8 +7,14 @@ category: "overlays"
 import * as Example from "@/examples/ui/drawer";
 
 <Preview layout="center">
-	<Example.DrawerExample />
+	<Example.Default />
 </Preview>
+
+## Usage
+
+```ts
+import { Drawer } from "@voila.dev/ui/drawer";
+```
 
 ```tsx
 <Drawer.Root direction="right">
@@ -27,14 +33,32 @@ import * as Example from "@/examples/ui/drawer";
 </Drawer.Root>
 ```
 
-Built on [Vaul](https://vaul.emilkowal.ski/), which is why this one uses
-`asChild` where the rest of the kit uses `render`.
+A panel you can throw. Built on [Vaul](https://vaul.emilkowal.ski/), so it
+drags with momentum and snaps like a native sheet — which is why this one uses
+`asChild` where the rest of the kit uses `render`. Choose it over
+[Sheet](/ui/sheet) when the gesture is part of the point, which on touch it
+usually is. Choose Sheet when the panel is desktop furniture that happens to
+slide.
+
+## Recipes
+
+`direction` sets the edge. Only `top` and `bottom` drawers drag, so
+`showHandle` — the grab bar — is meaningful there and noise on the sides;
+`showCloseButton` exists for exactly that reason, giving `left`/`right` drawers
+a way out that a handle would otherwise have provided.
+
+`overlayClassName` styles the backdrop, `className` the panel. They are separate
+props because dimming the page and shaping the sheet are different decisions.
 
 ## API
 
 ### Drawer.Root
 
 <PropTable of="Drawer.Root" />
+
+The undescribed props here are [Vaul](https://vaul.emilkowal.ski/)'s own —
+`snapPoints`, `modal`, `nested` and the rest — and cannot be annotated from this
+repo. Vaul's documentation covers them.
 
 ### Drawer.Close
 
@@ -75,3 +99,8 @@ Built on [Vaul](https://vaul.emilkowal.ski/), which is why this one uses
 ### Drawer.Trigger
 
 <PropTable of="Drawer.Trigger" />
+
+## Related
+
+[Sheet](/ui/sheet) · [ResponsiveSheet](/ui/responsive-sheet) ·
+[ResponsiveDialog](/ui/responsive-dialog) · [Dialog](/ui/dialog)

@@ -7,8 +7,14 @@ category: "layout"
 import * as Example from "@/examples/ui/resizable";
 
 <Preview layout="stack">
-	<Example.ResizableExample />
+	<Example.Default />
 </Preview>
+
+## Usage
+
+```ts
+import { Resizable } from "@voila.dev/ui/resizable";
+```
 
 ```tsx
 <div className="h-48">
@@ -20,11 +26,43 @@ import * as Example from "@/examples/ui/resizable";
 </div>
 ```
 
+For the split views of an application shell — a list beside a detail pane, an
+editor above its output — where the split is the user's to set and worth
+keeping. It is not a responsive layout primitive: on a phone the panels are
+still side by side and each is half as wide, so swap to a stacked layout at
+your breakpoint rather than shipping a 160px pane. And if the second panel only
+appears in response to an action, a [Sheet](/ui/sheet) or a
+[Drawer](/ui/drawer) is the lighter answer, since neither costs the first panel
+any width.
+
 The group fills its parent, so the size goes on a wrapper and never on
-`Resizable.PanelGroup` itself. A panel with `collapsible` and `collapsedSize={0}`
-snaps shut when dragged to the edge.
+`Resizable.PanelGroup` itself — a group in a parent with no height collapses to
+nothing.
+
+## Recipes
+
+<Preview layout="stack" label="Vertical, with a panel that snaps shut">
+	<Example.Vertical />
+</Preview>
+
+`orientation="vertical"` stacks the panels and turns the handle horizontal.
+Note the inversion the library inherits: a horizontal group is one whose panels
+sit side by side, and its separators are vertical rules.
+
+A panel with `collapsible` and `collapsedSize={0}` snaps shut when it is dragged
+past its minimum instead of stopping there, and snaps back open on the next
+drag. Pair it with `minSize` so the panel has a floor to be dragged past.
+
+`withHandle` draws a grip in the middle of the handle. The drag target is the
+same either way — it is a hit area wider than the hairline — so the grip is
+about making the affordance visible on a surface where a 1px rule does not read
+as draggable.
 
 ## API
+
+`Resizable.Root` and `Resizable.PanelGroup` are the same component; the alias
+keeps the part name the underlying library uses, so the two tables below are
+identical by design.
 
 ### Resizable.Root
 
@@ -41,3 +79,12 @@ snaps shut when dragged to the edge.
 ### Resizable.PanelGroup
 
 <PropTable of="Resizable.PanelGroup" />
+
+The panel and group props above come from
+[react-resizable-panels](https://github.com/bvaughn/react-resizable-panels),
+which owns the layout maths, the imperative handles (`groupRef`, `panelRef`)
+and the persistence hooks; only `withHandle` is this library's.
+
+## Related
+
+[ScrollArea](/ui/scroll-area) · [Sidebar](/ui/sidebar) · [Sheet](/ui/sheet)

@@ -1,6 +1,6 @@
 import { Select } from "@voila.dev/ui/select";
 
-export function SelectExample() {
+export function Default() {
 	return (
 		<Select.Root>
 			<Select.Trigger className="w-56">

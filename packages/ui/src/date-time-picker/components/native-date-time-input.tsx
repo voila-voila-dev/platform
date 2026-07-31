@@ -10,7 +10,9 @@ interface Props
 		React.ComponentProps<typeof NativeDatePickerDateTime>,
 		"value" | "defaultValue" | "onChange"
 	> {
+	/** Controlled value; pass `null` for a controlled empty selection. */
 	value?: Date | null;
+	/** Called with the parsed `Date`, or `null` when the input is emptied. */
 	onValueChange?: (date: Date | null) => void;
 }
 

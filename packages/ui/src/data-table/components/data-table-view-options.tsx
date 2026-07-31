@@ -5,7 +5,12 @@ import { Button } from "#/button/components/button.tsx";
 import { DropdownMenu } from "#/dropdown-menu/components/dropdown-menu.tsx";
 
 interface Props<TData> extends React.ComponentProps<typeof Button> {
+	/**
+	 * The live table instance. Get it from `DataTable.Root`'s `toolbar` render
+	 * prop — this control reads the column list off it.
+	 */
 	table: TanstackTable<TData>;
+	/** Text on the trigger. This package ships no translations. */
 	label?: string;
 }
 

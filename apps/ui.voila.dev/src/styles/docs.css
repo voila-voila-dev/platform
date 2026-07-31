@@ -56,24 +56,27 @@
 		margin-top: 1rem;
 	}
 
-	& h2,
-	& h3,
-	& h4 {
+	/* Guarded like the links and lists below: a previewed Accordion, Card or
+	 * Alert brings its own headings, and the article's heading font and
+	 * `margin-top` were pushing those components apart from the inside. */
+	& h2:not(.not-prose *),
+	& h3:not(.not-prose *),
+	& h4:not(.not-prose *) {
 		font-family: var(--font-heading);
 		font-weight: 600;
 		letter-spacing: -0.01em;
 		scroll-margin-top: 5rem;
 		color: var(--foreground);
 	}
-	& h2 {
+	& h2:not(.not-prose *) {
 		margin-top: 2.5rem;
 		font-size: 1.375rem;
 	}
-	& h3 {
+	& h3:not(.not-prose *) {
 		margin-top: 2rem;
 		font-size: 1.125rem;
 	}
-	& h4 {
+	& h4:not(.not-prose *) {
 		margin-top: 1.5rem;
 		font-size: 1rem;
 	}

@@ -1,6 +1,6 @@
 import { Menubar } from "@voila.dev/ui/menubar";
 
-export function MenubarExample() {
+export function Default() {
 	return (
 		<Menubar.Root>
 			<Menubar.Menu>

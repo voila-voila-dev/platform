@@ -7,7 +7,9 @@ import { cn } from "#/lib/utils.ts";
 // `content` is omitted from the base: React declares it on every element as
 // the `<meta content>` string.
 interface Props extends Omit<React.ComponentProps<"div">, "content"> {
+	/** Replaces the default body. Omit it to get `Chart.LegendContent`. */
 	content?: React.ReactNode;
+	/** Which edge of the chart the legend sits against. */
 	align?: "top" | "bottom";
 }
 

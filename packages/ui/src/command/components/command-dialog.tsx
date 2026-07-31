@@ -4,10 +4,15 @@ import { cn } from "#/lib/utils.ts";
 
 interface Props
 	extends Omit<React.ComponentProps<typeof Dialog.Root>, "children"> {
+	/** Accessible name of the dialog. Visually hidden — the input is the visible cue. */
 	title?: string;
+	/** Accessible description, also visually hidden. */
 	description?: string;
+	/** Classes for the dialog panel. */
 	className?: string;
+	/** Draws the X in the corner. */
 	showCloseButton?: boolean;
+	/** The `Command` tree: input, list, groups and items. */
 	children: React.ReactNode;
 }
 

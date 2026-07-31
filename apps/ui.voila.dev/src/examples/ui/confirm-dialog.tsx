@@ -1,7 +1,7 @@
 import { Button } from "@voila.dev/ui/button";
 import { ConfirmDialog } from "@voila.dev/ui/confirm-dialog";
 
-export function ConfirmDialogExample() {
+export function Default() {
 	return (
 		<>
 			<ConfirmDialog

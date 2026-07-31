@@ -1,7 +1,7 @@
 import { Button } from "@voila.dev/ui/button";
 import { DropdownMenu } from "@voila.dev/ui/dropdown-menu";
 
-export function DropdownMenuExample() {
+export function Default() {
 	return (
 		<DropdownMenu.Root>
 			<DropdownMenu.Trigger render={<Button variant="outline" />}>

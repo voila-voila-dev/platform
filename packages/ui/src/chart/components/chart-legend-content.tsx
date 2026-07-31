@@ -4,6 +4,7 @@ import { configKeyFor, seriesColor } from "#/chart/core/config.ts";
 import { cn } from "#/lib/utils.ts";
 
 interface Props extends React.ComponentProps<"div"> {
+	/** Drops the swatch, leaving labels only. */
 	readonly hideIcon?: boolean;
 	/**
 	 * Field naming the config entry for each row. Pass it on charts coloured per

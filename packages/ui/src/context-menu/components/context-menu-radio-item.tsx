@@ -7,6 +7,7 @@ import {
 } from "#/menu/components/menu-variants.ts";
 
 interface Props extends ContextMenuPrimitive.RadioItem.Props {
+	/** Indents the item to line up with siblings that have an icon or a checkmark. */
 	inset?: boolean;
 }
 

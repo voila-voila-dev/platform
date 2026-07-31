@@ -1,7 +1,7 @@
 import { Button } from "@voila.dev/ui/button";
 import { ContactCards } from "@voila.dev/ui/landing";
 
-export function ContactCardsExample() {
+export function Default() {
 	return (
 		<ContactCards.Root>
 			<ContactCards.Card>
@@ -27,7 +27,3 @@ export function ContactCardsExample() {
 		</ContactCards.Root>
 	);
 }
-
-/* -------------------------------------------------------------------------- */
-/* Blog                                                                       */
-/* -------------------------------------------------------------------------- */

@@ -7,14 +7,46 @@ category: "layout"
 import * as Example from "@/examples/ui/scroll-area";
 
 <Preview layout="stack">
-	<Example.ScrollAreaExample />
+	<Example.Default />
 </Preview>
+
+## Usage
+
+```ts
+import { ScrollArea } from "@voila.dev/ui/scroll-area";
+```
 
 ```tsx
 <ScrollArea.Root className="h-56 w-72 rounded-lg border">…</ScrollArea.Root>
 ```
 
-The height has to come from you — a scroll area with no bound never scrolls.
+For a bounded region inside the page — a list in a panel, a long menu, a code
+block — where the platform scrollbar would look out of place next to the
+surface it sits on. Do not wrap the page in one: the document should scroll with
+the browser's own scrollbar, which is what mobile chrome, scroll restoration and
+find-in-page are built around.
+
+The height has to come from you. `ScrollArea.Root` is `position: relative` and
+nothing more, so a root with no bound simply grows and never scrolls. Bound it
+with a utility class, or with `flex-1 min-h-0` inside a flex column.
+
+`ScrollArea.Root` renders the viewport and a vertical bar for you — the
+children you pass go inside the viewport, not next to it.
+
+## Recipes
+
+<Preview layout="stack" label="A composed horizontal bar">
+	<Example.Horizontal />
+</Preview>
+
+Horizontal scrolling needs its bar composed in, since the root only ships the
+vertical one: render `<ScrollArea.Bar orientation="horizontal" />` alongside the
+content and give the content a width the container cannot fit (`w-max` on a
+flex row is the usual trick).
+
+`keepMounted` on a bar renders it whether or not the pointer is near, which is
+mostly useful in tests and screenshots; the default fade is the better default
+for a real surface.
 
 ## API
 
@@ -25,3 +57,11 @@ The height has to come from you — a scroll area with no bound never scrolls.
 ### ScrollArea.Bar
 
 <PropTable of="ScrollArea.Bar" />
+
+Both parts wrap [Base UI's Scroll Area](https://base-ui.com/react/components/scroll-area),
+which owns `overflowEdgeThreshold`, `keepMounted` and the state-function form of
+`className` and `style`.
+
+## Related
+
+[Resizable](/ui/resizable) · [List](/ui/list) · [Table](/ui/table)

@@ -5,7 +5,7 @@ sidebar:
   order: 35
 ---
 
-import * as Example from "@/examples/ui-chart/chart";
+import * as Example from "@/examples/ui-chart/chart-legend";
 
 <Preview layout="stack">
 	<Example.Legend />
@@ -14,3 +14,17 @@ import * as Example from "@/examples/ui-chart/chart";
 ```tsx
 <Chart.Legend />
 ```
+
+## API
+
+### Chart.Legend
+
+<PropTable of="Chart.Legend" />
+
+### Chart.LegendContent
+
+<PropTable of="Chart.LegendContent" />
+
+The legend is ordinary HTML portalled into the root's overlay layer, so it needs
+room reserved for it in [Chart.Root](/ui-chart/chart-root)'s `margin` — about
+24px at the bottom.

@@ -15,6 +15,7 @@ import { Skeleton } from "#/skeleton/components/skeleton.tsx";
 const BAR_HEIGHTS = [40, 70, 55, 90, 65, 80, 50] as const;
 
 interface Props extends React.ComponentProps<"div"> {
+	/** Accessible name announced while the chart loads. */
 	readonly label?: string;
 }
 

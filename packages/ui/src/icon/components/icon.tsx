@@ -32,6 +32,11 @@ const isDevelopment =
 	(import.meta as unknown as { env?: { DEV?: boolean } }).env?.DEV === true;
 
 interface Props extends ComponentProps<PhosphorIconComponent> {
+	/**
+	 * The Phosphor export name, e.g. `"HeartIcon"`. Typed as the union of valid
+	 * names but accepts any string, so a name read out of a database still
+	 * compiles; an unknown one renders `TagIcon` instead of crashing.
+	 */
 	name: PhosphorIconName | (string & {});
 }
 

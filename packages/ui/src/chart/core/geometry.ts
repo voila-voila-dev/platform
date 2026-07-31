@@ -217,12 +217,17 @@ export function roundedBarPath(options: RoundedBarOptions): string {
 }
 
 export interface ArcOptions {
+	/** Centre of the circle the arc is cut from, in plot coordinates. */
 	readonly cx: number;
+	/** Centre of the circle the arc is cut from, in plot coordinates. */
 	readonly cy: number;
+	/** Inner edge. `0` makes the arc a pie wedge rather than a donut segment. */
 	readonly innerRadius: number;
+	/** Outer edge, in pixels from the centre. */
 	readonly outerRadius: number;
 	/** Degrees clockwise from twelve o'clock. */
 	readonly startAngle: number;
+	/** Degrees clockwise from twelve o'clock. A 360-degree sweep draws a full ring. */
 	readonly endAngle: number;
 }
 

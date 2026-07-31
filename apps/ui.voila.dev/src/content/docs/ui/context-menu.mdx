@@ -7,8 +7,14 @@ category: "overlays"
 import * as Example from "@/examples/ui/context-menu";
 
 <Preview layout="center">
-	<Example.ContextMenuExample />
+	<Example.Default />
 </Preview>
+
+## Usage
+
+```ts
+import { ContextMenu } from "@voila.dev/ui/context-menu";
+```
 
 ```tsx
 <ContextMenu.Root>
@@ -21,8 +27,18 @@ import * as Example from "@/examples/ui/context-menu";
 </ContextMenu.Root>
 ```
 
-There is no right-click on a touchscreen, so anything here needs a second route
-— usually the same items in a [DropdownMenu](/ui/dropdown-menu).
+The same menu as [DropdownMenu](/ui/dropdown-menu), opened by right-click on a
+region rather than by a button. That trigger is its whole problem: nothing on
+screen advertises it, and it does not exist on touch. So a context menu may
+accelerate an action but must never be its only route — put the same items in a
+visible menu too.
+
+## Recipes
+
+The parts mirror [DropdownMenu](/ui/dropdown-menu) exactly — `Group`,
+`Separator`, `Sub`, `CheckboxItem`, `RadioItem`, `Shortcut`, and the same `inset`
+and `variant="destructive"` on items. Anything you learn on one page applies to
+the other.
 
 ## API
 
@@ -85,3 +101,7 @@ There is no right-click on a touchscreen, so anything here needs a second route
 ### ContextMenu.Trigger
 
 <PropTable of="ContextMenu.Trigger" />
+
+## Related
+
+[DropdownMenu](/ui/dropdown-menu) · [Menubar](/ui/menubar) · [Kbd](/ui/kbd)

@@ -11,13 +11,17 @@ import { Pagination } from "#/pagination/components/pagination.tsx";
 interface Props extends Omit<React.ComponentProps<"div">, "children"> {
 	/** Zero-based page index. */
 	page: number;
+	/** Rows per page. Used with `total` to compute the page count and the range line. */
 	pageSize: number;
 	/** Total number of rows across all pages (server-side count). */
 	total: number;
+	/** Called with the new zero-based index. This footer holds no state of its own. */
 	onPageChange: (page: number) => void;
 	/** Pages shown on each side of the current page (windowed with ellipses). */
 	siblingCount?: number;
+	/** Label for the previous-page control. This package ships no translations. */
 	previousText?: string;
+	/** Label for the next-page control. */
 	nextText?: string;
 	/** Localizable "1-10 of 42" range line; receives 1-based row positions. */
 	rangeText?: (range: {

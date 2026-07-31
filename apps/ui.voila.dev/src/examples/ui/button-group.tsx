@@ -2,7 +2,7 @@ import { CalendarIcon } from "@phosphor-icons/react";
 import { Button } from "@voila.dev/ui/button";
 import { ButtonGroup } from "@voila.dev/ui/button-group";
 
-export function ButtonGroupExample() {
+export function Default() {
 	return (
 		<div className="flex flex-col gap-4">
 			<ButtonGroup.Root>

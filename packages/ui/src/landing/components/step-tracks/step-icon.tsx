@@ -8,6 +8,7 @@ import {
 import { cn } from "#/lib/utils.ts";
 
 interface Props extends React.ComponentProps<"div"> {
+	/** The step's position, shown inside the marker. You number the steps, not the track. */
 	number: number;
 }
 

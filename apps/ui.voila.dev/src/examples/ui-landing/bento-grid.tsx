@@ -2,7 +2,7 @@ import { HandHeartIcon } from "@phosphor-icons/react";
 import { BentoGrid } from "@voila.dev/ui/landing";
 import { values } from "./fixtures";
 
-export function BentoGridExample() {
+export function Default() {
 	return (
 		<BentoGrid.Root>
 			<BentoGrid.FeaturedItem>

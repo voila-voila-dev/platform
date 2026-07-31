@@ -1,6 +1,6 @@
 import { SegmentedControl } from "@voila.dev/ui/segmented-control";
 
-export function SegmentedControlExample() {
+export function Default() {
 	return (
 		<div className="flex flex-col items-start gap-4">
 			<SegmentedControl.Root defaultValue="week" size="sm">
@@ -16,7 +16,3 @@ export function SegmentedControlExample() {
 		</div>
 	);
 }
-
-/* -------------------------------------------------------------------------- */
-/* Pickers                                                                    */
-/* -------------------------------------------------------------------------- */

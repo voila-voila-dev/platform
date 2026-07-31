@@ -3,7 +3,7 @@ import { Button } from "@voila.dev/ui/button";
 import { Item } from "@voila.dev/ui/item";
 import { List } from "@voila.dev/ui/list";
 
-export function ListExample() {
+export function Default() {
 	return (
 		<List.Root aria-label="Open projects" className="w-full max-w-md">
 			<List.Item variant="outline">
@@ -41,7 +41,3 @@ export function ListExample() {
 		</List.Root>
 	);
 }
-
-/* -------------------------------------------------------------------------- */
-/* Table                                                                      */
-/* -------------------------------------------------------------------------- */

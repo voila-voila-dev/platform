@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import * as Example from "@/examples/ui-map/maps";
+import * as Example from "@/examples/ui-map/map-view";
 
 <Preview layout="stack">
 	<Example.Basic />
@@ -26,3 +26,12 @@ import * as Example from "@/examples/ui-map/maps";
 
 `onReady` replays after a theme-driven basemap swap, which drops custom sources
 and layers — write it as "make the map look like this", not "do this once".
+
+## API
+
+<PropTable of="MapView" />
+
+`center` and `zoom` are initial values, read once on mount; later changes are
+ignored. Pan and zoom the live instance from `onReady` when the camera has to
+follow your state. For a circle that *does* follow its props, see
+[RadiusMap](/ui-map/radius-map).

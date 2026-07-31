@@ -1,7 +1,7 @@
 import { IconPicker } from "@voila.dev/ui/icon-picker";
 import { useState } from "react";
 
-export function IconPickerExample() {
+export function Default() {
 	const [iconName, setIconName] = useState<string | null>("PaletteIcon");
 	return (
 		<div className="w-full max-w-64">

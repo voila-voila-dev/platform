@@ -1,7 +1,7 @@
 import { Button } from "@voila.dev/ui/button";
 import { Drawer } from "@voila.dev/ui/drawer";
 
-export function DrawerExample() {
+export function Default() {
 	return (
 		<Drawer.Root>
 			<Drawer.Trigger asChild>

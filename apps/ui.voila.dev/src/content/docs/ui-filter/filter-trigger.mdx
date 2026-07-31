@@ -5,7 +5,7 @@ sidebar:
   order: 4
 ---
 
-import * as Example from "@/examples/ui-filter/filters";
+import * as Example from "@/examples/ui-filter/filter-trigger";
 
 <Preview layout="stack">
 	<Example.Trigger />
@@ -19,3 +19,12 @@ import * as Example from "@/examples/ui-filter/filters";
 	onClick={() => setOpen(true)}
 />;
 ```
+
+## API
+
+<PropTable of="Filter.Trigger" />
+
+`activeCount` is the prop that matters: pass `countActiveFilters(values)` and a
+filtered list stops looking like a short one. It is a plain `<button>`, so
+`onClick` and the rest are yours — [Filter.Root](/ui-filter/filter-root) wires
+it to [Filter.Panel](/ui-filter/filter-root#filterpanel) for you.

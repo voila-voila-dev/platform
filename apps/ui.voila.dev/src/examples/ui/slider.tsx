@@ -1,6 +1,6 @@
 import { Slider } from "@voila.dev/ui/slider";
 
-export function SliderExample() {
+export function Default() {
 	return (
 		<div className="flex w-full max-w-72 flex-col gap-6">
 			<Slider.Root defaultValue={50} />

@@ -5,12 +5,17 @@ import { Drawer } from "#/drawer/components/drawer.tsx";
 import { useResponsiveDialogIsMobile } from "#/responsive-dialog/context/responsive-dialog-context.ts";
 
 interface Props {
+	/** Classes for the panel on both surfaces. */
 	className?: string;
+	/** Header, body and footer parts. */
 	children?: React.ReactNode;
 	/** Desktop dialog width — the mobile drawer is always full-width. */
 	size?: DialogContentSize;
+	/** Draws the X in the corner. */
 	showCloseButton?: boolean;
+	/** Accessible name for that X. This package ships no translations. */
 	closeButtonLabel?: string;
+	/** Classes for the backdrop behind the panel. `className` styles the panel itself. */
 	overlayClassName?: string;
 	/**
 	 * Whether opening moves focus into the content (the default). Pass `false`

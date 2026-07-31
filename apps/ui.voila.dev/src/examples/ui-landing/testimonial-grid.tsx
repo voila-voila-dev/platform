@@ -17,7 +17,7 @@ const testimonials = [
 	},
 ] as const;
 
-export function TestimonialGridExample() {
+export function Default() {
 	return (
 		<TestimonialGrid.Root>
 			{testimonials.map((testimonial) => (

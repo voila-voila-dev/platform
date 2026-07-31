@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import * as Example from "@/examples/ui-map/maps";
+import * as Example from "@/examples/ui-map/radius-map";
 
 <Preview layout="stack">
 	<Example.Radius />
@@ -18,3 +18,12 @@ import * as Example from "@/examples/ui-map/maps";
 	radiusKm={radiusKm}
 />;
 ```
+
+## API
+
+<PropTable of="RadiusMap" />
+
+`center` and `radiusKm` are live, which is the whole difference from
+[MapView](/ui-map/map-view): drag the radius slider and the circle redraws and
+the viewport re-frames to keep it whole. `center` and `zoom` are taken over for
+that, so they are not yours to set here.

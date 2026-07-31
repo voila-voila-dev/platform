@@ -1,6 +1,6 @@
 import { InputOTP } from "@voila.dev/ui/input-otp";
 
-export function InputOTPExample() {
+export function Default() {
 	return (
 		<InputOTP.Root maxLength={6}>
 			<InputOTP.Group>

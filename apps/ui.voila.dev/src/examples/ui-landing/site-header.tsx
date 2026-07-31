@@ -12,7 +12,7 @@ const mainNavigation = [
 /* Layout primitives                                                          */
 /* -------------------------------------------------------------------------- */
 
-export function SiteHeaderExample() {
+export function Default() {
 	return (
 		<div className="min-h-52 w-full">
 			<SiteHeader.Root>

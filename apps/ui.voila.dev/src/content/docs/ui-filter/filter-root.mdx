@@ -5,7 +5,7 @@ sidebar:
   order: 1
 ---
 
-import * as Example from "@/examples/ui-filter/filters";
+import * as Example from "@/examples/ui-filter/filter-root";
 
 <Preview layout="stack">
 	<Example.Bar />
@@ -26,3 +26,23 @@ const [values, setValues] = useState<FilterValues>({});
 
 `FilterValues` never holds an empty filter, so `Object.keys(values).length` is
 the active count and the record round-trips to a query string unchanged.
+
+## API
+
+### Filter.Root
+
+<PropTable of="Filter.Root" />
+
+`onValuesChange` fires on apply and on chip removal, never on a keystroke inside
+the editor, so it is safe to use directly as a fetch key. `onSearchChange` is
+the opposite — it fires per keystroke, so debounce that one yourself.
+
+### Filter.Panel
+
+<PropTable of="Filter.Panel" />
+
+The overlay `Filter.Root` opens, exposed for the case where you want Root's
+draft-then-apply behaviour behind a trigger of your own. Pair it with
+[Filter.Trigger](/ui-filter/filter-trigger), or with any button you like — it
+only needs `open` and `onOpenChange`. For the editor with no overlay and no
+commit step, use [Filter.Form](/ui-filter/filter-form).

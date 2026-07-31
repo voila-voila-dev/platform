@@ -12,10 +12,15 @@ import { axisAngle, polarFrame, polarToCartesian } from "#/chart/core/polar.ts";
  */
 
 interface Props extends React.ComponentProps<"g"> {
+	/** Series to draw. Defaults to the root's value keys. */
 	readonly keys?: ReadonlyArray<string>;
+	/** Opacity of the filled polygon. Lower it when two shapes overlap. */
 	readonly fillOpacity?: number;
+	/** Width of the polygon outline, in pixels. */
 	readonly strokeWidth?: number;
+	/** Draw a dot at every vertex, not only the active one. */
 	readonly dots?: boolean;
+	/** Pixels kept clear inside the plot edge. */
 	readonly inset?: number;
 }
 

@@ -5,7 +5,7 @@ sidebar:
   order: 20
 ---
 
-import * as Example from "@/examples/ui-chart/chart";
+import * as Example from "@/examples/ui-chart/chart-pie";
 
 <Preview layout="stack">
 	<Example.Pie />
@@ -17,3 +17,19 @@ import * as Example from "@/examples/ui-chart/chart";
 
 Polar marks want a square box and `interactive={false}` on the root — the
 keyboard cursor is a cartesian idea.
+
+## API
+
+### Chart.Pie
+
+<PropTable of="Chart.Pie" />
+
+A pie colours by row, not by series, which is why `nameKey` exists and why the
+tooltip and legend both read it.
+
+### Chart.Slice
+
+<PropTable of="Chart.Slice" />
+
+One wedge. `Chart.Pie` renders these for you; use it directly only when building
+a round mark of your own.

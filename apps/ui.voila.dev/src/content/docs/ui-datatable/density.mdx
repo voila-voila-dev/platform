@@ -5,7 +5,7 @@ sidebar:
   order: 7
 ---
 
-import * as Example from "@/examples/ui-datatable/tables";
+import * as Example from "@/examples/ui-datatable/density";
 
 <Preview layout="stack">
 	<Example.Density />
@@ -16,3 +16,12 @@ const [density, setDensity] = useState<DataTableDensity>("comfortable");
 
 <DataTable.Root columns={columns} data={projects} density={density} />;
 ```
+
+## API
+
+<PropTable of="DataTable.DensityToggle" />
+
+The toggle holds no state: pass the same value to it and to
+[DataTable.Root](/ui-datatable/data-table)'s `density`, so the control and the
+rows cannot disagree. `compact` fits about a third more rows on a screen, which
+is the right default for a table people scan for one line rather than read.

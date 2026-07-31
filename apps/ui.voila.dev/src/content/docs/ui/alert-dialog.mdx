@@ -7,8 +7,14 @@ category: "overlays"
 import * as Example from "@/examples/ui/alert-dialog";
 
 <Preview layout="center">
-	<Example.AlertDialogExample />
+	<Example.Default />
 </Preview>
+
+## Usage
+
+```ts
+import { AlertDialog } from "@voila.dev/ui/alert-dialog";
+```
 
 ```tsx
 <AlertDialog.Root>
@@ -27,8 +33,21 @@ import * as Example from "@/examples/ui/alert-dialog";
 </AlertDialog.Root>
 ```
 
-Unlike [Dialog](/ui/dialog) it has no close button and does not dismiss on an
-outside click. The user has to answer the question, which is the point.
+A modal that asks one question and will not be dismissed by clicking away.
+That is the whole difference from [Dialog](/ui/dialog): an alert dialog is for a
+decision with consequences, so the escape routes are deliberate buttons rather
+than the backdrop. If you are building the common destructive confirmation,
+[ConfirmDialog](/ui/confirm-dialog) is this component with the title, buttons and
+open state already wired — reach for that first and come here when the layout
+needs to be your own.
+
+## Recipes
+
+`size` takes `default` or `sm`; `sm` fits a question whose answer is one line.
+
+Put the consequence in the title, not the control: "Delete this project?" tells
+someone what they are about to do, "Are you sure?" makes them guess. The confirm
+button should name the action too — `Delete project`, never `OK`.
 
 ## API
 
@@ -83,3 +102,8 @@ outside click. The user has to answer the question, which is the point.
 ### AlertDialog.Trigger
 
 <PropTable of="AlertDialog.Trigger" />
+
+## Related
+
+[ConfirmDialog](/ui/confirm-dialog) · [Dialog](/ui/dialog) ·
+[ResponsiveDialog](/ui/responsive-dialog)

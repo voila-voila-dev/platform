@@ -2,7 +2,7 @@ import { Badge } from "@voila.dev/ui/badge";
 import { Button } from "@voila.dev/ui/button";
 import { Card } from "@voila.dev/ui/card";
 
-export function CardExample() {
+export function Default() {
 	return (
 		<Card.Root className="w-full max-w-96">
 			<Card.Header>
@@ -27,7 +27,3 @@ export function CardExample() {
 		</Card.Root>
 	);
 }
-
-/* -------------------------------------------------------------------------- */
-/* Avatars                                                                    */
-/* -------------------------------------------------------------------------- */

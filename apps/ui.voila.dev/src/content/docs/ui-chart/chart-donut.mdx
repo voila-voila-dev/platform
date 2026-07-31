@@ -5,7 +5,7 @@ sidebar:
   order: 21
 ---
 
-import * as Example from "@/examples/ui-chart/chart";
+import * as Example from "@/examples/ui-chart/chart-donut";
 
 <Preview layout="stack">
 	<Example.Donut />
@@ -14,3 +14,11 @@ import * as Example from "@/examples/ui-chart/chart";
 ```tsx
 <Chart.Donut />
 ```
+
+## API
+
+<PropTable of="Chart.Donut" />
+
+The same props as [Chart.Pie](/ui-chart/chart-pie) — a donut is a pie with
+`innerRadiusRatio` above zero. The hole is worth it for two reasons: a total can
+sit in it, and comparing arc lengths is easier than comparing wedge areas.

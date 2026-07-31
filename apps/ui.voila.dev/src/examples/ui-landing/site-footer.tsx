@@ -2,7 +2,7 @@ import { EnvelopeSimpleIcon, LinkedinLogoIcon } from "@phosphor-icons/react";
 import { SiteFooter } from "@voila.dev/ui/landing";
 import { BrandLogo } from "./fixtures";
 
-export function SiteFooterExample() {
+export function Default() {
 	return (
 		<SiteFooter.Root>
 			<SiteFooter.Columns>
@@ -47,7 +47,3 @@ export function SiteFooterExample() {
 		</SiteFooter.Root>
 	);
 }
-
-/* -------------------------------------------------------------------------- */
-/* Sections                                                                   */
-/* -------------------------------------------------------------------------- */

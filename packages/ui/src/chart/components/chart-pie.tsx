@@ -16,8 +16,11 @@ interface Props extends React.ComponentProps<"g"> {
 	readonly nameKey?: string;
 	/** Fraction of the outer radius left hollow. `0` draws a full pie. */
 	readonly innerRadiusRatio?: number;
+	/** Radians of blank between two wedges. */
 	readonly padAngle?: number;
+	/** Where the first wedge begins, in radians clockwise from 12 o'clock. */
 	readonly startAngle?: number;
+	/** Where the last wedge ends. A partial sweep draws an arc rather than a circle. */
 	readonly endAngle?: number;
 	/** Pixels kept clear around the wedges, for the active one to lift into. */
 	readonly inset?: number;

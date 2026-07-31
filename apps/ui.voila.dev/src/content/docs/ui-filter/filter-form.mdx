@@ -5,7 +5,7 @@ sidebar:
   order: 2
 ---
 
-import * as Example from "@/examples/ui-filter/filters";
+import * as Example from "@/examples/ui-filter/filter-form";
 
 <Preview layout="stack">
 	<Example.Form />
@@ -20,3 +20,23 @@ import * as Example from "@/examples/ui-filter/filters";
 	locale="en-US"
 />;
 ```
+
+## API
+
+### Filter.Form
+
+<PropTable of="Filter.Form" />
+
+Unlike [Filter.Root](/ui-filter/filter-root), `onValuesChange` fires on every
+edit — there is no draft and no apply step. That is the point of this part: in a
+sidebar that filters as you type, a commit button would be in the way. In a
+panel the user has to dismiss, it would not.
+
+### Filter.Field
+
+<PropTable of="Filter.Field" />
+
+One filter on its own, which is what `Filter.Form` renders in a loop. Reach for
+it when a single filter belongs somewhere else on the page — a status select in
+a toolbar — rather than in the editor with the rest. Clearing it calls
+`onValueChange` with `undefined`, which is how a filter leaves the record.

@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import * as Example from "@/examples/ui-filter/filters";
+import * as Example from "@/examples/ui-filter/filter-chips";
 
 <Preview layout="stack">
 	<Example.Chips />
@@ -20,3 +20,13 @@ import * as Example from "@/examples/ui-filter/filters";
 	locale="en-US"
 />;
 ```
+
+## API
+
+<PropTable of="Filter.Chips" />
+
+The chips are the read half of the pair: without them a filtered list looks like
+a short list. They render one chip per key in `values`, skipping any value whose
+definition is missing from `definitions`, so a stale query string cannot produce
+an unlabelled chip. `onChipClick` is what makes a chip a way back into the
+editor rather than only a way out of a filter.

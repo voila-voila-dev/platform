@@ -14,17 +14,25 @@ interface Props
 	 * dialog through `open`/`onOpenChange` instead.
 	 */
 	trigger?: React.ReactElement<Record<string, unknown>>;
-	// Narrower than Base UI's `(open, eventDetails)`: the dialog also opens and
-	// closes itself around `onConfirm`, where there is no originating event.
+	/**
+	 * Called when the dialog opens or closes. Narrower than Base UI's
+	 * `(open, eventDetails)`, because the dialog also closes itself around
+	 * `onConfirm`, where there is no originating event.
+	 */
 	onOpenChange?: (open: boolean) => void;
+	/** The question, as a heading. Name the consequence, not the control. */
 	title: React.ReactNode;
+	/** What will happen, in a sentence. The place to say what cannot be undone. */
 	description?: React.ReactNode;
 	/** Icon slot rendered in `AlertDialog.Media` beside the title. */
 	media?: React.ReactNode;
+	/** Width of the panel. `sm` suits a one-line confirmation. */
 	size?: "default" | "sm";
 	// English defaults to match the kit's other built-in labels; pass localized
 	// strings from the app (e.g. paraglide messages).
+	/** Text of the confirm button. Name the action — "Delete project", not "OK". */
 	confirmLabel?: React.ReactNode;
+	/** Text of the dismiss button. */
 	cancelLabel?: React.ReactNode;
 	/** Confirm button variant - use `destructive` for irreversible actions. */
 	variant?: ButtonVariant;

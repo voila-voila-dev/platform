@@ -3,7 +3,9 @@ import { SpreadsheetCellText } from "#/spreadsheet/components/spreadsheet-cell-t
 import { SpreadsheetRow } from "#/spreadsheet/components/spreadsheet-row.tsx";
 
 interface Props {
+	/** How many placeholder rows to draw. */
 	rows?: number;
+	/** Must match the real column count, or the placeholder rows will not line up. */
 	columns: number;
 }
 

@@ -1,6 +1,6 @@
 import { ImageUploadField } from "@voila.dev/ui/image-upload-field";
 
-export function ImageUploadFieldExample() {
+export function Default() {
 	return (
 		<ImageUploadField
 			className="w-full max-w-sm"

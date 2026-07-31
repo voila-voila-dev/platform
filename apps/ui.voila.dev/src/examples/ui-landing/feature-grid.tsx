@@ -16,7 +16,7 @@ const features = [
 	},
 ];
 
-export function FeatureGridExample() {
+export function Default() {
 	return (
 		<FeatureGrid.Root tone="destructive" columns="2">
 			{features.map((feature) => {

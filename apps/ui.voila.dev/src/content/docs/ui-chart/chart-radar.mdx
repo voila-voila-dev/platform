@@ -5,7 +5,7 @@ sidebar:
   order: 22
 ---
 
-import * as Example from "@/examples/ui-chart/chart";
+import * as Example from "@/examples/ui-chart/chart-radar";
 
 <Preview layout="stack">
 	<Example.Radar />
@@ -19,3 +19,21 @@ import * as Example from "@/examples/ui-chart/chart";
 
 `inset` reserves the ring's outer margin for the axis labels, which are drawn
 outside it.
+
+## API
+
+### Chart.Radar
+
+<PropTable of="Chart.Radar" />
+
+### Chart.PolarGrid
+
+<PropTable of="Chart.PolarGrid" />
+
+### Chart.PolarAngleAxis
+
+<PropTable of="Chart.PolarAngleAxis" />
+
+A radar needs the polar pair rather than
+[Chart.XAxis](/ui-chart/chart-x-axis) and [Chart.YAxis](/ui-chart/chart-y-axis):
+the rings are the value scale and the spokes are the categories.

@@ -1,6 +1,6 @@
 import { Avatar } from "@voila.dev/ui/avatar";
 
-export function AvatarExample() {
+export function Default() {
 	return (
 		<>
 			<Avatar.Root size="sm">

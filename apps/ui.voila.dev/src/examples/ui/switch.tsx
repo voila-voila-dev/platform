@@ -1,7 +1,7 @@
 import { Label } from "@voila.dev/ui/label";
 import { Switch } from "@voila.dev/ui/switch";
 
-export function SwitchExample() {
+export function Default() {
 	return (
 		<div className="flex flex-col gap-4">
 			<div className="flex items-center gap-2">

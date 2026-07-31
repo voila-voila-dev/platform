@@ -8,6 +8,7 @@ import { tonePanelClass } from "#/landing/lib/tones.ts";
 import { cn } from "#/lib/utils.ts";
 
 interface Props extends React.ComponentProps<"div"> {
+	/** Which side of the comparison this panel is — the before or the after. */
 	variant: ComparisonPanelVariant;
 }
 

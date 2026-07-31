@@ -5,7 +5,7 @@ sidebar:
   order: 3
 ---
 
-import * as Example from "@/examples/ui-spreadsheet/grids";
+import * as Example from "@/examples/ui-spreadsheet/nested-table-input";
 
 <Preview layout="stack">
 	<Example.Nested />
@@ -20,3 +20,13 @@ import * as Example from "@/examples/ui-spreadsheet/grids";
 	<Spreadsheet.Root>{/* the nested grid */}</Spreadsheet.Root>
 </Spreadsheet.NestedInput>;
 ```
+
+## API
+
+<PropTable of="Spreadsheet.NestedInput" />
+
+`summary` is what keeps the row scannable — it is the only thing visible until
+the popover opens, so make it count the things inside ("3 tiers"), not name them.
+`children` is any editor at all; a nested
+[Spreadsheet.Root](/ui-spreadsheet/spreadsheet) is the common case but nothing
+here assumes one.

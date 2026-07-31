@@ -4,6 +4,7 @@ import { accentHighlightStarClass } from "#/landing/lib/tones.ts";
 import { cn } from "#/lib/utils.ts";
 
 interface Props extends React.ComponentProps<"div"> {
+	/** How many stars to fill, out of five. */
 	count?: number;
 }
 

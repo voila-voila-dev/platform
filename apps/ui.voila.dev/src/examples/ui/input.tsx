@@ -1,6 +1,6 @@
 import { Input } from "@voila.dev/ui/input";
 
-export function InputExample() {
+export function Default() {
 	return (
 		<div className="flex w-full max-w-72 flex-col gap-3">
 			<Input placeholder="Search freelancers" />

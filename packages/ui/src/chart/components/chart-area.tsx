@@ -12,10 +12,15 @@ import type { ChartCurve } from "#/chart/core/types.ts";
  */
 
 interface Props extends React.ComponentProps<"g"> {
+	/** Series to draw. Defaults to the root's value keys. */
 	readonly keys?: ReadonlyArray<string>;
+	/** How points are joined: `linear`, `monotone` or `step`. */
 	readonly curve?: ChartCurve;
+	/** Stacks the areas into a running total instead of overlaying them. */
 	readonly stacked?: boolean;
+	/** Opacity of the fill under the line. Lower it when areas overlap. */
 	readonly fillOpacity?: number;
+	/** Width of the line along the top of the area, in pixels. */
 	readonly strokeWidth?: number;
 	/** Fade the fill towards the baseline instead of filling flat. */
 	readonly gradient?: boolean;

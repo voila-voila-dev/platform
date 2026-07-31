@@ -1,7 +1,7 @@
 import { ResponsiveSelect } from "@voila.dev/ui/responsive-select";
 import { useState } from "react";
 
-export function ResponsiveSelectExample() {
+export function Default() {
 	const [value, setValue] = useState("designer");
 	return (
 		<div className="w-full max-w-72">

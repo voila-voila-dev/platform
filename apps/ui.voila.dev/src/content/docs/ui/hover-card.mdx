@@ -7,8 +7,14 @@ category: "overlays"
 import * as Example from "@/examples/ui/hover-card";
 
 <Preview layout="center">
-	<Example.HoverCardExample />
+	<Example.Default />
 </Preview>
+
+## Usage
+
+```ts
+import { HoverCard } from "@voila.dev/ui/hover-card";
+```
 
 ```tsx
 <HoverCard.Root>
@@ -19,8 +25,21 @@ import * as Example from "@/examples/ui/hover-card";
 </HoverCard.Root>
 ```
 
-Hover only opens it on a pointer, so nothing here can be the only way to reach
-the information.
+A preview that appears when a pointer rests on a link — who a person is, what
+a project contains — without asking anyone to click. It opens on hover, which
+makes it the one overlay here that a touch user may never see, so nothing inside
+it may be the only route to an action or a fact. Treat it as enrichment. For
+help text use [Tooltip](/ui/tooltip); for content that survives a click, use
+[Popover](/ui/popover).
+
+## Recipes
+
+Positioning works exactly as on [Popover](/ui/popover): `side`, `align`,
+`sideOffset`, `alignOffset` and `collisionPadding` are direct props, and the
+rest of the positioner is reachable through `positionerProps`.
+
+Keep the card cheap to render — it may open on a pointer that was only passing
+through.
 
 ## API
 
@@ -35,3 +54,7 @@ the information.
 ### HoverCard.Trigger
 
 <PropTable of="HoverCard.Trigger" />
+
+## Related
+
+[Popover](/ui/popover) · [Tooltip](/ui/tooltip) · [UserAvatar](/ui/user-avatar)

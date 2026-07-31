@@ -5,7 +5,7 @@ sidebar:
   order: 37
 ---
 
-import * as Example from "@/examples/ui-chart/chart";
+import * as Example from "@/examples/ui-chart/chart-reference-line";
 
 <Preview layout="stack">
 	<Example.ReferenceLine />
@@ -14,3 +14,10 @@ import * as Example from "@/examples/ui-chart/chart";
 ```tsx
 <Chart.ReferenceLine value={30} label="Target" />
 ```
+
+## API
+
+<PropTable of="Chart.ReferenceLine" />
+
+`value` is on the value axis, so a reference line marks a threshold, a target or
+an average — not a date. Place it after the marks to draw it on top.

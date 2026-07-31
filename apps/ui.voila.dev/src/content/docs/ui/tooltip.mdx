@@ -7,8 +7,14 @@ category: "overlays"
 import * as Example from "@/examples/ui/tooltip";
 
 <Preview layout="row">
-	<Example.TooltipExample />
+	<Example.Default />
 </Preview>
+
+## Usage
+
+```ts
+import { Tooltip } from "@voila.dev/ui/tooltip";
+```
 
 ```tsx
 <Tooltip.Root>
@@ -19,9 +25,22 @@ import * as Example from "@/examples/ui/tooltip";
 </Tooltip.Root>
 ```
 
-A tooltip is a label, not a place to put content — it cannot hold anything
-focusable, and it never carries information that is not available elsewhere. An
-icon-only button still needs its own `aria-label`.
+One line naming a control, on hover or focus. It is the smallest overlay here
+and the most misused: a tooltip cannot hold a link, a button, or anything a
+person must interact with, because it disappears when the pointer leaves and
+never appears on touch at all. If the content matters, it belongs on the page or
+in a [Popover](/ui/popover). An icon button's tooltip is a convenience — its
+`aria-label` is what actually names it.
+
+## Recipes
+
+Wrap the app once in `Tooltip.Provider` so tooltips share a delay: the first
+one waits, the rest open immediately while the pointer keeps moving along a
+toolbar. Without it every tooltip re-waits and a row of icon buttons feels
+broken.
+
+Positioning follows the same `side`/`align`/`sideOffset` model as
+[Popover](/ui/popover).
 
 ## API
 
@@ -40,3 +59,8 @@ icon-only button still needs its own `aria-label`.
 ### Tooltip.Trigger
 
 <PropTable of="Tooltip.Trigger" />
+
+## Related
+
+[Popover](/ui/popover) · [HoverCard](/ui/hover-card) · [Kbd](/ui/kbd) ·
+[Button](/ui/button)

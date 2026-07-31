@@ -5,6 +5,7 @@ import { SpreadsheetContext } from "#/spreadsheet/context/spreadsheet-context.ts
 import { useSpreadsheetRowDrag } from "#/spreadsheet/hooks/use-spreadsheet-drag.ts";
 
 interface Props extends React.ComponentProps<"td"> {
+	/** The row's current position. Needs `onRowMove` on the table to do anything. */
 	index: number;
 }
 

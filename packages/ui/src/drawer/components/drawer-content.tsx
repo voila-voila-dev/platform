@@ -8,10 +8,13 @@ import { DrawerPortal } from "#/drawer/components/drawer-portal.tsx";
 import { cn } from "#/lib/utils.ts";
 
 interface Props extends React.ComponentProps<typeof DrawerPrimitive.Content> {
+	/** Draws the grab bar. Only meaningful on `top`/`bottom` drawers, which drag. */
 	showHandle?: boolean;
 	/** Renders an X button on `left`/`right` drawers, which have no grab handle. */
 	showCloseButton?: boolean;
+	/** Accessible name for that X. This package ships no translations. */
 	closeButtonLabel?: string;
+	/** Classes for the backdrop behind the panel. `className` styles the panel itself. */
 	overlayClassName?: string;
 }
 

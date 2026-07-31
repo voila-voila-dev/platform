@@ -3,6 +3,7 @@ import type * as React from "react";
 import { cn } from "#/lib/utils.ts";
 
 interface Props extends React.ComponentProps<"button"> {
+	/** Must count ALL columns, the drag-handle and actions columns included. */
 	colSpan: number;
 }
 

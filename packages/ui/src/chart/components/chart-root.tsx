@@ -39,6 +39,7 @@ const DEFAULT_MARGIN: ChartMargin = {
 interface Props extends Omit<React.ComponentProps<"div">, "children"> {
 	/** Per-series labels, colours and icons. */
 	readonly config: ChartConfig;
+	/** The rows to plot, in the order they should appear along the category axis. */
 	readonly data?: ReadonlyArray<ChartDatum>;
 	/** The category axis: which field names each row. */
 	readonly x?: ChartCategorySpec;
@@ -46,9 +47,14 @@ interface Props extends Omit<React.ComponentProps<"div">, "children"> {
 	readonly y?: ChartValueSpec;
 	/** `horizontal` puts the categories down the side. */
 	readonly orientation?: ChartOrientation;
+	/**
+	 * Space reserved around the plot for the axes and the legend. A clipped axis
+	 * label almost always means this needs more room on that side.
+	 */
 	readonly margin?: Partial<ChartMargin>;
 	/** Turns pointer scrubbing and keyboard navigation off. */
 	readonly interactive?: boolean;
+	/** The marks and axes. Drawn in order, so what comes last sits on top. */
 	readonly children?: React.ReactNode;
 }
 

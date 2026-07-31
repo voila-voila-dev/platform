@@ -8,6 +8,7 @@ import {
 import { cn } from "#/lib/utils.ts";
 
 interface Props extends React.ComponentProps<"span"> {
+	/** Overrides the tone inherited from `FeatureGrid.Root`, for one card. */
 	tone?: Tone;
 }
 

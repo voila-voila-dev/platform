@@ -7,8 +7,14 @@ category: "overlays"
 import * as Example from "@/examples/ui/responsive-sheet";
 
 <Preview layout="center">
-	<Example.ResponsiveSheetExample />
+	<Example.Default />
 </Preview>
+
+## Usage
+
+```ts
+import { ResponsiveSheet } from "@voila.dev/ui/responsive-sheet";
+```
 
 ```tsx
 <ResponsiveSheet.Root>
@@ -22,8 +28,19 @@ import * as Example from "@/examples/ui/responsive-sheet";
 </ResponsiveSheet.Root>
 ```
 
-Reach for this over [Sheet](/ui/sheet) for detail panels, which are the ones
-that hurt most on a phone.
+A [Sheet](/ui/sheet) on desktop and a bottom [Drawer](/ui/drawer) on small
+screens. Reach for this over plain Sheet for detail panels, which are the ones
+that hurt most on a phone: a side panel on a narrow viewport is either a sliver
+or a modal pretending not to be one.
+
+## Recipes
+
+`size` sets the desktop panel width; the mobile drawer is always full-width,
+because a partial bottom sheet on a phone wastes the only dimension it has.
+
+As with [ResponsiveDialog](/ui/responsive-dialog), the root holds the open state
+so crossing the breakpoint does not close the panel, and `autoFocus={false}`
+keeps the keyboard down when the first field is a text input.
 
 ## API
 
@@ -62,3 +79,8 @@ that hurt most on a phone.
 ### ResponsiveSheet.Trigger
 
 <PropTable of="ResponsiveSheet.Trigger" />
+
+## Related
+
+[Sheet](/ui/sheet) · [ResponsiveDialog](/ui/responsive-dialog) ·
+[Drawer](/ui/drawer)

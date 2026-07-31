@@ -1,7 +1,7 @@
 import { Button } from "@voila.dev/ui/button";
 import { ResponsiveSheet } from "@voila.dev/ui/responsive-sheet";
 
-export function ResponsiveSheetExample() {
+export function Default() {
 	return (
 		<ResponsiveSheet.Root>
 			<ResponsiveSheet.Trigger render={<Button variant="outline" />}>

@@ -8,8 +8,10 @@ interface Props
 			PopoverPrimitive.Positioner.Props,
 			"align" | "alignOffset" | "side" | "sideOffset"
 		> {
-	// Escape hatch for the Positioner props not surfaced as dedicated props
-	// (collisionPadding, sticky, anchor, positionMethod, arrowPadding…).
+	/**
+	 * Escape hatch for the Positioner props not surfaced as dedicated ones —
+	 * `collisionPadding`, `sticky`, `anchor`, `positionMethod`, `arrowPadding`.
+	 */
 	positionerProps?: Omit<
 		PopoverPrimitive.Positioner.Props,
 		"align" | "alignOffset" | "side" | "sideOffset" | "children"

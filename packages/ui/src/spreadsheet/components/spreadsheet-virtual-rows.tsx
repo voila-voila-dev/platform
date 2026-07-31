@@ -13,6 +13,7 @@ interface Props {
 	estimatedRowHeight?: number;
 	/** Extra rows rendered on both sides of the visible window. */
 	overscan?: number;
+	/** Renders ONE row, by absolute index. Keep your usual `Spreadsheet.Row` markup here. */
 	children: (index: number) => React.ReactNode;
 }
 

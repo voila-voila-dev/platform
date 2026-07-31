@@ -3,6 +3,10 @@ import { cn } from "#/lib/utils.ts";
 import { SpreadsheetRowIndexContext } from "#/spreadsheet/context/spreadsheet-context.ts";
 
 interface Props extends React.ComponentProps<"tr"> {
+	/**
+	 * Draws the invalid ring on the row's cells. The row is the right place for
+	 * it: the controls inside sit on transparent backgrounds.
+	 */
 	invalid?: boolean;
 }
 

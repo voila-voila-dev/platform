@@ -45,6 +45,7 @@ interface Props extends React.ComponentProps<"g"> {
 	readonly gap?: number;
 	/** Distance from the mark, along the value axis. */
 	readonly offset?: number;
+	/** Formats each label. Use it for units and locale — the raw number is passed in. */
 	readonly formatter?: (value: number) => string;
 }
 

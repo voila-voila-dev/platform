@@ -6,26 +6,104 @@ category: "data-display"
 
 import * as Example from "@/examples/ui/stat-card";
 
-<Preview layout="stack">
-	<Example.StatCardExample />
+<Preview layout="center">
+	<Example.Default />
 </Preview>
+
+## Usage
+
+```ts
+import { StatCard } from "@voila.dev/ui/stat-card";
+```
 
 ```tsx
 <StatCard.Root>
 	<StatCard.Header>
 		<StatCard.Label>Projects published</StatCard.Label>
+		<StatCard.Delta trend="up">+12%</StatCard.Delta>
 	</StatCard.Header>
-	<StatCard.Value>38</StatCard.Value>
-	<StatCard.Delta trend="up">+12% vs. last month</StatCard.Delta>
+	<StatCard.Value>1,284</StatCard.Value>
 </StatCard.Root>
 ```
+
+The label and the delta share the header row; the value sits under them on its
+own line, so a row of cards lines its numbers up whether or not each one has a
+delta to show.
 
 `trend` picks the arrow and the colour; it is separate from the text because a
 falling number is not always bad — cancellations going down is a `down` trend
 you would want to read as good.
 
-`StatCard.Chart` is a full-bleed slot pinned to the bottom edge for a sparkline.
-Constrain the chart's height on the `Chart.Root` itself.
+## Recipes
+
+<Preview layout="center" label="A sparkline for the shape of the number">
+	<Example.WithSparkline />
+</Preview>
+
+`StatCard.Chart` is a full-bleed slot pinned to the bottom edge: it cancels the
+card's bottom padding and the card clips the chart to its rounded corners.
+Constrain the height on the `Chart.Root` itself and drop the margins, since a
+sparkline has no axes to make room for.
+
+```tsx
+<StatCard.Chart>
+	<Chart.Root
+		config={config}
+		data={data}
+		x={{ key: "month", type: "point" }}
+		y={{ keys: ["projects"] }}
+		className="aspect-auto h-16 w-full"
+		margin={{ top: 4, right: 0, bottom: 0, left: 0 }}
+		interactive
+	>
+		<Chart.Cursor />
+		<Chart.Area />
+		<Chart.Tooltip />
+	</Chart.Root>
+</StatCard.Chart>
+```
+
+The cursor and the tooltip work in a 64-pixel-tall chart exactly as they do in
+a full-size one, so a sparkline can still be read value by value.
+
+<Preview layout="stack" label="The three sparkline shapes">
+	<Example.SparklineShapes />
+</Preview>
+
+An area for a volume that accumulates, a line for a rate, bars for counts per
+period. Bars need a `band` axis to sit in; a line or an area wants `point`.
+
+<Preview layout="center" label="Falling numbers that are good news">
+	<Example.FallingMetric />
+</Preview>
+
+```tsx
+<StatCard.Delta trend="down" className="text-success">
+	-45%
+</StatCard.Delta>
+```
+
+`trend` keeps the arrow pointing down while the colour says the metric is
+moving the right way.
+
+<Preview layout="stack" label="Loading and empty">
+	<Example.States />
+</Preview>
+
+`Chart.Skeleton` and `Chart.Empty` slot straight into `StatCard.Chart`. Pad the
+slot back (`px-4`, plus `pb-4` for the empty state) so the placeholder sits
+inside the card instead of bleeding to its edges like a real chart.
+
+<Preview layout="stack" label="Compact, for dense dashboards">
+	<Example.Compact />
+</Preview>
+
+`size="sm"` on the root tightens the padding and the gaps; the anatomy is
+unchanged.
+
+<Preview layout="stack" label="A KPI strip">
+	<Example.KpiStrip />
+</Preview>
 
 ## API
 

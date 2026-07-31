@@ -1,6 +1,6 @@
 import { UserAvatar } from "@voila.dev/ui/user-avatar";
 
-export function UserAvatarExample() {
+export function Default() {
 	return (
 		<div className="flex flex-col items-start gap-4">
 			<UserAvatar

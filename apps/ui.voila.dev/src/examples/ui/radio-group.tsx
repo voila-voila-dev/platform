@@ -1,7 +1,7 @@
 import { Label } from "@voila.dev/ui/label";
 import { RadioGroup } from "@voila.dev/ui/radio-group";
 
-export function RadioGroupExample() {
+export function Default() {
 	return (
 		<RadioGroup.Root defaultValue="designer" className="w-full max-w-64">
 			{[

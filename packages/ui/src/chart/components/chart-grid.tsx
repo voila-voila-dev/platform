@@ -9,8 +9,11 @@ import { cn } from "#/lib/utils.ts";
  */
 
 interface Props extends React.ComponentProps<"g"> {
+	/** Draw the lines running across the value axis. */
 	readonly horizontal?: boolean;
+	/** Draw the lines running along the category axis. */
 	readonly vertical?: boolean;
+	/** Target number of grid lines. The scale rounds it to readable intervals. */
 	readonly tickCount?: number;
 	/** Dash pattern for the lines. Pass `undefined` for solid. */
 	readonly strokeDasharray?: string;

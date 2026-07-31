@@ -8,8 +8,10 @@ interface Props
 			PreviewCardPrimitive.Positioner.Props,
 			"align" | "alignOffset" | "collisionPadding" | "side" | "sideOffset"
 		> {
-	// Escape hatch for the Positioner props not surfaced as dedicated props
-	// (sticky, anchor, positionMethod, arrowPadding…).
+	/**
+	 * Escape hatch for the Positioner props not surfaced as dedicated ones —
+	 * `sticky`, `anchor`, `positionMethod`, `arrowPadding`.
+	 */
 	positionerProps?: Omit<
 		PreviewCardPrimitive.Positioner.Props,
 		| "align"

@@ -1,6 +1,6 @@
 import { ContextMenu } from "@voila.dev/ui/context-menu";
 
-export function ContextMenuExample() {
+export function Default() {
 	return (
 		<ContextMenu.Root>
 			<ContextMenu.Trigger className="flex h-36 w-72 items-center justify-center rounded-xl border border-dashed text-muted-foreground text-sm">

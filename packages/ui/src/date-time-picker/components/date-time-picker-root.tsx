@@ -22,14 +22,18 @@ interface Props extends DateTimeShared {
 	 * `{ dateStyle: "medium", timeStyle: "short" }` (e.g. "Jun 20, 2026, 2:30 PM").
 	 */
 	formatOptions?: Intl.DateTimeFormatOptions;
+	/** Button variant for the trigger. `outline` is the field-shaped default. */
 	variant?: React.ComponentProps<typeof Button>["variant"];
 	/** Escape hatch for the underlying Calendar (disabled days, week numbers…). */
 	calendarProps?: Omit<
 		React.ComponentProps<typeof Calendar.Root>,
 		"mode" | "selected" | "onSelect" | "locale"
 	>;
+	/** Whether the popover starts open. Uncontrolled — for the controlled form use `open`. */
 	defaultOpen?: boolean;
+	/** Controlled popover state. Pair it with `onOpenChange`. */
 	open?: boolean;
+	/** Called when the popover opens or closes. */
 	onOpenChange?: (open: boolean) => void;
 }
 

@@ -23,7 +23,7 @@ const orderSteps = [
 	},
 ];
 
-export function NumberedCardsExample() {
+export function Default() {
 	return (
 		<NumberedCards.Root tone="highlight">
 			{orderSteps.map((step, index) => {

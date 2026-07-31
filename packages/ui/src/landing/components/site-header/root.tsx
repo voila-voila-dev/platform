@@ -3,6 +3,10 @@ import { SiteHeaderContext } from "#/landing/components/site-header/context/site
 import { cn } from "#/lib/utils.ts";
 
 interface Props extends React.ComponentProps<"header"> {
+	/**
+	 * Whether the mobile menu starts open. Leave it off: the menu server-renders
+	 * closed and hydrates, so opening by default flashes on first paint.
+	 */
 	defaultOpen?: boolean;
 }
 
