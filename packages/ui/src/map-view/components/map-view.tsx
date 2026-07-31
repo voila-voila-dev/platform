@@ -90,10 +90,7 @@ export function MapView({ className, ...props }: Props) {
 			fallback={
 				<div
 					data-slot="map-view"
-					className={cn(
-						"h-[70vh] w-full overflow-hidden",
-						className,
-					)}
+					className={cn("h-[70vh] w-full overflow-hidden", className)}
 				>
 					<Skeleton className="h-full w-full rounded-none" />
 				</div>
