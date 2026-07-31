@@ -119,9 +119,11 @@ describe("MapView", () => {
 		const screen = render(<MapView />);
 		const wrapper = queryMapView(screen);
 		expect(wrapper?.tagName).toBe("DIV");
-		expect(wrapper?.classList.contains("rounded-lg")).toBe(true);
-		expect(wrapper?.classList.contains("border")).toBe(true);
-		expect(wrapper?.classList.contains("border-input")).toBe(false);
+		// Edge-to-edge by default: full-viewport maps are the common case, and a
+		// framed variant is one `rounded-lg border` away in `className`.
+		expect(wrapper?.classList.contains("rounded-lg")).toBe(false);
+		expect(wrapper?.classList.contains("border")).toBe(false);
+		expect(wrapper?.classList.contains("overflow-hidden")).toBe(true);
 	});
 
 	it("merges className over the defaults", () => {

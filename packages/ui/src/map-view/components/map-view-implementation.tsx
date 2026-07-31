@@ -145,7 +145,7 @@ export function MapViewImplementation({
 		<div
 			data-slot="map-view"
 			className={cn(
-				"h-[70vh] w-full overflow-hidden rounded-lg border",
+				"h-[70vh] w-full overflow-hidden",
 				// MapLibre ships white control chrome (zoom buttons, attribution);
 				// invert it — hue-rotated back so link colors survive — when the map
 				// sits in a dark subtree.

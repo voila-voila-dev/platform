@@ -91,7 +91,7 @@ export function MapView({ className, ...props }: Props) {
 				<div
 					data-slot="map-view"
 					className={cn(
-						"h-[70vh] w-full overflow-hidden rounded-lg border",
+						"h-[70vh] w-full overflow-hidden",
 						className,
 					)}
 				>
