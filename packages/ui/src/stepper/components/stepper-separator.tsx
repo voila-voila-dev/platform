@@ -7,8 +7,8 @@ interface Props extends React.ComponentProps<"div"> {}
 
 /**
  * Connecting line to the next step. Horizontal: a flexible rule filling the
- * gap between items. Vertical: an absolute line dropping from the indicator,
- * sized by the item's bottom padding.
+ * gap between items. Vertical: an absolute line dropping from the indicator
+ * and bridging the root's gap down to just above the next indicator.
  */
 export function StepperSeparator({ className, ...props }: Props) {
 	const { orientation } = useStepperContext("Stepper.Separator");
@@ -20,7 +20,7 @@ export function StepperSeparator({ className, ...props }: Props) {
 			className={cn(
 				"bg-border transition-colors group-data-[state=completed]/stepper-item:bg-primary",
 				"data-[orientation=horizontal]:h-px data-[orientation=horizontal]:min-w-4 data-[orientation=horizontal]:flex-1",
-				"data-[orientation=vertical]:absolute data-[orientation=vertical]:top-7 data-[orientation=vertical]:bottom-1 data-[orientation=vertical]:left-3 data-[orientation=vertical]:w-px data-[orientation=vertical]:-translate-x-1/2",
+				"data-[orientation=vertical]:absolute data-[orientation=vertical]:top-7 data-[orientation=vertical]:-bottom-5 data-[orientation=vertical]:left-3 data-[orientation=vertical]:w-px data-[orientation=vertical]:-translate-x-1/2",
 				className,
 			)}
 			{...props}

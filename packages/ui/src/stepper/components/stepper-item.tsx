@@ -9,16 +9,27 @@ import {
 
 interface Props extends React.ComponentProps<"li"> {
 	step: number;
+	/**
+	 * Overrides the state derived from the root's `value` — for flows whose
+	 * progression is not a simple index (a failed step, a skipped one).
+	 */
+	state?: StepperStepState;
 }
 
 /**
  * One step: its indicator, title and description, plus the state the
  * separator after it reads.
  */
-export function StepperItem({ className, step, ...props }: Props) {
+export function StepperItem({
+	className,
+	step,
+	state: stateOverride,
+	...props
+}: Props) {
 	const { value, orientation } = useStepperContext("Stepper.Item");
 	const state: StepperStepState =
-		step < value ? "completed" : step === value ? "active" : "inactive";
+		stateOverride ??
+		(step < value ? "completed" : step === value ? "active" : "inactive");
 	const contextValue = React.useMemo(() => ({ step, state }), [step, state]);
 	return (
 		<StepperItemContext.Provider value={contextValue}>
@@ -28,7 +39,7 @@ export function StepperItem({ className, step, ...props }: Props) {
 				data-orientation={orientation}
 				aria-current={state === "active" ? "step" : undefined}
 				className={cn(
-					"group/stepper-item flex items-center gap-2 data-[orientation=vertical]:relative data-[orientation=vertical]:items-start data-[orientation=vertical]:pb-6 data-[orientation=vertical]:last:pb-0 data-[orientation=horizontal]:[&:not(:last-child)]:flex-1",
+					"group/stepper-item flex items-center gap-2 data-[orientation=vertical]:relative data-[orientation=vertical]:items-start data-[orientation=horizontal]:[&:not(:last-child)]:flex-1",
 					className,
 				)}
 				{...props}

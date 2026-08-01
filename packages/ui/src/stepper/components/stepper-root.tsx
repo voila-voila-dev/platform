@@ -33,7 +33,7 @@ export function StepperRoot({
 				data-slot="stepper"
 				data-orientation={orientation}
 				className={cn(
-					"group/stepper flex w-full data-[orientation=horizontal]:items-center data-[orientation=horizontal]:gap-2 data-[orientation=vertical]:flex-col",
+					"group/stepper flex w-full data-[orientation=horizontal]:items-center data-[orientation=horizontal]:gap-2 data-[orientation=vertical]:flex-col data-[orientation=vertical]:gap-6",
 					className,
 				)}
 				{...props}
