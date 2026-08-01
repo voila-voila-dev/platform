@@ -1,0 +1,69 @@
+---
+title: "Attachment"
+description: "A file or image attachment: media, metadata, upload state, actions."
+category: "data-display"
+---
+
+import * as Example from "@/examples/ui/attachment";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Attachment.Root state="uploading">
+	<Attachment.Media><Spinner /></Attachment.Media>
+	<Attachment.Content>
+		<Attachment.Title>sales-dashboard.pdf</Attachment.Title>
+		<Attachment.Description>Uploading · 64%</Attachment.Description>
+	</Attachment.Content>
+	<Attachment.Actions>
+		<Attachment.Action aria-label="Cancel upload"><XIcon /></Attachment.Action>
+	</Attachment.Actions>
+</Attachment.Root>
+```
+
+`state` drives the visual lifecycle — `idle` (dashed, before a file is chosen),
+`uploading` / `processing` (pulsing title), `error`, `done`. `orientation="vertical"`
+with `Attachment.Media variant="image"` makes a thumbnail card;
+`Attachment.Group` lays several out in a snap-scrolling row.
+`Attachment.Trigger` is a full-card overlay that opens a preview or link while
+the actions stay clickable above it.
+
+## API
+
+### Attachment.Root
+
+<PropTable of="Attachment.Root" />
+
+### Attachment.Action
+
+<PropTable of="Attachment.Action" />
+
+### Attachment.Actions
+
+<PropTable of="Attachment.Actions" />
+
+### Attachment.Content
+
+<PropTable of="Attachment.Content" />
+
+### Attachment.Description
+
+<PropTable of="Attachment.Description" />
+
+### Attachment.Group
+
+<PropTable of="Attachment.Group" />
+
+### Attachment.Media
+
+<PropTable of="Attachment.Media" />
+
+### Attachment.Title
+
+<PropTable of="Attachment.Title" />
+
+### Attachment.Trigger
+
+<PropTable of="Attachment.Trigger" />

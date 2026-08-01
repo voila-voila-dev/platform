@@ -46,6 +46,7 @@
 		"./alert": "./src/alert/index.ts",
 		"./alert-dialog": "./src/alert-dialog/index.ts",
 		"./aspect-ratio": "./src/aspect-ratio/index.ts",
+		"./attachment": "./src/attachment/index.ts",
 		"./avatar": "./src/avatar/index.ts",
 		"./badge": "./src/badge/index.ts",
 		"./banner": "./src/banner/index.ts",
