@@ -43,9 +43,13 @@ export function ResponsiveDialogContent({
 				showCloseButton={showCloseButton}
 				closeButtonLabel={closeButtonLabel}
 				overlayClassName={overlayClassName}
-				onOpenAutoFocus={
-					autoFocus ? undefined : (event) => event.preventDefault()
-				}
+				// autoFocus=true keeps Drawer.Content's default (focus the panel);
+				// false prevents the focus move entirely.
+				{...(autoFocus
+					? {}
+					: {
+							onOpenAutoFocus: (event: Event) => event.preventDefault(),
+						})}
 			>
 				{children}
 			</Drawer.Content>
