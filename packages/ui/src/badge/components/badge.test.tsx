@@ -99,3 +99,32 @@ describe("badge exports", () => {
 		expect(badgeVariantOptions.length).toBe(8);
 	});
 });
+
+describe("badge soft appearance", () => {
+	it("defaults to the solid appearance", () => {
+		const screen = render(<Badge color="emerald">Vérifié</Badge>);
+		const badge = queryBadge(screen);
+		expect(badge?.getAttribute("data-appearance")).toBe("solid");
+		expect(badge?.classList.contains("bg-badge-emerald")).toBe(true);
+	});
+
+	it("tints the background and mixes the text tone when soft", () => {
+		const screen = render(
+			<Badge color="emerald" appearance="soft">
+				Vérifié
+			</Badge>,
+		);
+		const badge = queryBadge(screen);
+		expect(badge?.getAttribute("data-appearance")).toBe("soft");
+		expect(badge?.className).toContain("bg-badge-emerald/15");
+		expect(badge?.className).toContain("color-mix");
+	});
+
+	it("keeps every palette color covered by a soft compound", () => {
+		for (const color of badgeColors) {
+			const classes = badgeVariants({ color, appearance: "soft" });
+			expect(classes).toContain(`bg-badge-${color}/15`);
+			expect(classes).toContain(`--color-badge-${color}`);
+		}
+	});
+});

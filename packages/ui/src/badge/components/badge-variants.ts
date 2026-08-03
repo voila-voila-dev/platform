@@ -58,6 +58,17 @@ export const badgeVariants = cva({
 			pink: "bg-badge-pink text-badge-pink-foreground [a]:hover:bg-badge-pink/90",
 			rose: "bg-badge-rose text-badge-rose-foreground [a]:hover:bg-badge-rose/90",
 		},
+		/**
+		 * Fill style for the palette colors. `solid` is the classic filled chip;
+		 * `soft` keeps the same hue as a ~15% tinted background with a text tone
+		 * mixed from the hue and the theme foreground, so the pastel stays
+		 * legible in light and dark mode without any per-hue soft tokens. Only
+		 * meaningful together with `color` (compound variants below).
+		 */
+		appearance: {
+			solid: "",
+			soft: "",
+		},
 		/** `sm` for dense surfaces such as table cells. Below that, use text. */
 		size: {
 			default:
@@ -65,6 +76,128 @@ export const badgeVariants = cva({
 			sm: "h-4 gap-0.5 px-1.5 py-0 text-[10px] has-data-[icon=inline-end]:pr-1 has-data-[icon=inline-start]:pl-1 [&>svg:not([class*='size-'])]:size-2.5",
 		},
 	},
+	compoundVariants: [
+		{
+			color: "slate",
+			appearance: "soft",
+			className:
+				"bg-badge-slate/15 dark:bg-badge-slate/25 text-[color-mix(in_oklab,var(--color-badge-slate)_55%,var(--color-foreground))] [a]:hover:bg-badge-slate/25",
+		},
+		{
+			color: "gray",
+			appearance: "soft",
+			className:
+				"bg-badge-gray/15 dark:bg-badge-gray/25 text-[color-mix(in_oklab,var(--color-badge-gray)_55%,var(--color-foreground))] [a]:hover:bg-badge-gray/25",
+		},
+		{
+			color: "zinc",
+			appearance: "soft",
+			className:
+				"bg-badge-zinc/15 dark:bg-badge-zinc/25 text-[color-mix(in_oklab,var(--color-badge-zinc)_55%,var(--color-foreground))] [a]:hover:bg-badge-zinc/25",
+		},
+		{
+			color: "red",
+			appearance: "soft",
+			className:
+				"bg-badge-red/15 dark:bg-badge-red/25 text-[color-mix(in_oklab,var(--color-badge-red)_55%,var(--color-foreground))] [a]:hover:bg-badge-red/25",
+		},
+		{
+			color: "orange",
+			appearance: "soft",
+			className:
+				"bg-badge-orange/15 dark:bg-badge-orange/25 text-[color-mix(in_oklab,var(--color-badge-orange)_55%,var(--color-foreground))] [a]:hover:bg-badge-orange/25",
+		},
+		{
+			color: "amber",
+			appearance: "soft",
+			className:
+				"bg-badge-amber/15 dark:bg-badge-amber/25 text-[color-mix(in_oklab,var(--color-badge-amber)_55%,var(--color-foreground))] [a]:hover:bg-badge-amber/25",
+		},
+		{
+			color: "yellow",
+			appearance: "soft",
+			className:
+				"bg-badge-yellow/15 dark:bg-badge-yellow/25 text-[color-mix(in_oklab,var(--color-badge-yellow)_55%,var(--color-foreground))] [a]:hover:bg-badge-yellow/25",
+		},
+		{
+			color: "lime",
+			appearance: "soft",
+			className:
+				"bg-badge-lime/15 dark:bg-badge-lime/25 text-[color-mix(in_oklab,var(--color-badge-lime)_55%,var(--color-foreground))] [a]:hover:bg-badge-lime/25",
+		},
+		{
+			color: "green",
+			appearance: "soft",
+			className:
+				"bg-badge-green/15 dark:bg-badge-green/25 text-[color-mix(in_oklab,var(--color-badge-green)_55%,var(--color-foreground))] [a]:hover:bg-badge-green/25",
+		},
+		{
+			color: "emerald",
+			appearance: "soft",
+			className:
+				"bg-badge-emerald/15 dark:bg-badge-emerald/25 text-[color-mix(in_oklab,var(--color-badge-emerald)_55%,var(--color-foreground))] [a]:hover:bg-badge-emerald/25",
+		},
+		{
+			color: "teal",
+			appearance: "soft",
+			className:
+				"bg-badge-teal/15 dark:bg-badge-teal/25 text-[color-mix(in_oklab,var(--color-badge-teal)_55%,var(--color-foreground))] [a]:hover:bg-badge-teal/25",
+		},
+		{
+			color: "cyan",
+			appearance: "soft",
+			className:
+				"bg-badge-cyan/15 dark:bg-badge-cyan/25 text-[color-mix(in_oklab,var(--color-badge-cyan)_55%,var(--color-foreground))] [a]:hover:bg-badge-cyan/25",
+		},
+		{
+			color: "sky",
+			appearance: "soft",
+			className:
+				"bg-badge-sky/15 dark:bg-badge-sky/25 text-[color-mix(in_oklab,var(--color-badge-sky)_55%,var(--color-foreground))] [a]:hover:bg-badge-sky/25",
+		},
+		{
+			color: "blue",
+			appearance: "soft",
+			className:
+				"bg-badge-blue/15 dark:bg-badge-blue/25 text-[color-mix(in_oklab,var(--color-badge-blue)_55%,var(--color-foreground))] [a]:hover:bg-badge-blue/25",
+		},
+		{
+			color: "indigo",
+			appearance: "soft",
+			className:
+				"bg-badge-indigo/15 dark:bg-badge-indigo/25 text-[color-mix(in_oklab,var(--color-badge-indigo)_55%,var(--color-foreground))] [a]:hover:bg-badge-indigo/25",
+		},
+		{
+			color: "violet",
+			appearance: "soft",
+			className:
+				"bg-badge-violet/15 dark:bg-badge-violet/25 text-[color-mix(in_oklab,var(--color-badge-violet)_55%,var(--color-foreground))] [a]:hover:bg-badge-violet/25",
+		},
+		{
+			color: "purple",
+			appearance: "soft",
+			className:
+				"bg-badge-purple/15 dark:bg-badge-purple/25 text-[color-mix(in_oklab,var(--color-badge-purple)_55%,var(--color-foreground))] [a]:hover:bg-badge-purple/25",
+		},
+		{
+			color: "fuchsia",
+			appearance: "soft",
+			className:
+				"bg-badge-fuchsia/15 dark:bg-badge-fuchsia/25 text-[color-mix(in_oklab,var(--color-badge-fuchsia)_55%,var(--color-foreground))] [a]:hover:bg-badge-fuchsia/25",
+		},
+		{
+			color: "pink",
+			appearance: "soft",
+			className:
+				"bg-badge-pink/15 dark:bg-badge-pink/25 text-[color-mix(in_oklab,var(--color-badge-pink)_55%,var(--color-foreground))] [a]:hover:bg-badge-pink/25",
+		},
+		{
+			color: "rose",
+			appearance: "soft",
+			className:
+				"bg-badge-rose/15 dark:bg-badge-rose/25 text-[color-mix(in_oklab,var(--color-badge-rose)_55%,var(--color-foreground))] [a]:hover:bg-badge-rose/25",
+		},
+	],
 });
 
 export type BadgeVariants = VariantProps<typeof badgeVariants>;

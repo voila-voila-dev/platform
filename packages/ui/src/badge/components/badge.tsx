@@ -12,6 +12,7 @@ export function Badge({
 	className,
 	variant = "default",
 	color,
+	appearance = "solid",
 	size = "default",
 	render,
 	...props
@@ -20,7 +21,10 @@ export function Badge({
 		defaultTagName: "span",
 		props: mergeProps<"span">(
 			{
-				className: cn(badgeVariants({ variant, color, size }), className),
+				className: cn(
+					badgeVariants({ variant, color, appearance, size }),
+					className,
+				),
 			},
 			props,
 		),
@@ -29,6 +33,7 @@ export function Badge({
 			slot: "badge",
 			variant,
 			color,
+			appearance,
 			size,
 		},
 	});
