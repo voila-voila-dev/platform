@@ -61,6 +61,7 @@
 		"./checkbox": "./src/checkbox/index.ts",
 		"./checkbox-group": "./src/checkbox-group/index.ts",
 		"./chip": "./src/chip/index.ts",
+		"./chip-picker": "./src/chip-picker/index.ts",
 		"./collapsible": "./src/collapsible/index.ts",
 		"./color-picker": "./src/color-picker/index.ts",
 		"./combobox": "./src/combobox/index.ts",
