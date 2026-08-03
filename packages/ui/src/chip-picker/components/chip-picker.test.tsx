@@ -107,3 +107,26 @@ describe("ChipPicker", () => {
 		expect(screen.getByText("1 / 1")).toBeDefined();
 	});
 });
+
+describe("chip picker sheet close", () => {
+	it("fires onSheetClosed when the sheet closes via Done", () => {
+		let closedCount = 0;
+		render(
+			<ChipPicker
+				title="Your interests"
+				searchPlaceholder="Search…"
+				labels={labels}
+				options={options}
+				selected={new Set()}
+				onToggle={() => {}}
+				onSheetClosed={() => {
+					closedCount += 1;
+				}}
+			/>,
+		);
+		fireEvent.click(screen.getByRole("button", { name: "Select" }));
+		expect(closedCount).toBe(0);
+		fireEvent.click(screen.getByRole("button", { name: "Done" }));
+		expect(closedCount).toBe(1);
+	});
+});

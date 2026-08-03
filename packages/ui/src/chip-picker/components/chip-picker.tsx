@@ -193,6 +193,7 @@ export function ChipPicker({
 	onToggle,
 	maxSelected,
 	sortLocale,
+	onSheetClosed,
 }: {
 	title: string;
 	searchPlaceholder: string;
@@ -202,8 +203,19 @@ export function ChipPicker({
 	onToggle: (id: string) => void;
 	maxSelected?: number;
 	sortLocale?: string;
+	/**
+	 * Fired when the sheet closes — the moment to persist the selection, since
+	 * the sheet is the single place it changes.
+	 */
+	onSheetClosed?: () => void;
 }) {
 	const [open, setOpen] = useState(false);
+	const handleOpenChange = (next: boolean): void => {
+		setOpen(next);
+		if (!next) {
+			onSheetClosed?.();
+		}
+	};
 	const labelOf = (id: string): string =>
 		options.find((option) => option.id === id)?.label ?? id;
 
@@ -222,7 +234,7 @@ export function ChipPicker({
 			</button>
 			<ChipPickerSheet
 				open={open}
-				onOpenChange={setOpen}
+				onOpenChange={handleOpenChange}
 				title={title}
 				searchPlaceholder={searchPlaceholder}
 				labels={labels}
