@@ -6,8 +6,19 @@ import type { EmailEditorImageBlock } from "#/email-block-editor/document/types.
 
 export const imageBlockDefinition: EmailBlockDefinition<EmailEditorImageBlock> =
 	{
+		type: "image",
 		label: "Image",
 		icon: ImageIcon,
+		createEmpty: (id) => ({
+			id,
+			type: "image",
+			src: "",
+			alt: "",
+			href: "",
+			width: "full",
+			overlay: "none",
+			rounded: true,
+		}),
 		View: ImageBlockView,
 		Settings: ImageBlockSettings,
 	};

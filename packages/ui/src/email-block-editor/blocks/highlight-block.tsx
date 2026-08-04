@@ -6,8 +6,10 @@ import type { EmailEditorHighlightBlock } from "#/email-block-editor/document/ty
 
 export const highlightBlockDefinition: EmailBlockDefinition<EmailEditorHighlightBlock> =
 	{
+		type: "highlight",
 		label: "Highlight",
 		icon: MegaphoneIcon,
+		createEmpty: (id) => ({ id, type: "highlight", text: "", align: "center" }),
 		View: HighlightBlockView,
 		Settings: HighlightBlockSettings,
 	};

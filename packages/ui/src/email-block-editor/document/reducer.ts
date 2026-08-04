@@ -1,5 +1,5 @@
+import { emailBlockDefinitionForType } from "#/email-block-editor/blocks/block-definitions.tsx";
 import {
-	createEmailEditorBlock,
 	type EmailEditorBlock,
 	type EmailEditorBlockType,
 	type EmailEditorDocument,
@@ -123,7 +123,11 @@ const addBlock = (
 ): EmailEditorState => {
 	const blocks = state.document.blocks;
 	const containerId = action.containerId ?? null;
-	const block = createEmailEditorBlock(action.blockType, blockId);
+	const definition = emailBlockDefinitionForType(action.blockType);
+	if (definition === undefined) {
+		return state;
+	}
+	const block = definition.createEmpty(blockId);
 	if (containerId === null) {
 		return {
 			...withBlocks(

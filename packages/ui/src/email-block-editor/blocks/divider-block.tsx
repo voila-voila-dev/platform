@@ -5,8 +5,10 @@ import type { EmailEditorDividerBlock } from "#/email-block-editor/document/type
 
 export const dividerBlockDefinition: EmailBlockDefinition<EmailEditorDividerBlock> =
 	{
+		type: "divider",
 		label: "Divider",
 		icon: MinusIcon,
+		createEmpty: (id) => ({ id, type: "divider" }),
 		View: DividerBlockView,
 		Settings: null,
 	};

@@ -6,8 +6,11 @@ import type { EmailEditorParagraphBlock } from "#/email-block-editor/document/ty
 
 export const paragraphBlockDefinition: EmailBlockDefinition<EmailEditorParagraphBlock> =
 	{
+		type: "paragraph",
 		label: "Paragraph",
 		icon: TextAlignLeftIcon,
+		createEmpty: (id) => ({ id, type: "paragraph", spans: [] }),
 		View: ParagraphBlockView,
 		Settings: ParagraphBlockSettings,
+		richText: true,
 	};

@@ -6,8 +6,17 @@ import type { EmailEditorButtonBlock } from "#/email-block-editor/document/types
 
 export const buttonBlockDefinition: EmailBlockDefinition<EmailEditorButtonBlock> =
 	{
+		type: "button",
 		label: "Button",
 		icon: CursorClickIcon,
+		createEmpty: (id) => ({
+			id,
+			type: "button",
+			label: "",
+			href: "",
+			align: "center",
+			variant: "primary",
+		}),
 		View: ButtonBlockView,
 		Settings: ButtonBlockSettings,
 	};

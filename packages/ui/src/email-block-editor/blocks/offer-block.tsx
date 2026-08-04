@@ -6,8 +6,23 @@ import type { EmailEditorOfferBlock } from "#/email-block-editor/document/types.
 
 export const offerBlockDefinition: EmailBlockDefinition<EmailEditorOfferBlock> =
 	{
+		type: "offer",
 		label: "Offer",
 		icon: SealPercentIcon,
+		createEmpty: (id) => ({
+			id,
+			type: "offer",
+			eyebrow: "",
+			name: "",
+			description: "",
+			image: { src: "", alt: "" },
+			price: { amountInMinorUnits: 0, currency: "EUR" },
+			period: "",
+			features: [],
+			buttonLabel: "",
+			buttonHref: "",
+			highlighted: false,
+		}),
 		View: OfferBlockView,
 		Settings: OfferBlockSettings,
 	};

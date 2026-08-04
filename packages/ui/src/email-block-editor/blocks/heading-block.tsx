@@ -6,8 +6,10 @@ import type { EmailEditorHeadingBlock } from "#/email-block-editor/document/type
 
 export const headingBlockDefinition: EmailBlockDefinition<EmailEditorHeadingBlock> =
 	{
+		type: "heading",
 		label: "Heading",
 		icon: TextHIcon,
+		createEmpty: (id) => ({ id, type: "heading", text: "", level: 1 }),
 		View: HeadingBlockView,
 		Settings: HeadingBlockSettings,
 	};

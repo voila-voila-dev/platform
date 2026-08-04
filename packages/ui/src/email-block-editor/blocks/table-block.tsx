@@ -6,8 +6,19 @@ import type { EmailEditorTableBlock } from "#/email-block-editor/document/types.
 
 export const tableBlockDefinition: EmailBlockDefinition<EmailEditorTableBlock> =
 	{
+		type: "table",
 		label: "Table",
 		icon: TableIcon,
+		createEmpty: (id) => ({
+			id,
+			type: "table",
+			columns: [
+				{ label: "", align: "left" },
+				{ label: "", align: "right" },
+			],
+			rows: [["", ""]],
+			headerRow: true,
+		}),
 		View: TableBlockView,
 		Settings: TableBlockSettings,
 	};

@@ -5,8 +5,11 @@ import type { EmailEditorFinePrintBlock } from "#/email-block-editor/document/ty
 
 export const finePrintBlockDefinition: EmailBlockDefinition<EmailEditorFinePrintBlock> =
 	{
+		type: "finePrint",
 		label: "Fine print",
 		icon: AsteriskIcon,
+		createEmpty: (id) => ({ id, type: "finePrint", spans: [] }),
 		View: FinePrintBlockView,
 		Settings: null,
+		richText: true,
 	};

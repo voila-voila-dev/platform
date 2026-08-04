@@ -1,15 +1,20 @@
 import { beforeEach, describe, expect, it } from "vitest";
+import { emailBlockDefinitionForType } from "#/email-block-editor/blocks/block-definitions.tsx";
 import {
 	createEmailEditorReducer,
 	type EmailEditorState,
 } from "#/email-block-editor/document/reducer.ts";
 import {
-	createEmailEditorBlock,
 	type EmailEditorDocument,
 	type EmailEditorGridBlock,
 	type EmailEditorLeafBlock,
 	emptyEmailEditorDocument,
 } from "#/email-block-editor/document/types.ts";
+
+/** A freshly created block of a type, the way the editor makes one: through
+ * that type's own definition. */
+const createBlock = (type: string, id: string) =>
+	emailBlockDefinitionForType(type)?.createEmpty(id);
 
 let nextId = 0;
 const reduce = createEmailEditorReducer(() => `id-${++nextId}`);
@@ -78,13 +83,13 @@ describe("createEmailEditorReducer", () => {
 		]);
 	});
 
-	it("creates every block type with empty content fields", () => {
-		expect(createEmailEditorBlock("paragraph", "x")).toEqual({
+	it("creates every block type from its own definition", () => {
+		expect(createBlock("paragraph", "x")).toEqual({
 			id: "x",
 			type: "paragraph",
 			spans: [],
 		});
-		expect(createEmailEditorBlock("button", "x")).toEqual({
+		expect(createBlock("button", "x")).toEqual({
 			id: "x",
 			type: "button",
 			label: "",
@@ -92,7 +97,7 @@ describe("createEmailEditorReducer", () => {
 			align: "center",
 			variant: "primary",
 		});
-		expect(createEmailEditorBlock("image", "x")).toEqual({
+		expect(createBlock("image", "x")).toEqual({
 			id: "x",
 			type: "image",
 			src: "",
@@ -102,7 +107,7 @@ describe("createEmailEditorReducer", () => {
 			overlay: "none",
 			rounded: true,
 		});
-		expect(createEmailEditorBlock("divider", "x")).toEqual({
+		expect(createBlock("divider", "x")).toEqual({
 			id: "x",
 			type: "divider",
 		});
@@ -278,7 +283,7 @@ describe("createEmailEditorReducer with grids", () => {
 		);
 
 	it("creates a grid with two desktop columns, one mobile column and no children", () => {
-		expect(createEmailEditorBlock("grid", "x")).toEqual({
+		expect(createBlock("grid", "x")).toEqual({
 			id: "x",
 			type: "grid",
 			desktopColumns: 2,

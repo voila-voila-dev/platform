@@ -3,8 +3,10 @@ export {
 	EMAIL_BLOCK_TYPES,
 	EMAIL_LEAF_BLOCK_TYPES,
 	type EmailBlockComponentProps,
+	type EmailBlockContainer,
 	type EmailBlockDefinition,
 	emailBlockDefinition,
+	emailBlockDefinitionForType,
 } from "#/email-block-editor/blocks/block-definitions.tsx";
 export { EmailBlockEditor } from "#/email-block-editor/components/email-block-editor.tsx";
 export {

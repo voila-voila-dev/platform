@@ -1,6 +1,9 @@
 import type { ReactElement, ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { EMAIL_LEAF_BLOCK_TYPES } from "#/email-block-editor/blocks/block-definitions.tsx";
+import {
+	EMAIL_LEAF_BLOCK_TYPES,
+	emailBlockDefinition,
+} from "#/email-block-editor/blocks/block-definitions.tsx";
 import { BlockToolbar } from "#/email-block-editor/components/block-toolbar.tsx";
 import {
 	useEmailEditorActions,
@@ -14,13 +17,6 @@ import { cn } from "#/lib/utils.ts";
 /** Render `node` into `slot`, or in place when there is no slot. */
 const renderIn = (slot: HTMLElement | null, node: ReactElement): ReactNode =>
 	slot === null ? node : createPortal(node, slot);
-/** Blocks whose content is edited through the span model, and therefore want
- * the toolbar's bold/italic/underline/link group. */
-const RICH_TEXT_BLOCK_TYPES: ReadonlySet<string> = new Set([
-	"paragraph",
-	"list",
-	"rating",
-]);
 
 interface Props {
 	block: EmailEditorBlock;
@@ -71,7 +67,7 @@ export function CanvasBlockRowToolbar({
 		>
 			<BlockToolbar
 				handle={handle}
-				richText={RICH_TEXT_BLOCK_TYPES.has(block.type)}
+				richText={emailBlockDefinition(block).richText === true}
 				coarsePointer={coarsePointer}
 				addableTypes={nested ? EMAIL_LEAF_BLOCK_TYPES : undefined}
 				onAddBelow={(type) => addBlock(type, { containerId, index: index + 1 })}

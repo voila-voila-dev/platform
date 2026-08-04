@@ -5,8 +5,17 @@ import { StatBlockView } from "#/email-block-editor/blocks/stat-block-view.tsx";
 import type { EmailEditorStatBlock } from "#/email-block-editor/document/types.ts";
 
 export const statBlockDefinition: EmailBlockDefinition<EmailEditorStatBlock> = {
+	type: "stat",
 	label: "Key figure",
 	icon: ChartBarIcon,
+	createEmpty: (id) => ({
+		id,
+		type: "stat",
+		value: "",
+		label: "",
+		description: "",
+		align: "center",
+	}),
 	View: StatBlockView,
 	Settings: StatBlockSettings,
 };

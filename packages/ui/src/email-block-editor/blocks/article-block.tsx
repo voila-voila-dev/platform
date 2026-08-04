@@ -6,8 +6,19 @@ import type { EmailEditorArticleBlock } from "#/email-block-editor/document/type
 
 export const articleBlockDefinition: EmailBlockDefinition<EmailEditorArticleBlock> =
 	{
+		type: "article",
 		label: "Article",
 		icon: NewspaperIcon,
+		createEmpty: (id) => ({
+			id,
+			type: "article",
+			title: "",
+			description: "",
+			image: { src: "", alt: "" },
+			author: "",
+			publishDate: "",
+			href: "",
+		}),
 		View: ArticleBlockView,
 		Settings: ArticleBlockSettings,
 	};

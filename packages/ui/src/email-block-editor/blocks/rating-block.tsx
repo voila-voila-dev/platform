@@ -6,8 +6,19 @@ import type { EmailEditorRatingBlock } from "#/email-block-editor/document/types
 
 export const ratingBlockDefinition: EmailBlockDefinition<EmailEditorRatingBlock> =
 	{
+		type: "rating",
 		label: "Rating",
 		icon: StarIcon,
+		createEmpty: (id) => ({
+			id,
+			type: "rating",
+			question: [],
+			style: "filled",
+			lowLabel: "",
+			highLabel: "",
+			href: "",
+		}),
 		View: RatingBlockView,
 		Settings: RatingBlockSettings,
+		richText: true,
 	};

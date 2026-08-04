@@ -6,8 +6,20 @@ import type { EmailEditorProductBlock } from "#/email-block-editor/document/type
 
 export const productBlockDefinition: EmailBlockDefinition<EmailEditorProductBlock> =
 	{
+		type: "product",
 		label: "Product",
 		icon: TagIcon,
+		createEmpty: (id) => ({
+			id,
+			type: "product",
+			name: "",
+			description: "",
+			image: { src: "", alt: "" },
+			price: { amountInMinorUnits: 0, currency: "EUR" },
+			compareAtPrice: null,
+			href: "",
+			buttonLabel: "",
+		}),
 		View: ProductBlockView,
 		Settings: ProductBlockSettings,
 	};

@@ -40,22 +40,48 @@ export interface EmailBlockComponentProps<
 }
 
 /**
- * Everything the editor needs to know about one block type. Adding a block =
- * add its interface to `document/types.ts` (type union + `createEmailEditorBlock`
- * case), write one `blocks/<type>-block.tsx` exporting a definition, and
- * register it below — the mapped type makes a missing entry a compile error,
- * and the menu, canvas and sidebar all pick it up from here.
+ * A block that holds other blocks. Declaring this is what makes a block a
+ * container: the reducer, the drag-and-drop layer and the canvas all consult it
+ * instead of testing for the one container type the package happens to ship.
+ */
+export interface EmailBlockContainer<B extends EmailEditorBlock> {
+	readonly children: (block: B) => ReadonlyArray<EmailEditorBlock>;
+	readonly withChildren: (
+		block: B,
+		children: ReadonlyArray<EmailEditorBlock>,
+	) => B;
+	/** Which types may be dropped in. Defaults to everything that is not itself
+	 * a container — the "one level of nesting" rule, without naming a type. */
+	readonly accepts?: (type: string) => boolean;
+	/** How the canvas arranges the children. */
+	readonly layout?: "grid" | "list";
+}
+
+/**
+ * Everything the editor knows about one block type. The definition is the
+ * single source of truth: what an empty one looks like, whether its content is
+ * rich text, and whether it holds other blocks. Adding a block is writing one
+ * `blocks/<type>-block.tsx` and registering it below — no central switch to
+ * remember.
  */
 export interface EmailBlockDefinition<
 	B extends EmailEditorBlock = EmailEditorBlock,
 > {
-	/** Label shown in the add-block menu. */
+	readonly type: B["type"];
+	/** Name shown in the add-block menu, unless `labels.blockNames` overrides it. */
 	readonly label: string;
 	readonly icon: Icon;
+	/** A freshly added block, with empty content fields. */
+	readonly createEmpty: (id: string) => B;
 	/** The WYSIWYG rendering, edited in place on the canvas. */
 	readonly View: ComponentType<EmailBlockComponentProps<B>>;
 	/** The per-block settings panel; null when the block has none. */
 	readonly Settings: ComponentType<EmailBlockComponentProps<B>> | null;
+	/** Content edited through the span model, so the toolbar offers
+	 * bold/italic/underline/link. */
+	readonly richText?: boolean;
+	/** Present when the block holds other blocks. */
+	readonly container?: EmailBlockContainer<B>;
 }
 
 export const EMAIL_BLOCK_DEFINITIONS: {
@@ -84,10 +110,11 @@ export const EMAIL_BLOCK_TYPES = Object.keys(
 	EMAIL_BLOCK_DEFINITIONS,
 ) as ReadonlyArray<EmailEditorBlockType>;
 
-/** The types offered inside a grid cell: everything but the grid, which cannot
- * nest. Derived from the registry so a new leaf block appears automatically. */
+/** The types offered inside a container's cell: everything that is not itself a
+ * container, so a new leaf block appears there automatically. */
 export const EMAIL_LEAF_BLOCK_TYPES = EMAIL_BLOCK_TYPES.filter(
-	(type): type is EmailEditorLeafBlockType => type !== "grid",
+	(type): type is EmailEditorLeafBlockType =>
+		EMAIL_BLOCK_DEFINITIONS[type].container === undefined,
 );
 
 /** Look up a block's definition with the union narrowed away — the registry
@@ -96,3 +123,12 @@ export const emailBlockDefinition = (
 	block: EmailEditorBlock,
 ): EmailBlockDefinition =>
 	EMAIL_BLOCK_DEFINITIONS[block.type] as EmailBlockDefinition;
+
+/** The definition for a type, or `undefined` for a type this editor does not
+ * know — a stored document outliving a block someone removed. */
+export const emailBlockDefinitionForType = (
+	type: string,
+): EmailBlockDefinition | undefined =>
+	(EMAIL_BLOCK_DEFINITIONS as Record<string, EmailBlockDefinition | undefined>)[
+		type
+	];
