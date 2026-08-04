@@ -9,13 +9,14 @@ export function List() {
 				marker: "badge",
 				items: [
 					{
-						title: "Post your project",
-						spans: [{ text: "In two minutes, from your workspace." }],
+						spans: [
+							{ text: "Post your project", bold: true },
+							{ text: " in two minutes, from your workspace." },
+						],
 					},
 					{
-						title: "Receive proposals",
 						spans: [
-							{ text: "From " },
+							{ text: "Receive proposals from " },
 							{ text: "verified", bold: true },
 							{ text: " freelancers, within hours." },
 						],

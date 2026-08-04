@@ -191,12 +191,16 @@ const everyBlockDocument: EmailEditorDocument = {
 			marker: "badge",
 			items: [
 				{
-					title: "Post your project",
-					spans: [{ text: "In two minutes." }],
+					spans: [
+						{ text: "Post your project", bold: true },
+						{ text: " in two minutes." },
+					],
 				},
 				{
-					title: "Receive applications",
-					spans: [{ text: "From verified freelancers." }],
+					spans: [
+						{ text: "Receive applications", bold: true },
+						{ text: " from verified freelancers." },
+					],
 				},
 			],
 		},

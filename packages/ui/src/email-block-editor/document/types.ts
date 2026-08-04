@@ -95,10 +95,9 @@ export interface EmailEditorDividerBlock {
 
 export type EmailEditorListMarker = "bullet" | "number" | "badge";
 
-/** One list entry: an optional bold lead-in, then the same span model the
- * paragraph uses — so bold/italic/underline/links work inside items for free. */
+/** One list entry: the same span model the paragraph uses, so
+ * bold/italic/underline/links work inside items for free. */
 export interface EmailEditorListItem {
-	readonly title?: string;
 	readonly spans: ReadonlyArray<EmailEditorTextSpan>;
 }
 

@@ -36,12 +36,10 @@ export function ListBlockSettings({ block, onChange }: Props) {
 						className="flex items-center justify-between gap-2 text-sm"
 					>
 						<span className="truncate text-muted-foreground">
-							{item.title?.trim() ||
-								item.spans
-									.map((span) => span.text)
-									.join("")
-									.trim() ||
-								`Item ${index + 1}`}
+							{item.spans
+								.map((span) => span.text)
+								.join("")
+								.trim() || `Item ${index + 1}`}
 						</span>
 						<Button
 							variant="ghost"
@@ -72,6 +70,7 @@ export function ListBlockSettings({ block, onChange }: Props) {
 			</div>
 			<p className="text-muted-foreground text-xs">
 				Each item's text is formatted from the block toolbar, like a paragraph.
+				Enter starts the next item, Shift+Enter breaks the line inside one.
 			</p>
 		</>
 	);

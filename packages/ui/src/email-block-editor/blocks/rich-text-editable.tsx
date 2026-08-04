@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef } from "react";
+import { type RefObject, useLayoutEffect, useRef } from "react";
 import {
 	editorElementToTextSpans,
 	textSpansToEditorHtml,
@@ -14,6 +14,13 @@ interface Props {
 	placeholder: string;
 	className?: string;
 	style?: React.CSSProperties;
+	/** Lets the owner move the caret here — a list focusing the item it just
+	 * created, say. */
+	editableRef?: RefObject<HTMLDivElement | null>;
+	/** Takes Enter over from the browser, for a surface where a new line means
+	 * something other than a line break (a new list item). Shift+Enter still
+	 * breaks the line, which is the escape hatch every list editor has. */
+	onEnter?: () => void;
 }
 
 /**
@@ -32,8 +39,11 @@ export function RichTextEditable({
 	placeholder,
 	className,
 	style,
+	editableRef: providedRef,
+	onEnter,
 }: Props) {
-	const editableRef = useRef<HTMLDivElement>(null);
+	const ownRef = useRef<HTMLDivElement>(null);
+	const editableRef = providedRef ?? ownRef;
 	const renderedHtmlRef = useRef<string | null>(null);
 	const html = textSpansToEditorHtml(spans);
 
@@ -58,6 +68,13 @@ export function RichTextEditable({
 		onChange(next);
 	};
 
+	const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+		if (onEnter && event.key === "Enter" && !event.shiftKey) {
+			event.preventDefault();
+			onEnter();
+		}
+	};
+
 	const empty = textSpansToPlainText(spans).trim() === "";
 
 	return (
@@ -72,6 +89,7 @@ export function RichTextEditable({
 			suppressContentEditableWarning
 			data-placeholder={placeholder}
 			onInput={handleInput}
+			onKeyDown={handleKeyDown}
 			className={cn(
 				// `min-h-[1lh]` keeps one line of height while the box is empty: a
 				// collapsed contentEditable would let the absolutely-positioned

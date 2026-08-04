@@ -1,6 +1,6 @@
 ---
 title: "ListBlock"
-description: "Bulleted, numbered or badged items, each with an optional lead-in."
+description: "Bulleted, numbered or badged items of rich text."
 sidebar:
   order: 5
 ---
@@ -17,11 +17,12 @@ import * as Example from "@/examples/ui-email-block-editor/list-block";
 	type: "list",
 	marker: "badge",
 	items: [
-		{ title: "Post your project", spans: [{ text: "In two minutes." }] },
+		{ spans: [{ text: "Post your project", bold: true }] },
 		{ spans: [{ text: "Pay once the project is delivered." }] },
 	],
 }
 ```
 
-Item bodies use the same span model as the paragraph, so bold, italic and links
-work inside them.
+Items use the same span model as the paragraph, so bold, italic and links work
+inside them. Enter starts the next item and puts the caret in it; Shift+Enter
+breaks the line inside the current one.

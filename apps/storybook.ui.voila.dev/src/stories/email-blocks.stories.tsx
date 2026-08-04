@@ -156,13 +156,14 @@ export const List: Story = {
 				marker: "badge",
 				items: [
 					{
-						title: "Post your project",
-						spans: [{ text: "In two minutes, from your dashboard." }],
+						spans: [
+							{ text: "Post your project", bold: true },
+							{ text: " in two minutes, from your dashboard." },
+						],
 					},
 					{
-						title: "Receive applications",
 						spans: [
-							{ text: "From " },
+							{ text: "Receive applications from " },
 							{ text: "verified", bold: true },
 							{ text: " freelancers, ready to start." },
 						],
