@@ -3,8 +3,10 @@ import type { ComponentType, ReactNode } from "react";
 import { articleBlockDefinition } from "#/email-block-editor/blocks/article-block.tsx";
 import { buttonBlockDefinition } from "#/email-block-editor/blocks/button-block.tsx";
 import { dividerBlockDefinition } from "#/email-block-editor/blocks/divider-block.tsx";
+import { finePrintBlockDefinition } from "#/email-block-editor/blocks/fine-print-block.tsx";
 import { gridBlockDefinition } from "#/email-block-editor/blocks/grid-block.tsx";
 import { headingBlockDefinition } from "#/email-block-editor/blocks/heading-block.tsx";
+import { highlightBlockDefinition } from "#/email-block-editor/blocks/highlight-block.tsx";
 import { imageBlockDefinition } from "#/email-block-editor/blocks/image-block.tsx";
 import { listBlockDefinition } from "#/email-block-editor/blocks/list-block.tsx";
 import { offerBlockDefinition } from "#/email-block-editor/blocks/offer-block.tsx";
@@ -68,11 +70,13 @@ export const EMAIL_BLOCK_DEFINITIONS: {
 	divider: dividerBlockDefinition,
 	list: listBlockDefinition,
 	stat: statBlockDefinition,
+	highlight: highlightBlockDefinition,
 	table: tableBlockDefinition,
 	article: articleBlockDefinition,
 	product: productBlockDefinition,
 	offer: offerBlockDefinition,
 	rating: ratingBlockDefinition,
+	finePrint: finePrintBlockDefinition,
 	grid: gridBlockDefinition,
 };
 

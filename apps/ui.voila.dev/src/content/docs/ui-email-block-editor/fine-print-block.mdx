@@ -1,0 +1,29 @@
+---
+title: "FinePrintBlock"
+description: "The email's small print: conditions, validity, disclaimers."
+sidebar:
+  order: 15
+---
+
+import * as Example from "@/examples/ui-email-block-editor/fine-print-block";
+
+<Preview layout="stack">
+	<Example.FinePrint />
+</Preview>
+
+```ts
+{
+	id: "fine-print",
+	type: "finePrint",
+	spans: [
+		{ text: "LAUNCH10: 10% off the order total, valid until August 31. See the " },
+		{ text: "terms and conditions", href: "https://acme.dev/terms" },
+		{ text: "." },
+	],
+}
+```
+
+Small, muted and centred, so it reads as a footnote rather than as body copy.
+It shares the [paragraph](/ui-email-block-editor/paragraph-block)'s span model,
+so the conditions can link to the terms. Typically the last block of the email,
+after the signature.

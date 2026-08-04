@@ -123,6 +123,29 @@ export interface EmailEditorStatBlock {
 	readonly align: EmailEditorAlignment;
 }
 
+/**
+ * A short promotional line the reader cannot miss — a launch, a promo code, a
+ * deadline. One bold sentence on a brand-tinted panel; anything longer belongs
+ * in a paragraph.
+ */
+export interface EmailEditorHighlightBlock {
+	readonly id: string;
+	readonly type: "highlight";
+	readonly text: string;
+	readonly align: EmailEditorAlignment;
+}
+
+/**
+ * The email's small print: offer conditions, validity dates, disclaimers.
+ * Rendered small and muted so it reads as a footnote, not as body copy. The
+ * span model is the paragraph's, so the conditions can link to the terms.
+ */
+export interface EmailEditorFinePrintBlock {
+	readonly id: string;
+	readonly type: "finePrint";
+	readonly spans: ReadonlyArray<EmailEditorTextSpan>;
+}
+
 export type EmailEditorRatingStyle = "filled" | "outline";
 
 /**
@@ -233,11 +256,13 @@ export type EmailEditorLeafBlock =
 	| EmailEditorDividerBlock
 	| EmailEditorListBlock
 	| EmailEditorStatBlock
+	| EmailEditorHighlightBlock
 	| EmailEditorTableBlock
 	| EmailEditorArticleBlock
 	| EmailEditorProductBlock
 	| EmailEditorOfferBlock
-	| EmailEditorRatingBlock;
+	| EmailEditorRatingBlock
+	| EmailEditorFinePrintBlock;
 
 export type EmailEditorGridColumns = 1 | 2 | 3 | 4;
 export type EmailEditorGridMobileColumns = 1 | 2;
@@ -323,6 +348,10 @@ export const createEmailEditorBlock = (
 				description: "",
 				align: "center",
 			};
+		case "highlight":
+			return { id, type, text: "", align: "center" };
+		case "finePrint":
+			return { id, type, spans: [] };
 		case "table":
 			return {
 				id,

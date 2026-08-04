@@ -1,0 +1,27 @@
+---
+title: "HighlightBlock"
+description: "One bold promotional line on a brand-tinted panel."
+sidebar:
+  order: 14
+---
+
+import * as Example from "@/examples/ui-email-block-editor/highlight-block";
+
+<Preview layout="stack">
+	<Example.Highlight />
+</Preview>
+
+```ts
+{
+	id: "highlight",
+	type: "highlight",
+	text: "🎁 10% off everything with the code LAUNCH10, until August 31",
+	align: "center",
+}
+```
+
+The line the reader should walk away with: a launch, a promo code, a deadline.
+Deliberately single-styled — no rich text, because everything in it is meant to
+be loud. Anything longer than a sentence belongs in a
+[paragraph](/ui-email-block-editor/paragraph-block); the offer's conditions
+belong in a [fine print](/ui-email-block-editor/fine-print-block) block.
