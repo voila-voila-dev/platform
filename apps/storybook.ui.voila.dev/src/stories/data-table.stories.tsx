@@ -6,6 +6,7 @@ import {
 	type ColumnDef,
 	DataTable,
 	dataTableSelectionColumn,
+	type RowSelectionState,
 } from "@voila.dev/ui/data-table";
 import { Select } from "@voila.dev/ui/select";
 import { useMemo, useState } from "react";
@@ -285,4 +286,62 @@ export const MobileCards: Story = {
 			)}
 		/>
 	),
+};
+
+/** The floating bulk-action bar: portalled above the bottom edge, so showing
+ * or clearing a selection never shifts the table behind it. "Select all"
+ * appears while the selection is partial and flips the bar into all-rows
+ * mode. */
+function SelectionBarExample() {
+	const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+	const [allSelected, setAllSelected] = useState(false);
+
+	const selectedCount = allSelected
+		? projects.length
+		: Object.values(rowSelection).filter(Boolean).length;
+
+	const clear = () => {
+		setRowSelection({});
+		setAllSelected(false);
+	};
+
+	return (
+		<>
+			<DataTable.Root
+				columns={[dataTableSelectionColumn<Project>(), ...columns]}
+				data={projects}
+				enableRowSelection
+				getRowId={(project) => project.reference}
+				rowSelection={rowSelection}
+				onRowSelectionChange={(selection) => {
+					// Touching any checkbox narrows an "all rows" selection back
+					// down to the visible picks.
+					setAllSelected(false);
+					setRowSelection(selection);
+				}}
+			/>
+			<DataTable.SelectionBar
+				count={selectedCount}
+				label={`${selectedCount} selected`}
+				onClear={clear}
+				clearLabel="Clear selection"
+				selectAll={
+					allSelected
+						? undefined
+						: {
+								label: `Select all ${projects.length}`,
+								onSelect: () => setAllSelected(true),
+							}
+				}
+			>
+				<Button type="button" variant="outline" size="sm" onClick={clear}>
+					Archive
+				</Button>
+			</DataTable.SelectionBar>
+		</>
+	);
+}
+
+export const SelectionBar: Story = {
+	render: () => <SelectionBarExample />,
 };
