@@ -1,6 +1,9 @@
 import { ImageIcon } from "@phosphor-icons/react";
 import { useRef, useState } from "react";
-import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
+import {
+	useEmailEditorLabels,
+	useEmailEditorTheme,
+} from "#/email-block-editor/context/email-editor-context.tsx";
 
 interface Props {
 	onUploadImage?: (file: File) => Promise<string>;
@@ -11,6 +14,7 @@ interface Props {
  * itself is the host's job, so without `onUploadImage` it is simply inert. */
 export function ImageDropZone({ onUploadImage, onUploaded }: Props) {
 	const theme = useEmailEditorTheme();
+	const { fields } = useEmailEditorLabels();
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [uploading, setUploading] = useState(false);
 
@@ -40,7 +44,7 @@ export function ImageDropZone({ onUploadImage, onUploaded }: Props) {
 				}}
 			>
 				<ImageIcon size={24} aria-hidden />
-				{uploading ? "Uploading…" : "Add an image"}
+				{uploading ? fields.uploading : fields.addImage}
 			</button>
 			<input
 				ref={fileInputRef}

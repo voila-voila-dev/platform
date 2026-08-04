@@ -1,6 +1,9 @@
 import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block-definitions.tsx";
 import { BlockTextInput } from "#/email-block-editor/blocks/block-text-input.tsx";
-import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
+import {
+	useEmailEditorLabels,
+	useEmailEditorTheme,
+} from "#/email-block-editor/context/email-editor-context.tsx";
 import type {
 	EmailEditorAlignment,
 	EmailEditorHighlightBlock,
@@ -19,6 +22,7 @@ interface Props extends EmailBlockComponentProps<EmailEditorHighlightBlock> {}
  */
 export function HighlightBlockView({ block, onChange }: Props) {
 	const theme = useEmailEditorTheme();
+	const { blocks } = useEmailEditorLabels();
 	const textAlign = TEXT_ALIGN[block.align];
 	return (
 		<div
@@ -28,9 +32,9 @@ export function HighlightBlockView({ block, onChange }: Props) {
 			}}
 		>
 			<BlockTextInput
-				ariaLabel="Highlight"
+				ariaLabel={blocks.highlight.ariaLabel}
 				value={block.text}
-				placeholder="10% off everything with the code LAUNCH10"
+				placeholder={blocks.highlight.placeholder}
 				onChange={(text) => onChange({ ...block, text })}
 				className="font-bold text-[20px] leading-[1.35]"
 				style={{ color: theme.color.brand, fontFamily: theme.font, textAlign }}

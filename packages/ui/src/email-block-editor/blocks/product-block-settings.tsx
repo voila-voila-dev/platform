@@ -5,32 +5,34 @@ import { MoneyOption } from "#/email-block-editor/components/block-options/money
 import { TextAreaOption } from "#/email-block-editor/components/block-options/text-area-option.tsx";
 import { TextOption } from "#/email-block-editor/components/block-options/text-option.tsx";
 import { ToggleOption } from "#/email-block-editor/components/block-options/toggle-option.tsx";
+import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorProductBlock } from "#/email-block-editor/document/types.ts";
 
 interface Props extends EmailBlockComponentProps<EmailEditorProductBlock> {}
 
 /** The settings panel for a product block. */
 export function ProductBlockSettings({ block, onChange }: Props) {
+	const { chrome, fields, blocks } = useEmailEditorLabels();
 	return (
 		<>
-			<BlockOptionSection title="Content">
+			<BlockOptionSection title={chrome.sectionContent}>
 				<TextOption
-					label="Name"
+					label={fields.name}
 					value={block.name}
 					onChange={(name) => onChange({ ...block, name })}
 				/>
 				<TextAreaOption
-					label="Description"
+					label={fields.description}
 					value={block.description}
 					onChange={(description) => onChange({ ...block, description })}
 				/>
 				<MoneyOption
-					label="Price"
+					label={fields.price}
 					value={block.price}
 					onChange={(price) => onChange({ ...block, price })}
 				/>
 				<ToggleOption
-					label="Struck-through base price"
+					label={blocks.product.compareAtPriceToggle}
 					checked={block.compareAtPrice !== null}
 					onChange={(enabled) =>
 						onChange({
@@ -38,11 +40,11 @@ export function ProductBlockSettings({ block, onChange }: Props) {
 							compareAtPrice: enabled ? { ...block.price } : null,
 						})
 					}
-					description="Shows a struck-through price next to the current price."
+					description={blocks.product.compareAtPriceDescription}
 				/>
 				{block.compareAtPrice === null ? null : (
 					<MoneyOption
-						label="Base price"
+						label={blocks.product.compareAtPrice}
 						value={block.compareAtPrice}
 						onChange={(compareAtPrice) =>
 							onChange({ ...block, compareAtPrice })
@@ -50,30 +52,30 @@ export function ProductBlockSettings({ block, onChange }: Props) {
 					/>
 				)}
 			</BlockOptionSection>
-			<BlockOptionSection title="Appearance">
+			<BlockOptionSection title={chrome.sectionAppearance}>
 				<TextOption
-					label="Image URL"
+					label={fields.imageUrl}
 					value={block.image.src}
 					onChange={(src) =>
 						onChange({ ...block, image: { ...block.image, src } })
 					}
-					placeholder="https://"
+					placeholder={fields.urlPlaceholder}
 				/>
 				<TextOption
-					label="Alt text"
+					label={fields.altText}
 					value={block.image.alt}
 					onChange={(alt) =>
 						onChange({ ...block, image: { ...block.image, alt } })
 					}
 				/>
 			</BlockOptionSection>
-			<BlockOptionSection title="Link">
+			<BlockOptionSection title={chrome.sectionLink}>
 				<TextOption
-					label="Button label"
+					label={fields.buttonLabel}
 					value={block.buttonLabel}
 					onChange={(buttonLabel) => onChange({ ...block, buttonLabel })}
-					placeholder="Order now"
-					description="Leave empty for a card without a button."
+					placeholder={blocks.product.buttonLabelPlaceholder}
+					description={blocks.product.buttonLabelDescription}
 				/>
 				<LinkOption
 					value={block.href}

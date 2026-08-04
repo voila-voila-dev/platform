@@ -2,6 +2,7 @@ import { LinkIcon } from "@phosphor-icons/react";
 import { useRef } from "react";
 import { Button } from "#/button/components/button.tsx";
 import { LinkPopover } from "#/email-block-editor/components/link-popover.tsx";
+import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
 import {
 	applyInlineFormat,
 	keepSelection,
@@ -19,6 +20,7 @@ interface Props {
  * while the popover holds focus and restored before the command applies. */
 export function SelectionLinkButton({ active, coarsePointer }: Props) {
 	const savedRangeRef = useRef<Range | null>(null);
+	const { chrome } = useEmailEditorLabels();
 
 	const restoreSelection = (): boolean => {
 		const range = savedRangeRef.current;
@@ -37,7 +39,7 @@ export function SelectionLinkButton({ active, coarsePointer }: Props) {
 				<Button
 					variant="ghost"
 					size={coarsePointer ? "icon" : "icon-sm"}
-					aria-label="Insert a link"
+					aria-label={chrome.insertLink}
 					aria-pressed={active || undefined}
 					className={toolbarButtonClassName(coarsePointer, active)}
 					onMouseDown={keepSelection}

@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import {
+	DEFAULT_EMAIL_EDITOR_LABELS,
 	EmailBlockEditor,
 	type EmailEditorDocument,
+	type EmailEditorLabelsInput,
 	emptyEmailEditorDocument,
 } from "@voila.dev/ui/email-block-editor";
 import { useState } from "react";
@@ -61,13 +63,20 @@ const fakeUploadImage = async (file: File) => {
 	return URL.createObjectURL(file);
 };
 
-function ControlledEditor({ document }: { document: EmailEditorDocument }) {
+function ControlledEditor({
+	document,
+	labels,
+}: {
+	document: EmailEditorDocument;
+	labels?: EmailEditorLabelsInput;
+}) {
 	const [value, setValue] = useState(document);
 	return (
 		<div className="p-6">
 			<EmailBlockEditor
 				document={value}
 				onChange={setValue}
+				labels={labels}
 				onUploadImage={fakeUploadImage}
 			/>
 		</div>
@@ -293,4 +302,33 @@ const everyBlockDocument: EmailEditorDocument = {
 export const EveryBlock: Story = {
 	args: { document: everyBlockDocument, onChange: () => {} },
 	render: (args) => <ControlledEditor document={args.document} />,
+};
+
+/** Every default label with a `••` in front of it. A string that is missing
+ * the marker is a string the editor hard-codes instead of reading from
+ * `labels` — the one way to see, rather than infer, that the extraction is
+ * complete. Open every settings panel and the mobile sheet. */
+const markLabels = (value: unknown): unknown => {
+	if (typeof value === "string") {
+		return `••${value}`;
+	}
+	if (typeof value === "function") {
+		return (...args: ReadonlyArray<never>) => `••${value(...args)}`;
+	}
+	return Object.fromEntries(
+		Object.entries(value as Record<string, unknown>).map(([key, nested]) => [
+			key,
+			markLabels(nested),
+		]),
+	);
+};
+
+export const SentinelLabels: Story = {
+	args: { document: everyBlockDocument, onChange: () => {} },
+	render: (args) => (
+		<ControlledEditor
+			document={args.document}
+			labels={markLabels(DEFAULT_EMAIL_EDITOR_LABELS) as EmailEditorLabelsInput}
+		/>
+	),
 };

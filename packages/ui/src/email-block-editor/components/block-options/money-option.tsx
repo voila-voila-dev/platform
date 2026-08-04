@@ -1,5 +1,6 @@
 import { useId } from "react";
 import { BlockOptionRow } from "#/email-block-editor/components/block-options/block-option-row.tsx";
+import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorMoney } from "#/email-block-editor/document/types.ts";
 import {
 	inputValueToMinorUnits,
@@ -21,6 +22,7 @@ interface Props {
  */
 export function MoneyOption({ label, value, onChange, description }: Props) {
 	const id = useId();
+	const { fields } = useEmailEditorLabels();
 	return (
 		<BlockOptionRow label={label} htmlFor={id} description={description}>
 			<MoneyInput
@@ -33,7 +35,7 @@ export function MoneyOption({ label, value, onChange, description }: Props) {
 					})
 				}
 				currency={value.currency}
-				currencyLabel="Currency"
+				currencyLabel={fields.currency}
 			/>
 		</BlockOptionRow>
 	);

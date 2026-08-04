@@ -1,6 +1,7 @@
 import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block-definitions.tsx";
 import { BlockOptionSection } from "#/email-block-editor/components/block-options/block-option-section.tsx";
 import { SegmentedOption } from "#/email-block-editor/components/block-options/segmented-option.tsx";
+import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
 import type {
 	EmailEditorGridBlock,
 	EmailEditorGridColumns,
@@ -28,23 +29,24 @@ interface Props extends EmailBlockComponentProps<EmailEditorGridBlock> {}
 
 /** The settings panel for a grid block: column counts and spacing. */
 export function GridBlockSettings({ block, onChange }: Props) {
+	const { chrome, blocks } = useEmailEditorLabels();
 	return (
-		<BlockOptionSection title="Appearance">
+		<BlockOptionSection title={chrome.sectionAppearance}>
 			<SegmentedOption
-				label="Columns (desktop)"
+				label={blocks.grid.desktopColumns}
 				value={block.desktopColumns}
 				options={DESKTOP_COLUMN_OPTIONS}
 				onChange={(desktopColumns) => onChange({ ...block, desktopColumns })}
 			/>
 			<SegmentedOption
-				label="Columns (mobile)"
+				label={blocks.grid.mobileColumns}
 				value={block.mobileColumns}
 				options={MOBILE_COLUMN_OPTIONS}
 				onChange={(mobileColumns) => onChange({ ...block, mobileColumns })}
 				description={
 					block.mobileColumns === block.desktopColumns
 						? undefined
-						: "A different column count on mobile relies on a media query: the Gmail app on a third-party account ignores it and falls back to one column."
+						: blocks.grid.mobileColumnsDescription
 				}
 			/>
 		</BlockOptionSection>

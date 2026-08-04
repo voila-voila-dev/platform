@@ -1,5 +1,6 @@
 import { type ReactElement, useState } from "react";
 import { Button } from "#/button/components/button.tsx";
+import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
 import { Input } from "#/input/components/input.tsx";
 import { Popover } from "#/popover/components/popover.tsx";
 
@@ -28,6 +29,7 @@ export function LinkPopover({
 }: Props) {
 	const [open, setOpen] = useState(false);
 	const [href, setHref] = useState("");
+	const { chrome, fields } = useEmailEditorLabels();
 
 	return (
 		<Popover.Root
@@ -55,16 +57,16 @@ export function LinkPopover({
 					}}
 				>
 					<Input
-						aria-label="Link URL"
+						aria-label={chrome.linkUrl}
 						type="url"
-						placeholder="https://"
+						placeholder={fields.urlPlaceholder}
 						value={href}
 						onChange={(event) => setHref(event.target.value)}
 						autoFocus
 					/>
 					<div className="flex items-center justify-between gap-2">
 						<Button type="submit" size="sm" disabled={href.trim() === ""}>
-							Apply
+							{chrome.apply}
 						</Button>
 						{onRemove ? (
 							<Button
@@ -76,7 +78,7 @@ export function LinkPopover({
 									setOpen(false);
 								}}
 							>
-								Remove link
+								{chrome.removeLink}
 							</Button>
 						) : null}
 					</div>

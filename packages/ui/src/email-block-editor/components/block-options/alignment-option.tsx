@@ -5,29 +5,8 @@ import {
 } from "@phosphor-icons/react";
 import type * as React from "react";
 import { SegmentedOption } from "#/email-block-editor/components/block-options/segmented-option.tsx";
+import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorAlignment } from "#/email-block-editor/document/types.ts";
-
-const ALIGNMENTS: ReadonlyArray<{
-	readonly value: EmailEditorAlignment;
-	readonly label: string;
-	readonly icon: React.ReactNode;
-}> = [
-	{
-		value: "left",
-		label: "Align left",
-		icon: <TextAlignLeftIcon aria-hidden />,
-	},
-	{
-		value: "center",
-		label: "Align center",
-		icon: <TextAlignCenterIcon aria-hidden />,
-	},
-	{
-		value: "right",
-		label: "Align right",
-		icon: <TextAlignRightIcon aria-hidden />,
-	},
-];
 
 interface Props {
 	label?: string;
@@ -40,16 +19,34 @@ interface Props {
  * segmented control, so "Alignment" means the same thing and looks the same
  * everywhere (§1.2 of the editor plan).
  */
-export function AlignmentOption({
-	label = "Alignment",
-	value,
-	onChange,
-}: Props) {
+export function AlignmentOption({ label, value, onChange }: Props) {
+	const { fields } = useEmailEditorLabels();
+	const alignments: ReadonlyArray<{
+		readonly value: EmailEditorAlignment;
+		readonly label: string;
+		readonly icon: React.ReactNode;
+	}> = [
+		{
+			value: "left",
+			label: fields.alignLeft,
+			icon: <TextAlignLeftIcon aria-hidden />,
+		},
+		{
+			value: "center",
+			label: fields.alignCenter,
+			icon: <TextAlignCenterIcon aria-hidden />,
+		},
+		{
+			value: "right",
+			label: fields.alignRight,
+			icon: <TextAlignRightIcon aria-hidden />,
+		},
+	];
 	return (
 		<SegmentedOption
-			label={label}
+			label={label ?? fields.alignment}
 			value={value}
-			options={ALIGNMENTS}
+			options={alignments}
 			onChange={onChange}
 		/>
 	);

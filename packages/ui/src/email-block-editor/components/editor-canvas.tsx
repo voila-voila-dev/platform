@@ -5,6 +5,7 @@ import { CardFooterPlaceholder } from "#/email-block-editor/components/card-foot
 import { CardHeaderPlaceholder } from "#/email-block-editor/components/card-header-placeholder.tsx";
 import {
 	useEmailEditorActions,
+	useEmailEditorLabels,
 	useEmailEditorState,
 	useEmailEditorTheme,
 } from "#/email-block-editor/context/email-editor-context.tsx";
@@ -27,6 +28,7 @@ export function EditorCanvas({ headerSlot, footerSlot }: Props) {
 	const theme = useEmailEditorTheme();
 	const { document, preview } = useEmailEditorState();
 	const { addBlock, moveBlock } = useEmailEditorActions();
+	const { chrome } = useEmailEditorLabels();
 	const blocks = document.blocks;
 	return (
 		<div
@@ -69,7 +71,7 @@ export function EditorCanvas({ headerSlot, footerSlot }: Props) {
 									className="text-[14px]"
 									style={{ color: theme.color.muted, fontFamily: theme.font }}
 								>
-									Your email is empty.
+									{chrome.emptyDocument}
 								</p>
 								<AddBlockMenu onAdd={(type) => addBlock(type)} />
 							</div>

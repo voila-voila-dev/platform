@@ -1,5 +1,6 @@
 import { useId } from "react";
 import { BlockOptionRow } from "#/email-block-editor/components/block-options/block-option-row.tsx";
+import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
 import { Input } from "#/input/components/input.tsx";
 
 interface Props {
@@ -14,19 +15,19 @@ interface Props {
  * `type="url"` with the `https://` placeholder, so a link field is
  * recognisable at a glance in any block (§1.2 of the editor plan).
  */
-export function LinkOption({
-	label = "Link (URL)",
-	value,
-	onChange,
-	description,
-}: Props) {
+export function LinkOption({ label, value, onChange, description }: Props) {
+	const { fields } = useEmailEditorLabels();
 	const id = useId();
 	return (
-		<BlockOptionRow label={label} htmlFor={id} description={description}>
+		<BlockOptionRow
+			label={label ?? fields.link}
+			htmlFor={id}
+			description={description}
+		>
 			<Input
 				id={id}
 				type="url"
-				placeholder="https://"
+				placeholder={fields.urlPlaceholder}
 				value={value}
 				onChange={(event) => onChange(event.target.value)}
 			/>

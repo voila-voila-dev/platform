@@ -6,6 +6,7 @@ import {
 import { SelectionLinkButton } from "#/email-block-editor/components/selection-link-button.tsx";
 import { ToolbarIconButton } from "#/email-block-editor/components/toolbar-icon-button.tsx";
 import { ToolbarSeparator } from "#/email-block-editor/components/toolbar-separator.tsx";
+import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
 import {
 	applyInlineFormat,
 	keepSelection,
@@ -18,11 +19,12 @@ interface Props {
 
 /** Bold / italic / underline / link for the current text selection. */
 export function RichTextControls({ active, coarsePointer }: Props) {
+	const { chrome } = useEmailEditorLabels();
 	return (
 		<>
 			<ToolbarSeparator />
 			<ToolbarIconButton
-				label="Bold"
+				label={chrome.bold}
 				active={active.has("bold")}
 				coarsePointer={coarsePointer}
 				onMouseDown={keepSelection}
@@ -31,7 +33,7 @@ export function RichTextControls({ active, coarsePointer }: Props) {
 				<TextBIcon aria-hidden />
 			</ToolbarIconButton>
 			<ToolbarIconButton
-				label="Italic"
+				label={chrome.italic}
 				active={active.has("italic")}
 				coarsePointer={coarsePointer}
 				onMouseDown={keepSelection}
@@ -40,7 +42,7 @@ export function RichTextControls({ active, coarsePointer }: Props) {
 				<TextItalicIcon aria-hidden />
 			</ToolbarIconButton>
 			<ToolbarIconButton
-				label="Underline"
+				label={chrome.underline}
 				active={active.has("underline")}
 				coarsePointer={coarsePointer}
 				onMouseDown={keepSelection}

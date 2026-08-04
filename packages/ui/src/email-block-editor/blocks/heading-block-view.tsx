@@ -1,6 +1,9 @@
 import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block-definitions.tsx";
 import { BlockTextInput } from "#/email-block-editor/blocks/block-text-input.tsx";
-import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
+import {
+	useEmailEditorLabels,
+	useEmailEditorTheme,
+} from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorHeadingBlock } from "#/email-block-editor/document/types.ts";
 
 interface Props extends EmailBlockComponentProps<EmailEditorHeadingBlock> {}
@@ -12,12 +15,13 @@ interface Props extends EmailBlockComponentProps<EmailEditorHeadingBlock> {}
  */
 export function HeadingBlockView({ block, onChange }: Props) {
 	const theme = useEmailEditorTheme();
+	const { blocks } = useEmailEditorLabels();
 	return (
 		<BlockTextInput
-			ariaLabel="Heading"
+			ariaLabel={blocks.heading.ariaLabel}
 			value={block.text}
 			onChange={(text) => onChange({ ...block, text })}
-			placeholder="Your heading"
+			placeholder={blocks.heading.placeholder}
 			className="font-bold leading-[1.3]"
 			style={{
 				fontFamily: theme.font,

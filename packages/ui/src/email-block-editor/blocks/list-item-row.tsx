@@ -1,7 +1,10 @@
 import { useEffect, useRef } from "react";
 import { ListMarker } from "#/email-block-editor/blocks/list-marker.tsx";
 import { RichTextEditable } from "#/email-block-editor/blocks/rich-text-editable.tsx";
-import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
+import {
+	useEmailEditorLabels,
+	useEmailEditorTheme,
+} from "#/email-block-editor/context/email-editor-context.tsx";
 import type {
 	EmailEditorListItem,
 	EmailEditorListMarker,
@@ -29,6 +32,7 @@ export function ListItemRow({
 	onEnter,
 }: Props) {
 	const theme = useEmailEditorTheme();
+	const { blocks } = useEmailEditorLabels();
 	const editableRef = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
@@ -46,8 +50,8 @@ export function ListItemRow({
 				spans={item.spans}
 				onChange={(spans) => onChange({ ...item, spans })}
 				onEnter={onEnter}
-				ariaLabel={`Item ${index + 1}`}
-				placeholder="Your text"
+				ariaLabel={blocks.list.item(index + 1)}
+				placeholder={blocks.list.itemPlaceholder}
 				className="min-w-0 flex-1 text-[16px] leading-[1.6]"
 				style={{ fontFamily: theme.font, color: theme.color.ink }}
 			/>

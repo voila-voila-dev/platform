@@ -6,6 +6,7 @@ import {
 import { Button } from "#/button/components/button.tsx";
 import { AddBlockMenu } from "#/email-block-editor/components/add-block-menu.tsx";
 import { ToolbarIconButton } from "#/email-block-editor/components/toolbar-icon-button.tsx";
+import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { SortableBlockHandle } from "#/email-block-editor/dnd/sortable-block-list.ts";
 import type { EmailEditorBlockType } from "#/email-block-editor/document/types.ts";
 import { toolbarButtonClassName } from "#/email-block-editor/lib/inline-format.ts";
@@ -28,6 +29,7 @@ export function StructureControls({
 	onAddBelow,
 	onSelectContainer,
 }: Props) {
+	const { chrome } = useEmailEditorLabels();
 	return (
 		<>
 			<AddBlockMenu
@@ -37,7 +39,7 @@ export function StructureControls({
 					<Button
 						variant="ghost"
 						size={coarsePointer ? "icon" : "icon-sm"}
-						aria-label="Add a block"
+						aria-label={chrome.addBlock}
 						className={toolbarButtonClassName(coarsePointer)}
 					>
 						<PlusIcon aria-hidden />
@@ -47,7 +49,7 @@ export function StructureControls({
 			<Button
 				variant="ghost"
 				size={coarsePointer ? "icon" : "icon-sm"}
-				aria-label="Move block"
+				aria-label={chrome.moveBlock}
 				className={cn(
 					toolbarButtonClassName(coarsePointer),
 					"cursor-grab touch-none active:cursor-grabbing",
@@ -60,7 +62,7 @@ export function StructureControls({
 			</Button>
 			{onSelectContainer ? (
 				<ToolbarIconButton
-					label="Select the column row"
+					label={chrome.selectContainer}
 					coarsePointer={coarsePointer}
 					onClick={onSelectContainer}
 				>

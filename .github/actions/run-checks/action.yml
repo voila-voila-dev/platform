@@ -29,6 +29,13 @@ runs:
       shell: bash
       run: bun run check-docs
 
+    # Catches an English string hard-coded back into the email editor: it
+    # compiles fine and only shows up later as one stray word in a translated
+    # app.
+    - name: Check email editor labels
+      shell: bash
+      run: bun run check-labels
+
     - name: Test
       shell: bash
       run: bun run test

@@ -1,6 +1,7 @@
 import { UploadSimpleIcon } from "@phosphor-icons/react";
 import { useRef } from "react";
 import { Button } from "#/button/components/button.tsx";
+import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorImageBlock } from "#/email-block-editor/document/types.ts";
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 
 /** Replaces the block's image from a file the author picks. */
 export function ImageUploadButton({ block, onChange, onUploadImage }: Props) {
+	const { fields } = useEmailEditorLabels();
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	return (
 		<>
@@ -20,7 +22,7 @@ export function ImageUploadButton({ block, onChange, onUploadImage }: Props) {
 				onClick={() => fileInputRef.current?.click()}
 			>
 				<UploadSimpleIcon aria-hidden />
-				{block.src === "" ? "Upload an image" : "Replace the image"}
+				{block.src === "" ? fields.uploadImage : fields.replaceImage}
 			</Button>
 			<input
 				ref={fileInputRef}

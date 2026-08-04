@@ -10,6 +10,8 @@ import type {
 	EmailEditorDocument,
 	EmailEditorPreview,
 } from "#/email-block-editor/document/types.ts";
+import type { EmailEditorLabelsInput } from "#/email-block-editor/labels.ts";
+import { mergeEmailEditorLabels } from "#/email-block-editor/labels.ts";
 import {
 	useCoarsePointer,
 	useCompactEditorLayout,
@@ -34,6 +36,9 @@ interface Props {
 	/** Colours, font, preview locale and metrics of the canvas. Merged over the
 	 * defaults section by section, so `{ color: { brand } }` is a valid theme. */
 	theme?: EmailEditorThemeInput;
+	/** Every string the editor shows. Merged over the English defaults section
+	 * by section, so overriding one key keeps the rest. */
+	labels?: EmailEditorLabelsInput;
 	/** Replaces the neutral header placeholder above the canvas with your own chrome. */
 	headerSlot?: ReactNode;
 	/** Replaces the neutral footer placeholder below the canvas. */
@@ -56,6 +61,7 @@ export function EmailBlockEditor({
 	onUploadImage,
 	generateBlockId = () => crypto.randomUUID(),
 	theme,
+	labels,
 	headerSlot,
 	footerSlot,
 }: Props) {
@@ -86,10 +92,11 @@ export function EmailBlockEditor({
 	const config = useMemo(
 		() => ({
 			theme: mergeEmailEditorTheme(theme),
+			labels: mergeEmailEditorLabels(labels),
 			onUploadImage,
 			generateBlockId,
 		}),
-		[theme, onUploadImage, generateBlockId],
+		[theme, labels, onUploadImage, generateBlockId],
 	);
 
 	return (

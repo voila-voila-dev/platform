@@ -3,56 +3,56 @@ import { BlockOptionSection } from "#/email-block-editor/components/block-option
 import { LinkOption } from "#/email-block-editor/components/block-options/link-option.tsx";
 import { SelectOption } from "#/email-block-editor/components/block-options/select-option.tsx";
 import { TextOption } from "#/email-block-editor/components/block-options/text-option.tsx";
+import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
 import type {
 	EmailEditorRatingBlock,
 	EmailEditorRatingStyle,
 } from "#/email-block-editor/document/types.ts";
 
-const STYLE_OPTIONS: ReadonlyArray<{
-	readonly value: EmailEditorRatingStyle;
-	readonly label: string;
-}> = [
-	{ value: "filled", label: "Filled stars" },
-	{ value: "outline", label: "Outlined stars" },
-];
-
 interface Props extends EmailBlockComponentProps<EmailEditorRatingBlock> {}
 
 /** The settings panel for a rating block. */
 export function RatingBlockSettings({ block, onChange }: Props) {
+	const { chrome, fields, blocks } = useEmailEditorLabels();
+	const styleOptions: ReadonlyArray<{
+		readonly value: EmailEditorRatingStyle;
+		readonly label: string;
+	}> = [
+		{ value: "filled", label: blocks.rating.styleFilled },
+		{ value: "outline", label: blocks.rating.styleOutline },
+	];
 	return (
 		<>
-			<BlockOptionSection title="Content">
+			<BlockOptionSection title={chrome.sectionContent}>
 				<p className="text-muted-foreground text-xs">
-					The question is typed and formatted directly on the block, like a
-					paragraph.
+					{blocks.rating.questionHint}
 				</p>
 				<TextOption
-					label="Low end of the scale"
+					label={blocks.rating.lowLabel}
 					value={block.lowLabel}
 					onChange={(lowLabel) => onChange({ ...block, lowLabel })}
-					placeholder="Not at all"
+					placeholder={blocks.rating.lowPlaceholder}
 				/>
 				<TextOption
-					label="High end of the scale"
+					label={blocks.rating.highLabel}
 					value={block.highLabel}
 					onChange={(highLabel) => onChange({ ...block, highLabel })}
-					placeholder="Absolutely"
+					placeholder={blocks.rating.highPlaceholder}
 				/>
 			</BlockOptionSection>
-			<BlockOptionSection title="Appearance">
+			<BlockOptionSection title={chrome.sectionAppearance}>
 				<SelectOption
-					label="Style"
+					label={fields.style}
 					value={block.style}
-					options={STYLE_OPTIONS}
+					options={styleOptions}
 					onChange={(style) => onChange({ ...block, style })}
 				/>
 			</BlockOptionSection>
-			<BlockOptionSection title="Link">
+			<BlockOptionSection title={chrome.sectionLink}>
 				<LinkOption
 					value={block.href}
 					onChange={(href) => onChange({ ...block, href })}
-					description="Each star points to this address with rating=1 through rating=5 appended: the five scores are therefore counted separately in the click statistics."
+					description={blocks.rating.linkDescription}
 				/>
 			</BlockOptionSection>
 		</>

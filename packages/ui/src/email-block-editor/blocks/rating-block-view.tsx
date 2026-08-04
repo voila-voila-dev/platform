@@ -1,7 +1,10 @@
 import { StarIcon } from "@phosphor-icons/react";
 import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block-definitions.tsx";
 import { RichTextEditable } from "#/email-block-editor/blocks/rich-text-editable.tsx";
-import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
+import {
+	useEmailEditorLabels,
+	useEmailEditorTheme,
+} from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorRatingBlock } from "#/email-block-editor/document/types.ts";
 
 /** The scale, mirroring the domain's `EMAIL_RATING_SCALE`. */
@@ -16,13 +19,14 @@ interface Props extends EmailBlockComponentProps<EmailEditorRatingBlock> {}
  */
 export function RatingBlockView({ block, onChange }: Props) {
 	const theme = useEmailEditorTheme();
+	const { blocks } = useEmailEditorLabels();
 	return (
 		<div className="flex flex-col items-center gap-3 text-center">
 			<RichTextEditable
 				spans={block.question}
 				onChange={(question) => onChange({ ...block, question })}
-				ariaLabel="Question"
-				placeholder="How did your last project go?"
+				ariaLabel={blocks.rating.ariaLabel}
+				placeholder={blocks.rating.placeholder}
 				className="text-center text-[16px] leading-[1.6]"
 				style={{ fontFamily: theme.font, color: theme.color.ink }}
 			/>

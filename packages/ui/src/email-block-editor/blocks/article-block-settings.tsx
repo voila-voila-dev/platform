@@ -3,60 +3,62 @@ import { BlockOptionSection } from "#/email-block-editor/components/block-option
 import { LinkOption } from "#/email-block-editor/components/block-options/link-option.tsx";
 import { TextAreaOption } from "#/email-block-editor/components/block-options/text-area-option.tsx";
 import { TextOption } from "#/email-block-editor/components/block-options/text-option.tsx";
+import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorArticleBlock } from "#/email-block-editor/document/types.ts";
 
 interface Props extends EmailBlockComponentProps<EmailEditorArticleBlock> {}
 
 /** The settings panel for an article block. */
 export function ArticleBlockSettings({ block, onChange }: Props) {
+	const { chrome, fields, blocks } = useEmailEditorLabels();
 	return (
 		<>
-			<BlockOptionSection title="Content">
+			<BlockOptionSection title={chrome.sectionContent}>
 				<TextOption
-					label="Title"
+					label={fields.title}
 					value={block.title}
 					onChange={(title) => onChange({ ...block, title })}
 				/>
 				<TextAreaOption
-					label="Summary"
+					label={fields.summary}
 					value={block.description}
 					onChange={(description) => onChange({ ...block, description })}
 				/>
 				<TextOption
-					label="Author"
+					label={fields.author}
 					value={block.author}
 					onChange={(author) => onChange({ ...block, author })}
 				/>
 				<TextOption
-					label="Publication date"
+					label={blocks.article.publishDate}
 					value={block.publishDate}
 					onChange={(publishDate) => onChange({ ...block, publishDate })}
-					placeholder="2026-07-20"
-					description="YYYY-MM-DD format; the date is written in the recipient's language at send time."
+					placeholder={blocks.article.publishDatePlaceholder}
+					description={blocks.article.publishDateDescription}
 				/>
 			</BlockOptionSection>
-			<BlockOptionSection title="Appearance">
+			<BlockOptionSection title={chrome.sectionAppearance}>
 				<TextOption
-					label="Image URL"
+					label={fields.imageUrl}
 					value={block.image.src}
 					onChange={(src) =>
 						onChange({ ...block, image: { ...block.image, src } })
 					}
-					placeholder="https://"
+					placeholder={fields.urlPlaceholder}
 				/>
 				<TextOption
-					label="Alt text"
+					label={fields.altText}
 					value={block.image.alt}
 					onChange={(alt) =>
 						onChange({ ...block, image: { ...block.image, alt } })
 					}
 				/>
 			</BlockOptionSection>
-			<BlockOptionSection title="Link">
+			<BlockOptionSection title={chrome.sectionLink}>
 				<LinkOption
 					value={block.href}
 					onChange={(href) => onChange({ ...block, href })}
-					description="The whole card links to this address."
+					description={blocks.article.linkDescription}
 				/>
 			</BlockOptionSection>
 		</>

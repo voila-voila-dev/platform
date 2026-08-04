@@ -1,18 +1,11 @@
 import { PlusIcon, XIcon } from "@phosphor-icons/react";
 import { Button } from "#/button/components/button.tsx";
 import { SelectOption } from "#/email-block-editor/components/block-options/select-option.tsx";
+import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
 import type {
 	EmailEditorTableBlock,
 	EmailEditorTableColumn,
 } from "#/email-block-editor/document/types.ts";
-
-const ALIGN_OPTIONS: ReadonlyArray<{
-	readonly value: EmailEditorTableColumn["align"];
-	readonly label: string;
-}> = [
-	{ value: "left", label: "Left" },
-	{ value: "right", label: "Right" },
-];
 
 interface Props {
 	block: EmailEditorTableBlock;
@@ -24,15 +17,23 @@ interface Props {
  * settings.
  */
 export function TableColumnSettings({ block, onChange }: Props) {
+	const { fields, blocks } = useEmailEditorLabels();
+	const alignOptions: ReadonlyArray<{
+		readonly value: EmailEditorTableColumn["align"];
+		readonly label: string;
+	}> = [
+		{ value: "left", label: fields.left },
+		{ value: "right", label: fields.right },
+	];
 	return (
 		<>
 			{block.columns.map((column, index) => (
 				<div key={index} className="flex items-end gap-2">
 					<div className="flex-1">
 						<SelectOption
-							label={column.label.trim() || `Column ${index + 1}`}
+							label={column.label.trim() || blocks.table.column(index + 1)}
 							value={column.align}
-							options={ALIGN_OPTIONS}
+							options={alignOptions}
 							onChange={(align) =>
 								onChange({
 									...block,
@@ -46,7 +47,7 @@ export function TableColumnSettings({ block, onChange }: Props) {
 					<Button
 						variant="ghost"
 						size="icon-sm"
-						aria-label={`Remove column ${index + 1}`}
+						aria-label={blocks.table.removeColumn(index + 1)}
 						disabled={block.columns.length === 1}
 						onClick={() =>
 							onChange({
@@ -74,7 +75,7 @@ export function TableColumnSettings({ block, onChange }: Props) {
 				}
 			>
 				<PlusIcon aria-hidden />
-				Add a column
+				{blocks.table.addColumn}
 			</Button>
 		</>
 	);

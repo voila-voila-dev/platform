@@ -1,6 +1,9 @@
 import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block-definitions.tsx";
 import { BlockTextInput } from "#/email-block-editor/blocks/block-text-input.tsx";
-import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
+import {
+	useEmailEditorLabels,
+	useEmailEditorTheme,
+} from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorTableBlock } from "#/email-block-editor/document/types.ts";
 import { cn } from "#/lib/utils.ts";
 
@@ -29,6 +32,7 @@ interface Props extends EmailBlockComponentProps<EmailEditorTableBlock> {}
  */
 export function TableBlockView({ block, onChange }: Props) {
 	const theme = useEmailEditorTheme();
+	const { blocks } = useEmailEditorLabels();
 	const setCell = (rowIndex: number, columnIndex: number, value: string) =>
 		onChange({
 			...block,
@@ -62,9 +66,9 @@ export function TableBlockView({ block, onChange }: Props) {
 								}}
 							>
 								<BlockTextInput
-									ariaLabel={`Column ${columnIndex + 1} title`}
+									ariaLabel={blocks.table.columnTitle(columnIndex + 1)}
 									value={column.label}
-									placeholder="Column"
+									placeholder={blocks.table.columnPlaceholder}
 									onChange={(label) =>
 										onChange({
 											...block,
@@ -94,7 +98,7 @@ export function TableBlockView({ block, onChange }: Props) {
 								style={{ borderBottom: `1px solid ${theme.color.border}` }}
 							>
 								<BlockTextInput
-									ariaLabel={`Row ${rowIndex + 1}, column ${columnIndex + 1}`}
+									ariaLabel={blocks.table.cell(rowIndex + 1, columnIndex + 1)}
 									value={cell}
 									onChange={(value) => setCell(rowIndex, columnIndex, value)}
 									className="text-[14px] leading-[1.4]"

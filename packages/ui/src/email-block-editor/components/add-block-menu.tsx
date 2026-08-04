@@ -6,6 +6,7 @@ import {
 	EMAIL_BLOCK_DEFINITIONS,
 	EMAIL_BLOCK_TYPES,
 } from "#/email-block-editor/blocks/block-definitions.tsx";
+import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorBlockType } from "#/email-block-editor/document/types.ts";
 
 interface Props {
@@ -25,6 +26,7 @@ export function AddBlockMenu({
 	trigger,
 	types = EMAIL_BLOCK_TYPES,
 }: Props) {
+	const { chrome, blockNames } = useEmailEditorLabels();
 	return (
 		<DropdownMenu.Root>
 			<DropdownMenu.Trigger
@@ -32,7 +34,7 @@ export function AddBlockMenu({
 					trigger ?? (
 						<Button variant="outline" size="sm">
 							<PlusIcon aria-hidden />
-							Add a block
+							{chrome.addBlock}
 						</Button>
 					)
 				}
@@ -43,7 +45,9 @@ export function AddBlockMenu({
 					return (
 						<DropdownMenu.Item key={type} onClick={() => onAdd(type)}>
 							<definition.icon aria-hidden />
-							{definition.label}
+							{/* A consumer's own block is not in `blockNames`; its
+							    definition carries its own label. */}
+							{blockNames[type] ?? definition.label}
 						</DropdownMenu.Item>
 					);
 				})}

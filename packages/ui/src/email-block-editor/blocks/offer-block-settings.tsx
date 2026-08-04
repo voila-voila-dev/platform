@@ -6,76 +6,78 @@ import { MoneyOption } from "#/email-block-editor/components/block-options/money
 import { TextAreaOption } from "#/email-block-editor/components/block-options/text-area-option.tsx";
 import { TextOption } from "#/email-block-editor/components/block-options/text-option.tsx";
 import { ToggleOption } from "#/email-block-editor/components/block-options/toggle-option.tsx";
+import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorOfferBlock } from "#/email-block-editor/document/types.ts";
 
 interface Props extends EmailBlockComponentProps<EmailEditorOfferBlock> {}
 
 /** The settings panel for an offer block. */
 export function OfferBlockSettings({ block, onChange }: Props) {
+	const { chrome, fields, blocks } = useEmailEditorLabels();
 	return (
 		<>
-			<BlockOptionSection title="Content">
+			<BlockOptionSection title={chrome.sectionContent}>
 				<TextOption
-					label="Eyebrow"
+					label={blocks.offer.eyebrow}
 					value={block.eyebrow}
 					onChange={(eyebrow) => onChange({ ...block, eyebrow })}
-					placeholder="Most popular"
+					placeholder={blocks.offer.eyebrowPlaceholder}
 				/>
 				<TextOption
-					label="Name"
+					label={fields.name}
 					value={block.name}
 					onChange={(name) => onChange({ ...block, name })}
 				/>
 				<MoneyOption
-					label="Price"
+					label={fields.price}
 					value={block.price}
 					onChange={(price) => onChange({ ...block, price })}
 				/>
 				<TextOption
-					label="Billing period"
+					label={blocks.offer.period}
 					value={block.period}
 					onChange={(period) => onChange({ ...block, period })}
-					placeholder="per month"
-					description="Leave empty for a one-off price."
+					placeholder={blocks.offer.periodPlaceholder}
+					description={blocks.offer.periodDescription}
 				/>
 				<TextAreaOption
-					label="Description"
+					label={fields.description}
 					value={block.description}
 					onChange={(description) => onChange({ ...block, description })}
 				/>
 				<OfferFeatureSettings block={block} onChange={onChange} />
 			</BlockOptionSection>
-			<BlockOptionSection title="Appearance">
+			<BlockOptionSection title={chrome.sectionAppearance}>
 				<ToggleOption
-					label="Highlight"
+					label={blocks.offer.highlighted}
 					checked={block.highlighted}
 					onChange={(highlighted) => onChange({ ...block, highlighted })}
-					description="Frames the card in the brand color. Outlook (Word engine) renders square corners."
+					description={blocks.offer.highlightedDescription}
 				/>
 				<TextOption
-					label="Image URL"
+					label={fields.imageUrl}
 					value={block.image.src}
 					onChange={(src) =>
 						onChange({ ...block, image: { ...block.image, src } })
 					}
-					placeholder="https://"
-					description="Leave empty for an offer without a visual."
+					placeholder={fields.urlPlaceholder}
+					description={blocks.offer.imageDescription}
 				/>
 				<TextOption
-					label="Alt text"
+					label={fields.altText}
 					value={block.image.alt}
 					onChange={(alt) =>
 						onChange({ ...block, image: { ...block.image, alt } })
 					}
 				/>
 			</BlockOptionSection>
-			<BlockOptionSection title="Link">
+			<BlockOptionSection title={chrome.sectionLink}>
 				<TextOption
-					label="Button label"
+					label={fields.buttonLabel}
 					value={block.buttonLabel}
 					onChange={(buttonLabel) => onChange({ ...block, buttonLabel })}
-					placeholder="Choose this offer"
-					description="Leave empty for a card without a button."
+					placeholder={blocks.offer.buttonLabelPlaceholder}
+					description={blocks.offer.buttonLabelDescription}
 				/>
 				<LinkOption
 					value={block.buttonHref}

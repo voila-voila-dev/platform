@@ -6,6 +6,8 @@ import type {
 	EmailEditorDocument,
 	EmailEditorPreview,
 } from "#/email-block-editor/document/types.ts";
+import type { EmailEditorLabels } from "#/email-block-editor/labels.ts";
+import { DEFAULT_EMAIL_EDITOR_LABELS } from "#/email-block-editor/labels.ts";
 import type { EmailEditorTheme } from "#/email-block-editor/theme.ts";
 import { DEFAULT_EMAIL_EDITOR_THEME } from "#/email-block-editor/theme.ts";
 
@@ -16,6 +18,7 @@ import { DEFAULT_EMAIL_EDITOR_THEME } from "#/email-block-editor/theme.ts";
  */
 export interface EmailEditorConfigContextValue {
 	readonly theme: EmailEditorTheme;
+	readonly labels: EmailEditorLabels;
 	/** Delegated image upload: receives the picked file, resolves with its
 	 * public URL. Undefined disables image uploads. */
 	readonly onUploadImage?: (file: File) => Promise<string>;
@@ -112,6 +115,12 @@ export const useEmailEditorConfig = (): EmailEditorConfigContextValue =>
 export const useEmailEditorTheme = (): EmailEditorTheme =>
 	React.useContext(EmailEditorConfigContext)?.theme ??
 	DEFAULT_EMAIL_EDITOR_THEME;
+
+/** The copy of the surrounding editor, or the English defaults outside one —
+ * for the same reason {@link useEmailEditorTheme} falls back. */
+export const useEmailEditorLabels = (): EmailEditorLabels =>
+	React.useContext(EmailEditorConfigContext)?.labels ??
+	DEFAULT_EMAIL_EDITOR_LABELS;
 
 export const useEmailEditorState = (): EmailEditorStateContextValue =>
 	use(EmailEditorStateContext, "useEmailEditorState");

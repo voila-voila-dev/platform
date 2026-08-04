@@ -14,6 +14,7 @@ export {
 	useEmailEditor,
 	useEmailEditorActions,
 	useEmailEditorConfig,
+	useEmailEditorLabels,
 	useEmailEditorState,
 	useEmailEditorTheme,
 } from "#/email-block-editor/context/email-editor-context.tsx";
@@ -63,6 +64,16 @@ export {
 	type EmailEditorTextSpan,
 	emptyEmailEditorDocument,
 } from "#/email-block-editor/document/types.ts";
+export {
+	DEFAULT_EMAIL_EDITOR_LABELS,
+	type EmailEditorBlockLabels,
+	type EmailEditorBlockNameLabels,
+	type EmailEditorChromeLabels,
+	type EmailEditorFieldLabels,
+	type EmailEditorLabels,
+	type EmailEditorLabelsInput,
+	mergeEmailEditorLabels,
+} from "#/email-block-editor/labels.ts";
 export {
 	DEFAULT_EMAIL_EDITOR_THEME,
 	type EmailEditorTheme,

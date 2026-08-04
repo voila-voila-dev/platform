@@ -2,7 +2,10 @@ import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block
 import { BlockTextInput } from "#/email-block-editor/blocks/block-text-input.tsx";
 import { EmailCardButton } from "#/email-block-editor/blocks/email-card-button.tsx";
 import { EmailCardShell } from "#/email-block-editor/blocks/email-card-shell.tsx";
-import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
+import {
+	useEmailEditorLabels,
+	useEmailEditorTheme,
+} from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorProductBlock } from "#/email-block-editor/document/types.ts";
 import { formatPreviewPrice } from "#/email-block-editor/lib/money.ts";
 
@@ -14,20 +17,21 @@ interface Props extends EmailBlockComponentProps<EmailEditorProductBlock> {}
  */
 export function ProductBlockView({ block, onChange }: Props) {
 	const theme = useEmailEditorTheme();
+	const { blocks } = useEmailEditorLabels();
 	return (
 		<EmailCardShell image={block.image}>
 			<BlockTextInput
-				ariaLabel="Product name"
+				ariaLabel={blocks.product.nameAriaLabel}
 				value={block.name}
-				placeholder="Product name"
+				placeholder={blocks.product.namePlaceholder}
 				onChange={(name) => onChange({ ...block, name })}
 				className="font-bold text-[17px] leading-[1.3]"
 				style={{ color: theme.color.brand }}
 			/>
 			<textarea
-				aria-label="Product description"
+				aria-label={blocks.product.descriptionAriaLabel}
 				value={block.description}
-				placeholder="The product description."
+				placeholder={blocks.product.descriptionPlaceholder}
 				rows={2}
 				onChange={(event) =>
 					onChange({ ...block, description: event.target.value })

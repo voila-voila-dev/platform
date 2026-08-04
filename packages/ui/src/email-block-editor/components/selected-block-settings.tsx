@@ -3,6 +3,7 @@ import { emailBlockDefinition } from "#/email-block-editor/blocks/block-definiti
 import {
 	useEmailEditorActions,
 	useEmailEditorConfig,
+	useEmailEditorLabels,
 } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorBlock } from "#/email-block-editor/document/types.ts";
 
@@ -14,12 +15,11 @@ interface Props {
 export function SelectedBlockSettings({ block }: Props) {
 	const { updateBlock } = useEmailEditorActions();
 	const { onUploadImage } = useEmailEditorConfig();
+	const { chrome } = useEmailEditorLabels();
 	const definition = emailBlockDefinition(block);
 	if (definition.Settings === null) {
 		return (
-			<p className="text-muted-foreground text-sm">
-				This block has no settings.
-			</p>
+			<p className="text-muted-foreground text-sm">{chrome.noBlockSettings}</p>
 		);
 	}
 	const settingsProps: EmailBlockComponentProps = {

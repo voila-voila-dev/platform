@@ -1,19 +1,15 @@
 import { DesktopIcon, DeviceMobileIcon } from "@phosphor-icons/react";
 import {
 	useEmailEditorActions,
+	useEmailEditorLabels,
 	useEmailEditorState,
 } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorPreview } from "#/email-block-editor/document/types.ts";
 import { SegmentedControl } from "#/segmented-control/components/segmented-control.tsx";
 
-const PREVIEWS: ReadonlyArray<{
-	readonly value: EmailEditorPreview;
-	readonly label: string;
-	readonly Icon: typeof DesktopIcon;
-}> = [
-	{ value: "desktop", label: "Desktop", Icon: DesktopIcon },
-	{ value: "mobile", label: "Mobile", Icon: DeviceMobileIcon },
-];
+const PREVIEW_ICON: {
+	readonly [Preview in EmailEditorPreview]: typeof DesktopIcon;
+} = { desktop: DesktopIcon, mobile: DeviceMobileIcon };
 
 /**
  * Switches the canvas between the two renderings an email actually gets: the
@@ -24,19 +20,30 @@ const PREVIEWS: ReadonlyArray<{
 export function PreviewToggle() {
 	const { preview } = useEmailEditorState();
 	const { setPreview } = useEmailEditorActions();
+	const { chrome } = useEmailEditorLabels();
+	const previews: ReadonlyArray<{
+		readonly value: EmailEditorPreview;
+		readonly label: string;
+	}> = [
+		{ value: "desktop", label: chrome.previewDesktop },
+		{ value: "mobile", label: chrome.previewMobile },
+	];
 	return (
 		<SegmentedControl.Root
 			size="sm"
-			aria-label="Preview"
+			aria-label={chrome.preview}
 			value={preview}
 			onValueChange={(next) => setPreview(next as EmailEditorPreview)}
 		>
-			{PREVIEWS.map((preview) => (
-				<SegmentedControl.Item key={preview.value} value={preview.value}>
-					<preview.Icon aria-hidden />
-					{preview.label}
-				</SegmentedControl.Item>
-			))}
+			{previews.map((option) => {
+				const Icon = PREVIEW_ICON[option.value];
+				return (
+					<SegmentedControl.Item key={option.value} value={option.value}>
+						<Icon aria-hidden />
+						{option.label}
+					</SegmentedControl.Item>
+				);
+			})}
 		</SegmentedControl.Root>
 	);
 }

@@ -1,5 +1,8 @@
 import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block-definitions.tsx";
-import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
+import {
+	useEmailEditorLabels,
+	useEmailEditorTheme,
+} from "#/email-block-editor/context/email-editor-context.tsx";
 import type {
 	EmailEditorAlignment,
 	EmailEditorButtonBlock,
@@ -22,6 +25,7 @@ interface Props extends EmailBlockComponentProps<EmailEditorButtonBlock> {}
  */
 export function ButtonBlockView({ block, onChange }: Props) {
 	const theme = useEmailEditorTheme();
+	const { blocks } = useEmailEditorLabels();
 	const filled = block.variant === "primary";
 	return (
 		<div className="flex" style={{ justifyContent: JUSTIFY[block.align] }}>
@@ -33,12 +37,12 @@ export function ButtonBlockView({ block, onChange }: Props) {
 				}}
 			>
 				<input
-					aria-label="Button label"
+					aria-label={blocks.button.ariaLabel}
 					value={block.label}
 					onChange={(event) =>
 						onChange({ ...block, label: event.target.value })
 					}
-					placeholder="Your button"
+					placeholder={blocks.button.placeholder}
 					className="min-w-16 max-w-full border-none bg-transparent p-0 text-center font-semibold text-[15px] leading-none outline-none [field-sizing:content] placeholder:opacity-50"
 					style={{
 						fontFamily: theme.font,

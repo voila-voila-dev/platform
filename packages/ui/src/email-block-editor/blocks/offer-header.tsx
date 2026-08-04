@@ -1,6 +1,9 @@
 import { BlockTextInput } from "#/email-block-editor/blocks/block-text-input.tsx";
 import { EmailCardMeta } from "#/email-block-editor/blocks/email-card-meta.tsx";
-import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
+import {
+	useEmailEditorLabels,
+	useEmailEditorTheme,
+} from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorOfferBlock } from "#/email-block-editor/document/types.ts";
 import { formatPreviewPrice } from "#/email-block-editor/lib/money.ts";
 
@@ -13,6 +16,7 @@ interface Props {
  * its optional recurrence. */
 export function OfferHeader({ block, onChange }: Props) {
 	const theme = useEmailEditorTheme();
+	const { blocks } = useEmailEditorLabels();
 	return (
 		<>
 			{block.eyebrow === "" ? null : (
@@ -24,9 +28,9 @@ export function OfferHeader({ block, onChange }: Props) {
 				</span>
 			)}
 			<BlockTextInput
-				ariaLabel="Offer name"
+				ariaLabel={blocks.offer.nameAriaLabel}
 				value={block.name}
-				placeholder="Offer name"
+				placeholder={blocks.offer.namePlaceholder}
 				onChange={(name) => onChange({ ...block, name })}
 				className="font-bold text-[17px] leading-[1.3]"
 				style={{ color: theme.color.brand }}

@@ -2,7 +2,10 @@ import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block
 import { BlockTextInput } from "#/email-block-editor/blocks/block-text-input.tsx";
 import { EmailCardMeta } from "#/email-block-editor/blocks/email-card-meta.tsx";
 import { EmailCardShell } from "#/email-block-editor/blocks/email-card-shell.tsx";
-import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
+import {
+	useEmailEditorLabels,
+	useEmailEditorTheme,
+} from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorArticleBlock } from "#/email-block-editor/document/types.ts";
 
 /** The author/date line, with a separator only when both are present. */
@@ -19,22 +22,23 @@ interface Props extends EmailBlockComponentProps<EmailEditorArticleBlock> {}
  */
 export function ArticleBlockView({ block, onChange }: Props) {
 	const theme = useEmailEditorTheme();
+	const { blocks } = useEmailEditorLabels();
 	const meta = metaLine(block);
 	return (
 		<EmailCardShell image={block.image}>
 			<BlockTextInput
-				ariaLabel="Article title"
+				ariaLabel={blocks.article.titleAriaLabel}
 				value={block.title}
-				placeholder="Article title"
+				placeholder={blocks.article.titlePlaceholder}
 				onChange={(title) => onChange({ ...block, title })}
 				className="font-bold text-[17px] leading-[1.3]"
 				style={{ color: theme.color.brand }}
 			/>
 			{meta === "" ? null : <EmailCardMeta>{meta}</EmailCardMeta>}
 			<textarea
-				aria-label="Article summary"
+				aria-label={blocks.article.summaryAriaLabel}
 				value={block.description}
-				placeholder="The article summary."
+				placeholder={blocks.article.summaryPlaceholder}
 				rows={2}
 				onChange={(event) =>
 					onChange({ ...block, description: event.target.value })

@@ -1,6 +1,9 @@
 import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block-definitions.tsx";
 import { BlockTextInput } from "#/email-block-editor/blocks/block-text-input.tsx";
-import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
+import {
+	useEmailEditorLabels,
+	useEmailEditorTheme,
+} from "#/email-block-editor/context/email-editor-context.tsx";
 import type {
 	EmailEditorAlignment,
 	EmailEditorStatBlock,
@@ -19,6 +22,7 @@ interface Props extends EmailBlockComponentProps<EmailEditorStatBlock> {}
  */
 export function StatBlockView({ block, selected, onChange }: Props) {
 	const theme = useEmailEditorTheme();
+	const { fields, blocks } = useEmailEditorLabels();
 	const textAlign = TEXT_ALIGN[block.align];
 	return (
 		<div
@@ -26,17 +30,17 @@ export function StatBlockView({ block, selected, onChange }: Props) {
 			style={{ textAlign, fontFamily: theme.font }}
 		>
 			<BlockTextInput
-				ariaLabel="Value"
+				ariaLabel={fields.value}
 				value={block.value}
-				placeholder="128"
+				placeholder={blocks.stat.valuePlaceholder}
 				onChange={(value) => onChange({ ...block, value })}
 				className="font-bold text-[30px] leading-[1.1]"
 				style={{ color: theme.color.brand, textAlign }}
 			/>
 			<BlockTextInput
-				ariaLabel="Label"
+				ariaLabel={fields.label}
 				value={block.label}
-				placeholder="Projects delivered"
+				placeholder={blocks.stat.labelPlaceholder}
 				onChange={(label) => onChange({ ...block, label })}
 				className="font-semibold text-[12px] uppercase leading-[1.4] tracking-[0.04em]"
 				style={{ color: theme.color.muted, textAlign }}
@@ -46,9 +50,9 @@ export function StatBlockView({ block, selected, onChange }: Props) {
 			    line the email will not have. */}
 			{selected || block.description !== "" ? (
 				<BlockTextInput
-					ariaLabel="Description"
+					ariaLabel={fields.description}
 					value={block.description}
-					placeholder="Description (optional)"
+					placeholder={blocks.stat.descriptionPlaceholder}
 					onChange={(description) => onChange({ ...block, description })}
 					className="text-[14px] leading-[1.5]"
 					style={{ color: theme.color.ink, textAlign }}

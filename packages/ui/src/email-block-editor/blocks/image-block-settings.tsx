@@ -5,45 +5,46 @@ import { LinkOption } from "#/email-block-editor/components/block-options/link-o
 import { SelectOption } from "#/email-block-editor/components/block-options/select-option.tsx";
 import { TextOption } from "#/email-block-editor/components/block-options/text-option.tsx";
 import { ToggleOption } from "#/email-block-editor/components/block-options/toggle-option.tsx";
+import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
 import type {
 	EmailEditorImageBlock,
 	EmailEditorImageOverlay,
 	EmailEditorImageWidth,
 } from "#/email-block-editor/document/types.ts";
 
-const WIDTH_OPTIONS: ReadonlyArray<{
-	readonly value: EmailEditorImageWidth;
-	readonly label: string;
-}> = [
-	{ value: "full", label: "Full width" },
-	{ value: "contained", label: "Reduced width (centered)" },
-];
-const OVERLAY_OPTIONS: ReadonlyArray<{
-	readonly value: EmailEditorImageOverlay;
-	readonly label: string;
-}> = [
-	{ value: "none", label: "None" },
-	{ value: "play", label: "Play button (video thumbnail)" },
-];
-
 interface Props extends EmailBlockComponentProps<EmailEditorImageBlock> {}
 
 /** The settings panel for an image block. */
 export function ImageBlockSettings({ block, onChange, onUploadImage }: Props) {
+	const { chrome, fields, blocks } = useEmailEditorLabels();
+	const widthOptions: ReadonlyArray<{
+		readonly value: EmailEditorImageWidth;
+		readonly label: string;
+	}> = [
+		{ value: "full", label: blocks.image.widthFull },
+		{ value: "contained", label: blocks.image.widthContained },
+	];
+	const overlayOptions: ReadonlyArray<{
+		readonly value: EmailEditorImageOverlay;
+		readonly label: string;
+	}> = [
+		{ value: "none", label: fields.none },
+		{ value: "play", label: blocks.image.overlayPlay },
+	];
 	return (
 		<>
-			<BlockOptionSection title="Content">
+			<BlockOptionSection title={chrome.sectionContent}>
 				<TextOption
-					label="Alt text"
+					label={fields.altText}
 					value={block.alt}
 					onChange={(alt) => onChange({ ...block, alt })}
-					description="Shown when the email client blocks the image."
+					description={fields.altTextDescription}
 				/>
 				<TextOption
-					label="Image URL"
+					label={fields.imageUrl}
 					value={block.src}
 					onChange={(src) => onChange({ ...block, src })}
-					placeholder="https://"
+					placeholder={fields.urlPlaceholder}
 				/>
 				{onUploadImage ? (
 					<ImageUploadButton
@@ -53,36 +54,36 @@ export function ImageBlockSettings({ block, onChange, onUploadImage }: Props) {
 					/>
 				) : null}
 			</BlockOptionSection>
-			<BlockOptionSection title="Appearance">
+			<BlockOptionSection title={chrome.sectionAppearance}>
 				<SelectOption
-					label="Width"
+					label={blocks.image.width}
 					value={block.width}
-					options={WIDTH_OPTIONS}
+					options={widthOptions}
 					onChange={(width) => onChange({ ...block, width })}
 				/>
 				<SelectOption
-					label="Overlay"
+					label={blocks.image.overlay}
 					value={block.overlay}
-					options={OVERLAY_OPTIONS}
+					options={overlayOptions}
 					onChange={(overlay) => onChange({ ...block, overlay })}
 					description={
 						block.overlay === "play"
-							? "No email client plays an embedded video: the thumbnail links to the URL below. Outlook shows the badge under the image."
+							? blocks.image.overlayPlayDescription
 							: undefined
 					}
 				/>
 				<ToggleOption
-					label="Rounded corners"
+					label={blocks.image.rounded}
 					checked={block.rounded}
 					onChange={(rounded) => onChange({ ...block, rounded })}
-					description="Outlook (Word engine) always renders square corners."
+					description={blocks.image.roundedDescription}
 				/>
 			</BlockOptionSection>
-			<BlockOptionSection title="Link">
+			<BlockOptionSection title={chrome.sectionLink}>
 				<LinkOption
 					value={block.href}
 					onChange={(href) => onChange({ ...block, href })}
-					description="Leave empty for a non-clickable image."
+					description={blocks.image.linkDescription}
 				/>
 			</BlockOptionSection>
 		</>

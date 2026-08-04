@@ -1,5 +1,6 @@
 import { PlusIcon, XIcon } from "@phosphor-icons/react";
 import { Button } from "#/button/components/button.tsx";
+import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorOfferBlock } from "#/email-block-editor/document/types.ts";
 import { Input } from "#/input/components/input.tsx";
 
@@ -10,13 +11,14 @@ interface Props {
 
 /** The editable list of an offer's included features. */
 export function OfferFeatureSettings({ block, onChange }: Props) {
+	const { blocks } = useEmailEditorLabels();
 	return (
 		<div className="flex flex-col gap-2">
-			<span className="font-medium text-sm">Included features</span>
+			<span className="font-medium text-sm">{blocks.offer.features}</span>
 			{block.features.map((feature, index) => (
 				<div key={index} className="flex items-center gap-2">
 					<Input
-						aria-label={`Included feature ${index + 1}`}
+						aria-label={blocks.offer.feature(index + 1)}
 						value={feature}
 						onChange={(event) =>
 							onChange({
@@ -31,7 +33,7 @@ export function OfferFeatureSettings({ block, onChange }: Props) {
 					<Button
 						variant="ghost"
 						size="icon-sm"
-						aria-label={`Remove feature ${index + 1}`}
+						aria-label={blocks.offer.removeFeature(index + 1)}
 						onClick={() =>
 							onChange({
 								...block,
@@ -51,7 +53,7 @@ export function OfferFeatureSettings({ block, onChange }: Props) {
 				}
 			>
 				<PlusIcon aria-hidden />
-				Add a feature
+				{blocks.offer.addFeature}
 			</Button>
 		</div>
 	);

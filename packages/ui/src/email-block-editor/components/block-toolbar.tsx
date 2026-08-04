@@ -8,6 +8,7 @@ import { RichTextControls } from "#/email-block-editor/components/rich-text-cont
 import { StructureControls } from "#/email-block-editor/components/structure-controls.tsx";
 import { ToolbarIconButton } from "#/email-block-editor/components/toolbar-icon-button.tsx";
 import { ToolbarSeparator } from "#/email-block-editor/components/toolbar-separator.tsx";
+import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { SortableBlockHandle } from "#/email-block-editor/dnd/sortable-block-list.ts";
 import type { EmailEditorBlockType } from "#/email-block-editor/document/types.ts";
 import {
@@ -82,6 +83,7 @@ export function BlockToolbar({
 	onSelectContainer,
 }: Props) {
 	const activeMarks = useActiveInlineMarks();
+	const { chrome } = useEmailEditorLabels();
 	return (
 		<div
 			className={cn(
@@ -102,7 +104,7 @@ export function BlockToolbar({
 			<ToolbarSeparator />
 			{onOpenSettings ? (
 				<ToolbarIconButton
-					label="Block settings"
+					label={chrome.blockSettings}
 					coarsePointer={coarsePointer}
 					onClick={onOpenSettings}
 				>
@@ -110,14 +112,14 @@ export function BlockToolbar({
 				</ToolbarIconButton>
 			) : null}
 			<ToolbarIconButton
-				label="Duplicate block"
+				label={chrome.duplicateBlock}
 				coarsePointer={coarsePointer}
 				onClick={onDuplicate}
 			>
 				<CopyIcon aria-hidden />
 			</ToolbarIconButton>
 			<ToolbarIconButton
-				label="Delete block"
+				label={chrome.deleteBlock}
 				coarsePointer={coarsePointer}
 				onClick={onRemove}
 			>
