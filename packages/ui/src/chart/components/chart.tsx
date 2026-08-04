@@ -3,6 +3,7 @@ import { ChartBars } from "#/chart/components/chart-bars.tsx";
 import { ChartCursor } from "#/chart/components/chart-cursor.tsx";
 import { ChartDonut } from "#/chart/components/chart-donut.tsx";
 import { ChartEmpty } from "#/chart/components/chart-empty.tsx";
+import { ChartFunnel } from "#/chart/components/chart-funnel.tsx";
 import { ChartGrid } from "#/chart/components/chart-grid.tsx";
 import { ChartLabelList } from "#/chart/components/chart-label-list.tsx";
 import { ChartLegend } from "#/chart/components/chart-legend.tsx";
@@ -53,6 +54,7 @@ export const Chart = {
 	Points: ChartPoints,
 	ReferenceLine: ChartReferenceLine,
 	LabelList: ChartLabelList,
+	Funnel: ChartFunnel,
 	Pie: ChartPie,
 	Donut: ChartDonut,
 	Slice: ChartSlice,

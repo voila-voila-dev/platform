@@ -337,6 +337,50 @@ export const Donut: Story = {
 	},
 };
 
+const funnelData = [
+	{ stage: "recipients", count: 1240 },
+	{ stage: "delivered", count: 1188 },
+	{ stage: "opened", count: 512 },
+	{ stage: "clicked", count: 96 },
+];
+
+const funnelConfig = {
+	count: { label: "Contacts" },
+	recipients: { label: "Recipients", color: "var(--chart-1)" },
+	delivered: { label: "Delivered", color: "var(--chart-2)" },
+	opened: { label: "Opened", color: "var(--chart-3)" },
+	clicked: { label: "Clicked", color: "var(--chart-4)" },
+} satisfies ChartConfig;
+
+export const Funnel: Story = {
+	args: {
+		config: funnelConfig,
+		data: funnelData,
+		x: { key: "stage" },
+		y: { keys: ["count"] },
+		className: frame,
+		margin: { top: 8, right: 8, bottom: 8, left: 8 },
+		children: (
+			<>
+				<Chart.Funnel />
+				<Chart.Tooltip
+					content={<Chart.TooltipContent nameKey="stage" hideLabel />}
+				/>
+			</>
+		),
+	},
+	play: async ({ canvasElement }) => {
+		const steps = canvasElement.querySelectorAll(
+			'[data-slot="chart-funnel-step"]',
+		);
+		await expect(steps).toHaveLength(funnelData.length);
+		// One conversion badge per boundary between two steps.
+		await expect(
+			canvasElement.querySelectorAll('[data-slot="chart-funnel-conversion"]'),
+		).toHaveLength(funnelData.length - 1);
+	},
+};
+
 const coverageData = [
 	{ region: "North America", coverage: 92 },
 	{ region: "Western Europe", coverage: 68 },

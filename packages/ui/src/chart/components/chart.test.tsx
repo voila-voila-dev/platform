@@ -123,6 +123,66 @@ describe("Chart.Bars", () => {
 	});
 });
 
+describe("Chart.Funnel", () => {
+	const funnelData = [
+		{ stage: "recipients", count: 200 },
+		{ stage: "opened", count: 100 },
+		{ stage: "clicked", count: 25 },
+	];
+
+	function FunnelChart() {
+		return (
+			<Chart.Root
+				config={{
+					count: { label: "Contacts" },
+					recipients: { label: "Recipients", color: "var(--chart-1)" },
+					opened: { label: "Opened", color: "var(--chart-2)" },
+					clicked: { label: "Clicked", color: "var(--chart-3)" },
+				}}
+				data={funnelData}
+				x={{ key: "stage" }}
+				y={{ keys: ["count"] }}
+			>
+				<Chart.Funnel />
+				<Chart.Tooltip />
+			</Chart.Root>
+		);
+	}
+
+	it("draws one step per datum and one conversion badge per boundary", () => {
+		render(<FunnelChart />);
+		expect(slots("chart-funnel-step")).toHaveLength(3);
+		expect(slots("chart-funnel-conversion")).toHaveLength(2);
+	});
+
+	it("labels each step with its configured name and value", () => {
+		render(<FunnelChart />);
+		const labels = slots("chart-funnel-label").map(
+			(label) => label.textContent,
+		);
+		expect(labels[0]).toContain("Recipients");
+		expect(labels[0]).toContain("200");
+	});
+
+	it("shows the step-to-step conversion as a percentage", () => {
+		render(<FunnelChart />);
+		const badges = slots("chart-funnel-conversion").map(
+			(badge) => badge.textContent,
+		);
+		expect(badges[0]).toContain("50");
+		expect(badges[1]).toContain("25");
+	});
+
+	it("dims the steps that are not the active one", () => {
+		render(<FunnelChart />);
+		fireEvent.keyDown(screen.getByRole("img"), { key: "ArrowRight" });
+		const states = slots("chart-funnel-step").map((step) =>
+			step.getAttribute("data-state"),
+		);
+		expect(states).toEqual(["active", "muted", "muted"]);
+	});
+});
+
 describe("Chart axes and grid", () => {
 	it("labels the category axis with the categories", () => {
 		render(<BarChart />);

@@ -15,6 +15,10 @@ export type {
 	ChartTheme,
 } from "#/chart/core/config.ts";
 export type { FormatNumberOptions } from "#/chart/core/format.ts";
+export type {
+	FunnelLayoutOptions,
+	FunnelSlice,
+} from "#/chart/core/funnel.ts";
 export type { ArcOptions, RoundedBarOptions } from "#/chart/core/geometry.ts";
 export type {
 	ChartSliceAngle,
