@@ -6,6 +6,8 @@ import type {
 	EmailEditorDocument,
 	EmailEditorPreview,
 } from "#/email-block-editor/document/types.ts";
+import type { EmailEditorTheme } from "#/email-block-editor/theme.ts";
+import { DEFAULT_EMAIL_EDITOR_THEME } from "#/email-block-editor/theme.ts";
 
 /**
  * What an editor instance is configured with, as opposed to what it currently
@@ -13,6 +15,7 @@ import type {
  * re-render on every keystroke.
  */
 export interface EmailEditorConfigContextValue {
+	readonly theme: EmailEditorTheme;
 	/** Delegated image upload: receives the picked file, resolves with its
 	 * public URL. Undefined disables image uploads. */
 	readonly onUploadImage?: (file: File) => Promise<string>;
@@ -99,6 +102,16 @@ const use = <T,>(context: React.Context<T | null>, hook: string): T => {
 
 export const useEmailEditorConfig = (): EmailEditorConfigContextValue =>
 	use(EmailEditorConfigContext, "useEmailEditorConfig");
+
+/**
+ * The theme of the surrounding editor, or the defaults outside one. Falls back
+ * rather than throwing because the block views are exported: a host rendering
+ * one on its own has no editor around it, and the defaults are exactly what it
+ * wants.
+ */
+export const useEmailEditorTheme = (): EmailEditorTheme =>
+	React.useContext(EmailEditorConfigContext)?.theme ??
+	DEFAULT_EMAIL_EDITOR_THEME;
 
 export const useEmailEditorState = (): EmailEditorStateContextValue =>
 	use(EmailEditorStateContext, "useEmailEditorState");

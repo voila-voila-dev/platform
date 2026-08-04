@@ -1,6 +1,6 @@
 import { ImageIcon } from "@phosphor-icons/react";
 import { useRef, useState } from "react";
-import { EMAIL_COLOR, EMAIL_FONT } from "#/email-block-editor/theme.ts";
+import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
 
 interface Props {
 	onUploadImage?: (file: File) => Promise<string>;
@@ -10,6 +10,7 @@ interface Props {
 /** The empty state: a dashed zone that opens the file picker. The upload
  * itself is the host's job, so without `onUploadImage` it is simply inert. */
 export function ImageDropZone({ onUploadImage, onUploaded }: Props) {
+	const theme = useEmailEditorTheme();
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const [uploading, setUploading] = useState(false);
 
@@ -33,9 +34,9 @@ export function ImageDropZone({ onUploadImage, onUploaded }: Props) {
 				disabled={onUploadImage === undefined || uploading}
 				className="flex w-full flex-col items-center gap-2 rounded-lg border border-dashed px-4 py-10 text-[14px] disabled:cursor-not-allowed"
 				style={{
-					borderColor: EMAIL_COLOR.muted,
-					color: EMAIL_COLOR.muted,
-					fontFamily: EMAIL_FONT,
+					borderColor: theme.color.muted,
+					color: theme.color.muted,
+					fontFamily: theme.font,
 				}}
 			>
 				<ImageIcon size={24} aria-hidden />

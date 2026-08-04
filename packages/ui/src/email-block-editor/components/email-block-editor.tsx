@@ -14,6 +14,8 @@ import {
 	useCoarsePointer,
 	useCompactEditorLayout,
 } from "#/email-block-editor/lib/use-media-query.ts";
+import type { EmailEditorThemeInput } from "#/email-block-editor/theme.ts";
+import { mergeEmailEditorTheme } from "#/email-block-editor/theme.ts";
 
 interface Props {
 	/**
@@ -29,6 +31,9 @@ interface Props {
 	onUploadImage?: (file: File) => Promise<string>;
 	/** Block-id factory, injectable for deterministic tests. */
 	generateBlockId?: () => string;
+	/** Colours, font, preview locale and metrics of the canvas. Merged over the
+	 * defaults section by section, so `{ color: { brand } }` is a valid theme. */
+	theme?: EmailEditorThemeInput;
 	/** Replaces the neutral header placeholder above the canvas with your own chrome. */
 	headerSlot?: ReactNode;
 	/** Replaces the neutral footer placeholder below the canvas. */
@@ -50,6 +55,7 @@ export function EmailBlockEditor({
 	onChange,
 	onUploadImage,
 	generateBlockId = () => crypto.randomUUID(),
+	theme,
 	headerSlot,
 	footerSlot,
 }: Props) {
@@ -78,8 +84,12 @@ export function EmailBlockEditor({
 		openBlockSettings: compact ? openBlockSettings : undefined,
 	});
 	const config = useMemo(
-		() => ({ onUploadImage, generateBlockId }),
-		[onUploadImage, generateBlockId],
+		() => ({
+			theme: mergeEmailEditorTheme(theme),
+			onUploadImage,
+			generateBlockId,
+		}),
+		[theme, onUploadImage, generateBlockId],
 	);
 
 	return (

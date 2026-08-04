@@ -1,5 +1,4 @@
 import type { EmailEditorMoney } from "#/email-block-editor/document/types.ts";
-import { EMAIL_PREVIEW_LOCALE } from "#/email-block-editor/theme.ts";
 
 /** EUR has two decimals, and it is the only currency the platform transacts
  * in; widening this means mirroring the domain's `currencyDecimals`. */
@@ -21,12 +20,15 @@ export function inputValueToMinorUnits(value: string): number {
 }
 
 /**
- * How a price reads on the canvas. The sent email formats it per recipient
- * (`renderMarketingEmailDocument`); the canvas shows the default locale, so an
- * author never sees an amount their reader will not get.
+ * How a price reads on the canvas, in the theme's preview locale rather than
+ * the browser's. The sent email formats it per recipient, so an author should
+ * never see an amount their reader will not get.
  */
-export function formatPreviewPrice(money: EmailEditorMoney): string {
-	return new Intl.NumberFormat(EMAIL_PREVIEW_LOCALE, {
+export function formatPreviewPrice(
+	money: EmailEditorMoney,
+	locale: string,
+): string {
+	return new Intl.NumberFormat(locale, {
 		style: "currency",
 		currency: money.currency,
 	}).format(money.amountInMinorUnits / MINOR_UNITS_PER_UNIT);

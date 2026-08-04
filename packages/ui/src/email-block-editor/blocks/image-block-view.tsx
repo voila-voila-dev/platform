@@ -1,8 +1,8 @@
 import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block-definitions.tsx";
 import { ImageDropZone } from "#/email-block-editor/blocks/image-drop-zone.tsx";
 import { PlayOverlay } from "#/email-block-editor/blocks/play-overlay.tsx";
+import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorImageBlock } from "#/email-block-editor/document/types.ts";
-import { EMAIL_IMAGE_WIDTH_RATIO } from "#/email-block-editor/theme.ts";
 
 interface Props extends EmailBlockComponentProps<EmailEditorImageBlock> {}
 
@@ -14,12 +14,13 @@ interface Props extends EmailBlockComponentProps<EmailEditorImageBlock> {}
  * block's options).
  */
 export function ImageBlockView({ block, onChange, onUploadImage }: Props) {
+	const theme = useEmailEditorTheme();
 	if (block.src !== "") {
 		return (
 			<div
 				className="relative mx-auto"
 				style={{
-					width: `${EMAIL_IMAGE_WIDTH_RATIO[block.width] * 100}%`,
+					width: `${theme.imageWidthRatio[block.width] * 100}%`,
 				}}
 			>
 				<img

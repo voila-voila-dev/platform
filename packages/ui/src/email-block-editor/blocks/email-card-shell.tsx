@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { EmailCardImage } from "#/email-block-editor/blocks/email-card-image.tsx";
+import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorCardImage } from "#/email-block-editor/document/types.ts";
-import { EMAIL_COLOR, EMAIL_FONT } from "#/email-block-editor/theme.ts";
 
 interface Props {
 	/** Omit for a card with no visual; an empty `src` renders the placeholder. */
@@ -21,13 +21,14 @@ export function EmailCardShell({
 	highlighted = false,
 	children,
 }: Props) {
+	const theme = useEmailEditorTheme();
 	return (
 		<div
 			className="overflow-hidden rounded-[14px]"
 			style={{
-				border: `${highlighted ? 2 : 1}px solid ${highlighted ? EMAIL_COLOR.brand : EMAIL_COLOR.border}`,
-				backgroundColor: EMAIL_COLOR.card,
-				fontFamily: EMAIL_FONT,
+				border: `${highlighted ? 2 : 1}px solid ${highlighted ? theme.color.brand : theme.color.border}`,
+				backgroundColor: theme.color.card,
+				fontFamily: theme.font,
 			}}
 		>
 			{image === undefined ? null : <EmailCardImage image={image} />}

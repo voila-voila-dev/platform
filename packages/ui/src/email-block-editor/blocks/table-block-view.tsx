@@ -1,7 +1,7 @@
 import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block-definitions.tsx";
 import { BlockTextInput } from "#/email-block-editor/blocks/block-text-input.tsx";
+import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorTableBlock } from "#/email-block-editor/document/types.ts";
-import { EMAIL_COLOR, EMAIL_FONT } from "#/email-block-editor/theme.ts";
 import { cn } from "#/lib/utils.ts";
 
 /** Mirrors `emailLineItemsTable`'s `flushEdges`: the first and last columns
@@ -28,6 +28,7 @@ interface Props extends EmailBlockComponentProps<EmailEditorTableBlock> {}
  * per-column alignment. Cells are edited in place.
  */
 export function TableBlockView({ block, onChange }: Props) {
+	const theme = useEmailEditorTheme();
 	const setCell = (rowIndex: number, columnIndex: number, value: string) =>
 		onChange({
 			...block,
@@ -43,7 +44,7 @@ export function TableBlockView({ block, onChange }: Props) {
 	return (
 		<table
 			className="w-full border-collapse"
-			style={{ fontFamily: EMAIL_FONT }}
+			style={{ fontFamily: theme.font }}
 		>
 			{block.headerRow ? (
 				<thead>
@@ -56,7 +57,7 @@ export function TableBlockView({ block, onChange }: Props) {
 									block.columns.length,
 								)}
 								style={{
-									borderBottom: `2px solid ${EMAIL_COLOR.border}`,
+									borderBottom: `2px solid ${theme.color.border}`,
 									textAlign: column.align,
 								}}
 							>
@@ -73,7 +74,7 @@ export function TableBlockView({ block, onChange }: Props) {
 										})
 									}
 									className="font-semibold text-[11px] uppercase leading-[1.3] tracking-[0.04em]"
-									style={{ color: EMAIL_COLOR.muted, textAlign: column.align }}
+									style={{ color: theme.color.muted, textAlign: column.align }}
 								/>
 							</th>
 						))}
@@ -90,7 +91,7 @@ export function TableBlockView({ block, onChange }: Props) {
 									columnIndex,
 									block.columns.length,
 								)}
-								style={{ borderBottom: `1px solid ${EMAIL_COLOR.border}` }}
+								style={{ borderBottom: `1px solid ${theme.color.border}` }}
 							>
 								<BlockTextInput
 									ariaLabel={`Row ${rowIndex + 1}, column ${columnIndex + 1}`}
@@ -98,7 +99,7 @@ export function TableBlockView({ block, onChange }: Props) {
 									onChange={(value) => setCell(rowIndex, columnIndex, value)}
 									className="text-[14px] leading-[1.4]"
 									style={{
-										color: EMAIL_COLOR.ink,
+										color: theme.color.ink,
 										textAlign: block.columns[columnIndex]?.align ?? "left",
 									}}
 								/>

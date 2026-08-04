@@ -1,7 +1,7 @@
 import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block-definitions.tsx";
 import { RichTextEditable } from "#/email-block-editor/blocks/rich-text-editable.tsx";
+import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorFinePrintBlock } from "#/email-block-editor/document/types.ts";
-import { EMAIL_COLOR, EMAIL_FONT } from "#/email-block-editor/theme.ts";
 
 interface Props extends EmailBlockComponentProps<EmailEditorFinePrintBlock> {}
 
@@ -11,6 +11,7 @@ interface Props extends EmailBlockComponentProps<EmailEditorFinePrintBlock> {}
  * the terms, say) work through the shared span model.
  */
 export function FinePrintBlockView({ block, onChange }: Props) {
+	const theme = useEmailEditorTheme();
 	return (
 		<RichTextEditable
 			spans={block.spans}
@@ -18,7 +19,7 @@ export function FinePrintBlockView({ block, onChange }: Props) {
 			ariaLabel="Fine print"
 			placeholder="Offer valid until…"
 			className="text-center text-[11px] leading-[1.5]"
-			style={{ fontFamily: EMAIL_FONT, color: EMAIL_COLOR.muted }}
+			style={{ fontFamily: theme.font, color: theme.color.muted }}
 		/>
 	);
 }

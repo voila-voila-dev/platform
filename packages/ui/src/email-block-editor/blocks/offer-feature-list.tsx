@@ -1,5 +1,5 @@
 import { CheckIcon } from "@phosphor-icons/react";
-import { EMAIL_COLOR } from "#/email-block-editor/theme.ts";
+import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
 
 interface Props {
 	features: ReadonlyArray<string>;
@@ -8,6 +8,7 @@ interface Props {
 /** The ticked included features, mirroring the bulleted list the renderer
  * emits for them. */
 export function OfferFeatureList({ features }: Props) {
+	const theme = useEmailEditorTheme();
 	if (features.length === 0) {
 		return null;
 	}
@@ -17,12 +18,12 @@ export function OfferFeatureList({ features }: Props) {
 				<li
 					key={index}
 					className="flex items-start gap-2 text-[14px] leading-[1.5]"
-					style={{ color: EMAIL_COLOR.ink }}
+					style={{ color: theme.color.ink }}
 				>
 					<CheckIcon
 						size={16}
 						aria-hidden
-						style={{ color: EMAIL_COLOR.brand, marginTop: 3 }}
+						style={{ color: theme.color.brand, marginTop: 3 }}
 					/>
 					{feature}
 				</li>

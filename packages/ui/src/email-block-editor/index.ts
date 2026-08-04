@@ -15,6 +15,7 @@ export {
 	useEmailEditorActions,
 	useEmailEditorConfig,
 	useEmailEditorState,
+	useEmailEditorTheme,
 } from "#/email-block-editor/context/email-editor-context.tsx";
 export type { SortableBlockHandle } from "#/email-block-editor/dnd/sortable-block-list.ts";
 export type {
@@ -62,4 +63,10 @@ export {
 	type EmailEditorTextSpan,
 	emptyEmailEditorDocument,
 } from "#/email-block-editor/document/types.ts";
-export { EMAIL_COLOR, EMAIL_FONT } from "#/email-block-editor/theme.ts";
+export {
+	DEFAULT_EMAIL_EDITOR_THEME,
+	type EmailEditorTheme,
+	type EmailEditorThemeColor,
+	type EmailEditorThemeInput,
+	mergeEmailEditorTheme,
+} from "#/email-block-editor/theme.ts";

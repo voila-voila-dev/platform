@@ -16,12 +16,6 @@ export const EMAIL_EDITOR_DOCUMENT_VERSION = 1;
  */
 export type EmailEditorPreview = "desktop" | "mobile";
 
-/** The card width each preview mirrors: the full 600px email card, or a
- * common phone viewport. */
-export const EMAIL_PREVIEW_WIDTH: {
-	readonly [P in EmailEditorPreview]: number;
-} = { desktop: 600, mobile: 390 };
-
 /**
  * The shared option vocabulary. Declared once here and mirrored once in the
  * domain schema; a new option reuses one of these rather than inventing a

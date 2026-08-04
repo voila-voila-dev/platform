@@ -1,7 +1,7 @@
 import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block-definitions.tsx";
 import { RichTextEditable } from "#/email-block-editor/blocks/rich-text-editable.tsx";
+import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorParagraphBlock } from "#/email-block-editor/document/types.ts";
-import { EMAIL_COLOR, EMAIL_FONT } from "#/email-block-editor/theme.ts";
 
 interface Props extends EmailBlockComponentProps<EmailEditorParagraphBlock> {}
 
@@ -11,6 +11,7 @@ interface Props extends EmailBlockComponentProps<EmailEditorParagraphBlock> {}
  * (16px ink).
  */
 export function ParagraphBlockView({ block, onChange }: Props) {
+	const theme = useEmailEditorTheme();
 	return (
 		<RichTextEditable
 			spans={block.spans}
@@ -18,7 +19,7 @@ export function ParagraphBlockView({ block, onChange }: Props) {
 			ariaLabel="Paragraph"
 			placeholder="Your text. Use {{firstName}} to personalize."
 			className="text-[16px] leading-[1.6]"
-			style={{ fontFamily: EMAIL_FONT, color: EMAIL_COLOR.ink }}
+			style={{ fontFamily: theme.font, color: theme.color.ink }}
 		/>
 	);
 }

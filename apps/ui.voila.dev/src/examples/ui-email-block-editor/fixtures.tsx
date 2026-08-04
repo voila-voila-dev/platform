@@ -1,5 +1,5 @@
 import {
-	EMAIL_COLOR,
+	DEFAULT_EMAIL_EDITOR_THEME,
 	type EmailBlockComponentProps,
 	type EmailEditorBlock,
 	emailBlockDefinition,
@@ -18,13 +18,13 @@ export function EmailCard({ children }: { children: ReactNode }) {
 	return (
 		<div
 			className="flex w-full justify-center rounded-lg p-4"
-			style={{ backgroundColor: EMAIL_COLOR.canvas }}
+			style={{ backgroundColor: DEFAULT_EMAIL_EDITOR_THEME.color.canvas }}
 		>
 			<div
 				className="w-full max-w-[600px] rounded-[14px] border px-6 py-5"
 				style={{
-					backgroundColor: EMAIL_COLOR.card,
-					borderColor: EMAIL_COLOR.border,
+					backgroundColor: DEFAULT_EMAIL_EDITOR_THEME.color.card,
+					borderColor: DEFAULT_EMAIL_EDITOR_THEME.color.border,
 				}}
 			>
 				{children}

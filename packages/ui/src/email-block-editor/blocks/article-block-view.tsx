@@ -2,8 +2,8 @@ import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block
 import { BlockTextInput } from "#/email-block-editor/blocks/block-text-input.tsx";
 import { EmailCardMeta } from "#/email-block-editor/blocks/email-card-meta.tsx";
 import { EmailCardShell } from "#/email-block-editor/blocks/email-card-shell.tsx";
+import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorArticleBlock } from "#/email-block-editor/document/types.ts";
-import { EMAIL_COLOR } from "#/email-block-editor/theme.ts";
 
 /** The author/date line, with a separator only when both are present. */
 const metaLine = (block: EmailEditorArticleBlock): string =>
@@ -18,6 +18,7 @@ interface Props extends EmailBlockComponentProps<EmailEditorArticleBlock> {}
  * the byline and the link live in the settings.
  */
 export function ArticleBlockView({ block, onChange }: Props) {
+	const theme = useEmailEditorTheme();
 	const meta = metaLine(block);
 	return (
 		<EmailCardShell image={block.image}>
@@ -27,7 +28,7 @@ export function ArticleBlockView({ block, onChange }: Props) {
 				placeholder="Article title"
 				onChange={(title) => onChange({ ...block, title })}
 				className="font-bold text-[17px] leading-[1.3]"
-				style={{ color: EMAIL_COLOR.brand }}
+				style={{ color: theme.color.brand }}
 			/>
 			{meta === "" ? null : <EmailCardMeta>{meta}</EmailCardMeta>}
 			<textarea
@@ -39,7 +40,7 @@ export function ArticleBlockView({ block, onChange }: Props) {
 					onChange({ ...block, description: event.target.value })
 				}
 				className="w-full resize-none border-none bg-transparent p-0 text-[15px] leading-[1.5] outline-none [field-sizing:content] placeholder:opacity-40"
-				style={{ color: EMAIL_COLOR.ink }}
+				style={{ color: theme.color.ink }}
 			/>
 		</EmailCardShell>
 	);

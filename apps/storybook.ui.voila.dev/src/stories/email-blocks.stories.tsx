@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import {
-	EMAIL_COLOR,
+	DEFAULT_EMAIL_EDITOR_THEME,
 	type EmailBlockComponentProps,
 	type EmailEditorBlock,
 	emailBlockDefinition,
@@ -21,13 +21,13 @@ function EmailCard({ children }: { children: ReactNode }) {
 	return (
 		<div
 			className="flex justify-center rounded-lg p-8"
-			style={{ backgroundColor: EMAIL_COLOR.canvas }}
+			style={{ backgroundColor: DEFAULT_EMAIL_EDITOR_THEME.color.canvas }}
 		>
 			<div
 				className="w-full max-w-[600px] rounded-[14px] border px-8 py-6"
 				style={{
-					backgroundColor: EMAIL_COLOR.card,
-					borderColor: EMAIL_COLOR.border,
+					backgroundColor: DEFAULT_EMAIL_EDITOR_THEME.color.card,
+					borderColor: DEFAULT_EMAIL_EDITOR_THEME.color.border,
 				}}
 			>
 				{children}

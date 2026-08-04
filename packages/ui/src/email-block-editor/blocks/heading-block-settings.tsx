@@ -5,14 +5,13 @@ import type {
 	EmailEditorHeadingBlock,
 	EmailEditorHeadingLevel,
 } from "#/email-block-editor/document/types.ts";
-import { EMAIL_HEADING_STYLE } from "#/email-block-editor/theme.ts";
 
 const HEADING_LEVEL_OPTIONS: ReadonlyArray<{
 	readonly value: EmailEditorHeadingLevel;
 	readonly label: string;
 }> = [
-	{ value: 1, label: EMAIL_HEADING_STYLE[1].label },
-	{ value: 2, label: EMAIL_HEADING_STYLE[2].label },
+	{ value: 1, label: "Main title (H1)" },
+	{ value: 2, label: "Subtitle (H2)" },
 ];
 
 interface Props extends EmailBlockComponentProps<EmailEditorHeadingBlock> {}

@@ -6,15 +6,10 @@ import { CardHeaderPlaceholder } from "#/email-block-editor/components/card-head
 import {
 	useEmailEditorActions,
 	useEmailEditorState,
+	useEmailEditorTheme,
 } from "#/email-block-editor/context/email-editor-context.tsx";
 import { EmailEditorDndContext } from "#/email-block-editor/dnd/email-editor-dnd-context.tsx";
 import { SortableBlockContainer } from "#/email-block-editor/dnd/sortable-block-container.tsx";
-import { EMAIL_PREVIEW_WIDTH } from "#/email-block-editor/document/types.ts";
-import {
-	EMAIL_COLOR,
-	EMAIL_FONT,
-	EMAIL_GRID_GAP_PX,
-} from "#/email-block-editor/theme.ts";
 
 interface Props {
 	headerSlot?: ReactNode;
@@ -29,23 +24,24 @@ interface Props {
  * shows a single centered add button instead.
  */
 export function EditorCanvas({ headerSlot, footerSlot }: Props) {
+	const theme = useEmailEditorTheme();
 	const { document, preview } = useEmailEditorState();
 	const { addBlock, moveBlock } = useEmailEditorActions();
 	const blocks = document.blocks;
 	return (
 		<div
 			className="flex justify-center rounded-lg px-4 py-8"
-			style={{ backgroundColor: EMAIL_COLOR.canvas }}
+			style={{ backgroundColor: theme.color.canvas }}
 		>
 			<div
 				className="w-full"
-				style={{ maxWidth: `${EMAIL_PREVIEW_WIDTH[preview]}px` }}
+				style={{ maxWidth: `${theme.previewWidth[preview]}px` }}
 			>
 				<div
 					className="rounded-[14px] border"
 					style={{
-						backgroundColor: EMAIL_COLOR.card,
-						borderColor: EMAIL_COLOR.border,
+						backgroundColor: theme.color.card,
+						borderColor: theme.color.border,
 					}}
 				>
 					{headerSlot ?? <CardHeaderPlaceholder />}
@@ -55,7 +51,7 @@ export function EditorCanvas({ headerSlot, footerSlot }: Props) {
 								containerId={null}
 								blockIds={blocks.map((block) => block.id)}
 								layout="list"
-								style={{ minHeight: `${EMAIL_GRID_GAP_PX}px` }}
+								style={{ minHeight: `${theme.gridGapPx}px` }}
 							>
 								{blocks.map((block, index) => (
 									<CanvasBlockRow
@@ -71,7 +67,7 @@ export function EditorCanvas({ headerSlot, footerSlot }: Props) {
 							<div className="flex flex-col items-center gap-3 rounded-lg border border-dashed px-4 py-10">
 								<p
 									className="text-[14px]"
-									style={{ color: EMAIL_COLOR.muted, fontFamily: EMAIL_FONT }}
+									style={{ color: theme.color.muted, fontFamily: theme.font }}
 								>
 									Your email is empty.
 								</p>

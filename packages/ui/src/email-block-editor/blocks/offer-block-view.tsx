@@ -3,8 +3,8 @@ import { EmailCardButton } from "#/email-block-editor/blocks/email-card-button.t
 import { EmailCardShell } from "#/email-block-editor/blocks/email-card-shell.tsx";
 import { OfferFeatureList } from "#/email-block-editor/blocks/offer-feature-list.tsx";
 import { OfferHeader } from "#/email-block-editor/blocks/offer-header.tsx";
+import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorOfferBlock } from "#/email-block-editor/document/types.ts";
-import { EMAIL_COLOR } from "#/email-block-editor/theme.ts";
 
 interface Props extends EmailBlockComponentProps<EmailEditorOfferBlock> {}
 
@@ -14,6 +14,7 @@ interface Props extends EmailBlockComponentProps<EmailEditorOfferBlock> {}
  * the recommended plan of a row in the brand colour.
  */
 export function OfferBlockView({ block, onChange }: Props) {
+	const theme = useEmailEditorTheme();
 	return (
 		<EmailCardShell
 			image={block.image.src === "" ? undefined : block.image}
@@ -23,7 +24,7 @@ export function OfferBlockView({ block, onChange }: Props) {
 			{block.description === "" ? null : (
 				<p
 					className="text-[15px] leading-[1.5]"
-					style={{ color: EMAIL_COLOR.ink }}
+					style={{ color: theme.color.ink }}
 				>
 					{block.description}
 				</p>
