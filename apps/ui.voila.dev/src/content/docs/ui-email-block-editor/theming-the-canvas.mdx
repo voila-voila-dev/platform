@@ -17,73 +17,104 @@ as the rest of the system: `--ring` for the selection ring, `--border` for the
 dashed drop slots, and so on through the sidebar's inputs and buttons.
 
 There is nothing to configure. If your app imports any
-`@voila.dev/ui/styles/themes/*.css` (or defines the same CSS custom properties itself), the
-editor chrome picks your brand up automatically, dark mode included. Change
-`--primary` and the sidebar's controls follow; toggle the theme and the
-toolbar toggles with it.
+`@voila.dev/ui/styles/themes/*.css` (or defines the same CSS custom properties
+itself), the editor chrome picks your brand up automatically, dark mode
+included. Change `--primary` and the sidebar's controls follow; toggle the
+theme and the toolbar toggles with it.
 
 ## The card follows your email
 
-The email card itself (the grey canvas, the white 600px card, the brand blue
-of headings and buttons) deliberately does *not* follow your app theme. An
-email does not have a dark mode toggle, and a canvas that restyled itself with
-the app would stop being an honest preview of what the recipient receives. So
-the card's look is pinned to constants in `src/theme.ts`:
+The email card itself — the grey backdrop, the white card, the brand colour of
+headings and buttons — is the *preview*, and what it should match is your
+renderer, not your app. An email client has no CSS custom properties and no
+dark mode toggle, so a canvas that restyled itself with the app would stop
+being an honest preview of what the recipient receives.
 
-```ts
-export const EMAIL_COLOR = {
-	brand: "#151b77", // headings, filled buttons, highlighted cards
-	ink: "#2a2a33", // body text
-	muted: "#9095a3", // meta lines, placeholders
-	border: "#ececf1", // card borders, dividers
-	card: "#ffffff", // the email card
-	canvas: "#f4f4f7", // the grey behind it
-} as const;
-
-export const EMAIL_FONT =
-	"-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";
-```
-
-Every block imports these two values, so the palette is one object, not a
-scatter of hex codes. Your server-side renderer stays the source of truth: the
-constants only need to agree with it closely enough that the canvas is an
-honest preview.
-
-## Rebranding it
-
-There is no theme prop, on purpose: a per-instance theme would invite the
-canvas and the sent email to drift apart. The package is source-shipped, so
-rebranding the canvas is editing `theme.ts`, the same file whether you keep
-the dependency (patch it) or copy the package into your repo and own it
-outright. Change `brand`, change your renderer's matching value in the same
-commit, and every heading, button, offer highlight and rating star follows.
-
-The import path, if you want to reuse the palette in your own surrounding UI:
-
-```ts
-import { EMAIL_COLOR, EMAIL_FONT } from "@voila.dev/ui/email-block-editor";
-```
-
-## Locale, headers and footers
-
-Two neighbours of the palette complete the picture:
-
-- `EMAIL_PREVIEW_LOCALE` (`en-US` by default) is the locale the canvas
-  previews prices and dates in. It is deliberately not the browser's locale:
-  the sent email formats per recipient, and an author should see what a
-  recipient gets, not what their own machine is configured for.
-- The header and footer placeholders are neutral stand-ins for the branded
-  chrome your server adds at send time. Pass `headerSlot` and `footerSlot` to
-  `EmailBlockEditor` to preview your real logo and footer in their place.
+That is what the `theme` prop is for:
 
 ```tsx
 <EmailBlockEditor
+	blocks={BLOCKS}
 	document={document}
-	onChange={setDocument}
+	onDocumentChange={setDocument}
+	theme={{
+		color: { brand: "#151b77", canvas: "#f4f4f7" },
+		locale: "fr-FR",
+	}}
+/>
+```
+
+It is merged over the defaults **section by section**, so `{ color: { brand } }`
+is a complete theme: the other colours, the font and the metrics keep theirs.
+Two editors in the same app can therefore look different, which matters the
+moment you preview two brands, or a transactional template beside a marketing
+one.
+
+The defaults point at the kit's tokens (`var(--color-primary)` and friends), so
+an editor with no `theme` follows the app — the right behaviour for a demo and
+the wrong one for a real email. Point it at your renderer's literal palette and
+the canvas stops lying.
+
+The theme covers the colours, the font stack, the preview locale, the two
+heading sizes, the grid gutter, the image width ratios and the two preview
+widths. The whole default is exported if you want to read it or build on it:
+
+```ts
+import {
+	DEFAULT_EMAIL_EDITOR_THEME,
+	mergeEmailEditorTheme,
+} from "@voila.dev/ui/email-block-editor";
+```
+
+`mergeEmailEditorTheme` is the same merge the editor does, for when you need
+the resolved object outside one — a preview thumbnail, say.
+
+## Locale
+
+`theme.locale` (`en-US` by default) is the locale the canvas previews prices
+and dates in. Deliberately not the browser's: the sent email formats per
+recipient, and an author should see what a recipient gets rather than what
+their own machine happens to be configured for.
+
+## Headers and footers
+
+The header and footer placeholders are neutral stand-ins for the branded
+chrome your renderer adds at send time. Replace them to preview the real
+thing:
+
+```tsx
+<EmailBlockEditor
+	blocks={BLOCKS}
+	document={document}
+	onDocumentChange={setDocument}
 	headerSlot={<BrandHeader />}
 	footerSlot={<BrandFooter />}
 />
 ```
+
+Composing the parts yourself, the same two are `EmailEditor.CardHeader` and
+`EmailEditor.CardFooter`, each taking a `render` prop. The footer sits outside
+the card on purpose: that is where a sent email puts contact details and the
+unsubscribe line.
+
+## Copy
+
+Colours are not the only thing a host owns. Every string the editor shows
+comes from `labels`, merged the same way:
+
+```tsx
+<EmailBlockEditor
+	blocks={BLOCKS}
+	document={document}
+	onDocumentChange={setDocument}
+	labels={{ chrome: { addBlock: "Ajouter un bloc" } }}
+/>
+```
+
+There is no i18n runtime in the package: your app has one already, and a
+second would fight it. The strings are data, in four sections — `chrome`,
+`blockNames`, `fields`, `blocks` — and a label that reads an index is a
+function, because `Item 3` and `3e élément` do not share a word order.
 
 ## Related
 

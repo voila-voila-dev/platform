@@ -3,16 +3,32 @@ export type {
 	EmailBlockContainer,
 	EmailBlockDefinition,
 } from "#/email-block-editor/blocks/block-definitions.tsx";
+export { BlockTextInput } from "#/email-block-editor/blocks/block-text-input.tsx";
 export {
 	createEmailBlocks,
 	type EmailBlocksOptions,
 } from "#/email-block-editor/blocks/create-email-blocks.ts";
+export { EmailCardButton } from "#/email-block-editor/blocks/email-card-button.tsx";
+export { EmailCardImage } from "#/email-block-editor/blocks/email-card-image.tsx";
+export { EmailCardMeta } from "#/email-block-editor/blocks/email-card-meta.tsx";
+export { EmailCardShell } from "#/email-block-editor/blocks/email-card-shell.tsx";
 export {
 	type AnyEmailBlockDefinition,
 	createEmailBlockRegistry,
 	type EmailEditorBlockOf,
 	type EmailEditorRegistry,
 } from "#/email-block-editor/blocks/registry.ts";
+export { RichTextEditable } from "#/email-block-editor/blocks/rich-text-editable.tsx";
+export { AlignmentOption } from "#/email-block-editor/components/block-options/alignment-option.tsx";
+export { BlockOptionRow } from "#/email-block-editor/components/block-options/block-option-row.tsx";
+export { BlockOptionSection } from "#/email-block-editor/components/block-options/block-option-section.tsx";
+export { LinkOption } from "#/email-block-editor/components/block-options/link-option.tsx";
+export { MoneyOption } from "#/email-block-editor/components/block-options/money-option.tsx";
+export { SegmentedOption } from "#/email-block-editor/components/block-options/segmented-option.tsx";
+export { SelectOption } from "#/email-block-editor/components/block-options/select-option.tsx";
+export { TextAreaOption } from "#/email-block-editor/components/block-options/text-area-option.tsx";
+export { TextOption } from "#/email-block-editor/components/block-options/text-option.tsx";
+export { ToggleOption } from "#/email-block-editor/components/block-options/toggle-option.tsx";
 export { EmailBlockEditor } from "#/email-block-editor/components/email-block-editor.tsx";
 export {
 	type EmailEditorActionsContextValue,

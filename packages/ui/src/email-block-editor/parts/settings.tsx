@@ -38,7 +38,6 @@ export function EmailEditorSidebar({ className, children }: SidebarProps) {
 		return null;
 	}
 	return (
-		// biome-ignore lint/a11y/noStaticElementInteractions: not a control; it only stops a click from reaching the host's deselect handler.
 		<div
 			className={cn("flex flex-col gap-4", EMAIL_EDITOR_SIDE_COLUMN, className)}
 			{...stopPropagation}
@@ -90,7 +89,6 @@ export function EmailEditorDocumentSettings({
 }: CardProps) {
 	const { compact } = useEmailEditorState();
 	return (
-		// biome-ignore lint/a11y/noStaticElementInteractions: not a control; it only stops a click from reaching the host's deselect handler.
 		<div
 			className={cn(
 				"flex flex-col gap-4 rounded-lg border bg-background p-4",
@@ -129,7 +127,6 @@ export function EmailEditorSettingsSheet() {
 						{chrome.blockSettingsDescription}
 					</Drawer.Description>
 				</Drawer.Header>
-				{/* biome-ignore lint/a11y/noStaticElementInteractions: not a control; it only stops a click from reaching the host's deselect handler. */}
 				<div
 					className="flex flex-col gap-4 overflow-y-auto px-4 pb-8"
 					{...stopPropagation}

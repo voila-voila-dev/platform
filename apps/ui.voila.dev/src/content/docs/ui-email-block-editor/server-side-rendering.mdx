@@ -129,15 +129,24 @@ because the server owns them.
 
 ## Keeping the preview honest
 
-The canvas colours and font live in `theme.ts` as `EMAIL_COLOR` and
-`EMAIL_FONT`, and the snippet above hard-codes the same values. Your renderer
-stays the source of truth; the constants only need to agree with it closely
-enough that the canvas is an honest preview. If you rebrand the sent email,
-change both in the same commit. See
-[Theming the canvas](/ui-email-block-editor/theming-the-canvas).
+Your renderer is the source of truth for what a recipient sees; the canvas
+only has to agree with it closely enough to be an honest preview. Pass your
+renderer's palette to the editor as `theme` and there is one place to change
+when you rebrand:
 
-Prices and dates in the canvas are previewed in `EMAIL_PREVIEW_LOCALE`
-(`en-US` by default), mirroring a renderer that formats per recipient:
+```tsx
+<EmailBlockEditor
+	blocks={BLOCKS}
+	document={document}
+	onDocumentChange={setDocument}
+	theme={{ color: { brand: "#151b77", canvas: "#f4f4f7" } }}
+/>
+```
+
+See [Theming the canvas](/ui-email-block-editor/theming-the-canvas).
+
+Prices and dates in the canvas are previewed in `theme.locale` (`en-US` by
+default), mirroring a renderer that formats per recipient:
 
 ```ts
 
