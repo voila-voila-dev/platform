@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEmailEditorState } from "#/email-block-editor/context/email-editor-context.tsx";
 import { cn } from "#/lib/utils.ts";
 
 /** How a part tells the layout it is there. Composition makes it possible to
@@ -15,21 +16,41 @@ export const useRegisterEmailEditorPart = (part: string): void => {
 	}, [register, part]);
 };
 
+/**
+ * Which column a part belongs to on a wide viewport. Declared as a static on
+ * the component rather than as a class on its root, because two parts placed
+ * into the same CSS grid cell overlap silently — they render on top of each
+ * other and the one underneath is simply invisible.
+ */
+export type EmailEditorSlot = "main" | "side";
+
+export interface EmailEditorPart {
+	readonly slot?: EmailEditorSlot;
+}
+
+const slotOf = (child: React.ReactNode): EmailEditorSlot => {
+	if (!React.isValidElement(child)) {
+		return "main";
+	}
+	return (child.type as EmailEditorPart)?.slot ?? "main";
+};
+
 interface Props {
 	className?: string;
 	children: React.ReactNode;
 }
 
 /**
- * The two-column arrangement: the canvas and the settings column side by side
- * on a wide viewport, stacked below `lg` — where a 280px column would put a
- * block's options a screenful away from the block they configure.
+ * The canvas and the settings column side by side on a wide viewport, stacked
+ * below `lg` — where a 280px column would put a block's options a screenful
+ * away from the block they configure.
  *
- * The columns are a CSS breakpoint rather than a measured one, matching
- * `useCompactEditorLayout`, so the layout and the parts that read `compact`
- * always agree.
+ * Stacked, the children keep their source order, which is why the document's
+ * own fields sit above the canvas there rather than under it. Side by side,
+ * each child goes to the column its component declares.
  */
 export function EmailEditorLayout({ className, children }: Props) {
+	const { compact } = useEmailEditorState();
 	const parts = React.useRef(new Set<string>());
 	const register = React.useCallback((part: string) => {
 		parts.current.add(part);
@@ -44,22 +65,32 @@ export function EmailEditorLayout({ className, children }: Props) {
 		}
 	}, []);
 
+	const columns = React.Children.toArray(children).reduce<{
+		main: Array<React.ReactNode>;
+		side: Array<React.ReactNode>;
+	}>(
+		(grouped, child) => {
+			grouped[slotOf(child)].push(child);
+			return grouped;
+		},
+		{ main: [], side: [] },
+	);
+
 	return (
 		<EmailEditorLayoutContext.Provider value={register}>
-			<div
-				className={cn(
-					"grid grid-cols-1 items-start gap-6 lg:grid-cols-[minmax(0,1fr)_280px]",
-					className,
-				)}
-			>
-				{children}
-			</div>
+			{compact ? (
+				<div className={cn("flex flex-col gap-4", className)}>{children}</div>
+			) : (
+				<div
+					className={cn(
+						"grid grid-cols-[minmax(0,1fr)_280px] items-start gap-6",
+						className,
+					)}
+				>
+					<div className="flex min-w-0 flex-col gap-3">{columns.main}</div>
+					<div className="flex flex-col gap-4">{columns.side}</div>
+				</div>
+			)}
 		</EmailEditorLayoutContext.Provider>
 	);
 }
-
-/** The main column: everything that is not the settings column. */
-export const EMAIL_EDITOR_MAIN_COLUMN = "lg:col-start-1";
-/** The settings column, spanning however many rows the main column has. */
-export const EMAIL_EDITOR_SIDE_COLUMN =
-	"lg:col-start-2 lg:row-start-1 lg:row-end-[-1]";

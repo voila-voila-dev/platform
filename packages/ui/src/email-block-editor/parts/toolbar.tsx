@@ -5,7 +5,7 @@ import {
 	useEmailEditorActions,
 	useEmailEditorState,
 } from "#/email-block-editor/context/email-editor-context.tsx";
-import { EMAIL_EDITOR_MAIN_COLUMN } from "#/email-block-editor/parts/layout.tsx";
+import type { EmailEditorSlot } from "#/email-block-editor/parts/layout.tsx";
 import { cn } from "#/lib/utils.ts";
 
 interface Props {
@@ -27,11 +27,7 @@ export function EmailEditorToolbar({ className, children }: Props) {
 	return (
 		// biome-ignore lint/a11y/noStaticElementInteractions: not a control; it only stops a click from reaching the host's deselect handler.
 		<div
-			className={cn(
-				"flex items-center justify-end gap-2",
-				EMAIL_EDITOR_MAIN_COLUMN,
-				className,
-			)}
+			className={cn("flex items-center justify-end gap-2", className)}
 			onClick={(event) => event.stopPropagation()}
 			onKeyDown={(event) => event.stopPropagation()}
 		>
@@ -46,3 +42,5 @@ export function EmailEditorToolbar({ className, children }: Props) {
 		</div>
 	);
 }
+
+EmailEditorToolbar.slot = "main" satisfies EmailEditorSlot;

@@ -12,10 +12,8 @@ import {
 } from "#/email-block-editor/context/email-editor-context.tsx";
 import { EmailEditorDndContext } from "#/email-block-editor/dnd/email-editor-dnd-context.tsx";
 import { SortableBlockContainer } from "#/email-block-editor/dnd/sortable-block-container.tsx";
-import {
-	EMAIL_EDITOR_MAIN_COLUMN,
-	useRegisterEmailEditorPart,
-} from "#/email-block-editor/parts/layout.tsx";
+import type { EmailEditorSlot } from "#/email-block-editor/parts/layout.tsx";
+import { useRegisterEmailEditorPart } from "#/email-block-editor/parts/layout.tsx";
 import { cn } from "#/lib/utils.ts";
 
 interface CanvasProps {
@@ -36,11 +34,7 @@ export function EmailEditorCanvas({ className, children }: CanvasProps) {
 	useRegisterEmailEditorPart("canvas");
 	return (
 		<div
-			className={cn(
-				"flex justify-center rounded-lg px-4 py-8",
-				EMAIL_EDITOR_MAIN_COLUMN,
-				className,
-			)}
+			className={cn("flex justify-center rounded-lg px-4 py-8", className)}
 			style={{ backgroundColor: theme.color.canvas }}
 		>
 			<div
@@ -146,3 +140,5 @@ export function EmailEditorBlocks({ className }: BlocksProps) {
 		</div>
 	);
 }
+
+EmailEditorCanvas.slot = "main" satisfies EmailEditorSlot;

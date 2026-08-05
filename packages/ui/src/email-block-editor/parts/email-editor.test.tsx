@@ -149,6 +149,41 @@ describe("EmailEditor", () => {
 		warn.mockRestore();
 	});
 
+	it("stacks the settings cards in one column instead of on top of each other", () => {
+		// The parts used to place themselves into the grid with column and row
+		// classes, and two of them claimed the same cell: the block settings card
+		// rendered exactly on top of the document settings card, hiding it.
+		const { getByText } = render(
+			<EditorUnderTest initial={documentOf(heading("a", "First"))}>
+				<EmailEditor.Layout>
+					<EmailEditor.Toolbar />
+					<EmailEditor.DocumentSettings>
+						<label htmlFor="subject">Subject</label>
+					</EmailEditor.DocumentSettings>
+					<EmailEditor.Canvas />
+					<EmailEditor.Sidebar />
+				</EmailEditor.Layout>
+			</EditorUnderTest>,
+		);
+
+		const card =
+			'[class~="rounded-lg"][class~="border"][class~="bg-background"]';
+		const documentCard = getByText("Subject").closest(card);
+		const blockCard = getByText("Block settings").closest(card);
+		expect(documentCard).not.toBeNull();
+		expect(blockCard).not.toBeNull();
+		expect(documentCard).not.toBe(blockCard);
+		expect(documentCard?.contains(blockCard as Node)).toBe(false);
+		// Both in the settings column, the document's fields first — not two
+		// elements placed into the same cell.
+		const column = documentCard?.parentElement;
+		expect(column?.contains(blockCard as Node)).toBe(true);
+		expect(
+			(documentCard as Node).compareDocumentPosition(blockCard as Node) &
+				Node.DOCUMENT_POSITION_FOLLOWING,
+		).toBeTruthy();
+	});
+
 	it("takes its copy from `labels`", () => {
 		const { getByText } = render(
 			<EmailEditor.Root

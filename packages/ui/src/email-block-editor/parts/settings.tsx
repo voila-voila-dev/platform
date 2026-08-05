@@ -6,10 +6,7 @@ import {
 	useEmailEditorLabels,
 	useEmailEditorState,
 } from "#/email-block-editor/context/email-editor-context.tsx";
-import {
-	EMAIL_EDITOR_MAIN_COLUMN,
-	EMAIL_EDITOR_SIDE_COLUMN,
-} from "#/email-block-editor/parts/layout.tsx";
+import type { EmailEditorSlot } from "#/email-block-editor/parts/layout.tsx";
 import { cn } from "#/lib/utils.ts";
 
 /**
@@ -38,10 +35,7 @@ export function EmailEditorSidebar({ className, children }: SidebarProps) {
 		return null;
 	}
 	return (
-		<div
-			className={cn("flex flex-col gap-4", EMAIL_EDITOR_SIDE_COLUMN, className)}
-			{...stopPropagation}
-		>
+		<div className={cn("flex flex-col gap-4", className)} {...stopPropagation}>
 			{children ?? <EmailEditorBlockSettings />}
 		</div>
 	);
@@ -87,13 +81,10 @@ export function EmailEditorDocumentSettings({
 	title,
 	children,
 }: CardProps) {
-	const { compact } = useEmailEditorState();
 	return (
 		<div
 			className={cn(
 				"flex flex-col gap-4 rounded-lg border bg-background p-4",
-				compact ? EMAIL_EDITOR_MAIN_COLUMN : EMAIL_EDITOR_SIDE_COLUMN,
-				compact ? null : "lg:row-end-auto",
 				className,
 			)}
 			{...stopPropagation}
@@ -137,3 +128,8 @@ export function EmailEditorSettingsSheet() {
 		</Drawer.Root>
 	);
 }
+
+EmailEditorSidebar.slot = "side" satisfies EmailEditorSlot;
+// Above the canvas when stacked (source order), at the top of the settings
+// column when side by side.
+EmailEditorDocumentSettings.slot = "side" satisfies EmailEditorSlot;
