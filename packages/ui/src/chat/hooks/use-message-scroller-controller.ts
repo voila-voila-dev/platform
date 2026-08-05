@@ -478,7 +478,11 @@ function useMessageScrollerController({
 						return;
 					}
 
-					scrollToElement(anchor, { align: "start" }, { keepPreviousPeek: true });
+					scrollToElement(
+						anchor,
+						{ align: "start" },
+						{ keepPreviousPeek: true },
+					);
 					handledScrollAnchorsRef.current.add(anchor);
 					return;
 				}
@@ -491,7 +495,11 @@ function useMessageScrollerController({
 				);
 
 				if (anchor) {
-					scrollToElement(anchor, { align: "start" }, { keepPreviousPeek: true });
+					scrollToElement(
+						anchor,
+						{ align: "start" },
+						{ keepPreviousPeek: true },
+					);
 					handledScrollAnchorsRef.current.add(anchor);
 					return;
 				}

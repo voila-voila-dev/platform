@@ -11,26 +11,49 @@ import * as Example from "@/examples/ui/chat";
 </Preview>
 
 ```tsx
-<Chat.MessageList>
-	<Chat.DateSeparator>Hier</Chat.DateSeparator>
-	<Chat.MessageGroup align="start">
-		<Chat.MessageSender avatar={<Avatar.Root …/>} name="Camille Dubois" />
-		<Chat.Message variant="other">
-			Bonjour, je serai sur place 30 minutes avant le match.
-			<Chat.MessageTime dateTime="2026-06-11T18:42">18:42</Chat.MessageTime>
-		</Chat.Message>
-	</Chat.MessageGroup>
-</Chat.MessageList>
+<Chat.Provider autoScroll>
+	<Chat.Root>
+		<Chat.Viewport aria-label="Messages">
+			<Chat.Transcript>
+				<Chat.Item messageId="day-1">
+					<Chat.DateSeparator>Hier</Chat.DateSeparator>
+				</Chat.Item>
+				<Chat.Item messageId="m1">
+					<Chat.Message align="start">
+						<Chat.Avatar><Avatar.Root …/></Chat.Avatar>
+						<Chat.Content>
+							<Chat.Header>Camille Dubois</Chat.Header>
+							<Chat.BubbleGroup>
+								<Chat.Bubble variant="muted">
+									<Chat.BubbleContent>
+										<Chat.Text>Bonjour, je serai sur place 30 minutes avant.</Chat.Text>
+										<Chat.Time dateTime="2026-06-11T18:42">18:42</Chat.Time>
+									</Chat.BubbleContent>
+								</Chat.Bubble>
+							</Chat.BubbleGroup>
+						</Chat.Content>
+					</Chat.Message>
+				</Chat.Item>
+			</Chat.Transcript>
+		</Chat.Viewport>
+		<Chat.ScrollButton label="Voir les derniers messages" />
+	</Chat.Root>
+</Chat.Provider>
 
 <Chat.Composer value={draft} onValueChange={setDraft} onSubmit={send} sendLabel="Envoyer" />
 ```
 
-The list keeps itself pinned to the newest message while the user is at the
-bottom, and stops following as soon as they scroll up — so an arriving message
-never yanks the view away from what they are reading.
+The scroller keeps a reader who is at the live edge pinned to new content, holds
+a turn at the reading line while a reply streams in, and preserves the position
+when older history is prepended — so an arriving message never yanks the view
+away from what is being read. `useChatScroller` exposes `scrollToEnd`,
+`scrollToStart` and `scrollToMessage`; `useChatScrollerScrollable` reports which
+edges still have content; `useChatScrollerVisibility` reports the visible rows
+and the current anchored turn.
 
-Group consecutive messages from one author into a single `Chat.MessageGroup`;
-the sender block is rendered once per group, not once per message.
+`Chat.MessageList` and its `Chat.Message*` siblings are the earlier,
+self-scrolling anatomy, kept for the screens still on it. Its bubble is
+`Chat.MessageBubble` (the `own`/`other` variants).
 
 <Preview layout="stack">
 	<Example.Conversations />
@@ -41,9 +64,29 @@ the sender block is rendered once per group, not once per message.
 
 ## API
 
+### Chat.Avatar
+
+<PropTable of="Chat.Avatar" />
+
+### Chat.Bubble
+
+<PropTable of="Chat.Bubble" />
+
+### Chat.BubbleContent
+
+<PropTable of="Chat.BubbleContent" />
+
+### Chat.BubbleGroup
+
+<PropTable of="Chat.BubbleGroup" />
+
 ### Chat.Composer
 
 <PropTable of="Chat.Composer" />
+
+### Chat.Content
+
+<PropTable of="Chat.Content" />
 
 ### Chat.ConversationItem
 
@@ -57,9 +100,41 @@ the sender block is rendered once per group, not once per message.
 
 <PropTable of="Chat.ExternalLinkDialog" />
 
+### Chat.Footer
+
+<PropTable of="Chat.Footer" />
+
+### Chat.Group
+
+<PropTable of="Chat.Group" />
+
+### Chat.Header
+
+<PropTable of="Chat.Header" />
+
+### Chat.Item
+
+<PropTable of="Chat.Item" />
+
+### Chat.Marker
+
+<PropTable of="Chat.Marker" />
+
+### Chat.MarkerContent
+
+<PropTable of="Chat.MarkerContent" />
+
+### Chat.MarkerIcon
+
+<PropTable of="Chat.MarkerIcon" />
+
 ### Chat.Message
 
 <PropTable of="Chat.Message" />
+
+### Chat.MessageBubble
+
+<PropTable of="Chat.MessageBubble" />
 
 ### Chat.MessageGroup
 
@@ -81,6 +156,38 @@ the sender block is rendered once per group, not once per message.
 
 <PropTable of="Chat.MessageTime" />
 
+### Chat.Provider
+
+<PropTable of="Chat.Provider" />
+
+### Chat.Reactions
+
+<PropTable of="Chat.Reactions" />
+
+### Chat.Root
+
+<PropTable of="Chat.Root" />
+
+### Chat.ScrollButton
+
+<PropTable of="Chat.ScrollButton" />
+
+### Chat.Text
+
+<PropTable of="Chat.Text" />
+
+### Chat.Time
+
+<PropTable of="Chat.Time" />
+
+### Chat.Transcript
+
+<PropTable of="Chat.Transcript" />
+
 ### Chat.UnreadSeparator
 
 <PropTable of="Chat.UnreadSeparator" />
+
+### Chat.Viewport
+
+<PropTable of="Chat.Viewport" />

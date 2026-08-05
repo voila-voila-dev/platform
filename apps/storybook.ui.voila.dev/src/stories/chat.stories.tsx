@@ -140,20 +140,20 @@ function FullFeaturedPlayground() {
 										name="Nathan Guyot"
 										badge={<Badge variant="highlight">Northwind</Badge>}
 									/>
-									<Chat.Message variant="other">
+									<Chat.MessageBubble variant="other">
 										Welcome to the project thread!
 										<Chat.MessageTime dateTime="2026-06-08T10:15">
 											10:15
 										</Chat.MessageTime>
-									</Chat.Message>
+									</Chat.MessageBubble>
 								</Chat.MessageGroup>
 								<Chat.MessageGroup align="end">
-									<Chat.Message variant="own">
+									<Chat.MessageBubble variant="own">
 										Thanks, glad to be on board.
 										<Chat.MessageTime dateTime="2026-06-08T10:20">
 											10:20
 										</Chat.MessageTime>
-									</Chat.Message>
+									</Chat.MessageBubble>
 								</Chat.MessageGroup>
 							</>
 						) : null}
@@ -164,18 +164,18 @@ function FullFeaturedPlayground() {
 								name="Camille Dubois"
 								badge={<Badge variant="brand">Verified freelancer</Badge>}
 							/>
-							<Chat.Message variant="other">
+							<Chat.MessageBubble variant="other">
 								Hi, I'll be online 30 minutes before the kickoff call.
 								<Chat.MessageTime dateTime="2026-06-11T18:42">
 									18:42
 								</Chat.MessageTime>
-							</Chat.Message>
-							<Chat.Message variant="other">
+							</Chat.MessageBubble>
+							<Chat.MessageBubble variant="other">
 								Is there a shared folder where I can drop my files?
 								<Chat.MessageTime dateTime="2026-06-11T18:43">
 									18:43
 								</Chat.MessageTime>
-							</Chat.Message>
+							</Chat.MessageBubble>
 						</Chat.MessageGroup>
 						<Chat.MessageGroup align="start">
 							<Chat.MessageSender
@@ -183,20 +183,20 @@ function FullFeaturedPlayground() {
 								name="Nathan Guyot"
 								badge={<Badge variant="highlight">Northwind</Badge>}
 							/>
-							<Chat.Message variant="other">
+							<Chat.MessageBubble variant="other">
 								Yes, the project drive has a folder set up for you.
 								<Chat.MessageTime dateTime="2026-06-11T19:05">
 									19:05
 								</Chat.MessageTime>
-							</Chat.Message>
+							</Chat.MessageBubble>
 						</Chat.MessageGroup>
 						<Chat.MessageGroup align="end">
-							<Chat.Message variant="own">
+							<Chat.MessageBubble variant="own">
 								Perfect, thanks! Talk on Monday.
 								<Chat.MessageTime dateTime="2026-06-11T19:10">
 									19:10
 								</Chat.MessageTime>
-							</Chat.Message>
+							</Chat.MessageBubble>
 						</Chat.MessageGroup>
 						<Chat.UnreadSeparator>New messages</Chat.UnreadSeparator>
 						<Chat.DateSeparator>Today</Chat.DateSeparator>
@@ -206,12 +206,12 @@ function FullFeaturedPlayground() {
 								name="Camille Dubois"
 								badge={<Badge variant="brand">Verified freelancer</Badge>}
 							/>
-							<Chat.Message variant="other">
+							<Chat.MessageBubble variant="other">
 								Small change: I'll join at 1:30pm instead.
 								<Chat.MessageTime dateTime="2026-06-12T08:55">
 									08:55
 								</Chat.MessageTime>
-							</Chat.Message>
+							</Chat.MessageBubble>
 						</Chat.MessageGroup>
 						{liveGroups.map((group) => {
 							const [firstMessage] = group;
@@ -222,14 +222,14 @@ function FullFeaturedPlayground() {
 								return (
 									<Chat.MessageGroup key={firstMessage.id} align="end">
 										{group.map((message) => (
-											<Chat.Message key={message.id} variant="own">
+											<Chat.MessageBubble key={message.id} variant="own">
 												<Chat.MessageText onLinkClick={setPendingUrl}>
 													{message.text}
 												</Chat.MessageText>
 												<Chat.MessageTime>
 													{liveMessageTime(message.id)}
 												</Chat.MessageTime>
-											</Chat.Message>
+											</Chat.MessageBubble>
 										))}
 									</Chat.MessageGroup>
 								);
@@ -242,14 +242,14 @@ function FullFeaturedPlayground() {
 										badge={<Badge variant="highlight">Northwind</Badge>}
 									/>
 									{group.map((message) => (
-										<Chat.Message key={message.id} variant="other">
+										<Chat.MessageBubble key={message.id} variant="other">
 											<Chat.MessageText onLinkClick={setPendingUrl}>
 												{message.text}
 											</Chat.MessageText>
 											<Chat.MessageTime>
 												{liveMessageTime(message.id)}
 											</Chat.MessageTime>
-										</Chat.Message>
+										</Chat.MessageBubble>
 									))}
 								</Chat.MessageGroup>
 							);
@@ -334,18 +334,18 @@ export const Thread: Story = {
 						name="Camille Dubois"
 						badge={<Badge variant="brand">Verified freelancer</Badge>}
 					/>
-					<Chat.Message variant="other">
+					<Chat.MessageBubble variant="other">
 						Hi, I'll be online 30 minutes before the kickoff call.
 						<Chat.MessageTime dateTime="2026-06-11T18:42">
 							18:42
 						</Chat.MessageTime>
-					</Chat.Message>
-					<Chat.Message variant="other">
+					</Chat.MessageBubble>
+					<Chat.MessageBubble variant="other">
 						Is there a shared folder where I can drop my files?
 						<Chat.MessageTime dateTime="2026-06-11T18:43">
 							18:43
 						</Chat.MessageTime>
-					</Chat.Message>
+					</Chat.MessageBubble>
 				</Chat.MessageGroup>
 				<Chat.MessageGroup align="start">
 					<Chat.MessageSender
@@ -353,12 +353,12 @@ export const Thread: Story = {
 						name="Nathan Guyot"
 						badge={<Badge variant="highlight">Northwind</Badge>}
 					/>
-					<Chat.Message variant="other">
+					<Chat.MessageBubble variant="other">
 						Yes, the project drive has a folder set up for you.
 						<Chat.MessageTime dateTime="2026-06-11T19:05">
 							19:05
 						</Chat.MessageTime>
-					</Chat.Message>
+					</Chat.MessageBubble>
 				</Chat.MessageGroup>
 				<Chat.DateSeparator>Today</Chat.DateSeparator>
 				<Chat.MessageGroup align="start">
@@ -367,20 +367,20 @@ export const Thread: Story = {
 						name="Emilien"
 						badge={<Badge>Acme team</Badge>}
 					/>
-					<Chat.Message variant="other">
+					<Chat.MessageBubble variant="other">
 						Hi everyone, I'm around if you need anything.
 						<Chat.MessageTime dateTime="2026-06-12T09:02">
 							09:02
 						</Chat.MessageTime>
-					</Chat.Message>
+					</Chat.MessageBubble>
 				</Chat.MessageGroup>
 				<Chat.MessageGroup align="end">
-					<Chat.Message variant="own">
+					<Chat.MessageBubble variant="own">
 						Perfect, thanks! Talk on Monday.
 						<Chat.MessageTime dateTime="2026-06-12T09:10">
 							09:10
 						</Chat.MessageTime>
-					</Chat.Message>
+					</Chat.MessageBubble>
 				</Chat.MessageGroup>
 			</Chat.MessageList>
 		</div>
@@ -394,12 +394,12 @@ export const UnreadSeparator: Story = {
 		<div className="flex h-72 w-full max-w-xl flex-col gap-3">
 			<Chat.MessageList>
 				<Chat.MessageGroup align="end">
-					<Chat.Message variant="own">
+					<Chat.MessageBubble variant="own">
 						Talk on Monday!
 						<Chat.MessageTime dateTime="2026-06-11T19:10">
 							19:10
 						</Chat.MessageTime>
-					</Chat.Message>
+					</Chat.MessageBubble>
 				</Chat.MessageGroup>
 				<Chat.UnreadSeparator>New messages</Chat.UnreadSeparator>
 				<Chat.MessageGroup align="start">
@@ -408,12 +408,12 @@ export const UnreadSeparator: Story = {
 						name="Camille Dubois"
 						badge={<Badge variant="brand">Verified freelancer</Badge>}
 					/>
-					<Chat.Message variant="other">
+					<Chat.MessageBubble variant="other">
 						Small change: I'll join at 1:30pm instead.
 						<Chat.MessageTime dateTime="2026-06-12T08:55">
 							08:55
 						</Chat.MessageTime>
-					</Chat.Message>
+					</Chat.MessageBubble>
 				</Chat.MessageGroup>
 			</Chat.MessageList>
 		</div>
@@ -431,21 +431,21 @@ export const LongWordOverflow: Story = {
 						avatar={senderAvatar("CD")}
 						name="Camille Dubois"
 					/>
-					<Chat.Message variant="other">
+					<Chat.MessageBubble variant="other">
 						Here is the link to the checklist:
 						https://intranet.acme.dev/handbooks/design-reviews/progressive-handoff-checklist-for-launches-2026
 						<Chat.MessageTime dateTime="2026-06-12T09:02">
 							09:02
 						</Chat.MessageTime>
-					</Chat.Message>
+					</Chat.MessageBubble>
 				</Chat.MessageGroup>
 				<Chat.MessageGroup align="end">
-					<Chat.Message variant="own">
+					<Chat.MessageBubble variant="own">
 						Supercalifragilisticexpialidocious-pneumonoultramicroscopicsilicovolcanoconiosis-extraordinarily
 						<Chat.MessageTime dateTime="2026-06-12T09:03">
 							09:03
 						</Chat.MessageTime>
-					</Chat.Message>
+					</Chat.MessageBubble>
 				</Chat.MessageGroup>
 			</Chat.MessageList>
 		</div>
@@ -463,7 +463,7 @@ function MessageLinksPlayground() {
 						name="Camille Dubois"
 						badge={<Badge variant="brand">Verified freelancer</Badge>}
 					/>
-					<Chat.Message variant="other">
+					<Chat.MessageBubble variant="other">
 						<Chat.MessageText onLinkClick={setPendingUrl}>
 							Here is the style guide:
 							https://www.brand-guidelines.example.com/handoff. Let me know if
@@ -472,10 +472,10 @@ function MessageLinksPlayground() {
 						<Chat.MessageTime dateTime="2026-06-12T09:02">
 							09:02
 						</Chat.MessageTime>
-					</Chat.Message>
+					</Chat.MessageBubble>
 				</Chat.MessageGroup>
 				<Chat.MessageGroup align="end">
-					<Chat.Message variant="own">
+					<Chat.MessageBubble variant="own">
 						<Chat.MessageText onLinkClick={setPendingUrl}>
 							Thanks! I prefer this one:
 							https://docs.example.com/brand/asset-delivery
@@ -483,7 +483,7 @@ function MessageLinksPlayground() {
 						<Chat.MessageTime dateTime="2026-06-12T09:04">
 							09:04
 						</Chat.MessageTime>
-					</Chat.Message>
+					</Chat.MessageBubble>
 				</Chat.MessageGroup>
 			</Chat.MessageList>
 			<Chat.ExternalLinkDialog
@@ -544,9 +544,9 @@ function FollowPlayground() {
 						badge={<Badge variant="brand">Verified freelancer</Badge>}
 					/>
 					{messages.map((message) => (
-						<Chat.Message key={message} variant="other">
+						<Chat.MessageBubble key={message} variant="other">
 							{message}
-						</Chat.Message>
+						</Chat.MessageBubble>
 					))}
 				</Chat.MessageGroup>
 			</Chat.MessageList>
@@ -753,10 +753,10 @@ function AppendPlayground() {
 						badge={<Badge variant="brand">Verified freelancer</Badge>}
 					/>
 					{messages.map((message, index) => (
-						<Chat.Message key={`${index}-${message}`} variant="other">
+						<Chat.MessageBubble key={`${index}-${message}`} variant="other">
 							{message}
 							<Chat.MessageTime>09:1{index}</Chat.MessageTime>
-						</Chat.Message>
+						</Chat.MessageBubble>
 					))}
 				</Chat.MessageGroup>
 			</Chat.MessageList>

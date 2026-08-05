@@ -2,7 +2,7 @@
 import { cleanup, fireEvent, render } from "@testing-library/react";
 import type { ComponentProps } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { Chat } from "#/chat/components/chat.tsx";
+import { Chat, useChatScrollerScrollable } from "#/chat/index.ts";
 
 afterEach(cleanup);
 
@@ -25,236 +25,381 @@ function defineScrollMetrics(
 	});
 }
 
-describe("Chat.MessageList", () => {
-	it("renders the header and children inside the scroll slot", () => {
-		const screen = render(
-			<Chat.MessageList header={<button type="button">Load older</button>}>
-				<p>Bonjour</p>
-			</Chat.MessageList>,
+describe("Chat scroller", () => {
+	function renderScroller(children: React.ReactNode) {
+		return render(
+			<Chat.Provider autoScroll>
+				<Chat.Root>
+					<Chat.Viewport aria-label="Conversation">
+						<Chat.Transcript>{children}</Chat.Transcript>
+					</Chat.Viewport>
+					<Chat.ScrollButton label="Nouveaux messages" />
+				</Chat.Root>
+			</Chat.Provider>,
 		);
-		const list = queryBySlot(screen, "chat-message-list");
-		expect(list?.tagName).toBe("DIV");
-		expect(screen.getByText("Load older")).toBeTruthy();
+	}
+
+	it("renders the frame, viewport, transcript and rows", () => {
+		const screen = renderScroller(
+			<Chat.Item messageId="m1">
+				<p>Bonjour</p>
+			</Chat.Item>,
+		);
+		expect(queryBySlot(screen, "chat-root")).toBeTruthy();
+		expect(queryBySlot(screen, "chat-viewport")).toBeTruthy();
+		expect(queryBySlot(screen, "chat-transcript")).toBeTruthy();
+		expect(queryBySlot(screen, "chat-item")).toBeTruthy();
 		expect(screen.getByText("Bonjour")).toBeTruthy();
 	});
 
-	it("announces new messages politely to screen readers", () => {
-		const screen = render(<Chat.MessageList>x</Chat.MessageList>);
-		const list = queryBySlot(screen, "chat-message-list");
-		expect(list?.getAttribute("role")).toBe("log");
-		expect(list?.getAttribute("aria-live")).toBe("polite");
+	it("exposes the viewport as a focusable labeled region", () => {
+		const screen = renderScroller(null);
+		const viewport = queryBySlot(screen, "chat-viewport");
+		expect(viewport?.getAttribute("role")).toBe("region");
+		expect(viewport?.getAttribute("aria-label")).toBe("Conversation");
+		expect(viewport?.getAttribute("tabindex")).toBe("0");
 	});
 
-	it("scrolls to the bottom on first mount", () => {
-		const screen = render(
-			<Chat.MessageList>
-				<p>Latest</p>
-			</Chat.MessageList>,
-		);
-		const list = queryBySlot(screen, "chat-message-list") as HTMLDivElement;
-		// jsdom reports 0 for layout metrics; the effect still assigns scrollTop
-		// from scrollHeight, so the two end up equal (the "land at bottom" intent).
-		expect(list.scrollTop).toBe(list.scrollHeight);
+	it("announces new rows politely to screen readers", () => {
+		const screen = renderScroller(null);
+		const transcript = queryBySlot(screen, "chat-transcript");
+		expect(transcript?.getAttribute("role")).toBe("log");
+		expect(transcript?.getAttribute("aria-live")).toBe("polite");
+		expect(transcript?.getAttribute("aria-relevant")).toBe("additions");
 	});
 
-	it("notifies onFollowChange when the reader scrolls away from the bottom", () => {
-		const onFollowChange = vi.fn();
-		const screen = render(
-			<Chat.MessageList onFollowChange={onFollowChange}>
-				<p>History</p>
-			</Chat.MessageList>,
-		);
-		const list = queryBySlot(screen, "chat-message-list") as HTMLDivElement;
-		// Simulate a tall thread scrolled to the very top (far from the bottom).
-		defineScrollMetrics(list, { scrollHeight: 1000, clientHeight: 200 });
-		list.scrollTop = 0;
-		fireEvent.scroll(list);
-		expect(onFollowChange).toHaveBeenCalledWith(false);
+	it("fades the bottom edge and themes the scrollbar for dark mode", () => {
+		const screen = renderScroller(null);
+		const viewport = queryBySlot(screen, "chat-viewport");
+		expect(viewport?.classList.contains("scroll-fade-b")).toBe(true);
+		expect(viewport?.classList.contains("dark:scheme-dark")).toBe(true);
 	});
 
-	it("honours a custom followThreshold", () => {
-		const onFollowChange = vi.fn();
-		const screen = render(
-			<Chat.MessageList onFollowChange={onFollowChange} followThreshold={500}>
-				<p>History</p>
-			</Chat.MessageList>,
+	it("tags rows with their message id and anchor flag", () => {
+		const screen = renderScroller(
+			<Chat.Item messageId="m1" scrollAnchor>
+				x
+			</Chat.Item>,
 		);
-		const list = queryBySlot(screen, "chat-message-list") as HTMLDivElement;
-		// 300px from the bottom: outside the default 48px, inside the custom 500px.
-		defineScrollMetrics(list, { scrollHeight: 1000, clientHeight: 200 });
-		list.scrollTop = 500;
-		fireEvent.scroll(list);
-		expect(onFollowChange).not.toHaveBeenCalled();
+		const item = queryBySlot(screen, "chat-item");
+		expect(item?.getAttribute("data-message-id")).toBe("m1");
+		expect(item?.getAttribute("data-scroll-anchor")).toBe("true");
 	});
 
-	it("does not yank the reader down when a message arrives while reading history", () => {
-		const screen = render(
-			<Chat.MessageList>{[<p key="a">Premier</p>]}</Chat.MessageList>,
-		);
-		const list = queryBySlot(screen, "chat-message-list") as HTMLDivElement;
-		defineScrollMetrics(list, { scrollHeight: 1000, clientHeight: 200 });
-		// Reading history: far from the bottom.
-		list.scrollTop = 100;
-		fireEvent.scroll(list);
-		screen.rerender(
-			<Chat.MessageList>
-				{[<p key="a">Premier</p>, <p key="b">Nouveau</p>]}
-			</Chat.MessageList>,
-		);
-		expect(list.scrollTop).toBe(100);
+	it("renders the transcript tail spacer hidden by default", () => {
+		const screen = renderScroller(<Chat.Item messageId="m1">x</Chat.Item>);
+		const spacer = screen.baseElement.querySelector(
+			"[data-message-scroller-spacer]",
+		) as HTMLElement;
+		expect(spacer).toBeTruthy();
+		expect(spacer.hidden).toBe(true);
 	});
 
-	it("preserves the viewport on prepend when native scroll anchoring is missing", () => {
-		const screen = render(
-			<Chat.MessageList>{[<p key="a">Anchored</p>]}</Chat.MessageList>,
-		);
-		const list = queryBySlot(screen, "chat-message-list") as HTMLDivElement;
-		defineScrollMetrics(list, { scrollHeight: 1000, clientHeight: 200 });
-		// Re-run the effect so it records the 1000px height as the baseline.
-		screen.rerender(
-			<Chat.MessageList>{[<p key="a">Anchored</p>]}</Chat.MessageList>,
-		);
-		list.scrollTop = 100;
-		fireEvent.scroll(list);
-		// Loading older history grows the content above the anchored message.
-		defineScrollMetrics(list, { scrollHeight: 1400, clientHeight: 200 });
-		screen.rerender(
-			<Chat.MessageList>
-				{[<p key="older">Older</p>, <p key="a">Anchored</p>]}
-			</Chat.MessageList>,
-		);
-		// jsdom (like Safari) lacks overflow-anchor: the list compensates by the
-		// 400px height delta so the reader stays on the same message.
-		expect(list.scrollTop).toBe(500);
+	it("keeps the scroll button inert and unfocusable while there is no overflow", () => {
+		const screen = renderScroller(<Chat.Item messageId="m1">x</Chat.Item>);
+		const button = queryBySlot(screen, "chat-scroll-button");
+		// jsdom reports zero scroll metrics: nothing to scroll toward, so the
+		// affordance stays inactive.
+		expect(button?.getAttribute("data-active")).toBe("false");
+		expect(button?.getAttribute("tabindex")).toBe("-1");
+		expect(button?.textContent).toContain("Nouveaux messages");
 	});
 
-	it("shows a jump-to-latest button while away from the bottom and jumps on click", () => {
-		const screen = render(
-			<Chat.MessageList jumpToLatestLabel="Nouveaux messages">
-				<p>History</p>
-			</Chat.MessageList>,
+	it("exposes the follow state through useChatScrollerScrollable", () => {
+		const seen: boolean[] = [];
+		function Probe() {
+			const scrollable = useChatScrollerScrollable();
+			seen.push(scrollable.end);
+			return null;
+		}
+		render(
+			<Chat.Provider autoScroll>
+				<Probe />
+				<Chat.Root>
+					<Chat.Viewport>
+						<Chat.Transcript>
+							<Chat.Item messageId="m1">x</Chat.Item>
+						</Chat.Transcript>
+					</Chat.Viewport>
+				</Chat.Root>
+			</Chat.Provider>,
 		);
-		const list = queryBySlot(screen, "chat-message-list") as HTMLDivElement;
-		expect(queryBySlot(screen, "chat-jump-to-latest")).toBeNull();
-		defineScrollMetrics(list, { scrollHeight: 1000, clientHeight: 200 });
-		list.scrollTop = 0;
-		fireEvent.scroll(list);
-		const button = screen.getByRole("button", { name: "Nouveaux messages" });
-		fireEvent.click(button);
-		expect(list.scrollTop).toBe(1000);
-		expect(queryBySlot(screen, "chat-jump-to-latest")).toBeNull();
-	});
-
-	it("renders no jump-to-latest affordance without a label", () => {
-		const screen = render(<Chat.MessageList>x</Chat.MessageList>);
-		const list = queryBySlot(screen, "chat-message-list") as HTMLDivElement;
-		defineScrollMetrics(list, { scrollHeight: 1000, clientHeight: 200 });
-		list.scrollTop = 0;
-		fireEvent.scroll(list);
-		expect(queryBySlot(screen, "chat-jump-to-latest")).toBeNull();
-	});
-
-	it("opts into a dark color-scheme so the native scrollbar matches the theme", () => {
-		const screen = render(<Chat.MessageList>x</Chat.MessageList>);
-		const list = queryBySlot(screen, "chat-message-list");
-		expect(list?.classList.contains("dark:scheme-dark")).toBe(true);
-	});
-});
-
-describe("Chat.MessageGroup", () => {
-	it("exposes the alignment as data-align and carries the group marker", () => {
-		const screen = render(<Chat.MessageGroup align="end">x</Chat.MessageGroup>);
-		const group = queryBySlot(screen, "chat-message-group");
-		expect(group?.getAttribute("data-align")).toBe("end");
-		// `group` is what lets group-data-[align=end]:* on Chat.MessageTime match.
-		expect(group?.classList.contains("group")).toBe(true);
-		expect(group?.classList.contains("items-end")).toBe(true);
-	});
-
-	it("left-aligns a start group", () => {
-		const screen = render(
-			<Chat.MessageGroup align="start">x</Chat.MessageGroup>,
-		);
-		expect(
-			queryBySlot(screen, "chat-message-group")?.classList.contains(
-				"items-start",
-			),
-		).toBe(true);
+		// Everything fits: no overflow toward the end (the reader is following).
+		expect(seen.at(-1)).toBe(false);
 	});
 });
 
 describe("Chat.Message", () => {
-	it("exposes the variant as a data attribute with its bubble classes", () => {
-		const screen = render(<Chat.Message variant="own">Salut</Chat.Message>);
-		const message = queryBySlot(screen, "chat-message");
-		expect(message?.getAttribute("data-variant")).toBe("own");
-		expect(message?.classList.contains("bg-primary")).toBe(true);
-	});
-
-	it("renders the other variant with the muted bubble", () => {
-		const screen = render(<Chat.Message variant="other">Bonjour</Chat.Message>);
-		const message = queryBySlot(screen, "chat-message");
-		expect(message?.getAttribute("data-variant")).toBe("other");
-		expect(message?.classList.contains("bg-muted")).toBe(true);
-	});
-
-	it("wraps unbroken words/URLs instead of overflowing the bubble", () => {
+	it("exposes the alignment and mirrors the end row", () => {
 		const screen = render(
-			<Chat.Message variant="other">
-				https://example.com/une-url-tres-longue-sans-espace
+			<Chat.Message align="end">
+				<Chat.Content>x</Chat.Content>
 			</Chat.Message>,
 		);
 		const message = queryBySlot(screen, "chat-message");
-		expect(message?.classList.contains("min-w-0")).toBe(true);
-		expect(message?.classList.contains("[overflow-wrap:anywhere]")).toBe(true);
+		expect(message?.getAttribute("data-align")).toBe("end");
+		expect(
+			message?.classList.contains("data-[align=end]:flex-row-reverse"),
+		).toBe(true);
+		// `group/message` lets descendants react to the row's alignment.
+		expect(message?.classList.contains("group/message")).toBe(true);
 	});
 
-	it("animates in but respects reduced motion", () => {
-		const screen = render(<Chat.Message variant="own">x</Chat.Message>);
-		const message = queryBySlot(screen, "chat-message");
-		expect(message?.classList.contains("animate-in")).toBe(true);
-		expect(message?.classList.contains("motion-reduce:animate-none")).toBe(
-			true,
+	it("defaults to start alignment", () => {
+		const screen = render(<Chat.Message>x</Chat.Message>);
+		expect(
+			queryBySlot(screen, "chat-message")?.getAttribute("data-align"),
+		).toBe("start");
+	});
+
+	it("renders avatar, header, content and footer slots", () => {
+		const screen = render(
+			<Chat.Message>
+				<Chat.Avatar>AV</Chat.Avatar>
+				<Chat.Content>
+					<Chat.Header>Camille Dubois</Chat.Header>
+					<Chat.Bubble variant="muted">
+						<Chat.BubbleContent>Bonjour</Chat.BubbleContent>
+					</Chat.Bubble>
+					<Chat.Footer>Distribué</Chat.Footer>
+				</Chat.Content>
+			</Chat.Message>,
 		);
+		expect(queryBySlot(screen, "chat-avatar")?.textContent).toBe("AV");
+		expect(queryBySlot(screen, "chat-header")?.textContent).toBe(
+			"Camille Dubois",
+		);
+		expect(queryBySlot(screen, "chat-footer")?.textContent).toBe("Distribué");
+		expect(screen.getByText("Bonjour")).toBeTruthy();
+	});
+
+	it("wraps unbroken words/URLs instead of overflowing the row", () => {
+		const screen = render(
+			<Chat.Message>
+				<Chat.Content>
+					https://example.com/une-url-tres-longue-sans-espace
+				</Chat.Content>
+			</Chat.Message>,
+		);
+		const content = queryBySlot(screen, "chat-content");
+		expect(content?.classList.contains("min-w-0")).toBe(true);
+		expect(content?.classList.contains("[overflow-wrap:anywhere]")).toBe(true);
 	});
 });
 
-describe("Chat.MessageText", () => {
+describe("Chat.Bubble", () => {
+	it("exposes the variant and alignment as data attributes", () => {
+		const screen = render(
+			<Chat.Bubble variant="default" align="end">
+				<Chat.BubbleContent>Salut</Chat.BubbleContent>
+			</Chat.Bubble>,
+		);
+		const bubble = queryBySlot(screen, "chat-bubble");
+		expect(bubble?.getAttribute("data-variant")).toBe("default");
+		expect(bubble?.getAttribute("data-align")).toBe("end");
+	});
+
+	it.each([
+		"default",
+		"secondary",
+		"muted",
+		"tinted",
+		"outline",
+		"ghost",
+		"destructive",
+	] as const)("renders the %s variant", (variant) => {
+		const screen = render(
+			<Chat.Bubble variant={variant}>
+				<Chat.BubbleContent>x</Chat.BubbleContent>
+			</Chat.Bubble>,
+		);
+		expect(
+			queryBySlot(screen, "chat-bubble")?.getAttribute("data-variant"),
+		).toBe(variant);
+	});
+
+	it("keeps long content inside the bubble surface", () => {
+		const screen = render(
+			<Chat.Bubble variant="muted">
+				<Chat.BubbleContent>
+					https://example.com/une-url-tres-longue-sans-espace
+				</Chat.BubbleContent>
+			</Chat.Bubble>,
+		);
+		const content = queryBySlot(screen, "chat-bubble-content");
+		expect(content?.classList.contains("min-w-0")).toBe(true);
+		expect(content?.classList.contains("[overflow-wrap:anywhere]")).toBe(true);
+	});
+
+	it("animates in but respects reduced motion", () => {
+		const screen = render(
+			<Chat.Bubble variant="default">
+				<Chat.BubbleContent>x</Chat.BubbleContent>
+			</Chat.Bubble>,
+		);
+		const content = queryBySlot(screen, "chat-bubble-content");
+		expect(content?.classList.contains("animate-in")).toBe(true);
+		expect(content?.classList.contains("motion-reduce:animate-none")).toBe(
+			true,
+		);
+	});
+
+	it("renders an interactive surface through the render prop", () => {
+		const onClick = vi.fn();
+		const screen = render(
+			<Chat.Bubble variant="muted">
+				<Chat.BubbleContent render={<button type="button" onClick={onClick} />}>
+					Ouvrir
+				</Chat.BubbleContent>
+			</Chat.Bubble>,
+		);
+		const content = queryBySlot(screen, "chat-bubble-content");
+		expect(content?.tagName).toBe("BUTTON");
+		fireEvent.click(content as HTMLElement);
+		expect(onClick).toHaveBeenCalled();
+	});
+
+	it("groups consecutive bubbles", () => {
+		const screen = render(
+			<Chat.BubbleGroup>
+				<Chat.Bubble variant="muted">
+					<Chat.BubbleContent>a</Chat.BubbleContent>
+				</Chat.Bubble>
+				<Chat.Bubble variant="muted">
+					<Chat.BubbleContent>b</Chat.BubbleContent>
+				</Chat.Bubble>
+			</Chat.BubbleGroup>,
+		);
+		const group = queryBySlot(screen, "chat-bubble-group");
+		expect(group?.querySelectorAll("[data-slot=chat-bubble]")).toHaveLength(2);
+	});
+
+	it("positions reactions on the requested side and alignment", () => {
+		const screen = render(
+			<Chat.Bubble variant="muted">
+				<Chat.BubbleContent>Salut</Chat.BubbleContent>
+				<Chat.Reactions side="top" align="start">
+					<span>👍</span>
+				</Chat.Reactions>
+			</Chat.Bubble>,
+		);
+		const reactions = queryBySlot(screen, "chat-reactions");
+		expect(reactions?.getAttribute("data-side")).toBe("top");
+		expect(reactions?.getAttribute("data-align")).toBe("start");
+		expect(reactions?.textContent).toBe("👍");
+	});
+});
+
+describe("Chat.Marker", () => {
+	it("renders an inline marker with icon and content", () => {
+		const screen = render(
+			<Chat.Marker>
+				<Chat.MarkerIcon>
+					<svg role="presentation" />
+				</Chat.MarkerIcon>
+				<Chat.MarkerContent>4 fichiers explorés</Chat.MarkerContent>
+			</Chat.Marker>,
+		);
+		const marker = queryBySlot(screen, "chat-marker");
+		expect(marker?.getAttribute("data-variant")).toBe("default");
+		expect(
+			queryBySlot(screen, "chat-marker-icon")?.getAttribute("aria-hidden"),
+		).toBe("true");
+		expect(queryBySlot(screen, "chat-marker-content")?.textContent).toBe(
+			"4 fichiers explorés",
+		);
+	});
+
+	it.each([
+		"default",
+		"separator",
+		"border",
+	] as const)("exposes the %s variant as a data attribute", (variant) => {
+		const screen = render(
+			<Chat.Marker variant={variant}>
+				<Chat.MarkerContent>x</Chat.MarkerContent>
+			</Chat.Marker>,
+		);
+		expect(
+			queryBySlot(screen, "chat-marker")?.getAttribute("data-variant"),
+		).toBe(variant);
+	});
+
+	it("becomes a real link through the render prop", () => {
+		const screen = render(
+			<Chat.Marker
+				render={
+					// biome-ignore lint/a11y/useAnchorContent: content is merged in from Chat.Marker
+					<a href="/details" />
+				}
+			>
+				<Chat.MarkerContent>Voir le détail</Chat.MarkerContent>
+			</Chat.Marker>,
+		);
+		const marker = queryBySlot(screen, "chat-marker");
+		expect(marker?.tagName).toBe("A");
+		expect(marker?.getAttribute("href")).toBe("/details");
+	});
+});
+
+describe("Chat.DateSeparator", () => {
+	it("renders a separator role with its label between rules", () => {
+		const screen = render(<Chat.DateSeparator>Hier</Chat.DateSeparator>);
+		const separator = queryBySlot(screen, "chat-date-separator");
+		expect(separator?.getAttribute("role")).toBe("separator");
+		expect(separator?.textContent).toBe("Hier");
+		expect(separator?.classList.contains("before:flex-1")).toBe(true);
+	});
+});
+
+describe("Chat.UnreadSeparator", () => {
+	it("renders a destructive separator with its label", () => {
+		const screen = render(
+			<Chat.UnreadSeparator>Nouveaux messages</Chat.UnreadSeparator>,
+		);
+		const separator = queryBySlot(screen, "chat-unread-separator");
+		expect(separator?.getAttribute("role")).toBe("separator");
+		expect(separator?.textContent).toBe("Nouveaux messages");
+		expect(separator?.classList.contains("text-destructive")).toBe(true);
+	});
+});
+
+describe("Chat.Text", () => {
 	it("turns URLs into links opening in a new tab and keeps surrounding text", () => {
 		const screen = render(
-			<Chat.MessageText>
+			<Chat.Text>
 				Voici le lien : https://example.com/protocole pour samedi.
-			</Chat.MessageText>,
+			</Chat.Text>,
 		);
 		const link = screen.baseElement.querySelector("a");
 		expect(link?.getAttribute("href")).toBe("https://example.com/protocole");
 		expect(link?.getAttribute("target")).toBe("_blank");
 		expect(link?.getAttribute("rel")).toBe("noopener noreferrer");
-		expect(queryBySlot(screen, "chat-message-text")?.textContent).toContain(
+		expect(queryBySlot(screen, "chat-text")?.textContent).toContain(
 			"pour samedi.",
 		);
 	});
 
 	it("leaves trailing sentence punctuation out of the URL", () => {
 		const screen = render(
-			<Chat.MessageText>Regarde https://example.com/page.</Chat.MessageText>,
+			<Chat.Text>Regarde https://example.com/page.</Chat.Text>,
 		);
 		const link = screen.baseElement.querySelector("a");
 		expect(link?.getAttribute("href")).toBe("https://example.com/page");
 	});
 
 	it("renders plain text untouched when there is no URL", () => {
-		const screen = render(<Chat.MessageText>Hello everyone</Chat.MessageText>);
+		const screen = render(<Chat.Text>Bonjour à tous</Chat.Text>);
 		expect(screen.baseElement.querySelector("a")).toBeNull();
-		expect(screen.getByText("Hello everyone")).toBeTruthy();
+		expect(screen.getByText("Bonjour à tous")).toBeTruthy();
 	});
 
 	it("intercepts activation through onLinkClick instead of navigating", () => {
 		const onLinkClick = vi.fn();
 		const screen = render(
-			<Chat.MessageText onLinkClick={onLinkClick}>
+			<Chat.Text onLinkClick={onLinkClick}>
 				https://example.com/protocole
-			</Chat.MessageText>,
+			</Chat.Text>,
 		);
 		const link = screen.baseElement.querySelector("a") as HTMLAnchorElement;
 		fireEvent.click(link);
@@ -323,63 +468,23 @@ describe("Chat.ExternalLinkDialog", () => {
 	});
 });
 
-describe("Chat.MessageTime", () => {
-	it("renders a time element keyed to the end-group alignment variant", () => {
-		const screen = render(<Chat.MessageTime>09:12</Chat.MessageTime>);
-		const time = queryBySlot(screen, "chat-message-time");
+describe("Chat.Time", () => {
+	it("renders a subdued time element inheriting the bubble color", () => {
+		const screen = render(<Chat.Time>09:12</Chat.Time>);
+		const time = queryBySlot(screen, "chat-time");
 		expect(time?.tagName).toBe("TIME");
-		expect(
-			time?.classList.contains(
-				"group-data-[align=end]:text-primary-foreground",
-			),
-		).toBe(true);
-		// Uses the smallest type token rather than a magic text-[10px].
+		// Uses the smallest type token and opacity so it works on any bubble
+		// variant (primary, muted, destructive…) without per-variant colors.
 		expect(time?.classList.contains("text-xs")).toBe(true);
+		expect(time?.classList.contains("opacity-70")).toBe(true);
 	});
 
 	it("forwards a machine-readable dateTime", () => {
 		const screen = render(
-			<Chat.MessageTime dateTime="2026-06-12T09:12">09:12</Chat.MessageTime>,
+			<Chat.Time dateTime="2026-06-12T09:12">09:12</Chat.Time>,
 		);
-		const time = queryBySlot(screen, "chat-message-time");
+		const time = queryBySlot(screen, "chat-time");
 		expect(time?.getAttribute("datetime")).toBe("2026-06-12T09:12");
-	});
-});
-
-describe("Chat.DateSeparator", () => {
-	it("renders a separator role with its label", () => {
-		const screen = render(<Chat.DateSeparator>Hier</Chat.DateSeparator>);
-		const separator = queryBySlot(screen, "chat-date-separator");
-		expect(separator?.getAttribute("role")).toBe("separator");
-		expect(separator?.textContent).toBe("Hier");
-	});
-});
-
-describe("Chat.UnreadSeparator", () => {
-	it("renders a destructive separator with its label", () => {
-		const screen = render(
-			<Chat.UnreadSeparator>Nouveaux messages</Chat.UnreadSeparator>,
-		);
-		const separator = queryBySlot(screen, "chat-unread-separator");
-		expect(separator?.getAttribute("role")).toBe("separator");
-		expect(separator?.textContent).toBe("Nouveaux messages");
-		expect(separator?.classList.contains("text-destructive")).toBe(true);
-	});
-});
-
-describe("Chat.MessageSender", () => {
-	it("renders the name and the optional avatar and badge slots", () => {
-		const screen = render(
-			<Chat.MessageSender
-				avatar={<span>AV</span>}
-				name="Camille Dubois"
-				badge={<span>Pro</span>}
-			/>,
-		);
-		const sender = queryBySlot(screen, "chat-message-sender");
-		expect(sender?.textContent).toContain("Camille Dubois");
-		expect(sender?.textContent).toContain("AV");
-		expect(sender?.textContent).toContain("Pro");
 	});
 });
 
@@ -638,5 +743,287 @@ describe("Chat.ConversationItem", () => {
 		const item = queryBySlot(screen, "chat-conversation-item");
 		expect(item?.classList.contains("custom-item")).toBe(true);
 		expect(item?.classList.contains("rounded-lg")).toBe(true);
+	});
+});
+
+describe("Chat.MessageList", () => {
+	it("renders the header and children inside the scroll slot", () => {
+		const screen = render(
+			<Chat.MessageList header={<button type="button">Load older</button>}>
+				<p>Bonjour</p>
+			</Chat.MessageList>,
+		);
+		const list = queryBySlot(screen, "chat-message-list");
+		expect(list?.tagName).toBe("DIV");
+		expect(screen.getByText("Load older")).toBeTruthy();
+		expect(screen.getByText("Bonjour")).toBeTruthy();
+	});
+
+	it("announces new messages politely to screen readers", () => {
+		const screen = render(<Chat.MessageList>x</Chat.MessageList>);
+		const list = queryBySlot(screen, "chat-message-list");
+		expect(list?.getAttribute("role")).toBe("log");
+		expect(list?.getAttribute("aria-live")).toBe("polite");
+	});
+
+	it("scrolls to the bottom on first mount", () => {
+		const screen = render(
+			<Chat.MessageList>
+				<p>Latest</p>
+			</Chat.MessageList>,
+		);
+		const list = queryBySlot(screen, "chat-message-list") as HTMLDivElement;
+		// jsdom reports 0 for layout metrics; the effect still assigns scrollTop
+		// from scrollHeight, so the two end up equal (the "land at bottom" intent).
+		expect(list.scrollTop).toBe(list.scrollHeight);
+	});
+
+	it("notifies onFollowChange when the reader scrolls away from the bottom", () => {
+		const onFollowChange = vi.fn();
+		const screen = render(
+			<Chat.MessageList onFollowChange={onFollowChange}>
+				<p>History</p>
+			</Chat.MessageList>,
+		);
+		const list = queryBySlot(screen, "chat-message-list") as HTMLDivElement;
+		// Simulate a tall thread scrolled to the very top (far from the bottom).
+		defineScrollMetrics(list, { scrollHeight: 1000, clientHeight: 200 });
+		list.scrollTop = 0;
+		fireEvent.scroll(list);
+		expect(onFollowChange).toHaveBeenCalledWith(false);
+	});
+
+	it("honours a custom followThreshold", () => {
+		const onFollowChange = vi.fn();
+		const screen = render(
+			<Chat.MessageList onFollowChange={onFollowChange} followThreshold={500}>
+				<p>History</p>
+			</Chat.MessageList>,
+		);
+		const list = queryBySlot(screen, "chat-message-list") as HTMLDivElement;
+		// 300px from the bottom: outside the default 48px, inside the custom 500px.
+		defineScrollMetrics(list, { scrollHeight: 1000, clientHeight: 200 });
+		list.scrollTop = 500;
+		fireEvent.scroll(list);
+		expect(onFollowChange).not.toHaveBeenCalled();
+	});
+
+	it("does not yank the reader down when a message arrives while reading history", () => {
+		const screen = render(
+			<Chat.MessageList>{[<p key="a">Premier</p>]}</Chat.MessageList>,
+		);
+		const list = queryBySlot(screen, "chat-message-list") as HTMLDivElement;
+		defineScrollMetrics(list, { scrollHeight: 1000, clientHeight: 200 });
+		// Reading history: far from the bottom.
+		list.scrollTop = 100;
+		fireEvent.scroll(list);
+		screen.rerender(
+			<Chat.MessageList>
+				{[<p key="a">Premier</p>, <p key="b">Nouveau</p>]}
+			</Chat.MessageList>,
+		);
+		expect(list.scrollTop).toBe(100);
+	});
+
+	it("preserves the viewport on prepend when native scroll anchoring is missing", () => {
+		const screen = render(
+			<Chat.MessageList>{[<p key="a">Anchored</p>]}</Chat.MessageList>,
+		);
+		const list = queryBySlot(screen, "chat-message-list") as HTMLDivElement;
+		defineScrollMetrics(list, { scrollHeight: 1000, clientHeight: 200 });
+		// Re-run the effect so it records the 1000px height as the baseline.
+		screen.rerender(
+			<Chat.MessageList>{[<p key="a">Anchored</p>]}</Chat.MessageList>,
+		);
+		list.scrollTop = 100;
+		fireEvent.scroll(list);
+		// Loading older history grows the content above the anchored message.
+		defineScrollMetrics(list, { scrollHeight: 1400, clientHeight: 200 });
+		screen.rerender(
+			<Chat.MessageList>
+				{[<p key="older">Older</p>, <p key="a">Anchored</p>]}
+			</Chat.MessageList>,
+		);
+		// jsdom (like Safari) lacks overflow-anchor: the list compensates by the
+		// 400px height delta so the reader stays on the same message.
+		expect(list.scrollTop).toBe(500);
+	});
+
+	it("shows a jump-to-latest button while away from the bottom and jumps on click", () => {
+		const screen = render(
+			<Chat.MessageList jumpToLatestLabel="Nouveaux messages">
+				<p>History</p>
+			</Chat.MessageList>,
+		);
+		const list = queryBySlot(screen, "chat-message-list") as HTMLDivElement;
+		expect(queryBySlot(screen, "chat-jump-to-latest")).toBeNull();
+		defineScrollMetrics(list, { scrollHeight: 1000, clientHeight: 200 });
+		list.scrollTop = 0;
+		fireEvent.scroll(list);
+		const button = screen.getByRole("button", { name: "Nouveaux messages" });
+		fireEvent.click(button);
+		expect(list.scrollTop).toBe(1000);
+		expect(queryBySlot(screen, "chat-jump-to-latest")).toBeNull();
+	});
+
+	it("renders no jump-to-latest affordance without a label", () => {
+		const screen = render(<Chat.MessageList>x</Chat.MessageList>);
+		const list = queryBySlot(screen, "chat-message-list") as HTMLDivElement;
+		defineScrollMetrics(list, { scrollHeight: 1000, clientHeight: 200 });
+		list.scrollTop = 0;
+		fireEvent.scroll(list);
+		expect(queryBySlot(screen, "chat-jump-to-latest")).toBeNull();
+	});
+
+	it("opts into a dark color-scheme so the native scrollbar matches the theme", () => {
+		const screen = render(<Chat.MessageList>x</Chat.MessageList>);
+		const list = queryBySlot(screen, "chat-message-list");
+		expect(list?.classList.contains("dark:scheme-dark")).toBe(true);
+	});
+});
+
+describe("Chat.MessageGroup", () => {
+	it("exposes the alignment as data-align and carries the group marker", () => {
+		const screen = render(<Chat.MessageGroup align="end">x</Chat.MessageGroup>);
+		const group = queryBySlot(screen, "chat-message-group");
+		expect(group?.getAttribute("data-align")).toBe("end");
+		// `group` is what lets group-data-[align=end]:* on Chat.MessageTime match.
+		expect(group?.classList.contains("group")).toBe(true);
+		expect(group?.classList.contains("items-end")).toBe(true);
+	});
+
+	it("left-aligns a start group", () => {
+		const screen = render(
+			<Chat.MessageGroup align="start">x</Chat.MessageGroup>,
+		);
+		expect(
+			queryBySlot(screen, "chat-message-group")?.classList.contains(
+				"items-start",
+			),
+		).toBe(true);
+	});
+});
+
+describe("Chat.MessageBubble", () => {
+	it("exposes the variant as a data attribute with its bubble classes", () => {
+		const screen = render(
+			<Chat.MessageBubble variant="own">Salut</Chat.MessageBubble>,
+		);
+		const message = queryBySlot(screen, "chat-message-bubble");
+		expect(message?.getAttribute("data-variant")).toBe("own");
+		expect(message?.classList.contains("bg-primary")).toBe(true);
+	});
+
+	it("renders the other variant with the muted bubble", () => {
+		const screen = render(
+			<Chat.MessageBubble variant="other">Bonjour</Chat.MessageBubble>,
+		);
+		const message = queryBySlot(screen, "chat-message-bubble");
+		expect(message?.getAttribute("data-variant")).toBe("other");
+		expect(message?.classList.contains("bg-muted")).toBe(true);
+	});
+
+	it("wraps unbroken words/URLs instead of overflowing the bubble", () => {
+		const screen = render(
+			<Chat.MessageBubble variant="other">
+				https://example.com/une-url-tres-longue-sans-espace
+			</Chat.MessageBubble>,
+		);
+		const message = queryBySlot(screen, "chat-message-bubble");
+		expect(message?.classList.contains("min-w-0")).toBe(true);
+		expect(message?.classList.contains("[overflow-wrap:anywhere]")).toBe(true);
+	});
+
+	it("animates in but respects reduced motion", () => {
+		const screen = render(
+			<Chat.MessageBubble variant="own">x</Chat.MessageBubble>,
+		);
+		const message = queryBySlot(screen, "chat-message-bubble");
+		expect(message?.classList.contains("animate-in")).toBe(true);
+		expect(message?.classList.contains("motion-reduce:animate-none")).toBe(
+			true,
+		);
+	});
+});
+
+describe("Chat.MessageText", () => {
+	it("turns URLs into links opening in a new tab and keeps surrounding text", () => {
+		const screen = render(
+			<Chat.MessageText>
+				Voici le lien : https://example.com/protocole pour samedi.
+			</Chat.MessageText>,
+		);
+		const link = screen.baseElement.querySelector("a");
+		expect(link?.getAttribute("href")).toBe("https://example.com/protocole");
+		expect(link?.getAttribute("target")).toBe("_blank");
+		expect(link?.getAttribute("rel")).toBe("noopener noreferrer");
+		expect(queryBySlot(screen, "chat-message-text")?.textContent).toContain(
+			"pour samedi.",
+		);
+	});
+
+	it("leaves trailing sentence punctuation out of the URL", () => {
+		const screen = render(
+			<Chat.MessageText>Regarde https://example.com/page.</Chat.MessageText>,
+		);
+		const link = screen.baseElement.querySelector("a");
+		expect(link?.getAttribute("href")).toBe("https://example.com/page");
+	});
+
+	it("renders plain text untouched when there is no URL", () => {
+		const screen = render(<Chat.MessageText>Hello everyone</Chat.MessageText>);
+		expect(screen.baseElement.querySelector("a")).toBeNull();
+		expect(screen.getByText("Hello everyone")).toBeTruthy();
+	});
+
+	it("intercepts activation through onLinkClick instead of navigating", () => {
+		const onLinkClick = vi.fn();
+		const screen = render(
+			<Chat.MessageText onLinkClick={onLinkClick}>
+				https://example.com/protocole
+			</Chat.MessageText>,
+		);
+		const link = screen.baseElement.querySelector("a") as HTMLAnchorElement;
+		fireEvent.click(link);
+		expect(onLinkClick).toHaveBeenCalledWith("https://example.com/protocole");
+	});
+});
+
+describe("Chat.MessageTime", () => {
+	it("renders a time element keyed to the end-group alignment variant", () => {
+		const screen = render(<Chat.MessageTime>09:12</Chat.MessageTime>);
+		const time = queryBySlot(screen, "chat-message-time");
+		expect(time?.tagName).toBe("TIME");
+		expect(
+			time?.classList.contains(
+				"group-data-[align=end]:text-primary-foreground",
+			),
+		).toBe(true);
+		// Uses the smallest type token rather than a magic text-[10px].
+		expect(time?.classList.contains("text-xs")).toBe(true);
+	});
+
+	it("forwards a machine-readable dateTime", () => {
+		const screen = render(
+			<Chat.MessageTime dateTime="2026-06-12T09:12">09:12</Chat.MessageTime>,
+		);
+		const time = queryBySlot(screen, "chat-message-time");
+		expect(time?.getAttribute("datetime")).toBe("2026-06-12T09:12");
+	});
+});
+
+describe("Chat.MessageSender", () => {
+	it("renders the name and the optional avatar and badge slots", () => {
+		const screen = render(
+			<Chat.MessageSender
+				avatar={<span>AV</span>}
+				name="Camille Dubois"
+				badge={<span>Pro</span>}
+			/>,
+		);
+		const sender = queryBySlot(screen, "chat-message-sender");
+		expect(sender?.textContent).toContain("Camille Dubois");
+		expect(sender?.textContent).toContain("AV");
+		expect(sender?.textContent).toContain("Pro");
 	});
 });

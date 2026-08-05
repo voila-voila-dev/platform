@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from "#/lib/cva.ts";
 
-export const chatMessageVariants = cva({
+export const chatMessageBubbleVariants = cva({
 	// `min-w-0` + `overflow-wrap:anywhere` keep an unbroken word/URL inside the
 	// bubble instead of overflowing the whole list horizontally.
 	// Subtle enter animation for appended messages; respect reduced-motion.
@@ -21,4 +21,6 @@ export const chatMessageVariants = cva({
 	},
 });
 
-export type ChatMessageVariants = VariantProps<typeof chatMessageVariants>;
+export type ChatMessageBubbleVariants = VariantProps<
+	typeof chatMessageBubbleVariants
+>;

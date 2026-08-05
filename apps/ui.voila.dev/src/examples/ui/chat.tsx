@@ -36,26 +36,26 @@ export function Default() {
 						name="Camille Dubois"
 						badge={<Badge variant="brand">Verified freelancer</Badge>}
 					/>
-					<Chat.Message variant="other">
+					<Chat.MessageBubble variant="other">
 						Hi, I will share the first drafts before our call tomorrow.
 						<Chat.MessageTime dateTime="2026-06-11T18:42">
 							18:42
 						</Chat.MessageTime>
-					</Chat.Message>
-					<Chat.Message variant="other">
+					</Chat.MessageBubble>
+					<Chat.MessageBubble variant="other">
 						Is there a shared folder where I can drop the files?
 						<Chat.MessageTime dateTime="2026-06-11T18:43">
 							18:43
 						</Chat.MessageTime>
-					</Chat.Message>
+					</Chat.MessageBubble>
 				</Chat.MessageGroup>
 				<Chat.MessageGroup align="end">
-					<Chat.Message variant="own">
+					<Chat.MessageBubble variant="own">
 						Yes, the project drive is already shared with you.
 						<Chat.MessageTime dateTime="2026-06-12T09:10">
 							09:10
 						</Chat.MessageTime>
-					</Chat.Message>
+					</Chat.MessageBubble>
 				</Chat.MessageGroup>
 			</Chat.MessageList>
 			<Composer />
