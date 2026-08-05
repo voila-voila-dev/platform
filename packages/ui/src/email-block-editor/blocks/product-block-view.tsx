@@ -9,13 +9,17 @@ import {
 import type { EmailEditorProductBlock } from "#/email-block-editor/document/types.ts";
 import { formatPreviewPrice } from "#/email-block-editor/lib/money.ts";
 
-interface Props extends EmailBlockComponentProps<EmailEditorProductBlock> {}
+interface Props<Currency extends string>
+	extends EmailBlockComponentProps<EmailEditorProductBlock<Currency>> {}
 
 /**
  * A catalogue item on the shared card shell: visual, name, description, price
  * with an optional struck-through base price, and a call to action.
  */
-export function ProductBlockView({ block, onChange }: Props) {
+export function ProductBlockView<Currency extends string>({
+	block,
+	onChange,
+}: Props<Currency>) {
 	const theme = useEmailEditorTheme();
 	const { blocks } = useEmailEditorLabels();
 	return (

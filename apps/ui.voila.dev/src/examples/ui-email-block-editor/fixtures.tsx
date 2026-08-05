@@ -1,10 +1,10 @@
 import {
 	DEFAULT_EMAIL_EDITOR_THEME,
 	type EmailBlockComponentProps,
-	type EmailEditorBlock,
-	emailBlockDefinition,
+	type EmailEditorBuiltInBlock,
 } from "@voila.dev/ui/email-block-editor";
 import { type ReactNode, useState } from "react";
+import { DOCS_EMAIL_REGISTRY } from "./blocks";
 
 /** Fake upload for the docs previews: no backend here, so the picked file is
  * served from an object URL — a real app returns the uploaded file's URL. */
@@ -41,11 +41,14 @@ export function Block({
 	initial,
 	onUploadImage,
 }: {
-	initial: EmailEditorBlock;
+	initial: EmailEditorBuiltInBlock;
 	onUploadImage?: EmailBlockComponentProps["onUploadImage"];
 }) {
 	const [block, setBlock] = useState(initial);
-	const definition = emailBlockDefinition(block);
+	const definition = DOCS_EMAIL_REGISTRY.definitionFor(block.type);
+	if (definition === undefined) {
+		return null;
+	}
 	return (
 		<EmailCard>
 			<definition.View

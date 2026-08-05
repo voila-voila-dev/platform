@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import {
+	createEmailBlocks,
 	DEFAULT_EMAIL_EDITOR_LABELS,
 	EmailBlockEditor,
 	type EmailEditorDocument,
@@ -7,6 +8,8 @@ import {
 	emptyEmailEditorDocument,
 } from "@voila.dev/ui/email-block-editor";
 import { useState } from "react";
+
+const STORY_BLOCKS = createEmailBlocks({ currency: "EUR" });
 
 const meta = {
 	title: "EmailBlockEditor/EmailBlockEditor",
@@ -74,6 +77,7 @@ function ControlledEditor({
 	return (
 		<div className="p-6">
 			<EmailBlockEditor
+				blocks={STORY_BLOCKS}
 				document={value}
 				onChange={setValue}
 				labels={labels}
@@ -84,11 +88,8 @@ function ControlledEditor({
 }
 
 export const Composed: Story = {
-	args: {
-		document: sampleDocument,
-		onChange: () => {},
-	},
-	render: (args) => <ControlledEditor document={args.document} />,
+	args: { blocks: STORY_BLOCKS, document: sampleDocument, onChange: () => {} },
+	render: () => <ControlledEditor document={sampleDocument} />,
 };
 
 /** A multi-column row: blocks drag in and out of the cells, and the column
@@ -133,16 +134,17 @@ const gridDocument: EmailEditorDocument = {
 };
 
 export const Grid: Story = {
-	args: { document: gridDocument, onChange: () => {} },
-	render: (args) => <ControlledEditor document={args.document} />,
+	args: { blocks: STORY_BLOCKS, document: gridDocument, onChange: () => {} },
+	render: () => <ControlledEditor document={gridDocument} />,
 };
 
 export const Empty: Story = {
 	args: {
+		blocks: STORY_BLOCKS,
 		document: emptyEmailEditorDocument(),
 		onChange: () => {},
 	},
-	render: (args) => <ControlledEditor document={args.document} />,
+	render: () => <ControlledEditor document={emptyEmailEditorDocument()} />,
 };
 
 /** One of every block, for the mobile checklist: no horizontal overflow, the
@@ -300,8 +302,12 @@ const everyBlockDocument: EmailEditorDocument = {
 };
 
 export const EveryBlock: Story = {
-	args: { document: everyBlockDocument, onChange: () => {} },
-	render: (args) => <ControlledEditor document={args.document} />,
+	args: {
+		blocks: STORY_BLOCKS,
+		document: everyBlockDocument,
+		onChange: () => {},
+	},
+	render: () => <ControlledEditor document={everyBlockDocument} />,
 };
 
 /** Every default label with a `••` in front of it. A string that is missing
@@ -324,10 +330,14 @@ const markLabels = (value: unknown): unknown => {
 };
 
 export const SentinelLabels: Story = {
-	args: { document: everyBlockDocument, onChange: () => {} },
-	render: (args) => (
+	args: {
+		blocks: STORY_BLOCKS,
+		document: everyBlockDocument,
+		onChange: () => {},
+	},
+	render: () => (
 		<ControlledEditor
-			document={args.document}
+			document={everyBlockDocument}
 			labels={markLabels(DEFAULT_EMAIL_EDITOR_LABELS) as EmailEditorLabelsInput}
 		/>
 	),

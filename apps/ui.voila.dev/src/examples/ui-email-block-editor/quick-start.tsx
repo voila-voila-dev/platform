@@ -3,6 +3,7 @@ import {
 	type EmailEditorDocument,
 } from "@voila.dev/ui/email-block-editor";
 import { useState } from "react";
+import { DOCS_EMAIL_BLOCKS } from "./blocks";
 import { fakeUploadImage } from "./fixtures";
 
 /** The quick-start hero: a welcome email, in the full composed editor. */
@@ -75,6 +76,7 @@ export function Editor() {
 	const [document, setDocument] = useState(welcomeDocument);
 	return (
 		<EmailBlockEditor
+			blocks={DOCS_EMAIL_BLOCKS}
 			document={document}
 			onChange={setDocument}
 			onUploadImage={fakeUploadImage}

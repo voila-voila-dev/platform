@@ -1,11 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import {
+	createEmailBlockRegistry,
+	createEmailBlocks,
 	DEFAULT_EMAIL_EDITOR_THEME,
 	type EmailBlockComponentProps,
-	type EmailEditorBlock,
-	emailBlockDefinition,
+	type EmailEditorBuiltInBlock,
 } from "@voila.dev/ui/email-block-editor";
 import { type ReactNode, useState } from "react";
+
+const STORY_REGISTRY = createEmailBlockRegistry(
+	createEmailBlocks({ currency: "EUR" }),
+);
 
 const meta = {
 	title: "EmailBlockEditor/Blocks",
@@ -41,12 +46,15 @@ function BlockStory({
 	selected = false,
 	onUploadImage,
 }: {
-	initial: EmailEditorBlock;
+	initial: EmailEditorBuiltInBlock;
 	selected?: boolean;
 	onUploadImage?: EmailBlockComponentProps["onUploadImage"];
 }) {
 	const [block, setBlock] = useState(initial);
-	const definition = emailBlockDefinition(block);
+	const definition = STORY_REGISTRY.definitionFor(block.type);
+	if (definition === undefined) {
+		return null;
+	}
 	return (
 		<EmailCard>
 			<definition.View

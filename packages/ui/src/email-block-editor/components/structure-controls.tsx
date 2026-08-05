@@ -8,15 +8,14 @@ import { AddBlockMenu } from "#/email-block-editor/components/add-block-menu.tsx
 import { ToolbarIconButton } from "#/email-block-editor/components/toolbar-icon-button.tsx";
 import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { SortableBlockHandle } from "#/email-block-editor/dnd/sortable-block-list.ts";
-import type { EmailEditorBlockType } from "#/email-block-editor/document/types.ts";
 import { toolbarButtonClassName } from "#/email-block-editor/lib/inline-format.ts";
 import { cn } from "#/lib/utils.ts";
 
 interface Props {
 	handle: SortableBlockHandle;
 	coarsePointer: boolean;
-	addableTypes?: ReadonlyArray<EmailEditorBlockType>;
-	onAddBelow: (type: EmailEditorBlockType) => void;
+	addableTypes?: ReadonlyArray<string>;
+	onAddBelow: (type: string) => void;
 	onSelectContainer?: () => void;
 }
 

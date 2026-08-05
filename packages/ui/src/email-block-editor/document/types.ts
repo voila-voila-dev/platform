@@ -10,6 +10,16 @@
 export const EMAIL_EDITOR_DOCUMENT_VERSION = 1;
 
 /**
+ * All the editor machinery needs of a block: something to key it by, and
+ * something to look its definition up by. Everything else — what fields it
+ * has, whether it holds children — is the definition's business.
+ */
+export interface EmailEditorBlockLike {
+	readonly id: string;
+	readonly type: string;
+}
+
+/**
  * Which rendering of the email the canvas is showing. Not part of the
  * document — it is a view of it — but every block gets it, because what a
  * reader sees depends on it (a grid's column count, the card's width).
@@ -161,19 +171,19 @@ export interface EmailEditorTableColumn {
 	readonly align: "left" | "right";
 }
 
-/** The currencies the platform transacts in, mirroring the domain's
- * `SupportedCurrency`. */
-export type EmailEditorCurrency = "EUR";
-
 /**
- * A price, stored the way the platform stores money everywhere: an integer
- * amount in the currency's minor unit plus its currency, never a
- * pre-formatted string — one campaign can go out in several locales, so the
- * formatting happens at render.
+ * A price, stored the way a platform should store money: an integer amount in
+ * the currency's minor unit plus its currency, never a pre-formatted string —
+ * one campaign can go out in several locales, so the formatting happens at
+ * render.
+ *
+ * The currency is a type parameter so a host can narrow it to its own
+ * supported set and have a document round-trip through its schema without a
+ * cast. `createEmailBlocks({ currency })` fixes it for an editor instance.
  */
-export interface EmailEditorMoney {
+export interface EmailEditorMoney<Currency extends string = string> {
 	readonly amountInMinorUnits: number;
-	readonly currency: EmailEditorCurrency;
+	readonly currency: Currency;
 }
 
 /** The visual of a card block. An empty `src` means the card has none. */
@@ -199,28 +209,28 @@ export interface EmailEditorArticleBlock {
 	readonly href: string;
 }
 
-export interface EmailEditorProductBlock {
+export interface EmailEditorProductBlock<Currency extends string = string> {
 	readonly id: string;
 	readonly type: "product";
 	readonly name: string;
 	readonly description: string;
 	readonly image: EmailEditorCardImage;
-	readonly price: EmailEditorMoney;
-	/** The struck-through base price, mirroring the shop catalogue's
-	 * `publicPriceHtCents`. Null when the product is not discounted. */
-	readonly compareAtPrice: EmailEditorMoney | null;
+	readonly price: EmailEditorMoney<Currency>;
+	/** The struck-through base price. Null when the product is not
+	 * discounted. */
+	readonly compareAtPrice: EmailEditorMoney<Currency> | null;
 	readonly href: string;
 	readonly buttonLabel: string;
 }
 
-export interface EmailEditorOfferBlock {
+export interface EmailEditorOfferBlock<Currency extends string = string> {
 	readonly id: string;
 	readonly type: "offer";
 	readonly eyebrow: string;
 	readonly name: string;
 	readonly description: string;
 	readonly image: EmailEditorCardImage;
-	readonly price: EmailEditorMoney;
+	readonly price: EmailEditorMoney<Currency>;
 	/** "per month", "per year"; empty for a one-off price. */
 	readonly period: string;
 	readonly features: ReadonlyArray<string>;
@@ -239,9 +249,13 @@ export interface EmailEditorTableBlock {
 	readonly headerRow: boolean;
 }
 
-/** Everything that can sit inside a grid cell — that is, every block but the
- * grid itself. */
-export type EmailEditorLeafBlock =
+/**
+ * The blocks this package ships, minus the grid: everything that can sit
+ * inside a cell. "Built-in" because the editor's own types are parameterised
+ * over *a* block union — an instance's union is whatever its registered
+ * definitions create, which may add to these or leave some out.
+ */
+export type EmailEditorBuiltInLeafBlock<Currency extends string = string> =
 	| EmailEditorHeadingBlock
 	| EmailEditorParagraphBlock
 	| EmailEditorButtonBlock
@@ -252,8 +266,8 @@ export type EmailEditorLeafBlock =
 	| EmailEditorHighlightBlock
 	| EmailEditorTableBlock
 	| EmailEditorArticleBlock
-	| EmailEditorProductBlock
-	| EmailEditorOfferBlock
+	| EmailEditorProductBlock<Currency>
+	| EmailEditorOfferBlock<Currency>
 	| EmailEditorRatingBlock
 	| EmailEditorFinePrintBlock;
 
@@ -266,34 +280,46 @@ export type EmailEditorGridMobileColumns = 1 | 2;
  * (a gallery, two article cards, three offers) at a fraction of the
  * complexity, and an asymmetric layout is simply two sibling blocks.
  *
- * A grid cannot contain a grid: the type forbids it, which is what keeps the
- * reducer, the drag-and-drop layer and the renderer tractable.
+ * `Leaf` is what may go in a cell. A grid is not in its own `Leaf` union, which
+ * is how the type says a grid cannot contain a grid.
  */
-export interface EmailEditorGridBlock {
+export interface EmailEditorGridBlock<
+	Leaf extends EmailEditorBlockLike = EmailEditorBuiltInLeafBlock,
+> {
 	readonly id: string;
 	readonly type: "grid";
 	readonly desktopColumns: EmailEditorGridColumns;
 	/** Defaults to 1 so the layout is readable in the clients that ignore the
 	 * media query pinning this count (see the renderer). */
 	readonly mobileColumns: EmailEditorGridMobileColumns;
-	readonly children: ReadonlyArray<EmailEditorLeafBlock>;
+	readonly children: ReadonlyArray<Leaf>;
 }
 
-export type EmailEditorBlock = EmailEditorLeafBlock | EmailEditorGridBlock;
+export type EmailEditorBuiltInBlock<Currency extends string = string> =
+	| EmailEditorBuiltInLeafBlock<Currency>
+	| EmailEditorGridBlock<EmailEditorBuiltInLeafBlock<Currency>>;
 
-export type EmailEditorBlockType = EmailEditorBlock["type"];
-export type EmailEditorLeafBlockType = EmailEditorLeafBlock["type"];
+export type EmailEditorBuiltInBlockType = EmailEditorBuiltInBlock["type"];
+export type EmailEditorBuiltInLeafBlockType =
+	EmailEditorBuiltInLeafBlock["type"];
 
-export const isEmailEditorGridBlock = (
-	block: EmailEditorBlock,
-): block is EmailEditorGridBlock => block.type === "grid";
-
-export interface EmailEditorDocument {
+/**
+ * A document: the version and the blocks, over whatever block union the
+ * editor instance is configured with. `Block` appears only inside a
+ * `ReadonlyArray`, so it is covariant and a document of a narrower union is a
+ * document of a wider one — which is what lets a host's own persisted type and
+ * this one be mutually assignable instead of merely similar.
+ */
+export interface EmailEditorDocument<
+	Block extends EmailEditorBlockLike = EmailEditorBuiltInBlock,
+> {
 	readonly version: typeof EMAIL_EDITOR_DOCUMENT_VERSION;
-	readonly blocks: ReadonlyArray<EmailEditorBlock>;
+	readonly blocks: ReadonlyArray<Block>;
 }
 
-export const emptyEmailEditorDocument = (): EmailEditorDocument => ({
+export const emptyEmailEditorDocument = <
+	Block extends EmailEditorBlockLike = EmailEditorBuiltInBlock,
+>(): EmailEditorDocument<Block> => ({
 	version: EMAIL_EDITOR_DOCUMENT_VERSION,
 	blocks: [],
 });

@@ -6,6 +6,7 @@ import { CardHeaderPlaceholder } from "#/email-block-editor/components/card-head
 import {
 	useEmailEditorActions,
 	useEmailEditorLabels,
+	useEmailEditorRegistry,
 	useEmailEditorState,
 	useEmailEditorTheme,
 } from "#/email-block-editor/context/email-editor-context.tsx";
@@ -29,6 +30,7 @@ export function EditorCanvas({ headerSlot, footerSlot }: Props) {
 	const { document, preview } = useEmailEditorState();
 	const { addBlock, moveBlock } = useEmailEditorActions();
 	const { chrome } = useEmailEditorLabels();
+	const registry = useEmailEditorRegistry();
 	const blocks = document.blocks;
 	return (
 		<div
@@ -48,7 +50,11 @@ export function EditorCanvas({ headerSlot, footerSlot }: Props) {
 				>
 					{headerSlot ?? <CardHeaderPlaceholder />}
 					<div className="px-8 pt-2 pb-8">
-						<EmailEditorDndContext blocks={blocks} onMove={moveBlock}>
+						<EmailEditorDndContext
+							registry={registry}
+							blocks={blocks}
+							onMove={moveBlock}
+						>
 							<SortableBlockContainer
 								containerId={null}
 								blockIds={blocks.map((block) => block.id)}

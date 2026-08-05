@@ -1,4 +1,5 @@
 import {
+	createEmailBlocks,
 	EMAIL_EDITOR_DOCUMENT_VERSION,
 	EmailBlockEditor,
 	type EmailEditorDocument,
@@ -73,7 +74,15 @@ const welcomeDocument: EmailEditorDocument = {
  * same controlled `document`/`onChange` contract an app would persist — and
  * this module is behind `React.lazy` because the editor pulls in dnd-kit.
  */
+const DEMO_BLOCKS = createEmailBlocks({ currency: "EUR" });
+
 export default function EmailEditorDemo() {
 	const [document, setDocument] = useState(welcomeDocument);
-	return <EmailBlockEditor document={document} onChange={setDocument} />;
+	return (
+		<EmailBlockEditor
+			blocks={DEMO_BLOCKS}
+			document={document}
+			onChange={setDocument}
+		/>
+	);
 }

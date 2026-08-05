@@ -1,13 +1,18 @@
-export {
-	EMAIL_BLOCK_DEFINITIONS,
-	EMAIL_BLOCK_TYPES,
-	EMAIL_LEAF_BLOCK_TYPES,
-	type EmailBlockComponentProps,
-	type EmailBlockContainer,
-	type EmailBlockDefinition,
-	emailBlockDefinition,
-	emailBlockDefinitionForType,
+export type {
+	EmailBlockComponentProps,
+	EmailBlockContainer,
+	EmailBlockDefinition,
 } from "#/email-block-editor/blocks/block-definitions.tsx";
+export {
+	createEmailBlocks,
+	type EmailBlocksOptions,
+} from "#/email-block-editor/blocks/create-email-blocks.ts";
+export {
+	type AnyEmailBlockDefinition,
+	createEmailBlockRegistry,
+	type EmailEditorBlockOf,
+	type EmailEditorRegistry,
+} from "#/email-block-editor/blocks/registry.ts";
 export { EmailBlockEditor } from "#/email-block-editor/components/email-block-editor.tsx";
 export {
 	type EmailEditorActionsContextValue,
@@ -17,25 +22,30 @@ export {
 	useEmailEditorActions,
 	useEmailEditorConfig,
 	useEmailEditorLabels,
+	useEmailEditorRegistry,
 	useEmailEditorState,
 	useEmailEditorTheme,
 } from "#/email-block-editor/context/email-editor-context.tsx";
 export type { SortableBlockHandle } from "#/email-block-editor/dnd/sortable-block-list.ts";
-export type {
-	EmailEditorAction,
-	EmailEditorContainerId,
-	EmailEditorState,
+export {
+	allEmailEditorBlocks,
+	createEmailEditorReducer,
+	type EmailEditorAction,
+	type EmailEditorContainerId,
+	type EmailEditorState,
 } from "#/email-block-editor/document/reducer.ts";
 export {
 	EMAIL_EDITOR_DOCUMENT_VERSION,
 	type EmailEditorAlignment,
 	type EmailEditorArticleBlock,
-	type EmailEditorBlock,
-	type EmailEditorBlockType,
+	type EmailEditorBlockLike,
+	type EmailEditorBuiltInBlock,
+	type EmailEditorBuiltInBlockType,
+	type EmailEditorBuiltInLeafBlock,
+	type EmailEditorBuiltInLeafBlockType,
 	type EmailEditorButtonBlock,
 	type EmailEditorButtonVariant,
 	type EmailEditorCardImage,
-	type EmailEditorCurrency,
 	type EmailEditorDividerBlock,
 	type EmailEditorDocument,
 	type EmailEditorFinePrintBlock,
@@ -48,8 +58,6 @@ export {
 	type EmailEditorImageBlock,
 	type EmailEditorImageOverlay,
 	type EmailEditorImageWidth,
-	type EmailEditorLeafBlock,
-	type EmailEditorLeafBlockType,
 	type EmailEditorListBlock,
 	type EmailEditorListItem,
 	type EmailEditorListMarker,

@@ -9,10 +9,14 @@ import { ToggleOption } from "#/email-block-editor/components/block-options/togg
 import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorOfferBlock } from "#/email-block-editor/document/types.ts";
 
-interface Props extends EmailBlockComponentProps<EmailEditorOfferBlock> {}
+interface Props<Currency extends string>
+	extends EmailBlockComponentProps<EmailEditorOfferBlock<Currency>> {}
 
 /** The settings panel for an offer block. */
-export function OfferBlockSettings({ block, onChange }: Props) {
+export function OfferBlockSettings<Currency extends string>({
+	block,
+	onChange,
+}: Props<Currency>) {
 	const { chrome, fields, blocks } = useEmailEditorLabels();
 	return (
 		<>

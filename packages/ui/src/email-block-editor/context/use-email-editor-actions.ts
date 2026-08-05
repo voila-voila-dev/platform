@@ -1,4 +1,5 @@
 import * as React from "react";
+import type { EmailEditorRegistry } from "#/email-block-editor/blocks/registry.ts";
 import type { EmailEditorActionsContextValue } from "#/email-block-editor/context/email-editor-context.tsx";
 import type {
 	EmailEditorAction,
@@ -6,13 +7,17 @@ import type {
 } from "#/email-block-editor/document/reducer.ts";
 import { createEmailEditorReducer } from "#/email-block-editor/document/reducer.ts";
 import type {
+	EmailEditorBlockLike,
 	EmailEditorDocument,
 	EmailEditorPreview,
 } from "#/email-block-editor/document/types.ts";
 
 interface Options {
-	readonly document: EmailEditorDocument;
-	readonly onDocumentChange: (document: EmailEditorDocument) => void;
+	readonly registry: EmailEditorRegistry;
+	readonly document: EmailEditorDocument<EmailEditorBlockLike>;
+	readonly onDocumentChange: (
+		document: EmailEditorDocument<EmailEditorBlockLike>,
+	) => void;
 	readonly selectedBlockId: string | null;
 	readonly onSelectedBlockIdChange: (blockId: string | null) => void;
 	readonly onPreviewChange: (preview: EmailEditorPreview) => void;
@@ -28,6 +33,7 @@ interface Options {
  * changed underneath it.
  */
 export function useEmailEditorActions({
+	registry,
 	document,
 	onDocumentChange,
 	selectedBlockId,
@@ -42,6 +48,7 @@ export function useEmailEditorActions({
 		onSelectedBlockIdChange,
 		onPreviewChange,
 		generateBlockId,
+		registry,
 	});
 	React.useEffect(() => {
 		latest.current = {
@@ -50,15 +57,16 @@ export function useEmailEditorActions({
 			onSelectedBlockIdChange,
 			onPreviewChange,
 			generateBlockId,
+			registry,
 		};
 	});
 
 	const dispatch = React.useCallback((action: EmailEditorAction) => {
 		const current = latest.current;
-		const next = createEmailEditorReducer(current.generateBlockId)(
-			current.state,
-			action,
-		);
+		const next = createEmailEditorReducer(
+			current.registry,
+			current.generateBlockId,
+		)(current.state, action);
 		// Kept in the ref so two dispatches inside one event compose instead of
 		// the second one reducing over pre-event state.
 		latest.current = { ...current, state: next };

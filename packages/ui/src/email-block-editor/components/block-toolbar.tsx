@@ -10,7 +10,6 @@ import { ToolbarIconButton } from "#/email-block-editor/components/toolbar-icon-
 import { ToolbarSeparator } from "#/email-block-editor/components/toolbar-separator.tsx";
 import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { SortableBlockHandle } from "#/email-block-editor/dnd/sortable-block-list.ts";
-import type { EmailEditorBlockType } from "#/email-block-editor/document/types.ts";
 import {
 	INLINE_MARKS,
 	selectedAnchorElement,
@@ -47,8 +46,8 @@ interface Props {
 	/** Touch pointer: grow every target to 44px. */
 	coarsePointer: boolean;
 	/** Restricts the add-below menu; a grid cell offers the leaf types only. */
-	addableTypes?: ReadonlyArray<EmailEditorBlockType>;
-	onAddBelow: (type: EmailEditorBlockType) => void;
+	addableTypes?: ReadonlyArray<string>;
+	onAddBelow: (type: string) => void;
 	onDuplicate: () => void;
 	onRemove: () => void;
 	/** Present when the settings are in a sheet; opens it for this block. */

@@ -3,6 +3,7 @@ import { BlockOptionSection } from "#/email-block-editor/components/block-option
 import { SegmentedOption } from "#/email-block-editor/components/block-options/segmented-option.tsx";
 import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
 import type {
+	EmailEditorBlockLike,
 	EmailEditorGridBlock,
 	EmailEditorGridColumns,
 	EmailEditorGridMobileColumns,
@@ -25,10 +26,14 @@ const MOBILE_COLUMN_OPTIONS: ReadonlyArray<{
 	{ value: 2, label: "2" },
 ];
 
-interface Props extends EmailBlockComponentProps<EmailEditorGridBlock> {}
+interface Props<Leaf extends EmailEditorBlockLike>
+	extends EmailBlockComponentProps<EmailEditorGridBlock<Leaf>> {}
 
 /** The settings panel for a grid block: column counts and spacing. */
-export function GridBlockSettings({ block, onChange }: Props) {
+export function GridBlockSettings<Leaf extends EmailEditorBlockLike>({
+	block,
+	onChange,
+}: Props<Leaf>) {
 	const { chrome, blocks } = useEmailEditorLabels();
 	return (
 		<BlockOptionSection title={chrome.sectionAppearance}>

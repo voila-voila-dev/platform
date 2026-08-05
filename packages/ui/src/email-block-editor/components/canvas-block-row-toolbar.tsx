@@ -1,17 +1,15 @@
 import type { ReactElement, ReactNode } from "react";
 import { createPortal } from "react-dom";
-import {
-	EMAIL_LEAF_BLOCK_TYPES,
-	emailBlockDefinition,
-} from "#/email-block-editor/blocks/block-definitions.tsx";
+
 import { BlockToolbar } from "#/email-block-editor/components/block-toolbar.tsx";
 import {
 	useEmailEditorActions,
+	useEmailEditorRegistry,
 	useEmailEditorState,
 } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { SortableBlockHandle } from "#/email-block-editor/dnd/sortable-block-list.ts";
 import type { EmailEditorContainerId } from "#/email-block-editor/document/reducer.ts";
-import type { EmailEditorBlock } from "#/email-block-editor/document/types.ts";
+import type { EmailEditorBlockLike } from "#/email-block-editor/document/types.ts";
 import { cn } from "#/lib/utils.ts";
 
 /** Render `node` into `slot`, or in place when there is no slot. */
@@ -19,7 +17,8 @@ const renderIn = (slot: HTMLElement | null, node: ReactElement): ReactNode =>
 	slot === null ? node : createPortal(node, slot);
 
 interface Props {
-	block: EmailEditorBlock;
+	block: EmailEditorBlockLike;
+	/** The container this row sits in, or null at the document root. */
 	index: number;
 	containerId: EmailEditorContainerId;
 	handle: SortableBlockHandle;
@@ -46,7 +45,8 @@ export function CanvasBlockRowToolbar({
 	handle,
 	toolbarSlot,
 }: Props) {
-	const { coarsePointer } = useEmailEditorState();
+	const { coarsePointer, document } = useEmailEditorState();
+	const registry = useEmailEditorRegistry();
 	const {
 		addBlock,
 		duplicateBlock,
@@ -55,6 +55,14 @@ export function CanvasBlockRowToolbar({
 		openBlockSettings,
 	} = useEmailEditorActions();
 	const nested = containerId !== null;
+	const containerType =
+		containerId === null
+			? undefined
+			: document.blocks.find((candidate) => candidate.id === containerId)?.type;
+	const addableTypes =
+		containerType === undefined
+			? undefined
+			: registry.types.filter((type) => registry.accepts(containerType, type));
 	return renderIn(
 		toolbarSlot,
 		<div
@@ -67,9 +75,9 @@ export function CanvasBlockRowToolbar({
 		>
 			<BlockToolbar
 				handle={handle}
-				richText={emailBlockDefinition(block).richText === true}
+				richText={registry.definitionFor(block.type)?.richText === true}
 				coarsePointer={coarsePointer}
-				addableTypes={nested ? EMAIL_LEAF_BLOCK_TYPES : undefined}
+				addableTypes={addableTypes}
 				onAddBelow={(type) => addBlock(type, { containerId, index: index + 1 })}
 				onDuplicate={() => duplicateBlock(block.id)}
 				onRemove={() => removeBlock(block.id)}

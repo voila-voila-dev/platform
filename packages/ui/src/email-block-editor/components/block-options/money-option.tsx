@@ -8,10 +8,10 @@ import {
 } from "#/email-block-editor/lib/money.ts";
 import { MoneyInput } from "#/money-input/components/money-input.tsx";
 
-interface Props {
+interface Props<Currency extends string> {
 	label: string;
-	value: EmailEditorMoney;
-	onChange: (money: EmailEditorMoney) => void;
+	value: EmailEditorMoney<Currency>;
+	onChange: (money: EmailEditorMoney<Currency>) => void;
 	description?: string;
 }
 
@@ -20,7 +20,12 @@ interface Props {
  * currency (never a formatted string), so one campaign can be sent in several
  * locales and formatted per recipient at render time.
  */
-export function MoneyOption({ label, value, onChange, description }: Props) {
+export function MoneyOption<Currency extends string>({
+	label,
+	value,
+	onChange,
+	description,
+}: Props<Currency>) {
 	const id = useId();
 	const { fields } = useEmailEditorLabels();
 	return (

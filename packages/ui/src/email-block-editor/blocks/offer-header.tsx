@@ -7,14 +7,17 @@ import {
 import type { EmailEditorOfferBlock } from "#/email-block-editor/document/types.ts";
 import { formatPreviewPrice } from "#/email-block-editor/lib/money.ts";
 
-interface Props {
-	block: EmailEditorOfferBlock;
-	onChange: (block: EmailEditorOfferBlock) => void;
+interface Props<Currency extends string> {
+	block: EmailEditorOfferBlock<Currency>;
+	onChange: (block: EmailEditorOfferBlock<Currency>) => void;
 }
 
 /** The plan's identity: its optional surtitle, its name, and the price with
  * its optional recurrence. */
-export function OfferHeader({ block, onChange }: Props) {
+export function OfferHeader<Currency extends string>({
+	block,
+	onChange,
+}: Props<Currency>) {
 	const theme = useEmailEditorTheme();
 	const { blocks } = useEmailEditorLabels();
 	return (

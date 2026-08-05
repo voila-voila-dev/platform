@@ -1,5 +1,10 @@
 import type { ReactNode } from "react";
 import { useCallback, useMemo, useState } from "react";
+import type {
+	AnyEmailBlockDefinition,
+	EmailEditorRegistry,
+} from "#/email-block-editor/blocks/registry.ts";
+import { createEmailBlockRegistry } from "#/email-block-editor/blocks/registry.ts";
 import { BlockSettingsSheet } from "#/email-block-editor/components/block-settings-sheet.tsx";
 import { EditorCanvas } from "#/email-block-editor/components/editor-canvas.tsx";
 import { EditorSidebar } from "#/email-block-editor/components/editor-sidebar.tsx";
@@ -7,6 +12,7 @@ import { PreviewToggle } from "#/email-block-editor/components/preview-toggle.ts
 import { EmailEditorProvider } from "#/email-block-editor/context/email-editor-context.tsx";
 import { useEmailEditorActions } from "#/email-block-editor/context/use-email-editor-actions.ts";
 import type {
+	EmailEditorBlockLike,
 	EmailEditorDocument,
 	EmailEditorPreview,
 } from "#/email-block-editor/document/types.ts";
@@ -19,15 +25,21 @@ import {
 import type { EmailEditorThemeInput } from "#/email-block-editor/theme.ts";
 import { mergeEmailEditorTheme } from "#/email-block-editor/theme.ts";
 
-interface Props {
+interface Props<Block extends EmailEditorBlockLike> {
+	/**
+	 * The block types this editor offers, as definitions. `createEmailBlocks`
+	 * returns the ones this package ships; add your own, drop the ones you do
+	 * not want, reorder them. Either the list or a registry built from it.
+	 */
+	blocks: ReadonlyArray<AnyEmailBlockDefinition> | EmailEditorRegistry;
 	/**
 	 * The template being edited: `{ version, blocks }`, plain serialisable data.
 	 * Controlled — the editor holds no copy of it, so persistence is one
 	 * `JSON.stringify` away and undo is whatever you do with the state.
 	 */
-	document: EmailEditorDocument;
+	document: EmailEditorDocument<Block>;
 	/** Called with the whole next document on every edit, keystrokes included. */
-	onChange: (document: EmailEditorDocument) => void;
+	onChange: (document: EmailEditorDocument<Block>) => void;
 	/** Delegated image upload: receives the picked file, resolves with its
 	 * public URL. Omit to disable image uploads. */
 	onUploadImage?: (file: File) => Promise<string>;
@@ -55,7 +67,8 @@ interface Props {
  * internal UI state. Everything below the root reads the editor through
  * context rather than through props.
  */
-export function EmailBlockEditor({
+export function EmailBlockEditor<Block extends EmailEditorBlockLike>({
+	blocks,
 	document,
 	onChange,
 	onUploadImage,
@@ -64,7 +77,7 @@ export function EmailBlockEditor({
 	labels,
 	headerSlot,
 	footerSlot,
-}: Props) {
+}: Props<Block>) {
 	const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
 	const [settingsSheetOpen, setSettingsSheetOpen] = useState(false);
 	const compact = useCompactEditorLayout();
@@ -79,9 +92,20 @@ export function EmailBlockEditor({
 		() => setSettingsSheetOpen(true),
 		[setSettingsSheetOpen],
 	);
+	const registry = useMemo(
+		() => (Array.isArray(blocks) ? createEmailBlockRegistry(blocks) : blocks),
+		[blocks],
+	) as EmailEditorRegistry;
 	const actions = useEmailEditorActions({
+		registry,
 		document,
-		onDocumentChange: onChange,
+		// The one place a block union is forgotten. Everything below the root is
+		// written against `EmailEditorBlockLike` and looks its definition up by
+		// `type`, so the erased union is never needed again — and React contexts
+		// cannot be generic, which is why it has to happen here.
+		onDocumentChange: onChange as (
+			next: EmailEditorDocument<EmailEditorBlockLike>,
+		) => void,
 		selectedBlockId,
 		onSelectedBlockIdChange: setSelectedBlockId,
 		onPreviewChange: setPreview,
@@ -91,12 +115,13 @@ export function EmailBlockEditor({
 	});
 	const config = useMemo(
 		() => ({
+			registry,
 			theme: mergeEmailEditorTheme(theme),
 			labels: mergeEmailEditorLabels(labels),
 			onUploadImage,
 			generateBlockId,
 		}),
-		[theme, labels, onUploadImage, generateBlockId],
+		[registry, theme, labels, onUploadImage, generateBlockId],
 	);
 
 	return (

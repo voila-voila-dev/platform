@@ -1,6 +1,7 @@
 import { SelectedBlockSettings } from "#/email-block-editor/components/selected-block-settings.tsx";
 import {
 	useEmailEditorLabels,
+	useEmailEditorRegistry,
 	useEmailEditorState,
 } from "#/email-block-editor/context/email-editor-context.tsx";
 import { allEmailEditorBlocks } from "#/email-block-editor/document/reducer.ts";
@@ -13,9 +14,10 @@ import { allEmailEditorBlocks } from "#/email-block-editor/document/reducer.ts";
 export function BlockSettingsPanel() {
 	const { document, selectedBlockId } = useEmailEditorState();
 	const { chrome } = useEmailEditorLabels();
+	const registry = useEmailEditorRegistry();
 	// Grid children are selectable too, so the lookup walks the whole tree.
 	const selectedBlock =
-		allEmailEditorBlocks(document.blocks).find(
+		allEmailEditorBlocks(registry, document.blocks).find(
 			(block) => block.id === selectedBlockId,
 		) ?? null;
 

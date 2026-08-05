@@ -4,13 +4,16 @@ import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-
 import type { EmailEditorOfferBlock } from "#/email-block-editor/document/types.ts";
 import { Input } from "#/input/components/input.tsx";
 
-interface Props {
-	block: EmailEditorOfferBlock;
-	onChange: (block: EmailEditorOfferBlock) => void;
+interface Props<Currency extends string> {
+	block: EmailEditorOfferBlock<Currency>;
+	onChange: (block: EmailEditorOfferBlock<Currency>) => void;
 }
 
 /** The editable list of an offer's included features. */
-export function OfferFeatureSettings({ block, onChange }: Props) {
+export function OfferFeatureSettings<Currency extends string>({
+	block,
+	onChange,
+}: Props<Currency>) {
 	const { blocks } = useEmailEditorLabels();
 	return (
 		<div className="flex flex-col gap-2">

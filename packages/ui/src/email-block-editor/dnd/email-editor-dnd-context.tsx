@@ -10,6 +10,7 @@ import {
 } from "@dnd-kit/core";
 import { sortableKeyboardCoordinates } from "@dnd-kit/sortable";
 import type { ReactNode } from "react";
+import type { EmailEditorRegistry } from "#/email-block-editor/blocks/registry.ts";
 import {
 	CONTAINER_PREFIX,
 	ROOT_CONTAINER,
@@ -19,8 +20,7 @@ import {
 	emailEditorContainerBlocks,
 	emailEditorContainerOf,
 } from "#/email-block-editor/document/reducer.ts";
-import type { EmailEditorBlock } from "#/email-block-editor/document/types.ts";
-import { isEmailEditorGridBlock } from "#/email-block-editor/document/types.ts";
+import type { EmailEditorBlockLike } from "#/email-block-editor/document/types.ts";
 
 const containerIdFromDroppable = (
 	droppableId: string,
@@ -40,7 +40,8 @@ const containerIdFromDroppable = (
  * beside it.
  */
 const droppableDepth = (
-	blocks: ReadonlyArray<EmailEditorBlock>,
+	registry: EmailEditorRegistry,
+	blocks: ReadonlyArray<EmailEditorBlockLike>,
 	droppableId: string,
 ): number => {
 	if (droppableId === ROOT_CONTAINER) {
@@ -49,18 +50,20 @@ const droppableDepth = (
 	if (droppableId.startsWith(CONTAINER_PREFIX)) {
 		return 1;
 	}
-	return emailEditorContainerOf(blocks, droppableId) === null ? 2 : 0;
+	return emailEditorContainerOf(registry, blocks, droppableId) === null ? 2 : 0;
 };
 /** The container and index of a block that was dropped onto. */
 const resolveDropOnBlock = (
-	blocks: ReadonlyArray<EmailEditorBlock>,
+	registry: EmailEditorRegistry,
+	blocks: ReadonlyArray<EmailEditorBlockLike>,
 	blockId: string,
 ): { containerId: EmailEditorContainerId; index: number } | undefined => {
-	const containerId = emailEditorContainerOf(blocks, blockId);
+	const containerId = emailEditorContainerOf(registry, blocks, blockId);
 	if (containerId === undefined) {
 		return undefined;
 	}
-	const siblings = emailEditorContainerBlocks(blocks, containerId) ?? [];
+	const siblings =
+		emailEditorContainerBlocks(registry, blocks, containerId) ?? [];
 	return {
 		containerId,
 		index: siblings.findIndex((block) => block.id === blockId),
@@ -68,7 +71,8 @@ const resolveDropOnBlock = (
 };
 
 interface Props {
-	blocks: ReadonlyArray<EmailEditorBlock>;
+	registry: EmailEditorRegistry;
+	blocks: ReadonlyArray<EmailEditorBlockLike>;
 	onMove: (
 		blockId: string,
 		toContainerId: EmailEditorContainerId,
@@ -83,7 +87,12 @@ interface Props {
  * through `onMove` with the dragged block id and its destination container and
  * index; the document itself stays owned by the editor reducer.
  */
-export function EmailEditorDndContext({ blocks, onMove, children }: Props) {
+export function EmailEditorDndContext({
+	registry,
+	blocks,
+	onMove,
+	children,
+}: Props) {
 	const sensors = useSensors(
 		useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
 		useSensor(KeyboardSensor, {
@@ -96,8 +105,8 @@ export function EmailEditorDndContext({ blocks, onMove, children }: Props) {
 		const collisions = found.length > 0 ? found : rectIntersection(args);
 		return [...collisions].sort(
 			(left, right) =>
-				droppableDepth(blocks, String(left.id)) -
-				droppableDepth(blocks, String(right.id)),
+				droppableDepth(registry, blocks, String(left.id)) -
+				droppableDepth(registry, blocks, String(right.id)),
 		);
 	};
 
@@ -115,21 +124,26 @@ export function EmailEditorDndContext({ blocks, onMove, children }: Props) {
 			overContainer !== undefined
 				? {
 						containerId: overContainer,
-						index: (emailEditorContainerBlocks(blocks, overContainer) ?? [])
-							.length,
+						index: (
+							emailEditorContainerBlocks(registry, blocks, overContainer) ?? []
+						).length,
 					}
-				: resolveDropOnBlock(blocks, overId);
+				: resolveDropOnBlock(registry, blocks, overId);
 		if (destination === undefined) {
 			return;
 		}
 
-		// A grid cannot nest: aiming one at something inside another grid drops
-		// it beside that grid instead of doing nothing.
+		// A container the destination refuses — a grid aimed at a grid's cell —
+		// drops beside that container instead of doing nothing.
 		const activeBlock = blocks.find((block) => block.id === activeId);
+		const destinationType =
+			destination.containerId === null
+				? undefined
+				: blocks.find((block) => block.id === destination.containerId)?.type;
 		if (
 			activeBlock !== undefined &&
-			isEmailEditorGridBlock(activeBlock) &&
-			destination.containerId !== null
+			destinationType !== undefined &&
+			!registry.accepts(destinationType, activeBlock.type)
 		) {
 			const rootIndex = blocks.findIndex(
 				(block) => block.id === destination.containerId,

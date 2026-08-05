@@ -6,14 +6,18 @@ import { OfferHeader } from "#/email-block-editor/blocks/offer-header.tsx";
 import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorOfferBlock } from "#/email-block-editor/document/types.ts";
 
-interface Props extends EmailBlockComponentProps<EmailEditorOfferBlock> {}
+interface Props<Currency extends string>
+	extends EmailBlockComponentProps<EmailEditorOfferBlock<Currency>> {}
 
 /**
  * A pricing plan on the shared card shell: an eyebrow, a name, a price with an
  * optional period, a feature list and a call to action. `highlighted` draws
  * the recommended plan of a row in the brand colour.
  */
-export function OfferBlockView({ block, onChange }: Props) {
+export function OfferBlockView<Currency extends string>({
+	block,
+	onChange,
+}: Props<Currency>) {
 	const theme = useEmailEditorTheme();
 	return (
 		<EmailCardShell

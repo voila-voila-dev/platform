@@ -1,24 +1,24 @@
 import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block-definitions.tsx";
-import { emailBlockDefinition } from "#/email-block-editor/blocks/block-definitions.tsx";
 import { CanvasBlockRowToolbar } from "#/email-block-editor/components/canvas-block-row-toolbar.tsx";
-import { GridBlockCells } from "#/email-block-editor/components/grid-block-cells.tsx";
+import { ContainerBlockCells } from "#/email-block-editor/components/container-block-cells.tsx";
+import { UnknownBlock } from "#/email-block-editor/components/unknown-block.tsx";
 import {
 	useEmailEditorActions,
 	useEmailEditorConfig,
+	useEmailEditorRegistry,
 	useEmailEditorState,
 } from "#/email-block-editor/context/email-editor-context.tsx";
 import { SortableBlockItem } from "#/email-block-editor/dnd/sortable-block-item.tsx";
 import type { EmailEditorContainerId } from "#/email-block-editor/document/reducer.ts";
-import type { EmailEditorBlock } from "#/email-block-editor/document/types.ts";
-import { isEmailEditorGridBlock } from "#/email-block-editor/document/types.ts";
+import type { EmailEditorBlockLike } from "#/email-block-editor/document/types.ts";
 import { cn } from "#/lib/utils.ts";
 
 interface Props {
-	block: EmailEditorBlock;
+	block: EmailEditorBlockLike;
 	index: number;
 	containerId: EmailEditorContainerId;
 	/** Where to render the toolbar when the row's own column is too narrow for
-	 * it; see {@link GridBlockCells}. */
+	 * it; see {@link ContainerBlockCells}. */
 	toolbarSlot?: HTMLElement | null;
 }
 
@@ -35,9 +35,9 @@ export function CanvasBlockRow({
 	const { selectedBlockId, preview } = useEmailEditorState();
 	const { updateBlock, selectBlock } = useEmailEditorActions();
 	const { onUploadImage } = useEmailEditorConfig();
+	const registry = useEmailEditorRegistry();
 	const selected = selectedBlockId === block.id;
-	const definition = emailBlockDefinition(block);
-	const grid = isEmailEditorGridBlock(block) ? block : null;
+	const definition = registry.definitionFor(block.type);
 	const viewProps: EmailBlockComponentProps = {
 		block,
 		selected,
@@ -46,7 +46,7 @@ export function CanvasBlockRow({
 		onUploadImage,
 	};
 	// Selecting the innermost block: the child's handler runs first and stops
-	// the event, so clicking inside a grid cell never selects the grid.
+	// the event, so clicking inside a cell never selects the container.
 	const select = (event: { stopPropagation: () => void }) => {
 		event.stopPropagation();
 		selectBlock(block.id);
@@ -83,10 +83,12 @@ export function CanvasBlockRow({
 					{/* biome-ignore lint/a11y/noStaticElementInteractions: selection sugar; the real controls inside stay keyboard-accessible. */}
 					{/* biome-ignore lint/a11y/useKeyWithClickEvents: same as above. */}
 					<div onClick={select} onFocus={select}>
-						{grid === null ? (
+						{definition === undefined ? (
+							<UnknownBlock type={block.type} />
+						) : definition.container === undefined ? (
 							<definition.View {...viewProps} />
 						) : (
-							<GridBlockCells block={grid} />
+							<ContainerBlockCells block={block} definition={definition} />
 						)}
 					</div>
 				</>

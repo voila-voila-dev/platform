@@ -3,17 +3,15 @@ import type { ReactElement } from "react";
 import { Button } from "#/button/components/button.tsx";
 import { DropdownMenu } from "#/dropdown-menu/components/dropdown-menu.tsx";
 import {
-	EMAIL_BLOCK_DEFINITIONS,
-	EMAIL_BLOCK_TYPES,
-} from "#/email-block-editor/blocks/block-definitions.tsx";
-import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
-import type { EmailEditorBlockType } from "#/email-block-editor/document/types.ts";
+	useEmailEditorLabels,
+	useEmailEditorRegistry,
+} from "#/email-block-editor/context/email-editor-context.tsx";
 
 interface Props {
-	onAdd: (type: EmailEditorBlockType) => void;
+	onAdd: (type: string) => void;
 	trigger?: ReactElement;
-	/** The offerable types; a grid cell passes the leaf types only. */
-	types?: ReadonlyArray<EmailEditorBlockType>;
+	/** The offerable types; a container's cell passes the ones it accepts. */
+	types?: ReadonlyArray<string>;
 }
 
 /**
@@ -21,12 +19,10 @@ interface Props {
  * is the outlined empty-state button; the block toolbar passes its own icon
  * trigger instead.
  */
-export function AddBlockMenu({
-	onAdd,
-	trigger,
-	types = EMAIL_BLOCK_TYPES,
-}: Props) {
+export function AddBlockMenu({ onAdd, trigger, types }: Props) {
 	const { chrome, blockNames } = useEmailEditorLabels();
+	const registry = useEmailEditorRegistry();
+	const offered = types ?? registry.types;
 	return (
 		<DropdownMenu.Root>
 			<DropdownMenu.Trigger
@@ -40,8 +36,11 @@ export function AddBlockMenu({
 				}
 			/>
 			<DropdownMenu.Content align="start">
-				{types.map((type) => {
-					const definition = EMAIL_BLOCK_DEFINITIONS[type];
+				{offered.map((type) => {
+					const definition = registry.definitionFor(type);
+					if (definition === undefined) {
+						return null;
+					}
 					return (
 						<DropdownMenu.Item key={type} onClick={() => onAdd(type)}>
 							<definition.icon aria-hidden />

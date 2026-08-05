@@ -1,8 +1,8 @@
 import * as React from "react";
+import type { EmailEditorRegistry } from "#/email-block-editor/blocks/registry.ts";
 import type { EmailEditorContainerId } from "#/email-block-editor/document/reducer.ts";
 import type {
-	EmailEditorBlock,
-	EmailEditorBlockType,
+	EmailEditorBlockLike,
 	EmailEditorDocument,
 	EmailEditorPreview,
 } from "#/email-block-editor/document/types.ts";
@@ -17,6 +17,7 @@ import { DEFAULT_EMAIL_EDITOR_THEME } from "#/email-block-editor/theme.ts";
  * re-render on every keystroke.
  */
 export interface EmailEditorConfigContextValue {
+	readonly registry: EmailEditorRegistry;
 	readonly theme: EmailEditorTheme;
 	readonly labels: EmailEditorLabels;
 	/** Delegated image upload: receives the picked file, resolves with its
@@ -27,7 +28,7 @@ export interface EmailEditorConfigContextValue {
 
 /** What the editor is showing right now. Changes on every edit. */
 export interface EmailEditorStateContextValue {
-	readonly document: EmailEditorDocument;
+	readonly document: EmailEditorDocument<EmailEditorBlockLike>;
 	readonly selectedBlockId: string | null;
 	readonly preview: EmailEditorPreview;
 	/** The settings live in a bottom sheet rather than in a side column. */
@@ -43,14 +44,14 @@ export interface EmailEditorStateContextValue {
  */
 export interface EmailEditorActionsContextValue {
 	readonly addBlock: (
-		blockType: EmailEditorBlockType,
+		blockType: string,
 		options?: {
 			readonly containerId?: EmailEditorContainerId;
 			/** Insertion position within the container; appends when omitted. */
 			readonly index?: number;
 		},
 	) => void;
-	readonly updateBlock: (block: EmailEditorBlock) => void;
+	readonly updateBlock: (block: EmailEditorBlockLike) => void;
 	readonly removeBlock: (blockId: string) => void;
 	readonly moveBlock: (
 		blockId: string,
@@ -59,7 +60,9 @@ export interface EmailEditorActionsContextValue {
 	) => void;
 	readonly duplicateBlock: (blockId: string) => void;
 	readonly selectBlock: (blockId: string | null) => void;
-	readonly replaceDocument: (document: EmailEditorDocument) => void;
+	readonly replaceDocument: (
+		document: EmailEditorDocument<EmailEditorBlockLike>,
+	) => void;
 	readonly setPreview: (preview: EmailEditorPreview) => void;
 	/** Opens the block settings sheet. Undefined in the wide layout, where the
 	 * settings column is always on screen. */
@@ -105,6 +108,10 @@ const use = <T,>(context: React.Context<T | null>, hook: string): T => {
 
 export const useEmailEditorConfig = (): EmailEditorConfigContextValue =>
 	use(EmailEditorConfigContext, "useEmailEditorConfig");
+
+/** The block definitions this editor instance was configured with. */
+export const useEmailEditorRegistry = (): EmailEditorRegistry =>
+	use(EmailEditorConfigContext, "useEmailEditorRegistry").registry;
 
 /**
  * The theme of the surrounding editor, or the defaults outside one. Falls back

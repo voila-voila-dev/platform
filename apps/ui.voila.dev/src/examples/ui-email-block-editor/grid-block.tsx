@@ -1,12 +1,13 @@
-import {
-	EMAIL_BLOCK_DEFINITIONS,
-	type EmailEditorBlock,
-	type EmailEditorGridBlock,
-	type EmailEditorLeafBlock,
-	emailBlockDefinition,
+import type {
+	EmailEditorBuiltInBlock,
+	EmailEditorBuiltInLeafBlock,
+	EmailEditorGridBlock,
 } from "@voila.dev/ui/email-block-editor";
 import { useState } from "react";
+import { DOCS_EMAIL_REGISTRY } from "./blocks";
 import { EmailCard } from "./fixtures";
+
+const gridDefinition = DOCS_EMAIL_REGISTRY.definitionFor("grid");
 
 /**
  * The grid is a container: the canvas composes its cells and slots them in as
@@ -14,7 +15,9 @@ import { EmailCard } from "./fixtures";
  * the layout the block owns.
  */
 export function Grid() {
-	const [block, setBlock] = useState<EmailEditorGridBlock>({
+	const [block, setBlock] = useState<
+		EmailEditorGridBlock<EmailEditorBuiltInLeafBlock>
+	>({
 		id: "grid",
 		type: "grid",
 		desktopColumns: 2,
@@ -38,23 +41,24 @@ export function Grid() {
 			},
 		],
 	});
+	if (gridDefinition === undefined) {
+		return null;
+	}
 	return (
 		<EmailCard>
-			<EMAIL_BLOCK_DEFINITIONS.grid.View
-				block={block}
-				selected={false}
-				onChange={setBlock}
-			>
+			<gridDefinition.View block={block} selected={false} onChange={setBlock}>
 				{block.children.map((child) => (
 					<GridCell key={child.id} block={child} />
 				))}
-			</EMAIL_BLOCK_DEFINITIONS.grid.View>
+			</gridDefinition.View>
 		</EmailCard>
 	);
 }
 
-function GridCell({ block: initial }: { block: EmailEditorLeafBlock }) {
-	const [block, setBlock] = useState<EmailEditorBlock>(initial);
-	const definition = emailBlockDefinition(block);
-	return <definition.View block={block} selected={false} onChange={setBlock} />;
+function GridCell({ block: initial }: { block: EmailEditorBuiltInLeafBlock }) {
+	const [block, setBlock] = useState<EmailEditorBuiltInBlock>(initial);
+	const definition = DOCS_EMAIL_REGISTRY.definitionFor(block.type);
+	return definition === undefined ? null : (
+		<definition.View block={block} selected={false} onChange={setBlock} />
+	);
 }

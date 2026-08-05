@@ -1,4 +1,4 @@
-import type { EmailEditorBlockType } from "#/email-block-editor/document/types.ts";
+import type { EmailEditorBuiltInBlockType } from "#/email-block-editor/document/types.ts";
 
 /**
  * Every string the editor puts on screen. There is no i18n runtime here: the
@@ -35,6 +35,8 @@ export interface EmailEditorChromeLabels {
 	readonly linkUrl: string;
 	readonly apply: string;
 	readonly removeLink: string;
+	/** A stored block whose type this editor no longer registers. */
+	readonly unknownBlock: (type: string) => string;
 	/** The three headings a settings panel groups its options under. */
 	readonly sectionContent: string;
 	readonly sectionAppearance: string;
@@ -48,7 +50,10 @@ export interface EmailEditorChromeLabels {
  * `label` on its definition.
  */
 export type EmailEditorBlockNameLabels = {
-	readonly [Type in EmailEditorBlockType]: string;
+	readonly [Type in EmailEditorBuiltInBlockType]: string;
+} & {
+	/** A block a consumer registered: absent here, named by its definition. */
+	readonly [type: string]: string | undefined;
 };
 
 /**
@@ -255,6 +260,7 @@ export const DEFAULT_EMAIL_EDITOR_LABELS: EmailEditorLabels = {
 		linkUrl: "Link URL",
 		apply: "Apply",
 		removeLink: "Remove link",
+		unknownBlock: (type) => `Unknown block ("${type}")`,
 		sectionContent: "Content",
 		sectionAppearance: "Appearance",
 		sectionLink: "Link",
