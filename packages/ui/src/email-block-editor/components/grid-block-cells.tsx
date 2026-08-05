@@ -1,20 +1,26 @@
 import { useState } from "react";
 import { emailBlockDefinition } from "#/email-block-editor/blocks/block-definitions.tsx";
 import { CanvasBlockRow } from "#/email-block-editor/components/canvas-block-row.tsx";
-import type { CanvasContext } from "#/email-block-editor/components/editor-canvas.tsx";
 import { GridAddCell } from "#/email-block-editor/components/grid-add-cell.tsx";
+import {
+	useEmailEditorActions,
+	useEmailEditorConfig,
+	useEmailEditorState,
+} from "#/email-block-editor/context/email-editor-context.tsx";
 import { SortableBlockContainer } from "#/email-block-editor/dnd/sortable-block-container.tsx";
 import type { EmailEditorGridBlock } from "#/email-block-editor/document/types.ts";
 
 interface Props {
 	block: EmailEditorGridBlock;
-	context: CanvasContext;
 }
 
 /** A grid block's cells, each a drop target for leaf blocks. */
-export function GridBlockCells({ block, context }: Props) {
+export function GridBlockCells({ block }: Props) {
+	const { selectedBlockId, preview, coarsePointer } = useEmailEditorState();
+	const { updateBlock } = useEmailEditorActions();
+	const { onUploadImage } = useEmailEditorConfig();
 	const definition = emailBlockDefinition(block);
-	const selected = context.state.selectedBlockId === block.id;
+	const selected = selectedBlockId === block.id;
 	const showAddCell = selected || block.children.length === 0;
 	// Under a touch pointer a cell is far too narrow for a row of 44px targets,
 	// so a selected child's toolbar is portalled up here and gets the whole
@@ -30,11 +36,9 @@ export function GridBlockCells({ block, context }: Props) {
 			<definition.View
 				block={block}
 				selected={selected}
-				preview={context.preview}
-				onChange={(updated) =>
-					context.dispatch({ type: "update", block: updated })
-				}
-				onUploadImage={context.onUploadImage}
+				preview={preview}
+				onChange={updateBlock}
+				onUploadImage={onUploadImage}
 			>
 				{block.children.map((child, index) => (
 					<CanvasBlockRow
@@ -42,13 +46,10 @@ export function GridBlockCells({ block, context }: Props) {
 						block={child}
 						index={index}
 						containerId={block.id}
-						context={context}
-						toolbarSlot={context.coarsePointer ? toolbarSlot : null}
+						toolbarSlot={coarsePointer ? toolbarSlot : null}
 					/>
 				))}
-				{showAddCell ? (
-					<GridAddCell gridId={block.id} context={context} />
-				) : null}
+				{showAddCell ? <GridAddCell gridId={block.id} /> : null}
 			</definition.View>
 		</SortableBlockContainer>
 	);

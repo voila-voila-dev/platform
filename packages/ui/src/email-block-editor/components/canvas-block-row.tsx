@@ -1,8 +1,12 @@
 import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block-definitions.tsx";
 import { emailBlockDefinition } from "#/email-block-editor/blocks/block-definitions.tsx";
 import { CanvasBlockRowToolbar } from "#/email-block-editor/components/canvas-block-row-toolbar.tsx";
-import type { CanvasContext } from "#/email-block-editor/components/editor-canvas.tsx";
 import { GridBlockCells } from "#/email-block-editor/components/grid-block-cells.tsx";
+import {
+	useEmailEditorActions,
+	useEmailEditorConfig,
+	useEmailEditorState,
+} from "#/email-block-editor/context/email-editor-context.tsx";
 import { SortableBlockItem } from "#/email-block-editor/dnd/sortable-block-item.tsx";
 import type { EmailEditorContainerId } from "#/email-block-editor/document/reducer.ts";
 import type { EmailEditorBlock } from "#/email-block-editor/document/types.ts";
@@ -13,7 +17,6 @@ interface Props {
 	block: EmailEditorBlock;
 	index: number;
 	containerId: EmailEditorContainerId;
-	context: CanvasContext;
 	/** Where to render the toolbar when the row's own column is too narrow for
 	 * it; see {@link GridBlockCells}. */
 	toolbarSlot?: HTMLElement | null;
@@ -27,25 +30,26 @@ export function CanvasBlockRow({
 	block,
 	index,
 	containerId,
-	context,
 	toolbarSlot = null,
 }: Props) {
-	const { dispatch } = context;
-	const selected = context.state.selectedBlockId === block.id;
+	const { selectedBlockId, preview } = useEmailEditorState();
+	const { updateBlock, selectBlock } = useEmailEditorActions();
+	const { onUploadImage } = useEmailEditorConfig();
+	const selected = selectedBlockId === block.id;
 	const definition = emailBlockDefinition(block);
 	const grid = isEmailEditorGridBlock(block) ? block : null;
 	const viewProps: EmailBlockComponentProps = {
 		block,
 		selected,
-		preview: context.preview,
-		onChange: (updated) => dispatch({ type: "update", block: updated }),
-		onUploadImage: context.onUploadImage,
+		preview,
+		onChange: updateBlock,
+		onUploadImage,
 	};
 	// Selecting the innermost block: the child's handler runs first and stops
 	// the event, so clicking inside a grid cell never selects the grid.
 	const select = (event: { stopPropagation: () => void }) => {
 		event.stopPropagation();
-		dispatch({ type: "select", blockId: block.id });
+		selectBlock(block.id);
 	};
 
 	return (
@@ -70,7 +74,6 @@ export function CanvasBlockRow({
 							block={block}
 							index={index}
 							containerId={containerId}
-							context={context}
 							handle={handle}
 							toolbarSlot={toolbarSlot}
 						/>
@@ -83,7 +86,7 @@ export function CanvasBlockRow({
 						{grid === null ? (
 							<definition.View {...viewProps} />
 						) : (
-							<GridBlockCells block={grid} context={context} />
+							<GridBlockCells block={grid} />
 						)}
 					</div>
 				</>

@@ -4,13 +4,16 @@ import { BlockSettingsSheet } from "#/email-block-editor/components/block-settin
 import { EditorCanvas } from "#/email-block-editor/components/editor-canvas.tsx";
 import { EditorSidebar } from "#/email-block-editor/components/editor-sidebar.tsx";
 import { PreviewToggle } from "#/email-block-editor/components/preview-toggle.tsx";
-import type { EmailEditorAction } from "#/email-block-editor/document/reducer.ts";
-import { createEmailEditorReducer } from "#/email-block-editor/document/reducer.ts";
+import { EmailEditorProvider } from "#/email-block-editor/context/email-editor-context.tsx";
+import { useEmailEditorActions } from "#/email-block-editor/context/use-email-editor-actions.ts";
 import type {
 	EmailEditorDocument,
 	EmailEditorPreview,
 } from "#/email-block-editor/document/types.ts";
-import { useCompactEditorLayout } from "#/email-block-editor/lib/use-media-query.ts";
+import {
+	useCoarsePointer,
+	useCompactEditorLayout,
+} from "#/email-block-editor/lib/use-media-query.ts";
 
 interface Props {
 	/**
@@ -39,10 +42,9 @@ interface Props {
  * bottom sheet opened from the selected block's toolbar.
  *
  * The document is controlled (`document`/`onChange`); the block selection is
- * internal UI state. The block registry (`EMAIL_BLOCK_DEFINITIONS`) is public
- * so a host can render the same blocks outside the editor.
+ * internal UI state. Everything below the root reads the editor through
+ * context rather than through props.
  */
-// fallow-ignore-next-line complexity -- composition, not logic: the compact/wide split picks a layout and the rest is prop wiring.
 export function EmailBlockEditor({
 	document,
 	onChange,
@@ -54,35 +56,38 @@ export function EmailBlockEditor({
 	const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null);
 	const [settingsSheetOpen, setSettingsSheetOpen] = useState(false);
 	const compact = useCompactEditorLayout();
+	const coarsePointer = useCoarsePointer();
 	// Editing on a phone starts on the phone rendering; the author can still
 	// switch to the desktop one to check a multi-column row.
 	const [preview, setPreview] = useState<EmailEditorPreview>(
 		compact ? "mobile" : "desktop",
 	);
-	const reduce = useMemo(
-		() => createEmailEditorReducer(generateBlockId),
-		[generateBlockId],
-	);
 
-	const dispatch = useCallback(
-		(action: EmailEditorAction) => {
-			const state = reduce({ document, selectedBlockId }, action);
-			if (state.document !== document) {
-				onChange(state.document);
-			}
-			setSelectedBlockId(state.selectedBlockId);
-		},
-		[reduce, document, selectedBlockId, onChange],
+	const openBlockSettings = useCallback(
+		() => setSettingsSheetOpen(true),
+		[setSettingsSheetOpen],
 	);
-
-	const state = { document, selectedBlockId };
-	// Only the sheet layout needs an opener; the sidebar layout is always there.
-	const openSettingsSheet = compact
-		? () => setSettingsSheetOpen(true)
-		: undefined;
+	const actions = useEmailEditorActions({
+		document,
+		onDocumentChange: onChange,
+		selectedBlockId,
+		onSelectedBlockIdChange: setSelectedBlockId,
+		onPreviewChange: setPreview,
+		generateBlockId,
+		// Only the sheet layout needs an opener; the sidebar layout is always there.
+		openBlockSettings: compact ? openBlockSettings : undefined,
+	});
+	const config = useMemo(
+		() => ({ onUploadImage, generateBlockId }),
+		[onUploadImage, generateBlockId],
+	);
 
 	return (
-		<>
+		<EmailEditorProvider
+			config={config}
+			state={{ document, selectedBlockId, preview, compact, coarsePointer }}
+			actions={actions}
+		>
 			<div
 				className={
 					compact
@@ -92,35 +97,18 @@ export function EmailBlockEditor({
 			>
 				<div className="flex flex-col gap-3">
 					<div className="flex items-center justify-end">
-						<PreviewToggle value={preview} onChange={setPreview} />
+						<PreviewToggle />
 					</div>
-					<EditorCanvas
-						state={state}
-						dispatch={dispatch}
-						preview={preview}
-						onUploadImage={onUploadImage}
-						onOpenSettings={openSettingsSheet}
-						headerSlot={headerSlot}
-						footerSlot={footerSlot}
-					/>
+					<EditorCanvas headerSlot={headerSlot} footerSlot={footerSlot} />
 				</div>
-				{compact ? null : (
-					<EditorSidebar
-						state={state}
-						dispatch={dispatch}
-						onUploadImage={onUploadImage}
-					/>
-				)}
+				{compact ? null : <EditorSidebar />}
 			</div>
 			{compact ? (
 				<BlockSettingsSheet
 					open={settingsSheetOpen}
 					onOpenChange={setSettingsSheetOpen}
-					state={state}
-					dispatch={dispatch}
-					onUploadImage={onUploadImage}
 				/>
 			) : null}
-		</>
+		</EmailEditorProvider>
 	);
 }

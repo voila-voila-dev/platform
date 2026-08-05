@@ -7,6 +7,15 @@ export {
 	emailBlockDefinition,
 } from "#/email-block-editor/blocks/block-definitions.tsx";
 export { EmailBlockEditor } from "#/email-block-editor/components/email-block-editor.tsx";
+export {
+	type EmailEditorActionsContextValue,
+	type EmailEditorConfigContextValue,
+	type EmailEditorStateContextValue,
+	useEmailEditor,
+	useEmailEditorActions,
+	useEmailEditorConfig,
+	useEmailEditorState,
+} from "#/email-block-editor/context/email-editor-context.tsx";
 export type { SortableBlockHandle } from "#/email-block-editor/dnd/sortable-block-list.ts";
 export type {
 	EmailEditorAction,

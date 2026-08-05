@@ -2,7 +2,10 @@ import type { ReactElement, ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { EMAIL_LEAF_BLOCK_TYPES } from "#/email-block-editor/blocks/block-definitions.tsx";
 import { BlockToolbar } from "#/email-block-editor/components/block-toolbar.tsx";
-import type { CanvasContext } from "#/email-block-editor/components/editor-canvas.tsx";
+import {
+	useEmailEditorActions,
+	useEmailEditorState,
+} from "#/email-block-editor/context/email-editor-context.tsx";
 import type { SortableBlockHandle } from "#/email-block-editor/dnd/sortable-block-list.ts";
 import type { EmailEditorContainerId } from "#/email-block-editor/document/reducer.ts";
 import type { EmailEditorBlock } from "#/email-block-editor/document/types.ts";
@@ -23,7 +26,6 @@ interface Props {
 	block: EmailEditorBlock;
 	index: number;
 	containerId: EmailEditorContainerId;
-	context: CanvasContext;
 	handle: SortableBlockHandle;
 	toolbarSlot: HTMLElement | null;
 }
@@ -45,11 +47,17 @@ export function CanvasBlockRowToolbar({
 	block,
 	index,
 	containerId,
-	context,
 	handle,
 	toolbarSlot,
 }: Props) {
-	const { dispatch, coarsePointer } = context;
+	const { coarsePointer } = useEmailEditorState();
+	const {
+		addBlock,
+		duplicateBlock,
+		removeBlock,
+		selectBlock,
+		openBlockSettings,
+	} = useEmailEditorActions();
 	const nested = containerId !== null;
 	return renderIn(
 		toolbarSlot,
@@ -66,22 +74,11 @@ export function CanvasBlockRowToolbar({
 				richText={RICH_TEXT_BLOCK_TYPES.has(block.type)}
 				coarsePointer={coarsePointer}
 				addableTypes={nested ? EMAIL_LEAF_BLOCK_TYPES : undefined}
-				onAddBelow={(type) =>
-					dispatch({
-						type: "add",
-						blockType: type,
-						containerId,
-						index: index + 1,
-					})
-				}
-				onDuplicate={() => dispatch({ type: "duplicate", blockId: block.id })}
-				onRemove={() => dispatch({ type: "remove", blockId: block.id })}
-				onOpenSettings={context.onOpenSettings}
-				onSelectContainer={
-					nested
-						? () => dispatch({ type: "select", blockId: containerId })
-						: undefined
-				}
+				onAddBelow={(type) => addBlock(type, { containerId, index: index + 1 })}
+				onDuplicate={() => duplicateBlock(block.id)}
+				onRemove={() => removeBlock(block.id)}
+				onOpenSettings={openBlockSettings}
+				onSelectContainer={nested ? () => selectBlock(containerId) : undefined}
 			/>
 		</div>,
 	);

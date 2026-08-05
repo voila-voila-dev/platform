@@ -1,20 +1,19 @@
 import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block-definitions.tsx";
 import { emailBlockDefinition } from "#/email-block-editor/blocks/block-definitions.tsx";
-import type { EmailEditorAction } from "#/email-block-editor/document/reducer.ts";
+import {
+	useEmailEditorActions,
+	useEmailEditorConfig,
+} from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorBlock } from "#/email-block-editor/document/types.ts";
 
 interface Props {
 	block: EmailEditorBlock;
-	dispatch: (action: EmailEditorAction) => void;
-	onUploadImage?: (file: File) => Promise<string>;
 }
 
 /** The settings panel of whichever block is selected. */
-export function SelectedBlockSettings({
-	block,
-	dispatch,
-	onUploadImage,
-}: Props) {
+export function SelectedBlockSettings({ block }: Props) {
+	const { updateBlock } = useEmailEditorActions();
+	const { onUploadImage } = useEmailEditorConfig();
 	const definition = emailBlockDefinition(block);
 	if (definition.Settings === null) {
 		return (
@@ -26,7 +25,7 @@ export function SelectedBlockSettings({
 	const settingsProps: EmailBlockComponentProps = {
 		block,
 		selected: true,
-		onChange: (updated) => dispatch({ type: "update", block: updated }),
+		onChange: updateBlock,
 		onUploadImage,
 	};
 	return <definition.Settings key={block.id} {...settingsProps} />;
