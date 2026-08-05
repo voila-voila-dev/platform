@@ -90,6 +90,7 @@
 		"./icon-picker": "./src/icon-picker/index.ts",
 		"./image-cropper": "./src/image-cropper/index.ts",
 		"./image-upload-field": "./src/image-upload-field/index.ts",
+		"./inbox-preview": "./src/inbox-preview/index.ts",
 		"./input": "./src/input/index.ts",
 		"./input-group": "./src/input-group/index.ts",
 		"./input-otp": "./src/input-otp/index.ts",
