@@ -24,6 +24,7 @@ interface Options {
 	readonly generateBlockId: () => string;
 	/** Only in the compact layout, where the settings live in a sheet. */
 	readonly openBlockSettings?: () => void;
+	readonly setBlockSettingsOpen: (open: boolean) => void;
 }
 
 /**
@@ -41,6 +42,7 @@ export function useEmailEditorActions({
 	onPreviewChange,
 	generateBlockId,
 	openBlockSettings,
+	setBlockSettingsOpen,
 }: Options): EmailEditorActionsContextValue {
 	const latest = React.useRef({
 		state: { document, selectedBlockId } satisfies EmailEditorState,
@@ -96,7 +98,8 @@ export function useEmailEditorActions({
 			replaceDocument: (next) => dispatch({ type: "replace", document: next }),
 			setPreview: (preview) => latest.current.onPreviewChange(preview),
 			openBlockSettings,
+			setBlockSettingsOpen,
 		}),
-		[dispatch, openBlockSettings],
+		[dispatch, openBlockSettings, setBlockSettingsOpen],
 	);
 }

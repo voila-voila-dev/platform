@@ -82,7 +82,7 @@ export default function EmailEditorDemo() {
 		<EmailBlockEditor
 			blocks={DEMO_BLOCKS}
 			document={document}
-			onChange={setDocument}
+			onDocumentChange={setDocument}
 		/>
 	);
 }

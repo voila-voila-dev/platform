@@ -35,6 +35,8 @@ export interface EmailEditorStateContextValue {
 	readonly compact: boolean;
 	/** Touch rather than mouse: the toolbars need room instead of hover. */
 	readonly coarsePointer: boolean;
+	/** Whether the block settings sheet is showing (compact layout only). */
+	readonly blockSettingsOpen: boolean;
 }
 
 /**
@@ -67,6 +69,7 @@ export interface EmailEditorActionsContextValue {
 	/** Opens the block settings sheet. Undefined in the wide layout, where the
 	 * settings column is always on screen. */
 	readonly openBlockSettings?: () => void;
+	readonly setBlockSettingsOpen: (open: boolean) => void;
 }
 
 const EmailEditorConfigContext =

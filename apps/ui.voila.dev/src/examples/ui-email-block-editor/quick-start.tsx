@@ -78,7 +78,7 @@ export function Editor() {
 		<EmailBlockEditor
 			blocks={DOCS_EMAIL_BLOCKS}
 			document={document}
-			onChange={setDocument}
+			onDocumentChange={setDocument}
 			onUploadImage={fakeUploadImage}
 		/>
 	);

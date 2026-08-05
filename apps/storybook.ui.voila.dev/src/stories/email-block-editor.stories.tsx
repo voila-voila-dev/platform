@@ -79,7 +79,7 @@ function ControlledEditor({
 			<EmailBlockEditor
 				blocks={STORY_BLOCKS}
 				document={value}
-				onChange={setValue}
+				onDocumentChange={setValue}
 				labels={labels}
 				onUploadImage={fakeUploadImage}
 			/>
@@ -88,7 +88,11 @@ function ControlledEditor({
 }
 
 export const Composed: Story = {
-	args: { blocks: STORY_BLOCKS, document: sampleDocument, onChange: () => {} },
+	args: {
+		blocks: STORY_BLOCKS,
+		document: sampleDocument,
+		onDocumentChange: () => {},
+	},
 	render: () => <ControlledEditor document={sampleDocument} />,
 };
 
@@ -134,7 +138,11 @@ const gridDocument: EmailEditorDocument = {
 };
 
 export const Grid: Story = {
-	args: { blocks: STORY_BLOCKS, document: gridDocument, onChange: () => {} },
+	args: {
+		blocks: STORY_BLOCKS,
+		document: gridDocument,
+		onDocumentChange: () => {},
+	},
 	render: () => <ControlledEditor document={gridDocument} />,
 };
 
@@ -142,7 +150,7 @@ export const Empty: Story = {
 	args: {
 		blocks: STORY_BLOCKS,
 		document: emptyEmailEditorDocument(),
-		onChange: () => {},
+		onDocumentChange: () => {},
 	},
 	render: () => <ControlledEditor document={emptyEmailEditorDocument()} />,
 };
@@ -305,7 +313,7 @@ export const EveryBlock: Story = {
 	args: {
 		blocks: STORY_BLOCKS,
 		document: everyBlockDocument,
-		onChange: () => {},
+		onDocumentChange: () => {},
 	},
 	render: () => <ControlledEditor document={everyBlockDocument} />,
 };
@@ -333,7 +341,7 @@ export const SentinelLabels: Story = {
 	args: {
 		blocks: STORY_BLOCKS,
 		document: everyBlockDocument,
-		onChange: () => {},
+		onDocumentChange: () => {},
 	},
 	render: () => (
 		<ControlledEditor

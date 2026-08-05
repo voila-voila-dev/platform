@@ -84,6 +84,8 @@ export {
 	type EmailEditorLabelsInput,
 	mergeEmailEditorLabels,
 } from "#/email-block-editor/labels.ts";
+export { EmailEditor } from "#/email-block-editor/parts/namespace.ts";
+export type { EmailEditorRootProps } from "#/email-block-editor/parts/root.tsx";
 export {
 	DEFAULT_EMAIL_EDITOR_THEME,
 	type EmailEditorTheme,
