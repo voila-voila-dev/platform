@@ -69,6 +69,15 @@ interface Props {
  * wraps under a touch pointer rather than scrolling: it sits in the flow there
  * (see the canvas), so a second line costs nothing, while a scrolling row
  * would hide Delete behind an edge with no affordance.
+ *
+ * Its `stopPropagation` is load-bearing, exactly as in {@link EmailEditorToolbar}:
+ * a host commonly deselects the block when the page around the editor is
+ * clicked, and this toolbar only exists while a block is selected — so without
+ * it, clicking the add-block trigger deselects, unmounts the toolbar, and takes
+ * the just-opened menu down with it. A menu popup is portalled but stays a
+ * React child of this row, so its items are covered too. Only clicks: the drag
+ * handle's keyboard sensor listens on the document, so swallowing keydown here
+ * would break picking a block up and moving it with the keyboard.
  */
 export function BlockToolbar({
 	handle,
@@ -84,11 +93,14 @@ export function BlockToolbar({
 	const activeMarks = useActiveInlineMarks();
 	const { chrome } = useEmailEditorLabels();
 	return (
+		// biome-ignore lint/a11y/noStaticElementInteractions: not a control; it only stops a click from reaching the host's deselect handler.
+		// biome-ignore lint/a11y/useKeyWithClickEvents: same as above; a keyboard equivalent would swallow the drag handle's keys.
 		<div
 			className={cn(
 				"flex max-w-full items-center gap-0.5 rounded-md border bg-background p-0.5 shadow-sm",
 				coarsePointer ? "flex-wrap justify-start" : "flex-nowrap",
 			)}
+			onClick={(event) => event.stopPropagation()}
 		>
 			<StructureControls
 				handle={handle}

@@ -184,6 +184,29 @@ describe("EmailEditor", () => {
 		).toBeTruthy();
 	});
 
+	it("keeps a click on the selected block's toolbar away from the host", () => {
+		// A host deselects when the page around the editor is clicked. The block
+		// toolbar only exists while a block is selected, so a click that reached
+		// the host unmounted the toolbar mid-interaction: the add-block menu
+		// opened on mousedown and vanished on release, leaving the button dead
+		// unless you held the press and let go over the item you wanted.
+		const deselect = vi.fn();
+		const { getByLabelText } = render(
+			// biome-ignore lint/a11y/noStaticElementInteractions: stands in for the host page.
+			// biome-ignore lint/a11y/useKeyWithClickEvents: same as above.
+			<div onClick={deselect}>
+				<EditorUnderTest
+					initial={documentOf(heading("a", "First"))}
+					selectedBlockId="a"
+				/>
+			</div>,
+		);
+
+		fireEvent.click(getByLabelText("Add a block"));
+
+		expect(deselect).not.toHaveBeenCalled();
+	});
+
 	it("takes its copy from `labels`", () => {
 		const { getByText } = render(
 			<EmailEditor.Root
