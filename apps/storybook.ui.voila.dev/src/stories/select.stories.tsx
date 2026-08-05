@@ -59,6 +59,36 @@ export const WithGroups: Story = {
 	),
 };
 
+const templateItems = {
+	none: "No template",
+	"fb-form": "Consumables - Organisation/Provider - Facebook Form",
+	urgency: "Consumables - Provider - Existing - Urgency",
+};
+
+/** Names typed by a user get long. The trigger shrinks to the field it sits in
+ * and ellipsises rather than pushing the form wider, and the popup takes the
+ * width its longest option needs. */
+export const LongValueInANarrowField: Story = {
+	render: () => (
+		<div className="w-[340px] rounded-lg border p-4">
+			<Select.Root defaultValue="fb-form" items={templateItems}>
+				<Select.Trigger className="w-full">
+					<Select.Value />
+				</Select.Trigger>
+				<Select.Content>
+					<Select.Item value="none">No template</Select.Item>
+					<Select.Item value="fb-form">
+						Consumables - Organisation/Provider - Facebook Form
+					</Select.Item>
+					<Select.Item value="urgency">
+						Consumables - Provider - Existing - Urgency
+					</Select.Item>
+				</Select.Content>
+			</Select.Root>
+		</div>
+	),
+};
+
 export const Disabled: Story = {
 	render: () => (
 		<Select.Root disabled>
