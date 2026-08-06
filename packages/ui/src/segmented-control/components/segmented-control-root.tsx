@@ -12,6 +12,7 @@ interface Props
 export function SegmentedControlRoot({
 	className,
 	size = "default",
+	stretch = false,
 	children,
 	onValueChange,
 	...props
@@ -78,7 +79,7 @@ export function SegmentedControlRoot({
 			ref={rootRef}
 			data-slot="segmented-control"
 			data-size={size}
-			className={cn(segmentedControlVariants({ size }), className)}
+			className={cn(segmentedControlVariants({ size, stretch }), className)}
 			onValueChange={(value, eventDetails) => {
 				onValueChange?.(value, eventDetails);
 				forceMeasure();
@@ -91,7 +92,7 @@ export function SegmentedControlRoot({
 				data-slot="segmented-control-thumb"
 				className="absolute inset-y-[3px] left-0 -z-10 rounded-md border border-transparent bg-background opacity-0 shadow-sm transition-[transform,width] duration-200 ease-out group-data-[size=sm]/segmented-control:rounded-[min(var(--radius-sm),10px)] motion-reduce:transition-none dark:border-input dark:bg-input/30"
 			/>
-			<SegmentedControlContext.Provider value={{ size }}>
+			<SegmentedControlContext.Provider value={{ size, stretch }}>
 				{children}
 			</SegmentedControlContext.Provider>
 		</RadioGroupPrimitive>

@@ -87,6 +87,28 @@ describe("SegmentedControl", () => {
 		expect(group.classList.contains("h-8")).toBe(true);
 	});
 
+	it("stretches the group and splits it evenly between the segments", () => {
+		const screen = render(<Fixture stretch />);
+		expect(screen.getByRole("radiogroup").classList.contains("w-full")).toBe(
+			true,
+		);
+		for (const label of ["Day", "Week", "Month"]) {
+			expect(
+				screen.getByRole("radio", { name: label }).classList.contains("flex-1"),
+			).toBe(true);
+		}
+	});
+
+	it("sizes itself to its labels unless asked to stretch", () => {
+		const screen = render(<Fixture />);
+		expect(screen.getByRole("radiogroup").classList.contains("w-fit")).toBe(
+			true,
+		);
+		expect(
+			screen.getByRole("radio", { name: "Day" }).classList.contains("flex-1"),
+		).toBe(false);
+	});
+
 	it("does not select a disabled segment", () => {
 		const onValueChange = vi.fn();
 		const screen = render(

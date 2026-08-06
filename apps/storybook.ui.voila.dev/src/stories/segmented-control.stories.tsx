@@ -95,9 +95,9 @@ export const WithDisabledItem: Story = {
 	),
 };
 
-export const FullWidth: Story = {
+export const Stretch: Story = {
 	render: () => (
-		<SegmentedControl.Root defaultValue="week" className="w-full *:flex-1">
+		<SegmentedControl.Root defaultValue="week" stretch>
 			<SegmentedControl.Item value="day">Day</SegmentedControl.Item>
 			<SegmentedControl.Item value="week">Week</SegmentedControl.Item>
 			<SegmentedControl.Item value="month">Month</SegmentedControl.Item>

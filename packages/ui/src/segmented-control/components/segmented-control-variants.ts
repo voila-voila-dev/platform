@@ -14,8 +14,19 @@ export const segmentedControlVariants = cva({
 			sm: "h-7 rounded-[min(var(--radius-md),12px)]",
 			lg: "h-9",
 		},
+		/**
+		 * Fill the container instead of the labels, each segment taking an equal
+		 * share of it. For a control that belongs to a column — a settings rail,
+		 * a form, a phone — where segments sized to their own words leave the
+		 * control ragged against everything stacked with it.
+		 */
+		stretch: {
+			true: "w-full",
+			false: "",
+		},
 	},
 	defaultVariants: {
 		size: "default",
+		stretch: false,
 	},
 });
