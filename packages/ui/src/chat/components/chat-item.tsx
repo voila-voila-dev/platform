@@ -14,10 +14,11 @@ export function ChatItem({ className, ...props }: Props) {
 	return (
 		<MessageScrollerItem
 			data-slot="chat-item"
-			className={cn(
-				"min-w-0 shrink-0 [contain-intrinsic-size:auto_6rem] [content-visibility:auto]",
-				className,
-			)}
+			// No `content-visibility: auto` here: it implies paint containment at
+			// all times, not just while the row is off screen, so anything a row
+			// draws outside its own box gets clipped — the reaction pill
+			// overlapping the bubble's edge, its ring, any hover affordance.
+			className={cn("min-w-0 shrink-0", className)}
 			{...props}
 		/>
 	);

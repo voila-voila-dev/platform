@@ -58,7 +58,17 @@ export function ChatMessageActions({
 		<ContextMenuRoot>
 			<ContextMenuTrigger
 				data-slot="chat-message-actions-trigger"
-				className={cn("w-fit", className)}
+				// The trigger wraps the bubble, so it must stay transparent to
+				// layout. A shrink-to-fit box here becomes the bubble's containing
+				// block and makes the bubble's percentage `max-width` cyclic, which
+				// Chromium settles below the text's natural width — bubbles collapse
+				// to a sliver and wrap per character. Stretching it and aligning
+				// inside keeps the percentage resolvable, and keeping it a flex
+				// column keeps the bubble's own end-alignment working.
+				className={cn(
+					"flex w-full min-w-0 flex-col group-data-[align=end]/message:items-end",
+					className,
+				)}
 			>
 				{children}
 			</ContextMenuTrigger>
