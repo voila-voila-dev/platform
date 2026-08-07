@@ -59,7 +59,7 @@ describe("Chat.MessageActions", () => {
 		expect(screen.getAllByRole("button", { pressed: false })).toHaveLength(6);
 	});
 
-	it("reports the emoji tapped, and leaves the toggling to the caller", () => {
+	it("reports the emoji tapped, closes, and leaves the toggling to the caller", () => {
 		const onReact = vi.fn();
 		render(
 			<Chat.MessageActions onReact={onReact} emojis={["👍", "❤️"]}>
@@ -69,6 +69,7 @@ describe("Chat.MessageActions", () => {
 		openMenu();
 		fireEvent.click(screen.getByRole("button", { name: "👍" }));
 		expect(onReact).toHaveBeenCalledWith("👍");
+		expect(screen.queryByRole("button", { name: "👍" })).toBeNull();
 	});
 
 	it("shows the reader's own reactions as pressed", () => {

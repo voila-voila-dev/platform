@@ -220,7 +220,12 @@ export function ChatMessageActions({
 					<ChatQuickReactionRow
 						emojis={emojis}
 						activeEmojis={active}
-						onReact={onReact}
+						// The row is plain buttons, not menu items, so the menu would
+						// stay open after the choice — close it like an item would.
+						onReact={(emoji) => {
+							onReact(emoji);
+							setMenuOpen(false);
+						}}
 						label={reactionsLabel}
 						className="border-b px-1.5 py-1.5"
 					/>
