@@ -3,6 +3,7 @@ import { cleanup, fireEvent, render } from "@testing-library/react";
 import { useState } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { createEmailBlocks } from "#/email-block-editor/blocks/create-email-blocks.ts";
+import { PreviewToggle } from "#/email-block-editor/components/preview-toggle.tsx";
 import type {
 	EmailEditorBlockLike,
 	EmailEditorDocument,
@@ -205,6 +206,25 @@ describe("EmailEditor", () => {
 		fireEvent.click(getByLabelText("Add a block"));
 
 		expect(deselect).not.toHaveBeenCalled();
+	});
+
+	// The toolbar's two pieces are exported so a host can put either somewhere
+	// else — a settings column, a page header — without rebuilding it.
+	it("lets a host place the preview toggle outside the toolbar", () => {
+		const { getByRole, queryByLabelText } = render(
+			<EditorUnderTest initial={documentOf()}>
+				<EmailEditor.Layout>
+					<EmailEditor.Canvas />
+					<EmailEditor.Sidebar>
+						<PreviewToggle />
+					</EmailEditor.Sidebar>
+				</EmailEditor.Layout>
+			</EditorUnderTest>,
+		);
+
+		expect(getByRole("radio", { name: "Mobile" })).toBeDefined();
+		// No toolbar in this arrangement, so no add-block menu came with it.
+		expect(queryByLabelText("Add a block")).toBeNull();
 	});
 
 	it("takes its copy from `labels`", () => {

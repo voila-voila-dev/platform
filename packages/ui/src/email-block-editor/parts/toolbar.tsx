@@ -20,6 +20,10 @@ interface Props {
  * defensive: a host commonly deselects the block when the page around the
  * editor is clicked, and without this every toolbar click would deselect
  * first and act on nothing.
+ *
+ * Pass `children` to arrange the bar yourself; `AddBlockMenu` and
+ * `PreviewToggle` are exported so you can keep either without rebuilding it,
+ * or place one somewhere else entirely — a settings column, a page header.
  */
 export function EmailEditorToolbar({ className, children }: Props) {
 	const { document } = useEmailEditorState();
