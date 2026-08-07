@@ -19,7 +19,10 @@ export function ChatMessageGroup({
 				className: cn(
 					// `group` so descendants (e.g. ChatMessageTime) can react to the
 					// group's `data-align` via `group-data-[align=end]:*`.
-					"group flex flex-col gap-1",
+					// Stretched on purpose: a shrink-to-fit group makes the bubbles'
+					// percentage `max-width` cyclic and short bubbles collapse into a
+					// per-word wrap (same rationale as on `ChatBubbleGroup`).
+					"group flex w-full min-w-0 flex-col gap-1",
 					align === "end" ? "items-end" : "items-start",
 					className,
 				),

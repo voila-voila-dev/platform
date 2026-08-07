@@ -7,7 +7,9 @@ export const chatMessageBubbleVariants = cva({
 	// Content stays left-aligned in both variants so short messages read from the
 	// left edge of the bubble; the bubble itself is aligned end/start by the
 	// enclosing `ChatMessageGroup`.
-	base: "flex min-w-0 max-w-[85%] flex-col items-start gap-0.5 rounded-lg px-3 py-2 text-sm whitespace-pre-wrap [overflow-wrap:anywhere] animate-in fade-in slide-in-from-bottom-1 motion-reduce:animate-none sm:max-w-[75%]",
+	// `w-fit` needs the enclosing `ChatMessageGroup` stretched, or the
+	// percentage `max-width` turns cyclic.
+	base: "flex w-fit min-w-0 max-w-[85%] flex-col items-start gap-0.5 rounded-lg px-3 py-2 text-sm whitespace-pre-wrap [overflow-wrap:anywhere] animate-in fade-in slide-in-from-bottom-1 motion-reduce:animate-none sm:max-w-[75%]",
 	variants: {
 		/**
 		 * Which side of the conversation the bubble belongs to. `own` is the
