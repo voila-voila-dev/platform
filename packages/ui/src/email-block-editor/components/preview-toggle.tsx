@@ -11,13 +11,20 @@ const PREVIEW_ICON: {
 	readonly [Preview in EmailEditorPreview]: typeof DesktopIcon;
 } = { desktop: DesktopIcon, mobile: DeviceMobileIcon };
 
+interface Props {
+	/** Fill the container, each rendering taking half of it. For the toggle
+	 * placed in a settings column rather than in the toolbar, where a control
+	 * sized to "Desktop" and "Mobile" reads ragged against the cards under it. */
+	stretch?: boolean;
+}
+
 /**
  * Switches the canvas between the two renderings an email actually gets: the
  * full 600px card, and a phone-width one where grids collapse to their mobile
  * column count. Editor chrome, so it uses app styling and sits above the
  * canvas rather than inside the card.
  */
-export function PreviewToggle() {
+export function PreviewToggle({ stretch }: Props = {}) {
 	const { preview } = useEmailEditorState();
 	const { setPreview } = useEmailEditorActions();
 	const { chrome } = useEmailEditorLabels();
@@ -31,6 +38,7 @@ export function PreviewToggle() {
 	return (
 		<SegmentedControl.Root
 			size="sm"
+			stretch={stretch}
 			aria-label={chrome.preview}
 			value={preview}
 			onValueChange={(next) => setPreview(next as EmailEditorPreview)}

@@ -227,6 +227,25 @@ describe("EmailEditor", () => {
 		expect(queryByLabelText("Add a block")).toBeNull();
 	});
 
+	// A column is exactly where the toggle needs to fill its width rather than
+	// sit at the width of the word "Desktop".
+	it("stretches the preview toggle when asked", () => {
+		const { getByRole } = render(
+			<EditorUnderTest initial={documentOf()}>
+				<EmailEditor.Layout>
+					<EmailEditor.Canvas />
+					<EmailEditor.Sidebar>
+						<PreviewToggle stretch />
+					</EmailEditor.Sidebar>
+				</EmailEditor.Layout>
+			</EditorUnderTest>,
+		);
+
+		expect(
+			getByRole("radiogroup", { name: "Preview" }).classList.contains("w-full"),
+		).toBe(true);
+	});
+
 	it("takes its copy from `labels`", () => {
 		const { getByText } = render(
 			<EmailEditor.Root
