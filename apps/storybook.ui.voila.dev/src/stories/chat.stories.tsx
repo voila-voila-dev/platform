@@ -1,8 +1,13 @@
+import {
+	CopySimpleIcon,
+	PencilSimpleIcon,
+	TrashIcon,
+} from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import { Avatar } from "@voila.dev/ui/avatar";
 import { Badge } from "@voila.dev/ui/badge";
 import { Button } from "@voila.dev/ui/button";
-import { Chat } from "@voila.dev/ui/chat";
+import { CHAT_QUICK_REACTIONS, Chat } from "@voila.dev/ui/chat";
 import { useState } from "react";
 
 const meta = {
@@ -778,4 +783,251 @@ function AppendPlayground() {
 
 export const AppendAutoScroll: Story = {
 	render: () => <AppendPlayground />,
+};
+
+const demoActions = (
+	<>
+		<Chat.MessageAction icon={<CopySimpleIcon />}>Copy</Chat.MessageAction>
+		<Chat.MessageAction icon={<PencilSimpleIcon />}>Edit</Chat.MessageAction>
+		<Chat.MessageAction icon={<TrashIcon />} variant="destructive">
+			Delete
+		</Chat.MessageAction>
+	</>
+);
+
+type DemoReaction = { emoji: string; count: number; mine: boolean };
+
+function demoReactionRow(
+	reactions: ReadonlyArray<DemoReaction>,
+	align: "start" | "end",
+	onReact: (emoji: string) => void,
+) {
+	if (reactions.length === 0) {
+		return null;
+	}
+	return (
+		<Chat.Reactions align={align}>
+			{reactions.map((reaction) => (
+				<Chat.Reaction
+					key={reaction.emoji}
+					emoji={reaction.emoji}
+					count={reaction.count}
+					active={reaction.mine}
+					onClick={() => onReact(reaction.emoji)}
+				/>
+			))}
+		</Chat.Reactions>
+	);
+}
+
+function toggleReaction(
+	reactions: ReadonlyArray<DemoReaction>,
+	emoji: string,
+): DemoReaction[] {
+	const existing = reactions.find((reaction) => reaction.emoji === emoji);
+	if (existing === undefined) {
+		return [...reactions, { emoji, count: 1, mine: true }];
+	}
+	return reactions
+		.map((reaction) =>
+			reaction.emoji === emoji
+				? {
+						emoji,
+						count: reaction.count + (reaction.mine ? -1 : 1),
+						mine: !reaction.mine,
+					}
+				: reaction,
+		)
+		.filter((reaction) => reaction.count > 0);
+}
+
+function MessageActionsWithReactionsPlayground() {
+	const [ownReactions, setOwnReactions] = useState<ReadonlyArray<DemoReaction>>(
+		[
+			{ emoji: "👍", count: 3, mine: true },
+			{ emoji: "❤️", count: 1, mine: false },
+		],
+	);
+	const [otherReactions, setOtherReactions] = useState<
+		ReadonlyArray<DemoReaction>
+	>([{ emoji: "😂", count: 2, mine: false }]);
+	return (
+		<div className="flex w-full max-w-xl flex-col gap-1 py-10">
+			<Chat.MessageActions
+				onReact={(emoji) =>
+					setOtherReactions((previous) => toggleReaction(previous, emoji))
+				}
+				activeEmojis={otherReactions
+					.filter((reaction) => reaction.mine)
+					.map((reaction) => reaction.emoji)}
+				reactionsLabel="React"
+				menuLabel="Message actions"
+				actions={demoActions}
+			>
+				<Chat.Bubble variant="muted">
+					<Chat.BubbleContent>
+						Hover me, right-click me, or long-press me on a touch screen.
+						<Chat.Time dateTime="2026-06-12T09:02">09:02</Chat.Time>
+					</Chat.BubbleContent>
+					{demoReactionRow(otherReactions, "start", (emoji) =>
+						setOtherReactions((previous) => toggleReaction(previous, emoji)),
+					)}
+				</Chat.Bubble>
+			</Chat.MessageActions>
+			<Chat.Bubble variant="muted">
+				<Chat.BubbleContent>
+					The reaction pill above pushes me down instead of covering me.
+					<Chat.Time dateTime="2026-06-12T09:03">09:03</Chat.Time>
+				</Chat.BubbleContent>
+			</Chat.Bubble>
+			<div data-align="end" className="flex flex-col items-end gap-1">
+				<Chat.MessageActions
+					onReact={(emoji) =>
+						setOwnReactions((previous) => toggleReaction(previous, emoji))
+					}
+					activeEmojis={ownReactions
+						.filter((reaction) => reaction.mine)
+						.map((reaction) => reaction.emoji)}
+					reactionsLabel="React"
+					menuLabel="Message actions"
+					actions={demoActions}
+				>
+					<Chat.Bubble align="end">
+						<Chat.BubbleContent>
+							Same combination on the end side: menu plus reactions.
+							<Chat.Time dateTime="2026-06-12T09:04">09:04</Chat.Time>
+						</Chat.BubbleContent>
+						{demoReactionRow(ownReactions, "end", (emoji) =>
+							setOwnReactions((previous) => toggleReaction(previous, emoji)),
+						)}
+					</Chat.Bubble>
+				</Chat.MessageActions>
+				<Chat.Bubble align="end">
+					<Chat.BubbleContent>
+						And I stay clear of the pill too.
+						<Chat.Time dateTime="2026-06-12T09:05">09:05</Chat.Time>
+					</Chat.BubbleContent>
+				</Chat.Bubble>
+			</div>
+		</div>
+	);
+}
+
+/** The non-regression combination: `Chat.MessageActions` wrapping bubbles that
+ * carry reactions, on both sides of the thread. The pill sits in the flow and
+ * pushes the next bubble; hovering shows the bar with the quick reactions and
+ * the icon actions; right-click opens the menu; tapping a pill or a quick
+ * reaction toggles it and pops the counter. */
+export const MessageActionsWithReactions: Story = {
+	render: () => <MessageActionsWithReactionsPlayground />,
+};
+
+/** The desktop affordance alone: hover the bubble with a mouse to get the
+ * floating bar — the quick reactions, then each icon-carrying action one
+ * press away. Right-click still opens the full menu. Nothing shows on a
+ * touch screen. */
+export const HoverActionBar: Story = {
+	render: () => (
+		<div className="flex w-full max-w-xl flex-col gap-1 py-16">
+			<Chat.MessageActions
+				onReact={() => {}}
+				reactionsLabel="React"
+				menuLabel="Message actions"
+				actions={demoActions}
+			>
+				<Chat.Bubble variant="muted">
+					<Chat.BubbleContent>
+						Hover me with a mouse — the bar floats above without moving me.
+					</Chat.BubbleContent>
+				</Chat.Bubble>
+			</Chat.MessageActions>
+		</div>
+	),
+};
+
+function PressSurfacePlayground() {
+	const [open, setOpen] = useState(false);
+	return (
+		<div className="flex w-full max-w-xl flex-col gap-3 py-6">
+			<Button type="button" size="sm" onClick={() => setOpen(true)}>
+				Force the long-press surface open
+			</Button>
+			<Chat.Bubble variant="muted">
+				<Chat.BubbleContent>
+					On a touch screen, a long press on me opens the same surface.
+				</Chat.BubbleContent>
+			</Chat.Bubble>
+			<Chat.MessagePressSurface
+				pressed={
+					open
+						? {
+								rect: {
+									top: 220,
+									left: 24,
+									right: 320,
+									bottom: 280,
+									width: 296,
+								},
+								end: false,
+							}
+						: null
+				}
+				onClose={() => setOpen(false)}
+				emojis={CHAT_QUICK_REACTIONS}
+				activeEmojis={new Set(["👍"])}
+				onReact={() => setOpen(false)}
+				reactionsLabel="React"
+				label="Message actions"
+				actions={demoActions}
+			>
+				<Chat.Bubble variant="muted">
+					<Chat.BubbleContent>
+						On a touch screen, a long press on me opens the same surface.
+					</Chat.BubbleContent>
+				</Chat.Bubble>
+			</Chat.MessagePressSurface>
+		</div>
+	);
+}
+
+/** The full-screen long-press surface, forced open for inspection: veil
+ * blurred, bubble lifted at its position, emoji row cascading in above it and
+ * the actions card below. A tap on the veil closes it. */
+export const LongPressSurface: Story = {
+	render: () => <PressSurfacePlayground />,
+};
+
+/** Reactions on the very last message of a thread: the pill's height counts
+ * in the flow, so nothing sits outside the scroller or gets clipped. */
+export const ReactionOnLastMessage: Story = {
+	render: () => (
+		<div className="flex h-72 w-full max-w-xl flex-col gap-3">
+			<Chat.MessageList>
+				<Chat.MessageGroup align="start">
+					<Chat.MessageSender
+						avatar={senderAvatar("CD")}
+						name="Camille Dubois"
+					/>
+					<Chat.MessageBubble variant="other">
+						See you on Monday!
+						<Chat.MessageTime dateTime="2026-06-12T09:02">
+							09:02
+						</Chat.MessageTime>
+					</Chat.MessageBubble>
+				</Chat.MessageGroup>
+				<Chat.MessageGroup align="end">
+					<Chat.Bubble align="end">
+						<Chat.BubbleContent>
+							Perfect, thanks a lot!
+							<Chat.Time dateTime="2026-06-12T09:03">09:03</Chat.Time>
+						</Chat.BubbleContent>
+						<Chat.Reactions align="end">
+							<Chat.Reaction emoji="👍" count={2} active />
+							<Chat.Reaction emoji="🙏" />
+						</Chat.Reactions>
+					</Chat.Bubble>
+				</Chat.MessageGroup>
+			</Chat.MessageList>
+		</div>
+	),
 };

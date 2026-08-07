@@ -38,7 +38,13 @@ export function ChatReaction({
 		>
 			<span aria-hidden>{emoji}</span>
 			{count > 1 && (
-				<span className="font-medium text-xs tabular-nums">{count}</span>
+				// Keyed on the count so a change remounts the number with a pop.
+				<span
+					key={count}
+					className="fade-in-0 zoom-in-50 animate-in font-medium text-xs tabular-nums duration-150 motion-reduce:animate-none"
+				>
+					{count}
+				</span>
 			)}
 		</button>
 	);

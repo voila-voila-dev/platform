@@ -3,15 +3,25 @@ import { cva } from "#/lib/cva.ts";
 import { cn } from "#/lib/utils.ts";
 
 const chatReactionsVariants = cva({
-	base: "absolute z-10 flex w-fit shrink-0 items-center justify-center gap-1 rounded-full bg-muted px-1.5 py-0.5 text-sm ring-3 ring-background has-[button]:p-0",
+	base: [
+		// In flow on purpose: the pill straddles the bubble's edge through a
+		// negative margin, so the half sticking out still counts in layout and
+		// pushes the next message down instead of covering it.
+		"relative z-10 flex w-fit max-w-full shrink-0 items-center justify-center gap-1 rounded-full bg-muted px-1.5 py-0.5 text-sm ring-3 ring-background has-[button]:p-0",
+		// @starting-style grows the pill out of the bubble's edge — margin is in
+		// the transition so the room it takes in the thread grows with it.
+		"scale-100 transition-[margin,scale,opacity,translate] duration-200 starting:scale-75 starting:opacity-0 motion-reduce:transition-none",
+	],
 	variants: {
 		side: {
-			top: "-translate-y-3/4 top-0",
-			bottom: "translate-y-3/4 bottom-0",
+			// -3 with the bubble's gap-1 nets an 8px overlap: the pill eats only
+			// the bubble's padding, never its last line of text.
+			top: "-mb-3 order-first origin-bottom starting:-mb-5",
+			bottom: "-mt-3 order-last origin-top starting:-mt-5",
 		},
 		align: {
-			start: "left-3",
-			end: "right-3",
+			start: "ml-3 self-start",
+			end: "mr-3 self-end",
 		},
 	},
 	defaultVariants: {
@@ -25,7 +35,12 @@ interface Props extends React.ComponentProps<"div"> {
 	side?: "top" | "bottom";
 }
 
-/** Reaction pill overlapping the bubble's edge (emoji, counts, buttons). */
+/**
+ * Reaction pill straddling the bubble's edge (emoji, counts, buttons).
+ * `align` follows the bubble's own side of the thread; `side` picks which edge
+ * the pill overlaps. The `order-*` classes place it visually whichever side of
+ * the content it sits in the markup.
+ */
 export function ChatReactions({
 	side = "bottom",
 	align = "end",

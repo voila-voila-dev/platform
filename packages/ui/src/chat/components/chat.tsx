@@ -20,6 +20,7 @@ import { ChatMessageActions } from "#/chat/components/chat-message-actions.tsx";
 import { ChatMessageBubble } from "#/chat/components/chat-message-bubble.tsx";
 import { ChatMessageGroup } from "#/chat/components/chat-message-group.tsx";
 import { ChatMessageList } from "#/chat/components/chat-message-list.tsx";
+import { ChatMessagePressSurface } from "#/chat/components/chat-message-press-surface.tsx";
 import { ChatMessageSender } from "#/chat/components/chat-message-sender.tsx";
 import { ChatMessageText } from "#/chat/components/chat-message-text.tsx";
 import { ChatMessageTime } from "#/chat/components/chat-message-time.tsx";
@@ -99,6 +100,7 @@ export const Chat = {
 	Reaction: ChatReaction,
 	MessageActions: ChatMessageActions,
 	MessageAction: ChatMessageAction,
+	MessagePressSurface: ChatMessagePressSurface,
 	// Marker
 	Marker: ChatMarker,
 	MarkerIcon: ChatMarkerIcon,

@@ -12,6 +12,7 @@ export {
 	type ChatMessageBubbleVariants,
 	chatMessageBubbleVariants,
 } from "#/chat/components/chat-message-bubble-variants.ts";
+export type { ChatPressedMessage } from "#/chat/components/chat-message-press-surface.tsx";
 export { useChatScroller } from "#/chat/hooks/use-chat-scroller.ts";
 export { useChatScrollerScrollable } from "#/chat/hooks/use-chat-scroller-scrollable.ts";
 export { useChatScrollerVisibility } from "#/chat/hooks/use-chat-scroller-visibility.ts";
