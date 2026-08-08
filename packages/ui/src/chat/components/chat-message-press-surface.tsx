@@ -198,8 +198,11 @@ export function ChatMessagePressSurface({
 				<DialogPrimitive.Popup
 					data-slot="chat-message-press-surface"
 					aria-label={label}
+					// `select-none` on the whole surface: the finger is still down when
+					// it opens, and iOS would otherwise start selecting the emoji row
+					// or the action labels instead of pressing them.
 					className={cn(
-						"fixed inset-0 z-50 outline-hidden",
+						"fixed inset-0 z-50 select-none outline-hidden",
 						"data-open:fade-in-0 data-closed:fade-out-0 data-open:animate-in data-closed:animate-out duration-200 motion-reduce:animate-none",
 					)}
 					onClick={(event) => {

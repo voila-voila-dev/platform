@@ -214,7 +214,10 @@ export function ChatMessageActions({
 			</ContextMenuTrigger>
 			<ContextMenuContent
 				data-slot="chat-message-actions"
-				className="min-w-44 p-0"
+				// The emoji row is plain buttons, not menu items, so it doesn't get
+				// the item variants' `select-none` — a long-press would select the
+				// emoji glyphs instead of pressing them.
+				className="min-w-44 select-none p-0"
 			>
 				{hasReactions && onReact !== undefined && (
 					<ChatQuickReactionRow
