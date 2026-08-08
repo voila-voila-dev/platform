@@ -144,33 +144,39 @@ function ChipPickerSheet({
 						</span>
 					</div>
 				</ResponsiveSheet.Header>
-				<div className="flex flex-col gap-3 px-4 pb-4">
+				{/* Search stays pinned under the header; only the list below scrolls. */}
+				<div className="px-4">
 					<PickerSearch
 						value={query}
 						placeholder={searchPlaceholder}
 						onChange={setQuery}
 					/>
-					<div className="flex max-h-72 flex-col gap-1 overflow-y-auto pb-1">
-						{visible.map((option) => {
-							const isSelected = selected.has(option.id);
-							return (
-								<OptionRow
-									key={option.id}
-									label={option.label}
-									selected={isSelected}
-									disabled={!isSelected && isFull}
-									onToggle={() => onToggle(option.id)}
-								/>
-							);
-						})}
-						{visible.length === 0 && (
-							<p className="text-muted-foreground text-xs">{labels.noResult}</p>
-						)}
-					</div>
+				</div>
+				{/* The list fills the height between search and footer, so the sheet
+				    shows as many options as fit rather than a fixed short window. */}
+				<ResponsiveSheet.Body className="gap-1">
+					{visible.map((option) => {
+						const isSelected = selected.has(option.id);
+						return (
+							<OptionRow
+								key={option.id}
+								label={option.label}
+								selected={isSelected}
+								disabled={!isSelected && isFull}
+								onToggle={() => onToggle(option.id)}
+							/>
+						);
+					})}
+					{visible.length === 0 && (
+						<p className="text-muted-foreground text-xs">{labels.noResult}</p>
+					)}
+				</ResponsiveSheet.Body>
+				{/* Footer keeps the done action anchored to the bottom of the sheet. */}
+				<ResponsiveSheet.Footer>
 					<Button type="button" size="lg" onClick={() => onOpenChange(false)}>
 						{labels.done}
 					</Button>
-				</div>
+				</ResponsiveSheet.Footer>
 			</ResponsiveSheet.Content>
 		</ResponsiveSheet.Root>
 	);
