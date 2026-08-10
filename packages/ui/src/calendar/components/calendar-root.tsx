@@ -46,12 +46,6 @@ export function CalendarRoot({
 	return (
 		<DayPicker
 			showOutsideDays={showOutsideDays}
-			className={cn(
-				"group/calendar bg-background p-2 [--cell-radius:var(--radius-md)] [--cell-size:--spacing(7)] in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent",
-				String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
-				String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
-				className,
-			)}
 			captionLayout={captionLayout}
 			weekStartsOn={weekStartsOn ?? weekStartFromLocale(locale)}
 			formatters={{
@@ -71,7 +65,16 @@ export function CalendarRoot({
 				...formatters,
 			}}
 			classNames={{
-				root: cn("w-fit", defaultClassNames.root),
+				// The caller's `className` merges here rather than through DayPicker's
+				// own prop: DayPicker joins the two strings without resolving Tailwind
+				// conflicts, so a `w-full` from outside could never beat `w-fit`.
+				root: cn(
+					"group/calendar w-fit bg-background p-2 [--cell-radius:var(--radius-md)] [--cell-size:--spacing(7)] in-data-[slot=card-content]:bg-transparent in-data-[slot=popover-content]:bg-transparent",
+					String.raw`rtl:**:[.rdp-button\_next>svg]:rotate-180`,
+					String.raw`rtl:**:[.rdp-button\_previous>svg]:rotate-180`,
+					defaultClassNames.root,
+					className,
+				),
 				months: cn(
 					"relative flex flex-col gap-4 md:flex-row",
 					defaultClassNames.months,

@@ -43,6 +43,9 @@ export function ShiftPickerBody({
 				locale={locale}
 				disabled={shiftCalendarDisabled(range, step)}
 				autoFocus
+				// The popover spans the viewport on mobile; a fit-width calendar
+				// would hug the left edge and leave the rest of the row empty.
+				className="w-full sm:w-fit"
 			/>
 			{/* The time column stretches to the calendar's exact height (its scroll
 			    list is absolutely positioned on desktop so it never grows the row),
