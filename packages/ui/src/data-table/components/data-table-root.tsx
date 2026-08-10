@@ -1,6 +1,7 @@
 import type { Table as TanstackTable } from "@tanstack/react-table";
 import type * as React from "react";
 import { DataTableDesktopTable } from "#/data-table/components/data-table-desktop-table.tsx";
+import { DataTableGallery } from "#/data-table/components/data-table-gallery.tsx";
 import { DataTableMobileCardList } from "#/data-table/components/data-table-mobile-card-list.tsx";
 import { DataTablePagination } from "#/data-table/components/data-table-pagination.tsx";
 import {
@@ -8,6 +9,7 @@ import {
 	useDataTable,
 } from "#/data-table/hooks/use-data-table.ts";
 import type { DataTableDensity } from "#/data-table/lib/density.ts";
+import type { DataTableView } from "#/data-table/lib/view.ts";
 
 interface Props<TData, TValue>
 	extends UseDataTableOptions<TData, TValue>,
@@ -44,6 +46,19 @@ interface Props<TData, TValue>
 	renderMobileCard?: (row: TData) => React.ReactNode;
 	/** Row height. `compact` fits about a third more rows on a screen. */
 	density?: DataTableDensity;
+	/**
+	 * Row layout. `gallery` swaps the table for a `CardGallery` grid built
+	 * from the same (sorted, filtered) row model. Needs `renderGalleryCard`;
+	 * drive it with `DataTable.ViewToggle`. The `pagination` footer works in
+	 * either layout — omit it to show everything at once.
+	 */
+	view?: DataTableView;
+	/**
+	 * Card content for one row in gallery view — compose the `CardGallery`
+	 * parts (`Logo`, `Title`, `Description`) or any JSX; the tile itself is
+	 * supplied and stays clickable through `onRowClick`.
+	 */
+	renderGalleryCard?: (row: TData) => React.ReactNode;
 }
 
 /**
@@ -85,6 +100,8 @@ export function DataTableRoot<TData, TValue>({
 	density = "comfortable",
 	renderExpandedRow,
 	globalFilter,
+	view = "table",
+	renderGalleryCard,
 	className,
 	...props
 }: Props<TData, TValue>) {
@@ -111,6 +128,7 @@ export function DataTableRoot<TData, TValue>({
 		(column) => typeof column.size === "number",
 	);
 	const rows = table.getRowModel().rows;
+	const galleryActive = view === "gallery" && renderGalleryCard !== undefined;
 
 	return (
 		<div data-slot="data-table" className={className} {...props}>
@@ -119,34 +137,46 @@ export function DataTableRoot<TData, TValue>({
 					{typeof toolbar === "function" ? toolbar(table) : toolbar}
 				</div>
 			)}
-			<DataTableMobileCardList
-				rows={rows}
-				loading={loading}
-				emptyState={emptyState}
-				onRowClick={onRowClick}
-				renderMobileCard={renderMobileCard}
-			/>
-			<DataTableDesktopTable
-				headerGroups={table.getHeaderGroups()}
-				rows={rows}
-				columnCount={table.getVisibleLeafColumns().length}
-				loading={loading}
-				emptyState={emptyState}
-				onRowClick={onRowClick}
-				stickyHeader={stickyHeader}
-				containerClassName={containerClassName}
-				hasFixedSizes={hasFixedSizes}
-				hiddenOnMobile={renderMobileCard !== undefined}
-				resizable={enableColumnResizing}
-				renderExpandedRow={renderExpandedRow}
-				density={density}
-				table={table}
-				pinned={
-					(columnPinning?.left?.length ?? 0) +
-						(columnPinning?.right?.length ?? 0) >
-					0
-				}
-			/>
+			{galleryActive ? (
+				<DataTableGallery
+					rows={rows}
+					loading={loading}
+					emptyState={emptyState}
+					onRowClick={onRowClick}
+					renderGalleryCard={renderGalleryCard}
+				/>
+			) : (
+				<>
+					<DataTableMobileCardList
+						rows={rows}
+						loading={loading}
+						emptyState={emptyState}
+						onRowClick={onRowClick}
+						renderMobileCard={renderMobileCard}
+					/>
+					<DataTableDesktopTable
+						headerGroups={table.getHeaderGroups()}
+						rows={rows}
+						columnCount={table.getVisibleLeafColumns().length}
+						loading={loading}
+						emptyState={emptyState}
+						onRowClick={onRowClick}
+						stickyHeader={stickyHeader}
+						containerClassName={containerClassName}
+						hasFixedSizes={hasFixedSizes}
+						hiddenOnMobile={renderMobileCard !== undefined}
+						resizable={enableColumnResizing}
+						renderExpandedRow={renderExpandedRow}
+						density={density}
+						table={table}
+						pinned={
+							(columnPinning?.left?.length ?? 0) +
+								(columnPinning?.right?.length ?? 0) >
+							0
+						}
+					/>
+				</>
+			)}
 			{pagination !== undefined && <DataTablePagination {...pagination} />}
 		</div>
 	);

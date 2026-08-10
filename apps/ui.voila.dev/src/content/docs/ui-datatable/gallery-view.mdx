@@ -1,0 +1,59 @@
+---
+title: "Gallery view"
+description: "The same rows as a CardGallery grid — with or without the pagination footer."
+sidebar:
+  order: 12
+---
+
+import * as Example from "@/examples/ui-datatable/gallery-view";
+
+<Preview layout="stack">
+	<Example.GalleryView />
+</Preview>
+
+```tsx
+const [view, setView] = useState<DataTableView>("table");
+
+<DataTable.Root
+	columns={columns}
+	data={organizations}
+	view={view}
+	renderGalleryCard={(organization) => (
+		<>
+			<CardGallery.Logo src={organization.logo}>
+				{organization.name.charAt(0)}
+			</CardGallery.Logo>
+			<CardGallery.Title>{organization.name}</CardGallery.Title>
+			<CardGallery.Description>{organization.category}</CardGallery.Description>
+		</>
+	)}
+	toolbar={
+		<DataTable.Toolbar>
+			<DataTable.Actions>
+				<DataTable.ViewToggle view={view} onViewChange={setView} />
+			</DataTable.Actions>
+		</DataTable.Toolbar>
+	}
+/>;
+```
+
+`view="gallery"` swaps the table for a [CardGallery](/ui/card-gallery) grid
+built from the same sorted, filtered row model, so the toolbar's
+[search](/ui-datatable/global-filter) and filters keep working unchanged.
+`renderGalleryCard` fills each tile — the tile itself is supplied, stays
+clickable through `onRowClick`, and the grid adapts its column count to the
+container on its own.
+
+Pagination is the consumer's call, exactly as in table view: pass the
+`pagination` prop and the footer stays; omit it and the grid shows everything
+at once. Sorting set in table view carries over — the columns still exist
+underneath.
+
+## API
+
+### DataTable.ViewToggle
+
+<PropTable of="DataTable.ViewToggle" />
+
+The table ⇄ gallery switch, at home in `DataTable.Actions`. It holds no state:
+pass `view` back to `DataTable.Root`.

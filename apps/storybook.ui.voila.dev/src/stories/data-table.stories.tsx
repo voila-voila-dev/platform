@@ -2,9 +2,11 @@ import { ExportIcon } from "@phosphor-icons/react";
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import { Badge } from "@voila.dev/ui/badge";
 import { Button } from "@voila.dev/ui/button";
+import { CardGallery } from "@voila.dev/ui/card-gallery";
 import {
 	type ColumnDef,
 	DataTable,
+	type DataTableView,
 	dataTableSelectionColumn,
 	type RowSelectionState,
 } from "@voila.dev/ui/data-table";
@@ -344,4 +346,114 @@ function SelectionBarExample() {
 
 export const SelectionBar: Story = {
 	render: () => <SelectionBarExample />,
+};
+
+interface Organization {
+	name: string;
+	category: string;
+	logo?: string;
+}
+
+function organizationLogo(initials: string, background: string) {
+	return `data:image/svg+xml;utf8,${encodeURIComponent(
+		`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" rx="20" fill="${background}"/><text x="48" y="61" font-family="system-ui, sans-serif" font-size="34" font-weight="600" fill="#fff" text-anchor="middle">${initials}</text></svg>`,
+	)}`;
+}
+
+const organizations: Organization[] = [
+	{
+		name: "Riverside Studio",
+		category: "Design studio",
+		logo: organizationLogo("RS", "#0e7490"),
+	},
+	{
+		name: "Northgate Labs",
+		category: "Research",
+		logo: organizationLogo("NL", "#7c3aed"),
+	},
+	{
+		name: "Harbour Media",
+		category: "Media production",
+		logo: organizationLogo("HM", "#ea580c"),
+	},
+	{
+		name: "Eastfield Group",
+		category: "Consulting",
+		logo: organizationLogo("EG", "#16a34a"),
+	},
+	{
+		name: "Southbank Digital",
+		category: "Software",
+		logo: organizationLogo("SD", "#2563eb"),
+	},
+	{ name: "Old Town Press", category: "Publishing" },
+	{
+		name: "Westside Ventures",
+		category: "Finance",
+		logo: organizationLogo("WV", "#ca8a04"),
+	},
+	{
+		name: "Lakeside Health",
+		category: "Healthcare",
+		logo: organizationLogo("LH", "#dc2626"),
+	},
+	{
+		name: "Highfield Energy",
+		category: "Renewables",
+		logo: organizationLogo("HE", "#db2777"),
+	},
+	{ name: "Millbrook Archive", category: "Heritage" },
+];
+
+const organizationColumns: ColumnDef<Organization>[] = [
+	{ accessorKey: "name", header: "Name" },
+	{ accessorKey: "category", header: "Category" },
+];
+
+/**
+ * `view="gallery"` turns the filtered rows into a `CardGallery` grid — logo
+ * large, name below, category last. `DataTable.ViewToggle` flips between the
+ * two layouts, the toolbar's search keeps filtering either one, and the
+ * `pagination` footer is equally at home in both — omitted here to show the
+ * whole directory at once.
+ */
+function GalleryViewExample() {
+	const [view, setView] = useState<DataTableView>("gallery");
+	const [search, setSearch] = useState("");
+
+	return (
+		<DataTable.Root
+			columns={organizationColumns}
+			data={organizations}
+			globalFilter={search}
+			view={view}
+			renderGalleryCard={(organization) => (
+				<>
+					<CardGallery.Logo src={organization.logo}>
+						{organization.name.charAt(0)}
+					</CardGallery.Logo>
+					<CardGallery.Title>{organization.name}</CardGallery.Title>
+					<CardGallery.Description>
+						{organization.category}
+					</CardGallery.Description>
+				</>
+			)}
+			toolbar={
+				<DataTable.Toolbar>
+					<DataTable.Search
+						value={search}
+						onChange={(event) => setSearch(event.target.value)}
+						placeholder="Search organizations..."
+					/>
+					<DataTable.Actions>
+						<DataTable.ViewToggle view={view} onViewChange={setView} />
+					</DataTable.Actions>
+				</DataTable.Toolbar>
+			}
+		/>
+	);
+}
+
+export const GalleryView: Story = {
+	render: () => <GalleryViewExample />,
 };

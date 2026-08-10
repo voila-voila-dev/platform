@@ -55,6 +55,7 @@
 		"./button-group": "./src/button-group/index.ts",
 		"./calendar": "./src/calendar/index.ts",
 		"./card": "./src/card/index.ts",
+		"./card-gallery": "./src/card-gallery/index.ts",
 		"./carousel": "./src/carousel/index.ts",
 		"./chart": "./src/chart/index.ts",
 		"./chat": "./src/chat/index.ts",

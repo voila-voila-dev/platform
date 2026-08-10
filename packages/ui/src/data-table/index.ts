@@ -5,6 +5,7 @@ export {
 	type ColumnSizingState,
 	DataTable,
 	type DataTableDensity,
+	type DataTableView,
 	dataTableSelectionColumn,
 	dataTableToCsv,
 	type ExpandedState,

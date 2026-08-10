@@ -9,6 +9,7 @@ import { DataTableSearch } from "#/data-table/components/data-table-search.tsx";
 import { DataTableSelectionBar } from "#/data-table/components/data-table-selection-bar.tsx";
 import { DataTableToolbar } from "#/data-table/components/data-table-toolbar.tsx";
 import { DataTableViewOptions } from "#/data-table/components/data-table-view-options.tsx";
+import { DataTableViewToggle } from "#/data-table/components/data-table-view-toggle.tsx";
 
 // Re-exported so consumers can type their `columns` without depending on
 // @tanstack/react-table directly.
@@ -26,6 +27,7 @@ export type {
 export type { DataTableDensity } from "#/data-table/lib/density.ts";
 export { dataTableSelectionColumn } from "#/data-table/lib/selection-column.tsx";
 export { dataTableToCsv } from "#/data-table/lib/to-csv.ts";
+export type { DataTableView } from "#/data-table/lib/view.ts";
 
 /**
  * The DataTable parts as one namespace.
@@ -42,4 +44,5 @@ export const DataTable = {
 	SelectionBar: DataTableSelectionBar,
 	Toolbar: DataTableToolbar,
 	ViewOptions: DataTableViewOptions,
+	ViewToggle: DataTableViewToggle,
 };

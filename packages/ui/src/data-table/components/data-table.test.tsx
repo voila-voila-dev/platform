@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { CardGallery } from "#/card-gallery/components/card-gallery.tsx";
 import {
 	type ColumnDef,
 	DataTable,
@@ -557,6 +558,131 @@ describe("DataTable column visibility and export", () => {
 			/>,
 		);
 		expect(csv.split("\r\n")[1]).toBe('"Acme, ""the client"""');
+	});
+});
+
+describe("DataTable gallery view", () => {
+	const renderCard = (project: Project) => (
+		<CardGallery.Title>{project.client}</CardGallery.Title>
+	);
+
+	it("swaps the table for a card grid with one tile per row", () => {
+		const screen = render(
+			<DataTable.Root
+				columns={columns}
+				data={projects}
+				view="gallery"
+				renderGalleryCard={renderCard}
+			/>,
+		);
+		const gallery = screen.baseElement.querySelector(
+			"[data-slot=data-table-gallery]",
+		);
+		expect(
+			gallery?.querySelectorAll("[data-slot=card-gallery-item]"),
+		).toHaveLength(projects.length);
+		expect(screen.baseElement.querySelector("table")).toBeNull();
+		// No pagination prop, no footer — the grid shows everything at once.
+		expect(
+			screen.baseElement.querySelector("[data-slot=data-table-pagination]"),
+		).toBeNull();
+	});
+
+	it("keeps the pagination footer when one is supplied", () => {
+		const screen = render(
+			<DataTable.Root
+				columns={columns}
+				data={projects}
+				view="gallery"
+				renderGalleryCard={renderCard}
+				pagination={{
+					page: 0,
+					pageSize: 3,
+					total: 9,
+					onPageChange: () => {},
+				}}
+			/>,
+		);
+		expect(
+			screen.baseElement.querySelector("[data-slot=data-table-gallery]"),
+		).not.toBeNull();
+		expect(screen.getByText("1-3 of 9")).toBeDefined();
+	});
+
+	it("keeps the table when no gallery card renderer is supplied", () => {
+		const screen = render(
+			<DataTable.Root columns={columns} data={projects} view="gallery" />,
+		);
+		expect(screen.baseElement.querySelector("table")).not.toBeNull();
+		expect(
+			screen.baseElement.querySelector("[data-slot=data-table-gallery]"),
+		).toBeNull();
+	});
+
+	it("follows the sorted, filtered row model", () => {
+		const screen = render(
+			<DataTable.Root
+				columns={columns}
+				data={projects}
+				view="gallery"
+				renderGalleryCard={renderCard}
+				initialSorting={[{ id: "client", desc: false }]}
+				globalFilter="PRJ-00"
+			/>,
+		);
+		const cards = Array.from(
+			screen.baseElement.querySelectorAll("[data-slot=card-gallery-item]"),
+		);
+		expect(cards[0]?.textContent).toContain("Acme Studio");
+	});
+
+	it("keeps cards clickable through onRowClick", () => {
+		const onRowClick = vi.fn();
+		const screen = render(
+			<DataTable.Root
+				columns={columns}
+				data={projects}
+				view="gallery"
+				renderGalleryCard={renderCard}
+				onRowClick={onRowClick}
+			/>,
+		);
+		fireEvent.click(screen.getByText("Globex Media"));
+		expect(onRowClick).toHaveBeenCalledWith(projects[1]);
+	});
+
+	it("renders the empty state when nothing matches", () => {
+		const screen = render(
+			<DataTable.Root
+				columns={columns}
+				data={[]}
+				view="gallery"
+				renderGalleryCard={renderCard}
+			/>,
+		);
+		expect(screen.getByText("No results")).toBeDefined();
+	});
+});
+
+describe("DataTable.ViewToggle", () => {
+	it("reports the picked view", () => {
+		const onViewChange = vi.fn();
+		const screen = render(
+			<DataTable.ViewToggle view="table" onViewChange={onViewChange} />,
+		);
+		fireEvent.click(screen.getByRole("button", { name: "Gallery view" }));
+		expect(onViewChange).toHaveBeenCalledWith("gallery");
+	});
+
+	it("marks the current view as pressed", () => {
+		const screen = render(
+			<DataTable.ViewToggle view="gallery" onViewChange={() => {}} />,
+		);
+		expect(
+			screen
+				.getByRole("button", { name: "Gallery view" })
+				.getAttribute("aria-pressed"),
+		).toBe("true");
 	});
 });
 
