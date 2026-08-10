@@ -70,6 +70,74 @@ describe("StatCard", () => {
 	});
 });
 
+describe("StatCard.Root status", () => {
+	it("renders no data-status and the default frame without one", () => {
+		const screen = render(<StatCard.Root>content</StatCard.Root>);
+		const card = querySlot(screen, "stat-card");
+		expect(card?.getAttribute("data-status")).toBeNull();
+		expect(card?.classList.contains("bg-card")).toBe(true);
+		expect(card?.classList.contains("ring-1")).toBe(true);
+	});
+
+	it("keeps the default frame for on-track", () => {
+		const screen = render(
+			<StatCard.Root status="on-track">content</StatCard.Root>,
+		);
+		const card = querySlot(screen, "stat-card");
+		expect(card?.getAttribute("data-status")).toBe("on-track");
+		expect(card?.classList.contains("bg-card")).toBe(true);
+		expect(card?.classList.contains("ring-1")).toBe(true);
+		expect(card?.classList.contains("border-warning/50")).toBe(false);
+		expect(card?.classList.contains("border-destructive/50")).toBe(false);
+	});
+
+	it("tints the frame with the warning tokens for below-objective", () => {
+		const screen = render(
+			<StatCard.Root status="below-objective">content</StatCard.Root>,
+		);
+		const card = querySlot(screen, "stat-card");
+		expect(card?.getAttribute("data-status")).toBe("below-objective");
+		expect(card?.classList.contains("border-warning/50")).toBe(true);
+		expect(card?.classList.contains("bg-warning/5")).toBe(true);
+		expect(card?.classList.contains("ring-1")).toBe(false);
+	});
+
+	it("tints the frame with the destructive tokens for alerting", () => {
+		const screen = render(
+			<StatCard.Root status="alerting">content</StatCard.Root>,
+		);
+		const card = querySlot(screen, "stat-card");
+		expect(card?.getAttribute("data-status")).toBe("alerting");
+		expect(card?.classList.contains("border-destructive/50")).toBe(true);
+		expect(card?.classList.contains("bg-destructive/5")).toBe(true);
+		expect(card?.classList.contains("ring-1")).toBe(false);
+	});
+});
+
+describe("StatCard.Target", () => {
+	it("renders a quiet objective line with copy left to the caller", () => {
+		const screen = render(
+			<StatCard.Root>
+				<StatCard.Value>92%</StatCard.Value>
+				<StatCard.Target>Target: 90%</StatCard.Target>
+			</StatCard.Root>,
+		);
+		const target = querySlot(screen, "stat-card-target");
+		expect(target?.textContent).toBe("Target: 90%");
+		expect(target?.classList.contains("text-xs")).toBe(true);
+		expect(target?.classList.contains("text-muted-foreground")).toBe(true);
+	});
+
+	it("follows the card size through the sm padding variant", () => {
+		const screen = render(<StatCard.Target>Target: 90%</StatCard.Target>);
+		expect(
+			querySlot(screen, "stat-card-target")?.classList.contains(
+				"group-data-[size=sm]/card:px-3",
+			),
+		).toBe(true);
+	});
+});
+
 describe("StatCard.Delta", () => {
 	it("maps up to the success color with a trend-up icon", () => {
 		const screen = render(<StatCard.Delta trend="up">+12%</StatCard.Delta>);

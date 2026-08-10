@@ -123,6 +123,43 @@ export function FallingMetric() {
 	);
 }
 
+/**
+ * `status` tints the frame, not the value: the number stays readable and a
+ * scan of the grid shows where the fires are.
+ */
+export function MetricStatus() {
+	return (
+		<div className="grid w-full gap-4 sm:grid-cols-3">
+			<StatCard.Root status="on-track">
+				<StatCard.Header>
+					<StatCard.Label>Fill rate</StatCard.Label>
+					<StatCard.Delta trend="up">+4%</StatCard.Delta>
+				</StatCard.Header>
+				<StatCard.Value>92%</StatCard.Value>
+				<StatCard.Target>Target: 90%</StatCard.Target>
+			</StatCard.Root>
+			<StatCard.Root status="below-objective">
+				<StatCard.Header>
+					<StatCard.Label>Bookings confirmed</StatCard.Label>
+					<StatCard.Delta trend="down">-8%</StatCard.Delta>
+				</StatCard.Header>
+				<StatCard.Value>1,102</StatCard.Value>
+				<StatCard.Target>Target: 1,250</StatCard.Target>
+			</StatCard.Root>
+			<StatCard.Root status="alerting">
+				<StatCard.Header>
+					<StatCard.Label>Cancellations</StatCard.Label>
+					<StatCard.Delta trend="up" className="text-destructive">
+						+45%
+					</StatCard.Delta>
+				</StatCard.Header>
+				<StatCard.Value>17</StatCard.Value>
+				<StatCard.Target>Target: under 10</StatCard.Target>
+			</StatCard.Root>
+		</div>
+	);
+}
+
 /** The card keeps its shape while the number is still on its way. */
 export function States() {
 	return (

@@ -86,6 +86,28 @@ period. Bars need a `band` axis to sit in; a line or an area wants `point`.
 `trend` keeps the arrow pointing down while the colour says the metric is
 moving the right way.
 
+<Preview layout="stack" label="Metric status against an objective">
+	<Example.MetricStatus />
+</Preview>
+
+```tsx
+<StatCard.Root status="alerting">
+	<StatCard.Header>
+		<StatCard.Label>Cancellations</StatCard.Label>
+	</StatCard.Header>
+	<StatCard.Value>17</StatCard.Value>
+	<StatCard.Target>Target: under 10</StatCard.Target>
+</StatCard.Root>
+```
+
+`status` sets `data-status` on the root and tints the frame with the semantic
+tokens — `alerting` destructive, `below-objective` warning, `on-track` the
+default frame. The tint goes on the frame, not the value, so the number stays
+readable and a scan of the grid shows where the fires are.
+
+`StatCard.Target` is a quiet line under the value for the objective the tint
+refers to. The copy is yours — the component only sets the muted small type.
+
 <Preview layout="stack" label="Loading and empty">
 	<Example.States />
 </Preview>
@@ -126,6 +148,10 @@ unchanged.
 ### StatCard.Label
 
 <PropTable of="StatCard.Label" />
+
+### StatCard.Target
+
+<PropTable of="StatCard.Target" />
 
 ### StatCard.Value
 

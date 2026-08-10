@@ -228,6 +228,51 @@ export const FallingMetric: Story = {
 	),
 };
 
+/**
+ * `status` tints the frame, not the value: the number stays readable and a
+ * scan of the grid shows where the fires are. `StatCard.Target` puts the
+ * objective under the value so the tint has a stated reference.
+ */
+export const MetricStatus: Story = {
+	render: () => (
+		<div className="grid w-full max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
+			<StatCard.Root status="on-track">
+				<StatCard.Header>
+					<StatCard.Label>Fill rate</StatCard.Label>
+					<StatCard.Delta trend="up">+4%</StatCard.Delta>
+				</StatCard.Header>
+				<StatCard.Value>92%</StatCard.Value>
+				<StatCard.Target>Target: 90%</StatCard.Target>
+			</StatCard.Root>
+			<StatCard.Root status="below-objective">
+				<StatCard.Header>
+					<StatCard.Label>Bookings confirmed</StatCard.Label>
+					<StatCard.Delta trend="down">-8%</StatCard.Delta>
+				</StatCard.Header>
+				<StatCard.Value>1,102</StatCard.Value>
+				<StatCard.Target>Target: 1,250</StatCard.Target>
+			</StatCard.Root>
+			<StatCard.Root status="alerting">
+				<StatCard.Header>
+					<StatCard.Label>Cancellations</StatCard.Label>
+					{/* Up is the bad direction here: invert via className. */}
+					<StatCard.Delta trend="up" className="text-destructive">
+						+45%
+					</StatCard.Delta>
+				</StatCard.Header>
+				<StatCard.Value>17</StatCard.Value>
+				<StatCard.Target>Target: under 10</StatCard.Target>
+			</StatCard.Root>
+		</div>
+	),
+};
+
+/** The status grid on a phone: the tiles stack, the tints still scan. */
+export const MetricStatusMobile: Story = {
+	...MetricStatus,
+	globals: { viewport: { value: "mobile1", isRotated: false } },
+};
+
 /** The compact card: same anatomy, tighter padding, for dense dashboards. */
 export const Compact: Story = {
 	render: () => (
