@@ -218,6 +218,64 @@ describe("Chat.MessageActions hover bar", () => {
 		expect(screen.queryByRole("button", { name: "Copy" })).toBeNull();
 	});
 
+	it("keeps a single bar on screen, whichever message is hovered last", () => {
+		mockPointer("fine");
+		render(
+			<>
+				<Chat.MessageActions onReact={() => {}} reactionsLabel="React">
+					<span>first</span>
+				</Chat.MessageActions>
+				<Chat.MessageActions onReact={() => {}} reactionsLabel="React">
+					<span>second</span>
+				</Chat.MessageActions>
+			</>,
+		);
+		fireEvent.pointerEnter(
+			screen.getByText("first").parentElement as HTMLElement,
+		);
+		fireEvent.pointerEnter(
+			screen.getByText("second").parentElement as HTMLElement,
+		);
+		expect(screen.getAllByLabelText("React")).toHaveLength(1);
+	});
+
+	it("stays away while the thread is busy editing", () => {
+		mockPointer("fine");
+		render(
+			<Chat.MessageActions
+				onReact={() => {}}
+				reactionsLabel="React"
+				hoverBar={false}
+			>
+				<span>hello</span>
+			</Chat.MessageActions>,
+		);
+		fireEvent.pointerEnter(trigger());
+		expect(screen.queryByLabelText("React")).toBeNull();
+	});
+
+	it("takes the open bar down when the thread starts editing", () => {
+		mockPointer("fine");
+		const { rerender } = render(
+			<Chat.MessageActions onReact={() => {}} reactionsLabel="React">
+				<span>hello</span>
+			</Chat.MessageActions>,
+		);
+		fireEvent.pointerEnter(trigger());
+		expect(screen.getByLabelText("React")).toBeTruthy();
+
+		rerender(
+			<Chat.MessageActions
+				onReact={() => {}}
+				reactionsLabel="React"
+				hoverBar={false}
+			>
+				<span>hello</span>
+			</Chat.MessageActions>,
+		);
+		expect(screen.queryByLabelText("React")).toBeNull();
+	});
+
 	it("keeps an action without an icon out of the bar", () => {
 		mockPointer("fine");
 		render(

@@ -24,6 +24,15 @@ export const CHAT_QUICK_REACTIONS: ReadonlyArray<string> = [
 const HOVER_CLOSE_DELAY = 120;
 
 /**
+ * Closes the one bar currently on screen. A thread is a column of adjacent
+ * hover targets and a bar floats over its neighbours, so without a single
+ * owner two of them end up open at once, each covering the other's message.
+ * Module-level rather than a context: every message in the document shares the
+ * same screen, and the consumer composes `Chat.MessageActions` freely.
+ */
+let closeOpenBar: (() => void) | null = null;
+
+/**
  * Both pointer checks are asked positively and tolerate a missing
  * `matchMedia` (jsdom), so a test environment keeps the desktop menu instead
  * of falling into either pointer-specific branch.
@@ -69,6 +78,13 @@ interface Props {
 	reactionsLabel?: string;
 	/** Accessible name of the long-press surface. */
 	menuLabel?: string;
+	/**
+	 * Whether a fine pointer may summon the floating bar. Turn it off across the
+	 * thread while a message is being edited: a bar hovering over the editor is
+	 * offering actions on a message the reader is already acting on. Right-click
+	 * and long press are unaffected.
+	 */
+	hoverBar?: boolean;
 	/** The menu items, composed by the caller from `Chat.MessageAction`. */
 	actions?: React.ReactNode;
 	className?: string;
@@ -93,6 +109,7 @@ export function ChatMessageActions({
 	onReact,
 	reactionsLabel,
 	menuLabel,
+	hoverBar = true,
 	actions,
 	className,
 }: Props) {
@@ -117,25 +134,37 @@ export function ChatMessageActions({
 		(bubbleElement()?.closest("[data-align=end]") ?? null) !== null;
 
 	const cancelBarClose = () => window.clearTimeout(barCloseTimeout.current);
-	const closeBar = () => {
-		cancelBarClose();
+	// Stable across renders so it can be handed to (and compared against) the
+	// module-level owner of the open bar.
+	const closeBar = React.useCallback(function close() {
+		window.clearTimeout(barCloseTimeout.current);
+		if (closeOpenBar === close) {
+			closeOpenBar = null;
+		}
 		setBarAlign(null);
-	};
+	}, []);
 	const scheduleBarClose = () => {
 		cancelBarClose();
-		barCloseTimeout.current = window.setTimeout(
-			() => setBarAlign(null),
-			HOVER_CLOSE_DELAY,
-		);
+		barCloseTimeout.current = window.setTimeout(closeBar, HOVER_CLOSE_DELAY);
 	};
 	const openBar = () => {
 		cancelBarClose();
-		if (menuOpen || pressed !== null) {
+		if (!hoverBar || menuOpen || pressed !== null) {
 			return;
 		}
+		if (closeOpenBar !== closeBar) {
+			closeOpenBar?.();
+		}
+		closeOpenBar = closeBar;
 		setBarAlign(endAligned() ? "end" : "start");
 	};
-	React.useEffect(() => cancelBarClose, []);
+	React.useEffect(() => closeBar, [closeBar]);
+	// A message that stops offering the bar takes the open one down with it.
+	React.useEffect(() => {
+		if (!hoverBar) {
+			closeBar();
+		}
+	}, [hoverBar, closeBar]);
 
 	const handleMenuOpenChange = (next: boolean) => {
 		if (next && coarsePointer()) {
@@ -193,8 +222,12 @@ export function ChatMessageActions({
 				// to a sliver and wrap per character. Stretching it and aligning
 				// inside keeps the percentage resolvable, and keeping it a flex
 				// column keeps the bubble's own end-alignment working.
+				// The bar is portaled into this trigger, so the message row carries it
+				// in the paint order: lifting the row while the bar is open is what
+				// keeps it above the neighbouring bubbles it floats over.
 				className={cn(
-					"flex w-full min-w-0 flex-col outline-none group-data-[align=end]/message:items-end",
+					"relative flex w-full min-w-0 flex-col outline-none group-data-[align=end]/message:items-end",
+					barAlign !== null && "z-50",
 					className,
 				)}
 			>

@@ -62,38 +62,47 @@ export function ChatMessageHoverBar({
 					anchor={anchor}
 					side="top"
 					align={align}
-					sideOffset={6}
+					// No gap: the popup carries the visual offset as padding instead,
+					// so its hit area touches the bubble. A real gap is a dead strip
+					// the pointer has to cross on its way up, and that strip belongs
+					// to the message above — which would open *its* bar and close the
+					// one the reader was reaching for.
+					sideOffset={0}
 					collisionPadding={8}
-					className="z-40"
+					// Above every bubble in the thread, including the messages the bar
+					// floats over.
+					className="z-50"
 				>
 					<PopoverPrimitive.Popup
 						data-slot="chat-message-hover-bar"
 						initialFocus={false}
 						finalFocus={false}
 						className={cn(
-							"flex items-center gap-0.5 rounded-full bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10",
+							"pb-1.5",
 							"data-open:fade-in-0 data-open:slide-in-from-bottom-1 data-closed:fade-out-0 data-open:animate-in data-closed:animate-out duration-150 motion-reduce:animate-none",
 						)}
 					>
-						{hasReactions && (
-							<ChatQuickReactionRow
-								emojis={emojis}
-								activeEmojis={activeEmojis}
-								label={reactionsLabel}
-								onReact={(emoji) => {
-									onReact(emoji);
-									onClose();
-								}}
-							/>
-						)}
-						{hasReactions && actions !== undefined && (
-							<div aria-hidden className="h-5 w-px bg-border" />
-						)}
-						<ChatMessageActionsHostContext.Provider
-							value={{ host: "bar", close: onClose }}
-						>
-							{actions}
-						</ChatMessageActionsHostContext.Provider>
+						<div className="flex items-center gap-0.5 rounded-full bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10">
+							{hasReactions && (
+								<ChatQuickReactionRow
+									emojis={emojis}
+									activeEmojis={activeEmojis}
+									label={reactionsLabel}
+									onReact={(emoji) => {
+										onReact(emoji);
+										onClose();
+									}}
+								/>
+							)}
+							{hasReactions && actions !== undefined && (
+								<div aria-hidden className="h-5 w-px bg-border" />
+							)}
+							<ChatMessageActionsHostContext.Provider
+								value={{ host: "bar", close: onClose }}
+							>
+								{actions}
+							</ChatMessageActionsHostContext.Provider>
+						</div>
 					</PopoverPrimitive.Popup>
 				</PopoverPrimitive.Positioner>
 			</PopoverPrimitive.Portal>
