@@ -109,7 +109,12 @@ export function EventCalendarTimeGrid({
 				</div>
 			) : null}
 
-			<div ref={scrollRef} className="max-h-140 overflow-y-auto">
+			{/* Hosts opt out of the inner scroll (one page scroll instead) by
+			    setting --event-calendar-max-height, e.g. to `none`. */}
+			<div
+				ref={scrollRef}
+				className="max-h-[var(--event-calendar-max-height,35rem)] overflow-y-auto"
+			>
 				<div className="flex" style={{ height: hours.length * HOUR_HEIGHT }}>
 					<div className="w-14 shrink-0">
 						{hours.map((hour) => (

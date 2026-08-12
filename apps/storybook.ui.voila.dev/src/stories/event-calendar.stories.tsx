@@ -95,3 +95,93 @@ function ControlledEventCalendar() {
 export const Controlled: Story = {
 	render: () => <ControlledEventCalendar />,
 };
+
+// Home-care planning shaped data: one color per lifecycle status.
+const PLANNING_EVENTS: CalendarEvent[] = [
+	{
+		id: "1",
+		title: "Marie Dupont",
+		start: at(0, 9, 0),
+		end: at(0, 12, 0),
+		color: "var(--color-blue-500)",
+		meta: ["3 h · récurrent"],
+	},
+	{
+		id: "2",
+		title: "Jean Martin",
+		start: at(0, 14, 0),
+		end: at(0, 16, 0),
+		color: "var(--color-emerald-600)",
+		meta: ["2 h · terminé"],
+	},
+	{
+		id: "3",
+		title: "Louise Bernard",
+		start: at(1, 8, 30),
+		end: at(1, 12, 30),
+		color: "var(--color-violet-500)",
+		meta: ["4 h · ponctuel"],
+	},
+	{
+		id: "4",
+		title: "Anne Moreau",
+		start: at(2, 10, 0),
+		end: at(2, 12, 0),
+		color: "var(--color-gray-400)",
+		meta: ["Annulée"],
+	},
+	{
+		id: "5",
+		title: "Marie Dupont",
+		start: at(3, 14, 0),
+		end: at(3, 17, 0),
+		color: "var(--color-blue-500)",
+		meta: ["3 h · récurrent"],
+	},
+	{
+		id: "6",
+		title: "Jean Martin",
+		start: at(4, 9, 0),
+		end: at(4, 13, 0),
+		color: "var(--color-blue-500)",
+		meta: ["4 h · récurrent"],
+	},
+];
+
+export const PlanningWeek: Story = {
+	args: {
+		events: PLANNING_EVENTS,
+		defaultDate: MONDAY,
+		defaultView: "week",
+		hourRange: [8, 18],
+		locale: "fr-FR",
+		hideToolbar: true,
+		onEventClick: () => {},
+	},
+};
+
+export const CustomEventRender: Story = {
+	args: {
+		events: PLANNING_EVENTS,
+		defaultDate: MONDAY,
+		defaultView: "week",
+		hourRange: [8, 18],
+		locale: "fr-FR",
+		hideToolbar: true,
+		onEventClick: () => {},
+		renderEvent: (props, { event }) => (
+			<button {...props}>
+				<span className="block truncate font-semibold">
+					{event.meta?.includes("Annulée") ? <s>{event.title}</s> : event.title}
+				</span>
+				<span className="block truncate opacity-70">
+					{event.start.toLocaleTimeString("fr-FR", {
+						hour: "2-digit",
+						minute: "2-digit",
+					})}
+					{event.meta ? ` · ${event.meta.join(" · ")}` : null}
+				</span>
+			</button>
+		),
+	},
+};

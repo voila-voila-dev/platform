@@ -2,6 +2,10 @@ import { mergeProps } from "@base-ui/react/merge-props";
 import { useRender } from "@base-ui/react/use-render";
 import * as React from "react";
 import { EventCalendarDayView } from "#/event-calendar/components/event-calendar-day-view.tsx";
+import {
+	type EventCalendarEventState,
+	EventCalendarRenderContext,
+} from "#/event-calendar/components/event-calendar-event.tsx";
 import { EventCalendarMonthView } from "#/event-calendar/components/event-calendar-month-view.tsx";
 import { EventCalendarToolbar } from "#/event-calendar/components/event-calendar-toolbar.tsx";
 import { EventCalendarWeekView } from "#/event-calendar/components/event-calendar-week-view.tsx";
@@ -37,6 +41,13 @@ interface Props
 	locale?: string;
 	/** Hide the built-in toolbar when the host renders its own controls. */
 	hideToolbar?: boolean;
+	/**
+	 * Base UI render prop for every event card: an element, or a function
+	 * receiving the card's props and `{ event }` as state. Replaces the default
+	 * title + meta content; the accent tint, hover and focus chrome arrive
+	 * through the merged props.
+	 */
+	renderEvent?: useRender.RenderProp<EventCalendarEventState>;
 }
 
 /**
@@ -61,6 +72,7 @@ export function EventCalendarRoot({
 	hourRange = [0, 24],
 	locale,
 	hideToolbar = false,
+	renderEvent,
 	className,
 	render,
 	...props
@@ -102,7 +114,7 @@ export function EventCalendarRoot({
 			props,
 			{
 				children: (
-					<>
+					<EventCalendarRenderContext.Provider value={renderEvent ?? null}>
 						{hideToolbar ? null : (
 							<EventCalendarToolbar
 								label={viewLabel(view, date, weekStartsOn, locale)}
@@ -124,7 +136,7 @@ export function EventCalendarRoot({
 						) : (
 							<EventCalendarDayView {...shared} hourRange={hourRange} />
 						)}
-					</>
+					</EventCalendarRenderContext.Provider>
 				),
 			},
 		),
