@@ -97,7 +97,7 @@ function ControlledNativeDateTimeInput() {
 		<DateTimePicker.Native
 			value={value}
 			onValueChange={setValue}
-			wrapperClassName="w-72"
+			className="w-72"
 		/>
 	);
 }

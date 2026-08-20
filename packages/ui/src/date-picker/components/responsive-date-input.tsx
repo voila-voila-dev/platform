@@ -1,10 +1,9 @@
-import { DatePicker } from "#/date-picker/components/date-picker.tsx";
+import { DatePickerRoot } from "#/date-picker/components/date-picker-root.tsx";
+import { NativeDateInput } from "#/date-picker/components/native-date-input.tsx";
+import { boundedCalendarProps } from "#/date-picker/lib/calendar-bounds.ts";
 import type { DatePickerBase } from "#/date-picker/lib/date-picker-props.ts";
 import { useIsMobile } from "#/hooks/use-mobile.ts";
 import { usePickerState } from "#/hooks/use-picker-state.ts";
-import { NativeDatePicker } from "#/native-date-picker/components/native-date-picker.tsx";
-import { boundedCalendarProps } from "#/responsive-date-picker/lib/calendar-bounds.ts";
-import { fromIsoDay, toIsoDay } from "#/responsive-date-picker/lib/iso-day.ts";
 
 interface Props extends DatePickerBase {
 	/** Controlled value; pass `null` for a controlled empty selection. */
@@ -34,7 +33,7 @@ interface Props extends DatePickerBase {
  * The value state lives here rather than in either surface, so a selection
  * survives crossing the breakpoint.
  */
-export function ResponsiveDatePickerRoot({
+export function ResponsiveDateInput({
 	value: controlledValue,
 	defaultValue,
 	onValueChange,
@@ -68,23 +67,23 @@ export function ResponsiveDatePickerRoot({
 
 	if (isMobile) {
 		return (
-			<NativeDatePicker.Date
+			<NativeDateInput
 				id={id}
 				name={name}
-				value={toIsoDay(value)}
-				min={min ? toIsoDay(min) : undefined}
-				max={max ? toIsoDay(max) : undefined}
+				value={value ?? null}
+				onValueChange={handleChange}
+				min={min}
+				max={max}
 				disabled={disabled}
 				aria-invalid={ariaInvalid}
 				aria-label={ariaLabel}
-				wrapperClassName={className}
-				onChange={(event) => handleChange(fromIsoDay(event.target.value))}
+				className={className}
 			/>
 		);
 	}
 
 	return (
-		<DatePicker.Root
+		<DatePickerRoot
 			value={value ?? null}
 			onValueChange={handleChange}
 			placeholder={placeholder}

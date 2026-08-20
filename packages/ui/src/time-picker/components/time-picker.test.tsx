@@ -31,33 +31,35 @@ const queryOptions = (screen: ReturnType<typeof render>) =>
 
 describe("TimePicker", () => {
 	it("shows the placeholder and marks the trigger empty when nothing is selected", () => {
-		const screen = render(<TimePicker placeholder="Start time" />);
+		const screen = render(<TimePicker.Root placeholder="Start time" />);
 		const trigger = queryTrigger(screen);
 		expect(trigger?.textContent).toContain("Start time");
 		expect(trigger?.getAttribute("data-empty")).toBe("true");
 	});
 
 	it("formats the selected time on the trigger (Intl short time, en default)", () => {
-		const screen = render(<TimePicker defaultValue="14:30" />);
+		const screen = render(<TimePicker.Root defaultValue="14:30" />);
 		const trigger = queryTrigger(screen);
 		expect(trigger?.textContent).toContain("2:30 PM");
 		expect(trigger?.getAttribute("data-empty")).toBeNull();
 	});
 
 	it("formats the trigger label with the provided locale", () => {
-		const screen = render(<TimePicker locale="fr-FR" defaultValue="14:30" />);
+		const screen = render(
+			<TimePicker.Root locale="fr-FR" defaultValue="14:30" />,
+		);
 		expect(queryTrigger(screen)?.textContent).toContain("14:30");
 		expect(queryTrigger(screen)?.textContent).not.toContain("PM");
 	});
 
 	it("defaults the trigger to the outline button variant", () => {
-		const screen = render(<TimePicker />);
+		const screen = render(<TimePicker.Root />);
 		expect(queryTrigger(screen)?.getAttribute("data-variant")).toBe("outline");
 	});
 
 	it("lists options from min to max inclusive at the given step", async () => {
 		const screen = render(
-			<TimePicker min="09:00" max="11:00" step={30} defaultOpen />,
+			<TimePicker.Root min="09:00" max="11:00" step={30} defaultOpen />,
 		);
 		await waitFor(() => {
 			expect(queryOptions(screen).map((option) => option.textContent)).toEqual([
@@ -72,7 +74,12 @@ describe("TimePicker", () => {
 
 	it("marks the matching option as selected", async () => {
 		const screen = render(
-			<TimePicker min="09:00" max="11:00" defaultValue="10:00" defaultOpen />,
+			<TimePicker.Root
+				min="09:00"
+				max="11:00"
+				defaultValue="10:00"
+				defaultOpen
+			/>,
 		);
 		await waitFor(() => {
 			const selected = screen.baseElement.querySelector(
@@ -86,7 +93,7 @@ describe("TimePicker", () => {
 	it("selecting an option fires onValueChange, updates the label, and closes", async () => {
 		const onValueChange = vi.fn();
 		const screen = render(
-			<TimePicker min="09:00" max="11:00" onValueChange={onValueChange} />,
+			<TimePicker.Root min="09:00" max="11:00" onValueChange={onValueChange} />,
 		);
 		fireEvent.click(queryTrigger(screen) as Element);
 		await waitFor(() => {
@@ -105,7 +112,9 @@ describe("TimePicker", () => {
 	});
 
 	it("serializes the value into a hidden form input as HH:mm", () => {
-		const screen = render(<TimePicker name="startTime" defaultValue="09:30" />);
+		const screen = render(
+			<TimePicker.Root name="startTime" defaultValue="09:30" />,
+		);
 		const input = screen.baseElement.querySelector(
 			'input[type=hidden][name="startTime"]',
 		) as HTMLInputElement;
@@ -114,7 +123,7 @@ describe("TimePicker", () => {
 	});
 
 	it("does not open when disabled", () => {
-		const screen = render(<TimePicker disabled />);
+		const screen = render(<TimePicker.Root disabled />);
 		const trigger = queryTrigger(screen) as HTMLButtonElement;
 		expect(trigger.disabled).toBe(true);
 		fireEvent.click(trigger);
@@ -123,7 +132,7 @@ describe("TimePicker", () => {
 
 	it("falls back to a 30-minute step when given a non-positive step", async () => {
 		const screen = render(
-			<TimePicker min="09:00" max="10:00" step={0} defaultOpen />,
+			<TimePicker.Root min="09:00" max="10:00" step={0} defaultOpen />,
 		);
 		await waitFor(() => {
 			expect(queryOptions(screen).length).toBe(3);
@@ -131,7 +140,7 @@ describe("TimePicker", () => {
 	});
 
 	it("renders an unparseable controlled value verbatim", () => {
-		const screen = render(<TimePicker value="not-a-time" />);
+		const screen = render(<TimePicker.Root value="not-a-time" />);
 		expect(queryTrigger(screen)?.textContent).toContain("not-a-time");
 	});
 });

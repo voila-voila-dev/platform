@@ -27,6 +27,32 @@ The value is a `Date`, and `null` means empty. `calendarProps` passes through to
 the grid underneath, so `defaultMonth`, `disabled` and the rest are set there
 rather than duplicated onto this component.
 
+## Three surfaces
+
+Every picker family here has the same three: `Root` is the composed popover
+above, `Native` is the OS control, and `Responsive` renders `Root` on a pointer
+and `Native` under the `useIsMobile` breakpoint (768px). One `Date | null` value
+model across all three, so switching surface is a one-word edit.
+
+`Responsive` is the default choice for a form. Reach for `Root` only when the
+surface must look identical everywhere, and for `Native` only when you want the
+OS control on desktop too.
+
+<Preview layout="center" label="The OS control">
+	<Example.Native />
+</Preview>
+
+<Preview layout="center" label="One field, both surfaces">
+	<Example.Responsive />
+</Preview>
+
+`min` and `max` bound both surfaces at once: the native field's attributes, and
+on desktop the range of the year dropdown plus the disabled days around it.
+`Responsive` always draws month and year dropdowns — a birth date is unreachable
+by paging a month at a time. Without bounds the dropdown still spans a century
+back and ten years forward, because react-day-picker's own fallback stops at the
+end of the current year and hides every future date.
+
 ## Recipes
 
 <Preview layout="center" label="Two dates, one field">
@@ -37,6 +63,16 @@ rather than duplicated onto this component.
 range is still half-drawn — once with `from` set and `to` undefined, then again
 when the second date lands. Guard on `to` before you turn it into a query, or
 the first click will fetch an open-ended range.
+
+<Preview layout="center" label="A range on any viewport">
+	<Example.ResponsiveRange />
+</Preview>
+
+`ResponsiveRange` and `NativeRange` are two bound fields rather than one
+two-month popover: no browser ships a native range input, and two months of day
+cells do not fit a phone. Each side bounds the other, so an inverted range
+cannot be entered, and a new start that overtakes the end clears it instead of
+leaving something impossible on screen.
 
 <Preview layout="center" label="A different locale">
 	<Example.Localized />
@@ -55,9 +91,25 @@ is what makes it work in a plain form post with no JavaScript on your side.
 
 <PropTable of="DatePicker.Root" />
 
+### DatePicker.Native
+
+<PropTable of="DatePicker.Native" />
+
+### DatePicker.Responsive
+
+<PropTable of="DatePicker.Responsive" />
+
 ### DatePicker.Range
 
 <PropTable of="DatePicker.Range" />
+
+### DatePicker.NativeRange
+
+<PropTable of="DatePicker.NativeRange" />
+
+### DatePicker.ResponsiveRange
+
+<PropTable of="DatePicker.ResponsiveRange" />
 
 ### DatePicker.Trigger
 
@@ -69,4 +121,5 @@ whose surface is not a calendar and you want the trigger to match the others.
 ## Related
 
 [Calendar](/ui/calendar) · [DateTimePicker](/ui/date-time-picker) ·
-[TimePicker](/ui/time-picker) · [Field](/ui/field)
+[TimePicker](/ui/time-picker) · [NativeDatePicker](/ui/native-date-picker) ·
+[Field](/ui/field)

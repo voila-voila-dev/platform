@@ -4,9 +4,9 @@ import { useState } from "react";
 
 const meta = {
 	title: "UI/TimePicker",
-	component: TimePicker,
+	component: TimePicker.Root,
 	tags: ["autodocs"],
-} satisfies Meta<typeof TimePicker>;
+} satisfies Meta<typeof TimePicker.Root>;
 
 export default meta;
 
@@ -16,7 +16,7 @@ function DefaultTimePicker() {
 	const [selectedTime, setSelectedTime] = useState<string | null>(null);
 
 	return (
-		<TimePicker
+		<TimePicker.Root
 			value={selectedTime}
 			onValueChange={setSelectedTime}
 			placeholder="Start time"
@@ -31,7 +31,9 @@ export const Default: Story = {
 function PreselectedTimePicker() {
 	const [selectedTime, setSelectedTime] = useState<string | null>("14:30");
 
-	return <TimePicker value={selectedTime} onValueChange={setSelectedTime} />;
+	return (
+		<TimePicker.Root value={selectedTime} onValueChange={setSelectedTime} />
+	);
 }
 
 export const WithValue: Story = {
@@ -42,7 +44,7 @@ function FrenchLocaleTimePicker() {
 	const [selectedTime, setSelectedTime] = useState<string | null>("14:30");
 
 	return (
-		<TimePicker
+		<TimePicker.Root
 			locale="fr-FR"
 			value={selectedTime}
 			onValueChange={setSelectedTime}
@@ -60,7 +62,7 @@ function BusinessHoursTimePicker() {
 
 	// 15-minute slots inside business hours — e.g. a project kickoff time.
 	return (
-		<TimePicker
+		<TimePicker.Root
 			min="08:00"
 			max="20:00"
 			step={15}
@@ -76,9 +78,11 @@ export const BusinessHours: Story = {
 };
 
 export const Disabled: Story = {
-	render: () => <TimePicker disabled placeholder="Start time" />,
+	render: () => <TimePicker.Root disabled placeholder="Start time" />,
 };
 
 export const Invalid: Story = {
-	render: () => <TimePicker aria-invalid placeholder="Start time (required)" />,
+	render: () => (
+		<TimePicker.Root aria-invalid placeholder="Start time (required)" />
+	),
 };

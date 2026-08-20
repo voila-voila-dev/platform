@@ -57,8 +57,7 @@ export function ResponsiveDateTimeInput({
 				max={max}
 				aria-invalid={ariaInvalid}
 				aria-label={ariaLabel}
-				className={className}
-				wrapperClassName="w-full"
+				className={cn("w-full", className)}
 			/>
 		);
 	}

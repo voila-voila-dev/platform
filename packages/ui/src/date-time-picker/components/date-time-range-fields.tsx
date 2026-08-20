@@ -1,5 +1,5 @@
 import type * as React from "react";
-import { ResponsiveDateTimeInput } from "#/date-time-picker/components/responsive-date-time-input.tsx";
+import type { ResponsiveDateTimeInput } from "#/date-time-picker/components/responsive-date-time-input.tsx";
 import {
 	type DateTimeRange,
 	endFieldBounds,
@@ -9,7 +9,31 @@ import {
 import { Label } from "#/label/components/label.tsx";
 import { cn } from "#/lib/utils.ts";
 
-interface Props {
+/**
+ * What the range layout needs from the single-instant field it lays out. The
+ * popover, native and responsive inputs all accept this shape (the native one
+ * through an adapter that drops what it has no use for), which is what lets one
+ * layout drive all three range surfaces.
+ */
+export type InstantField = React.ComponentType<
+	Pick<
+		React.ComponentProps<typeof ResponsiveDateTimeInput>,
+		| "id"
+		| "value"
+		| "onValueChange"
+		| "placeholder"
+		| "locale"
+		| "disabled"
+		| "minuteStep"
+		| "formatOptions"
+		| "min"
+		| "calendarProps"
+		| "aria-invalid"
+		| "className"
+	>
+>;
+
+export interface DateTimeRangeFieldsProps {
 	/** Controlled range; both sides may be `null` independently. */
 	value?: DateTimeRange;
 	/** Initial range when uncontrolled. */
@@ -49,13 +73,17 @@ interface Props {
 }
 
 /**
- * Two labeled {@link ResponsiveDateTimeInput}s bound into a single start/end range.
+ * Two labeled instant fields bound into a single start/end range.
  * Picking a start seeds (or nudges) the end so the span stays valid, and the end
  * field is bounded to never fall before the start (its calendar disables earlier
- * days and the native input carries a `min`). Both surfaces speak one
+ * days and the native input carries a `min`). Every surface speaks one
  * `{ start, end }` value model, so callers never juggle datetime strings.
+ *
+ * This is the layout only: `Field` decides which surface the two sides render.
  */
-export function DateTimeRangeInput({
+export function DateTimeRangeFields({
+	Field,
+	slot,
 	value: controlledValue,
 	defaultValue,
 	onValueChange,
@@ -72,7 +100,7 @@ export function DateTimeRangeInput({
 	formatOptions,
 	className,
 	"aria-invalid": ariaInvalid,
-}: Props) {
+}: DateTimeRangeFieldsProps & { Field: InstantField; slot: string }) {
 	const { range, commit } = useDateTimeRangeState({
 		value: controlledValue,
 		defaultValue,
@@ -96,12 +124,15 @@ export function DateTimeRangeInput({
 
 	return (
 		<div
-			data-slot="date-time-range-input"
-			className={cn("grid grid-cols-1 gap-3 sm:grid-cols-2", className)}
+			data-slot={slot}
+			className={cn(
+				"@container/date-time-range grid grid-cols-1 gap-3 @lg/date-time-range:grid-cols-2",
+				className,
+			)}
 		>
-			<div className="flex flex-col gap-1.5">
+			<div className="flex min-w-0 flex-col gap-1.5">
 				<Label htmlFor={startId}>{startLabel}</Label>
-				<ResponsiveDateTimeInput
+				<Field
 					id={startId}
 					value={range.start}
 					onValueChange={handleStartChange}
@@ -111,11 +142,12 @@ export function DateTimeRangeInput({
 					minuteStep={minuteStep}
 					formatOptions={formatOptions}
 					aria-invalid={ariaInvalid}
+					className="w-full min-w-0"
 				/>
 			</div>
-			<div className="flex flex-col gap-1.5">
+			<div className="flex min-w-0 flex-col gap-1.5">
 				<Label htmlFor={resolvedEndId}>{endLabel}</Label>
-				<ResponsiveDateTimeInput
+				<Field
 					id={resolvedEndId}
 					value={range.end}
 					onValueChange={handleEndChange}
