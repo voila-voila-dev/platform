@@ -70,6 +70,57 @@ describe("DataTable", () => {
 		expect(bodyRows(screen)[0]?.textContent).toContain("PRJ-002");
 	});
 
+	it("marks the sorted header without reordering rows under controlled sorting", () => {
+		const screen = render(
+			<DataTable.Root
+				columns={columns}
+				data={projects}
+				sorting={[{ id: "client", desc: false }]}
+			/>,
+		);
+		const clientHeader = screen.getByText("Client").closest("th");
+		expect(clientHeader?.getAttribute("aria-sort")).toBe("ascending");
+		// The caller owns the order (typically the server); rows stay as given.
+		expect(bodyRows(screen)[0]?.textContent).toContain("PRJ-001");
+	});
+
+	it("reports header clicks through onSortingChange under controlled sorting", () => {
+		const onSortingChange = vi.fn();
+		const screen = render(
+			<DataTable.Root
+				columns={columns}
+				data={projects}
+				sorting={[]}
+				onSortingChange={onSortingChange}
+			/>,
+		);
+		const clientHeader = screen.getByText("Client").closest("th");
+		if (!clientHeader) throw new Error("missing Client header");
+		fireEvent.click(clientHeader);
+		expect(onSortingChange).toHaveBeenCalledWith([
+			{ id: "client", desc: false },
+		]);
+		expect(bodyRows(screen)[0]?.textContent).toContain("PRJ-001");
+	});
+
+	it("keeps sorting internally when only onSortingChange is passed", () => {
+		const onSortingChange = vi.fn();
+		const screen = render(
+			<DataTable.Root
+				columns={columns}
+				data={projects}
+				onSortingChange={onSortingChange}
+			/>,
+		);
+		const clientHeader = screen.getByText("Client").closest("th");
+		if (!clientHeader) throw new Error("missing Client header");
+		fireEvent.click(clientHeader);
+		expect(onSortingChange).toHaveBeenCalledWith([
+			{ id: "client", desc: false },
+		]);
+		expect(bodyRows(screen)[0]?.textContent).toContain("Acme Studio");
+	});
+
 	it("renders the default empty state when there are no rows", () => {
 		const screen = render(<DataTable.Root columns={columns} data={[]} />);
 		expect(screen.getByText("No results")).toBeDefined();

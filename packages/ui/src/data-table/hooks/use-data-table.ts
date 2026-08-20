@@ -30,6 +30,14 @@ export interface UseDataTableOptions<TData, TValue> {
 	data: readonly TData[];
 	/** Sorting is managed internally; this seeds the initial column order. */
 	initialSorting?: SortingState;
+	/**
+	 * Controlled sorting state; omit to let the table own it. When passed, the
+	 * table stops sorting rows itself (`manualSorting`) and expects `data` to
+	 * arrive already ordered — the server-side sorting mode.
+	 */
+	sorting?: SortingState;
+	/** Fires whether or not `sorting` is passed, so it works as a listener too. */
+	onSortingChange?: (state: SortingState) => void;
 	/** Per-row or table-wide opt-in, forwarded to @tanstack/react-table. */
 	enableRowSelection?: boolean | ((row: Row<TData>) => boolean);
 	/** Controlled selection state; omit to let the table own it. */
@@ -100,6 +108,8 @@ export function useDataTable<TData, TValue>({
 	columns,
 	data,
 	initialSorting,
+	sorting,
+	onSortingChange,
 	enableRowSelection,
 	rowSelection,
 	onRowSelectionChange,
@@ -114,7 +124,9 @@ export function useDataTable<TData, TValue>({
 	renderExpandedRow,
 	globalFilter,
 }: UseDataTableOptions<TData, TValue>) {
-	const [sorting, setSorting] = React.useState<SortingState>(
+	const [sortingState, handleSortingChange] = useOptionalControlled(
+		sorting,
+		onSortingChange,
 		initialSorting ?? [],
 	);
 	const [selection, handleSelectionChange] = useOptionalControlled(
@@ -146,7 +158,10 @@ export function useDataTable<TData, TValue>({
 		getSortedRowModel: getSortedRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 		getExpandedRowModel: getExpandedRowModel(),
-		onSortingChange: setSorting,
+		// Controlled sorting means the caller orders `data` (typically in the
+		// database); the row model must not re-sort it.
+		manualSorting: sorting !== undefined,
+		onSortingChange: handleSortingChange,
 		enableRowSelection,
 		onRowSelectionChange: handleSelectionChange,
 		enableColumnResizing,
@@ -160,7 +175,7 @@ export function useDataTable<TData, TValue>({
 		getRowCanExpand: () => renderExpandedRow !== undefined,
 		getRowId,
 		state: {
-			sorting,
+			sorting: sortingState,
 			rowSelection: selection,
 			columnSizing: sizing,
 			columnVisibility: visibility,
