@@ -115,6 +115,7 @@
 		"./radius-map": "./src/radius-map/index.ts",
 		"./rating": "./src/rating/index.ts",
 		"./resizable": "./src/resizable/index.ts",
+		"./responsive-date-picker": "./src/responsive-date-picker/index.ts",
 		"./responsive-dialog": "./src/responsive-dialog/index.ts",
 		"./responsive-select": "./src/responsive-select/index.ts",
 		"./responsive-sheet": "./src/responsive-sheet/index.ts",
