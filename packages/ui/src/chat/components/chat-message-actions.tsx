@@ -225,8 +225,12 @@ export function ChatMessageActions({
 				// The bar is portaled into this trigger, so the message row carries it
 				// in the paint order: lifting the row while the bar is open is what
 				// keeps it above the neighbouring bubbles it floats over.
+				// The context-menu trigger's `select-none` protects the touch
+				// long-press from fighting native text selection, but on a mouse it
+				// only forbids copying a message — so a fine pointer gets selection
+				// back.
 				className={cn(
-					"relative flex w-full min-w-0 flex-col outline-none group-data-[align=end]/message:items-end",
+					"relative flex w-full min-w-0 flex-col outline-none pointer-fine:select-text group-data-[align=end]/message:items-end",
 					barAlign !== null && "z-50",
 					className,
 				)}
