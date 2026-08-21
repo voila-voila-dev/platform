@@ -1,6 +1,11 @@
 import { CalendarDotsIcon } from "@phosphor-icons/react";
 import * as React from "react";
+import { Button } from "#/button/components/button.tsx";
 import { DatePicker } from "#/date-picker/components/date-picker.tsx";
+import {
+	PICKER_FIELD_CLASSES,
+	PickerFieldContent,
+} from "#/date-picker/components/picker-field.tsx";
 import { ShiftPickerBody } from "#/date-time-picker/components/shift-picker-body.tsx";
 import { ShiftStepTabs } from "#/date-time-picker/components/shift-step-tabs.tsx";
 import {
@@ -13,6 +18,8 @@ import {
 	type ShiftStep,
 	shiftRangeLabel,
 } from "#/date-time-picker/lib/shift-time-range.ts";
+import { Drawer } from "#/drawer/components/drawer.tsx";
+import { useIsMobile } from "#/hooks/use-mobile.ts";
 import { cn } from "#/lib/utils.ts";
 import { Popover } from "#/popover/components/popover.tsx";
 
@@ -41,6 +48,11 @@ interface Props {
 	"aria-invalid"?: React.AriaAttributes["aria-invalid"];
 	/** Accessible name, for when there is no visible label. */
 	"aria-label"?: string;
+	/**
+	 * Heading for the mobile drawer. Defaults to `placeholder`, which already
+	 * names the field; pass it when that placeholder is not a title.
+	 */
+	drawerTitle?: string;
 }
 
 /**
@@ -63,7 +75,9 @@ export function ShiftTimeRangeInput({
 	className,
 	"aria-invalid": ariaInvalid,
 	"aria-label": ariaLabel,
+	drawerTitle,
 }: Props) {
+	const isMobile = useIsMobile();
 	const { range, commit } = useDateTimeRangeState({
 		value: controlledValue,
 		defaultValue,
@@ -87,47 +101,88 @@ export function ShiftTimeRangeInput({
 		}
 	};
 
+	const label = shiftRangeLabel({ range, locale, placeholder });
+	const icon = (
+		<CalendarDotsIcon className="size-4 shrink-0 text-muted-foreground" />
+	);
+	const empty = !(range.start && range.end);
+	const body = (
+		<>
+			<ShiftStepTabs
+				step={step}
+				range={range}
+				locale={locale}
+				onStepChange={setStep}
+			/>
+			<ShiftPickerBody
+				range={range}
+				step={step}
+				locale={locale}
+				minuteStep={minuteStep}
+				onDaySelect={handleDaySelect}
+				onTimeSelect={handleTimeSelect}
+			/>
+		</>
+	);
+
+	const handleOpenChange = (next: boolean) => {
+		setOpen(next);
+		if (next) setStep("start");
+	};
+
+	// A phone fits neither the anchored popover nor its two-column body, so the
+	// same tabs and grids come up as a sheet instead. The value model does not
+	// change with the surface: a shift still carries a date on each end.
+	if (isMobile) {
+		return (
+			<Drawer.Root open={open} onOpenChange={handleOpenChange}>
+				<Drawer.Trigger asChild>
+					<Button
+						id={id}
+						variant="outline"
+						data-slot="shift-time-range-trigger"
+						data-empty={empty || undefined}
+						className={cn(PICKER_FIELD_CLASSES, "w-full", className)}
+						disabled={disabled}
+						aria-invalid={ariaInvalid}
+						aria-label={ariaLabel}
+					>
+						<PickerFieldContent icon={icon}>{label}</PickerFieldContent>
+					</Button>
+				</Drawer.Trigger>
+				<Drawer.Content
+					data-slot="shift-time-range-content"
+					className="px-0 pb-2"
+				>
+					<Drawer.Header className="sr-only">
+						<Drawer.Title>{drawerTitle ?? placeholder}</Drawer.Title>
+					</Drawer.Header>
+					{body}
+				</Drawer.Content>
+			</Drawer.Root>
+		);
+	}
+
 	return (
-		<Popover.Root
-			open={open}
-			onOpenChange={(next) => {
-				setOpen(next);
-				if (next) setStep("start");
-			}}
-		>
+		<Popover.Root open={open} onOpenChange={handleOpenChange}>
 			<DatePicker.Trigger
 				slotName="shift-time-range-trigger"
-				icon={
-					<CalendarDotsIcon className="size-4 shrink-0 text-muted-foreground" />
-				}
+				icon={icon}
 				id={id}
 				className={cn("w-full", className)}
 				disabled={disabled}
-				empty={!(range.start && range.end)}
+				empty={empty}
 				aria-invalid={ariaInvalid}
 				aria-label={ariaLabel}
 			>
-				{shiftRangeLabel({ range, locale, placeholder })}
+				{label}
 			</DatePicker.Trigger>
 			<Popover.Content
 				data-slot="shift-time-range-content"
 				className="w-[calc(100vw-2rem)] p-0 sm:w-auto"
 				align="start"
 			>
-				<ShiftStepTabs
-					step={step}
-					range={range}
-					locale={locale}
-					onStepChange={setStep}
-				/>
-				<ShiftPickerBody
-					range={range}
-					step={step}
-					locale={locale}
-					minuteStep={minuteStep}
-					onDaySelect={handleDaySelect}
-					onTimeSelect={handleTimeSelect}
-				/>
+				{body}
 			</Popover.Content>
 		</Popover.Root>
 	);

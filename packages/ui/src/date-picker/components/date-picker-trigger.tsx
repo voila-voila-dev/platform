@@ -1,6 +1,10 @@
 import { CalendarBlankIcon } from "@phosphor-icons/react";
 import type * as React from "react";
 import { Button } from "#/button/components/button.tsx";
+import {
+	PICKER_FIELD_CLASSES,
+	PickerFieldContent,
+} from "#/date-picker/components/picker-field.tsx";
 import { cn } from "#/lib/utils.ts";
 import { Popover } from "#/popover/components/popover.tsx";
 
@@ -37,16 +41,12 @@ export function DatePickerTrigger({
 			render={
 				<Button
 					variant={variant}
-					className={cn(
-						"min-w-48 justify-start text-start font-normal data-empty:text-muted-foreground",
-						className,
-					)}
+					className={cn(PICKER_FIELD_CLASSES, className)}
 					{...props}
 				/>
 			}
 		>
-			{icon}
-			<span className="truncate">{children}</span>
+			<PickerFieldContent icon={icon}>{children}</PickerFieldContent>
 		</Popover.Trigger>
 	);
 }

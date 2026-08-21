@@ -79,6 +79,13 @@ choice of surface never changes your state.
 
 ### DateTimePicker.ShiftRange
 
+One trigger for a whole shift: a Start/End tab over a calendar and a time grid.
+Each end carries its own date, so an overnight shift (20:00 → 02:00) is picked
+directly rather than wrapped, and picking the start bounds what the end may be.
+Below the `useIsMobile` breakpoint the same tabs and grids come up as a drawer,
+since neither the anchored popover nor its two-column body fits a phone.
+
+
 <PropTable of="DateTimePicker.ShiftRange" />
 
 ## Related

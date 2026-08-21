@@ -40,11 +40,12 @@ export function ShiftTimeList({
 			data-slot="shift-time-list"
 			role="listbox"
 			aria-label={ariaLabel}
-			// On desktop the list fills its stretched parent (which matches the
-			// calendar height) and scrolls as a single narrow column. On mobile the
-			// row stacks under the calendar, so a single column would waste the full
-			// width and scroll forever; lay the times out as a compact grid instead.
-			className="grid max-h-56 grid-cols-3 gap-1 overflow-y-auto overscroll-contain p-1.5 sm:absolute sm:inset-0 sm:flex sm:max-h-none sm:grid-cols-1 sm:flex-col sm:gap-0.5"
+			// One column on both surfaces: a multi-column grid of times reads as a
+			// table you have to scan in two directions, when the list is ordered and
+			// only ever scanned down. On desktop it fills its stretched parent (which
+			// matches the calendar height); on mobile it takes the height the
+			// shortened calendar leaves it.
+			className="mx-auto flex w-full max-w-[17.5rem] max-h-72 flex-col gap-1 overflow-y-auto overscroll-contain p-1.5 sm:absolute sm:inset-0 sm:mx-0 sm:max-h-none sm:max-w-none sm:gap-0.5"
 		>
 			{options.map((minutes) => {
 				const selected = selectedMinutes === minutes;
