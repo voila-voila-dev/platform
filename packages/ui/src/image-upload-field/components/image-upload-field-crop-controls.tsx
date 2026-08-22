@@ -28,8 +28,11 @@ export function ImageUploadFieldCropControls({
 	className,
 	...props
 }: Props) {
-	const { cropToBlob, removeImage } = useImageCropper();
+	const { cropToBlob, removeImage, imageTransform } = useImageCropper();
 	if (!hasPicked) return null;
+	// The file is picked before the <img> has decoded and the viewport is
+	// measured; until then there is no crop area and `cropToBlob` throws.
+	const isImageReady = imageTransform !== null;
 	return (
 		<div
 			data-slot="image-upload-field-crop-controls"
@@ -51,7 +54,9 @@ export function ImageUploadFieldCropControls({
 				size="sm"
 				className="flex-1"
 				loading={isUploading}
+				disabled={!isImageReady}
 				onClick={async () => {
+					if (!isImageReady) return;
 					onCropped(await cropToBlob({ ...outputSize, type: "image/png" }));
 				}}
 			>

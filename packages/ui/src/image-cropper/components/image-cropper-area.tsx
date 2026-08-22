@@ -48,6 +48,7 @@ export function ImageCropperArea({
 		resetCrop,
 		imageElementRef,
 		reportImageLoad,
+		removeImage,
 		reportViewportSize,
 	} = context;
 	const contextRef = React.useRef(context);
@@ -260,6 +261,9 @@ export function ImageCropperArea({
 							}
 				}
 				onLoad={(event) => reportImageLoad(event.currentTarget)}
+				// A file the browser cannot decode would otherwise leave the user on a
+				// crop screen whose image never appears; back to the dropzone instead.
+				onError={removeImage}
 			/>
 			{shape === "circle" && (
 				<div

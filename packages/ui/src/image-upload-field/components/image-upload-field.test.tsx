@@ -105,6 +105,25 @@ describe("ImageUploadField", () => {
 		expect(screen.queryByText("Remplacer")).toBeNull();
 	});
 
+	it("keeps the confirm button disabled until the picked image has loaded", () => {
+		vi.stubGlobal("URL", {
+			...URL,
+			createObjectURL: () => "blob:picked",
+			revokeObjectURL: () => {},
+		});
+		const screen = render(
+			<ImageUploadField confirmLabel="Save" onFileCropped={() => {}} />,
+		);
+		const input = queryBySlot(
+			screen,
+			"image-cropper-input",
+		) as HTMLInputElement;
+		const file = new File(["x"], "photo.png", { type: "image/png" });
+		fireEvent.change(input, { target: { files: [file] } });
+		const confirm = screen.getByRole("button", { name: "Save" });
+		expect(confirm).toHaveProperty("disabled", true);
+	});
+
 	it("returns to the view state when a new value arrives after editing", () => {
 		const screen = render(<ImageUploadField onFileCropped={() => {}} />);
 		expect(
