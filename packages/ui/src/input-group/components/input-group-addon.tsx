@@ -6,8 +6,15 @@ const inputGroupAddonVariants = cva({
 	base: "flex h-auto cursor-text items-center justify-center gap-2 py-1.5 text-sm font-medium text-muted-foreground select-none [&>svg:not([class*='size-'])]:size-4",
 	variants: {
 		align: {
-			"inline-start": "order-first pl-2 has-[>button]:-ml-1 has-[>kbd]:-ml-0.5",
-			"inline-end": "order-last pr-2 has-[>button]:-mr-1 has-[>kbd]:-mr-0.5",
+			// Inline addons take the group's inner height (h-8 minus the 1px
+			// borders) instead of growing past it: a child taller than a
+			// <fieldset> can only overflow downward (the anonymous content box
+			// never bleeds above), which sat every input-group's content a few
+			// pixels low. Their oversized content (a py'd button) still centers.
+			"inline-start":
+				"order-first h-[calc(2rem-2px)] pl-2 has-[>button]:-ml-1 has-[>kbd]:-ml-0.5",
+			"inline-end":
+				"order-last h-[calc(2rem-2px)] pr-2 has-[>button]:-mr-1 has-[>kbd]:-mr-0.5",
 			"block-start":
 				"order-first w-full justify-start px-2.5 pt-2 group-has-[>input]/input-group:pt-2 [.border-b]:pb-2",
 			"block-end":
