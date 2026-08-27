@@ -19,11 +19,12 @@ interface Props extends Omit<React.ComponentProps<"div">, "onChange"> {
 	outputSize?: { readonly width: number; readonly height: number };
 	/**
 	 * Where the crop opens on a picked image, in fractions of its own size;
-	 * defaults to its centre. A profile photo wants something above that, since
-	 * a centred square crop of a portrait reliably takes the chin off. The user
-	 * can still pan and zoom from there.
+	 * defaults to its centre on both axes, so naming one axis is the common
+	 * case. A profile photo wants something above centre, since a centred
+	 * square crop of a portrait reliably takes the chin off. The user can still
+	 * pan and zoom from there.
 	 */
-	initialFocus?: ImageCropperFocus;
+	initialFocus?: Partial<ImageCropperFocus>;
 	/** Fired with the cropped Blob once the user confirms — parent uploads it. */
 	onFileCropped: (blob: Blob) => void;
 	onRemove?: () => void;
