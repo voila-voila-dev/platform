@@ -4,13 +4,16 @@ import {
 	type ImageCropperCropToBlobOptions,
 } from "#/image-cropper/context/image-cropper-context.tsx";
 import {
+	CENTER_FOCUS,
 	clampNumber,
 	clampOffset,
 	coverScaleFor,
 	type ImageCropperCropArea,
+	type ImageCropperFocus,
 	type ImageCropperPoint,
 	type ImageCropperSize,
 	ORIGIN,
+	offsetForFocus,
 } from "#/image-cropper/lib/image-cropper-geometry.ts";
 import { cn } from "#/lib/utils.ts";
 
@@ -35,6 +38,16 @@ interface Props extends React.ComponentProps<"div"> {
 	onImageChange?: (file: File | null) => void;
 	/** Reports the crop rectangle in natural image pixels whenever it moves. */
 	onCropChange?: (cropArea: ImageCropperCropArea) => void;
+	/**
+	 * Where the crop opens on a freshly loaded image, in fractions of the
+	 * image's own size; defaults to its centre. A portrait crop wants
+	 * something above that — heads sit in the upper half of a photo, so a
+	 * centred square crop of one reliably takes the chin off.
+	 *
+	 * The opening position only: panning, zooming and the exported crop are
+	 * unchanged, and the value is clamped, so an axis with no slack ignores it.
+	 */
+	initialFocus?: Partial<ImageCropperFocus>;
 }
 
 export function ImageCropperRoot({
@@ -47,6 +60,7 @@ export function ImageCropperRoot({
 	disabled = false,
 	onImageChange,
 	onCropChange,
+	initialFocus,
 	className,
 	children,
 	...props
@@ -66,6 +80,17 @@ export function ImageCropperRoot({
 		zoom: number;
 		offset: ImageCropperPoint;
 	}>({ zoom: minZoom, offset: ORIGIN });
+	const focus = React.useMemo<ImageCropperFocus>(
+		() => ({
+			x: initialFocus?.x ?? CENTER_FOCUS.x,
+			y: initialFocus?.y ?? CENTER_FOCUS.y,
+		}),
+		[initialFocus?.x, initialFocus?.y],
+	);
+	// Which source the opening framing has already been applied to, so that a
+	// later resize re-clamps whatever the user panned to instead of yanking the
+	// crop back to where it opened.
+	const framedSourceRef = React.useRef<string | null>(null);
 
 	const applyZoom = (
 		computeZoom: (previousZoom: number) => number,
@@ -107,8 +132,16 @@ export function ImageCropperRoot({
 		});
 	};
 
+	// Back to how the crop opened, framing included — resetting to the image's
+	// geometric centre would undo a framing the user never asked for.
 	const resetCrop = () => {
-		setTransform({ zoom: minZoom, offset: ORIGIN });
+		setTransform({
+			zoom: minZoom,
+			offset:
+				naturalSize === null || viewportSize === null
+					? ORIGIN
+					: offsetForFocus(focus, minZoom, naturalSize, viewportSize),
+		});
 	};
 
 	const openFilePicker = () => {
@@ -214,19 +247,25 @@ export function ImageCropperRoot({
 		});
 	};
 
-	// Re-clamp when the viewport is resized or a new image finishes loading.
+	// A new image opens on its focus; a resize only re-clamps what is already
+	// there. Both need the natural AND viewport sizes, which is why the opening
+	// framing happens here rather than when the image reports its load.
 	React.useEffect(() => {
 		if (naturalSize === null || viewportSize === null) return;
+		const opensAnImage = framedSourceRef.current !== imageSource;
+		framedSourceRef.current = imageSource;
 		setTransform((previous) => ({
 			zoom: previous.zoom,
-			offset: clampOffset(
-				previous.offset,
-				previous.zoom,
-				naturalSize,
-				viewportSize,
-			),
+			offset: opensAnImage
+				? offsetForFocus(focus, previous.zoom, naturalSize, viewportSize)
+				: clampOffset(
+						previous.offset,
+						previous.zoom,
+						naturalSize,
+						viewportSize,
+					),
 		}));
-	}, [naturalSize, viewportSize]);
+	}, [naturalSize, viewportSize, imageSource, focus]);
 
 	React.useEffect(() => {
 		if (cropArea !== null) onCropChange?.(cropArea);

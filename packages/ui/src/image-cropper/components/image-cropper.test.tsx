@@ -349,3 +349,50 @@ describe("ImageCropper composition", () => {
 		consoleError.mockRestore();
 	});
 });
+
+// A portrait photo is the case this exists for: 600x800 in a square viewport
+// leaves 200 natural pixels of vertical slack, and a centred crop spends half
+// of that below the subject.
+const PORTRAIT_WIDTH = 600;
+const PORTRAIT_HEIGHT = 800;
+
+function renderFocused(initialFocus?: { x?: number; y?: number }) {
+	const screen = render(
+		<ImageCropper.Root initialFocus={initialFocus}>
+			<ImageCropper.Dropzone />
+			<ImageCropper.Area />
+			<CropAreaReadout />
+		</ImageCropper.Root>,
+	);
+	selectImageFile(screen);
+	return screen;
+}
+
+describe("ImageCropper initial focus", () => {
+	it("opens on the image's centre when no focus is given", () => {
+		const screen = renderFocused();
+		loadImage(screen, PORTRAIT_WIDTH, PORTRAIT_HEIGHT);
+		expect(screen.getByTestId("crop-area").textContent).toBe("0,100,600,600");
+	});
+
+	it("opens higher up the image when asked to", () => {
+		const screen = renderFocused({ y: 0.4 });
+		loadImage(screen, PORTRAIT_WIDTH, PORTRAIT_HEIGHT);
+		expect(screen.getByTestId("crop-area").textContent).toBe("0,20,600,600");
+	});
+
+	it("ignores a focus on an axis with nothing to reveal", () => {
+		// 800x600 in a square viewport is already full-height: there is no slack
+		// to spend, so a vertical focus must not tear the image off its edge.
+		const screen = renderFocused({ y: 0.4 });
+		loadImage(screen, NATURAL_WIDTH, NATURAL_HEIGHT);
+		expect(screen.getByTestId("crop-area").textContent).toBe("100,0,600,600");
+	});
+
+	it("keeps the framing across a viewport resize", () => {
+		const screen = renderFocused({ y: 0.4 });
+		loadImage(screen, PORTRAIT_WIDTH, PORTRAIT_HEIGHT);
+		fireEvent(window, new Event("resize"));
+		expect(screen.getByTestId("crop-area").textContent).toBe("0,20,600,600");
+	});
+});

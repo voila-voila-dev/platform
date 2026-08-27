@@ -49,6 +49,39 @@ export function clampOffset(
 	};
 }
 
+/**
+ * A point of the image, in fractions of its own width and height, that the
+ * crop viewport should be centred on. `{ x: 0.5, y: 0.5 }` is the image's own
+ * centre, which is where a crop starts unless told otherwise.
+ */
+export type ImageCropperFocus = { x: number; y: number };
+
+export const CENTER_FOCUS: ImageCropperFocus = { x: 0.5, y: 0.5 };
+
+/**
+ * The offset that brings `focus` to the centre of the viewport, clamped so the
+ * image still covers it. An axis with no slack — a landscape photo in a square
+ * crop, vertically — simply does not move, since there is nothing there to
+ * reveal.
+ */
+export function offsetForFocus(
+	focus: ImageCropperFocus,
+	zoom: number,
+	image: ImageCropperSize,
+	viewport: ImageCropperSize,
+): ImageCropperPoint {
+	const displayScale = coverScaleFor(image, viewport) * zoom;
+	return clampOffset(
+		{
+			x: displayScale * image.width * (CENTER_FOCUS.x - focus.x),
+			y: displayScale * image.height * (CENTER_FOCUS.y - focus.y),
+		},
+		zoom,
+		image,
+		viewport,
+	);
+}
+
 export function distanceBetween(
 	a: ImageCropperPoint,
 	b: ImageCropperPoint,

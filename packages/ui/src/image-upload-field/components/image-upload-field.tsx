@@ -1,4 +1,5 @@
 import * as React from "react";
+import type { ImageCropperFocus } from "#/image-cropper/lib/image-cropper-geometry.ts";
 import { ImageUploadFieldEditor } from "#/image-upload-field/components/image-upload-field-editor.tsx";
 import { ImageUploadFieldView } from "#/image-upload-field/components/image-upload-field-view.tsx";
 import type { ImageUploadShape } from "#/image-upload-field/lib/image-upload-field-types.ts";
@@ -16,6 +17,13 @@ interface Props extends Omit<React.ComponentProps<"div">, "onChange"> {
 	 * Defaults to the cropped region's natural size.
 	 */
 	outputSize?: { readonly width: number; readonly height: number };
+	/**
+	 * Where the crop opens on a picked image, in fractions of its own size;
+	 * defaults to its centre. A profile photo wants something above that, since
+	 * a centred square crop of a portrait reliably takes the chin off. The user
+	 * can still pan and zoom from there.
+	 */
+	initialFocus?: ImageCropperFocus;
 	/** Fired with the cropped Blob once the user confirms — parent uploads it. */
 	onFileCropped: (blob: Blob) => void;
 	onRemove?: () => void;
@@ -44,6 +52,7 @@ export function ImageUploadField({
 	shape = "circle",
 	isUploading = false,
 	outputSize,
+	initialFocus,
 	onFileCropped,
 	onRemove,
 	label = "Upload an image",
@@ -106,6 +115,7 @@ export function ImageUploadField({
 				cancelLabel,
 				confirmLabel,
 				outputSize,
+				initialFocus,
 				hasPicked,
 				onPickedChange: setHasPicked,
 				onFileCropped,

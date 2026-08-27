@@ -22,4 +22,7 @@ export const ImageCropper = {
 };
 
 export type { ImageCropperCropToBlobOptions } from "#/image-cropper/context/image-cropper-context.tsx";
-export type { ImageCropperCropArea } from "#/image-cropper/lib/image-cropper-geometry.ts";
+export type {
+	ImageCropperCropArea,
+	ImageCropperFocus,
+} from "#/image-cropper/lib/image-cropper-geometry.ts";
