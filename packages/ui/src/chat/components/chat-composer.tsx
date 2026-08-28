@@ -29,6 +29,22 @@ interface Props extends Omit<React.ComponentProps<"form">, "onSubmit"> {
 	 * over-long draft instead of having input silently dropped.
 	 */
 	maxLength?: number;
+	/**
+	 * Let an empty (or whitespace-only) draft submit. For composers that can
+	 * send something other than text: the app sets it while an attachment is
+	 * ready to go, so the send button stays live with nothing typed.
+	 */
+	allowEmptySubmit?: boolean;
+	/**
+	 * Extra controls at the start of the input row (attach button, voice
+	 * recorder), bottom-aligned with the send button as the textarea grows.
+	 */
+	leading?: React.ReactNode;
+	/**
+	 * Content above the input row — typically a `Chat.ComposerAttachments`
+	 * tray of pending uploads.
+	 */
+	above?: React.ReactNode;
 	sendLabel: string;
 	error?: React.ReactNode;
 	hint?: React.ReactNode;
@@ -43,6 +59,9 @@ export function ChatComposer({
 	sending = false,
 	submitOnEnter = false,
 	maxLength,
+	allowEmptySubmit = false,
+	leading,
+	above,
 	sendLabel,
 	error,
 	hint,
@@ -53,7 +72,10 @@ export function ChatComposer({
 	const hasError = error !== undefined && error !== null;
 	const overLimit = maxLength !== undefined && value.length > maxLength;
 	const canSend =
-		!disabled && !sending && !overLimit && value.trim().length > 0;
+		!disabled &&
+		!sending &&
+		!overLimit &&
+		(allowEmptySubmit || value.trim().length > 0);
 
 	return (
 		<form
@@ -67,6 +89,7 @@ export function ChatComposer({
 			className={cn("flex flex-col gap-2", className)}
 			{...props}
 		>
+			{above}
 			<ChatComposerInput
 				value={value}
 				onValueChange={onValueChange}
@@ -79,6 +102,7 @@ export function ChatComposer({
 				invalid={hasError || overLimit}
 				describedBy={hasError ? errorId : undefined}
 				sendLabel={sendLabel}
+				leading={leading}
 			/>
 			{hasError ? (
 				<p id={errorId} role="alert" className="text-xs text-destructive">

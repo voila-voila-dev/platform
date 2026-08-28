@@ -1,4 +1,5 @@
 import { PaperPlaneRightIcon } from "@phosphor-icons/react";
+import type * as React from "react";
 import { Button } from "#/button/components/button.tsx";
 import { isSubmitKey } from "#/chat/lib/is-submit-key.ts";
 import { Spinner } from "#/spinner/components/spinner.tsx";
@@ -16,6 +17,7 @@ interface Props {
 	invalid: boolean;
 	describedBy: string | undefined;
 	sendLabel: string;
+	leading: React.ReactNode;
 }
 
 export function ChatComposerInput({
@@ -30,9 +32,20 @@ export function ChatComposerInput({
 	invalid,
 	describedBy,
 	sendLabel,
+	leading,
 }: Props) {
 	return (
 		<div className="flex items-end gap-2">
+			{/* Leading controls (attach, record), bottom-aligned like the send
+			    button so the row stays put as the textarea grows. */}
+			{leading !== undefined && leading !== null ? (
+				<div
+					data-slot="chat-composer-leading"
+					className="flex shrink-0 items-center gap-1"
+				>
+					{leading}
+				</div>
+			) : null}
 			<Textarea
 				value={value}
 				onChange={(changeEvent) => onValueChange(changeEvent.target.value)}

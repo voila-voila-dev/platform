@@ -1,5 +1,6 @@
 import {
 	CopySimpleIcon,
+	PaperclipIcon,
 	PencilSimpleIcon,
 	TrashIcon,
 } from "@phosphor-icons/react";
@@ -669,6 +670,97 @@ export const ComposerSubmitOnEnter: Story = {
 		<div className="w-full max-w-xl">
 			<ComposerPlayground submitOnEnter />
 		</div>
+	),
+};
+
+function attachmentPreview(label: string) {
+	return (
+		<div className="flex size-full items-center justify-center bg-muted text-muted-foreground text-xs">
+			{label}
+		</div>
+	);
+}
+
+/** Media composer: leading actions before the field, a pending-attachment
+ * tray above it, and `allowEmptySubmit` keeping send live with an empty
+ * draft while an attachment is ready to go. */
+function ComposerWithAttachmentsPlayground() {
+	const [value, setValue] = useState("");
+	const [attached, setAttached] = useState(true);
+	return (
+		<Chat.Composer
+			value={value}
+			onValueChange={setValue}
+			onSubmit={() => {
+				setValue("");
+				setAttached(false);
+			}}
+			placeholder="Write a message…"
+			sendLabel="Send"
+			allowEmptySubmit={attached}
+			leading={
+				<Button
+					type="button"
+					variant="ghost"
+					size="icon"
+					aria-label="Attach a file"
+					onClick={() => setAttached(true)}
+				>
+					<PaperclipIcon />
+				</Button>
+			}
+			above={
+				attached ? (
+					<Chat.ComposerAttachments>
+						<Chat.ComposerAttachment
+							removeLabel="Remove attachment"
+							onRemove={() => setAttached(false)}
+						>
+							{attachmentPreview("IMG")}
+						</Chat.ComposerAttachment>
+					</Chat.ComposerAttachments>
+				) : null
+			}
+		/>
+	);
+}
+
+export const ComposerWithAttachments: Story = {
+	render: () => (
+		<div className="w-full max-w-xl">
+			<ComposerWithAttachmentsPlayground />
+		</div>
+	),
+};
+
+/** The three chip states side by side: uploading (with progress), ready,
+ * and failed — the remove button stays reachable in every one. */
+export const ComposerAttachmentStates: Story = {
+	render: () => (
+		<Chat.ComposerAttachments>
+			<Chat.ComposerAttachment
+				status="uploading"
+				progress={0.4}
+				removeLabel="Remove attachment"
+				onRemove={() => {}}
+			>
+				{attachmentPreview("VID")}
+			</Chat.ComposerAttachment>
+			<Chat.ComposerAttachment
+				removeLabel="Remove attachment"
+				onRemove={() => {}}
+			>
+				{attachmentPreview("IMG")}
+			</Chat.ComposerAttachment>
+			<Chat.ComposerAttachment
+				status="error"
+				error="This file is too large."
+				removeLabel="Remove attachment"
+				onRemove={() => {}}
+			>
+				{attachmentPreview("PDF")}
+			</Chat.ComposerAttachment>
+		</Chat.ComposerAttachments>
 	),
 };
 

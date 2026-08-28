@@ -3,6 +3,10 @@ import { ChatBubble } from "#/chat/components/chat-bubble.tsx";
 import { ChatBubbleContent } from "#/chat/components/chat-bubble-content.tsx";
 import { ChatBubbleGroup } from "#/chat/components/chat-bubble-group.tsx";
 import { ChatComposer } from "#/chat/components/chat-composer.tsx";
+import {
+	ChatComposerAttachment,
+	ChatComposerAttachments,
+} from "#/chat/components/chat-composer-attachments.tsx";
 import { ChatContent } from "#/chat/components/chat-content.tsx";
 import { ChatConversationItem } from "#/chat/components/chat-conversation-item.tsx";
 import { ChatDateSeparator } from "#/chat/components/chat-date-separator.tsx";
@@ -113,6 +117,8 @@ export const Chat = {
 	ExternalLinkDialog: ChatExternalLinkDialog,
 	// Composer + conversation list
 	Composer: ChatComposer,
+	ComposerAttachments: ChatComposerAttachments,
+	ComposerAttachment: ChatComposerAttachment,
 	ConversationItem: ChatConversationItem,
 	// Self-scrolling message list anatomy
 	MessageList: ChatMessageList,
