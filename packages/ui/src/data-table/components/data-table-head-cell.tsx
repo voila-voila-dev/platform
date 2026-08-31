@@ -6,7 +6,11 @@ import {
 } from "@tanstack/react-table";
 import { DataTableResizeHandle } from "#/data-table/components/data-table-resize-handle.tsx";
 import { DataTableSortCaret } from "#/data-table/components/data-table-sort-caret.tsx";
-import { pinnedClass, pinnedStyle } from "#/data-table/lib/pinning.ts";
+import {
+	PINNED_HEAD_HOVER_CLASS,
+	pinnedClass,
+	pinnedStyle,
+} from "#/data-table/lib/pinning.ts";
 import { cn } from "#/lib/utils.ts";
 import { Table } from "#/table/components/table.tsx";
 
@@ -41,6 +45,11 @@ export function DataTableHeadCell<TData>({
 				"relative",
 				canSort && "cursor-pointer select-none hover:bg-muted/50",
 				pinnedClass(header.column),
+				// Solid hover on a pinned header: translucent would ghost the content
+				// sliding beneath through the cell.
+				canSort &&
+					header.column.getIsPinned() !== false &&
+					PINNED_HEAD_HOVER_CLASS,
 			)}
 			style={{
 				...(isSized ? { width: size } : {}),

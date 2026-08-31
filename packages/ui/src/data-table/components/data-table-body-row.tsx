@@ -3,6 +3,7 @@ import type { Row } from "@tanstack/react-table";
 import type * as React from "react";
 import { Button } from "#/button/components/button.tsx";
 import { DataTableBodyCell } from "#/data-table/components/data-table-body-cell.tsx";
+import { PINNED_ROW_STATE_CLASSES } from "#/data-table/lib/pinning.ts";
 import { cn } from "#/lib/utils.ts";
 import { Table } from "#/table/components/table.tsx";
 
@@ -42,7 +43,9 @@ export function DataTableBodyRow<TData>({
 				data-expanded={expanded || undefined}
 				className={cn(
 					onRowClick && "cursor-pointer",
-					pinned && "bg-background",
+					// A pinned cell inherits this background, so the row must never be
+					// translucent: the solid state washes replace the see-through ones.
+					pinned && cn("bg-background", PINNED_ROW_STATE_CLASSES),
 				)}
 				onClick={onRowClick ? handleClick : undefined}
 			>

@@ -35,6 +35,20 @@ function Fixture() {
 }
 
 describe("Table", () => {
+	it("stamps scroll-edge attributes only once the container has scrolled", () => {
+		const screen = render(<Fixture />);
+		const container = screen
+			.getByRole("table")
+			.closest('[data-slot="table-container"]') as HTMLElement;
+		expect(container.hasAttribute("data-scrolled-start")).toBe(false);
+		container.scrollLeft = 24;
+		container.dispatchEvent(new Event("scroll"));
+		expect(container.hasAttribute("data-scrolled-start")).toBe(true);
+		container.scrollLeft = 0;
+		container.dispatchEvent(new Event("scroll"));
+		expect(container.hasAttribute("data-scrolled-start")).toBe(false);
+	});
+
 	it("renders a table inside a horizontal scroll container", () => {
 		const screen = render(<Fixture />);
 		const table = screen.getByRole("table");
