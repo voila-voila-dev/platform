@@ -43,19 +43,28 @@ export function pinnedClass<TData>(
 		// so a pinned cell follows hover, selection and expansion instead of
 		// sitting there as an opaque patch that ignores them.
 		"bg-inherit",
-		// The shadow is what says "this floats above the content sliding under
-		// it" — but only while something actually does: keyed on the container's
-		// scroll-edge attributes, it fades in as the table scrolls and leaves an
-		// unscrolled table clean. Zero spread on purpose: a negative one shrinks
-		// each cell's shadow vertically and the edge reads as scalloped dashes,
-		// while at zero the neighbours overlap into one continuous band. Mixed
-		// from `--foreground` rather than black, so it darkens on a light theme
-		// and glows on a dark one.
+		// The edge is drawn by a pseudo-element rather than the cell's own
+		// border and shadow: the table collapses its borders, which hands them
+		// to the table's own paint pass — underneath every cell background,
+		// where a pinned column buries them — and drops cell box-shadows
+		// altogether, so neither ever reaches the screen. A rule floating above
+		// the cell does.
+		//
+		// The whole pseudo-element hangs off the container's scroll-edge
+		// attribute rather than fading in from a resting state: `in-*` matches
+		// through `:where()`, which carries no specificity, so an unscrolled
+		// base would outrank it and the edge would never show. Unscrolled, the
+		// rule has no `content` and so does not exist — which is the point, an
+		// unscrolled table has nothing to float above. Zero spread on the glow:
+		// a negative one shrinks each cell's shadow vertically and the edge
+		// reads as scalloped dashes, while at zero the neighbours overlap into
+		// one continuous band. Mixed from `--foreground` rather than black, so
+		// it darkens on a light theme and glows on a dark one.
 		side === "left" &&
 			column.getIsLastColumn("left") &&
-			"in-data-scrolled-start:shadow-[3px_0_4px_0_color-mix(in_oklab,var(--foreground)_12%,transparent)] in-data-scrolled-start:border-r transition-shadow",
+			"in-data-scrolled-start:after:pointer-events-none in-data-scrolled-start:after:absolute in-data-scrolled-start:after:inset-y-0 in-data-scrolled-start:after:right-0 in-data-scrolled-start:after:w-px in-data-scrolled-start:after:bg-border in-data-scrolled-start:after:content-[''] in-data-scrolled-start:after:shadow-[3px_0_4px_0_color-mix(in_oklab,var(--foreground)_12%,transparent)]",
 		side === "right" &&
 			column.getIsFirstColumn("right") &&
-			"in-data-scrolled-end:shadow-[-3px_0_4px_0_color-mix(in_oklab,var(--foreground)_12%,transparent)] in-data-scrolled-end:border-l transition-shadow",
+			"in-data-scrolled-end:after:pointer-events-none in-data-scrolled-end:after:absolute in-data-scrolled-end:after:inset-y-0 in-data-scrolled-end:after:left-0 in-data-scrolled-end:after:w-px in-data-scrolled-end:after:bg-border in-data-scrolled-end:after:content-[''] in-data-scrolled-end:after:shadow-[-3px_0_4px_0_color-mix(in_oklab,var(--foreground)_12%,transparent)]",
 	);
 }

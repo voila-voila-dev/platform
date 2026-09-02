@@ -559,6 +559,30 @@ describe("DataTable column pinning", () => {
 		const cell = screen.baseElement.querySelector("tbody tr:first-child td");
 		expect(cell?.className).toContain("bg-inherit");
 	});
+
+	// The table collapses its borders, which paints a cell's own border under
+	// every background and drops its box-shadow, so a frozen edge expressed
+	// that way never reaches the screen.
+	it("draws the frozen edge above the cell rather than as its border", () => {
+		const screen = render(
+			<DataTable.Root
+				columns={columns}
+				data={projects}
+				columnPinning={{ left: ["reference"], right: ["amount"] }}
+			/>,
+		);
+		const cells = screen.baseElement.querySelectorAll<HTMLTableCellElement>(
+			"tbody tr:first-child td",
+		);
+		expect(cells[0]?.className).toContain(
+			"in-data-scrolled-start:after:bg-border",
+		);
+		expect(cells[0]?.className).not.toContain("border-r");
+		expect(cells[2]?.className).toContain(
+			"in-data-scrolled-end:after:bg-border",
+		);
+		expect(cells[2]?.className).not.toContain("border-l");
+	});
 });
 
 describe("DataTable column visibility and export", () => {

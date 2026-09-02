@@ -138,6 +138,45 @@ const columns: ColumnDef<Project>[] = [
 	},
 ];
 
+/** The same rows with enough columns to force a horizontal scroll. */
+const wideColumns: ColumnDef<Project>[] = [
+	{ accessorKey: "reference", header: "Reference", size: 110 },
+	{ accessorKey: "client", header: "Client", size: 180 },
+	{ accessorKey: "specialty", header: "Specialty", size: 160 },
+	{
+		accessorKey: "status",
+		header: "Status",
+		size: 140,
+		cell: ({ row }) => (
+			<Badge color={statusColor[row.original.status]}>
+				{row.original.status}
+			</Badge>
+		),
+	},
+	{
+		id: "owner",
+		header: "Owner",
+		size: 160,
+		accessorFn: (project) => project.client,
+	},
+	{
+		id: "renewal",
+		header: "Renewal",
+		size: 160,
+		accessorFn: (project) => project.reference,
+	},
+	{
+		accessorKey: "amount",
+		header: () => <span className="block w-full text-right">Amount</span>,
+		size: 140,
+		cell: ({ row }) => (
+			<span className="block text-right tabular-nums">
+				{row.original.amount.toFixed(2)} USD
+			</span>
+		),
+	},
+];
+
 const meta = {
 	title: "DataTable/DataTable",
 	component: DataTable.Root,
@@ -456,4 +495,22 @@ function GalleryViewExample() {
 
 export const GalleryView: Story = {
 	render: () => <GalleryViewExample />,
+};
+
+/**
+ * Pinned columns stay put while the rest scrolls sideways. The frozen cells
+ * carry the row's own background, so hover and selection reach them without
+ * the scrolled columns showing through.
+ */
+export const PinnedColumns: Story = {
+	render: () => (
+		<div className="max-w-lg">
+			<DataTable.Root
+				columns={wideColumns}
+				data={projects}
+				columnPinning={{ left: ["reference", "client"], right: ["amount"] }}
+				onRowClick={() => {}}
+			/>
+		</div>
+	),
 };
