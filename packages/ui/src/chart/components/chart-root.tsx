@@ -111,8 +111,9 @@ export function ChartRoot({
 		[data, x, y, orientation, innerWidth, innerHeight],
 	);
 
+	const scrubbing = interactive && x !== undefined;
 	const { active, setActive, handlers } = useChartPointer({
-		enabled: interactive && x !== undefined,
+		enabled: scrubbing,
 		count: data.length,
 		width,
 		height,
@@ -149,7 +150,9 @@ export function ChartRoot({
 			data-orientation={orientation}
 			ref={ref}
 			className={cn(
-				"relative flex aspect-video w-full justify-center text-xs",
+				// Nothing drawn here is text to copy: a finger held on a phone would
+				// otherwise start selecting the axis labels instead of scrubbing.
+				"relative flex aspect-video w-full select-none justify-center text-xs",
 				className,
 			)}
 			{...props}
@@ -162,7 +165,14 @@ export function ChartRoot({
 				width={width}
 				height={height}
 				viewBox={`0 0 ${width} ${height}`}
-				className="absolute inset-0 h-full w-full rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring"
+				className={cn(
+					"absolute inset-0 h-full w-full rounded-md outline-none focus-visible:ring-2 focus-visible:ring-ring",
+					// A finger moving along the categories scrubs; across them, it
+					// keeps scrolling the page. Left to the browser, the first move in
+					// either direction became a pan and the pointer events stopped.
+					scrubbing &&
+						(orientation === "vertical" ? "touch-pan-y" : "touch-pan-x"),
+				)}
 				{...handlers}
 			>
 				<g

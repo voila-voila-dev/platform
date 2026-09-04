@@ -61,7 +61,8 @@ describe("Chart.Root", () => {
 	it("exposes the numbers as a hidden data table", () => {
 		render(<BarChart />);
 		const table = slot("chart-data-table");
-		expect(table.className).toContain("sr-only");
+		// The hiding sits on the wrapper: see `ChartDataTable` for why not the table.
+		expect(table.parentElement?.className).toContain("sr-only");
 		const headers = Array.from(table.querySelectorAll("thead th")).map(
 			(cell) => cell.textContent,
 		);
@@ -76,6 +77,40 @@ describe("Chart.Root", () => {
 			),
 		).map((cell) => cell.textContent);
 		expect(firstRow).toEqual(["January", "24", "18"]);
+	});
+
+	it("lets a finger scrub along the categories and scroll across them", () => {
+		render(<BarChart />);
+		expect(slot("chart-root").className).toContain("select-none");
+		expect(slot("chart-svg").getAttribute("class")).toContain("touch-pan-y");
+		cleanup();
+
+		render(
+			<Chart.Root
+				config={config}
+				data={data}
+				x={{ key: "month" }}
+				y={{ keys: ["projects"] }}
+				orientation="horizontal"
+			>
+				<Chart.Bars />
+			</Chart.Root>,
+		);
+		expect(slot("chart-svg").getAttribute("class")).toContain("touch-pan-x");
+		cleanup();
+
+		render(
+			<Chart.Root
+				config={config}
+				data={data}
+				x={{ key: "month" }}
+				y={{ keys: ["projects"] }}
+				interactive={false}
+			>
+				<Chart.Bars />
+			</Chart.Root>,
+		);
+		expect(slot("chart-svg").getAttribute("class")).not.toContain("touch-pan");
 	});
 
 	it("injects a guarded colour variable per configured series", () => {
