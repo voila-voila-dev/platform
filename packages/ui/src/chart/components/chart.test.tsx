@@ -152,6 +152,28 @@ describe("Chart.Bars", () => {
 		expect(recorded?.getAttribute("fill")).toBe("var(--color-projects)");
 		expect(recorded?.hasAttribute("stroke")).toBe(false);
 	});
+
+	it("hatches one series across every category when the projection is by series", () => {
+		render(
+			<Chart.Root
+				config={config}
+				data={data}
+				x={{ key: "month" }}
+				y={{ keys: ["projects", "bookings"], stacked: true }}
+			>
+				<Chart.Bars projected={(_datum, _index, key) => key === "bookings"} />
+			</Chart.Root>,
+		);
+		const bars = slots("chart-bar");
+		expect(
+			bars
+				.filter((bar) => bar.hasAttribute("data-projected"))
+				.map((bar) => bar.getAttribute("data-series")),
+		).toEqual(["bookings", "bookings", "bookings"]);
+		expect(
+			bars.filter((bar) => bar.getAttribute("data-series") === "projects"),
+		).toHaveLength(3);
+	});
 });
 
 describe("Chart.ReferenceLine", () => {

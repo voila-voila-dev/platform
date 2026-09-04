@@ -22,13 +22,16 @@ interface Props extends Omit<React.ComponentProps<"g">, "fill"> {
 	/** Per-datum fill, for charts coloured by row rather than by series. */
 	readonly fill?: (datum: Record<string, unknown>, index: number) => string;
 	/**
-	 * Which data are a projection rather than a record — the weeks ahead, a
-	 * forecast. Those bars are drawn hatched inside a dashed outline in their
-	 * series colour, so the eye reads them as pencilled-in, not done.
+	 * Which bars are a projection rather than a record — the weeks ahead, a
+	 * forecast, or the series still in flight while one is done. Those bars
+	 * are drawn hatched inside a dashed outline in their series colour, so the
+	 * eye reads them as pencilled-in, not done. Decided per bar: the datum and
+	 * the series it belongs to.
 	 */
 	readonly projected?: (
 		datum: Record<string, unknown>,
 		index: number,
+		key: string,
 	) => boolean;
 }
 
@@ -110,7 +113,7 @@ export function ChartBars({
 				const color =
 					fill?.(datum, rect.index) ??
 					seriesColor(config, rect.key, drawnKeys.indexOf(rect.key));
-				const isProjected = projected?.(datum, rect.index) ?? false;
+				const isProjected = projected?.(datum, rect.index, rect.key) ?? false;
 				// Dimming the rest is how the active bar stands out; with nothing
 				// active every bar is at full strength.
 				const state =
