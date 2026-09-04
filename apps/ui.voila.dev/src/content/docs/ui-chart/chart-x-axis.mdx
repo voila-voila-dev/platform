@@ -22,3 +22,11 @@ import * as Example from "@/examples/ui-chart/chart-x-axis";
 Ticks are dropped rather than rotated when labels would collide, which is what
 `minTickGap` controls. If labels are being clipped instead, the fix is `margin`
 on [Chart.Root](/ui-chart/chart-root) — the axes draw inside the root's box.
+
+When the right ticks are a matter of meaning rather than spacing — the first
+week of each month on a weekly axis — pass them as `ticks`; the thinning is
+skipped and a value the scale does not know is left out.
+
+```tsx
+<Chart.XAxis ticks={monthStarts} tickFormatter={formatMonth} />
+```

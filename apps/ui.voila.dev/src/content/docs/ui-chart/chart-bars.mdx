@@ -25,3 +25,11 @@ the series sum to a meaningful total.
 `stacked` here mirrors the y axis: set it on both, or the bars and the scale
 will disagree about the maximum. `fill` is the escape hatch for a chart coloured
 by row rather than by series — a ranking where each bar is its own thing.
+
+`projected` marks the data that are a forecast rather than a record — the
+weeks ahead on a calendar, say. Those bars are hatched inside a dashed outline
+in their series colour, so a reader never mistakes them for done:
+
+```tsx
+<Chart.Bars projected={(datum) => `${datum.week}` >= today} />
+```

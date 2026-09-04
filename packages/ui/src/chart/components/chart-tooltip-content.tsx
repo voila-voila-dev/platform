@@ -93,7 +93,13 @@ export function ChartTooltipContent({
 							className="flex w-full items-center gap-2 leading-none"
 						>
 							{hideIndicator ? null : Icon ? (
-								<Icon />
+								<span
+									data-slot="chart-tooltip-icon"
+									className="flex shrink-0"
+									style={{ color: seriesColor(config, configKey, index) }}
+								>
+									<Icon />
+								</span>
 							) : (
 								<ChartTooltipMarker
 									indicator={indicator}

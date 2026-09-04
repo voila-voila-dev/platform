@@ -20,4 +20,12 @@ import * as Example from "@/examples/ui-chart/chart-reference-line";
 <PropTable of="Chart.ReferenceLine" />
 
 `value` is on the value axis, so a reference line marks a threshold, a target or
-an average — not a date. Place it after the marks to draw it on top.
+an average. Place it after the marks to draw it on top.
+
+For a date, pass `category` instead: the line runs along the leading edge of
+that category's slot, which is where "today" belongs on a chart whose
+categories are days or weeks.
+
+```tsx
+<Chart.ReferenceLine category="2026-09-21" label="Today" />
+```

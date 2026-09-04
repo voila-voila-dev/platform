@@ -121,6 +121,59 @@ describe("Chart.Bars", () => {
 		expect(bottom?.getAttribute("d")).not.toContain("A");
 		expect(top?.getAttribute("d")).toContain("A");
 	});
+
+	it("hatches the projected bars inside a dashed outline of their series colour", () => {
+		render(
+			<Chart.Root
+				config={config}
+				data={data}
+				x={{ key: "month" }}
+				y={{ keys: ["projects", "bookings"], stacked: true }}
+			>
+				<Chart.Bars projected={(datum) => datum.month === "March"} />
+			</Chart.Root>,
+		);
+		const projected = slots("chart-bar").filter((bar) =>
+			bar.hasAttribute("data-projected"),
+		);
+		expect(projected).toHaveLength(2);
+		const bookings = projected.find(
+			(bar) => bar.getAttribute("data-series") === "bookings",
+		);
+		expect(bookings?.getAttribute("fill")).toMatch(
+			/^url\(#chart-.*-hatch-bookings\)$/,
+		);
+		expect(bookings?.getAttribute("stroke")).toBe("var(--color-bookings)");
+		expect(bookings?.getAttribute("stroke-dasharray")).toBe("3 2");
+		expect(document.querySelectorAll("pattern")).toHaveLength(2);
+		const recorded = slots("chart-bar").find(
+			(bar) => bar.getAttribute("data-index") === "0",
+		);
+		expect(recorded?.getAttribute("fill")).toBe("var(--color-projects)");
+		expect(recorded?.hasAttribute("stroke")).toBe(false);
+	});
+});
+
+describe("Chart.ReferenceLine", () => {
+	it("stands before a category, across the value axis", () => {
+		render(
+			<Chart.Root
+				config={config}
+				data={data}
+				x={{ key: "month" }}
+				y={{ keys: ["projects"] }}
+			>
+				<Chart.ReferenceLine category="February" label="today" />
+			</Chart.Root>,
+		);
+		const line = slot("chart-reference-line");
+		expect(line.getAttribute("data-category")).toBe("February");
+		const segment = line.querySelector("line");
+		// Vertical: one x for both ends, spanning the plot's height.
+		expect(segment?.getAttribute("x1")).toBe(segment?.getAttribute("x2"));
+		expect(segment?.getAttribute("y1")).toBe("0");
+		expect(slot("chart-reference-label").textContent).toBe("today");
+	});
 });
 
 describe("Chart.Funnel", () => {
@@ -190,6 +243,23 @@ describe("Chart axes and grid", () => {
 			slot("chart-x-axis").querySelectorAll('[data-slot="chart-tick-label"]'),
 		).map((label) => label.textContent);
 		expect(labels).toEqual(["January", "February", "March"]);
+	});
+
+	it("draws only the chosen ticks, skipping the ones the scale does not know", () => {
+		render(
+			<Chart.Root
+				config={config}
+				data={data}
+				x={{ key: "month" }}
+				y={{ keys: ["projects"] }}
+			>
+				<Chart.XAxis ticks={["March", "January", "Never"]} />
+			</Chart.Root>,
+		);
+		const labels = Array.from(
+			slot("chart-x-axis").querySelectorAll('[data-slot="chart-tick-label"]'),
+		).map((label) => label.textContent);
+		expect(labels).toEqual(["March", "January"]);
 	});
 
 	it("labels the value axis with round numbers", () => {

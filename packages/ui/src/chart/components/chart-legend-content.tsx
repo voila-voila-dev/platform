@@ -53,7 +53,15 @@ export function ChartLegendContent({
 						className="flex items-center gap-1.5 text-muted-foreground text-xs"
 					>
 						{Icon !== undefined && !hideIcon ? (
-							<Icon />
+							// The icon stands in for the swatch, so it wears the series
+							// colour: a shape alone would not say which bar it names.
+							<span
+								data-slot="chart-legend-icon"
+								className="flex shrink-0"
+								style={{ color: seriesColor(config, key, index) }}
+							>
+								<Icon />
+							</span>
 						) : (
 							<span
 								data-slot="chart-legend-swatch"

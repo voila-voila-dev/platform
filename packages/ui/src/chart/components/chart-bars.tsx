@@ -21,10 +21,24 @@ interface Props extends Omit<React.ComponentProps<"g">, "fill"> {
 	readonly gap?: number;
 	/** Per-datum fill, for charts coloured by row rather than by series. */
 	readonly fill?: (datum: Record<string, unknown>, index: number) => string;
+	/**
+	 * Which data are a projection rather than a record — the weeks ahead, a
+	 * forecast. Those bars are drawn hatched inside a dashed outline in their
+	 * series colour, so the eye reads them as pencilled-in, not done.
+	 */
+	readonly projected?: (
+		datum: Record<string, unknown>,
+		index: number,
+	) => boolean;
 }
 
 /** Milliseconds each bar waits behind the one before it, on entry. */
 const STAGGER_MS = 24;
+
+/** Hatch spacing in pixels — tight enough to read as a texture on a thin bar. */
+const HATCH_STEP = 4;
+
+const hatchId = (chartId: string, key: string) => `${chartId}-hatch-${key}`;
 
 export function ChartBars({
 	className,
@@ -33,9 +47,11 @@ export function ChartBars({
 	radius = 4,
 	gap,
 	fill,
+	projected,
 	...props
 }: Props) {
 	const {
+		chartId,
 		data,
 		categories,
 		categoryScale,
@@ -62,11 +78,39 @@ export function ChartBars({
 
 	return (
 		<g data-slot="chart-bars" className={className} {...props}>
+			{projected === undefined ? null : (
+				<defs>
+					{drawnKeys.map((key, keyIndex) => (
+						<pattern
+							key={key}
+							id={hatchId(chartId, key)}
+							width={HATCH_STEP}
+							height={HATCH_STEP}
+							patternUnits="userSpaceOnUse"
+							patternTransform="rotate(45)"
+						>
+							<line
+								x1={0}
+								y1={0}
+								x2={0}
+								y2={HATCH_STEP}
+								stroke={seriesColor(config, key, keyIndex)}
+								strokeWidth={1.5}
+							/>
+						</pattern>
+					))}
+				</defs>
+			)}
 			{rects.map((rect) => {
 				const path = roundedBarPath(rect);
 				if (path === "") {
 					return null;
 				}
+				const datum = data[rect.index] ?? {};
+				const color =
+					fill?.(datum, rect.index) ??
+					seriesColor(config, rect.key, drawnKeys.indexOf(rect.key));
+				const isProjected = projected?.(datum, rect.index) ?? false;
 				// Dimming the rest is how the active bar stands out; with nothing
 				// active every bar is at full strength.
 				const state =
@@ -82,12 +126,13 @@ export function ChartBars({
 						data-series={rect.key}
 						data-index={rect.index}
 						data-state={state}
+						data-projected={isProjected ? "" : undefined}
 						data-chart-animate=""
 						d={path}
-						fill={
-							fill?.(data[rect.index] ?? {}, rect.index) ??
-							seriesColor(config, rect.key, drawnKeys.indexOf(rect.key))
-						}
+						fill={isProjected ? `url(#${hatchId(chartId, rect.key)})` : color}
+						stroke={isProjected ? color : undefined}
+						strokeWidth={isProjected ? 1 : undefined}
+						strokeDasharray={isProjected ? "3 2" : undefined}
 						className="transition-opacity duration-150 data-[state=muted]:opacity-50"
 						style={
 							{

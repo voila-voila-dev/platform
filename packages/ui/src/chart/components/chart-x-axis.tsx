@@ -2,6 +2,7 @@ import type * as React from "react";
 import { useChartContext } from "#/chart/context/chart-context.tsx";
 import { axisTicks } from "#/chart/core/axis.ts";
 import { formatLabel } from "#/chart/core/format.ts";
+import type { ChartScale } from "#/chart/core/types.ts";
 import { cn } from "#/lib/utils.ts";
 
 /** The bottom axis: categories on a vertical chart, values on a horizontal one. */
@@ -19,11 +20,25 @@ interface Props extends React.ComponentProps<"g"> {
 	readonly tickMargin?: number;
 	/** Formats each label. Use it for units, dates and locale. */
 	readonly tickFormatter?: (value: number | string) => string;
+	/**
+	 * The ticks to draw, instead of the evenly thinned set — the first week of
+	 * each month on a weekly axis, say. Values not on the scale are skipped.
+	 */
+	readonly ticks?: ReadonlyArray<number | string>;
 	/** Keeps the scale but draws nothing — useful behind a bar's own labels. */
 	readonly hide?: boolean;
 }
 
 const TICK_LINE_LENGTH = 4;
+
+/** A chosen tick's position, or `NaN` when the scale does not know it. */
+function tickOffset(scale: ChartScale, value: number | string): number {
+	if (scale.kind === "linear") {
+		return typeof value === "number" ? scale.scale(value) : Number.NaN;
+	}
+	const category = String(value);
+	return scale.domain.includes(category) ? scale.center(category) : Number.NaN;
+}
 
 export function ChartXAxis({
 	className,
@@ -33,6 +48,7 @@ export function ChartXAxis({
 	minTickGap = 8,
 	tickMargin = 8,
 	tickFormatter,
+	ticks: chosenTicks,
 	hide = false,
 	...props
 }: Props) {
@@ -41,11 +57,16 @@ export function ChartXAxis({
 		return null;
 	}
 
-	const ticks = axisTicks(xScale, {
-		count: tickCount,
-		minTickGap,
-		available: innerWidth,
-	});
+	const ticks =
+		chosenTicks === undefined
+			? axisTicks(xScale, {
+					count: tickCount,
+					minTickGap,
+					available: innerWidth,
+				})
+			: chosenTicks
+					.map((value) => ({ value, offset: tickOffset(xScale, value) }))
+					.filter((tick) => Number.isFinite(tick.offset));
 	const format = tickFormatter ?? formatLabel;
 
 	return (

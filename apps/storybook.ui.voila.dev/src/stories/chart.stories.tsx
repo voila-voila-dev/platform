@@ -156,6 +156,59 @@ export const BarsNegative: Story = {
 	},
 };
 
+/**
+ * Weeks of a quarter: the ones behind us are recorded, the ones ahead are the
+ * business already on the books, drawn hatched so nobody reads them as done.
+ */
+const quarterWeeks = [
+	{ week: "2026-08-31", posted: 2, applied: 3, booked: 6, completed: 9 },
+	{ week: "2026-09-07", posted: 1, applied: 2, booked: 8, completed: 11 },
+	{ week: "2026-09-14", posted: 3, applied: 4, booked: 9, completed: 4 },
+	{ week: "2026-09-21", posted: 6, applied: 7, booked: 8, completed: 0 },
+	{ week: "2026-09-28", posted: 9, applied: 5, booked: 4, completed: 0 },
+	{ week: "2026-10-05", posted: 12, applied: 3, booked: 2, completed: 0 },
+];
+const TODAY_WEEK = "2026-09-21";
+
+export const BarsProjected: Story = {
+	args: {
+		config: {
+			posted: { label: "Posted", color: "var(--chart-1)" },
+			applied: { label: "Applied", color: "var(--chart-2)" },
+			booked: { label: "Booked", color: "var(--chart-3)" },
+			completed: { label: "Completed", color: "var(--chart-4)" },
+		},
+		data: quarterWeeks,
+		x: { key: "week" },
+		y: { keys: ["posted", "applied", "booked", "completed"], stacked: true },
+		className: frame,
+		margin: legendMargin,
+		children: (
+			<>
+				<Chart.Grid />
+				<Chart.XAxis
+					ticks={["2026-08-31", "2026-10-05"]}
+					tickFormatter={(value) => `${value}`.slice(5)}
+				/>
+				<Chart.YAxis />
+				<Chart.Cursor />
+				<Chart.ReferenceLine category={TODAY_WEEK} label="today" />
+				<Chart.Bars projected={(datum) => `${datum.week}` >= TODAY_WEEK} />
+				<Chart.Tooltip />
+				<Chart.Legend />
+			</>
+		),
+	},
+	play: async ({ canvasElement }) => {
+		const canvas = within(canvasElement);
+		const projected = canvasElement.querySelectorAll(
+			'[data-slot="chart-bar"][data-projected]',
+		);
+		await expect(projected).toHaveLength(12);
+		await expect(canvas.getByText("today")).toBeInTheDocument();
+	},
+};
+
 export const Line: Story = {
 	args: {
 		config: chartConfig,
