@@ -21,9 +21,13 @@ export function DataTableGroupHeadCell<TData>({ header }: Props<TData>) {
 	return (
 		<Table.Head
 			data-slot="data-table-group-head"
+			data-placeholder={header.isPlaceholder ? "" : undefined}
 			colSpan={header.colSpan}
 			className={cn(
 				"h-8 border-b text-center font-medium text-muted-foreground text-xs",
+				// A rule where each group starts, so the eye can tell which leaf
+				// columns a caption covers; a placeholder draws none.
+				"[&:not([data-placeholder])]:border-l",
 				pinnedClass(header.column),
 			)}
 			style={pinnedStyle(header.column)}

@@ -812,6 +812,11 @@ describe("DataTable column groups", () => {
 		const caption = screen.getByText("Email").closest("th");
 		expect(caption?.getAttribute("colspan")).toBe("2");
 		expect(caption?.getAttribute("data-slot")).toBe("data-table-group-head");
+		expect(caption?.hasAttribute("data-placeholder")).toBe(false);
+		// The groupless column's placeholder is marked, so it draws no rule.
+		expect(
+			headerRows[0]?.querySelector("th")?.hasAttribute("data-placeholder"),
+		).toBe(true);
 		// The groupless column leaves a silent placeholder in the caption row.
 		expect(headerRows[0]?.querySelectorAll("th")).toHaveLength(2);
 		expect(headerRows[1]?.querySelectorAll("th")).toHaveLength(3);
