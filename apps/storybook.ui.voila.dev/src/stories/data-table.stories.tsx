@@ -514,3 +514,81 @@ export const PinnedColumns: Story = {
 		</div>
 	),
 };
+
+/**
+ * Two measures per channel, each its own sortable column, under one caption
+ * per channel: the caption spans its columns and never sorts itself.
+ */
+interface Campaign {
+	name: string;
+	emailOpened: number;
+	emailClicked: number;
+	smsClicked: number;
+}
+
+const campaigns: Campaign[] = [
+	{
+		name: "Spring launch",
+		emailOpened: 0.54,
+		emailClicked: 0.24,
+		smsClicked: 0.22,
+	},
+	{
+		name: "Summer sale",
+		emailOpened: 0.33,
+		emailClicked: 0.09,
+		smsClicked: 0.17,
+	},
+	{
+		name: "Back to school",
+		emailOpened: 0.61,
+		emailClicked: 0.31,
+		smsClicked: 0.36,
+	},
+];
+
+const rate = (value: number) => `${Math.round(value * 100)} %`;
+
+const groupedColumns: ColumnDef<Campaign>[] = [
+	{ accessorKey: "name", header: "Campaign", size: 200 },
+	{
+		id: "email",
+		header: "Email",
+		columns: [
+			{
+				accessorKey: "emailOpened",
+				header: "Opened",
+				size: 110,
+				cell: ({ row }) => rate(row.original.emailOpened),
+			},
+			{
+				accessorKey: "emailClicked",
+				header: "Clicked",
+				size: 110,
+				cell: ({ row }) => rate(row.original.emailClicked),
+			},
+		],
+	},
+	{
+		id: "sms",
+		header: "SMS",
+		columns: [
+			{
+				accessorKey: "smsClicked",
+				header: "Clicked",
+				size: 110,
+				cell: ({ row }) => rate(row.original.smsClicked),
+			},
+		],
+	},
+];
+
+export const ColumnGroups: Story = {
+	render: () => (
+		<DataTable.Root
+			columns={groupedColumns}
+			data={campaigns}
+			initialSorting={[{ id: "emailClicked", desc: false }]}
+		/>
+	),
+};

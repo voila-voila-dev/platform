@@ -128,9 +128,11 @@ export function DataTableRoot<TData, TValue>({
 		globalFilter,
 	});
 
-	const hasFixedSizes = columns.some(
-		(column) => typeof column.size === "number",
-	);
+	// Sizes live on the leaf columns, which a column group nests one level
+	// down; the table itself only needs to know whether any leaf is sized.
+	const hasFixedSizes = table
+		.getAllLeafColumns()
+		.some((column) => typeof column.columnDef.size === "number");
 	const rows = table.getRowModel().rows;
 	const galleryActive = view === "gallery" && renderGalleryCard !== undefined;
 

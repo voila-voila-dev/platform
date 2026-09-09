@@ -775,3 +775,66 @@ describe("DataTable global filter", () => {
 		expect(rows[0]?.textContent).toContain("PRJ-002");
 	});
 });
+
+describe("DataTable column groups", () => {
+	interface Campaign {
+		name: string;
+		emailOpened: number;
+		emailClicked: number;
+	}
+
+	const campaigns: Campaign[] = [
+		{ name: "Spring", emailOpened: 0.4, emailClicked: 0.1 },
+		{ name: "Summer", emailOpened: 0.2, emailClicked: 0.3 },
+	];
+
+	const groupedColumns: ColumnDef<Campaign>[] = [
+		{ accessorKey: "name", header: "Name" },
+		{
+			id: "email",
+			header: "Email",
+			columns: [
+				{ accessorKey: "emailOpened", header: "Opened" },
+				{ accessorKey: "emailClicked", header: "Clicked" },
+			],
+		},
+	];
+
+	it("renders a caption row spanning the group's columns above the leaf labels", () => {
+		const screen = render(
+			<DataTable.Root columns={groupedColumns} data={campaigns} />,
+		);
+		const headerRows = Array.from(
+			screen.baseElement.querySelectorAll("thead tr"),
+		);
+		expect(headerRows).toHaveLength(2);
+
+		const caption = screen.getByText("Email").closest("th");
+		expect(caption?.getAttribute("colspan")).toBe("2");
+		expect(caption?.getAttribute("data-slot")).toBe("data-table-group-head");
+		// The groupless column leaves a silent placeholder in the caption row.
+		expect(headerRows[0]?.querySelectorAll("th")).toHaveLength(2);
+		expect(headerRows[1]?.querySelectorAll("th")).toHaveLength(3);
+	});
+
+	it("sorts by a grouped column, never by its caption", () => {
+		const screen = render(
+			<DataTable.Root columns={groupedColumns} data={campaigns} />,
+		);
+		const caption = screen.getByText("Email").closest("th");
+		if (!caption) throw new Error("missing caption");
+		fireEvent.click(caption);
+		expect(caption.getAttribute("aria-sort")).toBeNull();
+		expect(bodyRows(screen)[0]?.textContent).toContain("Spring");
+
+		const clicked = screen.getByText("Clicked").closest("th");
+		if (!clicked) throw new Error("missing Clicked header");
+		// A numeric column sorts descending first, so the higher click rate leads.
+		fireEvent.click(clicked);
+		expect(clicked.getAttribute("aria-sort")).toBe("descending");
+		expect(bodyRows(screen)[0]?.textContent).toContain("Summer");
+		fireEvent.click(clicked);
+		expect(clicked.getAttribute("aria-sort")).toBe("ascending");
+		expect(bodyRows(screen)[0]?.textContent).toContain("Spring");
+	});
+});

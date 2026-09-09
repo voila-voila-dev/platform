@@ -1,0 +1,34 @@
+---
+title: "Column groups"
+description: "A caption over several columns, each of which still sorts on its own."
+sidebar:
+  order: 6
+---
+
+import * as Example from "@/examples/ui-datatable/column-groups";
+
+<Preview layout="stack">
+	<Example.Groups />
+</Preview>
+
+```tsx
+const columns: ColumnDef<Campaign>[] = [
+	{ accessorKey: "name", header: "Campaign" },
+	{
+		id: "email",
+		header: "Email",
+		columns: [
+			{ accessorKey: "emailOpened", header: "Opened" },
+			{ accessorKey: "emailClicked", header: "Clicked" },
+		],
+	},
+];
+```
+
+A column with `columns` is a group: its `header` becomes a caption spanning
+the leaf columns beneath it, on a row of its own above the labels. The caption
+holds no data, so it neither sorts nor resizes; each leaf keeps its own sort,
+and `initialSorting` or `sorting` name a leaf by its id as usual.
+
+Everything that walks the columns (visibility, CSV export, mobile cards) sees
+the leaves only, so a group changes what the header looks like and nothing else.

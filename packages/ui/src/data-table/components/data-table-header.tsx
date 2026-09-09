@@ -2,6 +2,7 @@ import type {
 	HeaderGroup,
 	Table as TanstackTable,
 } from "@tanstack/react-table";
+import { DataTableGroupHeadCell } from "#/data-table/components/data-table-group-head-cell.tsx";
 import { DataTableHeadCell } from "#/data-table/components/data-table-head-cell.tsx";
 import { cn } from "#/lib/utils.ts";
 import { Table } from "#/table/components/table.tsx";
@@ -15,7 +16,11 @@ interface Props<TData> {
 	pinned: boolean;
 }
 
-/** The table's header rows. */
+/**
+ * The table's header rows: one per depth of the column tree. A flat column
+ * list is one row; column groups add a caption row above the leaf labels,
+ * each caption spanning the columns it groups.
+ */
 export function DataTableHeader<TData>({
 	headerGroups,
 	stickyHeader,
@@ -45,14 +50,20 @@ export function DataTableHeader<TData>({
 							<span className="sr-only">Expand row</span>
 						</Table.Head>
 					)}
-					{headerGroup.headers.map((header) => (
-						<DataTableHeadCell
-							key={header.id}
-							header={header}
-							resizable={resizable}
-							table={table}
-						/>
-					))}
+					{headerGroup.headers.map((header) =>
+						// The leaf row is the deepest one; every row above it holds
+						// group captions (and the placeholders of groupless columns).
+						headerGroup.depth < table.getHeaderGroups().length - 1 ? (
+							<DataTableGroupHeadCell key={header.id} header={header} />
+						) : (
+							<DataTableHeadCell
+								key={header.id}
+								header={header}
+								resizable={resizable}
+								table={table}
+							/>
+						),
+					)}
 				</Table.Row>
 			))}
 		</Table.Header>
