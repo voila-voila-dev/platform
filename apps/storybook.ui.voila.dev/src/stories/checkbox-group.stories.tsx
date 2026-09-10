@@ -48,9 +48,7 @@ export const Horizontal: Story = {
 };
 
 // A parent checkbox (`parent` + `allValues`) ticks the whole set and shows the
-// indeterminate dash while only some children are ticked. Labels must WRAP the
-// checkboxes here (implicit association): in parent mode Base UI overrides the
-// boxes' `id`s for its `aria-controls` wiring, so `htmlFor`/`id` pairs break.
+// indeterminate dash while only some children are ticked.
 export const WithParentCheckbox: Story = {
 	render: () => (
 		<CheckboxGroup

@@ -100,7 +100,7 @@ export function IconPicker({
 	const rows = useMemo(() => chunkIntoRows(shown, GRID_COLUMNS), [shown]);
 
 	return (
-		<Combobox.Root<string>
+		<Combobox.Root<string, false, string[]>
 			grid
 			filteredItems={rows}
 			{...(controlledValue !== undefined && { value: controlledValue })}

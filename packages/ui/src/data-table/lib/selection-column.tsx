@@ -1,7 +1,8 @@
-import type { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef, RowData } from "@tanstack/react-table";
 import { Checkbox } from "#/checkbox/components/checkbox.tsx";
+import type { DataTableFeatures } from "#/data-table/lib/features.ts";
 
-interface Options<TData> {
+interface Options<TData extends RowData> {
 	selectAllLabel?: string;
 	selectRowLabel?: (row: TData) => string;
 }
@@ -11,10 +12,10 @@ interface Options<TData> {
  * first in `columns` and enable selection on the `DataTable`. Checkbox clicks
  * never bubble into `onRowClick`.
  */
-export function dataTableSelectionColumn<TData>({
+export function dataTableSelectionColumn<TData extends RowData>({
 	selectAllLabel = "Select all rows",
 	selectRowLabel = () => "Select row",
-}: Options<TData> = {}): ColumnDef<TData> {
+}: Options<TData> = {}): ColumnDef<DataTableFeatures, TData> {
 	return {
 		id: "select",
 		size: 36,

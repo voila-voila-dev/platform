@@ -1,10 +1,11 @@
-import { flexRender, type Header } from "@tanstack/react-table";
+import { flexRender, type Header, type RowData } from "@tanstack/react-table";
+import type { DataTableFeatures } from "#/data-table/lib/features.ts";
 import { pinnedClass, pinnedStyle } from "#/data-table/lib/pinning.ts";
 import { cn } from "#/lib/utils.ts";
 import { Table } from "#/table/components/table.tsx";
 
-interface Props<TData> {
-	header: Header<TData, unknown>;
+interface Props<TData extends RowData> {
+	header: Header<DataTableFeatures, TData, unknown>;
 }
 
 /**
@@ -17,7 +18,9 @@ interface Props<TData> {
  * in two. A placeholder (the cell a groupless column leaves in the group row)
  * spans its column and says nothing, keeping the grid square.
  */
-export function DataTableGroupHeadCell<TData>({ header }: Props<TData>) {
+export function DataTableGroupHeadCell<TData extends RowData>({
+	header,
+}: Props<TData>) {
 	return (
 		<Table.Head
 			data-slot="data-table-group-head"

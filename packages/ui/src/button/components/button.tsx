@@ -1,4 +1,5 @@
 import { Button as ButtonPrimitive } from "@base-ui/react/button";
+import { isValidElement } from "react";
 import {
 	type ButtonVariants,
 	buttonVariants,
@@ -14,6 +15,19 @@ interface Props extends ButtonPrimitive.Props, ButtonVariants {
 	loading?: boolean;
 }
 
+/**
+ * Base UI assumes `render` produces a `<button>` and warns when it doesn't,
+ * because a non-button needs the keyboard and role handling it would otherwise
+ * skip. `render={<a href>}` spells the answer out, so read it rather than
+ * making every caller repeat `nativeButton={false}`. A component element says
+ * nothing about the tag it returns, so there the caller still decides.
+ */
+function rendersNativeButton(render: Props["render"]) {
+	if (!isValidElement(render)) return undefined;
+	if (typeof render.type !== "string") return undefined;
+	return render.type === "button";
+}
+
 export function Button({
 	className,
 	variant = "default",
@@ -21,6 +35,8 @@ export function Button({
 	shape = "default",
 	loading = false,
 	disabled,
+	nativeButton,
+	render,
 	children,
 	...props
 }: Props) {
@@ -32,6 +48,8 @@ export function Button({
 			data-shape={shape}
 			disabled={disabled || loading}
 			aria-busy={loading || undefined}
+			nativeButton={nativeButton ?? rendersNativeButton(render)}
+			render={render}
 			className={cn(buttonVariants({ variant, size, shape }), className)}
 			{...props}
 		>

@@ -12,7 +12,7 @@ import * as Example from "@/examples/ui-datatable/data-table";
 </Preview>
 
 ```tsx
-const columns: ColumnDef<Project>[] = [
+const columns: ColumnDef<DataTableFeatures, Project>[] = [
 	{ accessorKey: "reference", header: "Reference", size: 130 },
 	{ accessorKey: "client", header: "Client" },
 	{ accessorKey: "amount", header: "Amount", size: 110 },

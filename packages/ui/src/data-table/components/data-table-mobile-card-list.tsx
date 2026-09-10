@@ -1,11 +1,12 @@
-import type { Row } from "@tanstack/react-table";
+import type { Row, RowData } from "@tanstack/react-table";
 import type * as React from "react";
 import { DataTableEmpty } from "#/data-table/components/data-table-empty.tsx";
 import { DataTableLoadingOverlay } from "#/data-table/components/data-table-loading-overlay.tsx";
 import { DataTableMobileCard } from "#/data-table/components/data-table-mobile-card.tsx";
+import type { DataTableFeatures } from "#/data-table/lib/features.ts";
 
-interface Props<TData> {
-	rows: Row<TData>[];
+interface Props<TData extends RowData> {
+	rows: Row<DataTableFeatures, TData>[];
 	loading: boolean;
 	emptyState: React.ReactNode;
 	onRowClick: ((row: TData) => void) | undefined;
@@ -13,7 +14,7 @@ interface Props<TData> {
 }
 
 /** The card list that replaces the table below `md`. */
-export function DataTableMobileCardList<TData>({
+export function DataTableMobileCardList<TData extends RowData>({
 	rows,
 	loading,
 	emptyState,

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import { MapView } from "@voila.dev/ui/map-view";
-import maplibregl from "maplibre-gl";
+import * as maplibregl from "maplibre-gl";
 
 const meta = {
 	title: "UI/MapView",

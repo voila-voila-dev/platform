@@ -25,20 +25,17 @@ describe("Attachment", () => {
 		expect(attachment?.getAttribute("data-orientation")).toBe("horizontal");
 	});
 
-	it.each([
-		"idle",
-		"uploading",
-		"processing",
-		"error",
-		"done",
-	] as const)("exposes state %s as a data attribute", (state) => {
-		const screen = render(
-			<Attachment.Root state={state}>report.pdf</Attachment.Root>,
-		);
-		expect(queryBySlot(screen, "attachment")?.getAttribute("data-state")).toBe(
-			state,
-		);
-	});
+	it.each(["idle", "uploading", "processing", "error", "done"] as const)(
+		"exposes state %s as a data attribute",
+		(state) => {
+			const screen = render(
+				<Attachment.Root state={state}>report.pdf</Attachment.Root>,
+			);
+			expect(
+				queryBySlot(screen, "attachment")?.getAttribute("data-state"),
+			).toBe(state);
+		},
+	);
 
 	it("renders every part with its slot", () => {
 		const screen = render(

@@ -1,5 +1,5 @@
 import { Badge } from "@voila.dev/ui/badge";
-import type { ColumnDef } from "@voila.dev/ui/data-table";
+import type { ColumnDef, DataTableFeatures } from "@voila.dev/ui/data-table";
 
 export interface Project {
 	reference: string;
@@ -53,7 +53,7 @@ export const PROJECTS: Project[] = [
 	},
 ];
 
-export const columns: ColumnDef<Project>[] = [
+export const columns: ColumnDef<DataTableFeatures, Project>[] = [
 	{ accessorKey: "reference", header: "Reference", size: 130 },
 	{ accessorKey: "client", header: "Client" },
 	{ accessorKey: "role", header: "Role" },

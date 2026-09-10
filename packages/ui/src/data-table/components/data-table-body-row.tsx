@@ -1,14 +1,15 @@
 import { CaretRightIcon as CaretExpandIcon } from "@phosphor-icons/react";
-import type { Row } from "@tanstack/react-table";
+import type { Row, RowData } from "@tanstack/react-table";
 import type * as React from "react";
 import { Button } from "#/button/components/button.tsx";
 import { DataTableBodyCell } from "#/data-table/components/data-table-body-cell.tsx";
+import type { DataTableFeatures } from "#/data-table/lib/features.ts";
 import { PINNED_ROW_STATE_CLASSES } from "#/data-table/lib/pinning.ts";
 import { cn } from "#/lib/utils.ts";
 import { Table } from "#/table/components/table.tsx";
 
-interface Props<TData> {
-	row: Row<TData>;
+interface Props<TData extends RowData> {
+	row: Row<DataTableFeatures, TData>;
 	onRowClick: ((row: TData) => void) | undefined;
 	resizable: boolean;
 	renderExpandedRow: ((row: TData) => React.ReactNode) | undefined;
@@ -17,7 +18,7 @@ interface Props<TData> {
 }
 
 /** One data row, plus its detail panel when expanded. */
-export function DataTableBodyRow<TData>({
+export function DataTableBodyRow<TData extends RowData>({
 	row,
 	onRowClick,
 	resizable,

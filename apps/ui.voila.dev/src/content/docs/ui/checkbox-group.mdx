@@ -17,10 +17,9 @@ import * as Example from "@/examples/ui/checkbox-group";
 </CheckboxGroup>
 ```
 
-The group's value is the array of ticked `name`s. In parent mode (`parent` plus
-`allValues`) Base UI rewrites the boxes' ids for its `aria-controls` wiring, so
-labels have to *wrap* their checkbox there rather than point at it with
-`htmlFor`.
+The group's value is the array of ticked `name`s. A box given `parent`, together
+with `allValues` on the group, ticks the whole set and shows the indeterminate
+dash while only some of its children are ticked.
 
 ## API
 

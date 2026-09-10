@@ -30,12 +30,13 @@ describe("Badge", () => {
 		expect(badge?.getAttribute("data-color")).toBeNull();
 	});
 
-	it.each(
-		badgeVariantOptions,
-	)("exposes variant %s as a data attribute", (variant) => {
-		const screen = render(<Badge variant={variant}>Open</Badge>);
-		expect(queryBadge(screen)?.getAttribute("data-variant")).toBe(variant);
-	});
+	it.each(badgeVariantOptions)(
+		"exposes variant %s as a data attribute",
+		(variant) => {
+			const screen = render(<Badge variant={variant}>Open</Badge>);
+			expect(queryBadge(screen)?.getAttribute("data-variant")).toBe(variant);
+		},
+	);
 
 	it.each(badgeColors)("exposes color %s as a data attribute", (color) => {
 		const screen = render(<Badge color={color}>Open</Badge>);

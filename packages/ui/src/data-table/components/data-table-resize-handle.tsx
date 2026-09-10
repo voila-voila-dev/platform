@@ -1,20 +1,25 @@
 import type {
 	ColumnSizingState,
 	Header,
+	RowData,
 	Table as TanstackTable,
 } from "@tanstack/react-table";
+import type { DataTableFeatures } from "#/data-table/lib/features.ts";
 import { cn } from "#/lib/utils.ts";
 
-interface Props<TData> {
-	header: Header<TData, unknown>;
-	table: TanstackTable<TData>;
+interface Props<TData extends RowData> {
+	header: Header<DataTableFeatures, TData, unknown>;
+	table: TanstackTable<DataTableFeatures, TData>;
 }
 
 /**
  * The drag target that resizes a column. Sits on the header's trailing edge and
  * is also focusable, so the width is reachable without a pointer.
  */
-export function DataTableResizeHandle<TData>({ header, table }: Props<TData>) {
+export function DataTableResizeHandle<TData extends RowData>({
+	header,
+	table,
+}: Props<TData>) {
 	const nudge = (delta: number) => {
 		const next = Math.max(40, header.getSize() + delta);
 		table.setColumnSizing((previous: ColumnSizingState) => ({

@@ -5,6 +5,7 @@ import { CardGallery } from "#/card-gallery/components/card-gallery.tsx";
 import {
 	type ColumnDef,
 	DataTable,
+	type DataTableFeatures,
 	dataTableSelectionColumn,
 	dataTableToCsv,
 } from "#/data-table/components/data-table.tsx";
@@ -23,7 +24,7 @@ const projects: Project[] = [
 	{ reference: "PRJ-003", client: "Acme Studio", amount: 150 },
 ];
 
-const columns: ColumnDef<Project>[] = [
+const columns: ColumnDef<DataTableFeatures, Project>[] = [
 	{ accessorKey: "reference", header: "Reference" },
 	{ accessorKey: "client", header: "Client" },
 	{ accessorKey: "amount", header: "Amount" },
@@ -228,7 +229,7 @@ describe("DataTable", () => {
 });
 
 describe("DataTable selection", () => {
-	const selectableColumns: ColumnDef<Project>[] = [
+	const selectableColumns: ColumnDef<DataTableFeatures, Project>[] = [
 		dataTableSelectionColumn<Project>({
 			selectAllLabel: "Select all projects",
 			selectRowLabel: (project) => `Select ${project.reference}`,
@@ -532,16 +533,17 @@ describe("DataTable column pinning", () => {
 			<DataTable.Root
 				columns={columns}
 				data={projects}
-				columnPinning={{ left: ["reference"], right: ["amount"] }}
+				columnPinning={{ start: ["reference"], end: ["amount"] }}
 			/>,
 		);
 		const cells = screen.baseElement.querySelectorAll<HTMLTableCellElement>(
 			"tbody tr:first-child td",
 		);
+		// Logical insets, so the frozen columns follow the reading direction.
 		expect(cells[0]?.style.position).toBe("sticky");
-		expect(cells[0]?.style.left).toBe("0px");
+		expect(cells[0]?.style.insetInlineStart).toBe("0px");
 		expect(cells[2]?.style.position).toBe("sticky");
-		expect(cells[2]?.style.right).toBe("0px");
+		expect(cells[2]?.style.insetInlineEnd).toBe("0px");
 		// The middle column pans normally.
 		expect(cells[1]?.style.position).toBe("");
 	});
@@ -553,7 +555,7 @@ describe("DataTable column pinning", () => {
 			<DataTable.Root
 				columns={columns}
 				data={projects}
-				columnPinning={{ left: ["reference"] }}
+				columnPinning={{ start: ["reference"] }}
 			/>,
 		);
 		const cell = screen.baseElement.querySelector("tbody tr:first-child td");
@@ -568,7 +570,7 @@ describe("DataTable column pinning", () => {
 			<DataTable.Root
 				columns={columns}
 				data={projects}
-				columnPinning={{ left: ["reference"], right: ["amount"] }}
+				columnPinning={{ start: ["reference"], end: ["amount"] }}
 			/>,
 		);
 		const cells = screen.baseElement.querySelectorAll<HTMLTableCellElement>(
@@ -788,7 +790,7 @@ describe("DataTable column groups", () => {
 		{ name: "Summer", emailOpened: 0.2, emailClicked: 0.3 },
 	];
 
-	const groupedColumns: ColumnDef<Campaign>[] = [
+	const groupedColumns: ColumnDef<DataTableFeatures, Campaign>[] = [
 		{ accessorKey: "name", header: "Name" },
 		{
 			id: "email",

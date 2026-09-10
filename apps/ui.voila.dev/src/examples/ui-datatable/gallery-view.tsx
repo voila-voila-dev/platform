@@ -2,6 +2,7 @@ import { CardGallery } from "@voila.dev/ui/card-gallery";
 import {
 	type ColumnDef,
 	DataTable,
+	type DataTableFeatures,
 	type DataTableView,
 } from "@voila.dev/ui/data-table";
 import { useState } from "react";
@@ -57,7 +58,7 @@ const ORGANIZATIONS: Organization[] = [
 	},
 ];
 
-const columns: ColumnDef<Organization>[] = [
+const columns: ColumnDef<DataTableFeatures, Organization>[] = [
 	{ accessorKey: "name", header: "Name" },
 	{ accessorKey: "category", header: "Category" },
 ];

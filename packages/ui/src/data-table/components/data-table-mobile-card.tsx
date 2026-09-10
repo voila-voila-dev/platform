@@ -1,14 +1,15 @@
-import type { Row } from "@tanstack/react-table";
+import type { Row, RowData } from "@tanstack/react-table";
 import type * as React from "react";
+import type { DataTableFeatures } from "#/data-table/lib/features.ts";
 
-interface Props<TData> {
-	row: Row<TData>;
+interface Props<TData extends RowData> {
+	row: Row<DataTableFeatures, TData>;
 	onRowClick: ((row: TData) => void) | undefined;
 	renderMobileCard: (row: TData) => React.ReactNode;
 }
 
 /** One row as a card — a button when rows are clickable, a plain box otherwise. */
-export function DataTableMobileCard<TData>({
+export function DataTableMobileCard<TData extends RowData>({
 	row,
 	onRowClick,
 	renderMobileCard,

@@ -1,12 +1,13 @@
-import type { Row } from "@tanstack/react-table";
+import type { Row, RowData } from "@tanstack/react-table";
 import type * as React from "react";
 import { CardGalleryItem } from "#/card-gallery/components/card-gallery-item.tsx";
 import { CardGalleryRoot } from "#/card-gallery/components/card-gallery-root.tsx";
 import { DataTableEmpty } from "#/data-table/components/data-table-empty.tsx";
 import { DataTableLoadingOverlay } from "#/data-table/components/data-table-loading-overlay.tsx";
+import type { DataTableFeatures } from "#/data-table/lib/features.ts";
 
-interface Props<TData> {
-	rows: Row<TData>[];
+interface Props<TData extends RowData> {
+	rows: Row<DataTableFeatures, TData>[];
 	loading: boolean;
 	emptyState: React.ReactNode;
 	onRowClick: ((row: TData) => void) | undefined;
@@ -14,7 +15,7 @@ interface Props<TData> {
 }
 
 /** The `CardGallery` grid that replaces the table in gallery view. */
-export function DataTableGallery<TData>({
+export function DataTableGallery<TData extends RowData>({
 	rows,
 	loading,
 	emptyState,

@@ -826,10 +826,7 @@ export const ConversationListItems: Story = {
 				description="Rendered as an <a> via render — keyboard focus and hover active."
 				timestamp="10:24"
 				unreadCount={1}
-				render={
-					// biome-ignore lint/a11y/useAnchorContent: content is merged in from Chat.ConversationItem
-					<a href="#conversation" />
-				}
+				render={<a href="#conversation" />}
 			/>
 		</div>
 	),

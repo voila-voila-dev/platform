@@ -1,4 +1,8 @@
-import { type ColumnDef, DataTable } from "@voila.dev/ui/data-table";
+import {
+	type ColumnDef,
+	DataTable,
+	type DataTableFeatures,
+} from "@voila.dev/ui/data-table";
 
 interface Campaign {
 	name: string;
@@ -30,7 +34,7 @@ const CAMPAIGNS: Campaign[] = [
 
 const rate = (value: number) => `${Math.round(value * 100)} %`;
 
-export const columns: ColumnDef<Campaign>[] = [
+export const columns: ColumnDef<DataTableFeatures, Campaign>[] = [
 	{ accessorKey: "name", header: "Campaign" },
 	{
 		id: "email",

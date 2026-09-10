@@ -60,11 +60,10 @@ const mapLibre = vi.hoisted(() => {
 	return { state, FakeMap };
 });
 
+// MapLibre 6 ships ESM only, with no default export to stand in for.
 vi.mock("maplibre-gl", () => ({
-	default: {
-		Map: mapLibre.FakeMap,
-		NavigationControl: class NavigationControl {},
-	},
+	Map: mapLibre.FakeMap,
+	NavigationControl: class NavigationControl {},
 }));
 vi.mock("maplibre-gl/dist/maplibre-gl.css", () => ({}));
 

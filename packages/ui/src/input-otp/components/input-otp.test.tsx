@@ -93,6 +93,31 @@ describe("InputOTP", () => {
 		expect(slots[2]?.textContent).toBe("");
 	});
 
+	it("seeds the slots from defaultValue without React's mixed-input warning", () => {
+		// input-otp reads `defaultValue` for its own state but forwards it to
+		// the inner input too, alongside the `value` it already sets there. The
+		// root owns the uncontrolled case so the prop never gets that far.
+		const consoleError = vi
+			.spyOn(console, "error")
+			.mockImplementation(() => {});
+		const screen = renderOtp({ defaultValue: "12", maxLength: 6 });
+		const slots = querySlots(screen);
+		expect(slots[0]?.textContent).toBe("1");
+		expect(slots[1]?.textContent).toBe("2");
+		expect(slots[2]?.textContent).toBe("");
+		expect(consoleError).not.toHaveBeenCalled();
+		consoleError.mockRestore();
+	});
+
+	it("keeps typing working when seeded from defaultValue", () => {
+		const onChange = vi.fn();
+		const screen = renderOtp({ defaultValue: "12", maxLength: 6, onChange });
+		const input = queryInput(screen) as HTMLInputElement;
+		fireEvent.change(input, { target: { value: "123" } });
+		expect(onChange).toHaveBeenCalledWith("123");
+		expect(querySlots(screen)[2]?.textContent).toBe("3");
+	});
+
 	it("does not ship the stray cn-input-otp marker class", () => {
 		const screen = renderOtp();
 		expect(queryContainer(screen)?.className).not.toContain("cn-input-otp");

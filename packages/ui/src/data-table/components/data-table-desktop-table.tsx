@@ -1,6 +1,7 @@
 import type {
 	HeaderGroup,
 	Row,
+	RowData,
 	Table as TanstackTable,
 } from "@tanstack/react-table";
 import type * as React from "react";
@@ -11,12 +12,13 @@ import {
 	type DataTableDensity,
 	DENSITY_CELL_CLASS,
 } from "#/data-table/lib/density.ts";
+import type { DataTableFeatures } from "#/data-table/lib/features.ts";
 import { cn } from "#/lib/utils.ts";
 import { Table } from "#/table/components/table.tsx";
 
-interface Props<TData> {
-	headerGroups: HeaderGroup<TData>[];
-	rows: Row<TData>[];
+interface Props<TData extends RowData> {
+	headerGroups: HeaderGroup<DataTableFeatures, TData>[];
+	rows: Row<DataTableFeatures, TData>[];
 	columnCount: number;
 	loading: boolean;
 	emptyState: React.ReactNode;
@@ -28,12 +30,12 @@ interface Props<TData> {
 	resizable: boolean;
 	renderExpandedRow: ((row: TData) => React.ReactNode) | undefined;
 	density: DataTableDensity;
-	table: TanstackTable<TData>;
+	table: TanstackTable<DataTableFeatures, TData>;
 	pinned: boolean;
 }
 
 /** The bordered table itself — everything above the `md` breakpoint. */
-export function DataTableDesktopTable<TData>({
+export function DataTableDesktopTable<TData extends RowData>({
 	headerGroups,
 	rows,
 	columnCount,

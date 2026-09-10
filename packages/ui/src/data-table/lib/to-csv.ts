@@ -1,4 +1,5 @@
-import type { Table as TanstackTable } from "@tanstack/react-table";
+import type { RowData, Table as TanstackTable } from "@tanstack/react-table";
+import type { DataTableFeatures } from "#/data-table/lib/features.ts";
 
 /** RFC 4180: quotes double up, and any field containing them is quoted. */
 function toCsvField(value: unknown): string {
@@ -11,7 +12,9 @@ function toCsvField(value: unknown): string {
  * visible columns only — to CSV. Exported so a consumer can send the same bytes
  * somewhere other than a download.
  */
-export function dataTableToCsv<TData>(table: TanstackTable<TData>): string {
+export function dataTableToCsv<TData extends RowData>(
+	table: TanstackTable<DataTableFeatures, TData>,
+): string {
 	const columns = table.getVisibleLeafColumns();
 	const header = columns.map((column) =>
 		toCsvField(

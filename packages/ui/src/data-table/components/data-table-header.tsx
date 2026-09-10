@@ -1,17 +1,19 @@
 import type {
 	HeaderGroup,
+	RowData,
 	Table as TanstackTable,
 } from "@tanstack/react-table";
 import { DataTableGroupHeadCell } from "#/data-table/components/data-table-group-head-cell.tsx";
 import { DataTableHeadCell } from "#/data-table/components/data-table-head-cell.tsx";
+import type { DataTableFeatures } from "#/data-table/lib/features.ts";
 import { cn } from "#/lib/utils.ts";
 import { Table } from "#/table/components/table.tsx";
 
-interface Props<TData> {
-	headerGroups: HeaderGroup<TData>[];
+interface Props<TData extends RowData> {
+	headerGroups: HeaderGroup<DataTableFeatures, TData>[];
 	stickyHeader: boolean;
 	resizable: boolean;
-	table: TanstackTable<TData>;
+	table: TanstackTable<DataTableFeatures, TData>;
 	expandable: boolean;
 	pinned: boolean;
 }
@@ -21,7 +23,7 @@ interface Props<TData> {
  * list is one row; column groups add a caption row above the leaf labels,
  * each caption spanning the columns it groups.
  */
-export function DataTableHeader<TData>({
+export function DataTableHeader<TData extends RowData>({
 	headerGroups,
 	stickyHeader,
 	resizable,

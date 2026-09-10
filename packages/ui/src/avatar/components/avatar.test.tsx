@@ -25,19 +25,18 @@ describe("Avatar", () => {
 		expect(root?.getAttribute("data-size")).toBe("default");
 	});
 
-	it.each([
-		"sm",
-		"default",
-		"lg",
-	] as const)("applies size %s as a data attribute", (size) => {
-		const screen = render(
-			<Avatar.Root size={size}>
-				<Avatar.Fallback>CD</Avatar.Fallback>
-			</Avatar.Root>,
-		);
-		const root = screen.baseElement.querySelector("[data-slot=avatar]");
-		expect(root?.getAttribute("data-size")).toBe(size);
-	});
+	it.each(["sm", "default", "lg"] as const)(
+		"applies size %s as a data attribute",
+		(size) => {
+			const screen = render(
+				<Avatar.Root size={size}>
+					<Avatar.Fallback>CD</Avatar.Fallback>
+				</Avatar.Root>,
+			);
+			const root = screen.baseElement.querySelector("[data-slot=avatar]");
+			expect(root?.getAttribute("data-size")).toBe(size);
+		},
+	);
 
 	it("shows the fallback while the image has not loaded", () => {
 		const screen = render(
@@ -142,19 +141,18 @@ describe("Avatar.GroupCount", () => {
 		expect(count?.getAttribute("data-size")).toBe("default");
 	});
 
-	it.each([
-		"sm",
-		"default",
-		"lg",
-	] as const)("applies size %s as a data attribute", (size) => {
-		const screen = render(
-			<Avatar.GroupCount size={size}>+2</Avatar.GroupCount>,
-		);
-		const count = screen.baseElement.querySelector(
-			"[data-slot=avatar-group-count]",
-		);
-		expect(count?.getAttribute("data-size")).toBe(size);
-	});
+	it.each(["sm", "default", "lg"] as const)(
+		"applies size %s as a data attribute",
+		(size) => {
+			const screen = render(
+				<Avatar.GroupCount size={size}>+2</Avatar.GroupCount>,
+			);
+			const count = screen.baseElement.querySelector(
+				"[data-slot=avatar-group-count]",
+			);
+			expect(count?.getAttribute("data-size")).toBe(size);
+		},
+	);
 
 	it("does not inherit a size from sibling avatars", () => {
 		const screen = render(

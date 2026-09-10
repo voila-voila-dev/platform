@@ -15,6 +15,16 @@ const config: StorybookConfig = {
 	// runs, so the only handle left is a later `enforce: "post"` plugin that
 	// switches it back off.
 	viteFinal: (viteConfig) => {
+		// MapLibre 6 is ESM-only and starts its worker from a URL relative to
+		// its own module. Pre-bundling rewrites that module into `deps/`, where
+		// the worker URL no longer resolves - the worker never starts, and the
+		// map keeps drawing its raster layers on the main thread while every
+		// vector layer (water, roads, borders, labels) silently stays missing.
+		viteConfig.optimizeDeps ??= {};
+		viteConfig.optimizeDeps.exclude = [
+			...(viteConfig.optimizeDeps.exclude ?? []),
+			"maplibre-gl",
+		];
 		viteConfig.plugins ??= [];
 		viteConfig.plugins.push({
 			name: "voila:disable-strict-execution-order",

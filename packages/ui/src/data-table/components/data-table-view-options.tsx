@@ -1,15 +1,17 @@
 import { ColumnsIcon } from "@phosphor-icons/react";
-import type { Table as TanstackTable } from "@tanstack/react-table";
+import type { RowData, Table as TanstackTable } from "@tanstack/react-table";
 import type * as React from "react";
 import { Button } from "#/button/components/button.tsx";
+import type { DataTableFeatures } from "#/data-table/lib/features.ts";
 import { DropdownMenu } from "#/dropdown-menu/components/dropdown-menu.tsx";
 
-interface Props<TData> extends React.ComponentProps<typeof Button> {
+interface Props<TData extends RowData>
+	extends React.ComponentProps<typeof Button> {
 	/**
 	 * The live table instance. Get it from `DataTable.Root`'s `toolbar` render
 	 * prop — this control reads the column list off it.
 	 */
-	table: TanstackTable<TData>;
+	table: TanstackTable<DataTableFeatures, TData>;
 	/** Text on the trigger. This package ships no translations. */
 	label?: string;
 }
@@ -18,7 +20,7 @@ interface Props<TData> extends React.ComponentProps<typeof Button> {
  * Column visibility menu. Every hideable column gets a checkbox; the table owns
  * the state unless `columnVisibility` is passed to `DataTable`.
  */
-export function DataTableViewOptions<TData>({
+export function DataTableViewOptions<TData extends RowData>({
 	table,
 	label = "Columns",
 	...props

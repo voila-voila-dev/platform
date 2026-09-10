@@ -1,4 +1,4 @@
-import type maplibregl from "maplibre-gl";
+import type * as maplibregl from "maplibre-gl";
 import { type ComponentProps, lazy, type ReactNode, Suspense } from "react";
 import { cn } from "#/lib/utils.ts";
 import { Skeleton } from "#/skeleton/components/skeleton.tsx";

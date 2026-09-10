@@ -109,10 +109,15 @@ export const Vertical: Story = {
 		const [first, second] = canvasElement.querySelectorAll(
 			"[data-slot=tabs-trigger]",
 		);
-		// Vertical tabs must stack - the second trigger sits below the first.
-		expect(second?.getBoundingClientRect().top).toBeGreaterThan(
-			first?.getBoundingClientRect().bottom ?? Number.POSITIVE_INFINITY,
+		const above = first?.getBoundingClientRect();
+		const below = second?.getBoundingClientRect();
+		// Vertical tabs stack in a column: the second starts where the first
+		// ends - flush, since the default variant seats them in one filled
+		// track - and shares its leading edge rather than sitting beside it.
+		expect(below?.top).toBeGreaterThanOrEqual(
+			above?.bottom ?? Number.POSITIVE_INFINITY,
 		);
+		expect(below?.left).toBe(above?.left);
 	},
 };
 

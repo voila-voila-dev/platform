@@ -39,9 +39,13 @@ Columns in, rows in, a toolbar with export. Sorting is already on for every
 sortable column.
 
 ```tsx
-import { type ColumnDef, DataTable } from "@voila.dev/ui/data-table";
+import {
+	type ColumnDef,
+	DataTable,
+	type DataTableFeatures,
+} from "@voila.dev/ui/data-table";
 
-const columns: ColumnDef<Project>[] = [
+const columns: ColumnDef<DataTableFeatures, Project>[] = [
 	{ accessorKey: "reference", header: "Reference", size: 130 },
 	{ accessorKey: "client", header: "Client" },
 	{ accessorKey: "amount", header: "Amount", size: 110 },

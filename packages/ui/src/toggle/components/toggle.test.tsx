@@ -89,16 +89,15 @@ describe("Toggle", () => {
 		expect(toggle.classList.contains("border-transparent")).toBe(true);
 	});
 
-	it.each([
-		"sm",
-		"default",
-		"lg",
-	] as const)("applies the %s size classes", (size) => {
-		const heights = { sm: "h-7", default: "h-8", lg: "h-9" };
-		const screen = render(<Toggle aria-label="Favorite" size={size} />);
-		const toggle = screen.getByRole("button", { name: "Favorite" });
-		expect(toggle.classList.contains(heights[size])).toBe(true);
-	});
+	it.each(["sm", "default", "lg"] as const)(
+		"applies the %s size classes",
+		(size) => {
+			const heights = { sm: "h-7", default: "h-8", lg: "h-9" };
+			const screen = render(<Toggle aria-label="Favorite" size={size} />);
+			const toggle = screen.getByRole("button", { name: "Favorite" });
+			expect(toggle.classList.contains(heights[size])).toBe(true);
+		},
+	);
 
 	it("merges className over the variant classes", () => {
 		const screen = render(

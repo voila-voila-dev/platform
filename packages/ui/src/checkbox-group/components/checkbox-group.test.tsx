@@ -109,18 +109,17 @@ describe("CheckboxGroup", () => {
 		expect(parent.getAttribute("aria-checked")).toBe("mixed");
 	});
 
-	it("drops custom ids in parent mode (upstream aria-controls wiring)", () => {
-		// Documents the Base UI behavior behind the "wrap the Label" advice in
-		// checkbox-group.tsx: with `allValues` set, every box's `id` is replaced
-		// by a generated one, so `htmlFor`/`id` label pairs silently break. If
-		// this starts failing on a Base UI upgrade, the constraint is gone.
+	it("keeps a custom id in parent mode", () => {
+		// Base UI used to replace every box's `id` with a generated one for its
+		// `aria-controls` wiring, which silently broke `htmlFor`/`id` label
+		// pairs. Fixed upstream in 1.8, so an explicit pair now holds.
 		const screen = render(
 			<CheckboxGroup allValues={["design"]}>
 				<Checkbox parent />
 				<Checkbox name="design" id="custom-box-id" />
 			</CheckboxGroup>,
 		);
-		expect(screen.baseElement.querySelector("#custom-box-id")).toBeNull();
+		expect(screen.baseElement.querySelector("#custom-box-id")).not.toBeNull();
 	});
 
 	it("toggles a box through its wrapping label in parent mode", () => {

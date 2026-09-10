@@ -56,10 +56,7 @@ export function SiteHeader({ activeSlug }: { activeSlug?: string }) {
 						size="sm"
 						className="hidden md:inline-flex"
 						nativeButton={false}
-						render={
-							// biome-ignore lint/a11y/useAnchorContent: Button injects the label as children.
-							<a href="https://storybook.ui.voila.dev" />
-						}
+						render={<a href="https://storybook.ui.voila.dev" />}
 					>
 						Storybook
 					</Button>
@@ -68,10 +65,7 @@ export function SiteHeader({ activeSlug }: { activeSlug?: string }) {
 						size="icon-sm"
 						aria-label="GitHub repository"
 						nativeButton={false}
-						render={
-							// biome-ignore lint/a11y/useAnchorContent: Button injects the icon as children.
-							<a href="https://github.com/voila-voila-dev/ui" />
-						}
+						render={<a href="https://github.com/voila-voila-dev/ui" />}
 					>
 						<GithubLogoIcon />
 					</Button>

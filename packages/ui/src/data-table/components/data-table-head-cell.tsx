@@ -1,11 +1,13 @@
 import {
 	flexRender,
 	type Header,
+	type RowData,
 	type SortDirection,
 	type Table as TanstackTable,
 } from "@tanstack/react-table";
 import { DataTableResizeHandle } from "#/data-table/components/data-table-resize-handle.tsx";
 import { DataTableSortCaret } from "#/data-table/components/data-table-sort-caret.tsx";
+import type { DataTableFeatures } from "#/data-table/lib/features.ts";
 import {
 	PINNED_HEAD_HOVER_CLASS,
 	pinnedClass,
@@ -14,10 +16,10 @@ import {
 import { cn } from "#/lib/utils.ts";
 import { Table } from "#/table/components/table.tsx";
 
-interface Props<TData> {
-	header: Header<TData, unknown>;
+interface Props<TData extends RowData> {
+	header: Header<DataTableFeatures, TData, unknown>;
 	resizable: boolean;
-	table: TanstackTable<TData>;
+	table: TanstackTable<DataTableFeatures, TData>;
 }
 
 const ARIA_SORT_BY_DIRECTION: Record<
@@ -29,7 +31,7 @@ const ARIA_SORT_BY_DIRECTION: Record<
 };
 
 /** One header cell: label, sort affordance and (optionally) a resize handle. */
-export function DataTableHeadCell<TData>({
+export function DataTableHeadCell<TData extends RowData>({
 	header,
 	resizable,
 	table,

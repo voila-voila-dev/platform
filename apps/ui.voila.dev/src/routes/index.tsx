@@ -218,10 +218,7 @@ function Home() {
 								size="lg"
 								variant="outline"
 								nativeButton={false}
-								render={
-									// biome-ignore lint/a11y/useAnchorContent: Button injects the label as children.
-									<a href="#email-editor" />
-								}
+								render={<a href="#email-editor" />}
 							>
 								Open the email editor <ArrowDownIcon />
 							</Button>
@@ -468,10 +465,7 @@ function Home() {
 									size="lg"
 									variant="outline"
 									nativeButton={false}
-									render={
-										// biome-ignore lint/a11y/useAnchorContent: Button injects the label as children.
-										<a href="https://github.com/voila-voila-dev/ui" />
-									}
+									render={<a href="https://github.com/voila-voila-dev/ui" />}
 								>
 									Star it on GitHub
 								</Button>

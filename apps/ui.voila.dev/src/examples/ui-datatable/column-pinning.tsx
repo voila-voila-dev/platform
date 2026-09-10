@@ -8,7 +8,7 @@ export function Pinning() {
 			<DataTable.Root
 				columns={columns}
 				data={PROJECTS}
-				columnPinning={{ left: ["reference"], right: ["amount"] }}
+				columnPinning={{ start: ["reference"], end: ["amount"] }}
 			/>
 		</div>
 	);

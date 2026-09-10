@@ -201,10 +201,13 @@ export const BarsProjected: Story = {
 	},
 	play: async ({ canvasElement }) => {
 		const canvas = within(canvasElement);
-		const projected = canvasElement.querySelectorAll(
-			'[data-slot="chart-bar"][data-projected]',
-		);
-		await expect(projected).toHaveLength(12);
+		const bars = (filter: string) =>
+			canvasElement.querySelectorAll(`[data-slot="chart-bar"]${filter}`);
+		// Three weeks sit at or past today and three behind it, four series
+		// each - but `completed` is 0 across the three weeks ahead, since
+		// nothing completes in the future, and a zero-height bar draws no path.
+		await expect(bars("[data-projected]")).toHaveLength(9);
+		await expect(bars(":not([data-projected])")).toHaveLength(12);
 		await expect(canvas.getByText("today")).toBeInTheDocument();
 	},
 };

@@ -131,10 +131,7 @@ export const AsLink: Story = {
 		<Item.Root
 			variant="outline"
 			className="max-w-md"
-			render={
-				// biome-ignore lint/a11y/useAnchorContent: Base UI's render prop nests the Item children inside the anchor.
-				<a href="#project-detail" />
-			}
+			render={<a href="#project-detail" />}
 		>
 			<Item.Media variant="icon">
 				<CalendarCheckIcon />

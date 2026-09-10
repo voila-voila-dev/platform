@@ -66,23 +66,21 @@ describe("Sheet", () => {
 		});
 	});
 
-	it.each([
-		"top",
-		"right",
-		"bottom",
-		"left",
-	] as const)("applies the %s side as a data attribute", async (side) => {
-		const screen = render(<Fixture side={side} />);
-		fireEvent.click(
-			screen.getByRole("button", { name: "Open project details" }),
-		);
-		await waitFor(() => {
-			const content = screen.baseElement.querySelector(
-				"[data-slot=sheet-content]",
+	it.each(["top", "right", "bottom", "left"] as const)(
+		"applies the %s side as a data attribute",
+		async (side) => {
+			const screen = render(<Fixture side={side} />);
+			fireEvent.click(
+				screen.getByRole("button", { name: "Open project details" }),
 			);
-			expect(content?.getAttribute("data-side")).toBe(side);
-		});
-	});
+			await waitFor(() => {
+				const content = screen.baseElement.querySelector(
+					"[data-slot=sheet-content]",
+				);
+				expect(content?.getAttribute("data-side")).toBe(side);
+			});
+		},
+	);
 
 	it("applies the size to the popup as a data attribute", async () => {
 		const screen = render(<Fixture size="lg" />);

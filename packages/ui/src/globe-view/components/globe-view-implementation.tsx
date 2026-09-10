@@ -1,4 +1,4 @@
-import maplibregl from "maplibre-gl";
+import * as maplibregl from "maplibre-gl";
 import { useEffect, useRef, useState } from "react";
 import type { GlobeView } from "#/globe-view/components/globe-view.tsx";
 import { StaticGlobeOutline } from "#/globe-view/components/static-globe-outline.tsx";

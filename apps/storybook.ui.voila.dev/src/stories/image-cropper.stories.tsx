@@ -13,10 +13,10 @@ import {
 import { ResponsiveDialog } from "@voila.dev/ui/responsive-dialog";
 import { useState } from "react";
 import { expect, fireEvent, waitFor } from "storybook/test";
+import { PORTRAIT_IMAGE } from "../fixtures/portrait-image";
 
 const LANDSCAPE_IMAGE =
 	"https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=1200&q=80";
-const PORTRAIT_IMAGE = "https://github.com/shadcn.png";
 
 const meta = {
 	title: "UI/ImageCropper",

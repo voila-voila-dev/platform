@@ -15,9 +15,13 @@ import * as Example from "@/examples/ui-datatable/column-pinning";
 <DataTable.Root
 	columns={columns}
 	data={projects}
-	columnPinning={{ left: ["reference"], right: ["amount"] }}
+	columnPinning={{ start: ["reference"], end: ["amount"] }}
 />;
 ```
+
+The edges are logical rather than physical: `start` and `end` follow the
+reading direction, so the same table freezes the right columns under RTL.
+Naming one edge is enough — the other defaults to empty.
 
 Pinned columns stack, so several per side work. An edge rule marks where the
 frozen part ends — without it the two run together mid-scroll.

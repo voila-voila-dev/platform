@@ -1,4 +1,8 @@
-import { type ColumnDef, DataTable } from "@voila.dev/ui/data-table";
+import {
+	type ColumnDef,
+	DataTable,
+	type DataTableFeatures,
+} from "@voila.dev/ui/data-table";
 import {
 	Filter,
 	type FilterDefinition,
@@ -103,7 +107,7 @@ const ROLE_LABEL: Record<Project["role"], string> = {
 	writer: "Copywriter",
 };
 
-const PROJECT_COLUMNS: ColumnDef<Project>[] = [
+const PROJECT_COLUMNS: ColumnDef<DataTableFeatures, Project>[] = [
 	{ accessorKey: "reference", header: "Reference", size: 110 },
 	{ accessorKey: "client", header: "Client" },
 	{

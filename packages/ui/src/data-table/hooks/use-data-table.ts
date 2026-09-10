@@ -2,27 +2,28 @@ import {
 	type ColumnDef,
 	type ColumnPinningState,
 	type ColumnSizingState,
+	type ColumnVisibilityState,
 	type ExpandedState,
-	getCoreRowModel,
-	getExpandedRowModel,
-	getFilteredRowModel,
-	getSortedRowModel,
 	type OnChangeFn,
 	type Row,
+	type RowData,
 	type RowSelectionState,
 	type SortingState,
-	useReactTable,
-	type VisibilityState,
+	useTable,
 } from "@tanstack/react-table";
 import * as React from "react";
+import {
+	type DataTableFeatures,
+	dataTableFeatures,
+} from "#/data-table/lib/features.ts";
 
 /** The table-state slice of `DataTable.Root`'s props. */
-export interface UseDataTableOptions<TData, TValue> {
+export interface UseDataTableOptions<TData extends RowData> {
 	/**
 	 * TanStack column definitions. A numeric `size` on any column switches the
 	 * table to fixed layout, and sized cells truncate instead of stretching.
 	 */
-	columns: ColumnDef<TData, TValue>[];
+	columns: ColumnDef<DataTableFeatures, TData>[];
 	/**
 	 * The rows to render, already fetched and in the order you want them. The
 	 * table sorts and filters its own view of this array but never mutates it.
@@ -39,7 +40,9 @@ export interface UseDataTableOptions<TData, TValue> {
 	/** Fires whether or not `sorting` is passed, so it works as a listener too. */
 	onSortingChange?: (state: SortingState) => void;
 	/** Per-row or table-wide opt-in, forwarded to @tanstack/react-table. */
-	enableRowSelection?: boolean | ((row: Row<TData>) => boolean);
+	enableRowSelection?:
+		| boolean
+		| ((row: Row<DataTableFeatures, TData>) => boolean);
 	/** Controlled selection state; omit to let the table own it. */
 	rowSelection?: RowSelectionState;
 	/** Fires whether or not `rowSelection` is passed, so it works as a listener too. */
@@ -56,14 +59,16 @@ export interface UseDataTableOptions<TData, TValue> {
 	/** Fires on every drag frame; debounce before writing it to storage. */
 	onColumnSizingChange?: (state: ColumnSizingState) => void;
 	/** Controlled column visibility; pair with `DataTable.ViewOptions`. */
-	columnVisibility?: VisibilityState;
+	columnVisibility?: ColumnVisibilityState;
 	/** Fires whether or not `columnVisibility` is passed. Persist it to remember a user's columns. */
-	onColumnVisibilityChange?: (state: VisibilityState) => void;
+	onColumnVisibilityChange?: (state: ColumnVisibilityState) => void;
 	/**
 	 * Columns frozen against an edge while the rest pans horizontally, by id:
-	 * `{ left: ["name"], right: ["actions"] }`.
+	 * `{ start: ["name"], end: ["actions"] }`. The edges are logical, so they
+	 * follow the reading direction and swap under RTL. Naming one edge is
+	 * enough - the other defaults to empty.
 	 */
-	columnPinning?: ColumnPinningState;
+	columnPinning?: Partial<ColumnPinningState>;
 	/** Fires whether or not `columnPinning` is passed. */
 	onColumnPinningChange?: (state: ColumnPinningState) => void;
 	/**
@@ -104,7 +109,7 @@ function useOptionalControlled<TState>(
 }
 
 /** Builds the TanStack table instance behind `DataTable.Root`. */
-export function useDataTable<TData, TValue>({
+export function useDataTable<TData extends RowData>({
 	columns,
 	data,
 	initialSorting,
@@ -123,7 +128,7 @@ export function useDataTable<TData, TValue>({
 	onColumnPinningChange,
 	renderExpandedRow,
 	globalFilter,
-}: UseDataTableOptions<TData, TValue>) {
+}: UseDataTableOptions<TData>) {
 	const [sortingState, handleSortingChange] = useOptionalControlled(
 		sorting,
 		onSortingChange,
@@ -142,22 +147,25 @@ export function useDataTable<TData, TValue>({
 	const [visibility, handleVisibilityChange] = useOptionalControlled(
 		columnVisibility,
 		onColumnVisibilityChange,
-		{} as VisibilityState,
+		{} as ColumnVisibilityState,
+	);
+	// TanStack wants both edges spelled out; the caller may name only one.
+	// Memoised so a controlled table doesn't get a fresh object every render.
+	const filledPinning = React.useMemo(
+		() => columnPinning && { start: [], end: [], ...columnPinning },
+		[columnPinning],
 	);
 	const [pinning, handlePinningChange] = useOptionalControlled(
-		columnPinning,
+		filledPinning,
 		onColumnPinningChange,
-		{ left: [], right: [] } as ColumnPinningState,
+		{ start: [], end: [] } as ColumnPinningState,
 	);
 	const [expanded, setExpanded] = React.useState<ExpandedState>({});
 
-	return useReactTable({
-		data: data as TData[],
+	return useTable({
+		features: dataTableFeatures,
+		data,
 		columns,
-		getCoreRowModel: getCoreRowModel(),
-		getSortedRowModel: getSortedRowModel(),
-		getFilteredRowModel: getFilteredRowModel(),
-		getExpandedRowModel: getExpandedRowModel(),
 		// Controlled sorting means the caller orders `data` (typically in the
 		// database); the row model must not re-sort it.
 		manualSorting: sorting !== undefined,

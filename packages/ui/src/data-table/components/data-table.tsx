@@ -12,19 +12,22 @@ import { DataTableViewOptions } from "#/data-table/components/data-table-view-op
 import { DataTableViewToggle } from "#/data-table/components/data-table-view-toggle.tsx";
 
 // Re-exported so consumers can type their `columns` without depending on
-// @tanstack/react-table directly.
+// @tanstack/react-table directly. TanStack v9 threads the enabled features
+// through every generic, so a column definition reads
+// `ColumnDef<DataTableFeatures, Club>` - hence the feature set is exported too.
 export type {
 	ColumnDef,
 	ColumnOrderState,
 	ColumnPinningState,
 	ColumnSizingState,
+	ColumnVisibilityState,
 	ExpandedState,
 	Row,
 	RowSelectionState,
 	SortingState,
-	VisibilityState,
 } from "@tanstack/react-table";
 export type { DataTableDensity } from "#/data-table/lib/density.ts";
+export type { DataTableFeatures } from "#/data-table/lib/features.ts";
 export { dataTableSelectionColumn } from "#/data-table/lib/selection-column.tsx";
 export { dataTableToCsv } from "#/data-table/lib/to-csv.ts";
 export type { DataTableView } from "#/data-table/lib/view.ts";

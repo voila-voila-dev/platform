@@ -3,8 +3,10 @@ export {
 	type ColumnOrderState,
 	type ColumnPinningState,
 	type ColumnSizingState,
+	type ColumnVisibilityState,
 	DataTable,
 	type DataTableDensity,
+	type DataTableFeatures,
 	type DataTableView,
 	dataTableSelectionColumn,
 	dataTableToCsv,
@@ -12,5 +14,4 @@ export {
 	type Row,
 	type RowSelectionState,
 	type SortingState,
-	type VisibilityState,
 } from "#/data-table/components/data-table.tsx";

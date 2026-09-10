@@ -6,6 +6,7 @@ import { CardGallery } from "@voila.dev/ui/card-gallery";
 import {
 	type ColumnDef,
 	DataTable,
+	type DataTableFeatures,
 	type DataTableView,
 	dataTableSelectionColumn,
 	type RowSelectionState,
@@ -114,7 +115,7 @@ const statusColor = {
 	Completed: "gray",
 } as const;
 
-const columns: ColumnDef<Project>[] = [
+const columns: ColumnDef<DataTableFeatures, Project>[] = [
 	{ accessorKey: "reference", header: "Reference", size: 110 },
 	{ accessorKey: "client", header: "Client" },
 	{ accessorKey: "specialty", header: "Specialty" },
@@ -139,7 +140,7 @@ const columns: ColumnDef<Project>[] = [
 ];
 
 /** The same rows with enough columns to force a horizontal scroll. */
-const wideColumns: ColumnDef<Project>[] = [
+const wideColumns: ColumnDef<DataTableFeatures, Project>[] = [
 	{ accessorKey: "reference", header: "Reference", size: 110 },
 	{ accessorKey: "client", header: "Client", size: 180 },
 	{ accessorKey: "specialty", header: "Specialty", size: 160 },
@@ -182,7 +183,7 @@ const meta = {
 	component: DataTable.Root,
 	tags: ["autodocs"],
 	args: { columns, data: projects },
-} satisfies Meta<typeof DataTable.Root<Project, unknown>>;
+} satisfies Meta<typeof DataTable.Root<Project>>;
 
 export default meta;
 
@@ -444,7 +445,7 @@ const organizations: Organization[] = [
 	{ name: "Millbrook Archive", category: "Heritage" },
 ];
 
-const organizationColumns: ColumnDef<Organization>[] = [
+const organizationColumns: ColumnDef<DataTableFeatures, Organization>[] = [
 	{ accessorKey: "name", header: "Name" },
 	{ accessorKey: "category", header: "Category" },
 ];
@@ -508,7 +509,7 @@ export const PinnedColumns: Story = {
 			<DataTable.Root
 				columns={wideColumns}
 				data={projects}
-				columnPinning={{ left: ["reference", "client"], right: ["amount"] }}
+				columnPinning={{ start: ["reference", "client"], end: ["amount"] }}
 				onRowClick={() => {}}
 			/>
 		</div>
@@ -549,7 +550,7 @@ const campaigns: Campaign[] = [
 
 const rate = (value: number) => `${Math.round(value * 100)} %`;
 
-const groupedColumns: ColumnDef<Campaign>[] = [
+const groupedColumns: ColumnDef<DataTableFeatures, Campaign>[] = [
 	{ accessorKey: "name", header: "Campaign", size: 200 },
 	{
 		id: "email",

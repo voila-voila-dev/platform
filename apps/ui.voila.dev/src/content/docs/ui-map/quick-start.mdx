@@ -32,16 +32,29 @@ bun add @voila.dev/ui maplibre-gl
 
 Or copy the source, it's the same files.
 
-Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.
+Peers: `react@19`, `react-dom@19`, `tailwindcss@4`, `maplibre-gl@6`.
+
+MapLibre 6 is ESM-only and starts its tile worker from a URL relative to its
+own module, so keep it out of Vite's dependency pre-bundling: that step
+rewrites the module into `deps/`, where the worker URL no longer resolves. The
+worker then never starts and the map draws its raster layers alone — water,
+roads, borders and labels go missing, with nothing logged.
+
+```ts title="vite.config.ts"
+export default defineConfig({
+	optimizeDeps: { exclude: ["maplibre-gl"] },
+});
+```
 
 ## The 3-minute win
 
 A city map with a marker. `onReady` hands you the live MapLibre instance, so
-markers, sources and layers are ordinary MapLibre code.
+markers, sources and layers are ordinary MapLibre code. MapLibre 6 publishes
+no default export, so reach for the namespace or a named import.
 
 ```tsx
 import { MapView } from "@voila.dev/ui/map-view";
-import maplibregl from "maplibre-gl";
+import * as maplibregl from "maplibre-gl";
 
 export function VenueMap() {
 	return (

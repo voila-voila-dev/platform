@@ -1,4 +1,4 @@
-import type { Table as TanstackTable } from "@tanstack/react-table";
+import type { RowData, Table as TanstackTable } from "@tanstack/react-table";
 import type * as React from "react";
 import { DataTableDesktopTable } from "#/data-table/components/data-table-desktop-table.tsx";
 import { DataTableGallery } from "#/data-table/components/data-table-gallery.tsx";
@@ -9,10 +9,11 @@ import {
 	useDataTable,
 } from "#/data-table/hooks/use-data-table.ts";
 import type { DataTableDensity } from "#/data-table/lib/density.ts";
+import type { DataTableFeatures } from "#/data-table/lib/features.ts";
 import type { DataTableView } from "#/data-table/lib/view.ts";
 
-interface Props<TData, TValue>
-	extends UseDataTableOptions<TData, TValue>,
+interface Props<TData extends RowData>
+	extends UseDataTableOptions<TData>,
 		Omit<React.ComponentProps<"div">, "children"> {
 	/** When set, rows become clickable and invoke this with the row's data. */
 	onRowClick?: (row: TData) => void;
@@ -28,7 +29,7 @@ interface Props<TData, TValue>
 	 */
 	toolbar?:
 		| React.ReactNode
-		| ((table: TanstackTable<TData>) => React.ReactNode);
+		| ((table: TanstackTable<DataTableFeatures, TData>) => React.ReactNode);
 	/**
 	 * Keeps the header row visible while the body scrolls. Needs a bounded
 	 * height on the scroll container - pass e.g. `max-h-96` through
@@ -74,7 +75,7 @@ interface Props<TData, TValue>
  * `toolbar` is a render prop when it needs the table instance — the controls
  * that drive columns (`DataTable.ViewOptions`, `DataTable.Export`) do.
  */
-export function DataTableRoot<TData, TValue>({
+export function DataTableRoot<TData extends RowData>({
 	columns,
 	data,
 	initialSorting,
@@ -106,7 +107,7 @@ export function DataTableRoot<TData, TValue>({
 	renderGalleryCard,
 	className,
 	...props
-}: Props<TData, TValue>) {
+}: Props<TData>) {
 	const table = useDataTable({
 		columns,
 		data,
@@ -176,8 +177,8 @@ export function DataTableRoot<TData, TValue>({
 						density={density}
 						table={table}
 						pinned={
-							(columnPinning?.left?.length ?? 0) +
-								(columnPinning?.right?.length ?? 0) >
+							(columnPinning?.start?.length ?? 0) +
+								(columnPinning?.end?.length ?? 0) >
 							0
 						}
 					/>

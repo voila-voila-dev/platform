@@ -24,25 +24,23 @@ describe("Item", () => {
 		expect(item?.getAttribute("data-size")).toBe("default");
 	});
 
-	it.each([
-		"default",
-		"outline",
-		"muted",
-	] as const)("exposes variant %s as a data attribute", (variant) => {
-		const screen = render(<Item.Root variant={variant}>Project</Item.Root>);
-		expect(queryBySlot(screen, "item")?.getAttribute("data-variant")).toBe(
-			variant,
-		);
-	});
+	it.each(["default", "outline", "muted"] as const)(
+		"exposes variant %s as a data attribute",
+		(variant) => {
+			const screen = render(<Item.Root variant={variant}>Project</Item.Root>);
+			expect(queryBySlot(screen, "item")?.getAttribute("data-variant")).toBe(
+				variant,
+			);
+		},
+	);
 
-	it.each([
-		"default",
-		"sm",
-		"xs",
-	] as const)("exposes size %s as a data attribute", (size) => {
-		const screen = render(<Item.Root size={size}>Project</Item.Root>);
-		expect(queryBySlot(screen, "item")?.getAttribute("data-size")).toBe(size);
-	});
+	it.each(["default", "sm", "xs"] as const)(
+		"exposes size %s as a data attribute",
+		(size) => {
+			const screen = render(<Item.Root size={size}>Project</Item.Root>);
+			expect(queryBySlot(screen, "item")?.getAttribute("data-size")).toBe(size);
+		},
+	);
 
 	it("gives each size distinct paddings", () => {
 		const defaultItem = render(
@@ -124,16 +122,15 @@ describe("Item.Media", () => {
 		expect(media?.getAttribute("data-variant")).toBe("default");
 	});
 
-	it.each([
-		"default",
-		"icon",
-		"image",
-	] as const)("exposes variant %s as a data attribute", (variant) => {
-		const screen = render(<Item.Media variant={variant} />);
-		expect(
-			queryBySlot(screen, "item-media")?.getAttribute("data-variant"),
-		).toBe(variant);
-	});
+	it.each(["default", "icon", "image"] as const)(
+		"exposes variant %s as a data attribute",
+		(variant) => {
+			const screen = render(<Item.Media variant={variant} />);
+			expect(
+				queryBySlot(screen, "item-media")?.getAttribute("data-variant"),
+			).toBe(variant);
+		},
+	);
 
 	it("renders through the render prop like Item", () => {
 		const screen = render(

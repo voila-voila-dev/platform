@@ -1,5 +1,5 @@
 import { OTPInput } from "input-otp";
-import type * as React from "react";
+import * as React from "react";
 import { cn } from "#/lib/utils.ts";
 
 // Alias, not `interface … extends`: `input-otp`'s props are a union of the
@@ -11,8 +11,21 @@ type Props = React.ComponentProps<typeof OTPInput> & {
 export function InputOTPRoot({
 	className,
 	containerClassName,
+	defaultValue,
+	value,
+	onChange,
 	...props
 }: Props) {
+	// `input-otp` seeds its own state from `defaultValue` and then forwards the
+	// prop to the inner input as well, where its `value` already sits - React
+	// warns there about an input that is both controlled and uncontrolled. Own
+	// the uncontrolled case here and hand it a controlled pair instead, so the
+	// prop never reaches the input and the warning has nothing to fire on.
+	const [uncontrolled, setUncontrolled] = React.useState(
+		typeof defaultValue === "string" ? defaultValue : "",
+	);
+	const isControlled = value !== undefined;
+
 	return (
 		<OTPInput
 			data-slot="input-otp"
@@ -22,6 +35,13 @@ export function InputOTPRoot({
 			)}
 			spellCheck={false}
 			className={cn("disabled:cursor-not-allowed", className)}
+			value={isControlled ? value : uncontrolled}
+			onChange={(next) => {
+				if (!isControlled) {
+					setUncontrolled(next);
+				}
+				onChange?.(next);
+			}}
 			{...props}
 		/>
 	);

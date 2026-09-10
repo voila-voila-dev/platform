@@ -1,16 +1,18 @@
 import { DownloadSimpleIcon } from "@phosphor-icons/react";
-import type { Table as TanstackTable } from "@tanstack/react-table";
+import type { RowData, Table as TanstackTable } from "@tanstack/react-table";
 import type * as React from "react";
 import { Button } from "#/button/components/button.tsx";
+import type { DataTableFeatures } from "#/data-table/lib/features.ts";
 import { dataTableToCsv } from "#/data-table/lib/to-csv.ts";
 
-interface Props<TData> extends React.ComponentProps<typeof Button> {
+interface Props<TData extends RowData>
+	extends React.ComponentProps<typeof Button> {
 	/**
 	 * The live table instance, from `DataTable.Root`'s `toolbar` render prop.
 	 * What gets exported is the current view — sorted, filtered, visible columns
 	 * only — not the whole `data` array.
 	 */
-	table: TanstackTable<TData>;
+	table: TanstackTable<DataTableFeatures, TData>;
 	/** Name of the downloaded file. */
 	filename?: string;
 	/** Text on the button. This package ships no translations. */
@@ -18,7 +20,7 @@ interface Props<TData> extends React.ComponentProps<typeof Button> {
 }
 
 /** Downloads the current view as CSV. */
-export function DataTableExport<TData>({
+export function DataTableExport<TData extends RowData>({
 	table,
 	filename = "export.csv",
 	label = "Export",

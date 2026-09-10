@@ -310,29 +310,23 @@ describe("Chat.Marker", () => {
 		);
 	});
 
-	it.each([
-		"default",
-		"separator",
-		"border",
-	] as const)("exposes the %s variant as a data attribute", (variant) => {
-		const screen = render(
-			<Chat.Marker variant={variant}>
-				<Chat.MarkerContent>x</Chat.MarkerContent>
-			</Chat.Marker>,
-		);
-		expect(
-			queryBySlot(screen, "chat-marker")?.getAttribute("data-variant"),
-		).toBe(variant);
-	});
+	it.each(["default", "separator", "border"] as const)(
+		"exposes the %s variant as a data attribute",
+		(variant) => {
+			const screen = render(
+				<Chat.Marker variant={variant}>
+					<Chat.MarkerContent>x</Chat.MarkerContent>
+				</Chat.Marker>,
+			);
+			expect(
+				queryBySlot(screen, "chat-marker")?.getAttribute("data-variant"),
+			).toBe(variant);
+		},
+	);
 
 	it("becomes a real link through the render prop", () => {
 		const screen = render(
-			<Chat.Marker
-				render={
-					// biome-ignore lint/a11y/useAnchorContent: content is merged in from Chat.Marker
-					<a href="/details" />
-				}
-			>
+			<Chat.Marker render={<a href="/details" />}>
 				<Chat.MarkerContent>Voir le détail</Chat.MarkerContent>
 			</Chat.Marker>,
 		);
@@ -825,28 +819,45 @@ describe("Chat.MessageList", () => {
 		expect(list.scrollTop).toBe(100);
 	});
 
-	it("preserves the viewport on prepend when native scroll anchoring is missing", () => {
-		const screen = render(
-			<Chat.MessageList>{[<p key="a">Anchored</p>]}</Chat.MessageList>,
-		);
-		const list = queryBySlot(screen, "chat-message-list") as HTMLDivElement;
-		defineScrollMetrics(list, { scrollHeight: 1000, clientHeight: 200 });
-		// Re-run the effect so it records the 1000px height as the baseline.
-		screen.rerender(
-			<Chat.MessageList>{[<p key="a">Anchored</p>]}</Chat.MessageList>,
-		);
-		list.scrollTop = 100;
-		fireEvent.scroll(list);
-		// Loading older history grows the content above the anchored message.
-		defineScrollMetrics(list, { scrollHeight: 1400, clientHeight: 200 });
-		screen.rerender(
-			<Chat.MessageList>
-				{[<p key="older">Older</p>, <p key="a">Anchored</p>]}
-			</Chat.MessageList>,
-		);
-		// jsdom (like Safari) lacks overflow-anchor: the list compensates by the
-		// 400px height delta so the reader stays on the same message.
-		expect(list.scrollTop).toBe(500);
+	it("preserves the viewport on prepend when native scroll anchoring is missing", async () => {
+		// The list reads `overflow-anchor` support once, as its module loads, so
+		// the Safari branch has to be set up before the import rather than
+		// stubbed afterwards. It used to ride on jsdom happening to lack the
+		// property; jsdom 30 reports it as supported, which silently flipped
+		// this test to the other branch. Say which browser is being tested.
+		vi.stubGlobal("CSS", { supports: () => false });
+		vi.resetModules();
+		const { Chat: ChatWithoutAnchoring } = await import("#/chat/index.ts");
+		try {
+			const screen = render(
+				<ChatWithoutAnchoring.MessageList>
+					{[<p key="a">Anchored</p>]}
+				</ChatWithoutAnchoring.MessageList>,
+			);
+			const list = queryBySlot(screen, "chat-message-list") as HTMLDivElement;
+			defineScrollMetrics(list, { scrollHeight: 1000, clientHeight: 200 });
+			// Re-run the effect so it records the 1000px height as the baseline.
+			screen.rerender(
+				<ChatWithoutAnchoring.MessageList>
+					{[<p key="a">Anchored</p>]}
+				</ChatWithoutAnchoring.MessageList>,
+			);
+			list.scrollTop = 100;
+			fireEvent.scroll(list);
+			// Loading older history grows the content above the anchored message.
+			defineScrollMetrics(list, { scrollHeight: 1400, clientHeight: 200 });
+			screen.rerender(
+				<ChatWithoutAnchoring.MessageList>
+					{[<p key="older">Older</p>, <p key="a">Anchored</p>]}
+				</ChatWithoutAnchoring.MessageList>,
+			);
+			// Without overflow-anchor the list compensates by the 400px height
+			// delta itself, so the reader stays on the same message.
+			expect(list.scrollTop).toBe(500);
+		} finally {
+			vi.unstubAllGlobals();
+			vi.resetModules();
+		}
 	});
 
 	it("shows a jump-to-latest button while away from the bottom and jumps on click", () => {

@@ -1,5 +1,6 @@
-import type { Column } from "@tanstack/react-table";
+import type { Column, RowData } from "@tanstack/react-table";
 import type * as React from "react";
+import type { DataTableFeatures } from "#/data-table/lib/features.ts";
 import { cn } from "#/lib/utils.ts";
 
 /**
@@ -19,25 +20,45 @@ export const PINNED_HEAD_HOVER_CLASS =
  * Styles for a column frozen against an edge. The offset is the running width
  * of the columns pinned before it, so several can stack.
  */
-export function pinnedStyle<TData>(
-	column: Column<TData, unknown>,
+export function pinnedStyle<TData extends RowData>(
+	column: Column<DataTableFeatures, TData, unknown>,
 ): React.CSSProperties | undefined {
 	const side = column.getIsPinned();
 	if (side === false) {
 		return undefined;
 	}
-	return side === "left"
-		? { position: "sticky", left: column.getStart("left"), zIndex: 2 }
-		: { position: "sticky", right: column.getAfter("right"), zIndex: 2 };
+	// Logical insets, not `left`/`right`: TanStack pins to the start and end of
+	// the reading direction, so the offsets it hands back are already mirrored
+	// under RTL and physical sides would freeze the columns to the wrong edge.
+	return side === "start"
+		? {
+				position: "sticky",
+				insetInlineStart: column.getStart("start"),
+				zIndex: 2,
+			}
+		: {
+				position: "sticky",
+				insetInlineEnd: column.getAfter("end"),
+				zIndex: 2,
+			};
 }
 
-export function pinnedClass<TData>(
-	column: Column<TData, unknown>,
+export function pinnedClass<TData extends RowData>(
+	column: Column<DataTableFeatures, TData, unknown>,
 ): string | false {
 	const side = column.getIsPinned();
 	if (side === false) {
 		return false;
 	}
+	// Only the column against the scrolling content carries the edge. TanStack
+	// dropped `getIsLastColumn`/`getIsFirstColumn` in v9, so the position comes
+	// from the column's index within its own pinned region: the last of the
+	// start region and the first of the end region are the two that border it.
+	const pinnedIndex = column.getPinnedIndex();
+	const bordersScrollingContent =
+		side === "start"
+			? pinnedIndex === column.table.getStartVisibleLeafColumns().length - 1
+			: pinnedIndex === 0;
 	return cn(
 		// `bg-inherit` rather than a fixed colour: the row owns the background,
 		// so a pinned cell follows hover, selection and expansion instead of
@@ -60,11 +81,11 @@ export function pinnedClass<TData>(
 		// reads as scalloped dashes, while at zero the neighbours overlap into
 		// one continuous band. Mixed from `--foreground` rather than black, so
 		// it darkens on a light theme and glows on a dark one.
-		side === "left" &&
-			column.getIsLastColumn("left") &&
-			"in-data-scrolled-start:after:pointer-events-none in-data-scrolled-start:after:absolute in-data-scrolled-start:after:inset-y-0 in-data-scrolled-start:after:right-0 in-data-scrolled-start:after:w-px in-data-scrolled-start:after:bg-border in-data-scrolled-start:after:content-[''] in-data-scrolled-start:after:shadow-[3px_0_4px_0_color-mix(in_oklab,var(--foreground)_12%,transparent)]",
-		side === "right" &&
-			column.getIsFirstColumn("right") &&
-			"in-data-scrolled-end:after:pointer-events-none in-data-scrolled-end:after:absolute in-data-scrolled-end:after:inset-y-0 in-data-scrolled-end:after:left-0 in-data-scrolled-end:after:w-px in-data-scrolled-end:after:bg-border in-data-scrolled-end:after:content-[''] in-data-scrolled-end:after:shadow-[-3px_0_4px_0_color-mix(in_oklab,var(--foreground)_12%,transparent)]",
+		side === "start" &&
+			bordersScrollingContent &&
+			"in-data-scrolled-start:after:pointer-events-none in-data-scrolled-start:after:absolute in-data-scrolled-start:after:inset-y-0 in-data-scrolled-start:after:end-0 in-data-scrolled-start:after:w-px in-data-scrolled-start:after:bg-border in-data-scrolled-start:after:content-[''] in-data-scrolled-start:after:shadow-[3px_0_4px_0_color-mix(in_oklab,var(--foreground)_12%,transparent)]",
+		side === "end" &&
+			bordersScrollingContent &&
+			"in-data-scrolled-end:after:pointer-events-none in-data-scrolled-end:after:absolute in-data-scrolled-end:after:inset-y-0 in-data-scrolled-end:after:start-0 in-data-scrolled-end:after:w-px in-data-scrolled-end:after:bg-border in-data-scrolled-end:after:content-[''] in-data-scrolled-end:after:shadow-[-3px_0_4px_0_color-mix(in_oklab,var(--foreground)_12%,transparent)]",
 	);
 }
