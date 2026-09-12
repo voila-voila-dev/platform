@@ -25,6 +25,11 @@ interface Props
 	currencyDisabled?: boolean;
 	/** Accessible name for the currency select. */
 	currencyLabel: string;
+	/**
+	 * A control set inside the box before the currency, typically an
+	 * `InputGroup.Button` that fills the amount ("Max").
+	 */
+	action?: React.ReactNode;
 	/** Wrapper class (width/layout), forwarded to the `InputGroup`. */
 	className?: string;
 }
@@ -45,6 +50,7 @@ export function MoneyInput({
 	onCurrencyChange,
 	currencyDisabled = currencies.length <= 1,
 	currencyLabel,
+	action,
 	className,
 	...props
 }: Props) {
@@ -66,6 +72,7 @@ export function MoneyInput({
 				{...props}
 			/>
 			<InputGroup.Addon align="inline-end">
+				{action}
 				<select
 					data-slot="money-input-currency"
 					aria-label={currencyLabel}

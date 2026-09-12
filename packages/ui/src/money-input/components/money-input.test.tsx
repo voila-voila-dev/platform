@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 import { cleanup, fireEvent, render } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
+import { InputGroup } from "#/input-group/components/input-group.tsx";
 import { MoneyInput } from "#/money-input/components/money-input.tsx";
 
 afterEach(cleanup);
@@ -68,5 +69,30 @@ describe("MoneyInput", () => {
 		expect(currency.disabled).toBe(false);
 		fireEvent.change(currency, { target: { value: "USD" } });
 		expect(onCurrencyChange).toHaveBeenCalledWith("USD");
+	});
+
+	it("sets the action inside the box, before the currency", () => {
+		const onMax = vi.fn();
+		const screen = render(
+			<MoneyInput
+				value=""
+				onValueChange={() => {}}
+				currency="EUR"
+				currencyLabel="Currency"
+				action={<InputGroup.Button onClick={onMax}>Max</InputGroup.Button>}
+			/>,
+		);
+		const addon = screen.baseElement.querySelector(
+			"[data-slot=input-group-addon]",
+		);
+		if (addon === null) throw new Error("addon not found");
+		const button = screen.getByRole("button", { name: "Max" });
+		expect(addon.contains(button)).toBe(true);
+		expect(
+			button.compareDocumentPosition(queryCurrency(screen)) &
+				Node.DOCUMENT_POSITION_FOLLOWING,
+		).toBeTruthy();
+		fireEvent.click(button);
+		expect(onMax).toHaveBeenCalledTimes(1);
 	});
 });

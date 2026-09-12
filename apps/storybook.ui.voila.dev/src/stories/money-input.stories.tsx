@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
+import { InputGroup } from "@voila.dev/ui/input-group";
 import { MoneyInput } from "@voila.dev/ui/money-input";
 import { useState } from "react";
 
@@ -79,4 +80,29 @@ export const Disabled: Story = {
 			/>
 		</div>
 	),
+};
+
+function MaxMoneyInput() {
+	const [value, setValue] = useState("");
+	return (
+		<div className="w-full max-w-xs">
+			<MoneyInput
+				value={value}
+				onValueChange={setValue}
+				currency="EUR"
+				currencyLabel="Currency"
+				placeholder="0.00"
+				action={
+					<InputGroup.Button onClick={() => setValue("1250.40")}>
+						Max
+					</InputGroup.Button>
+				}
+			/>
+		</div>
+	);
+}
+
+/** A control inside the box: a "Max" button that fills the amount from a balance. */
+export const WithAction: Story = {
+	render: () => <MaxMoneyInput />,
 };
