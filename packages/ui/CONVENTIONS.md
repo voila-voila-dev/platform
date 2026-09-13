@@ -184,4 +184,8 @@ export const Empty = {
 - Every folder with an `index.ts` has a matching `exports` entry whose name
   equals the folder name. The only aliases are `./utils`, `./cva` and
   `./hooks`.
+- One nested subpath exists, `./content-editor/reader`: the read-only half
+  of the content editor, so a server build that only renders stored content
+  never loads Plate or Slate. A second nested subpath needs the same kind of
+  reason.
 - Stylesheets ship through `./styles/*.css`.

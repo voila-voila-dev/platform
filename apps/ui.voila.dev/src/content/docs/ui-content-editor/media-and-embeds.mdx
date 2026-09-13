@@ -1,0 +1,35 @@
+---
+title: "Media and embeds"
+description: "Images with upload, video, files, YouTube and X."
+sidebar:
+  order: 2
+---
+
+## Images
+
+The image feature appears only when the host wired `onUploadImage`. An
+inserted image is a drop zone until it has a url: the picked file goes to
+your callback, its result lands on the node, and a failure keeps the node and
+says why. Files dropped on or pasted into the canvas become image nodes too,
+one per file, each filled in as its upload lands. The callback receives the
+`File` and resolves with `{ url, width?, height? }`; the sizes reach the
+rendered `<img>`.
+
+```tsx
+onUploadImage={async (file) => {
+	const uploaded = await storage.put(file);
+	return { url: uploaded.publicUrl, width: uploaded.width, height: uploaded.height };
+}}
+```
+
+Every media node carries a caption, edited in place under it.
+
+## Video, files, YouTube, X
+
+Four embed features, each an attribute form in a popover rather than a
+prompt: a video url, a file url and name, a YouTube url or id, an X post url
+or id. Leave any out with `createContentFeatures({ embeds: ["youtube"] })`.
+
+A YouTube node renders the `youtube-nocookie` player; an X post renders the
+blockquote X's embed script upgrades in place, so a host that loads the
+script gets the card and one that does not still gets a link.

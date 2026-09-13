@@ -1,0 +1,54 @@
+---
+title: "Server-side rendering"
+description: "Render stored content without loading the editor."
+sidebar:
+  order: 7
+---
+
+import * as Example from "@/examples/ui-content-editor/reader";
+
+The editor never produces HTML; it produces a document. Rendering it for a
+reader is the reader half of every feature, exported on its own from
+`@voila.dev/ui/content-editor/reader`, an entry that imports neither Plate
+nor Slate. A static site build that only renders stored content pays for the
+renderer alone.
+
+## As HTML
+
+<Preview layout="stack">
+	<Example.Html />
+</Preview>
+
+```ts
+import { contentToHtml, createContentReaders } from "@voila.dev/ui/content-editor/reader";
+
+const READERS = createContentReaders();
+const html = contentToHtml(post.body, {
+	features: READERS,
+	imageDimensions,                 // sizes by url, for width and height on <img>
+	classNameFor: (type) => …,       // a class per node type, when your stylesheet names them
+});
+```
+
+`contentToInlineHtml` unwraps top-level paragraphs and joins them with
+`<br>`, for a value rendered inside a block the host already has.
+`collectContentUrls` lists every image url, for a build that measures them
+first.
+
+## As React
+
+<Preview layout="stack">
+	<Example.Rendered />
+</Preview>
+
+```tsx
+<ContentRenderer value={post.body} features={READERS} render={<article className="prose" />} />
+```
+
+Pass `createContentReaders` the same options as `createContentFeatures`
+(`headings`, `embeds`) so the reader renders exactly what the editor edits;
+the registry test holds the two sets to the same node types.
+
+## API
+
+<PropTable of="ContentRenderer" />

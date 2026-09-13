@@ -1,24 +1,33 @@
 /*
- * Fails the build on an English string hard-coded inside the email editor.
+ * Fails the build on an English string hard-coded inside an editor.
  *
- * Every string the editor renders comes from `labels.ts` so a consumer can ship
- * it in their own language. Nothing enforces that at the type level: a new
+ * Every string an editor renders comes from its `labels.ts` so a consumer can
+ * ship it in their own language. Nothing enforces that at the type level: a new
  * `placeholder="Your text"` compiles perfectly and only shows up as one English
  * word in the middle of a French app, months later, in a screenshot. Around 240
  * literals were extracted in one pass — this is what stops the next one from
  * creeping back in.
  *
- * Two shapes are refused under `packages/ui/src/email-block-editor/`:
- * a user-facing prop given a string literal (`label="Price"`), and a JSX text
- * node starting with a capital letter. `labels.ts` is where the strings are
- * supposed to be, so it is the one file exempt.
+ * Two shapes are refused under each editor's directory: a user-facing prop
+ * given a string literal (`label="Price"`), and a JSX text node starting with a
+ * capital letter. `labels.ts` is where the strings are supposed to be, so it
+ * is the one file exempt; tests assert on literals and are skipped too.
  *
- * Run from the repo root: `node scripts/check-email-editor-labels.mjs`.
+ * Run from the repo root: `node scripts/check-editor-labels.mjs`.
  */
-import { readdirSync, readFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 
-const ROOT = "packages/ui/src/email-block-editor";
+const EDITORS = [
+	{
+		root: "packages/ui/src/email-block-editor",
+		hook: "useEmailEditorLabels()",
+	},
+	{
+		root: "packages/ui/src/content-editor",
+		hook: "useContentEditorLabels()",
+	},
+];
 const EXEMPT = new Set(["labels.ts"]);
 
 /** Props whose value a reader sees, either on screen or through a screen reader. */
@@ -41,20 +50,29 @@ const JSX_TEXT = /^\s*[A-Z][A-Za-z0-9 ,.'’-]*$/;
 const CODE = /[(){}<>=;?:[\]]/;
 
 const files = [];
-const walk = (directory) => {
+const walk = (directory, hook) => {
+	if (!existsSync(directory)) {
+		return;
+	}
 	for (const entry of readdirSync(directory, { withFileTypes: true })) {
 		const full = path.join(directory, entry.name);
 		if (entry.isDirectory()) {
-			walk(full);
-		} else if (/\.tsx?$/.test(entry.name) && !EXEMPT.has(entry.name)) {
-			files.push(full);
+			walk(full, hook);
+		} else if (
+			/\.tsx?$/.test(entry.name) &&
+			!/\.test\.tsx?$/.test(entry.name) &&
+			!EXEMPT.has(entry.name)
+		) {
+			files.push({ file: full, hook });
 		}
 	}
 };
-walk(ROOT);
+for (const editor of EDITORS) {
+	walk(editor.root, editor.hook);
+}
 
 const failures = [];
-for (const file of files) {
+for (const { file, hook } of files) {
 	const lines = readFileSync(file, "utf8").split("\n");
 	let inImport = false;
 	lines.forEach((line, index) => {
@@ -71,15 +89,19 @@ for (const file of files) {
 		if (trimmed.startsWith("//") || trimmed.startsWith("*")) {
 			return;
 		}
+		// One identifier and a comma is an argument on its own line, not prose.
+		if (/^[A-Z][A-Za-z0-9]*,$/.test(trimmed)) {
+			return;
+		}
 		const literal = LITERAL_PROP.exec(line);
 		if (literal) {
 			failures.push(
-				`${file}:${index + 1}  ${literal[1]}="${literal[2]}" — read it from useEmailEditorLabels()`,
+				`${file}:${index + 1}  ${literal[1]}="${literal[2]}" — read it from ${hook}`,
 			);
 		}
 		if (JSX_TEXT.test(line) && !CODE.test(trimmed)) {
 			failures.push(
-				`${file}:${index + 1}  "${trimmed}" — read it from useEmailEditorLabels()`,
+				`${file}:${index + 1}  "${trimmed}" — read it from ${hook}`,
 			);
 		}
 	});
@@ -87,8 +109,8 @@ for (const file of files) {
 
 if (failures.length > 0) {
 	console.error(
-		`Hard-coded copy in the email editor (${failures.length}):\n${failures.join("\n")}`,
+		`Hard-coded copy in an editor (${failures.length}):\n${failures.join("\n")}`,
 	);
 	process.exit(1);
 }
-console.log(`No hard-coded copy in ${files.length} email editor files.`);
+console.log(`No hard-coded copy in ${files.length} editor files.`);

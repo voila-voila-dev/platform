@@ -1,0 +1,71 @@
+---
+title: "Toolbar and slash menu"
+description: "The chrome, derived from the registry, and how to compose it."
+sidebar:
+  order: 3
+---
+
+import * as Example from "@/examples/ui-content-editor/parts";
+
+`ContentEditor.Toolbar` with no children shows every item the registry's
+features declare, grouped in a fixed order: history, text, block, list,
+insert, table. An item is a `Toggle` when it knows whether it is active, a
+ghost `Button` otherwise, with a `Tooltip` carrying its label and its keys,
+and a `Popover` when it opens a form. An item that requires a capability the
+host did not wire (image upload) is absent, not disabled.
+
+Compose the groups by hand for a narrower toolbar:
+
+<Preview layout="stack" scroll>
+	<Example.ComposedByHand />
+</Preview>
+
+```tsx
+const items = FEATURES.flatMap((feature) => feature.toolbar ?? []);
+
+<ContentEditor.Toolbar>
+	<ContentEditor.ToolbarGroup items={items.filter((item) => item.group === "text")} />
+	<ContentEditor.ToolbarGroup items={items.filter((item) => item.group === "block")} />
+</ContentEditor.Toolbar>
+```
+
+## The floating toolbar
+
+`ContentEditor.FloatingToolbar` shows the features' `floating` items above a
+text selection, flipped below when the top has no room. It follows the
+editor's own selection rather than the DOM's, so it stays over the selected
+text while the link form inside it holds focus.
+
+## The slash menu
+
+Typing `/` opens the registry's slash items, filtered on the host's labels
+and each item's keywords, on the kit's `Command`. The menu is the `slash`
+feature: an editor built without it has none.
+
+## Single line
+
+<Preview layout="stack">
+	<Example.SingleLine />
+</Preview>
+
+`mode="single-line"` drops every block feature and holds one paragraph: Enter
+is swallowed, a seed of several blocks is folded into its first.
+`createInlineContentFeatures()` is the matching feature set.
+
+## API
+
+### ContentEditor.Root
+
+<PropTable of="ContentEditor.Root" />
+
+### ContentEditor.Canvas
+
+<PropTable of="ContentEditor.Canvas" />
+
+### ContentEditor.Toolbar
+
+<PropTable of="ContentEditor.Toolbar" />
+
+### ContentEditor.FloatingToolbar
+
+<PropTable of="ContentEditor.FloatingToolbar" />

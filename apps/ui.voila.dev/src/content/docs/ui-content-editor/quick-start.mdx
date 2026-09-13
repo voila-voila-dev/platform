@@ -1,0 +1,117 @@
+---
+title: "Quick start"
+description: "A rich content editor that lives in your app, from one feature registry."
+sidebar:
+  order: 0
+---
+
+import * as Example from "@/examples/ui-content-editor/quick-start";
+
+A rich content editor that lives in your app, from one feature registry.
+
+A blog post, a help page, a legal notice: the long-form text a product
+carries is usually edited somewhere else and pasted in. This module puts the
+editing surface inside your own app, built on Plate and the kit's own
+primitives. Headings, marks, links, lists, quotes, tables, callouts, images
+with upload, and embeds each come from one *feature definition*, and the
+toolbar, the slash menu, the floating toolbar, the reader-side renderer and
+the HTML serializer are all derived from that list.
+
+<Preview layout="stack" scroll>
+	<Example.Editor />
+</Preview>
+
+This is the real component. Select text for the floating toolbar, type `/`
+for a block, drop an image on the canvas.
+
+## Install
+
+```sh
+bun add @voila.dev/ui platejs @platejs/basic-nodes @platejs/link @platejs/list @platejs/indent @platejs/table @platejs/slash-command @platejs/combobox @platejs/markdown remark-gfm
+```
+
+```css title="globals.css"
+@import "@voila.dev/ui/styles/sources.css";
+@import "@voila.dev/ui/styles/content-editor.css";
+```
+
+Peers: `react@19`, `react-dom@19`, `tailwindcss@4`. The Plate packages are
+optional peers of the kit: a host that never imports `content-editor` never
+installs them.
+
+## The 3-minute win
+
+The editor is controlled: you hold the document, it reports changes. A
+document is a Slate tree, plain JSON your database stores as it is.
+
+```tsx
+import {
+	type ContentValue,
+	ContentEditorField,
+	createContentFeatures,
+} from "@voila.dev/ui/content-editor";
+import { useState } from "react";
+
+// Built once, outside the component: the editor's configuration, not its state.
+const FEATURES = createContentFeatures();
+
+export function PostBodyEditor() {
+	const [body, setBody] = useState<ContentValue | null>(null);
+	return (
+		<ContentEditorField
+			features={FEATURES}
+			value={body}
+			onChange={setBody}
+			onUploadImage={async (file) => {
+				// Upload to your own storage, resolve with the url.
+				const { url } = await uploadImage(file);
+				return { url };
+			}}
+		/>
+	);
+}
+```
+
+Omit `onUploadImage` and every image affordance disappears. Pass
+`toolbar={false}` for a chrome-less field, `mode="single-line"` for one
+paragraph, `readOnly` to show the document without editing it.
+
+## Arranging it differently
+
+`ContentEditorField` is the parts put together the usual way. Compose them
+yourself for another arrangement; every part renders a sensible default with
+no children.
+
+```tsx
+<ContentEditor.Root features={FEATURES} value={body} onChange={setBody}>
+	<ContentEditor.Layout stickyToolbar>
+		<ContentEditor.Toolbar />
+		<ContentEditor.Canvas />
+		<ContentEditor.CharacterCount />
+	</ContentEditor.Layout>
+	<ContentEditor.FloatingToolbar />
+</ContentEditor.Root>
+```
+
+## Mental model
+
+A feature is one object: its Plate plugins, its canvas element, its toolbar
+and slash items, and its reader half, which renders the node to React and to
+an HTML string. `createContentFeatures()` returns the built-in ones; add your
+own, drop what you do not want, reorder them. The reader halves are exported
+on their own from `@voila.dev/ui/content-editor/reader`, so a server build
+that only renders stored content never loads Plate.
+
+## API
+
+<PropTable of="ContentEditorField" />
+
+## Page map
+
+- [Blocks](/ui-content-editor/blocks): text, marks, headings, lists, quotes, dividers, tables, callouts.
+- [Media and embeds](/ui-content-editor/media-and-embeds): images with upload, video, files, YouTube, X.
+- [Toolbar and slash menu](/ui-content-editor/toolbar-and-slash-menu): the chrome, and how to compose it.
+- [Custom features](/ui-content-editor/custom-features): a node kind of your own, in one definition.
+- [Labels and theming](/ui-content-editor/labels-and-theming): every string and every size the host owns.
+- [Markdown](/ui-content-editor/markdown): the round trip, and what it loses.
+- [Server-side rendering](/ui-content-editor/server-side-rendering): the reader entry, `contentToHtml` and `ContentRenderer`.

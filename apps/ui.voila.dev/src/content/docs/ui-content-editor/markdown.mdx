@@ -1,0 +1,42 @@
+---
+title: "Markdown"
+description: "The round trip through Markdown, and what it loses."
+sidebar:
+  order: 6
+---
+
+import * as Example from "@/examples/ui-content-editor/reader";
+
+Markdown is an export and an import, not the stored format. The document
+stays JSON; `contentToMarkdown` writes GFM and `contentFromMarkdown` reads
+it, over the registry's own features.
+
+<Preview layout="stack">
+	<Example.Markdown />
+</Preview>
+
+```ts
+import { contentFromMarkdown, contentToMarkdown } from "@voila.dev/ui/content-editor";
+
+const markdown = contentToMarkdown(value, { features: FEATURES });
+const value = contentFromMarkdown(markdown, { features: FEATURES });
+```
+
+## What crosses how
+
+Paragraphs, marks, headings, links, lists, quotes, dividers and tables are
+GFM. An image is an mdast image, its caption as the title. A callout and the
+four embeds, which Markdown has no words for, cross as MDX elements named
+after their type (`<callout icon="💡">`, `<youtube-video videoId="…" />`): a
+plain Markdown reader sees the tag, an MDX reader gets the node back.
+
+What Markdown loses is named on each rule (`markdown.loss`): an image's
+width and height today. A test asserts that loss, so a Plate upgrade that
+starts carrying it shows up red rather than silently.
+
+## Importing existing content
+
+`contentFromMarkdown` reads Markdown a human wrote: `# ` headings, `- `
+lists, `**bold**`, links. Run `scrubImportedContent` over the result when the
+source carried stray line breaks or zero-width characters, the usual
+souvenirs of a migration.

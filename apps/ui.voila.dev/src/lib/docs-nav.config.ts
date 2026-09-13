@@ -170,4 +170,14 @@ export const docsSections: DocsSectionConfig[] = [
 				"The email template editor that lives in your app, not someone else's SaaS.",
 		},
 	},
+	{
+		label: "ui/content-editor",
+		dir: "ui-content-editor",
+		collapsed: true,
+		showcase: {
+			order: 2,
+			blurb:
+				"A rich content editor that lives in your app, from one feature registry.",
+		},
+	},
 ];

@@ -1,0 +1,41 @@
+---
+title: "Labels and theming"
+description: "Every string and every size, owned by the host."
+sidebar:
+  order: 5
+---
+
+## Labels
+
+No string the editor shows is hard-coded: they all come from `labels`, in
+two sections. `chrome` holds the editor's own copy (placeholder, upload
+states, the slash menu's empty state, the counts), `items` the name of every
+toolbar and slash item by its key, open for a custom feature's own keys.
+Sections merge one level deep: name only what you translate.
+
+```tsx
+<ContentEditorField
+	labels={{
+		chrome: { placeholder: "Écrivez, ou tapez / pour insérer un bloc…" },
+		items: { bold: "Gras", italic: "Italique", stockQuote: "Cours de bourse" },
+	}}
+/>
+```
+
+`DEFAULT_CONTENT_EDITOR_LABELS` is the English set, and the type
+`ContentEditorLabelsInput` the shape a translation file conforms to. The
+repository's `check-labels` script fails on a literal string inside the
+module, which is what keeps it that way.
+
+## Theme
+
+The theme is a handful of CSS custom properties the root sets, so the canvas
+follows the kit's tokens and dark mode, and a host overrides a size without
+a class.
+
+```tsx
+<ContentEditorField theme={{ variables: { "--content-editor-min-height": "24rem" } }} />
+```
+
+The two rules no utility class can say, the placeholder's position and
+colour, ship in `@voila.dev/ui/styles/content-editor.css`.

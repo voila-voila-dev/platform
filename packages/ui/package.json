@@ -24,7 +24,10 @@
 		"map",
 		"maplibre",
 		"email-editor",
-		"landing"
+		"landing",
+		"content-editor",
+		"rich-text-editor",
+		"plate"
 	],
 	"publishConfig": {
 		"access": "public"
@@ -69,6 +72,8 @@
 		"./command": "./src/command/index.ts",
 		"./confirm-dialog": "./src/confirm-dialog/index.ts",
 		"./context-menu": "./src/context-menu/index.ts",
+		"./content-editor": "./src/content-editor/index.ts",
+		"./content-editor/reader": "./src/content-editor/reader/index.ts",
 		"./copyable-text": "./src/copyable-text/index.ts",
 		"./cva": "./src/lib/cva.ts",
 		"./data-table": "./src/data-table/index.ts",
@@ -182,7 +187,18 @@
 		"@tanstack/react-virtual": "^3.14.6",
 		"@dnd-kit/core": "^6.3.1",
 		"@dnd-kit/sortable": "^10.0.0",
-		"@dnd-kit/utilities": "^3.2.2"
+		"@dnd-kit/utilities": "^3.2.2",
+		"platejs": "^53.3.11",
+		"@platejs/basic-nodes": "^53.0.0",
+		"@platejs/combobox": "^53.0.0",
+		"@platejs/indent": "^53.0.0",
+		"@platejs/link": "^53.3.5",
+		"@platejs/list": "^53.1.3",
+		"@platejs/markdown": "^53.3.12",
+		"@platejs/slash-command": "^53.0.0",
+		"@platejs/table": "^53.0.9",
+		"remark-gfm": "^4.0.1",
+		"@platejs/resizable": "^53.0.0"
 	},
 	"peerDependenciesMeta": {
 		"maplibre-gl": {
@@ -202,6 +218,39 @@
 		},
 		"@dnd-kit/utilities": {
 			"optional": true
+		},
+		"platejs": {
+			"optional": true
+		},
+		"@platejs/basic-nodes": {
+			"optional": true
+		},
+		"@platejs/combobox": {
+			"optional": true
+		},
+		"@platejs/indent": {
+			"optional": true
+		},
+		"@platejs/link": {
+			"optional": true
+		},
+		"@platejs/list": {
+			"optional": true
+		},
+		"@platejs/markdown": {
+			"optional": true
+		},
+		"@platejs/slash-command": {
+			"optional": true
+		},
+		"@platejs/table": {
+			"optional": true
+		},
+		"remark-gfm": {
+			"optional": true
+		},
+		"@platejs/resizable": {
+			"optional": true
 		}
 	},
 	"devDependencies": {
@@ -218,6 +267,17 @@
 		"jsdom": "30.0.1",
 		"maplibre-gl": "catalog:maplibre",
 		"typescript": "catalog:",
-		"vitest": "catalog:"
+		"vitest": "catalog:",
+		"platejs": "^53.3.11",
+		"@platejs/basic-nodes": "^53.0.0",
+		"@platejs/combobox": "^53.0.0",
+		"@platejs/indent": "^53.0.0",
+		"@platejs/link": "^53.3.5",
+		"@platejs/list": "^53.1.3",
+		"@platejs/markdown": "^53.3.12",
+		"@platejs/slash-command": "^53.0.0",
+		"@platejs/table": "^53.0.9",
+		"remark-gfm": "^4.0.1",
+		"@platejs/resizable": "^53.0.0"
 	}
 }

@@ -1,0 +1,59 @@
+---
+title: "Custom features"
+description: "A node kind of your own, in one definition the whole editor reads."
+sidebar:
+  order: 4
+---
+
+import * as Example from "@/examples/ui-content-editor/custom-feature";
+
+The feature list is not something the module decides. An editor runs on the
+definitions you hand it, and the toolbar, the slash menu, the canvas, the
+renderer and the serializer all read from that one list. Adding a node kind
+is one object; there is no union to extend and nothing to fork.
+
+<Preview layout="stack" scroll>
+	<Example.WithStockQuote />
+</Preview>
+
+## The definition
+
+```tsx
+import { PlateElement, type PlateElementProps } from "platejs/react";
+import type { ContentFeature } from "@voila.dev/ui/content-editor";
+
+export const stockQuoteFeature: ContentFeature = {
+	key: "stock-quote",
+	nodes: [
+		{
+			type: "stock-quote",
+			kind: "void",
+			createNode: (init) => ({ type: "stock-quote", symbol: "ACME", children: [{ text: "" }], ...init }),
+			// The reader half: React outside the editor, and the HTML string a server emits.
+			Render: ({ node }) => <span className="font-mono">{node.symbol}</span>,
+			toHtml: (node) => `<span class="stock-quote">${node.symbol}</span>`,
+		},
+	],
+	// The editor half: Plate plugins, the canvas element, the chrome.
+	plugins: () => [],
+	components: { "stock-quote": StockQuoteElement },
+	toolbar: [{ key: "stockQuote", group: "insert", icon: ChartLineUpIcon, label: "stockQuote", run: insertStockQuote }],
+	slash: [{ key: "stockQuote", icon: ChartLineUpIcon, label: "stockQuote", keywords: ["stock", "ticker"], run: insertStockQuote }],
+};
+```
+
+A void node needs a Plate plugin declaring it as one; the built-in image
+feature shows the shape (`createPlatePlugin({ key, node: { isElement: true, isVoid: true } })`).
+An item's `label` is a key into `labels.items`, so the host names it in its
+own language. A feature that needs something from the host declares it in
+`requires`; today the one capability is `"upload-image"`.
+
+Markdown is opt-in per node: a `markdown` rule on the node reader, or the
+`mdxRule` helper for a node that crosses as an MDX element. See
+[Markdown](/ui-content-editor/markdown).
+
+## Deriving the document type
+
+`ContentValueOf<typeof features>` is the node union a feature tuple can
+produce, from what its readers create. A consuming domain assigns that to its
+own schema at the boundary; the module never owns anyone's document shape.

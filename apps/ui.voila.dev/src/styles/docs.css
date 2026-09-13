@@ -9,6 +9,7 @@
 @import "@voila.dev/ui/styles/tokens/animations.css";
 @import "@voila.dev/ui/styles/themes/default.css";
 @import "@voila.dev/ui/styles/landing.css";
+@import "@voila.dev/ui/styles/content-editor.css";
 
 /*
  * Live previews render real components, so their classes must be generated.

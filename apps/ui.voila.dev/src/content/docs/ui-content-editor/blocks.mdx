@@ -1,0 +1,51 @@
+---
+title: "Blocks"
+description: "The text features every editor starts with."
+sidebar:
+  order: 1
+---
+
+Text, marks, headings, lists, quotes, dividers, tables and callouts are the
+features `createContentFeatures()` puts first. Each is one definition; each
+can be left out.
+
+## Text and marks
+
+The paragraph is the base block. Marks are bold, italic, underline,
+strikethrough and inline code, on the toolbar, the floating toolbar and the
+keyboard (`⌘B`, `⌘I`, `⌘U`, `⌘E`). Links wrap a selection and open a small
+form on `⌘K`.
+
+## Headings
+
+`h2` and `h3` by default: a body editor whose page already owns the `h1`.
+Ask for `h4` too with `createContentFeatures({ headings: ["h2", "h3", "h4"] })`.
+Typing `## ` at the start of a line makes one.
+
+## Lists
+
+Plate's indent-list model: a list item is a paragraph carrying
+`listStyleType` (`disc` or `decimal`) and `indent`, where the first level is
+`indent: 1`. Tab and Shift-Tab step in and out; `- `, `* `, `1. ` and `1) `
+at the start of a line start a list. The reader turns a run of such
+paragraphs back into one `<ul>` or `<ol>`.
+
+## Quotes and dividers
+
+A blockquote, from the toolbar or `> `. A divider, from the toolbar, the
+slash menu or `---`.
+
+## Tables
+
+Three by three with a header row, from the toolbar or the slash menu. Inside
+a table the toolbar swaps the insert button for one menu: rows and columns
+added on either side, the header row toggled, cells merged (drag across
+them first) and split, a fill from the kit's palette, and the row, column
+or table deleted. Columns and rows resize by their edges, Tab moves between
+cells. Spans, fills and column widths render the same in the reader and in
+`contentToHtml`.
+
+## Callouts
+
+An aside with an emoji icon, chosen from a grid by clicking it. Its text is
+inline, one paragraph.

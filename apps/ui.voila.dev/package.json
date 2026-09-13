@@ -21,6 +21,7 @@
 		"@voila.dev/ui-branding": "workspace:*",
 		"maplibre-gl": "catalog:maplibre",
 		"minisearch": "^7.2.0",
+		"platejs": "^53.3.11",
 		"react": "catalog:react",
 		"react-dom": "catalog:react",
 		"tailwindcss": "catalog:tailwind",
