@@ -90,7 +90,9 @@ export function ContentEditorLayout({
 						className={cn(
 							"flex min-w-0 items-center gap-1",
 							stickyToolbar &&
-								"sticky top-0 z-10 bg-background/95 py-1 backdrop-blur",
+								// Opaque on purpose: a translucent, blurred bar still let the document
+								// read through around the controls while it scrolled underneath.
+								"sticky top-0 z-10 bg-background py-1",
 						)}
 					>
 						{rows.toolbar}
