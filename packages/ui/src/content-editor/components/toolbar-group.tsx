@@ -22,7 +22,7 @@ export function ContentEditorToolbarGroup({
 		<div
 			data-slot="content-editor-toolbar-group"
 			className={cn(
-				"flex items-center gap-0.5 not-last:border-r not-last:border-border not-last:pr-1",
+				"flex shrink-0 items-center gap-0.5 not-last:border-r not-last:border-border not-last:pr-1",
 				className,
 			)}
 		>

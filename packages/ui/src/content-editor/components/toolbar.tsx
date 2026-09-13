@@ -31,18 +31,35 @@ export function groupToolbarItems(
 
 interface Props {
 	className?: string;
+	/**
+	 * Wrap the groups onto several rows instead of scrolling one row sideways.
+	 * Off by default: on a phone, wrapped groups leave a ragged block of
+	 * rows and hairlines above the document, while one row scrolls the way
+	 * a phone keyboard bar does.
+	 */
+	wrap?: boolean;
 	/** Compose groups by hand; without children every registry item is shown. */
 	children?: ReactNode;
 }
 
-export function ContentEditorToolbar({ className, children }: Props) {
+export function ContentEditorToolbar({
+	className,
+	wrap = false,
+	children,
+}: Props) {
 	const { registry, capabilities, labels } = useContentEditorConfig();
 	return (
 		<div
 			data-slot="content-editor-toolbar"
 			role="toolbar"
 			aria-label={labels.chrome.editor}
-			className={cn("flex flex-wrap items-center gap-1", className)}
+			className={cn(
+				"flex items-center gap-1",
+				wrap
+					? "flex-wrap"
+					: "min-w-0 flex-1 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
+				className,
+			)}
 		>
 			{children ??
 				groupToolbarItems(registry.toolbarItems(capabilities)).map((bucket) => (

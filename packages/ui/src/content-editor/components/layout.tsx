@@ -88,7 +88,7 @@ export function ContentEditorLayout({
 					<div
 						data-slot="content-editor-layout-toolbar"
 						className={cn(
-							"flex flex-wrap items-center gap-1",
+							"flex min-w-0 items-center gap-1",
 							stickyToolbar &&
 								"sticky top-0 z-10 bg-background/95 py-1 backdrop-blur",
 						)}
