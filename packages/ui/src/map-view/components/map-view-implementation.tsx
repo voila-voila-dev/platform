@@ -1,5 +1,6 @@
 import * as maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
+import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
 import { useEffect, useRef, useState } from "react";
 import { cn } from "#/lib/utils.ts";
 import type { MapView } from "#/map-view/components/map-view.tsx";
@@ -7,6 +8,12 @@ import {
 	DEFAULT_DARK_STYLE_URL,
 	DEFAULT_STYLE_URL,
 } from "#/map-view/lib/style-urls.ts";
+
+// MapLibre 6 spawns its tile worker from a URL relative to its own module,
+// which points nowhere once a bundler has renamed and moved that module: the
+// worker never starts and the map draws its raster layers alone, with no
+// error anywhere. Vite bundles the worker entry for us; MapLibre gets its URL.
+maplibregl.setWorkerUrl(maplibreWorkerUrl);
 
 /** Western Europe — a sensible default frame for the whole dataset. */
 const DEFAULT_CENTER: readonly [number, number] = [2.3522, 48.8566];

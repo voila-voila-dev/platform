@@ -20,6 +20,7 @@ const mapLibre = vi.hoisted(() => {
 	const state = {
 		shouldThrow: false,
 		instances: [] as FakeMap[],
+		workerUrl: null as string | null,
 	};
 	class FakeMap {
 		readonly options: Record<string, unknown>;
@@ -64,8 +65,14 @@ const mapLibre = vi.hoisted(() => {
 vi.mock("maplibre-gl", () => ({
 	Map: mapLibre.FakeMap,
 	NavigationControl: class NavigationControl {},
+	setWorkerUrl: (url: string) => {
+		mapLibre.state.workerUrl = url;
+	},
 }));
 vi.mock("maplibre-gl/dist/maplibre-gl.css", () => ({}));
+vi.mock("maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url", () => ({
+	default: "/assets/maplibre-gl-worker.js",
+}));
 
 class FakeResizeObserver {
 	observe() {}
@@ -218,6 +225,10 @@ describe("MapView", () => {
 		document.documentElement.classList.add("dark");
 		await flushThemeObserver();
 		expect(instance.setStyle).not.toHaveBeenCalled();
+	});
+
+	it("points MapLibre at the bundled tile worker", () => {
+		expect(mapLibre.state.workerUrl).toBe("/assets/maplibre-gl-worker.js");
 	});
 
 	it("forwards extra MapLibre options to the constructor", () => {
