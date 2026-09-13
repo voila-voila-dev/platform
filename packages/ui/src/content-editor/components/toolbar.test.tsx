@@ -27,7 +27,13 @@ function CaptureEditor() {
 	return null;
 }
 
-function EditorUnderTest({ initial }: { readonly initial: ContentValue }) {
+function EditorUnderTest({
+	initial,
+	variant,
+}: {
+	readonly initial: ContentValue;
+	readonly variant?: "compact" | "full";
+}) {
 	const [value, setValue] = useState<ContentValue | null>(initial);
 	return (
 		<ContentEditor.Root
@@ -38,7 +44,7 @@ function EditorUnderTest({ initial }: { readonly initial: ContentValue }) {
 		>
 			<CaptureEditor />
 			<ContentEditor.Layout>
-				<ContentEditor.Toolbar />
+				<ContentEditor.Toolbar variant={variant} />
 				<ContentEditor.Canvas />
 			</ContentEditor.Layout>
 		</ContentEditor.Root>
@@ -55,9 +61,39 @@ const selectAll = () =>
 	});
 
 describe("ContentEditor.Toolbar", () => {
+	it("folds the block types and the inserts into menus, and keeps the shortcut-only controls out", () => {
+		render(
+			<EditorUnderTest
+				initial={[{ type: "p", children: [{ text: "Hello world" }] }]}
+			/>,
+		);
+		const toolbar = screen.getByRole("toolbar");
+		const labels = [...toolbar.querySelectorAll("[aria-label]")].map((node) =>
+			node.getAttribute("aria-label"),
+		);
+		expect(labels.slice(0, 2)).toEqual(["Text", "Bold"]);
+		expect(labels).toContain("Insert");
+		expect(labels).not.toContain("Heading 2");
+		expect(labels).not.toContain("Undo");
+		expect(labels).not.toContain("Indent");
+	});
+
+	it("names the block type at the selection on the block menu", async () => {
+		render(
+			<EditorUnderTest
+				initial={[{ type: "h2", children: [{ text: "Title" }] }]}
+			/>,
+		);
+		selectAll();
+		expect(
+			await screen.findByRole("button", { name: "Heading 2" }),
+		).toBeTruthy();
+	});
+
 	it("shows every registry item but the table controls, in group order", () => {
 		render(
 			<EditorUnderTest
+				variant="full"
 				initial={[{ type: "p", children: [{ text: "Hello world" }] }]}
 			/>,
 		);
@@ -115,6 +151,7 @@ describe("ContentEditor.Toolbar", () => {
 	it("turns the block into a heading and back", () => {
 		render(
 			<EditorUnderTest
+				variant="full"
 				initial={[{ type: "p", children: [{ text: "Title" }] }]}
 			/>,
 		);
@@ -132,6 +169,7 @@ describe("ContentEditor.Toolbar", () => {
 	it("makes a bulleted list item out of the paragraph", () => {
 		render(
 			<EditorUnderTest
+				variant="full"
 				initial={[{ type: "p", children: [{ text: "Item" }] }]}
 			/>,
 		);
@@ -148,6 +186,7 @@ describe("ContentEditor.Toolbar", () => {
 	it("inserts a table and then shows the table controls", async () => {
 		render(
 			<EditorUnderTest
+				variant="full"
 				initial={[{ type: "p", children: [{ text: "Hello" }] }]}
 			/>,
 		);

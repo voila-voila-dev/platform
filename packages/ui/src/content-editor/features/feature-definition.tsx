@@ -64,6 +64,11 @@ export interface ContentToolbarItem {
 	readonly Popover?: ComponentType<{ readonly onClose: () => void }>;
 	/** When present, the item opens a menu of these instead of running. */
 	readonly menu?: ReadonlyArray<ContentToolbarItem>;
+	/**
+	 * Left out of the compact toolbar: a control whose shortcut is the usual
+	 * way in (undo, indent). The full toolbar still shows it.
+	 */
+	readonly secondary?: boolean;
 }
 
 export interface ContentSlashItem {

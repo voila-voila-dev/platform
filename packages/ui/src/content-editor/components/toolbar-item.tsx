@@ -16,7 +16,7 @@ interface Props {
 }
 
 /** One entry of an item's menu, with its own state read from the editor. */
-function MenuEntry({ item }: { readonly item: ContentToolbarItem }) {
+export function MenuEntry({ item }: { readonly item: ContentToolbarItem }) {
 	const editor = useEditorRef();
 	const { labels, uploadImage, readOnly } = useContentEditorConfig();
 	const state = useEditorSelector(

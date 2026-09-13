@@ -22,7 +22,10 @@ export function ContentEditorToolbarGroup({
 		<div
 			data-slot="content-editor-toolbar-group"
 			className={cn(
-				"flex shrink-0 items-center gap-0.5 not-last:border-r not-last:border-border not-last:pr-1",
+				// The hairline leads each group rather than trailing it, and a group whose
+				// items are all hidden (the table controls outside a table) hides with
+				// them: a row never ends on a stray separator.
+				"flex shrink-0 items-center gap-0.5 empty:hidden not-first:border-l not-first:border-border not-first:pl-1",
 				className,
 			)}
 		>

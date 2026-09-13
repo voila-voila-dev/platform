@@ -6,6 +6,7 @@ import { ContentEditorRoot } from "#/content-editor/components/root.tsx";
 import { ContentEditorToolbar } from "#/content-editor/components/toolbar.tsx";
 import { ContentEditorToolbarGroup } from "#/content-editor/components/toolbar-group.tsx";
 import { ContentEditorToolbarItem } from "#/content-editor/components/toolbar-item.tsx";
+import { ContentEditorToolbarMenu } from "#/content-editor/components/toolbar-menu.tsx";
 
 /**
  * The content editor parts as one namespace, in composition order: the
@@ -18,6 +19,7 @@ export const ContentEditor = {
 	Toolbar: ContentEditorToolbar,
 	ToolbarGroup: ContentEditorToolbarGroup,
 	ToolbarItem: ContentEditorToolbarItem,
+	ToolbarMenu: ContentEditorToolbarMenu,
 	Canvas: ContentEditorCanvas,
 	FloatingToolbar: ContentEditorFloatingToolbar,
 	CharacterCount: ContentEditorCharacterCount,

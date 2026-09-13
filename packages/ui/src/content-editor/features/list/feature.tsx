@@ -60,6 +60,7 @@ export const listFeature: ContentFeature = {
 			icon: TextOutdentIcon,
 			label: "outdent",
 			kbd: ["⇧", "Tab"],
+			secondary: true,
 			run: (editor) => outdent(editor),
 		},
 		{
@@ -68,6 +69,7 @@ export const listFeature: ContentFeature = {
 			icon: TextIndentIcon,
 			label: "indent",
 			kbd: ["Tab"],
+			secondary: true,
 			run: (editor) => indent(editor),
 		},
 	],
