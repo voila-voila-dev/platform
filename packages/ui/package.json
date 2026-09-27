@@ -280,6 +280,8 @@
 		"@platejs/slash-command": "^53.0.0",
 		"@platejs/table": "^53.0.9",
 		"remark-gfm": "^4.0.1",
-		"@platejs/resizable": "^53.0.0"
+		"@platejs/resizable": "^53.0.0",
+		"@tailwindcss/vite": "catalog:tailwind",
+		"tailwindcss": "catalog:tailwind"
 	}
 }

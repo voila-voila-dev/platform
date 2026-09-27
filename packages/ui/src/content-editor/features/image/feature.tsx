@@ -1,27 +1,16 @@
 import { ImageIcon } from "@phosphor-icons/react";
-import { createPlatePlugin } from "platejs/react";
 import type {
 	ContentEditorApi,
-	ContentFeature,
 	ContentItemContext,
 } from "#/content-editor/features/feature-definition.tsx";
-import { ImageElement } from "#/content-editor/features/image/image-element.tsx";
+import { ImageView } from "#/content-editor/features/image/image-view.tsx";
 import { queueImageUpload } from "#/content-editor/features/image/pending-uploads.ts";
 import {
+	type ContentImageNode,
 	imageNode,
-	imageReader,
 } from "#/content-editor/features/image/reader.tsx";
+import { defineElementFeature } from "#/content-editor/lib/define-element-feature.ts";
 import { newContentNodeId } from "#/content-editor/lib/ids.ts";
-import { insertBlockBelow } from "#/content-editor/lib/insert-block.ts";
-
-export const ImagePlugin = createPlatePlugin({
-	key: "image",
-	node: { isElement: true, isVoid: true },
-});
-
-function insertEmptyImage(editor: ContentEditorApi) {
-	insertBlockBelow(editor, imageNode.createNode());
-}
 
 /**
  * Dropped or pasted image files: one node per file, inserted at once so the
@@ -35,39 +24,33 @@ function insertImageFiles(
 	if (uploadImage === null) {
 		return;
 	}
+	const [image] = imageFeature.nodes;
 	const nodes = files.map((file) => {
 		const id = newContentNodeId();
 		queueImageUpload(id, file);
-		return imageNode.createNode({ id });
+		return image.createNode({ id });
 	});
 	editor.tf.insertNodes(nodes as never, { select: true });
 }
 
-export const imageFeature: ContentFeature = {
-	...imageReader,
-	plugins: () => [ImagePlugin],
-	components: { image: ImageElement },
+export const imageFeature = defineElementFeature<ContentImageNode>({
+	key: "image",
+	kind: "void",
+	node: imageNode,
+	fields: [
+		{ type: "image", key: "url", label: "file" },
+		{ type: "text", key: "alt", label: "alt", description: "altDescription" },
+		{ type: "text", key: "caption", label: "caption" },
+	],
+	defaults: { url: "" },
+	view: ImageView,
+	insert: {
+		icon: ImageIcon,
+		keywords: ["image", "photo", "picture", "upload"],
+	},
 	requires: ["upload-image"],
 	files: {
 		accepts: (file) => file.type.startsWith("image/"),
 		insert: insertImageFiles,
 	},
-	toolbar: [
-		{
-			key: "image",
-			group: "insert",
-			icon: ImageIcon,
-			label: "image",
-			run: insertEmptyImage,
-		},
-	],
-	slash: [
-		{
-			key: "image",
-			icon: ImageIcon,
-			label: "image",
-			keywords: ["image", "photo", "picture", "upload"],
-			run: insertEmptyImage,
-		},
-	],
-};
+});

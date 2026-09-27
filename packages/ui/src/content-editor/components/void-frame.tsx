@@ -4,6 +4,8 @@ import { cn } from "#/lib/utils.ts";
 
 interface Props {
 	className?: string;
+	/** Flows inside a line of text (a variable chip) instead of standing as a block. */
+	inline?: boolean;
 	children: ReactNode;
 }
 
@@ -13,20 +15,22 @@ interface Props {
  * an arrow key that lands on it looks like it did nothing, and Backspace
  * then deletes something the author never saw selected.
  */
-export function VoidFrame({ className, children }: Props) {
+export function VoidFrame({ className, inline = false, children }: Props) {
 	const selected = useSelected();
 	const focused = useFocused();
+	const Tag = inline ? "span" : "figure";
 	return (
-		<figure
+		<Tag
 			contentEditable={false}
 			data-selected={(selected && focused) || undefined}
 			className={cn(
-				"flex flex-col gap-1 rounded-md py-1 select-none data-selected:bg-accent/60 data-selected:outline-2 data-selected:outline-offset-2 data-selected:outline-ring",
+				"select-none rounded-md data-selected:bg-accent/60 data-selected:outline-2 data-selected:outline-offset-2 data-selected:outline-ring",
+				inline ? "inline-flex align-baseline" : "flex flex-col gap-1 py-1",
 				className,
 			)}
 		>
 			{children}
-		</figure>
+		</Tag>
 	);
 }
 

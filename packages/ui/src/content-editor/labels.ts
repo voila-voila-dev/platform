@@ -19,7 +19,9 @@ export interface ContentEditorChromeLabels {
 	readonly remove: string;
 	readonly cancel: string;
 	readonly edit: string;
+	readonly replace: string;
 	readonly pickImage: string;
+	readonly imageEmpty: string;
 	readonly dropToUpload: string;
 	readonly uploading: string;
 	readonly uploadDisabled: string;
@@ -29,6 +31,11 @@ export interface ContentEditorChromeLabels {
 	readonly unknownElement: (type: string) => string;
 	readonly characters: (count: number) => string;
 	readonly words: (count: number) => string;
+	readonly inspector: string;
+	readonly inspectorEmpty: string;
+	readonly currency: string;
+	readonly addItem: string;
+	readonly removeItem: (position: number) => string;
 }
 
 /** Toolbar, floating toolbar and slash items, by item key. Open for custom features. */
@@ -81,14 +88,30 @@ export interface ContentEditorItemLabels {
 	readonly deleteMenu: string;
 }
 
+/**
+ * The inspector's field labels, descriptions, placeholders and option
+ * labels, by the key a field descriptor names. Open for custom features.
+ */
+export interface ContentEditorFieldLabels {
+	readonly [key: string]: string | undefined;
+	readonly url: string;
+	readonly image: string;
+	readonly file: string;
+	readonly alt: string;
+	readonly altDescription: string;
+	readonly caption: string;
+}
+
 export interface ContentEditorLabels {
 	readonly chrome: ContentEditorChromeLabels;
 	readonly items: ContentEditorItemLabels;
+	readonly fields: ContentEditorFieldLabels;
 }
 
 export interface ContentEditorLabelsInput {
 	readonly chrome?: Partial<ContentEditorChromeLabels>;
 	readonly items?: Partial<ContentEditorItemLabels>;
+	readonly fields?: Partial<ContentEditorFieldLabels>;
 }
 
 export const DEFAULT_CONTENT_EDITOR_LABELS: ContentEditorLabels = {
@@ -107,7 +130,9 @@ export const DEFAULT_CONTENT_EDITOR_LABELS: ContentEditorLabels = {
 		remove: "Remove",
 		cancel: "Cancel",
 		edit: "Edit",
+		replace: "Replace",
 		pickImage: "Click to upload an image",
+		imageEmpty: "No image yet. Pick one in the settings.",
 		dropToUpload: "Drop to upload",
 		uploading: "Uploading…",
 		uploadDisabled: "Image upload is not available here.",
@@ -117,6 +142,11 @@ export const DEFAULT_CONTENT_EDITOR_LABELS: ContentEditorLabels = {
 		unknownElement: (type) => `Unknown block: ${type}`,
 		characters: (count) => `${count} characters`,
 		words: (count) => `${count} words`,
+		inspector: "Settings",
+		inspectorEmpty: "Select a block to see its settings.",
+		currency: "Currency",
+		addItem: "Add",
+		removeItem: (position) => `Remove item ${position}`,
 	},
 	items: {
 		bold: "Bold",
@@ -165,6 +195,14 @@ export const DEFAULT_CONTENT_EDITOR_LABELS: ContentEditorLabels = {
 		backgroundRed: "Red fill",
 		deleteMenu: "Delete",
 	},
+	fields: {
+		url: "URL",
+		image: "Image",
+		file: "File",
+		alt: "Alternative text",
+		altDescription: "Read aloud to someone who cannot see the image.",
+		caption: "Caption",
+	},
 };
 
 export function mergeContentEditorLabels(
@@ -176,5 +214,6 @@ export function mergeContentEditorLabels(
 	return {
 		chrome: { ...DEFAULT_CONTENT_EDITOR_LABELS.chrome, ...input.chrome },
 		items: { ...DEFAULT_CONTENT_EDITOR_LABELS.items, ...input.items },
+		fields: { ...DEFAULT_CONTENT_EDITOR_LABELS.fields, ...input.fields },
 	};
 }

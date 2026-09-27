@@ -53,68 +53,7 @@ function EditorUnderTest({
 	);
 }
 
-const emptyImage: ContentValue = [
-	{ type: "image", url: "", children: [{ text: "" }] },
-];
-
 describe("image feature", () => {
-	it("uploads the picked file once and puts its url on the node", async () => {
-		const upload = vi.fn(async (_file: File) => ({
-			url: "https://cdn/photo.png",
-			width: 640,
-			height: 480,
-		}));
-		const { container } = render(
-			<EditorUnderTest initial={emptyImage} upload={upload} />,
-		);
-		const input = container.querySelector(
-			'input[type="file"]',
-		) as HTMLInputElement;
-		await act(async () => {
-			fireEvent.change(input, { target: { files: [picture()] } });
-		});
-		await waitFor(() => {
-			expect((editorRef as PlateEditor).children[0]).toMatchObject({
-				type: "image",
-				url: "https://cdn/photo.png",
-				width: 640,
-				height: 480,
-			});
-		});
-		expect(upload).toHaveBeenCalledTimes(1);
-		expect(upload.mock.calls[0]?.[0].name).toBe("photo.png");
-		expect(container.querySelector("img")?.getAttribute("src")).toBe(
-			"https://cdn/photo.png",
-		);
-	});
-
-	it("keeps the node and says why when the upload fails", async () => {
-		const upload = vi.fn(async (_file: File): Promise<{ url: string }> => {
-			throw new Error("too big");
-		});
-		const { container } = render(
-			<EditorUnderTest initial={emptyImage} upload={upload} />,
-		);
-		const input = container.querySelector(
-			'input[type="file"]',
-		) as HTMLInputElement;
-		await act(async () => {
-			fireEvent.change(input, { target: { files: [picture()] } });
-		});
-		expect(await screen.findByText("Upload failed: too big")).toBeTruthy();
-		expect((editorRef as PlateEditor).children[0]).toMatchObject({
-			type: "image",
-			url: "",
-		});
-	});
-
-	it("says upload is unavailable when the host wired none", () => {
-		render(<EditorUnderTest initial={emptyImage} />);
-		expect(
-			screen.getByText("Image upload is not available here."),
-		).toBeTruthy();
-	});
-
 	it("takes pasted image files as new image nodes and fills them as uploads land", async () => {
 		const upload = vi.fn(async (file: File) => ({
 			url: `https://cdn/${file.name}`,

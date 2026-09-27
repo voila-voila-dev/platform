@@ -1,11 +1,11 @@
 import { useId } from "react";
-import { BlockOptionRow } from "#/email-block-editor/components/block-options/block-option-row.tsx";
-import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
-import type { EmailEditorMoney } from "#/email-block-editor/document/types.ts";
 import {
 	inputValueToMinorUnits,
 	moneyToInputValue,
-} from "#/email-block-editor/lib/money.ts";
+} from "#/content-editor/lib/money.ts";
+import { BlockOptionRow } from "#/email-block-editor/components/block-options/block-option-row.tsx";
+import { useEmailEditorLabels } from "#/email-block-editor/context/email-editor-context.tsx";
+import type { EmailEditorMoney } from "#/email-block-editor/document/types.ts";
 import { MoneyInput } from "#/money-input/components/money-input.tsx";
 
 interface Props<Currency extends string> {

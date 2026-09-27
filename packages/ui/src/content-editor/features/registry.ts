@@ -12,6 +12,7 @@ import type {
 	ContentSlashItem,
 	ContentToolbarItem,
 } from "#/content-editor/features/feature-definition.tsx";
+import type { ContentField } from "#/content-editor/features/field-definition.ts";
 import {
 	type ContentReaderRegistry,
 	createContentReaderRegistry,
@@ -38,6 +39,14 @@ export interface ContentRegistry {
 	readonly fileHandlers: (
 		capabilities: ReadonlySet<ContentCapability>,
 	) => ReadonlyArray<ContentFileHandler>;
+	/** The fields the inspector shows for a node type, and the key of the
+	 * feature that owns it (its name under `labels.items`). */
+	readonly inspectorFor: (type: string) =>
+		| {
+				readonly featureKey: string;
+				readonly fields: ReadonlyArray<ContentField>;
+		  }
+		| undefined;
 	readonly reader: ContentReaderRegistry;
 }
 
@@ -117,6 +126,14 @@ export function createContentRegistry(
 				.filter((feature) => available(feature, capabilities))
 				.flatMap((feature) => pick(feature) ?? []);
 
+	const inspectors = new Map(
+		active.flatMap((feature) =>
+			Object.entries(feature.fields ?? {})
+				.filter(([, fields]) => fields.length > 0)
+				.map(([type, fields]) => [type, { featureKey: feature.key, fields }]),
+		),
+	);
+
 	return {
 		features,
 		featureFor: (key) => features.find((feature) => feature.key === key),
@@ -127,6 +144,7 @@ export function createContentRegistry(
 		floatingItems: items((feature) => feature.floating),
 		slashItems: items((feature) => feature.slash),
 		fileHandlers: items((feature) => (feature.files ? [feature.files] : [])),
+		inspectorFor: (type) => inspectors.get(type),
 		reader,
 	};
 }

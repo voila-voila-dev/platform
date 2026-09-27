@@ -1,0 +1,104 @@
+---
+title: "Inspector and fields"
+description: "The settings of the selected element, from the fields its feature declares."
+sidebar:
+  order: 9
+---
+
+import * as Example from "@/examples/ui-content-editor/inspector";
+
+`ContentEditor.Inspector` shows the fields of the element the selection sits
+in: the url of a link, the file, alternative text and caption of an image, or
+anything a feature of yours declares. It edits the node in place, so the
+canvas updates as you type and one undo takes the change back. Nothing about
+an element is edited anywhere else.
+
+<Preview layout="stack" scroll>
+	<Example.SidePanel />
+</Preview>
+
+## Placing it
+
+The inspector is a part like the others, rendered inside `ContentEditor.Root`
+wherever the host wants it. On a wide screen, a side panel:
+
+```tsx
+<ContentEditor.Root features={features} value={value} onChange={setValue}>
+	<div className="grid gap-6 md:grid-cols-[1fr_18rem]">
+		<ContentEditor.Layout>
+			<ContentEditor.Toolbar />
+			<ContentEditor.Canvas />
+		</ContentEditor.Layout>
+		<ContentEditor.Inspector />
+	</div>
+</ContentEditor.Root>
+```
+
+On a phone, a sheet. `useInspectedElement()` returns the element being
+inspected, or `null`, so the host enables its button, or opens the sheet,
+only when there is something to show:
+
+```tsx
+function SettingsSheet() {
+	const inspected = useInspectedElement();
+	const [open, setOpen] = useState(false);
+	return (
+		<Sheet.Root open={open && inspected !== null} onOpenChange={setOpen}>
+			<Button disabled={inspected === null} onClick={() => setOpen(true)}>
+				Settings
+			</Button>
+			<Sheet.Content side="bottom">
+				<ContentEditor.Inspector />
+			</Sheet.Content>
+		</Sheet.Root>
+	);
+}
+```
+
+When the selection sits in two elements with fields at once (a link inside a
+highlighted paragraph), the inspector shows the innermost one.
+
+## Field types
+
+A field is data: a `type`, the attribute it edits (`key`) and a `label`.
+Each type has one control, and stores one kind of value on the node.
+
+| Type | Control | Stored value | Options |
+| --- | --- | --- | --- |
+| `text` | Input, or Textarea with `multiline` | `string` | `placeholder`, `multiline` |
+| `url` | Input of type `url` | `string` | `placeholder` |
+| `select` | Select | one of the option values | `options: [{ value, label }]` |
+| `boolean` | Switch | `boolean` | |
+| `money` | MoneyInput | `{ amountInMinorUnits, currency }` | `currencies` |
+| `image` | ImageUploadField, through `onUploadImage` | the image url | `aspectRatio` (default 16 / 9) |
+| `string-list` | One input per item, add and remove | `string[]` | `placeholder` |
+
+Every field also takes a `description`, shown under its control. An image
+field on an editor without `onUploadImage` falls back to a url input.
+
+A money amount is stored as integer minor units and a currency, never as a
+formatted string, so a document sent in several locales is formatted per
+reader at render time.
+
+## Labels
+
+A field's `label`, `description`, `placeholder` and each option's `label` are
+keys under `labels.fields`. A key with no entry is shown as written, so a
+host that does not translate writes the text itself, and one that does
+passes its own:
+
+```tsx
+<ContentEditor.Root
+	labels={{
+		fields: { alt: "Texte alternatif", caption: "Légende" },
+		chrome: { inspector: "Réglages", inspectorEmpty: "Sélectionnez un bloc." },
+	}}
+/>
+```
+
+The inspector's title is the element's name under `labels.items`, the same
+key the slash menu shows.
+
+## API
+
+<PropTable of="ContentEditor.Inspector" />

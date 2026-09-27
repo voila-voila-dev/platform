@@ -1,28 +1,15 @@
 import { MinusIcon } from "@phosphor-icons/react";
 import { HorizontalRulePlugin } from "@platejs/basic-nodes/react";
 import { createRuleFactory } from "platejs";
-import { PlateElement, type PlateElementProps } from "platejs/react";
-import { VoidFrame } from "#/content-editor/components/void-frame.tsx";
 import {
+	type ContentDividerNode,
 	dividerNode,
-	dividerReader,
 } from "#/content-editor/features/divider/reader.tsx";
-import type {
-	ContentEditorApi,
-	ContentFeature,
-} from "#/content-editor/features/feature-definition.tsx";
 import { paragraphNode } from "#/content-editor/features/paragraph/reader.tsx";
-import { insertBlockBelow } from "#/content-editor/lib/insert-block.ts";
+import { defineElementFeature } from "#/content-editor/lib/define-element-feature.ts";
 
-export function DividerElement(props: PlateElementProps) {
-	return (
-		<PlateElement {...props}>
-			<VoidFrame className="py-3">
-				<hr className="border-border" />
-			</VoidFrame>
-			{props.children}
-		</PlateElement>
-	);
+function DividerView() {
+	return <hr className="my-2 border-border" />;
 }
 
 /**
@@ -44,32 +31,18 @@ const dashesToDivider = createRuleFactory({
 	},
 });
 
-function insertDivider(editor: ContentEditorApi) {
-	insertBlockBelow(editor, dividerNode.createNode());
-}
-
-export const dividerFeature: ContentFeature = {
-	...dividerReader,
+export const dividerFeature = defineElementFeature<ContentDividerNode>({
+	key: "divider",
+	kind: "void",
+	node: dividerNode,
+	fields: [],
+	defaults: {},
+	view: DividerView,
+	insert: {
+		icon: MinusIcon,
+		keywords: ["divider", "rule", "separator", "hr"],
+	},
 	plugins: () => [
 		HorizontalRulePlugin.configure({ inputRules: [dashesToDivider()] }),
 	],
-	components: { hr: DividerElement },
-	toolbar: [
-		{
-			key: "divider",
-			group: "insert",
-			icon: MinusIcon,
-			label: "divider",
-			run: insertDivider,
-		},
-	],
-	slash: [
-		{
-			key: "divider",
-			icon: MinusIcon,
-			label: "divider",
-			keywords: ["divider", "rule", "separator", "hr"],
-			run: insertDivider,
-		},
-	],
-};
+});

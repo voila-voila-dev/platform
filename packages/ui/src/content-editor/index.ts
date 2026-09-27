@@ -46,6 +46,21 @@ export type {
 	ContentUploadedImage,
 } from "#/content-editor/features/feature-definition.tsx";
 export type {
+	ContentBooleanField,
+	ContentElementDefaults,
+	ContentField,
+	ContentFieldOf,
+	ContentFieldType,
+	ContentFieldValueByType,
+	ContentImageField,
+	ContentMoney,
+	ContentMoneyField,
+	ContentSelectField,
+	ContentStringListField,
+	ContentTextField,
+	ContentUrlField,
+} from "#/content-editor/features/field-definition.ts";
+export type {
 	AnyContentNodeReader,
 	ContentFeatureReader,
 	ContentHtmlOptions,
@@ -67,13 +82,24 @@ export {
 	createContentRegistry,
 } from "#/content-editor/features/registry.ts";
 export {
+	type ContentInspectedElement,
+	useInspectedElement,
+} from "#/content-editor/hooks/use-inspected-element.ts";
+export {
 	type ContentEditorChromeLabels,
+	type ContentEditorFieldLabels,
 	type ContentEditorItemLabels,
 	type ContentEditorLabels,
 	type ContentEditorLabelsInput,
 	DEFAULT_CONTENT_EDITOR_LABELS,
 	mergeContentEditorLabels,
 } from "#/content-editor/labels.ts";
+export {
+	type ContentElementFeatureDefinition,
+	type ContentElementKind,
+	type ContentElementViewProps,
+	defineElementFeature,
+} from "#/content-editor/lib/define-element-feature.ts";
 export {
 	emptyContentValue,
 	isEmptyContentValue,

@@ -1,9 +1,8 @@
 import type { ContentNodeLike } from "#/content-editor/features/content-value.ts";
 import type {
 	ContentFeatureReader,
-	ContentInsertableNodeReader,
+	ContentNodeReader,
 } from "#/content-editor/features/reader-definition.tsx";
-import { newContentNodeId } from "#/content-editor/lib/ids.ts";
 import { classAttribute } from "#/content-editor/reader/escape-html.ts";
 
 export interface ContentDividerNode extends ContentNodeLike {
@@ -11,15 +10,9 @@ export interface ContentDividerNode extends ContentNodeLike {
 	readonly id?: string;
 }
 
-export const dividerNode: ContentInsertableNodeReader<ContentDividerNode> = {
+export const dividerNode: ContentNodeReader<ContentDividerNode> = {
 	type: "hr",
 	kind: "void",
-	createNode: (init) => ({
-		id: newContentNodeId(),
-		type: "hr",
-		children: [{ text: "" }],
-		...init,
-	}),
 	Render: ({ options }) => (
 		<hr className={options.classNameFor?.("hr") ?? "border-border"} />
 	),

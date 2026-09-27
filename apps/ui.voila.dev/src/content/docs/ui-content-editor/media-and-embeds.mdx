@@ -8,12 +8,14 @@ sidebar:
 ## Images
 
 The image feature appears only when the host wired `onUploadImage`. An
-inserted image is a drop zone until it has a url: the picked file goes to
-your callback, its result lands on the node, and a failure keeps the node and
-says why. Files dropped on or pasted into the canvas become image nodes too,
-one per file, each filled in as its upload lands. The callback receives the
-`File` and resolves with `{ url, width?, height? }`; the sizes reach the
-rendered `<img>`.
+image is a void element: the canvas shows it, and its settings (the file, the
+alternative text, the caption) are fields in the
+[inspector](/ui-content-editor/inspector-and-fields). The file field crops the
+picked image and hands it to your callback; its result lands on the node, and
+a failure keeps the node and says why. Files dropped on or pasted into the
+canvas become image nodes too, one per file, each filled in as its upload
+lands. The callback receives the `File` and resolves with
+`{ url, width?, height? }`; the sizes reach the rendered `<img>`.
 
 ```tsx
 onUploadImage={async (file) => {
@@ -21,8 +23,6 @@ onUploadImage={async (file) => {
 	return { url: uploaded.publicUrl, width: uploaded.width, height: uploaded.height };
 }}
 ```
-
-Every media node carries a caption, edited in place under it.
 
 ## Video, files, YouTube, X
 

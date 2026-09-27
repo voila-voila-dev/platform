@@ -63,6 +63,8 @@ export function ContentEditorFloatingToolbar({ className }: Props) {
 	const [position, setPosition] = useState<{
 		top: number;
 		left: number;
+		/** Whether the toolbar sits above the selection or, short of room, under it. */
+		side: "top" | "bottom";
 	} | null>(null);
 	const [pinned, setPinned] = useState(false);
 
@@ -82,10 +84,9 @@ export function ContentEditorFloatingToolbar({ className }: Props) {
 		const width = toolbarRef.current?.offsetWidth ?? 220;
 		const margin = 8;
 		const wantedTop = rect.top + window.scrollY - height - margin;
+		const side = wantedTop < window.scrollY + margin ? "bottom" : "top";
 		const top =
-			wantedTop < window.scrollY + margin
-				? rect.bottom + window.scrollY + margin
-				: wantedTop;
+			side === "bottom" ? rect.bottom + window.scrollY + margin : wantedTop;
 		const centred = rect.left + window.scrollX + rect.width / 2 - width / 2;
 		const left = Math.max(
 			margin,
@@ -94,7 +95,7 @@ export function ContentEditorFloatingToolbar({ className }: Props) {
 				window.scrollX + document.documentElement.clientWidth - width - margin,
 			),
 		);
-		setPosition({ top, left });
+		setPosition({ top, left, side });
 	}, [tick, selectionKey, pinned, editor]);
 
 	if (readOnly || position === null) {
@@ -133,7 +134,14 @@ export function ContentEditorFloatingToolbar({ className }: Props) {
 			)}
 		>
 			{items.map((item) => (
-				<ContentEditorToolbarItem key={item.key} item={item} size="sm" />
+				<ContentEditorToolbarItem
+					key={item.key}
+					item={item}
+					size="sm"
+					// A form under a toolbar that sits above the text would cover
+					// the very text it links.
+					popoverSide={position.side}
+				/>
 			))}
 		</div>,
 		document.body,

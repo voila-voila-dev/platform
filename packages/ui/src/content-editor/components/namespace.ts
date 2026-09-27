@@ -2,6 +2,7 @@ import { ContentEditorCanvas } from "#/content-editor/components/canvas.tsx";
 import { ContentEditorCharacterCount } from "#/content-editor/components/character-count.tsx";
 import { ContentEditorDropZone } from "#/content-editor/components/drop-zone.tsx";
 import { ContentEditorFloatingToolbar } from "#/content-editor/components/floating-toolbar.tsx";
+import { ContentEditorInspector } from "#/content-editor/components/inspector.tsx";
 import { ContentEditorLayout } from "#/content-editor/components/layout.tsx";
 import { ContentEditorRoot } from "#/content-editor/components/root.tsx";
 import { ContentEditorToolbar } from "#/content-editor/components/toolbar.tsx";
@@ -24,5 +25,6 @@ export const ContentEditor = {
 	ToolbarMenu: ContentEditorToolbarMenu,
 	Canvas: ContentEditorCanvas,
 	FloatingToolbar: ContentEditorFloatingToolbar,
+	Inspector: ContentEditorInspector,
 	CharacterCount: ContentEditorCharacterCount,
 };

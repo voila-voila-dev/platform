@@ -1,4 +1,4 @@
-import type { EmailEditorMoney } from "#/email-block-editor/document/types.ts";
+import type { ContentMoney } from "#/content-editor/features/field-definition.ts";
 
 /** EUR has two decimals, and it is the only currency the platform transacts
  * in; widening this means mirroring the domain's `currencyDecimals`. */
@@ -6,7 +6,7 @@ export const MINOR_UNITS_PER_UNIT = 100;
 
 /** `2550` → `"25.50"`, and back. The field holds major units because that is
  * what an author types; the document only ever stores the integer. */
-export function moneyToInputValue(money: EmailEditorMoney): string {
+export function moneyToInputValue(money: ContentMoney): string {
 	return money.amountInMinorUnits === 0
 		? ""
 		: (money.amountInMinorUnits / MINOR_UNITS_PER_UNIT).toString();
@@ -25,7 +25,7 @@ export function inputValueToMinorUnits(value: string): number {
  * never see an amount their reader will not get.
  */
 export function formatPreviewPrice(
-	money: EmailEditorMoney,
+	money: ContentMoney,
 	locale: string,
 ): string {
 	return new Intl.NumberFormat(locale, {

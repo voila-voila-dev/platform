@@ -54,7 +54,9 @@ export function ContentEditorToolbarMenu({ items, trigger, className }: Props) {
 						aria-label={shown.label}
 						disabled={readOnly}
 						onMouseDown={(event) => event.preventDefault()}
-						className={cn("gap-1.5 px-2", className)}
+						// `relative` holds the label's `sr-only` box inside the scrolling
+						// toolbar; unanchored, it widened the page on a phone.
+						className={cn("relative gap-1.5 px-2", className)}
 					/>
 				}
 			>

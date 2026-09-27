@@ -13,6 +13,8 @@ interface Props {
 	item: ContentToolbarItem;
 	/** Smaller chrome for the floating toolbar. */
 	size?: "default" | "sm";
+	/** Where the item's form opens: away from the text it edits. */
+	popoverSide?: "top" | "bottom";
 }
 
 /** One entry of an item's menu, with its own state read from the editor. */
@@ -49,7 +51,11 @@ export function MenuEntry({ item }: { readonly item: ContentToolbarItem }) {
  * menu trigger when it opens a menu. `onMouseDown` is swallowed so the
  * editor keeps its selection while the control is pressed.
  */
-export function ContentEditorToolbarItem({ item, size = "default" }: Props) {
+export function ContentEditorToolbarItem({
+	item,
+	size = "default",
+	popoverSide = "bottom",
+}: Props) {
 	const editor = useEditorRef();
 	const { labels, uploadImage, readOnly, popovers } = useContentEditorConfig();
 	const [open, setOpen] = useState(false);
@@ -145,7 +151,7 @@ export function ContentEditorToolbarItem({ item, size = "default" }: Props) {
 		<Popover.Root open={open} onOpenChange={setOpen}>
 			{withTooltip(<Popover.Trigger render={control} />)}
 			<Popover.Content
-				side="bottom"
+				side={popoverSide}
 				align="start"
 				className="w-[min(18rem,calc(100vw-2rem))] p-3"
 				// The form edits the text, so closing it hands the caret back to

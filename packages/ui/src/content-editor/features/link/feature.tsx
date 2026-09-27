@@ -54,5 +54,8 @@ export const linkFeature: ContentFeature = {
 	components: { a: LinkElement },
 	toolbar: [linkItem],
 	floating: [linkItem],
+	fields: {
+		a: [{ type: "url", key: "url", label: "url", placeholder: "https://" }],
+	},
 	allowIn: () => true,
 };

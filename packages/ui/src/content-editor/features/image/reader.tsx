@@ -1,9 +1,8 @@
 import type { ContentNodeLike } from "#/content-editor/features/content-value.ts";
 import type {
 	ContentFeatureReader,
-	ContentInsertableNodeReader,
+	ContentNodeReader,
 } from "#/content-editor/features/reader-definition.tsx";
-import { newContentNodeId } from "#/content-editor/lib/ids.ts";
 import {
 	classAttribute,
 	escapeHtml,
@@ -27,7 +26,7 @@ interface MdastImage {
 	readonly title?: string | null;
 }
 
-export const imageNode: ContentInsertableNodeReader<ContentImageNode> = {
+export const imageNode: ContentNodeReader<ContentImageNode> = {
 	type: "image",
 	kind: "void",
 	markdown: {
@@ -52,13 +51,6 @@ export const imageNode: ContentInsertableNodeReader<ContentImageNode> = {
 		}),
 		loss: "width and height",
 	},
-	createNode: (init) => ({
-		id: newContentNodeId(),
-		type: "image",
-		url: "",
-		children: [{ text: "" }],
-		...init,
-	}),
 	Render: ({ node, options }) => {
 		const size = options.imageDimensions?.get(node.url);
 		return (

@@ -1,3 +1,4 @@
+import { formatPreviewPrice } from "#/content-editor/lib/money.ts";
 import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block-definitions.tsx";
 import { BlockTextInput } from "#/email-block-editor/blocks/block-text-input.tsx";
 import { EmailCardButton } from "#/email-block-editor/blocks/email-card-button.tsx";
@@ -7,7 +8,6 @@ import {
 	useEmailEditorTheme,
 } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorProductBlock } from "#/email-block-editor/document/types.ts";
-import { formatPreviewPrice } from "#/email-block-editor/lib/money.ts";
 
 interface Props<Currency extends string>
 	extends EmailBlockComponentProps<EmailEditorProductBlock<Currency>> {}
