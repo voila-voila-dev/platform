@@ -18,6 +18,7 @@ import {
 	fakeUploadImage,
 	frenchLabels,
 	inlineContent,
+	keyboardContent,
 	sampleContent,
 } from "./content-editor-fixtures.ts";
 
@@ -62,6 +63,16 @@ export const Default: Story = {
 export const Empty: Story = {
 	args: { features: FEATURES, value: null, onChange: () => {} },
 	render: () => <Composed initial={[]} />,
+};
+
+/**
+ * The keyboard, as in Gmail and Notion: Shift+Enter, ⌘K, a URL pasted over
+ * a selection, Enter and Backspace in lists, the arrows around a divider and
+ * an image, and the Markdown shortcuts. Each block says what to try on it.
+ */
+export const Keyboard: Story = {
+	args: { features: FEATURES, value: keyboardContent, onChange: () => {} },
+	render: () => <Composed initial={keyboardContent} />,
 };
 
 /** No toolbar: the floating toolbar over a selection and the slash menu are the whole chrome. */

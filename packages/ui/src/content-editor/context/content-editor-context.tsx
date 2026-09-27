@@ -6,6 +6,7 @@ import type {
 } from "#/content-editor/features/feature-definition.tsx";
 import type { ContentRegistry } from "#/content-editor/features/registry.ts";
 import type { ContentEditorLabels } from "#/content-editor/labels.ts";
+import type { ContentPopoverHosts } from "#/content-editor/lib/popover-hosts.ts";
 import type { ContentEditorTheme } from "#/content-editor/theme.ts";
 
 /**
@@ -23,6 +24,7 @@ export interface ContentEditorConfigContextValue {
 	readonly dropFiles: ((files: ReadonlyArray<File>) => void) | null;
 	readonly generateNodeId: () => string;
 	readonly readOnly: boolean;
+	readonly popovers: ContentPopoverHosts;
 }
 
 const ContentEditorConfigContext =

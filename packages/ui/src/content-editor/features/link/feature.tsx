@@ -1,4 +1,5 @@
 import { LinkIcon } from "@phosphor-icons/react";
+import { LinkRules } from "@platejs/link";
 import { LinkPlugin } from "@platejs/link/react";
 import { PlateElement, type PlateElementProps } from "platejs/react";
 import {
@@ -32,6 +33,7 @@ const linkItem: ContentToolbarItem = {
 	icon: LinkIcon,
 	label: "link",
 	kbd: ["⌘", "K"],
+	hotkey: "mod+k",
 	isActive: (editor) => linkAtSelection(editor) !== null,
 	isDisabled: (editor) =>
 		editor.selection === null ||
@@ -42,7 +44,13 @@ const linkItem: ContentToolbarItem = {
 
 export const linkFeature: ContentFeature = {
 	...linkReader,
-	plugins: () => [LinkPlugin],
+	// A pasted URL becomes a link; pasted over selected text, it links that
+	// text, as in Gmail and Notion.
+	plugins: () => [
+		LinkPlugin.configure({
+			inputRules: [LinkRules.autolink({ variant: "paste" })],
+		}),
+	],
 	components: { a: LinkElement },
 	toolbar: [linkItem],
 	floating: [linkItem],

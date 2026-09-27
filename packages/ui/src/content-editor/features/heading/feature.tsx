@@ -69,14 +69,13 @@ export function headingFeature(
 	}));
 	return {
 		...headingReader(levels),
-		// One markdown rule covers every level; it rides the first heading plugin.
+		// The markdown rule reads its `#` count from the plugin it rides, so
+		// each level carries its own.
 		plugins: () =>
-			levels.map((level, index) =>
-				index === 0
-					? headingSettings[level].plugin.configure({
-							inputRules: [HeadingRules.markdown()],
-						})
-					: headingSettings[level].plugin,
+			levels.map((level) =>
+				headingSettings[level].plugin.configure({
+					inputRules: [HeadingRules.markdown()],
+				}),
 			),
 		components: Object.fromEntries(
 			levels.map((level) => [level, headingElement(level)]),

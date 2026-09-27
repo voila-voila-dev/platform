@@ -23,7 +23,12 @@ export default defineConfig({
 					include: [BROWSER_TESTS],
 					browser: {
 						enabled: true,
-						provider: playwright(),
+						// The link paste test goes through the real clipboard.
+						provider: playwright({
+							contextOptions: {
+								permissions: ["clipboard-read", "clipboard-write"],
+							},
+						}),
 						headless: true,
 						instances: [{ browser: "chromium" }],
 					},

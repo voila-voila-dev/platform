@@ -21,6 +21,7 @@ import {
 } from "#/content-editor/labels.ts";
 import { emptyContentValue } from "#/content-editor/lib/empty-value.ts";
 import { newContentNodeId } from "#/content-editor/lib/ids.ts";
+import { createPopoverHosts } from "#/content-editor/lib/popover-hosts.ts";
 import {
 	type ContentEditorThemeInput,
 	mergeContentEditorTheme,
@@ -127,6 +128,8 @@ export function ContentEditorRoot<Value extends ContentValue = ContentValue>({
 		[registry],
 	);
 
+	const popovers = useMemo(createPopoverHosts, []);
+
 	const lastEmitted = useRef<ContentValue | null>(initialValue);
 	useEffect(() => {
 		if (value === null || value === lastEmitted.current) {
@@ -151,6 +154,7 @@ export function ContentEditorRoot<Value extends ContentValue = ContentValue>({
 			dropFiles: onDropFiles ?? null,
 			generateNodeId,
 			readOnly,
+			popovers,
 		};
 	}, [
 		registry,
@@ -161,6 +165,7 @@ export function ContentEditorRoot<Value extends ContentValue = ContentValue>({
 		onDropFiles,
 		generateNodeId,
 		readOnly,
+		popovers,
 	]);
 
 	return (

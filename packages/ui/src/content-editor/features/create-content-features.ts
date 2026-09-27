@@ -13,6 +13,7 @@ import { slashFeature } from "#/content-editor/features/slash/feature.tsx";
 import { tableFeature } from "#/content-editor/features/table/feature.tsx";
 import { textMarksFeature } from "#/content-editor/features/text-marks/feature.tsx";
 import { videoFeature } from "#/content-editor/features/video/feature.tsx";
+import { voidNavigationFeature } from "#/content-editor/features/void-navigation/feature.tsx";
 import { xPostFeature } from "#/content-editor/features/x-post/feature.tsx";
 import { youtubeFeature } from "#/content-editor/features/youtube/feature.tsx";
 import type { ContentReadersOptions } from "#/content-editor/reader/readers.ts";
@@ -47,6 +48,7 @@ export function createContentFeatures({
 		tableFeature,
 		...embeds.map((embed) => embedFeatures[embed]),
 		slashFeature,
+		voidNavigationFeature,
 		pasteMergeFeature,
 	] as const;
 }

@@ -1,5 +1,5 @@
 import { useEditorRef, useEditorSelector } from "platejs/react";
-import { type ReactElement, useState } from "react";
+import { type ReactElement, useEffect, useState } from "react";
 import { Button } from "#/button/components/button.tsx";
 import { useContentEditorConfig } from "#/content-editor/context/content-editor-context.tsx";
 import type { ContentToolbarItem } from "#/content-editor/features/feature-definition.tsx";
@@ -51,8 +51,14 @@ export function MenuEntry({ item }: { readonly item: ContentToolbarItem }) {
  */
 export function ContentEditorToolbarItem({ item, size = "default" }: Props) {
 	const editor = useEditorRef();
-	const { labels, uploadImage, readOnly } = useContentEditorConfig();
+	const { labels, uploadImage, readOnly, popovers } = useContentEditorConfig();
 	const [open, setOpen] = useState(false);
+	const hasPopover = item.Popover !== undefined;
+	useEffect(
+		() =>
+			hasPopover ? popovers.register(item.key, () => setOpen(true)) : undefined,
+		[popovers, item.key, hasPopover],
+	);
 	const state = useEditorSelector(
 		(current) => ({
 			active: item.isActive?.(current) ?? false,
@@ -142,6 +148,13 @@ export function ContentEditorToolbarItem({ item, size = "default" }: Props) {
 				side="bottom"
 				align="start"
 				className="w-[min(18rem,calc(100vw-2rem))] p-3"
+				// The form edits the text, so closing it hands the caret back to
+				// the text, not to the toolbar button: ⌘K, a URL, Enter, and the
+				// author types on.
+				finalFocus={() => {
+					editor.tf.focus();
+					return false;
+				}}
 			>
 				{open ? <Form onClose={() => setOpen(false)} /> : null}
 			</Popover.Content>

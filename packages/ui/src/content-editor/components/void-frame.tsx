@@ -1,3 +1,4 @@
+import { useFocused, useSelected } from "platejs/react";
 import type { ReactNode } from "react";
 import { cn } from "#/lib/utils.ts";
 
@@ -6,12 +7,23 @@ interface Props {
 	children: ReactNode;
 }
 
-/** The non-editable box every media and embed element draws itself in. */
+/**
+ * The non-editable box every void element draws itself in. It rings itself
+ * while the caret is on it, since a void shows no caret: without the ring,
+ * an arrow key that lands on it looks like it did nothing, and Backspace
+ * then deletes something the author never saw selected.
+ */
 export function VoidFrame({ className, children }: Props) {
+	const selected = useSelected();
+	const focused = useFocused();
 	return (
 		<figure
 			contentEditable={false}
-			className={cn("flex flex-col gap-1 py-1 select-none", className)}
+			data-selected={(selected && focused) || undefined}
+			className={cn(
+				"flex flex-col gap-1 rounded-md py-1 select-none data-selected:bg-accent/60 data-selected:outline-2 data-selected:outline-offset-2 data-selected:outline-ring",
+				className,
+			)}
 		>
 			{children}
 		</figure>

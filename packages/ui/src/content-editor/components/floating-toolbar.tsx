@@ -70,8 +70,10 @@ export function ContentEditorFloatingToolbar({ className }: Props) {
 		const rect = selectionRect(editor);
 		if (rect === null) {
 			// No usable selection: when a form inside the toolbar holds focus,
-			// keep the last position so the form stays usable.
-			if (!pinned) {
+			// keep the last position so the form stays usable. A form that
+			// closes on submit unmounts with focus inside it, so no blur ever
+			// unpins; the caret back in the text is what says it is over.
+			if (!pinned || editor.api.isFocused()) {
 				setPosition(null);
 			}
 			return;

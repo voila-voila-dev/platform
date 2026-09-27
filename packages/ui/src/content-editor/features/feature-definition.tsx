@@ -55,6 +55,12 @@ export interface ContentToolbarItem {
 	readonly label: string;
 	/** Keys rendered through `Kbd`, e.g. `["⌘", "B"]`. */
 	readonly kbd?: ReadonlyArray<string>;
+	/**
+	 * The key the canvas binds to this item, as `isHotkey` reads it
+	 * (`"mod+k"`): it runs the item, or opens its form. Left out when the
+	 * item's plugin already binds its key, as the marks' plugins do.
+	 */
+	readonly hotkey?: string;
 	readonly isActive?: (editor: ContentEditorApi) => boolean;
 	readonly isDisabled?: (editor: ContentEditorApi) => boolean;
 	/** Shown only while this predicate holds (the table controls inside a table). */

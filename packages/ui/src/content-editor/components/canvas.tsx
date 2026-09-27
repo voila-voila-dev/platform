@@ -1,6 +1,7 @@
 import { PlateContent, type PlateContentProps } from "platejs/react";
 import { useRegisterContentEditorPart } from "#/content-editor/components/layout.tsx";
 import { useContentEditorConfig } from "#/content-editor/context/content-editor-context.tsx";
+import { useRunHotkey } from "#/content-editor/hooks/use-run-hotkey.ts";
 import { useTakeFiles } from "#/content-editor/hooks/use-take-files.ts";
 import { cn } from "#/lib/utils.ts";
 
@@ -14,17 +15,20 @@ interface Props extends Omit<PlateContentProps, "placeholder" | "readOnly"> {
  * A drop or a paste that carries files goes to the feature that takes them
  * (an image to the image feature) and the rest to the host's `onDropFiles`,
  * in the capture phase so slate-react's own drop handling never sees it;
- * text keeps Plate's own handling.
+ * text keeps Plate's own handling. A key an item declares as its `hotkey`
+ * does what pressing that item does.
  */
 export function ContentEditorCanvas({
 	className,
 	placeholder,
 	onDropCapture,
 	onPasteCapture,
+	onKeyDown,
 	...props
 }: Props) {
 	const { labels, mode, readOnly } = useContentEditorConfig();
 	const takeFiles = useTakeFiles();
+	const runHotkey = useRunHotkey();
 	useRegisterContentEditorPart("canvas");
 
 	return (
@@ -41,6 +45,13 @@ export function ContentEditorCanvas({
 					return;
 				}
 				onDropCapture?.(event);
+			}}
+			onKeyDown={(event) => {
+				if (runHotkey(event)) {
+					event.preventDefault();
+					return;
+				}
+				onKeyDown?.(event);
 			}}
 			onPasteCapture={(event) => {
 				if (takeFiles(event.clipboardData)) {

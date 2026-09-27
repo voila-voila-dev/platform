@@ -115,6 +115,62 @@ export const sampleContent: ContentValue = [
 	{ type: "p", children: [{ text: "" }] },
 ];
 
+/**
+ * A document to try the keyboard on: each block says what to press on it,
+ * and it ends on an image, the void a caret used to get trapped in.
+ */
+export const keyboardContent: ContentValue = [
+	{
+		type: "p",
+		children: [
+			{ text: "Shift+Enter breaks this line" },
+			{ text: " without starting a new paragraph.", italic: true },
+		],
+	},
+	{
+		type: "p",
+		children: [
+			{ text: "Select " },
+			{ text: "these words", bold: true },
+			{ text: " and press ⌘K, or paste a URL over them." },
+		],
+	},
+	{
+		type: "p",
+		listStyleType: "disc",
+		indent: 1,
+		children: [{ text: "Enter on an empty item leaves the list" }],
+	},
+	{
+		type: "p",
+		listStyleType: "disc",
+		indent: 2,
+		children: [{ text: "Backspace at the start of an item outdents it" }],
+	},
+	{
+		type: "p",
+		children: [
+			{ text: "Arrow down onto the divider, then Backspace, then ⌘Z." },
+		],
+	},
+	{ type: "hr", children: [{ text: "" }] },
+	{
+		type: "p",
+		children: [
+			{
+				text: "Type - , 1. , > , ## , --- or **bold** at the start of an empty line.",
+			},
+		],
+	},
+	{
+		type: "image",
+		url: "https://placehold.co/960x320/png",
+		alt: "A placeholder",
+		caption: "Arrow down from here to leave the image",
+		children: [{ text: "" }],
+	},
+];
+
 export const inlineContent: ContentValue = [
 	{
 		type: "p",
