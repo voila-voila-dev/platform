@@ -28,9 +28,10 @@ export interface ContentUrlField<Key extends string = string>
 	readonly placeholder?: string;
 }
 
+/** A string, or a number when the attribute is a count (a column count). */
 export interface ContentSelectField<
 	Key extends string = string,
-	Value extends string = string,
+	Value extends string | number = string | number,
 > extends ContentFieldBase<Key> {
 	readonly type: "select";
 	readonly options: ReadonlyArray<{
@@ -87,7 +88,7 @@ export type ContentFieldType = ContentField["type"];
 export interface ContentFieldValueByType {
 	readonly text: string;
 	readonly url: string;
-	readonly select: string;
+	readonly select: string | number;
 	readonly boolean: boolean;
 	readonly money: ContentMoney;
 	readonly image: string;
@@ -111,6 +112,7 @@ type FieldsForValue<Key extends string, Value> =
 					| ContentImageField<Key>
 					| ContentSelectField<Key, Value>
 			: never)
+	| ([Value] extends [number] ? ContentSelectField<Key, Value> : never)
 	| ([Value] extends [boolean] ? ContentBooleanField<Key> : never)
 	| ([Value] extends [ContentMoney] ? ContentMoneyField<Key> : never)
 	| ([Value] extends [ReadonlyArray<string>]

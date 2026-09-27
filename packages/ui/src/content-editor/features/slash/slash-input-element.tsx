@@ -7,6 +7,14 @@ import { useContentEditorConfig } from "#/content-editor/context/content-editor-
  * The input Plate inserts when the user types `/`: the registry's slash
  * items, matched on the host's labels and on each item's keywords.
  */
+/** What the author typed the name of comes before what only has it as a
+ * keyword: "/columns" lists the columns, then the table. */
+const labelMatchesFirst =
+	(needle: string) =>
+	(a: { readonly label: string }, b: { readonly label: string }) =>
+		Number(!a.label.toLowerCase().includes(needle)) -
+		Number(!b.label.toLowerCase().includes(needle));
+
 export function SlashInputElement(props: PlateElementProps) {
 	const editor = useEditorRef();
 	const { registry, capabilities, labels, uploadImage } =
@@ -29,6 +37,7 @@ export function SlashInputElement(props: PlateElementProps) {
 							keyword.toLowerCase().includes(needle),
 						),
 				)
+				.sort(labelMatchesFirst(needle))
 				.map(({ item, label }) => ({ key: item.key, label, icon: item.icon }));
 		},
 		[items, labels],

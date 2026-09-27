@@ -197,6 +197,7 @@
 		"@platejs/markdown": "^53.3.12",
 		"@platejs/slash-command": "^53.0.0",
 		"@platejs/table": "^53.0.9",
+		"@platejs/layout": "^53.0.0",
 		"remark-gfm": "^4.0.1",
 		"@platejs/resizable": "^53.0.0"
 	},
@@ -246,6 +247,9 @@
 		"@platejs/table": {
 			"optional": true
 		},
+		"@platejs/layout": {
+			"optional": true
+		},
 		"remark-gfm": {
 			"optional": true
 		},
@@ -279,6 +283,7 @@
 		"@platejs/markdown": "^53.3.12",
 		"@platejs/slash-command": "^53.0.0",
 		"@platejs/table": "^53.0.9",
+		"@platejs/layout": "^53.0.0",
 		"remark-gfm": "^4.0.1",
 		"@platejs/resizable": "^53.0.0",
 		"@tailwindcss/vite": "catalog:tailwind",

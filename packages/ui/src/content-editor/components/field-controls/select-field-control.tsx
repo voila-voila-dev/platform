@@ -9,17 +9,21 @@ export function SelectFieldControl({
 	onChange,
 }: FieldControlProps<"select">) {
 	const text = useFieldText();
+	// The kit's select takes strings; a count is stored as the number it is.
 	const items = field.options.map((option) => ({
-		value: option.value,
+		value: String(option.value),
 		label: text(option.label),
 	}));
 	return (
 		<Select.Root
 			items={items}
-			value={value}
+			value={String(value)}
 			onValueChange={(next) => {
-				if (next !== null) {
-					onChange(next);
+				const option = field.options.find(
+					(candidate) => String(candidate.value) === next,
+				);
+				if (option !== undefined) {
+					onChange(option.value);
 				}
 			}}
 		>

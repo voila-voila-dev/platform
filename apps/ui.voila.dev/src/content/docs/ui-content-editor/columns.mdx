@@ -1,0 +1,115 @@
+---
+title: "Columns"
+description: "A row of one to four columns of blocks, stacked on a phone."
+sidebar:
+  order: 40
+---
+
+import * as Example from "@/examples/ui-content-editor/columns";
+
+A row of columns puts blocks side by side: one to four columns on a wide
+screen, one or two on a phone. Each column holds ordinary blocks
+(paragraphs, headings, lists, images), never another row of columns.
+
+<Preview layout="stack" scroll>
+	<Example.Columns />
+</Preview>
+
+## Setting it up
+
+`columnsFeature` is in no preset. Add it where a layout belongs, such as an
+email or a landing page:
+
+```tsx
+import { ContentEditor, columnsFeature, createContentFeatures } from "@voila.dev/ui/content-editor";
+
+const features = [...createContentFeatures(), columnsFeature];
+
+<ContentEditor.Root features={features} value={value} onChange={setValue}>
+	<ContentEditor.Canvas />
+	<ContentEditor.Inspector />
+</ContentEditor.Root>
+```
+
+## Editing
+
+- Type `/` and pick **Columns**, or use the toolbar's insert menu. The row
+  starts with two empty columns, with the caret in the first.
+- Type in a column as anywhere else. The arrow keys move the caret from the
+  end of one column to the start of the next.
+- Enter starts a new block inside the column. Backspace at the start of a
+  column and Delete at its end do nothing, so text never moves from one
+  column into another. On an empty first block, Backspace removes it.
+- With the caret in a row, the inspector sets the number of columns on
+  desktop and on mobile. It also lists the columns by their first words, to
+  move one left or right, remove one, or add one at the end.
+
+## Rules the editor keeps
+
+A normalizer keeps every document in this shape, whatever was pasted or
+loaded:
+
+- A row sits at the top level only. A row pasted into a column, a quote or
+  a table cell is unwrapped, and its blocks stay where they were pasted.
+- A column sits in a row only. A column on its own is unwrapped.
+- A row holds exactly `desktopColumns` columns. Missing columns are added
+  empty. When the count goes down, the blocks of each removed column move
+  to the end of the last column that is kept, so no text is lost.
+- An empty column gets an empty paragraph. A row with no columns is removed.
+- `desktopColumns` is 1 to 4 and `mobileColumns` is 1 or 2. Any other value
+  is set to the nearest allowed one.
+
+## Mobile
+
+On the canvas, the row takes its mobile count when the row itself is
+narrower than 30rem, so the editor stacks the columns as a phone does, even
+in a narrow side panel. `ContentRenderer` does the same.
+
+`contentToHtml` has no container to measure. It writes the desktop grid
+inline and the counts as `data-columns` and `data-mobile-columns`. To stack
+the columns, add a rule to the page's stylesheet:
+
+```css
+@media (max-width: 600px) {
+	[data-mobile-columns="1"] { grid-template-columns: minmax(0, 1fr) !important; }
+	[data-mobile-columns="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+```
+
+## The stored nodes
+
+```json
+{
+	"type": "columns",
+	"desktopColumns": 2,
+	"mobileColumns": 1,
+	"children": [
+		{ "type": "column", "children": [{ "type": "p", "children": [{ "text": "Left" }] }] },
+		{ "type": "column", "children": [{ "type": "p", "children": [{ "text": "Right" }] }] }
+	]
+}
+```
+
+`desktopColumns` and `mobileColumns` have the names and values of the email
+block editor's `grid` block. A grid's cells flow into rows of
+`desktopColumns`, so a grid of more cells than columns becomes one row per
+line of cells.
+
+The reader alone, for a server that renders stored content without the
+editor:
+
+```ts
+import { columnsReader, createContentReaders } from "@voila.dev/ui/content-editor/reader";
+
+const readers = [...createContentReaders(), columnsReader];
+```
+
+## Labels
+
+- The inspector's title is `items.columns`.
+- Its fields are `fields.columnsDesktop`, `fields.columnsMobile` and
+  `fields.columnsMobileDescription`.
+- The column list uses `chrome.columnsColumn(position)`,
+  `chrome.columnsEmpty`, `chrome.columnsAdd`,
+  `chrome.columnsRemove(position)`, `chrome.columnsMoveBefore(position)` and
+  `chrome.columnsMoveAfter(position)`.

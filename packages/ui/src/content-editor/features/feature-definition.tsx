@@ -5,6 +5,7 @@ import type {
 	PlateElementProps,
 } from "platejs/react";
 import type { ComponentType, FunctionComponent } from "react";
+import type { ContentNodeLike } from "#/content-editor/features/content-value.ts";
 import type { ContentField } from "#/content-editor/features/field-definition.ts";
 import type { ContentFeatureReader } from "#/content-editor/features/reader-definition.tsx";
 import type { ContentEditorLabels } from "#/content-editor/labels.ts";
@@ -107,6 +108,11 @@ export interface ContentFileHandler {
 	) => void;
 }
 
+export interface ContentInspectorSectionProps {
+	/** The inspected node, as it is now. */
+	readonly node: ContentNodeLike;
+}
+
 export interface ContentFeature extends ContentFeatureReader {
 	readonly plugins: (
 		context: ContentPluginContext,
@@ -124,6 +130,14 @@ export interface ContentFeature extends ContentFeatureReader {
 	 * element the selection sits in. `defineElementFeature` fills it.
 	 */
 	readonly fields?: Readonly<Record<string, ReadonlyArray<ContentField>>>;
+	/**
+	 * What the inspector shows under the fields, per node type, for what a
+	 * field list cannot say: the columns of a row, added, removed and
+	 * reordered.
+	 */
+	readonly inspectorSections?: Readonly<
+		Record<string, ComponentType<ContentInspectorSectionProps>>
+	>;
 	/** Hidden, and its items with it, unless the host wired the capability. */
 	readonly requires?: ReadonlyArray<ContentCapability>;
 	/** Which editor modes carry this feature; defaults to block editors only for block features. */

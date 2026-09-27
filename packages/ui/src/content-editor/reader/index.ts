@@ -1,4 +1,11 @@
 export { ContentRenderer } from "#/content-editor/components/content-renderer.tsx";
+export {
+	type ContentColumnNode,
+	type ContentColumnsDesktopCount,
+	type ContentColumnsMobileCount,
+	type ContentColumnsNode,
+	columnsReader,
+} from "#/content-editor/features/columns/reader.tsx";
 export type {
 	ContentDescendant,
 	ContentNodeLike,

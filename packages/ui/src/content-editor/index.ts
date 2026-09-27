@@ -31,6 +31,14 @@ export {
 	useContentEditorRegistry,
 } from "#/content-editor/context/content-editor-context.tsx";
 export { useContentEditorTheme } from "#/content-editor/context/theme-context.ts";
+export { columnsFeature } from "#/content-editor/features/columns/feature.tsx";
+export {
+	type ContentColumnNode,
+	type ContentColumnsDesktopCount,
+	type ContentColumnsMobileCount,
+	type ContentColumnsNode,
+	columnsReader,
+} from "#/content-editor/features/columns/reader.tsx";
 export type {
 	ContentDescendant,
 	ContentNodeLike,
@@ -47,6 +55,7 @@ export type {
 	ContentEditorApi,
 	ContentEditorMode,
 	ContentFeature,
+	ContentInspectorSectionProps,
 	ContentItemContext,
 	ContentPluginContext,
 	ContentSlashItem,

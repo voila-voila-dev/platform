@@ -68,6 +68,9 @@ export interface ContentElementFeatureDefinition<Node extends ContentNodeLike> {
 	) => ReadonlyArray<AnyPlatePlugin>;
 	readonly requires?: ReadonlyArray<ContentCapability>;
 	readonly files?: ContentFeature["files"];
+	/** What the inspector shows under the fields, for what a field list
+	 * cannot say (a container's children, added, removed, reordered). */
+	readonly inspector?: ComponentType<{ readonly node: Node }>;
 }
 
 /**
@@ -148,6 +151,14 @@ export function defineElementFeature<Node extends ContentNodeLike>(
 		},
 		components: { [node.type]: Element },
 		fields: { [node.type]: fields },
+		inspectorSections:
+			definition.inspector === undefined
+				? undefined
+				: {
+						[node.type]: definition.inspector as ComponentType<{
+							readonly node: ContentNodeLike;
+						}>,
+					},
 		slash: slashItem === undefined ? undefined : [slashItem],
 		toolbar:
 			slashItem === undefined ? undefined : [{ ...slashItem, group: "insert" }],

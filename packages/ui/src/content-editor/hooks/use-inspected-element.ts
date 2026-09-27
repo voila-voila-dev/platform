@@ -1,7 +1,9 @@
 import type { Path } from "platejs";
 import { useEditorRef, useEditorSelector } from "platejs/react";
+import type { ComponentType } from "react";
 import { useContentEditorConfig } from "#/content-editor/context/content-editor-context.tsx";
 import type { ContentNodeLike } from "#/content-editor/features/content-value.ts";
+import type { ContentInspectorSectionProps } from "#/content-editor/features/feature-definition.tsx";
 import type { ContentField } from "#/content-editor/features/field-definition.ts";
 
 export interface ContentInspectedElement {
@@ -11,6 +13,8 @@ export interface ContentInspectedElement {
 	/** The key of the feature that owns the node, its name under `labels.items`. */
 	readonly featureKey: string;
 	readonly fields: ReadonlyArray<ContentField>;
+	/** What the inspector shows under the fields, when the feature has more to say. */
+	readonly section?: ComponentType<ContentInspectorSectionProps>;
 	/** Writes one attribute on the node. */
 	readonly set: (key: string, value: unknown) => void;
 }
@@ -57,6 +61,7 @@ export function useInspectedElement(): ContentInspectedElement | null {
 			typeof entry.node.id === "string" ? entry.node.id : entry.path.join("."),
 		featureKey: inspector.featureKey,
 		fields: inspector.fields,
+		section: inspector.section,
 		set: (key, value) => {
 			// Found again by id when it has one: an upload may land after the
 			// element moved.

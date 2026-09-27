@@ -40,7 +40,9 @@ export function ContentEditorInspector({ className, ...props }: Props) {
 					// half-typed value never carries over to the next one.
 					key={inspected.identity}
 					disabled={readOnly}
-					className="flex flex-col gap-4"
+					// A fieldset is as wide as its widest line by default; a long
+					// truncated value would push the panel wider than the host made it.
+					className="flex min-w-0 flex-col gap-4"
 					// Enter in a one-line field, or Escape, hands the caret back to
 					// the text, as closing the link form does.
 					onKeyDown={(event) => {
@@ -65,6 +67,9 @@ export function ContentEditorInspector({ className, ...props }: Props) {
 							onChange={(value) => inspected.set(field.key, value)}
 						/>
 					))}
+					{inspected.section === undefined ? null : (
+						<inspected.section node={inspected.node} />
+					)}
 				</fieldset>
 			)}
 		</section>

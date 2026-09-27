@@ -3,12 +3,13 @@ import {
 	createPlatePlugin,
 	type PlateElementProps,
 } from "platejs/react";
-import type { FunctionComponent } from "react";
+import type { ComponentType, FunctionComponent } from "react";
 import type {
 	ContentCapability,
 	ContentEditorMode,
 	ContentFeature,
 	ContentFileHandler,
+	ContentInspectorSectionProps,
 	ContentSlashItem,
 	ContentToolbarItem,
 } from "#/content-editor/features/feature-definition.tsx";
@@ -45,6 +46,7 @@ export interface ContentRegistry {
 		| {
 				readonly featureKey: string;
 				readonly fields: ReadonlyArray<ContentField>;
+				readonly section?: ComponentType<ContentInspectorSectionProps>;
 		  }
 		| undefined;
 	readonly reader: ContentReaderRegistry;
@@ -127,11 +129,24 @@ export function createContentRegistry(
 				.flatMap((feature) => pick(feature) ?? []);
 
 	const inspectors = new Map(
-		active.flatMap((feature) =>
-			Object.entries(feature.fields ?? {})
-				.filter(([, fields]) => fields.length > 0)
-				.map(([type, fields]) => [type, { featureKey: feature.key, fields }]),
-		),
+		active.flatMap((feature) => {
+			const sections = feature.inspectorSections ?? {};
+			const types = new Set([
+				...Object.keys(feature.fields ?? {}),
+				...Object.keys(sections),
+			]);
+			return [...types]
+				.map((type) => ({
+					type,
+					fields: feature.fields?.[type] ?? [],
+					section: sections[type],
+				}))
+				.filter(({ fields, section }) => fields.length > 0 || section)
+				.map(
+					({ type, fields, section }) =>
+						[type, { featureKey: feature.key, fields, section }] as const,
+				);
+		}),
 	);
 
 	return {

@@ -39,6 +39,12 @@ export interface ContentEditorChromeLabels {
 	readonly currency: string;
 	readonly addItem: string;
 	readonly removeItem: (position: number) => string;
+	readonly columnsColumn: (position: number) => string;
+	readonly columnsEmpty: string;
+	readonly columnsAdd: string;
+	readonly columnsRemove: (position: number) => string;
+	readonly columnsMoveBefore: (position: number) => string;
+	readonly columnsMoveAfter: (position: number) => string;
 }
 
 /** Toolbar, floating toolbar and slash items, by item key. Open for custom features. */
@@ -90,6 +96,7 @@ export interface ContentEditorItemLabels {
 	readonly backgroundBlue: string;
 	readonly backgroundRed: string;
 	readonly deleteMenu: string;
+	readonly columns: string;
 }
 
 /**
@@ -154,6 +161,12 @@ export const DEFAULT_CONTENT_EDITOR_LABELS: ContentEditorLabels = {
 		currency: "Currency",
 		addItem: "Add",
 		removeItem: (position) => `Remove item ${position}`,
+		columnsColumn: (position) => `Column ${position}`,
+		columnsEmpty: "Empty",
+		columnsAdd: "Add a column",
+		columnsRemove: (position) => `Remove column ${position}`,
+		columnsMoveBefore: (position) => `Move column ${position} left`,
+		columnsMoveAfter: (position) => `Move column ${position} right`,
 	},
 	items: {
 		bold: "Bold",
@@ -202,6 +215,7 @@ export const DEFAULT_CONTENT_EDITOR_LABELS: ContentEditorLabels = {
 		backgroundBlue: "Blue fill",
 		backgroundRed: "Red fill",
 		deleteMenu: "Delete",
+		columns: "Columns",
 	},
 	fields: {
 		url: "URL",
@@ -210,6 +224,10 @@ export const DEFAULT_CONTENT_EDITOR_LABELS: ContentEditorLabels = {
 		alt: "Alternative text",
 		altDescription: "Read aloud to someone who cannot see the image.",
 		caption: "Caption",
+		columnsDesktop: "Columns (desktop)",
+		columnsMobile: "Columns (mobile)",
+		columnsMobileDescription:
+			"A different column count on mobile relies on a media query: the Gmail app on a third-party account ignores it and falls back to one column.",
 	},
 };
 
