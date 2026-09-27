@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useContentEditorTheme } from "#/content-editor/context/theme-context.ts";
 import type { EmailEditorRegistry } from "#/email-block-editor/blocks/registry.ts";
 import type { EmailEditorContainerId } from "#/email-block-editor/document/reducer.ts";
 import type {
@@ -9,7 +10,6 @@ import type {
 import type { EmailEditorLabels } from "#/email-block-editor/labels.ts";
 import { DEFAULT_EMAIL_EDITOR_LABELS } from "#/email-block-editor/labels.ts";
 import type { EmailEditorTheme } from "#/email-block-editor/theme.ts";
-import { DEFAULT_EMAIL_EDITOR_THEME } from "#/email-block-editor/theme.ts";
 
 /**
  * What an editor instance is configured with, as opposed to what it currently
@@ -123,8 +123,7 @@ export const useEmailEditorRegistry = (): EmailEditorRegistry =>
  * wants.
  */
 export const useEmailEditorTheme = (): EmailEditorTheme =>
-	React.useContext(EmailEditorConfigContext)?.theme ??
-	DEFAULT_EMAIL_EDITOR_THEME;
+	useContentEditorTheme();
 
 /** The copy of the surrounding editor, or the English defaults outside one —
  * for the same reason {@link useEmailEditorTheme} falls back. */

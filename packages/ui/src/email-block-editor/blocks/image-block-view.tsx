@@ -1,6 +1,6 @@
+import { PlayOverlay } from "#/content-editor/components/email-card/play-overlay.tsx";
 import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block-definitions.tsx";
 import { ImageDropZone } from "#/email-block-editor/blocks/image-drop-zone.tsx";
-import { PlayOverlay } from "#/email-block-editor/blocks/play-overlay.tsx";
 import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorImageBlock } from "#/email-block-editor/document/types.ts";
 

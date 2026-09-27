@@ -24,6 +24,11 @@ export {
 	createContentReaderRegistry,
 } from "#/content-editor/features/reader-registry.ts";
 export {
+	type ContentVariableNode,
+	variablePlaceholder,
+	variableReader,
+} from "#/content-editor/features/variable/reader.tsx";
+export {
 	emptyContentValue,
 	isEmptyContentValue,
 } from "#/content-editor/lib/empty-value.ts";

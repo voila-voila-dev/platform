@@ -9,6 +9,9 @@ export interface ContentEditorChromeLabels {
 	readonly placeholder: string;
 	readonly slashPlaceholder: string;
 	readonly slashEmpty: string;
+	readonly insertVariable: string;
+	readonly variablePlaceholder: string;
+	readonly variablesEmpty: string;
 	readonly insert: string;
 	readonly caption: string;
 	readonly altText: string;
@@ -63,6 +66,7 @@ export interface ContentEditorItemLabels {
 	readonly file: string;
 	readonly youtube: string;
 	readonly xPost: string;
+	readonly variable: string;
 	readonly link: string;
 	readonly unlink: string;
 	readonly undo: string;
@@ -120,6 +124,9 @@ export const DEFAULT_CONTENT_EDITOR_LABELS: ContentEditorLabels = {
 		placeholder: "Start writing, or type / for a block…",
 		slashPlaceholder: "Filter blocks…",
 		slashEmpty: "No block matches.",
+		insertVariable: "Insert a variable",
+		variablePlaceholder: "Find a variable…",
+		variablesEmpty: "No variable matches.",
 		insert: "Insert",
 		caption: "Add a caption…",
 		altText: "Alternative text",
@@ -171,6 +178,7 @@ export const DEFAULT_CONTENT_EDITOR_LABELS: ContentEditorLabels = {
 		file: "File",
 		youtube: "YouTube video",
 		xPost: "X post",
+		variable: "Variable",
 		link: "Link",
 		unlink: "Remove link",
 		undo: "Undo",

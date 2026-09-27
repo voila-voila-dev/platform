@@ -1,6 +1,6 @@
+import { EmailCardMeta } from "#/content-editor/components/email-card/email-card-meta.tsx";
 import { formatPreviewPrice } from "#/content-editor/lib/money.ts";
 import { BlockTextInput } from "#/email-block-editor/blocks/block-text-input.tsx";
-import { EmailCardMeta } from "#/email-block-editor/blocks/email-card-meta.tsx";
 import {
 	useEmailEditorLabels,
 	useEmailEditorTheme,

@@ -1,0 +1,73 @@
+---
+title: "Variables"
+description: "A value filled in per recipient, typed as {{ and kept as a node."
+sidebar:
+  order: 11
+---
+
+import * as Example from "@/examples/ui-content-editor/appearance";
+
+A variable is a value the sender fills in per recipient: a first name, an
+email address. In the editor it is an inline element shown as a chip, so it
+can be neither mistyped nor half deleted, and a renderer substitutes it
+without parsing text. Typing `{{` opens the suggestions.
+
+<Preview layout="stack" scroll>
+	<Example.Variables />
+</Preview>
+
+## Setting it up
+
+Add `variableFeature` to the features and pass the root the `variables` it
+offers. A variable is a `name`, which the node stores and the renderer
+substitutes, and an optional `label`, which the chip and the suggestions
+show.
+
+```tsx
+import { ContentEditorField, createContentFeatures, variableFeature } from "@voila.dev/ui/content-editor";
+
+<ContentEditorField
+	features={[...createContentFeatures(), variableFeature]}
+	variables={[
+		{ name: "firstName", label: "Prénom" },
+		{ name: "lastName", label: "Nom" },
+		{ name: "email", label: "E-mail" },
+	]}
+	value={value}
+	onChange={setValue}
+/>
+```
+
+## Typing
+
+- `{{` opens the suggestions at the caret. Typing filters them on the name
+  and the label; the arrow keys move, Enter or Tab picks.
+- Picking puts the chip at the caret, and the caret after it.
+- Escape gives back what was typed (`{{fir`), so a literal `{{` stays
+  possible. Backspace right after `{{` leaves a single `{`.
+- A chip is a void element: the arrow keys step over it and Backspace deletes
+  it whole.
+
+## The stored node
+
+```json
+{ "type": "variable", "name": "firstName", "children": [{ "text": "" }] }
+```
+
+The reader writes the placeholder back as text, `{{firstName}}`, in HTML and
+in Markdown, for the renderer that substitutes it. `variablePlaceholder(name)`
+builds that string, and `variableReader` is the reader alone, for a server
+that renders stored content without the editor:
+
+```ts
+import { createContentReaders, variableReader } from "@voila.dev/ui/content-editor/reader";
+
+const readers = [...createContentReaders(), variableReader];
+```
+
+A subject line is not a document: it keeps plain `{{firstName}}` text.
+
+## Labels
+
+The suggestions' input and empty state are `chrome.variablePlaceholder`,
+`chrome.insertVariable` (its accessible name) and `chrome.variablesEmpty`.

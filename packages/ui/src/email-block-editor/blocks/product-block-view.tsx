@@ -1,8 +1,8 @@
+import { EmailCardButton } from "#/content-editor/components/email-card/email-card-button.tsx";
+import { EmailCardShell } from "#/content-editor/components/email-card/email-card-shell.tsx";
 import { formatPreviewPrice } from "#/content-editor/lib/money.ts";
 import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block-definitions.tsx";
 import { BlockTextInput } from "#/email-block-editor/blocks/block-text-input.tsx";
-import { EmailCardButton } from "#/email-block-editor/blocks/email-card-button.tsx";
-import { EmailCardShell } from "#/email-block-editor/blocks/email-card-shell.tsx";
 import {
 	useEmailEditorLabels,
 	useEmailEditorTheme,

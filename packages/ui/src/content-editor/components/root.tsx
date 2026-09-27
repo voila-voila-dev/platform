@@ -4,12 +4,14 @@ import {
 	type ContentEditorConfigContextValue,
 	ContentEditorConfigProvider,
 } from "#/content-editor/context/content-editor-context.tsx";
+import { ContentEditorThemeProvider } from "#/content-editor/context/theme-context.ts";
 import type { ContentValue } from "#/content-editor/features/content-value.ts";
 import type {
 	ContentCapability,
 	ContentEditorMode,
 	ContentFeature,
 	ContentUploadedImage,
+	ContentVariable,
 } from "#/content-editor/features/feature-definition.tsx";
 import {
 	type ContentRegistry,
@@ -23,10 +25,14 @@ import { emptyContentValue } from "#/content-editor/lib/empty-value.ts";
 import { newContentNodeId } from "#/content-editor/lib/ids.ts";
 import { createPopoverHosts } from "#/content-editor/lib/popover-hosts.ts";
 import {
+	type ContentEditorAppearance,
 	type ContentEditorThemeInput,
+	contentEditorThemeProperties,
 	mergeContentEditorTheme,
 } from "#/content-editor/theme.ts";
 import { cn } from "#/lib/utils.ts";
+
+const NO_VARIABLES: ReadonlyArray<ContentVariable> = [];
 
 function featureKeys(
 	features: ReadonlyArray<ContentFeature> | ContentRegistry,
@@ -68,7 +74,16 @@ export interface ContentEditorRootProps<
 	/** Node-id factory, injectable for deterministic tests. */
 	generateNodeId?: () => string;
 	labels?: ContentEditorLabelsInput;
+	/**
+	 * How the canvas looks. `document` is a page of prose; `plain` is a
+	 * mail being written, as in Gmail; `email` is the campaign card, the
+	 * theme's width and colours around the text.
+	 */
+	appearance?: ContentEditorAppearance;
+	/** Colours, font, preview locale and sizes of the canvas. */
 	theme?: ContentEditorThemeInput;
+	/** What typing `{{` offers, with the `variable` feature in the list. */
+	variables?: ReadonlyArray<ContentVariable>;
 	className?: string;
 	children: ReactNode;
 }
@@ -94,7 +109,9 @@ export function ContentEditorRoot<Value extends ContentValue = ContentValue>({
 	onDropFiles,
 	generateNodeId = newContentNodeId,
 	labels,
+	appearance = "document",
 	theme,
+	variables = NO_VARIABLES,
 	className,
 	children,
 }: ContentEditorRootProps<Value>) {
@@ -148,7 +165,9 @@ export function ContentEditorRoot<Value extends ContentValue = ContentValue>({
 			registry,
 			mode,
 			labels: mergeContentEditorLabels(labels),
+			appearance,
 			theme: mergeContentEditorTheme(theme),
+			variables,
 			capabilities,
 			uploadImage: onUploadImage ?? null,
 			dropFiles: onDropFiles ?? null,
@@ -160,7 +179,9 @@ export function ContentEditorRoot<Value extends ContentValue = ContentValue>({
 		registry,
 		mode,
 		labels,
+		appearance,
 		theme,
+		variables,
 		onUploadImage,
 		onDropFiles,
 		generateNodeId,
@@ -170,24 +191,29 @@ export function ContentEditorRoot<Value extends ContentValue = ContentValue>({
 
 	return (
 		<ContentEditorConfigProvider value={config}>
-			<Plate
-				editor={editor}
-				readOnly={readOnly}
-				onChange={({ value: next }) => {
-					lastEmitted.current = next as ContentValue;
-					onChange(next as Value);
-				}}
-			>
-				<div
-					data-slot="content-editor"
-					data-mode={mode}
-					data-read-only={readOnly || undefined}
-					className={cn("flex flex-col gap-2", className)}
-					style={config.theme.variables as React.CSSProperties}
+			<ContentEditorThemeProvider value={config.theme}>
+				<Plate
+					editor={editor}
+					readOnly={readOnly}
+					onChange={({ value: next }) => {
+						lastEmitted.current = next as ContentValue;
+						onChange(next as Value);
+					}}
 				>
-					{children}
-				</div>
-			</Plate>
+					<div
+						data-slot="content-editor"
+						data-mode={mode}
+						data-appearance={appearance}
+						data-read-only={readOnly || undefined}
+						className={cn("flex flex-col gap-2", className)}
+						style={
+							contentEditorThemeProperties(config.theme) as React.CSSProperties
+						}
+					>
+						{children}
+					</div>
+				</Plate>
+			</ContentEditorThemeProvider>
 		</ContentEditorConfigProvider>
 	);
 }

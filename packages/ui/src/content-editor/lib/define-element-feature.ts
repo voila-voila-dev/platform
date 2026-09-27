@@ -60,7 +60,9 @@ export interface ContentElementFeatureDefinition<Node extends ContentNodeLike> {
 		readonly icon: Icon;
 		readonly keywords: ReadonlyArray<string>;
 	};
-	/** Plate plugins, when the element needs more than being declared (an input rule). */
+	/** Plate plugins, when the element needs more than being declared (an
+	 * input rule, a combobox). One keyed by the node type replaces the plain
+	 * element plugin the helper otherwise declares. */
 	readonly plugins?: (
 		context: ContentPluginContext,
 	) => ReadonlyArray<AnyPlatePlugin>;
@@ -128,14 +130,22 @@ export function defineElementFeature<Node extends ContentNodeLike>(
 	return {
 		key,
 		nodes: [{ ...node, createNode }],
-		plugins:
-			definition.plugins ??
-			(() => [
-				createPlatePlugin({
-					key: node.type,
-					node: { isElement: true, isVoid: kind === "void", isInline: inline },
-				}),
-			]),
+		plugins: (context) => {
+			const declared = definition.plugins?.(context) ?? [];
+			return declared.some((plugin) => plugin.key === node.type)
+				? declared
+				: [
+						...declared,
+						createPlatePlugin({
+							key: node.type,
+							node: {
+								isElement: true,
+								isVoid: kind === "void",
+								isInline: inline,
+							},
+						}),
+					];
+		},
 		components: { [node.type]: Element },
 		fields: { [node.type]: fields },
 		slash: slashItem === undefined ? undefined : [slashItem],

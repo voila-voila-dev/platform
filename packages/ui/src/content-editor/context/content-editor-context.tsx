@@ -3,11 +3,15 @@ import type {
 	ContentCapability,
 	ContentEditorMode,
 	ContentUploadedImage,
+	ContentVariable,
 } from "#/content-editor/features/feature-definition.tsx";
 import type { ContentRegistry } from "#/content-editor/features/registry.ts";
 import type { ContentEditorLabels } from "#/content-editor/labels.ts";
 import type { ContentPopoverHosts } from "#/content-editor/lib/popover-hosts.ts";
-import type { ContentEditorTheme } from "#/content-editor/theme.ts";
+import type {
+	ContentEditorAppearance,
+	ContentEditorTheme,
+} from "#/content-editor/theme.ts";
 
 /**
  * What an editor instance is configured with, as opposed to what it shows.
@@ -18,7 +22,9 @@ export interface ContentEditorConfigContextValue {
 	readonly registry: ContentRegistry;
 	readonly mode: ContentEditorMode;
 	readonly labels: ContentEditorLabels;
+	readonly appearance: ContentEditorAppearance;
 	readonly theme: ContentEditorTheme;
+	readonly variables: ReadonlyArray<ContentVariable>;
 	readonly capabilities: ReadonlySet<ContentCapability>;
 	readonly uploadImage: ((file: File) => Promise<ContentUploadedImage>) | null;
 	readonly dropFiles: ((files: ReadonlyArray<File>) => void) | null;

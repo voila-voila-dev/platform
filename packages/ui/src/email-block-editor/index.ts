@@ -1,3 +1,7 @@
+export { EmailCardButton } from "#/content-editor/components/email-card/email-card-button.tsx";
+export { EmailCardImage } from "#/content-editor/components/email-card/email-card-image.tsx";
+export { EmailCardMeta } from "#/content-editor/components/email-card/email-card-meta.tsx";
+export { EmailCardShell } from "#/content-editor/components/email-card/email-card-shell.tsx";
 export type {
 	EmailBlockComponentProps,
 	EmailBlockContainer,
@@ -8,10 +12,6 @@ export {
 	createEmailBlocks,
 	type EmailBlocksOptions,
 } from "#/email-block-editor/blocks/create-email-blocks.ts";
-export { EmailCardButton } from "#/email-block-editor/blocks/email-card-button.tsx";
-export { EmailCardImage } from "#/email-block-editor/blocks/email-card-image.tsx";
-export { EmailCardMeta } from "#/email-block-editor/blocks/email-card-meta.tsx";
-export { EmailCardShell } from "#/email-block-editor/blocks/email-card-shell.tsx";
 export {
 	type AnyEmailBlockDefinition,
 	createEmailBlockRegistry,

@@ -1,7 +1,7 @@
+import { EmailCardMeta } from "#/content-editor/components/email-card/email-card-meta.tsx";
+import { EmailCardShell } from "#/content-editor/components/email-card/email-card-shell.tsx";
 import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block-definitions.tsx";
 import { BlockTextInput } from "#/email-block-editor/blocks/block-text-input.tsx";
-import { EmailCardMeta } from "#/email-block-editor/blocks/email-card-meta.tsx";
-import { EmailCardShell } from "#/email-block-editor/blocks/email-card-shell.tsx";
 import {
 	useEmailEditorLabels,
 	useEmailEditorTheme,

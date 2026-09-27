@@ -1,6 +1,6 @@
+import { EmailCardButton } from "#/content-editor/components/email-card/email-card-button.tsx";
+import { EmailCardShell } from "#/content-editor/components/email-card/email-card-shell.tsx";
 import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block-definitions.tsx";
-import { EmailCardButton } from "#/email-block-editor/blocks/email-card-button.tsx";
-import { EmailCardShell } from "#/email-block-editor/blocks/email-card-shell.tsx";
 import { OfferFeatureList } from "#/email-block-editor/blocks/offer-feature-list.tsx";
 import { OfferHeader } from "#/email-block-editor/blocks/offer-header.tsx";
 import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";

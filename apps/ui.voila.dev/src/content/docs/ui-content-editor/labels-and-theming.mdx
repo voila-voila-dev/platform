@@ -1,9 +1,11 @@
 ---
 title: "Labels and theming"
-description: "Every string and every size, owned by the host."
+description: "Every string, colour and size, and how the canvas looks, owned by the host."
 sidebar:
   order: 6
 ---
+
+import * as Example from "@/examples/ui-content-editor/appearance";
 
 ## Labels
 
@@ -27,15 +29,66 @@ Sections merge one level deep: name only what you translate.
 repository's `check-labels` script fails on a literal string inside the
 module, which is what keeps it that way.
 
-## Theme
+## Appearance
 
-The theme is a handful of CSS custom properties the root sets, so the canvas
-follows the kit's tokens and dark mode, and a host overrides a size without
-a class.
+`appearance` says what the canvas looks like. It changes no node and no
+feature, only how the same document is drawn.
+
+| Appearance | The canvas |
+| --- | --- |
+| `document` (default) | A page of prose: the kit's font, the prose width, a gap between blocks. |
+| `plain` | A mail being written, as in Gmail: the theme's font, lines stacked with no gap. |
+| `email` | The campaign card: the theme's card width, colours and font, on the theme's backdrop. |
 
 ```tsx
-<ContentEditorField theme={{ variables: { "--content-editor-min-height": "24rem" } }} />
+<ContentEditorField appearance="email" theme={brandTheme} />
 ```
+
+<Preview layout="stack" scroll>
+	<Example.EmailAppearance />
+</Preview>
+
+## Theme
+
+The theme is every token the canvas is drawn with. It keeps the email block
+editor's token names, so a host's palette carries over as is.
+
+| Token | Default | Used for |
+| --- | --- | --- |
+| `color.brand` | `var(--color-primary)` | Buttons, highlighted cards, variable chips |
+| `color.ink` | `var(--color-card-foreground)` | Body text in the email card |
+| `color.muted` | `var(--color-muted-foreground)` | Meta lines, placeholders |
+| `color.border` | `var(--color-border)` | Card borders, dividers |
+| `color.card` | `var(--color-card)` | The email card |
+| `color.canvas` | `var(--color-muted)` | The backdrop around the card |
+| `font` | the system sans stack | `plain` and `email` text |
+| `locale` | `en-US` | Prices and dates previewed on the canvas |
+| `headingFontSize` | `{ 1: "22px", 2: "17px" }` | Email headings |
+| `gridGapPx` | `16` | The gutter between columns |
+| `imageWidthRatio` | `{ full: 1, contained: 0.6 }` | Email image widths |
+| `previewWidth` | `{ desktop: 600, mobile: 390 }` | The email card width |
+| `variables` | sizes | The canvas's min and max height, block gap, prose width |
+
+Each section merges on its own: `color: { brand: "#0f766e" }` keeps the other
+colours. The defaults point at the kit's tokens, so the canvas follows the
+active theme and dark mode. Pass your email palette as literal colours when
+the canvas should preview exactly what a recipient receives: an email client
+has no CSS variables, so your renderer keeps its own.
+
+```tsx
+<ContentEditorField
+	appearance="email"
+	theme={{
+		color: { brand: "#0f766e", canvas: "#f1f5f9" },
+		font: "Georgia, serif",
+		locale: "fr-FR",
+	}}
+/>
+```
+
+`useContentEditorTheme()` gives a custom element's view the same tokens.
+There are no per-block styling props: a block that looks different in a
+campaign reads the appearance and the theme.
 
 The two rules no utility class can say, the placeholder's position and
 colour, ship in `@voila.dev/ui/styles/content-editor.css`.

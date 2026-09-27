@@ -1,14 +1,19 @@
 import { ImageIcon } from "@phosphor-icons/react";
-import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
-import type { EmailEditorCardImage } from "#/email-block-editor/document/types.ts";
+import { useContentEditorTheme } from "#/content-editor/context/theme-context.ts";
+
+/** The visual of a card. An empty `src` means the card has none yet. */
+export interface ContentCardImage {
+	readonly src: string;
+	readonly alt: string;
+}
 
 interface Props {
-	image: EmailEditorCardImage;
+	image: ContentCardImage;
 }
 
 /** The image slot of a card block, with its rounded top corners. */
 export function EmailCardImage({ image }: Props) {
-	const theme = useEmailEditorTheme();
+	const theme = useContentEditorTheme();
 	if (image.src === "") {
 		return (
 			<div

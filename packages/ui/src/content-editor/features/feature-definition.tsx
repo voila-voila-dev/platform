@@ -23,6 +23,14 @@ export type ContentCapability = "upload-image";
 
 export type ContentEditorApi = PlateEditor;
 
+/** A value the sender fills in per recipient, offered when the author types `{{`. */
+export interface ContentVariable {
+	/** What the node stores and the renderer substitutes, e.g. `firstName`. */
+	readonly name: string;
+	/** What the chip and the suggestions show; defaults to the name. */
+	readonly label?: string;
+}
+
 export interface ContentUploadedImage {
 	readonly url: string;
 	readonly width?: number;

@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
 import { useCallback, useMemo, useState } from "react";
+import { ContentEditorThemeProvider } from "#/content-editor/context/theme-context.ts";
+import { mergeContentEditorTheme } from "#/content-editor/theme.ts";
 import type {
 	AnyEmailBlockDefinition,
 	EmailEditorRegistry,
@@ -19,7 +21,6 @@ import {
 	useCompactEditorLayout,
 } from "#/email-block-editor/lib/use-media-query.ts";
 import type { EmailEditorThemeInput } from "#/email-block-editor/theme.ts";
-import { mergeEmailEditorTheme } from "#/email-block-editor/theme.ts";
 
 export interface EmailEditorRootProps<Block extends EmailEditorBlockLike> {
 	/**
@@ -115,31 +116,34 @@ export function EmailEditorRoot<Block extends EmailEditorBlockLike>({
 		setBlockSettingsOpen,
 	});
 
+	const mergedTheme = useMemo(() => mergeContentEditorTheme(theme), [theme]);
 	const config = useMemo(
 		() => ({
 			registry,
-			theme: mergeEmailEditorTheme(theme),
+			theme: mergedTheme,
 			labels: mergeEmailEditorLabels(labels),
 			onUploadImage,
 			generateBlockId,
 		}),
-		[registry, theme, labels, onUploadImage, generateBlockId],
+		[registry, mergedTheme, labels, onUploadImage, generateBlockId],
 	);
 
 	return (
-		<EmailEditorProvider
-			config={config}
-			state={{
-				document,
-				selectedBlockId: selectedBlockId ?? ownSelectedBlockId,
-				preview: preview ?? ownPreview,
-				compact,
-				coarsePointer,
-				blockSettingsOpen,
-			}}
-			actions={actions}
-		>
-			{children}
-		</EmailEditorProvider>
+		<ContentEditorThemeProvider value={mergedTheme}>
+			<EmailEditorProvider
+				config={config}
+				state={{
+					document,
+					selectedBlockId: selectedBlockId ?? ownSelectedBlockId,
+					preview: preview ?? ownPreview,
+					compact,
+					coarsePointer,
+					blockSettingsOpen,
+				}}
+				actions={actions}
+			>
+				{children}
+			</EmailEditorProvider>
+		</ContentEditorThemeProvider>
 	);
 }

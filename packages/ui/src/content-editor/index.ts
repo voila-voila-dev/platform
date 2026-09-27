@@ -4,6 +4,14 @@ export {
 } from "#/content-editor/components/character-count.tsx";
 export { ContentEditorField } from "#/content-editor/components/content-editor-field.tsx";
 export { ContentRenderer } from "#/content-editor/components/content-renderer.tsx";
+export { EmailCardButton } from "#/content-editor/components/email-card/email-card-button.tsx";
+export {
+	type ContentCardImage,
+	EmailCardImage,
+} from "#/content-editor/components/email-card/email-card-image.tsx";
+export { EmailCardMeta } from "#/content-editor/components/email-card/email-card-meta.tsx";
+export { EmailCardShell } from "#/content-editor/components/email-card/email-card-shell.tsx";
+export { PlayOverlay } from "#/content-editor/components/email-card/play-overlay.tsx";
 export {
 	type ContentEditorPart,
 	type ContentEditorSlot,
@@ -22,6 +30,7 @@ export {
 	useContentEditorLabels,
 	useContentEditorRegistry,
 } from "#/content-editor/context/content-editor-context.tsx";
+export { useContentEditorTheme } from "#/content-editor/context/theme-context.ts";
 export type {
 	ContentDescendant,
 	ContentNodeLike,
@@ -44,6 +53,7 @@ export type {
 	ContentToolbarGroup,
 	ContentToolbarItem,
 	ContentUploadedImage,
+	ContentVariable,
 } from "#/content-editor/features/feature-definition.tsx";
 export type {
 	ContentBooleanField,
@@ -81,6 +91,12 @@ export {
 	type ContentRegistry,
 	createContentRegistry,
 } from "#/content-editor/features/registry.ts";
+export { variableFeature } from "#/content-editor/features/variable/feature.tsx";
+export {
+	type ContentVariableNode,
+	variablePlaceholder,
+	variableReader,
+} from "#/content-editor/features/variable/reader.tsx";
 export {
 	type ContentInspectedElement,
 	useInspectedElement,
@@ -130,7 +146,9 @@ export {
 	createContentReaders,
 } from "#/content-editor/reader/readers.ts";
 export {
+	type ContentEditorAppearance,
 	type ContentEditorTheme,
+	type ContentEditorThemeColor,
 	type ContentEditorThemeInput,
 	DEFAULT_CONTENT_EDITOR_THEME,
 	mergeContentEditorTheme,
