@@ -41,7 +41,7 @@ const EMPTY: {
 		amountInMinorUnits: 0,
 		currency: field.currencies?.[0] ?? "EUR",
 	}),
-	image: () => "",
+	image: (field) => (field.withAlt === true ? { src: "", alt: "" } : ""),
 	"string-list": () => [],
 };
 
@@ -70,8 +70,11 @@ export function InspectorField({ field, value, onChange }: Props) {
 		/>
 	);
 	const label = <Field.Label htmlFor={id}>{text(field.label)}</Field.Label>;
+	// An image with its alternative text says what it says under the upload,
+	// above the alternative text.
 	const description =
-		field.description === undefined ? null : (
+		field.description === undefined ||
+		(field.type === "image" && field.withAlt === true) ? null : (
 			<Field.Description>{text(field.description)}</Field.Description>
 		);
 

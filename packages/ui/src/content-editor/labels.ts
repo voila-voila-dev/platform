@@ -103,6 +103,12 @@ export interface ContentEditorItemLabels {
 	readonly finePrint: string;
 	readonly button: string;
 	readonly stat: string;
+	readonly article: string;
+	readonly product: string;
+	readonly offer: string;
+	readonly rating: string;
+	readonly alignColumnLeft: string;
+	readonly alignColumnRight: string;
 }
 
 /**
@@ -141,6 +147,61 @@ export interface ContentEditorFieldLabels {
 	readonly imageOverlayNone: string;
 	readonly imageOverlayPlay: string;
 	readonly imageOverlayPlayDescription: string;
+	readonly articleTitle: string;
+	readonly articleTitlePlaceholder: string;
+	readonly articleDescription: string;
+	readonly articleDescriptionPlaceholder: string;
+	readonly articleImage: string;
+	readonly articleAuthor: string;
+	readonly articlePublishDate: string;
+	readonly articlePublishDatePlaceholder: string;
+	readonly articlePublishDateDescription: string;
+	readonly articleHref: string;
+	readonly articleHrefDescription: string;
+	readonly productName: string;
+	readonly productNamePlaceholder: string;
+	readonly productDescription: string;
+	readonly productDescriptionPlaceholder: string;
+	readonly productImage: string;
+	readonly productPrice: string;
+	readonly productCompareAtPrice: string;
+	readonly productCompareAtPriceDescription: string;
+	readonly productHref: string;
+	readonly productButtonLabel: string;
+	readonly productButtonLabelPlaceholder: string;
+	readonly productButtonLabelDescription: string;
+	readonly offerEyebrow: string;
+	readonly offerEyebrowPlaceholder: string;
+	readonly offerName: string;
+	readonly offerNamePlaceholder: string;
+	readonly offerDescription: string;
+	readonly offerImage: string;
+	readonly offerImageDescription: string;
+	readonly offerPrice: string;
+	readonly offerPeriod: string;
+	readonly offerPeriodPlaceholder: string;
+	readonly offerPeriodDescription: string;
+	readonly offerFeature: string;
+	readonly offerButtonLabel: string;
+	readonly offerButtonLabelPlaceholder: string;
+	readonly offerButtonLabelDescription: string;
+	readonly offerButtonHref: string;
+	readonly offerHighlighted: string;
+	readonly offerHighlightedDescription: string;
+	readonly ratingQuestionPlaceholder: string;
+	readonly ratingStyle: string;
+	readonly ratingStyleFilled: string;
+	readonly ratingStyleOutline: string;
+	readonly ratingLowLabel: string;
+	readonly ratingLowLabelPlaceholder: string;
+	readonly ratingHighLabel: string;
+	readonly ratingHighLabelPlaceholder: string;
+	readonly ratingHref: string;
+	readonly ratingHrefDescription: string;
+	readonly tableHeaderRow: string;
+	readonly tableColumn: string;
+	readonly tableAlignLeft: string;
+	readonly tableAlignRight: string;
 }
 
 export interface ContentEditorLabels {
@@ -252,6 +313,12 @@ export const DEFAULT_CONTENT_EDITOR_LABELS: ContentEditorLabels = {
 		finePrint: "Fine print",
 		button: "Button",
 		stat: "Key figure",
+		article: "Article",
+		product: "Product",
+		offer: "Offer",
+		rating: "Rating",
+		alignColumnLeft: "Align column left",
+		alignColumnRight: "Align column right",
 	},
 	fields: {
 		url: "URL",
@@ -289,6 +356,65 @@ export const DEFAULT_CONTENT_EDITOR_LABELS: ContentEditorLabels = {
 		imageOverlayPlay: "Play button (video thumbnail)",
 		imageOverlayPlayDescription:
 			"No email client plays an embedded video: the thumbnail links to the link above.",
+		articleTitle: "Title",
+		articleTitlePlaceholder: "Article title",
+		articleDescription: "Summary",
+		articleDescriptionPlaceholder: "The article summary.",
+		articleImage: "Image",
+		articleAuthor: "Author",
+		articlePublishDate: "Publication date",
+		articlePublishDatePlaceholder: "2026-07-20",
+		articlePublishDateDescription:
+			"YYYY-MM-DD; each reader sees it written in their own language.",
+		articleHref: "Link",
+		articleHrefDescription: "The card links to this address.",
+		productName: "Name",
+		productNamePlaceholder: "Product name",
+		productDescription: "Description",
+		productDescriptionPlaceholder: "The product description.",
+		productImage: "Image",
+		productPrice: "Price",
+		productCompareAtPrice: "Base price",
+		productCompareAtPriceDescription:
+			"Shown struck through next to the price. Leave empty when the product is not discounted.",
+		productHref: "Link",
+		productButtonLabel: "Button label",
+		productButtonLabelPlaceholder: "Order now",
+		productButtonLabelDescription: "Leave empty for a card without a button.",
+		offerEyebrow: "Eyebrow",
+		offerEyebrowPlaceholder: "Most popular",
+		offerName: "Name",
+		offerNamePlaceholder: "Offer name",
+		offerDescription: "Description",
+		offerImage: "Image",
+		offerImageDescription: "Leave empty for an offer without a visual.",
+		offerPrice: "Price",
+		offerPeriod: "Billing period",
+		offerPeriodPlaceholder: "per month",
+		offerPeriodDescription: "Leave empty for a one-off price.",
+		offerFeature: "Included feature",
+		offerButtonLabel: "Button label",
+		offerButtonLabelPlaceholder: "Choose this offer",
+		offerButtonLabelDescription: "Leave empty for a card without a button.",
+		offerButtonHref: "Button link",
+		offerHighlighted: "Highlight",
+		offerHighlightedDescription:
+			"Frames the card in the brand color: the recommended plan of a row.",
+		ratingQuestionPlaceholder: "How did your last session go?",
+		ratingStyle: "Style",
+		ratingStyleFilled: "Filled stars",
+		ratingStyleOutline: "Outlined stars",
+		ratingLowLabel: "Low end of the scale",
+		ratingLowLabelPlaceholder: "Not at all",
+		ratingHighLabel: "High end of the scale",
+		ratingHighLabelPlaceholder: "Absolutely",
+		ratingHref: "Link",
+		ratingHrefDescription:
+			"Each star links here with rating=1 to rating=5 appended, so the click statistics count each score apart.",
+		tableHeaderRow: "Header row",
+		tableColumn: "Column",
+		tableAlignLeft: "Aligned left",
+		tableAlignRight: "Aligned right",
 	},
 };
 

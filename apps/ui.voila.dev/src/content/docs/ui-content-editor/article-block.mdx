@@ -1,0 +1,60 @@
+---
+title: "Article block"
+description: "A blog post or an external resource as a card: image, title, summary, byline."
+sidebar:
+  order: 30
+---
+
+import * as Example from "@/examples/ui-content-editor/article-block";
+
+`articleFeature` is a void element: nothing is typed on the card itself.
+Select it and the inspector edits every field, while the canvas shows the
+card as the email draws it. Type `/article` to insert one.
+
+<Preview layout="stack" scroll>
+	<Example.Article />
+</Preview>
+
+## Setting it up
+
+```tsx
+import { articleFeature, createContentFeatures } from "@voila.dev/ui/content-editor";
+
+const features = [...createContentFeatures(), articleFeature];
+```
+
+## The node
+
+```ts
+{
+	type: "article",
+	title: "How to choose the right freelancer",
+	description: "The three criteria that actually matter.",
+	image: { src: "https://cdn.acme.dev/brief.png", alt: "Freelancer at work" },
+	author: "Emma Martin",
+	publishDate: "2026-07-20",
+	href: "https://acme.dev/blog/choosing-a-freelancer",
+	children: [{ text: "" }],
+}
+```
+
+The attributes are the ones of the email block editor's
+[article block](/ui-email-block-editor/article-block), name for name, so a
+stored campaign converts one to one. Empty strings stand for the absent
+optionals. `publishDate` is an ISO day: the canvas writes it in the theme's
+`locale`, and the reader in its `locale` option.
+
+## Reading it
+
+`articleReader` renders an `<article>` with the image, the title linked to
+`href`, the byline and the summary.
+
+```ts
+import {
+	articleReader,
+	contentToHtml,
+	createContentReaders,
+} from "@voila.dev/ui/content-editor/reader";
+
+contentToHtml(value, { features: [...createContentReaders(), articleReader], locale: "fr-FR" });
+```

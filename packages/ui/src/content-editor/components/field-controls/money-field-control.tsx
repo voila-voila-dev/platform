@@ -1,5 +1,6 @@
 import type { FieldControlProps } from "#/content-editor/components/field-controls/field-control-props.ts";
 import { useContentEditorLabels } from "#/content-editor/context/content-editor-context.tsx";
+import type { ContentMoney } from "#/content-editor/features/field-definition.ts";
 import {
 	inputValueToMinorUnits,
 	moneyToInputValue,
@@ -13,16 +14,24 @@ export function MoneyFieldControl({
 	onChange,
 }: FieldControlProps<"money">) {
 	const { chrome } = useContentEditorLabels();
+	const money = value ?? {
+		amountInMinorUnits: 0,
+		currency: field.currencies?.[0] ?? "EUR",
+	};
+	const set = (next: ContentMoney) =>
+		onChange(
+			field.optional === true && next.amountInMinorUnits === 0 ? null : next,
+		);
 	return (
 		<MoneyInput
 			id={id}
-			value={moneyToInputValue(value)}
+			value={moneyToInputValue(money)}
 			onValueChange={(next) =>
-				onChange({ ...value, amountInMinorUnits: inputValueToMinorUnits(next) })
+				set({ ...money, amountInMinorUnits: inputValueToMinorUnits(next) })
 			}
-			currency={value.currency}
+			currency={money.currency}
 			currencies={field.currencies}
-			onCurrencyChange={(currency) => onChange({ ...value, currency })}
+			onCurrencyChange={(currency) => set({ ...money, currency })}
 			currencyLabel={chrome.currency}
 		/>
 	);

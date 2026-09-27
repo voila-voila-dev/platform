@@ -1,11 +1,6 @@
 import { ImageIcon } from "@phosphor-icons/react";
 import { useContentEditorTheme } from "#/content-editor/context/theme-context.ts";
-
-/** The visual of a card. An empty `src` means the card has none yet. */
-export interface ContentCardImage {
-	readonly src: string;
-	readonly alt: string;
-}
+import type { ContentCardImage } from "#/content-editor/features/field-definition.ts";
 
 interface Props {
 	image: ContentCardImage;

@@ -1,5 +1,5 @@
 import { CheckIcon } from "@phosphor-icons/react";
-import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
+import { useContentEditorTheme } from "#/content-editor/context/theme-context.ts";
 
 interface Props {
 	features: ReadonlyArray<string>;
@@ -7,8 +7,8 @@ interface Props {
 
 /** The ticked included features, mirroring the bulleted list the renderer
  * emits for them. */
-export function OfferFeatureList({ features }: Props) {
-	const theme = useEmailEditorTheme();
+export function EmailCardFeatureList({ features }: Props) {
+	const theme = useContentEditorTheme();
 	if (features.length === 0) {
 		return null;
 	}

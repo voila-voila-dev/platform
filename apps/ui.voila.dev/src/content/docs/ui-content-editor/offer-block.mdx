@@ -1,0 +1,61 @@
+---
+title: "Offer block"
+description: "A pricing plan as a card: eyebrow, name, price and period, features, button."
+sidebar:
+  order: 32
+---
+
+import * as Example from "@/examples/ui-content-editor/offer-block";
+
+`offerFeature` is a void element edited in the inspector. The included
+features are a list the author adds to and removes from one by one, and
+**Highlight** frames the card in the brand colour, for the plan a row
+recommends. Type `/offer` to insert one.
+
+<Preview layout="stack" scroll>
+	<Example.Offer />
+</Preview>
+
+## Setting it up
+
+`offerFeature` prices in euros; `createOfferFeature` takes the currencies
+the author picks from, as `createProductFeature` does.
+
+```tsx
+import { createContentFeatures, createOfferFeature } from "@voila.dev/ui/content-editor";
+
+const features = [
+	...createContentFeatures(),
+	createOfferFeature({ currencies: ["EUR", "USD"] }),
+];
+```
+
+## The node
+
+```ts
+{
+	type: "offer",
+	eyebrow: "Most popular",
+	name: "Pro",
+	description: "For teams that ship every week.",
+	image: { src: "", alt: "" },
+	price: { amountInMinorUnits: 2900, currency: "EUR" },
+	period: "per month",
+	features: ["Unlimited projects", "Priority support"],
+	buttonLabel: "Choose Pro",
+	buttonHref: "https://acme.dev/pricing/pro",
+	highlighted: true,
+	children: [{ text: "" }],
+}
+```
+
+The attributes are the ones of the email block editor's
+[offer block](/ui-email-block-editor/offer-block), name for name. An empty
+`period` is a one-off price, an empty image `src` an offer without a visual
+and an empty `buttonLabel` a card without a button.
+
+## Reading it
+
+`offerReader` renders an `<article>`, with `data-highlighted` on the
+highlighted one, the price and its period, and the features as a `<ul>`.
+Empty feature lines are left out.

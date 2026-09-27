@@ -1,5 +1,10 @@
 export { ContentRenderer } from "#/content-editor/components/content-renderer.tsx";
 export {
+	articleNode,
+	articleReader,
+	type ContentArticleNode,
+} from "#/content-editor/features/article/reader.tsx";
+export {
 	buttonReader,
 	type ContentButtonNode,
 	type ContentButtonVariant,
@@ -31,6 +36,23 @@ export type {
 	ContentImageOverlay,
 	ContentImageSize,
 } from "#/content-editor/features/image/reader.tsx";
+export {
+	type ContentOfferNode,
+	offerNode,
+	offerReader,
+} from "#/content-editor/features/offer/reader.tsx";
+export {
+	type ContentProductNode,
+	productNode,
+	productReader,
+} from "#/content-editor/features/product/reader.tsx";
+export {
+	type ContentRatingNode,
+	type ContentRatingStyle,
+	ratingNode,
+	ratingReader,
+	ratingStepHref,
+} from "#/content-editor/features/rating/reader.tsx";
 export type {
 	AnyContentNodeReader,
 	ContentFeatureReader,
@@ -52,6 +74,13 @@ export {
 	type ContentStatNode,
 	statReader,
 } from "#/content-editor/features/stat/reader.tsx";
+export {
+	type ContentTableColumn,
+	type ContentTableColumnAlign,
+	type ContentTableNode,
+	emailTableRows,
+	isEmailTable,
+} from "#/content-editor/features/table/reader.tsx";
 export {
 	type ContentVariableNode,
 	variablePlaceholder,

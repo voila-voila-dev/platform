@@ -1,0 +1,48 @@
+---
+title: "Rating block"
+description: "A one-to-five satisfaction question, each star its own tracked link."
+sidebar:
+  order: 33
+---
+
+import * as Example from "@/examples/ui-content-editor/rating-block";
+
+`ratingFeature` is a text element: the question is its text, typed and
+formatted in place like a paragraph, bold, italic and links included. Enter
+ends the question and starts a paragraph under it. The style, the two ends
+of the scale and the link are in the inspector. Type `/rating` to insert
+one.
+
+<Preview layout="stack" scroll>
+	<Example.Rating />
+</Preview>
+
+## The node
+
+```ts
+{
+	type: "rating",
+	style: "filled", // or "outline"
+	lowLabel: "Not at all",
+	highLabel: "Absolutely",
+	href: "https://acme.dev/survey",
+	children: [{ text: "How did your last project go?" }],
+}
+```
+
+`style`, `lowLabel`, `highLabel` and `href` are the attributes of the email
+block editor's [rating block](/ui-email-block-editor/rating-block), name
+for name. Its `question` spans are the node's `children`.
+
+## The five links
+
+Each star links to `href` with `rating=1` to `rating=5` appended, keeping
+any query the link already has, so the five scores are five separately
+counted links in the click statistics. `ratingStepHref(href, rating)`
+builds one. On the canvas the stars are inert.
+
+## Reading it
+
+`ratingReader` renders the question, the five stars (`★` filled, `☆`
+outline) as links, or as plain text when `href` is empty, and the two ends
+of the scale.

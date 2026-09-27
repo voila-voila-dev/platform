@@ -1,0 +1,64 @@
+---
+title: "Product block"
+description: "A catalogue item as a card: image, name, description, price, button."
+sidebar:
+  order: 31
+---
+
+import * as Example from "@/examples/ui-content-editor/product-block";
+
+`productFeature` is a void element edited in the inspector: the name, the
+description, the image and its alternative text, the price, an optional
+struck-through base price, the link and the button label. Type `/product`
+to insert one.
+
+<Preview layout="stack" scroll>
+	<Example.Product />
+</Preview>
+
+## Setting it up
+
+`productFeature` prices in euros. `createProductFeature` takes the
+currencies the author picks from; the first one prices a new card.
+
+```tsx
+import { createContentFeatures, createProductFeature } from "@voila.dev/ui/content-editor";
+
+const features = [
+	...createContentFeatures(),
+	createProductFeature({ currencies: ["EUR", "USD"] }),
+];
+```
+
+## The node
+
+```ts
+{
+	type: "product",
+	name: "Pro plan, 12 months",
+	description: "Unlimited projects and priority support.",
+	image: { src: "https://cdn.acme.dev/pro.png", alt: "Pro plan" },
+	price: { amountInMinorUnits: 19900, currency: "EUR" },
+	compareAtPrice: { amountInMinorUnits: 23900, currency: "EUR" },
+	href: "https://acme.dev/pricing",
+	buttonLabel: "Upgrade",
+	children: [{ text: "" }],
+}
+```
+
+The attributes are the ones of the email block editor's
+[product block](/ui-email-block-editor/product-block), name for name. A
+price is an integer amount in the currency's minor unit, never a formatted
+string: the canvas formats it in the theme's `locale`, the reader in its
+`locale` option.
+
+`compareAtPrice` is null on a new card. Emptying the base price in the
+inspector removes the attribute, because Slate drops an attribute set to
+null, so read an absent `compareAtPrice` as null too. An empty
+`buttonLabel` means a card without a button.
+
+## Reading it
+
+`productReader` renders an `<article>` with the image, the name, the
+description, the price with the base price in `<s>`, and the button as a
+link.

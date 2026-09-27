@@ -1,7 +1,7 @@
 import { EmailCardButton } from "#/content-editor/components/email-card/email-card-button.tsx";
+import { EmailCardFeatureList } from "#/content-editor/components/email-card/email-card-feature-list.tsx";
 import { EmailCardShell } from "#/content-editor/components/email-card/email-card-shell.tsx";
 import type { EmailBlockComponentProps } from "#/email-block-editor/blocks/block-definitions.tsx";
-import { OfferFeatureList } from "#/email-block-editor/blocks/offer-feature-list.tsx";
 import { OfferHeader } from "#/email-block-editor/blocks/offer-header.tsx";
 import { useEmailEditorTheme } from "#/email-block-editor/context/email-editor-context.tsx";
 import type { EmailEditorOfferBlock } from "#/email-block-editor/document/types.ts";
@@ -33,7 +33,7 @@ export function OfferBlockView<Currency extends string>({
 					{block.description}
 				</p>
 			)}
-			<OfferFeatureList features={block.features} />
+			<EmailCardFeatureList features={block.features} />
 			<EmailCardButton label={block.buttonLabel} />
 		</EmailCardShell>
 	);

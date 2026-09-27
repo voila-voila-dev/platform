@@ -57,6 +57,16 @@ export interface ContentMoneyField<Key extends string = string>
 	readonly type: "money";
 	/** The currencies the author picks from; the first is the default. */
 	readonly currencies?: ReadonlyArray<string>;
+	/** An empty amount stores `null`, for a price the node may go without
+	 * (a product's struck-through base price). */
+	readonly optional?: boolean;
+}
+
+/** A card's visual: its url and its alternative text. An empty `src` means
+ * the card has none. */
+export interface ContentCardImage {
+	readonly src: string;
+	readonly alt: string;
 }
 
 /** The url of an image the host's `onUploadImage` stored. */
@@ -65,6 +75,9 @@ export interface ContentImageField<Key extends string = string>
 	readonly type: "image";
 	/** The crop the upload goes through; defaults to 16 / 9. */
 	readonly aspectRatio?: number;
+	/** Stores a `ContentCardImage` and asks for its alternative text under
+	 * the upload, instead of the url alone. */
+	readonly withAlt?: boolean;
 }
 
 export interface ContentStringListField<Key extends string = string>
@@ -90,8 +103,8 @@ export interface ContentFieldValueByType {
 	readonly url: string;
 	readonly select: string | number;
 	readonly boolean: boolean;
-	readonly money: ContentMoney;
-	readonly image: string;
+	readonly money: ContentMoney | null;
+	readonly image: string | ContentCardImage;
 	readonly "string-list": ReadonlyArray<string>;
 }
 
@@ -115,6 +128,9 @@ type FieldsForValue<Key extends string, Value> =
 	| ([Value] extends [number] ? ContentSelectField<Key, Value> : never)
 	| ([Value] extends [boolean] ? ContentBooleanField<Key> : never)
 	| ([Value] extends [ContentMoney] ? ContentMoneyField<Key> : never)
+	| ([Value] extends [ContentCardImage]
+			? ContentImageField<Key> & { readonly withAlt: true }
+			: never)
 	| ([Value] extends [ReadonlyArray<string>]
 			? ContentStringListField<Key>
 			: never);

@@ -1,0 +1,79 @@
+---
+title: "Email table"
+description: "The table an email can carry: plain-text cells, a header row, each column aligned."
+sidebar:
+  order: 34
+---
+
+import * as Example from "@/examples/ui-content-editor/email-table";
+
+`emailTableFeature` is the table feature in its email mode, the email
+block editor's [table block](/ui-email-block-editor/table-block) on Plate's
+table: an order recap, a schedule, a price list. A cell holds one line of
+plain text. The table's own bar adds and deletes rows and columns, turns
+the header row on and off, and aligns the column the caret is in. The
+inspector has the header row as a switch and each column's alignment, as
+the email block editor's column settings had.
+
+<Preview layout="stack" scroll>
+	<Example.EmailTable />
+</Preview>
+
+## Setting it up
+
+Use it in place of `tableFeature`: two features cannot both claim the
+`table` node.
+
+```tsx
+import {
+	createContentFeatures,
+	emailTableFeature,
+} from "@voila.dev/ui/content-editor";
+
+const features = [
+	...createContentFeatures().filter((feature) => feature.key !== "table"),
+	emailTableFeature,
+];
+```
+
+`createTableFeature({ mode: "email" })` builds the same feature.
+
+## What the email mode keeps out
+
+- **Formatting.** Marks, links and line breaks are removed from a cell, and
+  pasted blocks are flattened to one line of text. A variable becomes its
+  `{{name}}` placeholder.
+- **Merging, fills and resizing.** None of them survives an email client,
+  so the email mode offers none of them and clears any a paste brings in.
+
+## The node
+
+```ts
+{
+	type: "table",
+	headerRow: true,
+	columns: [{ align: "left" }, { align: "right" }],
+	children: [
+		{ type: "tr", children: [
+			{ type: "th", children: [{ type: "p", children: [{ text: "Item" }] }] },
+			{ type: "th", children: [{ type: "p", children: [{ text: "Price" }] }] },
+		] },
+		{ type: "tr", children: [
+			{ type: "td", children: [{ type: "p", children: [{ text: "Pro plan" }] }] },
+			{ type: "td", children: [{ type: "p", children: [{ text: "€199.00" }] }] },
+		] },
+	],
+}
+```
+
+`headerRow` and `columns[].align` are the email block editor's attributes.
+Its column labels are the cells of the first row when `headerRow` is on,
+and its `rows` are the other rows' cells. `emailTableRows(node)` reads a
+table back as rows of strings, and `isEmailTable(node)` tells an email
+table from a document one.
+
+## Reading it
+
+`tableReader` renders an email table from its cell text: the first row in
+a `<thead>` when `headerRow` is on, each cell aligned as its column, the
+first and last columns flush with the text around the table.

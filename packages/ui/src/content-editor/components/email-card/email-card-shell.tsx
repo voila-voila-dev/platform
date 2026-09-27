@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
-import type { ContentCardImage } from "#/content-editor/components/email-card/email-card-image.tsx";
 import { EmailCardImage } from "#/content-editor/components/email-card/email-card-image.tsx";
 import { useContentEditorTheme } from "#/content-editor/context/theme-context.ts";
+import type { ContentCardImage } from "#/content-editor/features/field-definition.ts";
 
 interface Props {
 	/** Omit for a card with no visual; an empty `src` renders the placeholder. */

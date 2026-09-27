@@ -20,6 +20,8 @@ export interface ContentHtmlOptions {
 	readonly classNameFor?: (type: string) => string | undefined;
 	/** The anchor id of a node; defaults to its `id` attribute when it has one. */
 	readonly idFor?: (node: ContentNodeLike) => string | undefined;
+	/** The locale prices and dates are written in; defaults to `en-US`. */
+	readonly locale?: string;
 }
 
 export interface ContentRenderProps<N extends ContentNodeLike> {

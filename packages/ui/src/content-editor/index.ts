@@ -5,10 +5,7 @@ export {
 export { ContentEditorField } from "#/content-editor/components/content-editor-field.tsx";
 export { ContentRenderer } from "#/content-editor/components/content-renderer.tsx";
 export { EmailCardButton } from "#/content-editor/components/email-card/email-card-button.tsx";
-export {
-	type ContentCardImage,
-	EmailCardImage,
-} from "#/content-editor/components/email-card/email-card-image.tsx";
+export { EmailCardImage } from "#/content-editor/components/email-card/email-card-image.tsx";
 export { EmailCardMeta } from "#/content-editor/components/email-card/email-card-meta.tsx";
 export { EmailCardShell } from "#/content-editor/components/email-card/email-card-shell.tsx";
 export { PlayOverlay } from "#/content-editor/components/email-card/play-overlay.tsx";
@@ -31,6 +28,12 @@ export {
 	useContentEditorRegistry,
 } from "#/content-editor/context/content-editor-context.tsx";
 export { useContentEditorTheme } from "#/content-editor/context/theme-context.ts";
+export { articleFeature } from "#/content-editor/features/article/feature.tsx";
+export {
+	articleNode,
+	articleReader,
+	type ContentArticleNode,
+} from "#/content-editor/features/article/reader.tsx";
 export { buttonFeature } from "#/content-editor/features/button/feature.tsx";
 export {
 	buttonReader,
@@ -72,6 +75,7 @@ export type {
 } from "#/content-editor/features/feature-definition.tsx";
 export type {
 	ContentBooleanField,
+	ContentCardImage,
 	ContentElementDefaults,
 	ContentField,
 	ContentFieldOf,
@@ -101,6 +105,33 @@ export type {
 	ContentImageSize,
 } from "#/content-editor/features/image/reader.tsx";
 export { badgeListFeature } from "#/content-editor/features/list/feature.tsx";
+export {
+	createOfferFeature,
+	offerFeature,
+} from "#/content-editor/features/offer/feature.tsx";
+export {
+	type ContentOfferNode,
+	offerNode,
+	offerReader,
+} from "#/content-editor/features/offer/reader.tsx";
+export {
+	type ContentPriceFeatureOptions,
+	createProductFeature,
+	productFeature,
+} from "#/content-editor/features/product/feature.tsx";
+export {
+	type ContentProductNode,
+	productNode,
+	productReader,
+} from "#/content-editor/features/product/reader.tsx";
+export { ratingFeature } from "#/content-editor/features/rating/feature.tsx";
+export {
+	type ContentRatingNode,
+	type ContentRatingStyle,
+	ratingNode,
+	ratingReader,
+	ratingStepHref,
+} from "#/content-editor/features/rating/reader.tsx";
 export type {
 	AnyContentNodeReader,
 	ContentFeatureReader,
@@ -127,6 +158,19 @@ export {
 	type ContentStatNode,
 	statReader,
 } from "#/content-editor/features/stat/reader.tsx";
+export {
+	type ContentTableFeatureOptions,
+	createTableFeature,
+	emailTableFeature,
+	tableFeature,
+} from "#/content-editor/features/table/feature.tsx";
+export {
+	type ContentTableColumn,
+	type ContentTableColumnAlign,
+	type ContentTableNode,
+	emailTableRows,
+	isEmailTable,
+} from "#/content-editor/features/table/reader.tsx";
 export { variableFeature } from "#/content-editor/features/variable/feature.tsx";
 export {
 	type ContentVariableNode,
