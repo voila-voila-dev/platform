@@ -20,6 +20,7 @@ export interface ContentEditorConfigContextValue {
 	readonly theme: ContentEditorTheme;
 	readonly capabilities: ReadonlySet<ContentCapability>;
 	readonly uploadImage: ((file: File) => Promise<ContentUploadedImage>) | null;
+	readonly dropFiles: ((files: ReadonlyArray<File>) => void) | null;
 	readonly generateNodeId: () => string;
 	readonly readOnly: boolean;
 }

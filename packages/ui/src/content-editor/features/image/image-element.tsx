@@ -4,7 +4,7 @@ import {
 	type PlateElementProps,
 	useEditorRef,
 } from "platejs/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from "#/button/components/button.tsx";
 import { VoidCaption } from "#/content-editor/components/void-caption.tsx";
 import {
@@ -12,12 +12,15 @@ import {
 	VoidFrame,
 } from "#/content-editor/components/void-frame.tsx";
 import { useContentEditorConfig } from "#/content-editor/context/content-editor-context.tsx";
+import { takeImageUpload } from "#/content-editor/features/image/pending-uploads.ts";
 import type { ContentImageNode } from "#/content-editor/features/image/reader.tsx";
 
 /**
  * An image on the canvas. Without a url it is a drop zone that opens the
  * file picker; the upload is the host's, through `onUploadImage`, and its
- * result lands on the node. A failure keeps the node and says why.
+ * result lands on the node. A failure keeps the node and says why. A file
+ * dropped or pasted into the document is uploaded the same way, once its
+ * node mounts.
  */
 export function ImageElement(props: PlateElementProps) {
 	const editor = useEditorRef();
@@ -35,7 +38,12 @@ export function ImageElement(props: PlateElementProps) {
 		setUploading(true);
 		try {
 			const uploaded = await uploadImage(file);
-			const path = editor.api.findPath(props.element);
+			// Found again by id: the element may have been replaced while the
+			// upload ran, a caption typed or the document normalised.
+			const path =
+				node.id === undefined
+					? editor.api.findPath(props.element)
+					: editor.api.node({ at: [], match: { id: node.id } })?.[1];
 			if (path !== undefined) {
 				editor.tf.setNodes(
 					{
@@ -52,6 +60,14 @@ export function ImageElement(props: PlateElementProps) {
 			setUploading(false);
 		}
 	};
+
+	useEffect(() => {
+		const dropped =
+			node.id === undefined ? undefined : takeImageUpload(node.id);
+		if (dropped !== undefined) {
+			void upload(dropped);
+		}
+	}, [node.id]);
 
 	const picker = (
 		<input

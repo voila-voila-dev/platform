@@ -1,11 +1,7 @@
-import {
-	PlateContent,
-	type PlateContentProps,
-	useEditorRef,
-} from "platejs/react";
+import { PlateContent, type PlateContentProps } from "platejs/react";
 import { useRegisterContentEditorPart } from "#/content-editor/components/layout.tsx";
 import { useContentEditorConfig } from "#/content-editor/context/content-editor-context.tsx";
-import { dispatchFiles, filesOf } from "#/content-editor/lib/files.ts";
+import { useTakeFiles } from "#/content-editor/hooks/use-take-files.ts";
 import { cn } from "#/lib/utils.ts";
 
 interface Props extends Omit<PlateContentProps, "placeholder" | "readOnly"> {
@@ -16,10 +12,9 @@ interface Props extends Omit<PlateContentProps, "placeholder" | "readOnly"> {
 /**
  * The editable surface: the document, with its placeholder and focus ring.
  * A drop or a paste that carries files goes to the feature that takes them
- * (an image to the image feature), in the capture phase so slate-react's own
- * drop handling never sees it. What no feature takes is dropped rather than
- * handed to Plate, which would try to resolve a range under a file; text
- * keeps Plate's own handling.
+ * (an image to the image feature) and the rest to the host's `onDropFiles`,
+ * in the capture phase so slate-react's own drop handling never sees it;
+ * text keeps Plate's own handling.
  */
 export function ContentEditorCanvas({
 	className,
@@ -28,24 +23,9 @@ export function ContentEditorCanvas({
 	onPasteCapture,
 	...props
 }: Props) {
-	const editor = useEditorRef();
-	const { registry, capabilities, labels, uploadImage, mode, readOnly } =
-		useContentEditorConfig();
+	const { labels, mode, readOnly } = useContentEditorConfig();
+	const takeFiles = useTakeFiles();
 	useRegisterContentEditorPart("canvas");
-
-	const takeFiles = (transfer: DataTransfer | null): boolean => {
-		const files = filesOf(transfer);
-		if (files.length === 0) {
-			return false;
-		}
-		if (!readOnly) {
-			dispatchFiles(editor, files, registry.fileHandlers(capabilities), {
-				labels,
-				uploadImage,
-			});
-		}
-		return true;
-	};
 
 	return (
 		<PlateContent

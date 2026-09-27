@@ -58,6 +58,12 @@ export interface ContentEditorRootProps<
 	/** Delegated image upload: receives the picked file, resolves with its
 	 * url. Omit to hide every image affordance. */
 	onUploadImage?: (file: File) => Promise<ContentUploadedImage>;
+	/**
+	 * The files dropped or pasted that no feature takes: every file but the
+	 * images `onUploadImage` puts inline, or every file without it. Omit and
+	 * they are ignored.
+	 */
+	onDropFiles?: (files: ReadonlyArray<File>) => void;
 	/** Node-id factory, injectable for deterministic tests. */
 	generateNodeId?: () => string;
 	labels?: ContentEditorLabelsInput;
@@ -84,6 +90,7 @@ export function ContentEditorRoot<Value extends ContentValue = ContentValue>({
 	mode = "block",
 	readOnly = false,
 	onUploadImage,
+	onDropFiles,
 	generateNodeId = newContentNodeId,
 	labels,
 	theme,
@@ -141,10 +148,20 @@ export function ContentEditorRoot<Value extends ContentValue = ContentValue>({
 			theme: mergeContentEditorTheme(theme),
 			capabilities,
 			uploadImage: onUploadImage ?? null,
+			dropFiles: onDropFiles ?? null,
 			generateNodeId,
 			readOnly,
 		};
-	}, [registry, mode, labels, theme, onUploadImage, generateNodeId, readOnly]);
+	}, [
+		registry,
+		mode,
+		labels,
+		theme,
+		onUploadImage,
+		onDropFiles,
+		generateNodeId,
+		readOnly,
+	]);
 
 	return (
 		<ContentEditorConfigProvider value={config}>

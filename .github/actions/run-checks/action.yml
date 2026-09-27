@@ -36,6 +36,12 @@ runs:
       shell: bash
       run: bun run check-labels
 
+    # The `*.browser.test.tsx` files run in a real Chromium, through Playwright.
+    - name: Install Chromium
+      shell: bash
+      working-directory: packages/ui
+      run: bunx playwright install --with-deps chromium
+
     - name: Test
       shell: bash
       run: bun run test

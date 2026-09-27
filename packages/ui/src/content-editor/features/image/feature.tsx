@@ -6,10 +6,12 @@ import type {
 	ContentItemContext,
 } from "#/content-editor/features/feature-definition.tsx";
 import { ImageElement } from "#/content-editor/features/image/image-element.tsx";
+import { queueImageUpload } from "#/content-editor/features/image/pending-uploads.ts";
 import {
 	imageNode,
 	imageReader,
 } from "#/content-editor/features/image/reader.tsx";
+import { newContentNodeId } from "#/content-editor/lib/ids.ts";
 import { insertBlockBelow } from "#/content-editor/lib/insert-block.ts";
 
 export const ImagePlugin = createPlatePlugin({
@@ -23,8 +25,7 @@ function insertEmptyImage(editor: ContentEditorApi) {
 
 /**
  * Dropped or pasted image files: one node per file, inserted at once so the
- * document shows every placeholder, each uploaded and filled in as its
- * upload lands.
+ * document shows every placeholder, each filled in as its upload lands.
  */
 function insertImageFiles(
 	editor: ContentEditorApi,
@@ -34,27 +35,12 @@ function insertImageFiles(
 	if (uploadImage === null) {
 		return;
 	}
-	const nodes = files.map(() => imageNode.createNode());
-	editor.tf.insertNodes(nodes as never, { select: true });
-	files.forEach((file, index) => {
-		const node = nodes[index];
-		if (node === undefined) {
-			return;
-		}
-		void uploadImage(file).then((uploaded) => {
-			const path = editor.api.findPath(node as never);
-			if (path !== undefined) {
-				editor.tf.setNodes(
-					{
-						url: uploaded.url,
-						width: uploaded.width,
-						height: uploaded.height,
-					} as never,
-					{ at: path },
-				);
-			}
-		});
+	const nodes = files.map((file) => {
+		const id = newContentNodeId();
+		queueImageUpload(id, file);
+		return imageNode.createNode({ id });
 	});
+	editor.tf.insertNodes(nodes as never, { select: true });
 }
 
 export const imageFeature: ContentFeature = {

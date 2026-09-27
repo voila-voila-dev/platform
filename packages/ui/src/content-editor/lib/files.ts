@@ -14,24 +14,27 @@ export function filesOf(transfer: DataTransfer | null): ReadonlyArray<File> {
 
 /**
  * Routes each file to the first handler that accepts it, grouping files per
- * handler so one drop of three images makes one insertion. Returns whether
- * any file found a home, so the caller knows to swallow the event.
+ * handler so one drop of three images makes one insertion. Returns the files
+ * no handler took, for the host.
  */
 export function dispatchFiles(
 	editor: ContentEditorApi,
 	files: ReadonlyArray<File>,
 	handlers: ReadonlyArray<ContentFileHandler>,
 	context: ContentItemContext,
-): boolean {
+): ReadonlyArray<File> {
 	const grouped = new Map<ContentFileHandler, File[]>();
+	const unclaimed: File[] = [];
 	for (const file of files) {
 		const handler = handlers.find((candidate) => candidate.accepts(file));
-		if (handler !== undefined) {
+		if (handler === undefined) {
+			unclaimed.push(file);
+		} else {
 			grouped.set(handler, [...(grouped.get(handler) ?? []), file]);
 		}
 	}
 	for (const [handler, accepted] of grouped) {
 		handler.insert(editor, accepted, context);
 	}
-	return grouped.size > 0;
+	return unclaimed;
 }
