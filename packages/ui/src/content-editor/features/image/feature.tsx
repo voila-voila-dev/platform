@@ -41,8 +41,33 @@ export const imageFeature = defineElementFeature<ContentImageNode>({
 		{ type: "image", key: "url", label: "file" },
 		{ type: "text", key: "alt", label: "alt", description: "altDescription" },
 		{ type: "text", key: "caption", label: "caption" },
+		{
+			type: "url",
+			key: "href",
+			label: "imageLink",
+			description: "imageLinkDescription",
+		},
+		{
+			type: "select",
+			key: "size",
+			label: "imageSize",
+			options: [
+				{ value: "full", label: "imageSizeFull" },
+				{ value: "contained", label: "imageSizeContained" },
+			],
+		},
+		{
+			type: "select",
+			key: "overlay",
+			label: "imageOverlay",
+			description: "imageOverlayPlayDescription",
+			options: [
+				{ value: "none", label: "imageOverlayNone" },
+				{ value: "play", label: "imageOverlayPlay" },
+			],
+		},
 	],
-	defaults: { url: "" },
+	defaults: { url: "", href: "", size: "full", overlay: "none" },
 	view: ImageView,
 	insert: {
 		icon: ImageIcon,

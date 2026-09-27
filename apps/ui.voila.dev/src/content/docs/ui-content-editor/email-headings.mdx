@@ -1,0 +1,49 @@
+---
+title: "Email: headings"
+description: "The email's title and its section headings, h1 and h2."
+sidebar:
+  order: 20
+---
+
+import * as Example from "@/examples/ui-content-editor/email-blocks";
+
+An email has a title of its own, so its body offers `h1` as well as `h2`.
+The heading feature takes the levels it offers; `h1` is left out by default
+because a page body sits under the page's own title.
+
+<Preview layout="stack" scroll>
+	<Example.Headings />
+</Preview>
+
+## Setting it up
+
+```tsx
+import { createContentFeatures } from "@voila.dev/ui/content-editor";
+
+const features = createContentFeatures({ headings: ["h1", "h2"] });
+```
+
+Pass the same `headings` to `createContentReaders` so a reader renders what
+the editor wrote.
+
+## Typing
+
+- `# ` at the start of a block makes it an `h1`, `## ` an `h2`.
+- The toolbar and the slash menu offer each level as **Heading 1** and
+  **Heading 2** (`items.heading1`, `items.heading2`).
+
+## In the email appearance
+
+With `appearance="email"`, a heading is drawn as the sent email draws it:
+bold, in `theme.color.brand`, at `theme.headingFontSize[1]` for `h1` and
+`theme.headingFontSize[2]` for `h2` (and `h3`). The document appearance
+keeps the kit's heading sizes.
+
+## The stored node
+
+```json
+{ "type": "h1", "children": [{ "text": "Your season starts Saturday" }] }
+```
+
+The email block editor's heading block with `level: 1` becomes an `h1`, with
+`level: 2` an `h2`; its `text` becomes the node's text.

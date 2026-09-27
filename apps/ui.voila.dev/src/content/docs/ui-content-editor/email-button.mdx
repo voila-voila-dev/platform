@@ -1,0 +1,66 @@
+---
+title: "Email: button"
+description: "The call to action: one link for the whole block, filled or outlined."
+sidebar:
+  order: 24
+---
+
+import * as Example from "@/examples/ui-content-editor/email-blocks";
+
+A button is a void element. The canvas shows it as the reader will see it;
+its label, its link, its style and its alignment are in the inspector.
+
+<Preview layout="stack" scroll>
+	<Example.Button />
+</Preview>
+
+## Setting it up
+
+```tsx
+import { buttonFeature, createContentFeatures } from "@voila.dev/ui/content-editor";
+
+const features = [...createContentFeatures(), buttonFeature];
+```
+
+**Button** in the slash menu or the insert menu adds one and selects it, so
+the inspector opens on its label. Typed on an empty line, it takes that
+line's place.
+
+## Fields
+
+| Field | Values | Default |
+|---|---|---|
+| `label` | text | `""` |
+| `href` | url | `""` |
+| `variant` | `"primary"` (filled, brand colour), `"secondary"` (outlined) | `"primary"` |
+| `align` | `"left"`, `"center"`, `"right"` | `"center"` |
+
+An empty label shows its placeholder on the canvas; the reader writes
+nothing for it.
+
+## The stored node
+
+```json
+{
+	"type": "button",
+	"label": "Book a slot",
+	"href": "https://example.com/book",
+	"variant": "primary",
+	"align": "center",
+	"children": [{ "text": "" }]
+}
+```
+
+The web reader writes
+`<p style="text-align:center"><a href="…" class="button button-primary">Book a slot</a></p>`.
+`buttonReader` is the reader alone.
+
+The email block editor's button block maps field for field: `label`,
+`href`, `variant` and `align` keep their names and their values.
+
+## Labels
+
+The item is `items.button`. The fields are `fields.buttonLabel` (its
+placeholder `fields.buttonPlaceholder`), `fields.buttonLink`,
+`fields.buttonStyle` with `fields.buttonPrimary` and
+`fields.buttonSecondary`, and `fields.align`.

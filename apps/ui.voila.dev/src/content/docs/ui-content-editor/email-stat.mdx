@@ -1,0 +1,64 @@
+---
+title: "Email: key figure"
+description: "One figure with its label and an optional description."
+sidebar:
+  order: 25
+---
+
+import * as Example from "@/examples/ui-content-editor/email-blocks";
+
+A key figure is a void element: a large value in the brand colour, a small
+uppercase label, and an optional line of description. It holds one figure;
+a row of three is three figures in columns.
+
+<Preview layout="stack" scroll>
+	<Example.Stat />
+</Preview>
+
+## Setting it up
+
+```tsx
+import { createContentFeatures, statFeature } from "@voila.dev/ui/content-editor";
+
+const features = [...createContentFeatures(), statFeature];
+```
+
+**Key figure** in the slash menu or the insert menu adds one and selects it.
+
+## Fields
+
+| Field | Values | Default |
+|---|---|---|
+| `value` | text | `""` |
+| `label` | text | `""` |
+| `description` | text, optional | `""` |
+| `align` | `"left"`, `"center"`, `"right"` | `"center"` |
+
+An empty value or label shows its placeholder faded on the canvas. An empty
+description takes no room, on the canvas as in the email.
+
+## The stored node
+
+```json
+{
+	"type": "stat",
+	"value": "128",
+	"label": "Projects delivered",
+	"description": "Since 2019.",
+	"align": "center",
+	"children": [{ "text": "" }]
+}
+```
+
+The web reader writes a `<div class="stat">` holding `stat-value`,
+`stat-label` and, when there is one, `stat-description`. `statReader` is the
+reader alone.
+
+The email block editor's stat block maps field for field.
+
+## Labels
+
+The item is `items.stat`. The fields are `fields.statValue`,
+`fields.statLabel`, `fields.statDescription` and `fields.align`; the
+placeholders are `fields.statValuePlaceholder` and
+`fields.statLabelPlaceholder`.

@@ -1,0 +1,48 @@
+---
+title: "Email: fine print"
+description: "Offer conditions, validity dates and disclaimers, small and muted."
+sidebar:
+  order: 23
+---
+
+import * as Example from "@/examples/ui-content-editor/email-blocks";
+
+Fine print is the email's footnote: small, muted and centred. It is rich
+text, so the conditions can link to the terms, and it has no settings.
+
+<Preview layout="stack" scroll>
+	<Example.FinePrint />
+</Preview>
+
+## Setting it up
+
+```tsx
+import { createContentFeatures, finePrintFeature } from "@voila.dev/ui/content-editor";
+
+const features = [...createContentFeatures(), finePrintFeature];
+```
+
+## Typing
+
+- **Fine print** in the slash menu turns the current block into fine print
+  and keeps its text.
+- Shift+Enter breaks the line; Enter ends the fine print and starts a
+  paragraph. Enter on an empty one, or Backspace at its start, turns it back
+  into a paragraph.
+- The marks and ⌘K work as in a paragraph.
+
+## The stored node
+
+```json
+{ "type": "fine-print", "children": [{ "text": "Offer valid until 30 June." }] }
+```
+
+The web reader writes `<p class="fine-print"><small>…</small></p>`.
+`finePrintReader` is the reader alone.
+
+The email block editor's `finePrint` block maps one to one: its spans become
+the node's text children, a span's `href` an inline link.
+
+## Labels
+
+The item is `items.finePrint`.

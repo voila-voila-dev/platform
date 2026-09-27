@@ -31,6 +31,12 @@ export {
 	useContentEditorRegistry,
 } from "#/content-editor/context/content-editor-context.tsx";
 export { useContentEditorTheme } from "#/content-editor/context/theme-context.ts";
+export { buttonFeature } from "#/content-editor/features/button/feature.tsx";
+export {
+	buttonReader,
+	type ContentButtonNode,
+	type ContentButtonVariant,
+} from "#/content-editor/features/button/reader.tsx";
 export { columnsFeature } from "#/content-editor/features/columns/feature.tsx";
 export {
 	type ContentColumnNode,
@@ -79,6 +85,22 @@ export type {
 	ContentTextField,
 	ContentUrlField,
 } from "#/content-editor/features/field-definition.ts";
+export { finePrintFeature } from "#/content-editor/features/fine-print/feature.tsx";
+export {
+	type ContentFinePrintNode,
+	finePrintReader,
+} from "#/content-editor/features/fine-print/reader.tsx";
+export { highlightFeature } from "#/content-editor/features/highlight/feature.tsx";
+export {
+	type ContentHighlightNode,
+	highlightReader,
+} from "#/content-editor/features/highlight/reader.tsx";
+export type {
+	ContentImageNode,
+	ContentImageOverlay,
+	ContentImageSize,
+} from "#/content-editor/features/image/reader.tsx";
+export { badgeListFeature } from "#/content-editor/features/list/feature.tsx";
 export type {
 	AnyContentNodeReader,
 	ContentFeatureReader,
@@ -100,6 +122,11 @@ export {
 	type ContentRegistry,
 	createContentRegistry,
 } from "#/content-editor/features/registry.ts";
+export { statFeature } from "#/content-editor/features/stat/feature.tsx";
+export {
+	type ContentStatNode,
+	statReader,
+} from "#/content-editor/features/stat/reader.tsx";
 export { variableFeature } from "#/content-editor/features/variable/feature.tsx";
 export {
 	type ContentVariableNode,

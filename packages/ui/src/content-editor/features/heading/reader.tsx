@@ -10,7 +10,7 @@ import {
 	idAttribute,
 } from "#/content-editor/reader/escape-html.ts";
 
-export type ContentHeadingLevel = "h2" | "h3" | "h4";
+export type ContentHeadingLevel = "h1" | "h2" | "h3" | "h4";
 
 export interface ContentHeadingNode<
 	Level extends ContentHeadingLevel = ContentHeadingLevel,
@@ -20,6 +20,7 @@ export interface ContentHeadingNode<
 }
 
 const headingClassName: Record<ContentHeadingLevel, string> = {
+	h1: "font-bold text-2xl leading-tight",
 	h2: "font-semibold text-xl leading-tight",
 	h3: "font-semibold text-lg leading-snug",
 	h4: "font-semibold text-base",
@@ -51,7 +52,8 @@ function headingNode<Level extends ContentHeadingLevel>(
 	};
 }
 
-/** The body editor never offers `h1`: the page owns its title. */
+/** The body editor offers `h1` only when asked: a page owns its title, an
+ * email carries its own. */
 export function headingReader(levels: ReadonlyArray<ContentHeadingLevel>) {
 	return {
 		key: "heading",

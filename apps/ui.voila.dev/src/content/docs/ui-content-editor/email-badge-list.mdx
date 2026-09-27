@@ -1,0 +1,53 @@
+---
+title: "Email: badge list"
+description: "The email's numbered list, each number in a brand-coloured disc."
+sidebar:
+  order: 21
+---
+
+import * as Example from "@/examples/ui-content-editor/email-blocks";
+
+A badge list numbers its items in discs of the brand colour: the steps of a
+sign-up, the stages of a programme. It is a list like the bulleted and the
+numbered ones, so Enter adds an item, Enter on an empty item leaves the
+list, and Tab nests an item.
+
+<Preview layout="stack" scroll>
+	<Example.BadgeList />
+</Preview>
+
+## Setting it up
+
+`listFeature`, part of `createContentFeatures`, draws a badge item wherever
+one comes from. `badgeListFeature` is what lets the author make one: it adds
+**Badge list** to the toolbar and the slash menu. A document editor leaves it
+out.
+
+```tsx
+import { badgeListFeature, createContentFeatures } from "@voila.dev/ui/content-editor";
+
+const features = [...createContentFeatures(), badgeListFeature];
+```
+
+## The stored node
+
+A list item is a paragraph carrying `listStyleType` and `indent`, as with
+every list in the editor. The badge list's style is `"badge"`:
+
+```json
+[
+	{ "type": "p", "listStyleType": "badge", "indent": 1, "children": [{ "text": "Create your account" }] },
+	{ "type": "p", "listStyleType": "badge", "indent": 1, "listStart": 2, "children": [{ "text": "Pick a slot" }] }
+]
+```
+
+The editor stores each item's number as `listStart`, from the second item
+on; the first has none and is number 1. The web reader writes the run as
+`<ol data-list-style="badge">`, which a stylesheet can target.
+
+The email block editor's list block with `marker: "badge"` maps to these
+items; `"bullet"` maps to `"disc"` and `"number"` to `"decimal"`.
+
+## Labels
+
+The toolbar and slash item is `items.badgeList`.

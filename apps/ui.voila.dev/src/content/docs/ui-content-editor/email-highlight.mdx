@@ -1,0 +1,55 @@
+---
+title: "Email: highlight"
+description: "One bold line on a brand-tinted panel: a launch, a promo code, a deadline."
+sidebar:
+  order: 22
+---
+
+import * as Example from "@/examples/ui-content-editor/email-blocks";
+
+A highlight is the line the reader should walk away with. The author types
+it in place; its alignment is in the inspector. Anything longer than a
+sentence belongs in a paragraph.
+
+<Preview layout="stack" scroll>
+	<Example.Highlight />
+</Preview>
+
+## Setting it up
+
+```tsx
+import { createContentFeatures, highlightFeature } from "@voila.dev/ui/content-editor";
+
+const features = [...createContentFeatures(), highlightFeature];
+```
+
+## Typing
+
+- **Highlight** in the slash menu or the toolbar's insert menu turns the
+  current block into a highlight and keeps its text.
+- Enter ends the highlight and starts a paragraph. Enter on an empty
+  highlight, or Backspace at its start, turns it back into a paragraph.
+- Shift+Enter breaks the line inside it.
+
+## Fields
+
+| Field | Values | Default |
+|---|---|---|
+| `align` | `"left"`, `"center"`, `"right"` | `"center"` |
+
+## The stored node
+
+```json
+{ "type": "highlight", "align": "center", "children": [{ "text": "10% off with LAUNCH10" }] }
+```
+
+The web reader writes `<p class="highlight" style="text-align:center"><strong>…</strong></p>`.
+`highlightReader` is the reader alone, from `@voila.dev/ui/content-editor/reader`.
+
+The email block editor's highlight block maps one to one: its `text` becomes
+the node's text and `align` stays `align`.
+
+## Labels
+
+The item is `items.highlight`; the field is `fields.align`, its options
+`fields.alignLeft`, `fields.alignCenter` and `fields.alignRight`.

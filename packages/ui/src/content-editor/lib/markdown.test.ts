@@ -188,7 +188,7 @@ describe("round trip", () => {
 		});
 	});
 
-	it("names what Markdown loses: image sizes", () => {
+	it("names what Markdown loses: image sizes and email options", () => {
 		const back = withoutIds(
 			fromMarkdown(
 				toMarkdown([
@@ -206,7 +206,7 @@ describe("round trip", () => {
 		expect(
 			features.find((feature) => feature.key === "image")?.nodes?.[0]?.markdown
 				?.loss,
-		).toBe("width and height");
+		).toBe("width, height, link, size and overlay");
 	});
 
 	it("reads plain Markdown a human wrote", () => {

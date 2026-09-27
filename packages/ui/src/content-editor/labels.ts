@@ -97,6 +97,12 @@ export interface ContentEditorItemLabels {
 	readonly backgroundRed: string;
 	readonly deleteMenu: string;
 	readonly columns: string;
+	readonly heading1: string;
+	readonly badgeList: string;
+	readonly highlight: string;
+	readonly finePrint: string;
+	readonly button: string;
+	readonly stat: string;
 }
 
 /**
@@ -111,6 +117,30 @@ export interface ContentEditorFieldLabels {
 	readonly alt: string;
 	readonly altDescription: string;
 	readonly caption: string;
+	readonly align: string;
+	readonly alignLeft: string;
+	readonly alignCenter: string;
+	readonly alignRight: string;
+	readonly buttonLabel: string;
+	readonly buttonPlaceholder: string;
+	readonly buttonLink: string;
+	readonly buttonStyle: string;
+	readonly buttonPrimary: string;
+	readonly buttonSecondary: string;
+	readonly statValue: string;
+	readonly statValuePlaceholder: string;
+	readonly statLabel: string;
+	readonly statLabelPlaceholder: string;
+	readonly statDescription: string;
+	readonly imageLink: string;
+	readonly imageLinkDescription: string;
+	readonly imageSize: string;
+	readonly imageSizeFull: string;
+	readonly imageSizeContained: string;
+	readonly imageOverlay: string;
+	readonly imageOverlayNone: string;
+	readonly imageOverlayPlay: string;
+	readonly imageOverlayPlayDescription: string;
 }
 
 export interface ContentEditorLabels {
@@ -216,6 +246,12 @@ export const DEFAULT_CONTENT_EDITOR_LABELS: ContentEditorLabels = {
 		backgroundRed: "Red fill",
 		deleteMenu: "Delete",
 		columns: "Columns",
+		heading1: "Heading 1",
+		badgeList: "Badge list",
+		highlight: "Highlight",
+		finePrint: "Fine print",
+		button: "Button",
+		stat: "Key figure",
 	},
 	fields: {
 		url: "URL",
@@ -228,6 +264,31 @@ export const DEFAULT_CONTENT_EDITOR_LABELS: ContentEditorLabels = {
 		columnsMobile: "Columns (mobile)",
 		columnsMobileDescription:
 			"A different column count on mobile relies on a media query: the Gmail app on a third-party account ignores it and falls back to one column.",
+		align: "Alignment",
+		alignLeft: "Left",
+		alignCenter: "Center",
+		alignRight: "Right",
+		buttonLabel: "Label",
+		buttonPlaceholder: "Your button",
+		buttonLink: "Link",
+		buttonStyle: "Style",
+		buttonPrimary: "Filled (brand color)",
+		buttonSecondary: "Outline",
+		statValue: "Figure",
+		statValuePlaceholder: "128",
+		statLabel: "Label",
+		statLabelPlaceholder: "Projects delivered",
+		statDescription: "Description (optional)",
+		imageLink: "Link",
+		imageLinkDescription: "Where a click on the image leads. Empty for none.",
+		imageSize: "Width",
+		imageSizeFull: "Full width",
+		imageSizeContained: "Reduced width (centered)",
+		imageOverlay: "Overlay",
+		imageOverlayNone: "None",
+		imageOverlayPlay: "Play button (video thumbnail)",
+		imageOverlayPlayDescription:
+			"No email client plays an embedded video: the thumbnail links to the link above.",
 	},
 };
 

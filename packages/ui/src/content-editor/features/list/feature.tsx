@@ -1,6 +1,7 @@
 import {
 	ListBulletsIcon,
 	ListNumbersIcon,
+	SealIcon,
 	TextIndentIcon,
 	TextOutdentIcon,
 } from "@phosphor-icons/react";
@@ -13,17 +14,31 @@ import {
 	toggleList,
 } from "@platejs/list";
 import { ListPlugin } from "@platejs/list/react";
+import type { PlateElementProps } from "platejs/react";
+import type { ReactNode } from "react";
+import { useContentEditorTheme } from "#/content-editor/context/theme-context.ts";
 import type {
 	ContentEditorApi,
 	ContentFeature,
 } from "#/content-editor/features/feature-definition.tsx";
-import type { ContentListStyle } from "#/content-editor/features/paragraph/reader.tsx";
+import {
+	type ContentListStyle,
+	type ContentParagraphNode,
+	listItemNumber,
+} from "#/content-editor/features/paragraph/reader.tsx";
+
+const LIST_ITEMS = {
+	disc: { key: "bulletedList", icon: ListBulletsIcon },
+	decimal: { key: "numberedList", icon: ListNumbersIcon },
+	badge: { key: "badgeList", icon: SealIcon },
+} as const;
 
 function listItem(style: ContentListStyle) {
+	const { key, icon } = LIST_ITEMS[style];
 	return {
-		key: style === "disc" ? "bulletedList" : "numberedList",
-		icon: style === "disc" ? ListBulletsIcon : ListNumbersIcon,
-		label: style === "disc" ? "bulletedList" : "numberedList",
+		key,
+		icon,
+		label: key,
 		isActive: (editor: ContentEditorApi) => someList(editor, style),
 		run: (editor: ContentEditorApi) =>
 			toggleList(editor, { listStyleType: style }),
@@ -32,6 +47,50 @@ function listItem(style: ContentListStyle) {
 
 const bulleted = listItem("disc");
 const numbered = listItem("decimal");
+const badged = listItem("badge");
+
+/**
+ * Plate draws any style it does not know as an `<ol>` with that
+ * `list-style-type`, which the browser ignores; a badge item draws its own
+ * number, as the email does.
+ */
+function BadgeListItem({
+	element,
+	children,
+}: {
+	readonly element: PlateElementProps["element"];
+	readonly children?: ReactNode;
+}) {
+	const theme = useContentEditorTheme();
+	return (
+		<ol data-list-style="badge" className="m-0 list-none p-0">
+			<li className="flex items-start gap-3">
+				<span
+					contentEditable={false}
+					aria-hidden
+					className="mt-[0.1em] flex size-6 shrink-0 select-none items-center justify-center rounded-full font-semibold text-[12px] text-primary-foreground"
+					style={{ backgroundColor: theme.color.brand }}
+				>
+					{listItemNumber(element as unknown as ContentParagraphNode)}
+				</span>
+				<div className="min-w-0 flex-1">{children}</div>
+			</li>
+		</ol>
+	);
+}
+
+const PlateListPlugin = ListPlugin.extend(({ plugin }) => ({
+	render: {
+		belowNodes: (props) =>
+			props.element.listStyleType === "badge"
+				? (inner: { readonly children?: ReactNode }) => (
+						<BadgeListItem element={props.element}>
+							{inner.children}
+						</BadgeListItem>
+					)
+				: plugin.render.belowNodes?.(props),
+	},
+}));
 
 /**
  * Plate's indent-list model: a list item is a paragraph with `listStyleType`
@@ -42,7 +101,7 @@ export const listFeature: ContentFeature = {
 	key: "list",
 	plugins: ({ indentableTypes }) => [
 		IndentPlugin.configure({ inject: { targetPlugins: [...indentableTypes] } }),
-		ListPlugin.configure({
+		PlateListPlugin.configure({
 			inputRules: [
 				BulletedListRules.markdown({ variant: "-" }),
 				BulletedListRules.markdown({ variant: "*" }),
@@ -77,5 +136,18 @@ export const listFeature: ContentFeature = {
 		{ ...bulleted, keywords: ["list", "bullet", "unordered"] },
 		{ ...numbered, keywords: ["list", "number", "ordered"] },
 	],
+	allowIn: (mode) => mode === "block",
+};
+
+/**
+ * Offers the badge list, the email's numbered list, in the toolbar and the
+ * slash menu. `listFeature` draws a badge item wherever one comes from; this
+ * only lets the author make one, so a document editor leaves it out.
+ */
+export const badgeListFeature: ContentFeature = {
+	key: "badgeList",
+	plugins: () => [],
+	toolbar: [{ ...badged, group: "list" }],
+	slash: [{ ...badged, keywords: ["list", "badge", "steps", "numbered"] }],
 	allowIn: (mode) => mode === "block",
 };

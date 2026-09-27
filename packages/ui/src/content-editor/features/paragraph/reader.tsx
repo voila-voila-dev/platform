@@ -10,7 +10,15 @@ import {
 	idAttribute,
 } from "#/content-editor/reader/escape-html.ts";
 
-export type ContentListStyle = "disc" | "decimal";
+/** `badge` is the email's numbered list, each number in a brand-coloured disc. */
+export type ContentListStyle = "disc" | "decimal" | "badge";
+
+const LIST_STYLES: ReadonlyArray<string> = ["disc", "decimal", "badge"];
+
+/** An item's number: Plate stores it on every item but the first. */
+export function listItemNumber(node: ContentParagraphNode): number {
+	return node.listStart ?? 1;
+}
 
 /**
  * Plate's indent-list model: a list item is a paragraph carrying
@@ -28,7 +36,7 @@ export interface ContentParagraphNode extends ContentNodeLike {
 
 const listRun: ContentRunWrapper<ContentParagraphNode> = {
 	of: (node) =>
-		node.listStyleType === "disc" || node.listStyleType === "decimal"
+		node.listStyleType !== undefined && LIST_STYLES.includes(node.listStyleType)
 			? node.listStyleType
 			: null,
 	Render: ({ runKey, first, children }) =>
@@ -36,7 +44,12 @@ const listRun: ContentRunWrapper<ContentParagraphNode> = {
 			<ul className="flex list-disc flex-col gap-1 pl-5">{children}</ul>
 		) : (
 			<ol
-				className="flex list-decimal flex-col gap-1 pl-5"
+				data-list-style={runKey === "badge" ? "badge" : undefined}
+				className={
+					runKey === "badge"
+						? "flex list-none flex-col gap-2 pl-0"
+						: "flex list-decimal flex-col gap-1 pl-5"
+				}
 				start={
 					first.listStart && first.listStart !== 1 ? first.listStart : undefined
 				}
@@ -50,7 +63,8 @@ const listRun: ContentRunWrapper<ContentParagraphNode> = {
 			tag === "ol" && first.listStart && first.listStart !== 1
 				? ` start="${first.listStart}"`
 				: "";
-		return `<${tag}${start}>${inner}</${tag}>`;
+		const style = runKey === "badge" ? ' data-list-style="badge"' : "";
+		return `<${tag}${style}${start}>${inner}</${tag}>`;
 	},
 };
 
@@ -81,7 +95,17 @@ export const paragraphNode: ContentInsertableNodeReader<ContentParagraphNode> =
 			...init,
 		}),
 		Render: ({ node, children, options }) =>
-			listRun.of(node) !== null ? (
+			node.listStyleType === "badge" ? (
+				<li className="flex items-start gap-3" style={indentStyle(node)}>
+					<span
+						aria-hidden
+						className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary font-semibold text-primary-foreground text-xs"
+					>
+						{listItemNumber(node)}
+					</span>
+					<span className="min-w-0 flex-1">{children}</span>
+				</li>
+			) : listRun.of(node) !== null ? (
 				<li style={indentStyle(node)}>{children}</li>
 			) : (
 				<p
