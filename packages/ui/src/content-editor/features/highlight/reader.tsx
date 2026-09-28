@@ -11,6 +11,7 @@ import { mdxRule } from "#/content-editor/lib/mdx-rule.ts";
 import {
 	classAttribute,
 	idAttribute,
+	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
 
 /**
@@ -40,10 +41,11 @@ export const highlightNode: ContentNodeReader<ContentHighlightNode> = {
 	Render: ({ node, children, options }) => (
 		<p
 			id={options.idFor?.(node) ?? node.id}
-			className={
-				options.classNameFor?.("highlight") ??
-				"rounded-[10px] bg-primary/10 px-6 py-4 font-bold text-lg text-primary"
-			}
+			className={kitClassName(
+				options,
+				"highlight",
+				"rounded-[10px] bg-primary/10 px-6 py-4 font-bold text-lg text-primary",
+			)}
 			style={{ textAlign: node.align ?? "center" }}
 		>
 			{children}

@@ -36,6 +36,8 @@ describe("createContentReaderRegistry", () => {
 			"blockquote",
 			"hr",
 			"callout",
+			"code_block",
+			"code_line",
 			"image",
 			"table",
 			"tr",
@@ -138,7 +140,7 @@ describe("createContentRegistry", () => {
 		expect(
 			registry.reader
 				.nodeFor("stock-quote")
-				?.toHtml({ type: "stock-quote", children: [] }, "", {}),
+				?.toHtml({ type: "stock-quote", children: [] }, "", {}, []),
 		).toBe("<span>ACME</span>");
 	});
 });

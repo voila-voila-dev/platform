@@ -9,6 +9,7 @@ import {
 	classAttribute,
 	escapeHtml,
 	idAttribute,
+	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
 
 export interface ContentCalloutNode extends ContentNodeLike {
@@ -42,10 +43,11 @@ export const calloutNode: ContentInsertableNodeReader<ContentCalloutNode> = {
 	Render: ({ node, children, options }) => (
 		<aside
 			id={options.idFor?.(node) ?? node.id}
-			className={
-				options.classNameFor?.("callout") ??
-				"flex gap-3 rounded-md border border-border bg-muted/40 px-3 py-2"
-			}
+			className={kitClassName(
+				options,
+				"callout",
+				"flex gap-3 rounded-md border border-border bg-muted/40 px-3 py-2",
+			)}
 		>
 			<span aria-hidden="true" className="text-lg leading-7">
 				{node.icon}

@@ -18,13 +18,12 @@ import type {
 	ContentElementDefaults,
 	ContentFieldOf,
 } from "#/content-editor/features/field-definition.ts";
-import { paragraphNode } from "#/content-editor/features/paragraph/reader.tsx";
 import type {
 	ContentInsertableNodeReader,
 	ContentNodeReader,
 } from "#/content-editor/features/reader-definition.tsx";
 import { newContentNodeId } from "#/content-editor/lib/ids.ts";
-import { insertBlockBelow } from "#/content-editor/lib/insert-block.ts";
+import { insertBlockInPlace } from "#/content-editor/lib/insert-block.ts";
 
 /**
  * - `text`: the author types its text in place; its fields are settings.
@@ -120,20 +119,7 @@ export function defineElementFeature<Node extends ContentNodeLike>(
 			editor.tf.setNodes({ type: node.type, ...defaults } as never);
 			return;
 		}
-		// Typed on an empty line, the slash leaves that line empty above the
-		// new element: the element takes its place instead.
-		const current = editor.api.block();
-		const emptyLine =
-			current !== undefined &&
-			current[0].type === paragraphNode.type &&
-			current[0].listStyleType === undefined &&
-			editor.api.isEmpty(current[0])
-				? current[1]
-				: undefined;
-		insertBlockBelow(editor, fresh);
-		if (emptyLine !== undefined) {
-			editor.tf.removeNodes({ at: emptyLine });
-		}
+		insertBlockInPlace(editor, fresh);
 		// A void is filled in from the inspector, so it is what the author
 		// wants selected next, not the paragraph under it.
 		const inserted =

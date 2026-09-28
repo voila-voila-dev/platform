@@ -140,7 +140,123 @@ describe("contentToHtml", () => {
 				},
 				{ type: "retired", children: [{ text: "gone" }] },
 			]),
-		).toBe("<table><tbody><tr><th>H</th> <td>D</td></tr></tbody></table>");
+		).toBe("<table><tbody><tr><th>H</th><td>D</td></tr></tbody></table>");
+	});
+
+	it("writes a lone cell paragraph as bare text and heads a table whose first row is header cells", () => {
+		const cell = (type: "th" | "td", ...lines: string[]) => ({
+			type,
+			children: lines.map((line) => ({
+				type: "p",
+				id: `p-${line}`,
+				children: [{ text: line }],
+			})),
+		});
+		expect(
+			html([
+				{
+					type: "table",
+					children: [
+						{ type: "tr", children: [cell("th", "Name"), cell("th", "Age")] },
+						{ type: "tr", children: [cell("td", "Ann"), cell("td", "1", "2")] },
+					],
+				},
+			]),
+		).toBe(
+			"<table><thead><tr><th>Name</th><th>Age</th></tr></thead>" +
+				'<tbody><tr><td>Ann</td><td><p id="p-1">1</p> <p id="p-2">2</p></td></tr></tbody></table>',
+		);
+	});
+
+	it("wraps list items in a list wherever they sit, not only at the top level", () => {
+		expect(
+			html([
+				{
+					type: "blockquote",
+					children: [
+						{ type: "p", children: [{ text: "Said" }] },
+						{ type: "p", listStyleType: "disc", children: [{ text: "a" }] },
+						{ type: "p", listStyleType: "disc", children: [{ text: "b" }] },
+						{
+							type: "p",
+							listStyleType: "decimal",
+							children: [{ text: "c" }],
+						},
+					],
+				},
+			]),
+		).toBe(
+			"<blockquote><p>Said</p> <ul><li>a</li><li>b</li></ul> <ol><li>c</li></ol></blockquote>",
+		);
+	});
+
+	it("writes a code block as one escaped <pre>, its language as a class", () => {
+		expect(
+			html([
+				{
+					type: "code_block",
+					lang: "ts",
+					children: [
+						{ type: "code_line", children: [{ text: "if (a < b) {" }] },
+						{ type: "code_line", children: [{ text: "" }] },
+						{ type: "code_line", children: [{ text: '  say("&");' }] },
+					],
+				},
+				{
+					type: "code_block",
+					children: [{ type: "code_line", children: [{ text: "plain" }] }],
+				},
+			]),
+		).toBe(
+			'<pre><code class="language-ts">if (a &lt; b) {\n\n  say(&quot;&amp;&quot;);</code></pre>' +
+				"<pre><code>plain</code></pre>",
+		);
+	});
+
+	it("keeps the referrer on links within the site and drops it on the others", () => {
+		const link = (url: string, target?: string) => ({
+			type: "p",
+			children: [{ type: "a", url, target, children: [{ text: "x" }] }],
+		});
+		const rels = (siteOrigin?: string) =>
+			[
+				"/blog/post",
+				"#section",
+				"../up",
+				"?page=2",
+				"mailto:a@b.c",
+				"https://tries.care/blog",
+				"https://www.tries.care/blog",
+				"https://example.com",
+				"//example.com/x",
+			].map((url) =>
+				html([link(url)], { siteOrigin }).includes('rel="noopener noreferrer"'),
+			);
+		expect(rels("https://tries.care")).toEqual([
+			false,
+			false,
+			false,
+			false,
+			false,
+			false,
+			true,
+			true,
+			true,
+		]);
+		expect(rels()).toEqual([
+			false,
+			false,
+			false,
+			false,
+			false,
+			true,
+			true,
+			true,
+			true,
+		]);
+		expect(html([link("/in", "_blank")])).toBe(
+			'<p><a href="/in" target="_blank" rel="noopener noreferrer">x</a></p>',
+		);
 	});
 
 	it("lets a host name classes and ids", () => {

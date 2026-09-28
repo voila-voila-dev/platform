@@ -9,6 +9,7 @@ import {
 	classAttribute,
 	escapeHtml,
 	idAttribute,
+	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
 
 export interface ContentVideoNode extends ContentNodeLike {
@@ -41,7 +42,7 @@ export const videoNode: ContentInsertableNodeReader<ContentVideoNode> = {
 	Render: ({ node, options }) => (
 		<figure
 			id={options.idFor?.(node) ?? node.id}
-			className={options.classNameFor?.("video") ?? "flex flex-col gap-1"}
+			className={kitClassName(options, "video", "flex flex-col gap-1")}
 		>
 			{/* biome-ignore lint/a11y/useMediaCaption: the figcaption is the caption */}
 			<video

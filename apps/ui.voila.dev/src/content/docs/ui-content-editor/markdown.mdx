@@ -24,8 +24,8 @@ const value = contentFromMarkdown(markdown, { features: FEATURES });
 
 ## What crosses how
 
-Paragraphs, marks, headings, links, lists, quotes, dividers and tables are
-GFM. An image is an mdast image, its caption as the title. A callout and the
+Paragraphs, marks, headings, links, lists, quotes, dividers, tables and
+fenced code are GFM. An image is an mdast image, its caption as the title. A callout and the
 four embeds, which Markdown has no words for, cross as MDX elements named
 after their type (`<callout icon="💡">`, `<youtube-video videoId="…" />`): a
 plain Markdown reader sees the tag, an MDX reader gets the node back.

@@ -13,6 +13,7 @@ import {
 	classAttribute,
 	escapeHtml,
 	idAttribute,
+	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
 
 /**
@@ -68,10 +69,11 @@ export const offerNode: ContentNodeReader<ContentOfferNode> = {
 			<article
 				id={options.idFor?.(node) ?? node.id}
 				data-highlighted={node.highlighted || undefined}
-				className={
-					options.classNameFor?.("offer") ??
-					`overflow-hidden rounded-xl bg-card ${node.highlighted ? "border-2 border-primary" : "border border-border"}`
-				}
+				className={kitClassName(
+					options,
+					"offer",
+					`overflow-hidden rounded-xl bg-card ${node.highlighted ? "border-2 border-primary" : "border border-border"}`,
+				)}
 			>
 				{node.image.src ? (
 					<img

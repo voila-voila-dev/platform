@@ -1,5 +1,6 @@
 import { blockquoteFeature } from "#/content-editor/features/blockquote/feature.tsx";
 import { calloutFeature } from "#/content-editor/features/callout/feature.tsx";
+import { codeBlockFeature } from "#/content-editor/features/code-block/feature.tsx";
 import { dividerFeature } from "#/content-editor/features/divider/feature.tsx";
 import { fileFeature } from "#/content-editor/features/file/feature.tsx";
 import { headingFeature } from "#/content-editor/features/heading/feature.tsx";
@@ -44,6 +45,7 @@ export function createContentFeatures({
 		blockquoteFeature,
 		dividerFeature,
 		calloutFeature,
+		codeBlockFeature,
 		imageFeature,
 		tableFeature,
 		...embeds.map((embed) => embedFeatures[embed]),

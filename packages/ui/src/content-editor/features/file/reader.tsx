@@ -9,6 +9,7 @@ import {
 	classAttribute,
 	escapeHtml,
 	idAttribute,
+	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
 
 export interface ContentFileNode extends ContentNodeLike {
@@ -46,10 +47,11 @@ export const fileNode: ContentInsertableNodeReader<ContentFileNode> = {
 			id={options.idFor?.(node) ?? node.id}
 			href={node.url}
 			download={node.name}
-			className={
-				options.classNameFor?.("file") ??
-				"inline-flex items-center gap-2 rounded-md border border-border bg-muted/40 px-3 py-2 text-sm underline-offset-2 hover:underline"
-			}
+			className={kitClassName(
+				options,
+				"file",
+				"inline-flex items-center gap-2 rounded-md border border-border bg-muted/40 px-3 py-2 text-sm underline-offset-2 hover:underline",
+			)}
 		>
 			{node.name}
 		</a>

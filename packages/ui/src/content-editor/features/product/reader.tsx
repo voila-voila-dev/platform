@@ -13,6 +13,7 @@ import {
 	classAttribute,
 	escapeHtml,
 	idAttribute,
+	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
 
 /**
@@ -63,10 +64,11 @@ export const productNode: ContentNodeReader<ContentProductNode> = {
 		return (
 			<article
 				id={options.idFor?.(node) ?? node.id}
-				className={
-					options.classNameFor?.("product") ??
-					"overflow-hidden rounded-xl border border-border bg-card"
-				}
+				className={kitClassName(
+					options,
+					"product",
+					"overflow-hidden rounded-xl border border-border bg-card",
+				)}
 			>
 				{node.image.src ? (
 					<img

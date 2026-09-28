@@ -1,3 +1,4 @@
+import { Children, type ReactNode } from "react";
 import {
 	type ContentDescendant,
 	type ContentNodeLike,
@@ -14,6 +15,7 @@ import {
 	classAttribute,
 	escapeHtml,
 	idAttribute,
+	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
 
 export type ContentTableColumnAlign = "left" | "right";
@@ -184,6 +186,48 @@ function spanAttributes(cell: ContentTableCellAttributes): string {
 	return `${cell.colSpan && cell.colSpan > 1 ? ` colspan="${cell.colSpan}"` : ""}${cell.rowSpan && cell.rowSpan > 1 ? ` rowspan="${cell.rowSpan}"` : ""}${cell.background ? ` style="background-color:${escapeHtml(cell.background)}"` : ""}`;
 }
 
+/** The first row is the table's head when every cell of it is a header cell. */
+function hasHeadRow(node: ContentTableNode): boolean {
+	const [first] = node.children;
+	return (
+		first !== undefined &&
+		!isContentText(first) &&
+		first.children.length > 0 &&
+		first.children.every((cell) => !isContentText(cell) && cell.type === "th")
+	);
+}
+
+function TableRows({
+	node,
+	children,
+}: {
+	readonly node: ContentTableNode;
+	readonly children: ReactNode;
+}) {
+	const rows = Children.toArray(children);
+	if (!hasHeadRow(node)) {
+		return <tbody>{rows}</tbody>;
+	}
+	const [head, ...body] = rows;
+	return (
+		<>
+			<thead>{head}</thead>
+			{body.length > 0 ? <tbody>{body}</tbody> : null}
+		</>
+	);
+}
+
+function tableRowsHtml(
+	node: ContentTableNode,
+	rows: ReadonlyArray<string>,
+): string {
+	if (!hasHeadRow(node)) {
+		return `<tbody>${rows.join("")}</tbody>`;
+	}
+	const [head, ...body] = rows;
+	return `<thead>${head}</thead>${body.length > 0 ? `<tbody>${body.join("")}</tbody>` : ""}`;
+}
+
 export const tableNode: ContentInsertableNodeReader<ContentTableNode> = {
 	type: "table",
 	createNode: (init) => ({
@@ -203,10 +247,11 @@ export const tableNode: ContentInsertableNodeReader<ContentTableNode> = {
 			<div className="overflow-x-auto">
 				<table
 					id={options.idFor?.(node) ?? node.id}
-					className={
-						options.classNameFor?.("table") ??
-						"w-full border-collapse text-left"
-					}
+					className={kitClassName(
+						options,
+						"table",
+						"w-full border-collapse text-left",
+					)}
 				>
 					{node.colSizes && node.colSizes.length > 0 ? (
 						<colgroup>
@@ -215,36 +260,38 @@ export const tableNode: ContentInsertableNodeReader<ContentTableNode> = {
 							))}
 						</colgroup>
 					) : null}
-					<tbody>{children}</tbody>
+					<TableRows node={node}>{children}</TableRows>
 				</table>
 			</div>
 		),
-	toHtml: (node, children, options) =>
+	toHtml: (node, _children, options, rows) =>
 		isEmailTable(node)
 			? emailTableHtml(node, {
 					id: options.idFor?.(node) ?? node.id,
 					className: options.classNameFor?.("table"),
 				})
-			: `<table${idAttribute(options.idFor?.(node) ?? node.id)}${classAttribute(options.classNameFor?.("table"))}>${colgroupHtml(node)}<tbody>${children}</tbody></table>`,
+			: `<table${idAttribute(options.idFor?.(node) ?? node.id)}${classAttribute(options.classNameFor?.("table"))}>${colgroupHtml(node)}${tableRowsHtml(node, rows)}</table>`,
 };
 
 export const tableRowNode: ContentNodeReader<ContentTableRowNode> = {
 	type: "tr",
 	Render: ({ children }) => <tr>{children}</tr>,
-	toHtml: (_node, children) => `<tr>${children}</tr>`,
+	toHtml: (_node, _children, _options, cells) => `<tr>${cells.join("")}</tr>`,
 };
 
 export const tableCellNode: ContentNodeReader<ContentTableCellNode> = {
 	type: "td",
+	unwrapLoneParagraph: true,
 	Render: ({ node, children, options }) => (
 		<td
 			colSpan={node.colSpan}
 			rowSpan={node.rowSpan}
 			style={node.background ? { backgroundColor: node.background } : undefined}
-			className={
-				options.classNameFor?.("td") ??
-				"border border-border px-2 py-1 align-top"
-			}
+			className={kitClassName(
+				options,
+				"td",
+				"border border-border px-2 py-1 align-top",
+			)}
 		>
 			{children}
 		</td>
@@ -256,6 +303,7 @@ export const tableCellNode: ContentNodeReader<ContentTableCellNode> = {
 export const tableHeaderCellNode: ContentNodeReader<ContentTableHeaderCellNode> =
 	{
 		type: "th",
+		unwrapLoneParagraph: true,
 		Render: ({ node, children, options }) => (
 			<th
 				colSpan={node.colSpan}
@@ -263,10 +311,11 @@ export const tableHeaderCellNode: ContentNodeReader<ContentTableHeaderCellNode> 
 				style={
 					node.background ? { backgroundColor: node.background } : undefined
 				}
-				className={
-					options.classNameFor?.("th") ??
-					"border border-border bg-muted px-2 py-1 text-left font-medium"
-				}
+				className={kitClassName(
+					options,
+					"th",
+					"border border-border bg-muted px-2 py-1 text-left font-medium",
+				)}
 			>
 				{children}
 			</th>

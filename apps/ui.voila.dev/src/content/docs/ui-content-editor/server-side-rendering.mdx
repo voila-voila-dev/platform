@@ -27,8 +27,21 @@ const html = contentToHtml(post.body, {
 	features: READERS,
 	imageDimensions,                 // sizes by url, for width and height on <img>
 	classNameFor: (type) => …,       // a class per node type, when your stylesheet names them
+	siteOrigin: "https://example.com", // links elsewhere get rel="noopener noreferrer"
 });
 ```
+
+`contentToHtml` writes bare elements: no class unless `classNameFor` names
+one. A link to another origin, or one opening in a new tab, gets
+`rel="noopener noreferrer"`; a relative link or one to `siteOrigin` keeps its
+referrer. Without `siteOrigin`, every absolute http(s) link counts as
+external.
+
+A run of list items becomes one `<ul>` or `<ol>` wherever it sits, in a quote
+or a table cell as at the top level. A table whose first row is header cells
+gets a `<thead>`, and a cell holding one paragraph writes its text without the
+`<p>`. A code block is one `<pre><code>`, its language as a `language-*`
+class.
 
 `contentToInlineHtml` unwraps top-level paragraphs and joins them with
 `<br>`, for a value rendered inside a block the host already has.
@@ -42,7 +55,20 @@ first.
 </Preview>
 
 ```tsx
-<ContentRenderer value={post.body} features={READERS} render={<article className="prose" />} />
+<ContentRenderer value={post.body} features={READERS} />
+```
+
+The renderer carries the kit's own classes, for a page with no typography of
+its own. Inside Tailwind's `prose`, pass `unstyled` so the elements come out
+bare and `prose` styles them; `classNameFor` still applies.
+
+```tsx
+<ContentRenderer
+	value={post.body}
+	features={READERS}
+	options={{ unstyled: true, siteOrigin: "https://example.com" }}
+	render={<article className="prose" />}
+/>
 ```
 
 Pass `createContentReaders` the same options as `createContentFeatures`

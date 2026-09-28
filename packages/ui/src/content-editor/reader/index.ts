@@ -9,6 +9,10 @@ export {
 	type ContentButtonNode,
 	type ContentButtonVariant,
 } from "#/content-editor/features/button/reader.tsx";
+export type {
+	ContentCodeBlockNode,
+	ContentCodeLineNode,
+} from "#/content-editor/features/code-block/reader.tsx";
 export {
 	type ContentColumnNode,
 	type ContentColumnsDesktopCount,

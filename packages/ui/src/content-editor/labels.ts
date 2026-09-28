@@ -66,6 +66,7 @@ export interface ContentEditorItemLabels {
 	readonly quote: string;
 	readonly divider: string;
 	readonly callout: string;
+	readonly codeBlock: string;
 	readonly table: string;
 	readonly image: string;
 	readonly video: string;
@@ -276,6 +277,7 @@ export const DEFAULT_CONTENT_EDITOR_LABELS: ContentEditorLabels = {
 		quote: "Quote",
 		divider: "Divider",
 		callout: "Callout",
+		codeBlock: "Code block",
 		table: "Table",
 		image: "Image",
 		video: "Video",

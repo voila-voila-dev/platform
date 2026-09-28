@@ -8,6 +8,7 @@ import {
 	classAttribute,
 	escapeHtml,
 	idAttribute,
+	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
 
 export type ContentRatingStyle = "filled" | "outline";
@@ -85,10 +86,11 @@ export const ratingNode: ContentNodeReader<ContentRatingNode> = {
 		return (
 			<div
 				id={options.idFor?.(node) ?? node.id}
-				className={
-					options.classNameFor?.("rating") ??
-					"flex flex-col items-center gap-2 text-center"
-				}
+				className={kitClassName(
+					options,
+					"rating",
+					"flex flex-col items-center gap-2 text-center",
+				)}
 			>
 				<p>{children}</p>
 				<p className="flex gap-2 text-2xl text-primary">

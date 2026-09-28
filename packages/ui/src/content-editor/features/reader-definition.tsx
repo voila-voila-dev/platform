@@ -22,6 +22,20 @@ export interface ContentHtmlOptions {
 	readonly idFor?: (node: ContentNodeLike) => string | undefined;
 	/** The locale prices and dates are written in; defaults to `en-US`. */
 	readonly locale?: string;
+	/**
+	 * The site's own origin, such as `https://example.com`. A link to any
+	 * other origin gets `rel="noopener noreferrer"`; a relative link or one to
+	 * this origin keeps its referrer. Without it, every absolute http(s) link
+	 * counts as external.
+	 */
+	readonly siteOrigin?: string;
+	/**
+	 * Leaves the kit's own classes off what `ContentRenderer` renders, for a
+	 * host whose typography (Tailwind's `prose`) styles bare elements.
+	 * `classNameFor` still applies. `contentToHtml` writes no kit classes
+	 * either way.
+	 */
+	readonly unstyled?: boolean;
 }
 
 export interface ContentRenderProps<N extends ContentNodeLike> {
@@ -35,6 +49,7 @@ export interface ContentRunRenderProps<N extends ContentNodeLike> {
 	readonly runKey: string;
 	readonly first: N;
 	readonly children: ReactNode;
+	readonly options: ContentHtmlOptions;
 }
 
 /**
@@ -79,12 +94,18 @@ export interface ContentNodeReader<N extends ContentNodeLike> {
 	/** Blocks the indent and list machinery may act on (paragraph, headings, quote). */
 	readonly indentable?: boolean;
 	readonly Render: ComponentType<ContentRenderProps<N>>;
+	/** `parts` is `children` before it is joined: one entry per child, a run
+	 * of list items counting as one. */
 	readonly toHtml: (
 		node: N,
 		children: string,
 		options: ContentHtmlOptions,
+		parts: ReadonlyArray<string>,
 	) => string;
 	readonly wrapRun?: ContentRunWrapper<N>;
+	/** A lone plain paragraph child renders as its text, without the `<p>`:
+	 * a table cell already is the block its text sits in. */
+	readonly unwrapLoneParagraph?: boolean;
 	readonly markdown?: ContentMarkdownRule<N>;
 	/** How the editor mints a fresh node of this kind. Absent for a kind that
 	 * is never inserted on its own (a table row). */

@@ -8,6 +8,7 @@ import { newContentNodeId } from "#/content-editor/lib/ids.ts";
 import {
 	classAttribute,
 	idAttribute,
+	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
 
 export type ContentHeadingLevel = "h1" | "h2" | "h3" | "h4";
@@ -43,7 +44,7 @@ function headingNode<Level extends ContentHeadingLevel>(
 				level,
 				{
 					id: options.idFor?.(node) ?? node.id,
-					className: options.classNameFor?.(level) ?? headingClassName[level],
+					className: kitClassName(options, level, headingClassName[level]),
 				},
 				children,
 			),

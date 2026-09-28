@@ -12,7 +12,11 @@ import type {
 	ContentHtmlOptions,
 } from "#/content-editor/features/reader-definition.tsx";
 import type { ContentReaderRegistry } from "#/content-editor/features/reader-registry.ts";
-import { toReaderRegistry } from "#/content-editor/reader/content-to-html.ts";
+import {
+	groupSiblings,
+	renderedChildren,
+	toReaderRegistry,
+} from "#/content-editor/reader/content-to-html.ts";
 import { cn } from "#/lib/utils.ts";
 
 function renderLeaf(
@@ -35,16 +39,35 @@ function renderLeaf(
 	return <Fragment key={key}>{content}</Fragment>;
 }
 
-function renderChildren(
+function renderGroups(
 	registry: ContentReaderRegistry,
-	children: ReadonlyArray<ContentDescendant>,
+	siblings: ReadonlyArray<ContentDescendant>,
 	options: ContentHtmlOptions,
-): ReactNode {
-	return children.map((child, index) =>
-		isContentText(child)
-			? renderLeaf(registry, child, index)
-			: renderNode(registry, child, options, index),
-	);
+): ReactNode[] {
+	let position = 0;
+	return groupSiblings(registry, siblings).map((group) => {
+		const start = position;
+		if (group.kind === "single") {
+			position += 1;
+			return isContentText(group.node)
+				? renderLeaf(registry, group.node, start)
+				: renderNode(registry, group.node, options, start);
+		}
+		position += group.nodes.length;
+		const [first] = group.nodes;
+		return (
+			<group.reader.wrapRun.Render
+				key={`run-${start}`}
+				runKey={group.runKey}
+				first={first}
+				options={options}
+			>
+				{group.nodes.map((node, index) =>
+					renderNode(registry, node, options, start + index),
+				)}
+			</group.reader.wrapRun.Render>
+		);
+	});
 }
 
 function renderNode(
@@ -63,48 +86,9 @@ function renderNode(
 			node={node}
 			options={options}
 		>
-			{renderChildren(registry, node.children, options)}
+			{renderGroups(registry, renderedChildren(reader, node), options)}
 		</reader.Render>
 	);
-}
-
-function renderBlocks(
-	registry: ContentReaderRegistry,
-	value: ContentValue,
-	options: ContentHtmlOptions,
-): ReactNode {
-	const output: ReactNode[] = [];
-	let index = 0;
-	while (index < value.length) {
-		const node = value[index] as ContentNodeLike;
-		const reader = registry.nodeFor(node.type);
-		const run = reader?.wrapRun?.of(node) ?? null;
-		if (run === null || reader?.wrapRun === undefined) {
-			output.push(renderNode(registry, node, options, index));
-			index += 1;
-			continue;
-		}
-		const items: ReactNode[] = [];
-		const first = node;
-		const start = index;
-		while (index < value.length) {
-			const candidate = value[index] as ContentNodeLike;
-			if (
-				candidate.type !== node.type ||
-				reader.wrapRun.of(candidate) !== run
-			) {
-				break;
-			}
-			items.push(renderNode(registry, candidate, options, index));
-			index += 1;
-		}
-		output.push(
-			<reader.wrapRun.Render key={`run-${start}`} runKey={run} first={first}>
-				{items}
-			</reader.wrapRun.Render>,
-		);
-	}
-	return output;
 }
 
 interface Props extends useRender.ComponentProps<"div"> {
@@ -127,9 +111,11 @@ export function ContentRenderer({
 		defaultTagName: "div",
 		props: mergeProps<"div">(
 			{
-				className: cn("flex flex-col gap-3", className),
+				className: options.unstyled
+					? className
+					: cn("flex flex-col gap-3", className),
 				children:
-					value === null ? null : renderBlocks(registry, value, options),
+					value === null ? null : renderGroups(registry, value, options),
 			},
 			props,
 		),

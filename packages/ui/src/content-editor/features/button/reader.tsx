@@ -13,6 +13,7 @@ import {
 	classAttribute,
 	escapeHtml,
 	idAttribute,
+	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
 import { cn } from "#/lib/utils.ts";
 
@@ -49,7 +50,7 @@ export const buttonNode: ContentNodeReader<ContentButtonNode> = {
 		node.label === "" ? null : (
 			<p
 				id={options.idFor?.(node) ?? node.id}
-				className={options.classNameFor?.("button") ?? "flex"}
+				className={kitClassName(options, "button", "flex")}
 				style={{ justifyContent: JUSTIFY[node.align ?? "center"] }}
 			>
 				<a

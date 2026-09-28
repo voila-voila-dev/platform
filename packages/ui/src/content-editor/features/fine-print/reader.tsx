@@ -7,6 +7,7 @@ import { mdxRule } from "#/content-editor/lib/mdx-rule.ts";
 import {
 	classAttribute,
 	idAttribute,
+	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
 
 /**
@@ -29,10 +30,11 @@ export const finePrintNode: ContentNodeReader<ContentFinePrintNode> = {
 	Render: ({ node, children, options }) => (
 		<p
 			id={options.idFor?.(node) ?? node.id}
-			className={
-				options.classNameFor?.("fine-print") ??
-				"text-center text-muted-foreground text-xs leading-normal"
-			}
+			className={kitClassName(
+				options,
+				"fine-print",
+				"text-center text-muted-foreground text-xs leading-normal",
+			)}
 		>
 			<small>{children}</small>
 		</p>

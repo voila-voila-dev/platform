@@ -6,6 +6,7 @@ import {
 	type ContentFeature,
 	ContentRenderer,
 	type ContentValue,
+	contentFromMarkdown,
 	contentToHtml,
 	contentToMarkdown,
 	createContentFeatures,
@@ -17,6 +18,7 @@ import { useState } from "react";
 import {
 	fakeUploadImage,
 	frenchLabels,
+	importedArticleMarkdown,
 	inlineContent,
 	keyboardContent,
 	sampleContent,
@@ -169,6 +171,43 @@ export const ReadOnly: Story = {
 			</pre>
 		</div>
 	),
+};
+
+const IMPORTED_ARTICLE = contentFromMarkdown(importedArticleMarkdown, {
+	features: FEATURES,
+});
+const SITE_ORIGIN = "https://ui.voila.dev";
+
+/**
+ * An imported Markdown post inside a host's `prose`: `unstyled` leaves the
+ * typography to it, `siteOrigin` keeps the referrer on the internal link.
+ * The React renderer, the HTML string rendered, and that string.
+ */
+export const ReadOnlyInProse: Story = {
+	args: { features: FEATURES, value: IMPORTED_ARTICLE, onChange: () => {} },
+	render: () => {
+		const html = contentToHtml(IMPORTED_ARTICLE, {
+			features: READERS,
+			siteOrigin: SITE_ORIGIN,
+		});
+		return (
+			<div className="grid gap-6 lg:grid-cols-3">
+				<ContentRenderer
+					value={IMPORTED_ARTICLE}
+					features={READERS}
+					options={{ unstyled: true, siteOrigin: SITE_ORIGIN }}
+					render={<article className="prose prose-sm dark:prose-invert" />}
+				/>
+				<article
+					className="prose prose-sm dark:prose-invert"
+					dangerouslySetInnerHTML={{ __html: html }}
+				/>
+				<pre className="overflow-auto whitespace-pre-wrap rounded-md bg-muted p-3 text-xs">
+					{html}
+				</pre>
+			</div>
+		);
+	},
 };
 
 /** The same document as Markdown, MDX elements for what Markdown cannot say. */

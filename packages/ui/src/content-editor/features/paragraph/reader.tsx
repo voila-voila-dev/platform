@@ -39,16 +39,25 @@ const listRun: ContentRunWrapper<ContentParagraphNode> = {
 		node.listStyleType !== undefined && LIST_STYLES.includes(node.listStyleType)
 			? node.listStyleType
 			: null,
-	Render: ({ runKey, first, children }) =>
+	Render: ({ runKey, first, children, options }) =>
 		runKey === "disc" ? (
-			<ul className="flex list-disc flex-col gap-1 pl-5">{children}</ul>
+			<ul
+				className={
+					options.unstyled ? undefined : "flex list-disc flex-col gap-1 pl-5"
+				}
+			>
+				{children}
+			</ul>
 		) : (
 			<ol
 				data-list-style={runKey === "badge" ? "badge" : undefined}
+				// The badge list draws its own numbers, so it keeps its classes.
 				className={
 					runKey === "badge"
 						? "flex list-none flex-col gap-2 pl-0"
-						: "flex list-decimal flex-col gap-1 pl-5"
+						: options.unstyled
+							? undefined
+							: "flex list-decimal flex-col gap-1 pl-5"
 				}
 				start={
 					first.listStart && first.listStart !== 1 ? first.listStart : undefined

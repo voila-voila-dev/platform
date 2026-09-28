@@ -1,5 +1,6 @@
 import { blockquoteReader } from "#/content-editor/features/blockquote/reader.tsx";
 import { calloutReader } from "#/content-editor/features/callout/reader.tsx";
+import { codeBlockReader } from "#/content-editor/features/code-block/reader.tsx";
 import { dividerReader } from "#/content-editor/features/divider/reader.tsx";
 import { fileReader } from "#/content-editor/features/file/reader.tsx";
 import {
@@ -44,6 +45,7 @@ export function createContentReaders({
 		blockquoteReader,
 		dividerReader,
 		calloutReader,
+		codeBlockReader,
 		imageReader,
 		tableReader,
 		...embeds.map((embed) => embedReaders[embed]),

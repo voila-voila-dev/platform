@@ -9,6 +9,7 @@ import {
 	classAttribute,
 	escapeHtml,
 	idAttribute,
+	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
 
 export interface ContentYoutubeNode extends ContentNodeLike {
@@ -45,9 +46,7 @@ export const youtubeNode: ContentInsertableNodeReader<ContentYoutubeNode> = {
 	Render: ({ node, options }) => (
 		<figure
 			id={options.idFor?.(node) ?? node.id}
-			className={
-				options.classNameFor?.("youtube-video") ?? "flex flex-col gap-1"
-			}
+			className={kitClassName(options, "youtube-video", "flex flex-col gap-1")}
 		>
 			<iframe
 				title={node.caption ?? node.videoId}

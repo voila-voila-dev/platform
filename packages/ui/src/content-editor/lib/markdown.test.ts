@@ -5,6 +5,8 @@ import {
 	contentFromMarkdown,
 	contentToMarkdown,
 } from "#/content-editor/lib/markdown.ts";
+import { contentToHtml } from "#/content-editor/reader/content-to-html.ts";
+import { createContentReaders } from "#/content-editor/reader/readers.ts";
 
 const features = createContentFeatures();
 const toMarkdown = (value: ContentValue) =>
@@ -207,6 +209,26 @@ describe("round trip", () => {
 			features.find((feature) => feature.key === "image")?.nodes?.[0]?.markdown
 				?.loss,
 		).toBe("width, height, link, size and overlay");
+	});
+
+	it("brings fenced code back as a code block, in both directions", () => {
+		const markdown = "```ts\nconst a = 1;\n\nreturn a;\n```\n";
+		const value = fromMarkdown(markdown);
+		expect(withoutIds(value)).toEqual([
+			{
+				type: "code_block",
+				lang: "ts",
+				children: [
+					{ type: "code_line", children: [{ text: "const a = 1;" }] },
+					{ type: "code_line", children: [{ text: "" }] },
+					{ type: "code_line", children: [{ text: "return a;" }] },
+				],
+			},
+		]);
+		expect(toMarkdown(value)).toBe(markdown);
+		expect(contentToHtml(value, { features: createContentReaders() })).toBe(
+			'<pre><code class="language-ts">const a = 1;\n\nreturn a;</code></pre>',
+		);
 	});
 
 	it("reads plain Markdown a human wrote", () => {

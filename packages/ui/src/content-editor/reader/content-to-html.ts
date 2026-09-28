@@ -43,6 +43,118 @@ function leafToHtml(
 }
 
 /**
+ * Siblings in document order, a run of consecutive list items gathered into
+ * one entry so it gets one wrapper, wherever the run sits: at the top level,
+ * in a quote, in a table cell.
+ */
+export type ContentSiblingGroup =
+	| { readonly kind: "single"; readonly node: ContentDescendant }
+	| {
+			readonly kind: "run";
+			readonly runKey: string;
+			readonly reader: AnyContentNodeReader & {
+				readonly wrapRun: NonNullable<AnyContentNodeReader["wrapRun"]>;
+			};
+			readonly nodes: ReadonlyArray<ContentNodeLike>;
+	  };
+
+export function groupSiblings(
+	registry: ContentReaderRegistry,
+	siblings: ReadonlyArray<ContentDescendant>,
+): ReadonlyArray<ContentSiblingGroup> {
+	const groups: ContentSiblingGroup[] = [];
+	let index = 0;
+	while (index < siblings.length) {
+		const node = siblings[index] as ContentDescendant;
+		const reader = isContentText(node)
+			? undefined
+			: registry.nodeFor(node.type);
+		const runKey =
+			isContentText(node) || reader?.wrapRun === undefined
+				? null
+				: reader.wrapRun.of(node);
+		if (
+			runKey === null ||
+			reader?.wrapRun === undefined ||
+			isContentText(node)
+		) {
+			groups.push({ kind: "single", node });
+			index += 1;
+			continue;
+		}
+		const nodes: ContentNodeLike[] = [];
+		while (index < siblings.length) {
+			const candidate = siblings[index] as ContentDescendant;
+			if (
+				isContentText(candidate) ||
+				candidate.type !== node.type ||
+				reader.wrapRun.of(candidate) !== runKey
+			) {
+				break;
+			}
+			nodes.push(candidate);
+			index += 1;
+		}
+		groups.push({
+			kind: "run",
+			runKey,
+			reader: reader as Extract<ContentSiblingGroup, { kind: "run" }>["reader"],
+			nodes,
+		});
+	}
+	return groups;
+}
+
+/**
+ * The children a reader renders: a lone plain paragraph's own children when
+ * the reader unwraps it, the node's children otherwise.
+ */
+export function renderedChildren(
+	reader: AnyContentNodeReader,
+	node: ContentNodeLike,
+): ReadonlyArray<ContentDescendant> {
+	const only = node.children.length === 1 ? node.children[0] : undefined;
+	return reader.unwrapLoneParagraph === true &&
+		only !== undefined &&
+		!isContentText(only) &&
+		only.type === "p" &&
+		only.listStyleType === undefined &&
+		only.indent === undefined
+		? only.children
+		: node.children;
+}
+
+function groupToHtml(
+	registry: ContentReaderRegistry,
+	group: ContentSiblingGroup,
+	options: ContentHtmlOptions,
+): string {
+	if (group.kind === "single") {
+		return descendantToHtml(registry, group.node, options);
+	}
+	const [first] = group.nodes;
+	return group.reader.wrapRun.toHtml(
+		group.runKey,
+		group.nodes
+			.map((node) => descendantToHtml(registry, node, options))
+			.join(""),
+		first,
+	);
+}
+
+function lastNodeOf(group: ContentSiblingGroup): ContentDescendant {
+	return group.kind === "single"
+		? group.node
+		: (group.nodes.at(-1) as ContentNodeLike);
+}
+
+function firstNodeOf(group: ContentSiblingGroup): ContentDescendant {
+	return group.kind === "single"
+		? group.node
+		: (group.nodes[0] as ContentNodeLike);
+}
+
+/**
  * Siblings joined with a space where two elements touch, or where an element
  * is followed by text that starts with a letter or digit: browsers collapse
  * a doubled space, so this never widens a gap that already exists.
@@ -51,19 +163,23 @@ function childrenToHtml(
 	registry: ContentReaderRegistry,
 	children: ReadonlyArray<ContentDescendant>,
 	options: ContentHtmlOptions,
-): string {
+): { readonly html: string; readonly parts: ReadonlyArray<string> } {
+	const groups = groupSiblings(registry, children);
+	const parts = groups.map((group) => groupToHtml(registry, group, options));
 	let html = "";
-	children.forEach((child, index) => {
-		html += descendantToHtml(registry, child, options);
-		const next = children[index + 1];
-		if (next === undefined || isContentText(child)) {
+	groups.forEach((group, index) => {
+		html += parts[index];
+		const next = groups[index + 1];
+		const last = lastNodeOf(group);
+		if (next === undefined || isContentText(last)) {
 			return;
 		}
-		if (!isContentText(next) || /^[\p{L}\p{N}]/u.test(next.text)) {
+		const following = firstNodeOf(next);
+		if (!isContentText(following) || /^[\p{L}\p{N}]/u.test(following.text)) {
 			html += " ";
 		}
 	});
-	return html;
+	return { html, parts };
 }
 
 function descendantToHtml(
@@ -78,18 +194,12 @@ function descendantToHtml(
 	if (reader === undefined) {
 		return "";
 	}
-	return reader.toHtml(
-		node,
-		childrenToHtml(registry, node.children, options),
+	const { html, parts } = childrenToHtml(
+		registry,
+		renderedChildren(reader, node),
 		options,
 	);
-}
-
-function runOf(
-	reader: AnyContentNodeReader | undefined,
-	node: ContentNodeLike,
-): string | null {
-	return reader?.wrapRun?.of(node) ?? null;
+	return reader.toHtml(node, html, options, parts);
 }
 
 /** Top-level blocks, with runs (list items) wrapped once. */
@@ -98,30 +208,9 @@ function blocksToHtml(
 	value: ContentValue,
 	options: ContentHtmlOptions,
 ): string {
-	let html = "";
-	let index = 0;
-	while (index < value.length) {
-		const node = value[index] as ContentNodeLike;
-		const reader = registry.nodeFor(node.type);
-		const run = runOf(reader, node);
-		if (run === null || reader?.wrapRun === undefined) {
-			html += descendantToHtml(registry, node, options);
-			index += 1;
-			continue;
-		}
-		let inner = "";
-		const first = node;
-		while (index < value.length) {
-			const candidate = value[index] as ContentNodeLike;
-			if (candidate.type !== node.type || runOf(reader, candidate) !== run) {
-				break;
-			}
-			inner += descendantToHtml(registry, candidate, options);
-			index += 1;
-		}
-		html += reader.wrapRun.toHtml(run, inner, first);
-	}
-	return html;
+	return groupSiblings(registry, value)
+		.map((group) => groupToHtml(registry, group, options))
+		.join("");
 }
 
 export function contentToHtml(
@@ -150,7 +239,7 @@ export function contentToInlineHtml(
 	return value
 		.map((node) =>
 			node.type === "p"
-				? childrenToHtml(registry, node.children, options)
+				? childrenToHtml(registry, node.children, options).html
 				: descendantToHtml(registry, node, options),
 		)
 		.join("<br>");

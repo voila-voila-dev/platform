@@ -12,6 +12,7 @@ import {
 	classAttribute,
 	escapeHtml,
 	idAttribute,
+	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
 
 /**
@@ -59,10 +60,11 @@ export const articleNode: ContentNodeReader<ContentArticleNode> = {
 		return (
 			<article
 				id={options.idFor?.(node) ?? node.id}
-				className={
-					options.classNameFor?.("article") ??
-					"overflow-hidden rounded-xl border border-border bg-card"
-				}
+				className={kitClassName(
+					options,
+					"article",
+					"overflow-hidden rounded-xl border border-border bg-card",
+				)}
 			>
 				{node.image.src ? (
 					<img

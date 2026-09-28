@@ -5,9 +5,9 @@ sidebar:
   order: 1
 ---
 
-Text, marks, headings, lists, quotes, dividers, tables and callouts are the
-features `createContentFeatures()` puts first. Each is one definition; each
-can be left out.
+Text, marks, headings, lists, quotes, dividers, tables, callouts and code
+blocks are the features `createContentFeatures()` puts first. Each is one
+definition; each can be left out.
 
 ## Text and marks
 
@@ -49,3 +49,11 @@ cells. Spans, fills and column widths render the same in the reader and in
 
 An aside with an emoji icon, chosen from a grid by clicking it. Its text is
 inline, one paragraph.
+
+## Code blocks
+
+Preformatted code, from the toolbar or the slash menu. Enter starts a new
+line of code. It is Plate's `code_block` of `code_line`s, the shape fenced
+code comes back from Markdown as, without `@platejs/code-block`: no
+highlighting in the editor, and the reader writes the fence's language as a
+`language-*` class for a highlighter of the host's.

@@ -16,3 +16,25 @@ export function insertBlockBelow(
 		select: true,
 	});
 }
+
+/**
+ * The same, taking the place of the empty line it was asked from: typed on
+ * an empty line, the slash would otherwise leave that line empty above.
+ */
+export function insertBlockInPlace(
+	editor: ContentEditorApi,
+	node: ContentNodeLike,
+) {
+	const current = editor.api.block();
+	const emptyLine =
+		current !== undefined &&
+		current[0].type === paragraphNode.type &&
+		current[0].listStyleType === undefined &&
+		editor.api.isEmpty(current[0])
+			? current[1]
+			: undefined;
+	insertBlockBelow(editor, node);
+	if (emptyLine !== undefined) {
+		editor.tf.removeNodes({ at: emptyLine });
+	}
+}

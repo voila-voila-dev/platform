@@ -12,6 +12,7 @@ import {
 	classAttribute,
 	escapeHtml,
 	idAttribute,
+	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
 
 /**
@@ -46,7 +47,7 @@ export const statNode: ContentNodeReader<ContentStatNode> = {
 	Render: ({ node, options }) => (
 		<div
 			id={options.idFor?.(node) ?? node.id}
-			className={options.classNameFor?.("stat") ?? "flex flex-col gap-1"}
+			className={kitClassName(options, "stat", "flex flex-col gap-1")}
 			style={{ textAlign: node.align ?? "center" }}
 		>
 			<strong className="font-bold text-3xl text-primary leading-tight">

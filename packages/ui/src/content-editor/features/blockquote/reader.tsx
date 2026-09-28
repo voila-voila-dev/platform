@@ -7,6 +7,7 @@ import { newContentNodeId } from "#/content-editor/lib/ids.ts";
 import {
 	classAttribute,
 	idAttribute,
+	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
 
 export interface ContentBlockquoteNode extends ContentNodeLike {
@@ -27,10 +28,11 @@ export const blockquoteNode: ContentInsertableNodeReader<ContentBlockquoteNode> 
 		Render: ({ node, children, options }) => (
 			<blockquote
 				id={options.idFor?.(node) ?? node.id}
-				className={
-					options.classNameFor?.("blockquote") ??
-					"border-border border-l-2 pl-3 text-muted-foreground italic"
-				}
+				className={kitClassName(
+					options,
+					"blockquote",
+					"border-border border-l-2 pl-3 text-muted-foreground italic",
+				)}
 			>
 				{children}
 			</blockquote>

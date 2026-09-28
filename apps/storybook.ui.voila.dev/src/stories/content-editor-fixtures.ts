@@ -54,6 +54,18 @@ export const sampleContent: ContentValue = [
 		type: "blockquote",
 		children: [{ text: "A quote, for when someone else said it better." }],
 	},
+	{
+		type: "code_block",
+		lang: "ts",
+		children: [
+			{
+				type: "code_line",
+				children: [{ text: "const html = contentToHtml(value, {" }],
+			},
+			{ type: "code_line", children: [{ text: "  features: READERS," }] },
+			{ type: "code_line", children: [{ text: "});" }] },
+		],
+	},
 	{ type: "hr", children: [{ text: "" }] },
 	{
 		type: "table",
@@ -231,6 +243,7 @@ export const frenchLabels: ContentEditorLabelsInput = {
 		quote: "Citation",
 		divider: "Séparateur",
 		callout: "Encadré",
+		codeBlock: "Bloc de code",
 		table: "Tableau",
 		image: "Image",
 		video: "Vidéo",
@@ -250,3 +263,25 @@ export const frenchLabels: ContentEditorLabelsInput = {
 		deleteTable: "Supprimer le tableau",
 	},
 };
+
+/** A post as a blog import writes it: Markdown, read back through `contentFromMarkdown`. */
+export const importedArticleMarkdown = `## Before the season
+
+Read the [training plan](/blog/training-plan) first, then the
+[federation rules](https://www.ffhandball.fr).
+
+> Three things to check:
+>
+> - the licence
+> - the medical certificate
+
+| Week | Load |
+| ---- | ---- |
+| 1    | Light |
+| 2    | Medium |
+
+\`\`\`ts
+const load = weeks.map((week) => week.minutes);
+if (load.at(-1) > 90) warn("<too much>");
+\`\`\`
+`;

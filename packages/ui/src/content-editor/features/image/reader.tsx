@@ -7,6 +7,7 @@ import {
 	classAttribute,
 	escapeHtml,
 	idAttribute,
+	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
 
 /** How much of the email's width the image takes; `contained` suits a logo or a portrait. */
@@ -83,7 +84,7 @@ export const imageNode: ContentNodeReader<ContentImageNode> = {
 		return (
 			<figure
 				id={options.idFor?.(node) ?? node.id}
-				className={options.classNameFor?.("image") ?? "flex flex-col gap-1"}
+				className={kitClassName(options, "image", "flex flex-col gap-1")}
 				style={
 					node.size === "contained"
 						? {
