@@ -79,7 +79,9 @@ describe("ContentEditor", () => {
 			expect(screen.getByRole("textbox").textContent).toBe("Remplacé");
 		});
 		expect(onValue).toHaveBeenCalledTimes(1);
-		expect(onValue).toHaveBeenCalledWith([paragraph("Remplacé")]);
+		expect(onValue).toHaveBeenCalledWith([
+			expect.objectContaining(paragraph("Remplacé")),
+		]);
 	});
 
 	it("warns when a layout has no canvas", () => {

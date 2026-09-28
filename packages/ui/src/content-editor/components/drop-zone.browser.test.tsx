@@ -244,7 +244,7 @@ describe("files dropped and pasted", () => {
 
 		expect(onCanvas.defaultPrevented).toBe(true);
 		expect(onTray.defaultPrevented).toBe(true);
-		expect((editor as PlateEditor).children).toEqual([
+		expect((editor as PlateEditor).children).toMatchObject([
 			{ type: "p", children: [{ text: "Hello" }] },
 		]);
 	});

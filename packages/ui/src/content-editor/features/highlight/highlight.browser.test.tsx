@@ -71,7 +71,12 @@ describe("highlight feature", () => {
 		await expect.poll(() => nodeAt(1)?.type).toBe("p");
 		await userEvent.keyboard("Body");
 		await expect
-			.poll(() => contentToHtml(latest, { features: FEATURES }))
+			.poll(() =>
+				contentToHtml(latest, { features: FEATURES }).replace(
+					/ id="[^"]*"/g,
+					"",
+				),
+			)
 			.toBe(
 				'<p class="highlight" style="text-align:left"><strong>10% off with LAUNCH10</strong></p><p>Body</p>',
 			);

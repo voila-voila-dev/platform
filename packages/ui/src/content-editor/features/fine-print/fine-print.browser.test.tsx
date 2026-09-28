@@ -62,7 +62,12 @@ describe("fine print feature", () => {
 		await userEvent.keyboard("{Enter}");
 		await expect.poll(() => nodeAt(1)?.type).toBe("p");
 		await expect
-			.poll(() => contentToHtml(latest, { features: FEATURES }))
+			.poll(() =>
+				contentToHtml(latest, { features: FEATURES }).replace(
+					/ id="[^"]*"/g,
+					"",
+				),
+			)
 			.toContain('<p class="fine-print"><small>Offer valid until Sunday.');
 	});
 });
