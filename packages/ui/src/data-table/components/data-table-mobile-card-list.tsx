@@ -4,6 +4,7 @@ import { DataTableEmpty } from "#/data-table/components/data-table-empty.tsx";
 import { DataTableLoadingOverlay } from "#/data-table/components/data-table-loading-overlay.tsx";
 import { DataTableMobileCard } from "#/data-table/components/data-table-mobile-card.tsx";
 import type { DataTableFeatures } from "#/data-table/lib/features.ts";
+import { cn } from "#/lib/utils.ts";
 
 interface Props<TData extends RowData> {
 	rows: Row<DataTableFeatures, TData>[];
@@ -11,6 +12,7 @@ interface Props<TData extends RowData> {
 	emptyState: React.ReactNode;
 	onRowClick: ((row: TData) => void) | undefined;
 	renderMobileCard: ((row: TData) => React.ReactNode) | undefined;
+	framed: boolean;
 }
 
 /** The card list that replaces the table below `md`. */
@@ -20,6 +22,7 @@ export function DataTableMobileCardList<TData extends RowData>({
 	emptyState,
 	onRowClick,
 	renderMobileCard,
+	framed,
 }: Props<TData>) {
 	if (renderMobileCard === undefined) {
 		return null;
@@ -40,7 +43,7 @@ export function DataTableMobileCardList<TData extends RowData>({
 					))}
 				</ul>
 			) : (
-				<div className="rounded-md border">
+				<div className={cn(framed && "rounded-md border")}>
 					{emptyState ?? <DataTableEmpty />}
 				</div>
 			)}

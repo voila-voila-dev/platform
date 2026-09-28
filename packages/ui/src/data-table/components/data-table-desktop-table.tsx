@@ -30,6 +30,7 @@ interface Props<TData extends RowData> {
 	resizable: boolean;
 	renderExpandedRow: ((row: TData) => React.ReactNode) | undefined;
 	density: DataTableDensity;
+	framed: boolean;
 	table: TanstackTable<DataTableFeatures, TData>;
 	pinned: boolean;
 }
@@ -49,13 +50,15 @@ export function DataTableDesktopTable<TData extends RowData>({
 	resizable,
 	renderExpandedRow,
 	density,
+	framed,
 	table,
 	pinned,
 }: Props<TData>) {
 	return (
 		<div
 			className={cn(
-				"relative overflow-hidden rounded-md border",
+				"relative overflow-hidden",
+				framed && "rounded-md border",
 				hiddenOnMobile && "hidden md:block",
 			)}
 		>

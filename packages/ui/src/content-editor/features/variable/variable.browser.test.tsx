@@ -43,7 +43,20 @@ const paragraph = () => latest[0] as ContentNodeLike;
 
 async function typeInEmptyComposer(keys: string) {
 	render(<Composer />);
-	await page.getByRole("textbox", { name: "Content editor" }).click();
+	const textbox = page.getByRole("textbox", { name: "Content editor" });
+	await textbox.click();
+	// The editor places its caret a beat after the click: a key typed before
+	// that lands, then the rest goes in ahead of it ("a {b}" read " {b}a").
+	await expect
+		.poll(() => {
+			const anchor = window.getSelection()?.anchorNode ?? null;
+			return (
+				document.activeElement === textbox.element() &&
+				anchor !== null &&
+				textbox.element().contains(anchor)
+			);
+		})
+		.toBe(true);
 	await userEvent.keyboard(keys);
 }
 

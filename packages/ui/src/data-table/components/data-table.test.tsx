@@ -176,6 +176,26 @@ describe("DataTable", () => {
 		expect(container?.classList.contains("max-h-40")).toBe(true);
 	});
 
+	it("frames the table with its own border by default", () => {
+		const screen = render(<DataTable.Root columns={columns} data={projects} />);
+		const frame = screen.baseElement.querySelector(
+			"[data-slot=table-container]",
+		)?.parentElement;
+		expect(frame?.classList.contains("border")).toBe(true);
+		expect(frame?.classList.contains("rounded-md")).toBe(true);
+	});
+
+	it("drops its own border when framed is off", () => {
+		const screen = render(
+			<DataTable.Root columns={columns} data={projects} framed={false} />,
+		);
+		const frame = screen.baseElement.querySelector(
+			"[data-slot=table-container]",
+		)?.parentElement;
+		expect(frame?.classList.contains("border")).toBe(false);
+		expect(frame?.classList.contains("rounded-md")).toBe(false);
+	});
+
 	it("renders sorted mobile cards and hides the table below md", () => {
 		const onRowClick = vi.fn();
 		const screen = render(

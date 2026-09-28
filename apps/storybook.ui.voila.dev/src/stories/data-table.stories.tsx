@@ -296,6 +296,19 @@ export const StickyHeader: Story = {
 	),
 };
 
+/** `framed={false}` drops the table's own border so a card can hold it edge
+ * to edge — the card's border is the only one left. */
+export const InsideACard: Story = {
+	render: () => (
+		<section className="overflow-hidden rounded-lg border bg-card">
+			<h2 className="px-4 py-3 font-medium text-sm">Projects</h2>
+			<div className="border-t">
+				<DataTable.Root columns={columns} data={projects} framed={false} />
+			</div>
+		</section>
+	),
+};
+
 export const Loading: Story = {
 	render: () => (
 		<DataTable.Root columns={columns} data={projects.slice(0, 5)} loading />

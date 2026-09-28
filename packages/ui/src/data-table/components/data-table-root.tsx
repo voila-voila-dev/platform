@@ -48,6 +48,12 @@ interface Props<TData extends RowData>
 	/** Row height. `compact` fits about a third more rows on a screen. */
 	density?: DataTableDensity;
 	/**
+	 * Draws the table's own rounded border. Turn it off when the table sits
+	 * edge to edge inside a card that already frames it — two borders a few
+	 * pixels apart read as a mistake. The parent then clips the corners.
+	 */
+	framed?: boolean;
+	/**
 	 * Row layout. `gallery` swaps the table for a `CardGallery` grid built
 	 * from the same (sorted, filtered) row model. Needs `renderGalleryCard`;
 	 * drive it with `DataTable.ViewToggle`. The `pagination` footer works in
@@ -101,6 +107,7 @@ export function DataTableRoot<TData extends RowData>({
 	columnPinning,
 	onColumnPinningChange,
 	density = "comfortable",
+	framed = true,
 	renderExpandedRow,
 	globalFilter,
 	view = "table",
@@ -151,6 +158,7 @@ export function DataTableRoot<TData extends RowData>({
 					emptyState={emptyState}
 					onRowClick={onRowClick}
 					renderGalleryCard={renderGalleryCard}
+					framed={framed}
 				/>
 			) : (
 				<>
@@ -160,6 +168,7 @@ export function DataTableRoot<TData extends RowData>({
 						emptyState={emptyState}
 						onRowClick={onRowClick}
 						renderMobileCard={renderMobileCard}
+						framed={framed}
 					/>
 					<DataTableDesktopTable
 						headerGroups={table.getHeaderGroups()}
@@ -175,6 +184,7 @@ export function DataTableRoot<TData extends RowData>({
 						resizable={enableColumnResizing}
 						renderExpandedRow={renderExpandedRow}
 						density={density}
+						framed={framed}
 						table={table}
 						pinned={
 							(columnPinning?.start?.length ?? 0) +

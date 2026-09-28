@@ -5,6 +5,7 @@ import { CardGalleryRoot } from "#/card-gallery/components/card-gallery-root.tsx
 import { DataTableEmpty } from "#/data-table/components/data-table-empty.tsx";
 import { DataTableLoadingOverlay } from "#/data-table/components/data-table-loading-overlay.tsx";
 import type { DataTableFeatures } from "#/data-table/lib/features.ts";
+import { cn } from "#/lib/utils.ts";
 
 interface Props<TData extends RowData> {
 	rows: Row<DataTableFeatures, TData>[];
@@ -12,6 +13,7 @@ interface Props<TData extends RowData> {
 	emptyState: React.ReactNode;
 	onRowClick: ((row: TData) => void) | undefined;
 	renderGalleryCard: (row: TData) => React.ReactNode;
+	framed: boolean;
 }
 
 /** The `CardGallery` grid that replaces the table in gallery view. */
@@ -21,6 +23,7 @@ export function DataTableGallery<TData extends RowData>({
 	emptyState,
 	onRowClick,
 	renderGalleryCard,
+	framed,
 }: Props<TData>) {
 	return (
 		<div data-slot="data-table-gallery" className="relative">
@@ -44,7 +47,7 @@ export function DataTableGallery<TData extends RowData>({
 					))}
 				</CardGalleryRoot>
 			) : (
-				<div className="rounded-md border">
+				<div className={cn(framed && "rounded-md border")}>
 					{emptyState ?? <DataTableEmpty />}
 				</div>
 			)}
