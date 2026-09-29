@@ -37,6 +37,9 @@ starts carrying it shows up red rather than silently.
 ## Importing existing content
 
 `contentFromMarkdown` reads Markdown a human wrote: `# ` headings, `- `
-lists, `**bold**`, links. Run `scrubImportedContent` over the result when the
+lists, `**bold**`, links. A newline inside a paragraph is a soft break and
+comes back as a space, as CommonMark renders it; a hard break (two trailing
+spaces, a backslash before the newline, or `<br>`) stays a line break, and
+`contentToMarkdown` writes it back as a backslash break. Run `scrubImportedContent` over the result when the
 source carried stray line breaks or zero-width characters, the usual
 souvenirs of a migration.

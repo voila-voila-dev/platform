@@ -71,6 +71,30 @@ function rulesOf(registry: ContentRegistry): MdRules {
 	return rules;
 }
 
+interface MdastNode {
+	readonly type: string;
+	value?: string;
+	readonly children?: ReadonlyArray<MdastNode>;
+}
+
+/**
+ * CommonMark reads a newline inside a paragraph as a soft break: the text
+ * flows on, as a space. Plate keeps it as a newline, which the reader writes
+ * as `<br>`. A hard break (two trailing spaces, a backslash, `<br>`) is a
+ * `break` node, never a text newline, so it is left alone.
+ */
+function remarkSoftBreaksAsSpaces() {
+	const visit = (node: MdastNode) => {
+		if (node.type === "text" && node.value !== undefined) {
+			node.value = node.value.replace(/[ \t]*\r?\n[ \t]*/g, " ");
+		}
+		node.children?.forEach(visit);
+	};
+	return visit;
+}
+
+const REMARK_PLUGINS = [remarkGfm, remarkMdx];
+
 function markdownEditor(features: ContentMarkdownOptions["features"]) {
 	const registry = toContentRegistry(features, "block");
 	return createPlateEditor({
@@ -78,7 +102,7 @@ function markdownEditor(features: ContentMarkdownOptions["features"]) {
 			...registry.plugins,
 			MarkdownPlugin.configure({
 				options: {
-					remarkPlugins: [remarkGfm, remarkMdx],
+					remarkPlugins: REMARK_PLUGINS,
 					rules: rulesOf(registry),
 				},
 			}),
@@ -126,9 +150,8 @@ export function contentFromMarkdown(
 	options: ContentMarkdownOptions,
 ): ContentValue {
 	const registry = toContentRegistry(options.features, "block");
-	const value = deserializeMd(
-		markdownEditor(registry),
-		markdown,
-	) as ContentValue;
+	const value = deserializeMd(markdownEditor(registry), markdown, {
+		remarkPlugins: [...REMARK_PLUGINS, remarkSoftBreaksAsSpaces],
+	}) as ContentValue;
 	return liftVoidBlocks(value, registry);
 }

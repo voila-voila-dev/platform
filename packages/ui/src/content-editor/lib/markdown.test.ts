@@ -231,6 +231,57 @@ describe("round trip", () => {
 		);
 	});
 
+	it("reads a soft line break as a space, as CommonMark renders it", () => {
+		expect(
+			withoutIds(
+				fromMarkdown(
+					"Read the plan\nfirst, **then\nthe** rules.\n\n> a quote\n> that wraps\n\n- an item\n  that wraps\n",
+				),
+			),
+		).toEqual([
+			{
+				type: "p",
+				children: [
+					{ text: "Read the plan first, " },
+					{ text: "then the", bold: true },
+					{ text: " rules." },
+				],
+			},
+			{
+				type: "blockquote",
+				children: [{ type: "p", children: [{ text: "a quote that wraps" }] }],
+			},
+			{
+				type: "p",
+				listStyleType: "disc",
+				indent: 1,
+				children: [{ text: "an item that wraps" }],
+			},
+		]);
+	});
+
+	it("keeps a hard line break, written any of the three ways, and writes it back", () => {
+		for (const markdown of ["one  \ntwo\n", "one\\\ntwo\n", "one<br>two\n"]) {
+			const value = fromMarkdown(markdown);
+			expect(withoutIds(value)).toEqual([
+				{
+					type: "p",
+					children: [{ text: "one" }, { text: "\n" }, { text: "two" }],
+				},
+			]);
+			expect(toMarkdown(value)).toBe("one\\\ntwo\n");
+			expect(withoutIds(fromMarkdown(toMarkdown(value)))).toEqual(
+				withoutIds(value),
+			);
+		}
+	});
+
+	it("leaves the newlines of fenced code alone", () => {
+		expect(
+			withoutIds(fromMarkdown("```\na\nb\n```\n"))[0]?.children,
+		).toHaveLength(2);
+	});
+
 	it("reads plain Markdown a human wrote", () => {
 		expect(
 			withoutIds(fromMarkdown("# Bonjour\n\nDu texte **gras**.\n\n- a\n- b\n")),
