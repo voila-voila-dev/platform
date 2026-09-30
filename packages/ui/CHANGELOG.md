@@ -4,6 +4,25 @@ Versions are `MAJOR.MINOR.<CI run number>`: every push to `main` publishes, and
 the major moves by hand when a release breaks callers. This file records those
 moves — not every publish.
 
+## 4.0 — the email block editor is removed
+
+`@voila.dev/ui/email-block-editor` is gone. The content editor replaces it:
+`createEmailFeatures()` edits the same fifteen blocks, with `appearance="email"`.
+Its document is a Slate tree, so a stored `{ version, blocks }` document needs
+one conversion; the worked converter is in
+[email-block-editor → content-editor + createEmailFeatures](https://ui.voila.dev/ui-content-editor/migrating-from-the-block-editor).
+
+### Breaking
+
+| Was | Is |
+| --- | --- |
+| `import { EmailBlockEditor } from "@voila.dev/ui/email-block-editor"` | `ContentEditor` with `createEmailFeatures()` from `@voila.dev/ui/content-editor` |
+| `EmailBlockEditor` props `blocks`, `document`, `onDocumentChange` | `ContentEditor.Root` props `features`, `value`, `onValueChange` |
+| `EmailEditorDocument`, `{ version: 1, blocks }` | `ContentValue`, a Slate tree; convert stored documents |
+| `createEmailBlocks`, `createEmailBlockRegistry`, custom block definitions | `createEmailFeatures`, and a custom feature per block |
+| the `grid` block | `columns` rows of `column`, one level deep |
+| peers `@dnd-kit/core`, `@dnd-kit/sortable`, `@dnd-kit/utilities` | no longer needed by the kit |
+
 ## 3.1 — the content editor writes mails
 
 The content editor can now write a one-to-one mail and a campaign email.

@@ -20,10 +20,6 @@ import path from "node:path";
 
 const EDITORS = [
 	{
-		root: "packages/ui/src/email-block-editor",
-		hook: "useEmailEditorLabels()",
-	},
-	{
 		root: "packages/ui/src/content-editor",
 		hook: "useContentEditorLabels()",
 	},

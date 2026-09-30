@@ -33,9 +33,11 @@ sidebar:
 | Columns | `columns` > `column` | container | [Columns](/ui-content-editor/columns) |
 | Recipient's name, email | `variable` | void, inline | [Variables](/ui-content-editor/variables) |
 
-The email block editor's fifteen blocks map one for one: its `grid` is
-`columns`, its `heading` levels 1 and 2 are `h1` and `h2`, and a list is a run
-of paragraphs, as everywhere in the content editor.
+The removed email block editor's fifteen blocks map one for one, and this
+table is the migration table: its `grid` is `columns`, its `heading` levels 1
+and 2 are `h1` and `h2`, and a list is a run of paragraphs, as everywhere in
+the content editor. To convert a stored document, see
+[email-block-editor → content-editor + createEmailFeatures](/ui-content-editor/migrating-from-the-block-editor).
 
 To turn a stored email into the HTML you send, see
 [Rendering an email](/ui-content-editor/rendering-an-email).

@@ -161,21 +161,11 @@ export const docsSections: DocsSectionConfig[] = [
 		},
 	},
 	{
-		label: "ui/email-block-editor",
-		dir: "ui-email-block-editor",
-		collapsed: true,
-		showcase: {
-			order: 1,
-			blurb:
-				"The email template editor that lives in your app, not someone else's SaaS.",
-		},
-	},
-	{
 		label: "ui/content-editor",
 		dir: "ui-content-editor",
 		collapsed: true,
 		showcase: {
-			order: 2,
+			order: 1,
 			blurb:
 				"A rich content editor that lives in your app, from one feature registry.",
 		},

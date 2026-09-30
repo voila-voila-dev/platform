@@ -83,7 +83,6 @@
 		"./direction": "./src/direction/index.ts",
 		"./drawer": "./src/drawer/index.ts",
 		"./dropdown-menu": "./src/dropdown-menu/index.ts",
-		"./email-block-editor": "./src/email-block-editor/index.ts",
 		"./empty": "./src/empty/index.ts",
 		"./event-calendar": "./src/event-calendar/index.ts",
 		"./field": "./src/field/index.ts",
@@ -185,9 +184,6 @@
 		"maplibre-gl": "^6.0.0",
 		"@tanstack/react-table": "^9.2.4",
 		"@tanstack/react-virtual": "^3.14.6",
-		"@dnd-kit/core": "^6.3.1",
-		"@dnd-kit/sortable": "^10.0.0",
-		"@dnd-kit/utilities": "^3.2.2",
 		"platejs": "^53.3.11",
 		"@platejs/basic-nodes": "^53.0.0",
 		"@platejs/combobox": "^53.0.0",
@@ -209,15 +205,6 @@
 			"optional": true
 		},
 		"@tanstack/react-virtual": {
-			"optional": true
-		},
-		"@dnd-kit/core": {
-			"optional": true
-		},
-		"@dnd-kit/sortable": {
-			"optional": true
-		},
-		"@dnd-kit/utilities": {
 			"optional": true
 		},
 		"platejs": {
@@ -258,9 +245,6 @@
 		}
 	},
 	"devDependencies": {
-		"@dnd-kit/core": "^6.3.1",
-		"@dnd-kit/sortable": "^10.0.0",
-		"@dnd-kit/utilities": "^3.2.2",
 		"@tanstack/react-table": "^9.2.4",
 		"@tanstack/react-virtual": "^3.14.11",
 		"@testing-library/dom": "^10.4.1",

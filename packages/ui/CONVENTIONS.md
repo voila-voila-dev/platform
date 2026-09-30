@@ -30,9 +30,6 @@ folder, with `<sub>/<sub>.tsx` for the namespace and unprefixed part filenames
 (`root.tsx`, `card-title.tsx`). This is the one place the flat
 `<component>-<part>.tsx` rule does not apply.
 
-`email-block-editor/blocks/` is a plugin registry, not a set of UI parts, and
-stays its own auxiliary folder.
-
 ## 2. Props interface — non-exported, always named `Props`
 
 ```tsx

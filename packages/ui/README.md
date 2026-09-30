@@ -39,15 +39,15 @@ real `node_modules` install.
 Peers: `react@19`, `react-dom@19`, `tailwindcss@4`. Some domains need an extra
 (optional) peer — install it only if you use them: `maplibre-gl` for `map-view`,
 `globe-view` and `radius-map`, `@tanstack/react-table` for `data-table`,
-`@tanstack/react-virtual` for `spreadsheet`, `@dnd-kit/*` for
-`email-block-editor`.
+`@tanstack/react-virtual` for `spreadsheet`, `platejs` and its `@platejs/*`
+plugins for `content-editor`.
 
 ## What's inside
 
 One package, one version — each domain behind its own subpath. There is
 deliberately **no root export**: `import { Button } from "@voila.dev/ui"` does
 not resolve, and is not meant to. A barrel would put every domain — maps,
-spreadsheet, the email editor and their optional peers — into one module graph,
+spreadsheet, the content editor and their optional peers — into one module graph,
 which is the bundle tax the subpaths exist to avoid. Import
 `@voila.dev/ui/button`.
 
@@ -55,7 +55,7 @@ which is the bundle tax the subpaths exist to avoid. Import
 | --- | --- |
 | `@voila.dev/ui/<component>` | 85 components, one convention. The floor everything else stands on. |
 | `@voila.dev/ui/styles/themes/*.css` | Your whole brand in one CSS file. Six ship; change it, everything follows. |
-| `@voila.dev/ui/email-block-editor` | The email template editor that lives in your app, not someone else's SaaS. |
+| `@voila.dev/ui/content-editor` | A rich content editor, and the email editor, that live in your app, from one feature registry. |
 | `@voila.dev/ui/spreadsheet` | An editable, virtualized grid your users will mistake for a native app. |
 | `@voila.dev/ui/data-table` | Sorting, pinning, CSV export — the table you keep rebuilding, finished. |
 | `@voila.dev/ui/chart` | Charts with zero charting library. SVG you can read, scales included. |
