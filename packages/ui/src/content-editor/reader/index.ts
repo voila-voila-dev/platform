@@ -27,10 +27,15 @@ export type {
 	ContentValue,
 } from "#/content-editor/features/content-value.ts";
 export { isContentText } from "#/content-editor/features/content-value.ts";
+export type { ContentDividerNode } from "#/content-editor/features/divider/reader.tsx";
 export {
 	type ContentFinePrintNode,
 	finePrintReader,
 } from "#/content-editor/features/fine-print/reader.tsx";
+export type {
+	ContentHeadingLevel,
+	ContentHeadingNode,
+} from "#/content-editor/features/heading/reader.tsx";
 export {
 	type ContentHighlightNode,
 	highlightReader,
@@ -40,11 +45,16 @@ export type {
 	ContentImageOverlay,
 	ContentImageSize,
 } from "#/content-editor/features/image/reader.tsx";
+export type { ContentLinkNode } from "#/content-editor/features/link/reader.tsx";
 export {
 	type ContentOfferNode,
 	offerNode,
 	offerReader,
 } from "#/content-editor/features/offer/reader.tsx";
+export type {
+	ContentListStyle,
+	ContentParagraphNode,
+} from "#/content-editor/features/paragraph/reader.tsx";
 export {
 	type ContentProductNode,
 	productNode,
@@ -78,6 +88,11 @@ export {
 	type ContentStatNode,
 	statReader,
 } from "#/content-editor/features/stat/reader.tsx";
+export type {
+	ContentTableCellNode,
+	ContentTableHeaderCellNode,
+	ContentTableRowNode,
+} from "#/content-editor/features/table/reader.tsx";
 export {
 	type ContentTableColumn,
 	type ContentTableColumnAlign,
@@ -86,10 +101,16 @@ export {
 	isEmailTable,
 } from "#/content-editor/features/table/reader.tsx";
 export {
+	CONTENT_MARKS,
+	type ContentMark,
+	type ContentTextMarks,
+} from "#/content-editor/features/text-marks/reader.tsx";
+export {
 	type ContentVariableNode,
 	variablePlaceholder,
 	variableReader,
 } from "#/content-editor/features/variable/reader.tsx";
+export type { ContentAlignment } from "#/content-editor/lib/alignment.ts";
 export {
 	emptyContentValue,
 	isEmptyContentValue,
@@ -102,7 +123,12 @@ export {
 } from "#/content-editor/reader/content-to-html.ts";
 export { escapeHtml } from "#/content-editor/reader/escape-html.ts";
 export {
+	type ContentCorrespondenceOptions,
+	type ContentEmailOptions,
 	type ContentEmbed,
 	type ContentReadersOptions,
 	createContentReaders,
+	createCorrespondenceReaders,
+	createEmailReaders,
+	EMAIL_MARKS,
 } from "#/content-editor/reader/readers.ts";

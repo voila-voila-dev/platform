@@ -272,9 +272,10 @@ function Home() {
 							An email editor. On your page. In your codebase.
 						</SectionIntro.Title>
 						<SectionIntro.Description>
-							Stop paying rent for your own email templates. Drop the block
-							editor into your app, let your users design emails, render the
-							same document server-side. This one is live — drag something.
+							Stop paying rent for your own email templates. Drop the content
+							editor into your app, let your users write emails, render the same
+							document server-side. This one is live: click a block to edit it
+							on the side, type / for another.
 						</SectionIntro.Description>
 					</SectionIntro.Root>
 					<div className="mx-auto mt-10 max-w-5xl">
@@ -289,7 +290,7 @@ function Home() {
 							</DeferredMount>
 						</div>
 						<div className="mt-6">
-							<InstallSnippet command="bun add @voila.dev/ui @dnd-kit/core @dnd-kit/sortable @dnd-kit/utilities" />
+							<InstallSnippet command="bun add @voila.dev/ui platejs @platejs/basic-nodes @platejs/link @platejs/list @platejs/indent @platejs/table @platejs/resizable @platejs/layout @platejs/slash-command @platejs/combobox @platejs/markdown remark-gfm" />
 						</div>
 					</div>
 				</section>

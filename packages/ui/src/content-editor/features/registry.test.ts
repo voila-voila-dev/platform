@@ -1,10 +1,18 @@
 import { createPlateEditor } from "platejs/react";
 import { describe, expect, it } from "vitest";
-import { createContentFeatures } from "#/content-editor/features/create-content-features.ts";
+import {
+	createContentFeatures,
+	createCorrespondenceFeatures,
+	createEmailFeatures,
+} from "#/content-editor/features/create-content-features.ts";
 import type { ContentFeature } from "#/content-editor/features/feature-definition.tsx";
 import { createContentReaderRegistry } from "#/content-editor/features/reader-registry.ts";
 import { createContentRegistry } from "#/content-editor/features/registry.ts";
-import { createContentReaders } from "#/content-editor/reader/readers.ts";
+import {
+	createContentReaders,
+	createCorrespondenceReaders,
+	createEmailReaders,
+} from "#/content-editor/reader/readers.ts";
 
 const none = new Set<never>();
 const withUpload = new Set(["upload-image" as const]);
@@ -70,6 +78,27 @@ describe("createContentRegistry", () => {
 		const editing = createContentRegistry(createContentFeatures(options));
 		const reading = createContentReaderRegistry(createContentReaders(options));
 		expect(editing.reader.nodeTypes).toEqual(reading.nodeTypes);
+	});
+
+	it("edits exactly what the readers of each email preset render, marks included", () => {
+		const pairs = [
+			[
+				createCorrespondenceFeatures({ marks: ["bold", "code"] }),
+				createCorrespondenceReaders({ marks: ["bold", "code"] }),
+			],
+			[
+				createEmailFeatures({ headings: ["h2"], marks: ["italic"] }),
+				createEmailReaders({ headings: ["h2"], marks: ["italic"] }),
+			],
+		] as const;
+		for (const [features, readers] of pairs) {
+			const editing = createContentRegistry(features).reader;
+			const reading = createContentReaderRegistry(readers);
+			expect(editing.nodeTypes).toEqual(reading.nodeTypes);
+			expect(editing.leaves.map((leaf) => leaf.key)).toEqual(
+				reading.leaves.map((leaf) => leaf.key),
+			);
+		}
 	});
 
 	it("assembles a Plate editor whose input rules come from the features and whose indent targets every indentable block", () => {

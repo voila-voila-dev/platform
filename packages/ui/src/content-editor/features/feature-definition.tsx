@@ -78,6 +78,14 @@ export interface ContentToolbarItem {
 	readonly run: (editor: ContentEditorApi, context: ContentItemContext) => void;
 	/** When present, the item opens this instead of running (a link form). */
 	readonly Popover?: ComponentType<{ readonly onClose: () => void }>;
+	/**
+	 * True when the element under the caret is one the inspector edits (the
+	 * caret in a link): with a `ContentEditor.Inspector` mounted, the item's
+	 * key and control focus the inspector instead of opening `Popover`, so
+	 * one thing is never edited in two places. Without an inspector, the
+	 * form opens as usual.
+	 */
+	readonly editedInInspector?: (editor: ContentEditorApi) => boolean;
 	/** When present, the item opens a menu of these instead of running. */
 	readonly menu?: ReadonlyArray<ContentToolbarItem>;
 	/**

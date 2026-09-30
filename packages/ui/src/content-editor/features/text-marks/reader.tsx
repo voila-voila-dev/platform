@@ -41,8 +41,37 @@ const code: ContentLeafDecorator = {
 	toHtml: (inner) => `<code>${inner}</code>`,
 };
 
-/** Marks nest in this order, outermost first: `<strong><em>…</em></strong>`. */
-export const textMarksReader = {
-	key: "text-marks",
-	leaves: [bold, italic, underline, strikethrough, code],
-} satisfies ContentFeatureReader;
+export type ContentMark = keyof ContentTextMarks;
+
+const decorators: Record<ContentMark, ContentLeafDecorator> = {
+	bold,
+	italic,
+	underline,
+	strikethrough,
+	code,
+};
+
+export const CONTENT_MARKS: ReadonlyArray<ContentMark> = [
+	"bold",
+	"italic",
+	"underline",
+	"strikethrough",
+	"code",
+];
+
+/**
+ * Marks nest in `CONTENT_MARKS` order, outermost first:
+ * `<strong><em>…</em></strong>`, whatever order `marks` lists them in.
+ */
+export function createTextMarksReader(
+	marks: ReadonlyArray<ContentMark> = CONTENT_MARKS,
+) {
+	return {
+		key: "text-marks",
+		leaves: CONTENT_MARKS.filter((mark) => marks.includes(mark)).map(
+			(mark) => decorators[mark],
+		),
+	} satisfies ContentFeatureReader;
+}
+
+export const textMarksReader = createTextMarksReader();

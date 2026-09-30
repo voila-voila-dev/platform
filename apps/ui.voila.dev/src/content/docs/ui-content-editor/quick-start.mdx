@@ -27,7 +27,7 @@ for a block, drop an image on the canvas.
 ## Install
 
 ```sh
-bun add @voila.dev/ui platejs @platejs/basic-nodes @platejs/link @platejs/list @platejs/indent @platejs/table @platejs/slash-command @platejs/combobox @platejs/markdown remark-gfm
+bun add @voila.dev/ui platejs @platejs/basic-nodes @platejs/link @platejs/list @platejs/indent @platejs/table @platejs/resizable @platejs/layout @platejs/slash-command @platejs/combobox @platejs/markdown remark-gfm
 ```
 
 ```css title="globals.css"
@@ -108,8 +108,17 @@ that only renders stored content never loads Plate.
 
 ## Page map
 
+- [Presets](/ui-content-editor/presets): a document, a mail, a campaign email.
 - [Blocks](/ui-content-editor/blocks): text, marks, headings, lists, quotes, dividers, tables, callouts, code blocks.
 - [Media and embeds](/ui-content-editor/media-and-embeds): images with upload, video, files, YouTube, X.
+- [Files and drop](/ui-content-editor/files-and-drop): dropped and pasted files, and the attachments they become.
+- [Keyboard](/ui-content-editor/keyboard): the keys, the same as in Gmail and Notion.
+- [Inspector and fields](/ui-content-editor/inspector-and-fields): the settings of the selected element, beside the canvas.
+- [Defining a feature](/ui-content-editor/defining-a-feature): a block from a list of fields and a view.
+- [Variables](/ui-content-editor/variables): a recipient's name, typed as `{{`.
+- [Columns](/ui-content-editor/columns): one to four columns side by side.
+- [Email blocks](/ui-content-editor/email-blocks): every block of the email preset, one page each.
+- [Rendering an email](/ui-content-editor/rendering-an-email): the email you send, from one exhaustive `switch`.
 - [Toolbar and slash menu](/ui-content-editor/toolbar-and-slash-menu): the chrome, and how to compose it.
 - [Custom features](/ui-content-editor/custom-features): a node kind of your own, in one definition.
 - [Labels and theming](/ui-content-editor/labels-and-theming): every string and every size the host owns.

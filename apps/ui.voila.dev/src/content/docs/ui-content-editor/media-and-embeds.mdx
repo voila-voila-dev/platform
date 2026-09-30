@@ -14,8 +14,10 @@ alternative text, the caption) are fields in the
 picked image and hands it to your callback; its result lands on the node, and
 a failure keeps the node and says why. Files dropped on or pasted into the
 canvas become image nodes too, one per file, each filled in as its upload
-lands. The callback receives the `File` and resolves with
-`{ url, width?, height? }`; the sizes reach the rendered `<img>`.
+lands; files that are not images go to the host, as
+[Files and drop](/ui-content-editor/files-and-drop) explains. The callback
+receives the `File` and resolves with `{ url, width?, height? }`; the sizes
+reach the rendered `<img>`.
 
 ```tsx
 onUploadImage={async (file) => {
@@ -33,3 +35,10 @@ or id. Leave any out with `createContentFeatures({ embeds: ["youtube"] })`.
 A YouTube node renders the `youtube-nocookie` player; an X post renders the
 blockquote X's embed script upgrades in place, so a host that loads the
 script gets the card and one that does not still gets a link.
+
+## In an email
+
+An email has no embeds: no mail client plays a video. The email preset keeps
+the image and gives it a link and a play overlay, so a video becomes a
+thumbnail that opens it. See [Email: image options](/ui-content-editor/email-image),
+and every other block of the email in [Email blocks](/ui-content-editor/email-blocks).

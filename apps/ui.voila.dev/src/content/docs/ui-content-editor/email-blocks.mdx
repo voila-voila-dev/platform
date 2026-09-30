@@ -1,0 +1,41 @@
+---
+title: "Email blocks"
+description: "Every block of the email preset, and the page that documents it."
+sidebar:
+  order: 19
+---
+
+`createEmailFeatures()` holds every block below; see
+[Presets](/ui-content-editor/presets). Each block is one of three kinds:
+
+- **Text**: you type in it, and its settings (alignment, style) are in the
+  inspector.
+- **Void**: it holds no text; every field is in the inspector, and the canvas
+  shows the block as the reader will see it.
+- **Container**: it holds other blocks.
+
+| Block | Node | Kind | Page |
+|---|---|---|---|
+| Paragraph, bold, italic, underline, link | `p`, `a` | text | [Blocks](/ui-content-editor/blocks) |
+| Title and section heading | `h1`, `h2` | text | [Headings](/ui-content-editor/email-headings) |
+| Bulleted, numbered and badge list | `p` with `listStyleType` | container | [Badge list](/ui-content-editor/email-badge-list) |
+| Highlight | `highlight` | text | [Highlight](/ui-content-editor/email-highlight) |
+| Fine print | `fine-print` | text | [Fine print](/ui-content-editor/email-fine-print) |
+| Button | `button` | void | [Button](/ui-content-editor/email-button) |
+| Key figure | `stat` | void | [Key figure](/ui-content-editor/email-stat) |
+| Image, with a link and a play overlay | `image` | void | [Image options](/ui-content-editor/email-image) |
+| Divider | `hr` | void | [Divider](/ui-content-editor/email-divider) |
+| Article | `article` | void | [Article block](/ui-content-editor/article-block) |
+| Product | `product` | void | [Product block](/ui-content-editor/product-block) |
+| Offer | `offer` | void | [Offer block](/ui-content-editor/offer-block) |
+| Rating | `rating` | text | [Rating block](/ui-content-editor/rating-block) |
+| Table | `table` | container | [Email table](/ui-content-editor/email-table) |
+| Columns | `columns` > `column` | container | [Columns](/ui-content-editor/columns) |
+| Recipient's name, email | `variable` | void, inline | [Variables](/ui-content-editor/variables) |
+
+The email block editor's fifteen blocks map one for one: its `grid` is
+`columns`, its `heading` levels 1 and 2 are `h1` and `h2`, and a list is a run
+of paragraphs, as everywhere in the content editor.
+
+To turn a stored email into the HTML you send, see
+[Rendering an email](/ui-content-editor/rendering-an-email).

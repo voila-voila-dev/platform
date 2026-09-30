@@ -18,8 +18,10 @@ to insert one.
 
 ## Setting it up
 
-`productFeature` prices in euros. `createProductFeature` takes the
-currencies the author picks from; the first one prices a new card.
+[`createEmailFeatures()`](/ui-content-editor/presets) includes it, priced in
+its `currencies` option. In another list of features, `productFeature`
+prices in euros, and `createProductFeature` takes the currencies the author
+picks from; the first one prices a new card.
 
 ```tsx
 import { createContentFeatures, createProductFeature } from "@voila.dev/ui/content-editor";

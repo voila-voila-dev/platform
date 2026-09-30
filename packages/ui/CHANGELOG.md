@@ -4,6 +4,31 @@ Versions are `MAJOR.MINOR.<CI run number>`: every push to `main` publishes, and
 the major moves by hand when a release breaks callers. This file records those
 moves — not every publish.
 
+## 3.1 — the content editor writes mails
+
+The content editor can now write a one-to-one mail and a campaign email.
+Nothing is removed: the email block editor still ships, and goes in 4.0.
+
+Two presets, each an array of features like `createContentFeatures`:
+
+```tsx
+import {
+	createCorrespondenceFeatures,
+	createEmailFeatures,
+} from "@voila.dev/ui/content-editor";
+```
+
+- `createCorrespondenceFeatures()` is a mail written by hand: paragraph,
+  marks, link, list, quote, image and variable.
+- `createEmailFeatures()` is a campaign: every block of the email block
+  editor, as headings, highlight, fine print, button, stat, image, divider,
+  article, product, offer, rating, table, columns and variable. Pair it with
+  `appearance="email"`.
+
+Each preset keeps a document to its own nodes. A node from outside the set,
+pasted or stored, is unwrapped: a table pasted into a mail becomes one line
+per cell.
+
 ## 3.0 — TanStack Table v9 and MapLibre 6
 
 Two peer dependencies moved a major, and both reach the code you write.

@@ -240,3 +240,81 @@ describe("ContentEditor.Inspector", () => {
 		await expect.poll(() => nodeAt(1).perks).toEqual([]);
 	});
 });
+
+describe("⌘K with an inspector on screen", () => {
+	const linked: ContentValue = [
+		{
+			type: "p",
+			children: [
+				{ text: "Read " },
+				{
+					type: "a",
+					url: "https://old.example",
+					children: [{ text: "the post" }],
+				},
+				{ text: " or the rest" },
+			],
+		},
+	];
+
+	function WithToolbar() {
+		const [value, setValue] = useState<ContentValue | null>(linked);
+		latest = value ?? [];
+		return (
+			<ContentEditor.Root features={FEATURES} value={value} onChange={setValue}>
+				<ContentEditor.Toolbar />
+				<ContentEditor.Canvas />
+				<ContentEditor.FloatingToolbar />
+				<ContentEditor.Inspector />
+			</ContentEditor.Root>
+		);
+	}
+
+	const linkForm = () =>
+		document.querySelector("[data-slot=content-editor-link-popover]");
+
+	it("focuses the inspector's url field when the caret is in a link, and opens no form", async () => {
+		render(<WithToolbar />);
+		await page.getByText("the post").click();
+		await userEvent.keyboard("{ControlOrMeta>}k{/ControlOrMeta}");
+		const url = page.getByRole("textbox", { name: "URL" });
+		await expect.element(url).toHaveFocus();
+		expect(linkForm()).toBeNull();
+		await userEvent.keyboard("https://new.example{Enter}");
+		await expect
+			.poll(() => (nodeAt(0).children[1] as ContentNodeLike).url)
+			.toBe("https://new.example");
+	});
+
+	it("focuses the inspector from the toolbar's link control too", async () => {
+		render(<WithToolbar />);
+		await page.getByText("the post").click();
+		await page
+			.getByRole("toolbar")
+			.first()
+			.getByRole("button", { name: "Link" })
+			.click();
+		await expect
+			.element(page.getByRole("textbox", { name: "URL" }))
+			.toHaveFocus();
+		expect(linkForm()).toBeNull();
+	});
+
+	it("opens the form on a selection outside any link, to create one", async () => {
+		render(<WithToolbar />);
+		await page.getByText("or the rest").click();
+		await userEvent.keyboard(
+			"{Shift>}{ArrowLeft}{ArrowLeft}{ArrowLeft}{/Shift}",
+		);
+		await userEvent.keyboard("{ControlOrMeta>}k{/ControlOrMeta}");
+		await vi.waitFor(() => expect(linkForm()).not.toBeNull());
+		await userEvent.keyboard("https://rest.example{Enter}");
+		await expect
+			.poll(() =>
+				nodeAt(0).children.some(
+					(child) => (child as ContentNodeLike).url === "https://rest.example",
+				),
+			)
+			.toBe(true);
+	});
+});

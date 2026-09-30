@@ -18,8 +18,10 @@ recommends. Type `/offer` to insert one.
 
 ## Setting it up
 
-`offerFeature` prices in euros; `createOfferFeature` takes the currencies
-the author picks from, as `createProductFeature` does.
+[`createEmailFeatures()`](/ui-content-editor/presets) includes it, priced in
+its `currencies` option. In another list of features, `offerFeature`
+prices in euros, and `createOfferFeature` takes the currencies the author
+picks from, as `createProductFeature` does.
 
 ```tsx
 import { createContentFeatures, createOfferFeature } from "@voila.dev/ui/content-editor";

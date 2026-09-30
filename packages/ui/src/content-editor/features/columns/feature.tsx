@@ -103,7 +103,8 @@ const slashItem: ContentSlashItem = {
 /**
  * A row of one to four columns (`columns` > `column` > blocks), the email
  * block editor's `grid` with the same `desktopColumns` and
- * `mobileColumns`. Not in a preset: a host adds it where a layout belongs.
+ * `mobileColumns`. In `createEmailFeatures`; a document host adds it where
+ * a layout belongs.
  */
 export const columnsFeature = {
 	...defined,

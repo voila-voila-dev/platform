@@ -1,0 +1,122 @@
+---
+title: "Presets"
+description: "Three feature lists for three kinds of text: a document, a mail, a campaign email."
+sidebar:
+  order: 1
+---
+
+import * as Example from "@/examples/ui-content-editor/presets";
+
+A preset is an array of features, nothing more. The kit ships three, one per
+kind of text a product holds. A host that wants a different mix spreads a
+preset and adds or drops features.
+
+| Preset | For | Pair it with |
+|---|---|---|
+| `createContentFeatures()` | A document: a post, a help page, a legal notice. | `appearance="document"`, the default |
+| `createCorrespondenceFeatures()` | A mail written to one person, as in Gmail. | `appearance="plain"` |
+| `createEmailFeatures()` | A campaign email built from blocks. | `appearance="email"` and `ContentEditor.Inspector` |
+
+## Correspondence
+
+Paragraphs, bold, italic and underline, links, bulleted and numbered lists,
+quotes, inline images and [variables](/ui-content-editor/variables). Nothing a
+mail client would draw differently from the editor.
+
+<Preview layout="stack" scroll>
+	<Example.Correspondence />
+</Preview>
+
+```tsx
+import { ContentEditor, createCorrespondenceFeatures } from "@voila.dev/ui/content-editor";
+
+const FEATURES = createCorrespondenceFeatures();
+
+<ContentEditor.Root
+	features={FEATURES}
+	value={body}
+	onChange={setBody}
+	appearance="plain"
+	variables={[{ name: "firstName", label: "First name" }]}
+	onUploadImage={upload}
+>
+	<ContentEditor.Toolbar />
+	<ContentEditor.Canvas />
+	<ContentEditor.FloatingToolbar />
+</ContentEditor.Root>
+```
+
+## Email
+
+Every [email block](/ui-content-editor/email-blocks): h1 and h2 headings,
+paragraphs, marks and links, bulleted, numbered and badge lists, highlight,
+fine print, button, key figure, image with its link and play overlay,
+divider, article, product, offer, rating, the email table,
+[columns](/ui-content-editor/columns) and variables. A block's settings live
+in the [inspector](/ui-content-editor/inspector-and-fields), so mount one.
+
+<Preview layout="stack" scroll>
+	<Example.Email />
+</Preview>
+
+## Options
+
+Every preset takes one options object, and each option has a default. The
+readers of the same preset take the same object, so a server renders exactly
+what the editor edits.
+
+| Option | `createContentFeatures` | `createCorrespondenceFeatures` | `createEmailFeatures` |
+|---|---|---|---|
+| `headings` | `["h2", "h3"]` | none | `["h1", "h2"]` |
+| `embeds` | every embed | none | none |
+| `marks` | every mark | `EMAIL_MARKS` | `EMAIL_MARKS` |
+| `currencies` | none | none | `["EUR"]`, for products and offers |
+
+`EMAIL_MARKS` is bold, italic and underline: the marks every mail client
+draws the same way. Strikethrough and inline code stay out of a mail unless
+you pass them.
+
+```ts
+import { createEmailFeatures } from "@voila.dev/ui/content-editor";
+import { createEmailReaders } from "@voila.dev/ui/content-editor/reader";
+
+const OPTIONS = { headings: ["h1", "h2"], currencies: ["EUR", "USD"] } as const;
+
+const FEATURES = createEmailFeatures(OPTIONS);
+const READERS = createEmailReaders(OPTIONS);
+```
+
+## What a paste keeps
+
+The two email presets end with `strictNodesFeature`. It keeps the document
+to the nodes and marks the preset declares, whatever arrives: a paste from
+Word or a web page, a copy from a document editor, a value the host sets.
+
+| What arrives | What remains |
+|---|---|
+| A mark the preset lacks (strikethrough, code) | The text, without the mark. |
+| An element inside a line (a mention, a span) | Its text, in the line. |
+| An element holding blocks (a table, a callout, a `<section>`) | The blocks it holds, each judged in turn. A table ends as its cells' lines. |
+| An element holding text (an `h3` in the email preset) | A paragraph with the same text. |
+| An element holding nothing (a YouTube embed) | Nothing. |
+
+The email preset has a table, so a pasted table stays one there, in its
+email form: text-only cells, one alignment per column.
+
+Add `strictNodesFeature` to a list of your own for the same guarantee. It
+reads the set from the editor's plugins, so it follows whatever you composed.
+
+```ts
+import { createCorrespondenceFeatures, emailTableFeature } from "@voila.dev/ui/content-editor";
+
+const FEATURES = [...createCorrespondenceFeatures(), emailTableFeature];
+```
+
+Spreading a preset keeps its `strictNodesFeature`, and the table it did not
+have is now in the set: a pasted table stays a table in this composer.
+
+## Related
+
+[Email blocks](/ui-content-editor/email-blocks) ·
+[Rendering an email](/ui-content-editor/rendering-an-email) ·
+[Keyboard](/ui-content-editor/keyboard)

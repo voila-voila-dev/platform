@@ -150,6 +150,38 @@ describe("links", () => {
 			]);
 	});
 
+	it("opens the link form on ⌘K pressed before the editor has seen the new selection", async () => {
+		const editor = await edit([p("Lire la doc ici")], (e) => e.api.start([0]));
+		const canvas = document.querySelector(
+			"[data-slot=content-editor-canvas]",
+		) as HTMLElement;
+		const text = canvas.querySelector("[data-slate-string]")
+			?.firstChild as Text;
+		const mac = navigator.platform.startsWith("Mac");
+		window.getSelection()?.setBaseAndExtent(text, 8, text, 11);
+		const key = new KeyboardEvent("keydown", {
+			key: "k",
+			code: "KeyK",
+			metaKey: mac,
+			ctrlKey: !mac,
+			bubbles: true,
+			cancelable: true,
+		});
+		// is-hotkey matches on the legacy key code, which the constructor leaves at 0.
+		Object.defineProperty(key, "which", { value: 75 });
+		Object.defineProperty(key, "keyCode", { value: 75 });
+		canvas.dispatchEvent(key);
+		expect(editor.selection).toMatchObject({
+			anchor: { path: [0, 0], offset: 8 },
+			focus: { path: [0, 0], offset: 11 },
+		});
+		await vi.waitFor(() =>
+			expect(
+				document.querySelector("[data-slot=content-editor-link-popover] input"),
+			).not.toBeNull(),
+		);
+	});
+
 	it("opens the form of the link under the caret on ⌘K, to change its address", async () => {
 		const editor = await edit(
 			[

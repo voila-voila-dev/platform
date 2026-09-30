@@ -150,6 +150,10 @@ export function ContentEditorRoot<Value extends ContentValue = ContentValue>({
 			// split, a paste or an insert never repeats an id the document
 			// already holds, in a host's tests as in its build.
 			nodeId: { idCreator: generateNodeId },
+			// A stored document is normalized as it loads, as any edit would
+			// be: a badge list gets its numbers, and a node the features do
+			// not declare meets their normalizers before the author sees it.
+			shouldNormalizeEditor: true,
 			override: { components: { ...registry.components } },
 		},
 		[registry],
@@ -176,6 +180,7 @@ export function ContentEditorRoot<Value extends ContentValue = ContentValue>({
 		}
 		lastEmitted.current = value;
 		editor.tf.setValue(withUniqueNodeIds(value, generateNodeId) as never);
+		editor.tf.normalize({ force: true });
 	}, [editor, value, generateNodeId]);
 
 	const config = useMemo<ContentEditorConfigContextValue>(() => {

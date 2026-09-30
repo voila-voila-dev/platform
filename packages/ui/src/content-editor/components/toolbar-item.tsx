@@ -3,6 +3,7 @@ import { type ReactElement, useEffect, useState } from "react";
 import { Button } from "#/button/components/button.tsx";
 import { useContentEditorConfig } from "#/content-editor/context/content-editor-context.tsx";
 import type { ContentToolbarItem } from "#/content-editor/features/feature-definition.tsx";
+import { focusInspectorFor } from "#/content-editor/lib/popover-hosts.ts";
 import { DropdownMenu } from "#/dropdown-menu/components/dropdown-menu.tsx";
 import { Kbd } from "#/kbd/components/kbd.tsx";
 import { Popover } from "#/popover/components/popover.tsx";
@@ -148,7 +149,15 @@ export function ContentEditorToolbarItem({
 	}
 	const Form = item.Popover;
 	return (
-		<Popover.Root open={open} onOpenChange={setOpen}>
+		<Popover.Root
+			open={open}
+			onOpenChange={(next) => {
+				if (next && focusInspectorFor(item, editor, popovers)) {
+					return;
+				}
+				setOpen(next);
+			}}
+		>
 			{withTooltip(<Popover.Trigger render={control} />)}
 			<Popover.Content
 				side={popoverSide}

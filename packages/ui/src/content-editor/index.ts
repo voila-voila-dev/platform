@@ -61,8 +61,11 @@ export type {
 export { isContentText } from "#/content-editor/features/content-value.ts";
 export {
 	createContentFeatures,
+	createCorrespondenceFeatures,
+	createEmailFeatures,
 	createInlineContentFeatures,
 } from "#/content-editor/features/create-content-features.ts";
+export type { ContentDividerNode } from "#/content-editor/features/divider/reader.tsx";
 export type {
 	ContentCapability,
 	ContentEditorApi,
@@ -98,6 +101,10 @@ export {
 	type ContentFinePrintNode,
 	finePrintReader,
 } from "#/content-editor/features/fine-print/reader.tsx";
+export type {
+	ContentHeadingLevel,
+	ContentHeadingNode,
+} from "#/content-editor/features/heading/reader.tsx";
 export { highlightFeature } from "#/content-editor/features/highlight/feature.tsx";
 export {
 	type ContentHighlightNode,
@@ -108,6 +115,7 @@ export type {
 	ContentImageOverlay,
 	ContentImageSize,
 } from "#/content-editor/features/image/reader.tsx";
+export type { ContentLinkNode } from "#/content-editor/features/link/reader.tsx";
 export { badgeListFeature } from "#/content-editor/features/list/feature.tsx";
 export {
 	createOfferFeature,
@@ -118,6 +126,10 @@ export {
 	offerNode,
 	offerReader,
 } from "#/content-editor/features/offer/reader.tsx";
+export type {
+	ContentListStyle,
+	ContentParagraphNode,
+} from "#/content-editor/features/paragraph/reader.tsx";
 export {
 	type ContentPriceFeatureOptions,
 	createProductFeature,
@@ -162,12 +174,18 @@ export {
 	type ContentStatNode,
 	statReader,
 } from "#/content-editor/features/stat/reader.tsx";
+export { strictNodesFeature } from "#/content-editor/features/strict-nodes/feature.ts";
 export {
 	type ContentTableFeatureOptions,
 	createTableFeature,
 	emailTableFeature,
 	tableFeature,
 } from "#/content-editor/features/table/feature.tsx";
+export type {
+	ContentTableCellNode,
+	ContentTableHeaderCellNode,
+	ContentTableRowNode,
+} from "#/content-editor/features/table/reader.tsx";
 export {
 	type ContentTableColumn,
 	type ContentTableColumnAlign,
@@ -175,6 +193,12 @@ export {
 	emailTableRows,
 	isEmailTable,
 } from "#/content-editor/features/table/reader.tsx";
+export { createTextMarksFeature } from "#/content-editor/features/text-marks/feature.tsx";
+export {
+	CONTENT_MARKS,
+	type ContentMark,
+	type ContentTextMarks,
+} from "#/content-editor/features/text-marks/reader.tsx";
 export { variableFeature } from "#/content-editor/features/variable/feature.tsx";
 export {
 	type ContentVariableNode,
@@ -194,6 +218,7 @@ export {
 	DEFAULT_CONTENT_EDITOR_LABELS,
 	mergeContentEditorLabels,
 } from "#/content-editor/labels.ts";
+export type { ContentAlignment } from "#/content-editor/lib/alignment.ts";
 export {
 	type ContentElementFeatureDefinition,
 	type ContentElementKind,
@@ -225,9 +250,14 @@ export {
 	contentToInlineHtml,
 } from "#/content-editor/reader/content-to-html.ts";
 export {
+	type ContentCorrespondenceOptions,
+	type ContentEmailOptions,
 	type ContentEmbed,
 	type ContentReadersOptions,
 	createContentReaders,
+	createCorrespondenceReaders,
+	createEmailReaders,
+	EMAIL_MARKS,
 } from "#/content-editor/reader/readers.ts";
 export {
 	type ContentEditorAppearance,

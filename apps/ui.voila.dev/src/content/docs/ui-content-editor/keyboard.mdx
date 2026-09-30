@@ -30,8 +30,13 @@ On Windows and Linux, read Ctrl for ⌘.
 
 | Key | What it does |
 | --- | --- |
-| ⌘K | Opens the link form. With text selected, the form opens in the floating toolbar and links that text. With the caret in a link, it opens on the toolbar to change or remove the address. |
+| ⌘K on selected text | Opens the link form in the floating toolbar, to link that text. |
+| ⌘K with the caret in a link | With a `ContentEditor.Inspector` on screen, focuses its URL field: change the address, then Enter or Escape hands the caret back to the text. Without an inspector, opens the link form to change or remove the address. |
 | ⌘V with a URL | Pasted over selected text, the URL links that text. Pasted at the caret, it arrives as a link. |
+
+A link is edited in one place at a time. The form creates one; an existing
+link belongs to the inspector when the host mounted one, and the toolbar's
+link control follows the same rule as the key.
 
 ⌘K is not specific to links. A toolbar item binds a key with `hotkey`, in the
 notation `isHotkey` reads (`"mod+k"`), and the canvas then does what pressing
@@ -47,8 +52,13 @@ const linkItem: ContentToolbarItem = {
 	hotkey: "mod+k",
 	run: () => {},
 	Popover: ContentLinkPopover,
+	editedInInspector: (editor) => linkAtSelection(editor) !== null,
 };
 ```
+
+`editedInInspector` is how an item hands an element to the inspector: while
+it returns true and an inspector is on screen, the key and the control focus
+the inspector's first field instead of opening `Popover`.
 
 Leave `hotkey` out when the item's own Plate plugin already binds the key,
 as the marks' plugins do for ⌘B, ⌘I and ⌘U. `kbd` stays what the tooltip

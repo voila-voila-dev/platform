@@ -19,11 +19,16 @@ import {
 	StrikethroughPlugin,
 	UnderlinePlugin,
 } from "@platejs/basic-nodes/react";
+import type { AnyPlatePlugin } from "platejs/react";
 import type {
 	ContentFeature,
 	ContentToolbarItem,
 } from "#/content-editor/features/feature-definition.tsx";
-import { textMarksReader } from "#/content-editor/features/text-marks/reader.tsx";
+import {
+	CONTENT_MARKS,
+	type ContentMark,
+	createTextMarksReader,
+} from "#/content-editor/features/text-marks/reader.tsx";
 
 function markItem(
 	key: string,
@@ -41,25 +46,52 @@ function markItem(
 	};
 }
 
-const items = [
-	markItem("bold", TextBIcon, ["⌘", "B"]),
-	markItem("italic", TextItalicIcon, ["⌘", "I"]),
-	markItem("underline", TextUnderlineIcon, ["⌘", "U"]),
-	markItem("strikethrough", TextStrikethroughIcon, undefined),
-	markItem("code", CodeIcon, ["⌘", "E"]),
-];
+const marks = {
+	bold: {
+		item: markItem("bold", TextBIcon, ["⌘", "B"]),
+		plugin: () => BoldPlugin.configure({ inputRules: [BoldRules.markdown()] }),
+	},
+	italic: {
+		item: markItem("italic", TextItalicIcon, ["⌘", "I"]),
+		plugin: () =>
+			ItalicPlugin.configure({ inputRules: [ItalicRules.markdown()] }),
+	},
+	underline: {
+		item: markItem("underline", TextUnderlineIcon, ["⌘", "U"]),
+		plugin: () =>
+			UnderlinePlugin.configure({ inputRules: [UnderlineRules.markdown()] }),
+	},
+	strikethrough: {
+		item: markItem("strikethrough", TextStrikethroughIcon, undefined),
+		plugin: () =>
+			StrikethroughPlugin.configure({
+				inputRules: [StrikethroughRules.markdown()],
+			}),
+	},
+	code: {
+		item: markItem("code", CodeIcon, ["⌘", "E"]),
+		plugin: () => CodePlugin.configure({ inputRules: [CodeRules.markdown()] }),
+	},
+} satisfies Record<
+	ContentMark,
+	{ readonly item: ContentToolbarItem; readonly plugin: () => AnyPlatePlugin }
+>;
 
-export const textMarksFeature: ContentFeature = {
-	...textMarksReader,
-	plugins: () => [
-		BoldPlugin.configure({ inputRules: [BoldRules.markdown()] }),
-		ItalicPlugin.configure({ inputRules: [ItalicRules.markdown()] }),
-		UnderlinePlugin.configure({ inputRules: [UnderlineRules.markdown()] }),
-		StrikethroughPlugin.configure({
-			inputRules: [StrikethroughRules.markdown()],
-		}),
-		CodePlugin.configure({ inputRules: [CodeRules.markdown()] }),
-	],
-	toolbar: items,
-	floating: items,
-};
+/**
+ * The marks the author can apply, and nothing else: a mark left out has no
+ * plugin, so neither its key nor its Markdown shortcut nor a paste applies it.
+ */
+export function createTextMarksFeature(
+	only: ReadonlyArray<ContentMark> = CONTENT_MARKS,
+): ContentFeature {
+	const kept = CONTENT_MARKS.filter((mark) => only.includes(mark));
+	const items = kept.map((mark) => marks[mark].item);
+	return {
+		...createTextMarksReader(kept),
+		plugins: () => kept.map((mark) => marks[mark].plugin()),
+		toolbar: items,
+		floating: items,
+	};
+}
+
+export const textMarksFeature = createTextMarksFeature();

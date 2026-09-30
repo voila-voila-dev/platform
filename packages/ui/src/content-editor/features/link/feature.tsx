@@ -40,6 +40,7 @@ const linkItem: ContentToolbarItem = {
 		(editor.api.isCollapsed() && linkAtSelection(editor) === null),
 	run: () => {},
 	Popover: ContentLinkPopover,
+	editedInInspector: (editor) => linkAtSelection(editor) !== null,
 };
 
 export const linkFeature: ContentFeature = {

@@ -1,5 +1,6 @@
 import { useEditorRef } from "platejs/react";
 import type * as React from "react";
+import { useEffect, useRef } from "react";
 import { InspectorField } from "#/content-editor/components/inspector-field.tsx";
 import { useContentEditorConfig } from "#/content-editor/context/content-editor-context.tsx";
 import { useInspectedElement } from "#/content-editor/hooks/use-inspected-element.ts";
@@ -15,8 +16,27 @@ interface Props extends React.ComponentProps<"section"> {}
  */
 export function ContentEditorInspector({ className, ...props }: Props) {
 	const editor = useEditorRef();
-	const { labels, readOnly } = useContentEditorConfig();
+	const { labels, readOnly, popovers } = useContentEditorConfig();
 	const inspected = useInspectedElement();
+	const fields = useRef<HTMLFieldSetElement>(null);
+	useEffect(
+		() =>
+			popovers.registerInspector(() => {
+				const first = fields.current?.querySelector<HTMLElement>(
+					"input, textarea, select, button",
+				);
+				// A sheet the host closed still has its inspector mounted.
+				if (first === null || first === undefined || !first.checkVisibility()) {
+					return false;
+				}
+				first.focus();
+				if (first instanceof HTMLInputElement) {
+					first.select();
+				}
+				return true;
+			}),
+		[popovers],
+	);
 	const name =
 		inspected === null
 			? labels.chrome.inspector
@@ -36,6 +56,7 @@ export function ContentEditorInspector({ className, ...props }: Props) {
 				</p>
 			) : (
 				<fieldset
+					ref={fields}
 					// A new element gets fresh controls: an upload in progress or a
 					// half-typed value never carries over to the next one.
 					key={inspected.identity}
