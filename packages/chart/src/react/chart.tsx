@@ -204,6 +204,8 @@ export function Chart({
 			return;
 		}
 		event.currentTarget.setPointerCapture(event.pointerId);
+		// A drag selects a range, not a value: the hover tooltip gives way.
+		handlers.onPointerLeave();
 		drag.current = {
 			startX: localX(event),
 			domain: viewport.domain,
@@ -401,6 +403,11 @@ export function Chart({
 						position: "absolute",
 						inset: 0,
 						touchAction: brushBehavior || zoom ? "none" : "pan-y",
+						// Dragging across the plot brushes or pans; without this it
+						// also selected the tick labels and the tooltip as text.
+						...(brushBehavior || zoom
+							? { userSelect: "none", WebkitUserSelect: "none" }
+							: {}),
 					}}
 					{...handlers}
 					onKeyDown={onKeyDown}

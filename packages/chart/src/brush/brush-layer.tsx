@@ -163,6 +163,8 @@ export function BrushLayer({
 						border:
 							"1px solid color-mix(in oklab, currentColor 50%, transparent)",
 						cursor: "ew-resize",
+						userSelect: "none",
+						WebkitUserSelect: "none",
 						opacity: range ? 1 : 0.5,
 					}}
 				/>

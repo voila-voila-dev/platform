@@ -151,6 +151,31 @@ describe("brush", () => {
 			container.querySelector("[data-slot=chart-brush-selection]"),
 		).not.toBeNull();
 	});
+
+	it("selects no text and hides the tooltip while dragging", async () => {
+		const container = await mount(
+			<Chart
+				definition={lines}
+				ariaLabel="Valeur"
+				brush={brushX({ onBrush: () => {} })}
+			/>,
+		);
+		const chart = surface(container);
+		const box = chart.getBoundingClientRect();
+		await userEvent.hover(chart, { position: { x: box.width * 0.5, y: 80 } });
+		await expect
+			.poll(() => container.querySelector("[data-slot=chart-tooltip]"))
+			.not.toBeNull();
+		await userEvent.dragAndDrop(chart, chart, {
+			sourcePosition: { x: box.width * 0.2, y: 80 },
+			targetPosition: { x: box.width * 0.7, y: 120 },
+		});
+		expect(window.getSelection()?.toString() ?? "").toBe("");
+		expect(
+			container.querySelector("[data-slot=chart-brush-selection]"),
+		).not.toBeNull();
+		expect(container.querySelector("[data-slot=chart-tooltip]")).toBeNull();
+	});
 });
 
 describe("facets", () => {
