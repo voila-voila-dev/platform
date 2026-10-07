@@ -33,10 +33,43 @@ if (mode === "stamp" && !version) {
 const toDist = (value) =>
 	value.replace(/^\.\/src\//, "./dist/").replace(/\.tsx?$/, ".js");
 
-for (const dir of fs.readdirSync("packages")) {
-	const file = path.join("packages", dir, "package.json");
-	if (!fs.existsSync(file)) continue;
-	const pkg = JSON.parse(fs.readFileSync(file, "utf8"));
+const manifests = fs
+	.readdirSync("packages")
+	.map((dir) => path.join("packages", dir, "package.json"))
+	.filter((file) => fs.existsSync(file))
+	.map((file) => ({ file, pkg: JSON.parse(fs.readFileSync(file, "utf8")) }));
+
+/** The version each sibling ships at: what a `workspace:` reference to it means once published. */
+const siblings = new Map(
+	manifests.map(({ pkg }) => [pkg.name, pkg.private ? null : pkg.version]),
+);
+
+/*
+ * bun pm pack resolves `workspace:*` from the versions bun.lock recorded,
+ * not from the stamped manifests: it packed @voila.dev/ui 5.0.114 without
+ * its @voila.dev/motion dependency at all. Writing the stamped version in
+ * ourselves leaves bun nothing to resolve.
+ */
+function pinWorkspaceRefs(pkg) {
+	for (const field of [
+		"dependencies",
+		"peerDependencies",
+		"optionalDependencies",
+	]) {
+		for (const [name, range] of Object.entries(pkg[field] ?? {})) {
+			if (!String(range).startsWith("workspace:")) continue;
+			const pinned = siblings.get(name);
+			if (!pinned) {
+				throw new Error(
+					`${pkg.name} ships a ${field} on ${name}, which is not published`,
+				);
+			}
+			pkg[field][name] = pinned;
+		}
+	}
+}
+
+for (const { file, pkg } of manifests) {
 	if (pkg.private) continue;
 
 	if (mode === "stamp") {
@@ -50,6 +83,7 @@ for (const dir of fs.readdirSync("packages")) {
 			delete pkg.scripts.build;
 		}
 		delete pkg.devDependencies;
+		pinWorkspaceRefs(pkg);
 		console.log(`${pkg.name}: manifest ready to publish`);
 	}
 
