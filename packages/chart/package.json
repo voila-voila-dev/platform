@@ -1,9 +1,8 @@
 {
 	"name": "@voila.dev/chart",
 	"version": "0.0.0",
-	"private": true,
 	"type": "module",
-	"description": "Charts as data: a definition of marks, channels and scales, drawn to SVG or Canvas, keyboard and screen-reader accessible. The core has no dependencies; the heavy layouts (geo, hierarchy, sankey\u2026) sit behind their own subpaths.",
+	"description": "Charts as data: a definition of marks, channels and scales, drawn to SVG or Canvas, keyboard and screen-reader accessible. The core has no dependencies; the heavy layouts (geo, hierarchy, sankey…) sit behind their own subpaths.",
 	"license": "MIT",
 	"homepage": "https://ui.voila.dev",
 	"repository": {
