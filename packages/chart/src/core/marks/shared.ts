@@ -22,8 +22,12 @@ export interface ChartMarkOptions<TDatum> {
 	readonly label?: string;
 	/** A field or function whose distinct values split the mark into coloured series. */
 	readonly color?: ChartAccessor<TDatum, ChartValue>;
-	/** `false` keeps the mark out of focus, tooltips and the data table. */
-	readonly tip?: boolean;
+	/**
+	 * `false` keeps the mark out of focus, tooltips and the data table; a
+	 * function decides per datum (the point where a recorded line hands over
+	 * to its dashed projection belongs to one of the two, not both).
+	 */
+	readonly tip?: boolean | ((datum: TDatum, index: number) => boolean);
 	readonly opacity?: number;
 }
 
@@ -131,4 +135,13 @@ export function valueOn(
 		return Number.isNaN(raw.getTime()) ? undefined : raw;
 	}
 	return numericValue(raw);
+}
+
+/** Whether a datum takes part in focus, tooltips and the data table. */
+export function tips<TDatum>(
+	tip: ChartMarkOptions<TDatum>["tip"],
+	datum: TDatum,
+	index: number,
+): boolean {
+	return typeof tip === "function" ? tip(datum, index) : tip !== false;
 }

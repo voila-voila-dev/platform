@@ -90,6 +90,8 @@ export interface ChartPaint {
 	readonly opacity?: number;
 	readonly fillOpacity?: number;
 	readonly strokeOpacity?: number;
+	/** Fill with diagonal hatching in the fill colour: a value pencilled in, not yet true. */
+	readonly hatch?: boolean;
 }
 
 export interface ChartTextPaint extends ChartPaint {

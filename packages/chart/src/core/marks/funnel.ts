@@ -11,6 +11,7 @@ import {
 	markId,
 	paint,
 	seriesResolver,
+	tips,
 } from "#/core/marks/shared.ts";
 import { categoryKey } from "#/core/scales/discrete.ts";
 import type {
@@ -133,7 +134,7 @@ export function funnel<TDatum>(
 						},
 					);
 				}
-				if (options.tip === false) {
+				if (!tips(options.tip, data[slice.index], slice.index)) {
 					continue;
 				}
 				const previous = slice.index > 0 ? values[slice.index - 1] : undefined;

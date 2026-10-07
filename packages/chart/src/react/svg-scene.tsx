@@ -17,9 +17,40 @@ const BASELINE: Record<
 	alphabetic: "alphabetic",
 };
 
-function paintProps(paint: ChartPaint): React.SVGAttributes<SVGElement> {
+const HATCH_STEP = 6;
+
+/** A stable id per colour (djb2), the same on the server and in the browser. */
+function hatchId(prefix: string, color: string): string {
+	let hash = 5381;
+	for (const character of color) {
+		hash = ((hash << 5) + hash + character.charCodeAt(0)) | 0;
+	}
+	return `${prefix}-hatch-${(hash >>> 0).toString(36)}`;
+}
+
+function hatchColors(
+	nodes: ReadonlyArray<SceneNode>,
+	into = new Set<string>(),
+): Set<string> {
+	for (const node of nodes) {
+		if (node.kind === "group") {
+			hatchColors(node.children, into);
+		} else if (node.paint.hatch && node.paint.fill) {
+			into.add(node.paint.fill);
+		}
+	}
+	return into;
+}
+
+function paintProps(
+	paint: ChartPaint,
+	prefix: string,
+): React.SVGAttributes<SVGElement> {
 	return {
-		fill: paint.fill ?? "none",
+		fill:
+			paint.hatch && paint.fill
+				? `url(#${hatchId(prefix, paint.fill)})`
+				: (paint.fill ?? "none"),
 		stroke: paint.stroke,
 		strokeWidth: paint.strokeWidth,
 		strokeDasharray: paint.strokeDasharray,
@@ -72,7 +103,7 @@ function SceneElement({
 				<path
 					{...data}
 					d={roundedBarPath({ ...node, radius: node.corners })}
-					{...paintProps(node.paint)}
+					{...paintProps(node.paint, clipPrefix)}
 				/>
 			) : (
 				<rect
@@ -81,11 +112,13 @@ function SceneElement({
 					y={node.y}
 					width={node.width}
 					height={node.height}
-					{...paintProps(node.paint)}
+					{...paintProps(node.paint, clipPrefix)}
 				/>
 			);
 		case "path":
-			return <path {...data} d={node.d} {...paintProps(node.paint)} />;
+			return (
+				<path {...data} d={node.d} {...paintProps(node.paint, clipPrefix)} />
+			);
 		case "circle":
 			return (
 				<circle
@@ -93,7 +126,7 @@ function SceneElement({
 					cx={node.cx}
 					cy={node.cy}
 					r={node.r}
-					{...paintProps(node.paint)}
+					{...paintProps(node.paint, clipPrefix)}
 				/>
 			);
 		case "line":
@@ -104,7 +137,7 @@ function SceneElement({
 					y1={node.y1}
 					x2={node.x2}
 					y2={node.y2}
-					{...paintProps(node.paint)}
+					{...paintProps(node.paint, clipPrefix)}
 				/>
 			);
 		case "text":
@@ -124,7 +157,7 @@ function SceneElement({
 					dominantBaseline={
 						node.paint.baseline ? BASELINE[node.paint.baseline] : undefined
 					}
-					{...paintProps(node.paint)}
+					{...paintProps(node.paint, clipPrefix)}
 				>
 					{node.text}
 				</text>
@@ -140,7 +173,35 @@ export function SvgSceneNodes({
 	scene: ChartScene;
 	clipPrefix: string;
 }) {
-	return scene.nodes.map((node) => (
-		<SceneElement key={node.key} node={node} clipPrefix={clipPrefix} />
-	));
+	const hatches = [...hatchColors(scene.nodes)];
+	return (
+		<>
+			{hatches.length > 0 ? (
+				<defs>
+					{hatches.map((color) => (
+						<pattern
+							key={color}
+							id={hatchId(clipPrefix, color)}
+							width={HATCH_STEP}
+							height={HATCH_STEP}
+							patternUnits="userSpaceOnUse"
+							patternTransform="rotate(45)"
+						>
+							<line
+								x1={0}
+								y1={0}
+								x2={0}
+								y2={HATCH_STEP}
+								stroke={color}
+								strokeWidth={1.5}
+							/>
+						</pattern>
+					))}
+				</defs>
+			) : null}
+			{scene.nodes.map((node) => (
+				<SceneElement key={node.key} node={node} clipPrefix={clipPrefix} />
+			))}
+		</>
+	);
 }

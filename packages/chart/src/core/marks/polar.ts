@@ -10,6 +10,7 @@ import {
 	markId,
 	paint,
 	seriesResolver,
+	tips,
 } from "#/core/marks/shared.ts";
 import {
 	arcPath,
@@ -187,7 +188,7 @@ export function arc<TDatum>(
 						opacity: options.opacity,
 					}),
 				});
-				if (options.tip === false) {
+				if (!tips(options.tip, data[index], index)) {
 					continue;
 				}
 				const middle = (angle.startAngle + angle.endAngle) / 2;
@@ -307,7 +308,7 @@ export function radialBar<TDatum>(
 					d: arcPath(shape),
 					paint: paint({ fill: series.color, opacity: options.opacity }),
 				});
-				if (options.tip === false) {
+				if (!tips(options.tip, data[index], index)) {
 					continue;
 				}
 				const anchor = polarToCartesian(
@@ -512,7 +513,7 @@ export function radar<TDatum>(
 				};
 				polygon.vertices[spoke] = vertex;
 				polygons.set(series.key, polygon);
-				if (options.tip !== false) {
+				if (tips(options.tip, data[index], index)) {
 					points.push({
 						key: `${id}:${index}`,
 						markId: id,

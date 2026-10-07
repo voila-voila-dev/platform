@@ -12,10 +12,11 @@ import {
 	lineY,
 	radar,
 	radialBar,
+	ruleX,
 	ruleY,
 } from "@voila.dev/chart";
 import { CanvasRenderer } from "@voila.dev/chart/canvas";
-import { Chart } from "@voila.dev/chart/react";
+import { Chart, ChartEmpty, ChartSkeleton } from "@voila.dev/chart/react";
 import { useMemo, useState } from "react";
 import { expect, userEvent, within } from "storybook/test";
 
@@ -320,4 +321,43 @@ function AnimatedBars() {
 export const Animated: Story = {
 	args: { ariaLabel: "", definition: defineChart({ marks: [] }) },
 	render: () => <AnimatedBars />,
+};
+
+const weeks = ["S1", "S2", "S3", "S4", "S5", "S6"].flatMap((week, index) => [
+	{ week, stage: "Terminées", missions: 4 + index, recorded: index < 4 },
+	{ week, stage: "En cours", missions: 3 + (index % 3), recorded: index < 4 },
+]);
+
+/** The weeks ahead, and the stages not done yet, are hatched: pencilled in, not recorded. */
+export const ProjectedBars: Story = {
+	args: {
+		ariaLabel: "Missions par semaine",
+		definition: defineChart({
+			marks: [
+				barY(weeks, {
+					x: "week",
+					y: "missions",
+					color: "stage",
+					projected: (row) => !row.recorded || row.stage === "En cours",
+				}),
+				ruleX(["S5"], { label: "Aujourd'hui", strokeDasharray: "2 3" }),
+			],
+		}),
+	},
+};
+
+export const Loading: Story = {
+	args: { ariaLabel: "", definition: defineChart({ marks: [] }) },
+	render: () => (
+		<ChartSkeleton className="w-full max-w-xl" style={{ height: 240 }} />
+	),
+};
+
+export const Empty: Story = {
+	args: { ariaLabel: "", definition: defineChart({ marks: [] }) },
+	render: () => (
+		<ChartEmpty className="w-full max-w-xl" style={{ height: 240 }}>
+			Aucune mission sur la période
+		</ChartEmpty>
+	),
 };

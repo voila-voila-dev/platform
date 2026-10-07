@@ -11,6 +11,7 @@ import {
 	markId,
 	paint,
 	seriesResolver,
+	tips,
 } from "#/core/marks/shared.ts";
 import { stackSegments } from "#/core/marks/stack.ts";
 import { areaPath, type ChartXY, linePath } from "#/core/paths.ts";
@@ -149,7 +150,7 @@ function areaMark<TDatum>(
 					const run = runs[runs.length - 1];
 					run.top.push(top);
 					run.bottom.push(place(along, edge.low));
-					if (options.tip === false) {
+					if (!tips(options.tip, data[index], index)) {
 						continue;
 					}
 					const value = explicit ? edge.high : (values[index] ?? 0);

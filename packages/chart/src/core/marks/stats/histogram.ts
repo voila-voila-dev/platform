@@ -95,7 +95,8 @@ export function histogram<TDatum>(
 	return rectY(bins, {
 		id: options.id,
 		label: options.label,
-		tip: options.tip,
+		// Bins are not the caller's data: only a plain on/off carries over.
+		tip: typeof options.tip === "function" ? undefined : options.tip,
 		opacity: options.opacity,
 		fill: options.fill,
 		x1: (bin) => bin.x1,

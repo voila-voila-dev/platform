@@ -6,6 +6,7 @@ import {
 	markId,
 	paint,
 	seriesResolver,
+	tips,
 	valueOn,
 } from "#/core/marks/shared.ts";
 import { type ChartXY, linePath } from "#/core/paths.ts";
@@ -111,7 +112,7 @@ function lineMark<TDatum>(
 						? { x: along, y: across }
 						: { x: across, y: along };
 					runs[runs.length - 1].push(xy);
-					if (options.tip !== false) {
+					if (tips(options.tip, data[index], index)) {
 						points.push({
 							key: `${id}:${index}`,
 							markId: id,

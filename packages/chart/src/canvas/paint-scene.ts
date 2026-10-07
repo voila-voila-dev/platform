@@ -14,6 +14,48 @@ const CANVAS_ALIGN = {
 	end: "right",
 } as const satisfies Record<string, CanvasTextAlign>;
 
+const HATCH_STEP = 6;
+const hatchCache = new WeakMap<
+	CanvasRenderingContext2D,
+	Map<string, CanvasPattern | string>
+>();
+
+/** Diagonal lines every few pixels in the colour, as the SVG pattern draws them. */
+function hatchPattern(
+	context: CanvasRenderingContext2D,
+	color: string,
+): CanvasPattern | string {
+	const cache =
+		hatchCache.get(context) ?? new Map<string, CanvasPattern | string>();
+	hatchCache.set(context, cache);
+	const cached = cache.get(color);
+	if (cached !== undefined) {
+		return cached;
+	}
+	const tile = document.createElement("canvas");
+	tile.width = HATCH_STEP;
+	tile.height = HATCH_STEP;
+	const pen = tile.getContext("2d");
+	if (pen === null) {
+		return color;
+	}
+	pen.strokeStyle = color;
+	pen.lineWidth = 1.5;
+	pen.beginPath();
+	// One diagonal across the tile, plus the two corner stubs that join it to
+	// the neighbouring tiles' lines.
+	pen.moveTo(0, HATCH_STEP);
+	pen.lineTo(HATCH_STEP, 0);
+	pen.moveTo(-1, 1);
+	pen.lineTo(1, -1);
+	pen.moveTo(HATCH_STEP - 1, HATCH_STEP + 1);
+	pen.lineTo(HATCH_STEP + 1, HATCH_STEP - 1);
+	pen.stroke();
+	const pattern = context.createPattern(tile, "repeat") ?? color;
+	cache.set(color, pattern);
+	return pattern;
+}
+
 function dashes(dasharray: string | undefined): number[] {
 	if (!dasharray) {
 		return [];
@@ -39,7 +81,9 @@ function fillAndStroke(
 	const opacity = paint.opacity ?? 1;
 	if (paint.fill && paint.fill !== "none") {
 		context.globalAlpha = opacity * (paint.fillOpacity ?? 1);
-		context.fillStyle = resolve(paint.fill);
+		context.fillStyle = paint.hatch
+			? hatchPattern(context, resolve(paint.fill))
+			: resolve(paint.fill);
 		draw("fill");
 	}
 	if (paint.stroke && paint.stroke !== "none") {

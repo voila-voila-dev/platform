@@ -5,6 +5,7 @@ import {
 	markId,
 	paint,
 	seriesResolver,
+	tips,
 	valueOn,
 } from "#/core/marks/shared.ts";
 import type {
@@ -109,7 +110,7 @@ export function dodgeY<TDatum>(
 					r,
 					paint: paint({ fill: series.color, opacity: options.opacity }),
 				});
-				if (options.tip !== false) {
+				if (tips(options.tip, data[entry.index], entry.index)) {
 					points.push({
 						key: `${id}:${entry.index}`,
 						markId: id,

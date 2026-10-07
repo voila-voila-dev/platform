@@ -10,6 +10,7 @@ import {
 	markId,
 	paint,
 	seriesResolver,
+	tips,
 } from "#/core/marks/shared.ts";
 import { categoryKey } from "#/core/scales/discrete.ts";
 import type {
@@ -117,7 +118,7 @@ export function waffleY<TDatum>(
 						paint: paint({ fill: series.color, opacity: options.opacity }),
 					});
 				}
-				if (options.tip !== false) {
+				if (tips(options.tip, data[index], index)) {
 					points.push({
 						key: `${id}:${index}`,
 						markId: id,

@@ -10,6 +10,7 @@ import {
 	markId,
 	paint,
 	seriesResolver,
+	tips,
 	valueOn,
 } from "#/core/marks/shared.ts";
 import type {
@@ -129,7 +130,7 @@ export function dot<TDatum>(
 						opacity: options.opacity,
 					}),
 				});
-				if (options.tip !== false) {
+				if (tips(options.tip, datum, index)) {
 					points.push({
 						key: `${id}:${index}`,
 						markId: id,

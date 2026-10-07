@@ -10,6 +10,7 @@ import {
 	markId,
 	paint,
 	seriesResolver,
+	tips,
 	valueOn,
 } from "#/core/marks/shared.ts";
 import { stackSegments } from "#/core/marks/stack.ts";
@@ -131,7 +132,7 @@ export function rectY<TDatum>(
 						opacity: options.opacity,
 					}),
 				});
-				if (options.tip !== false) {
+				if (tips(options.tip, data[index], index)) {
 					points.push({
 						key: `${id}:${index}`,
 						markId: id,

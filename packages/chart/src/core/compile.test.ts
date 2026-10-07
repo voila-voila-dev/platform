@@ -241,4 +241,20 @@ describe("compileChart", () => {
 		expect(first.nodes).toEqual(second.nodes);
 		expect(first.points).toEqual(second.points);
 	});
+
+	it("keeps out of focus the data a tip predicate rejects", () => {
+		const scene = compileChart(
+			defineChart({
+				marks: [
+					lineY(months, {
+						x: "month",
+						y: "missions",
+						tip: (_row, index) => index > 0,
+					}),
+				],
+			}),
+			SIZE,
+		);
+		expect(scene.points.map((point) => point.index)).toEqual([1, 2]);
+	});
 });
