@@ -41,7 +41,9 @@ hit-testing, keyboard focus, the tooltip and the data table read it.
 
 ## Marks
 
-`lineY` `lineX` `areaY` `areaX` `barY` `barX` `dot` `cell` `ruleY` `ruleX` `text`
+Cartesian: `lineY` `lineX` `areaY` `areaX` `barY` `barX` `dot` `cell` `ruleY` `ruleX` `text`
+
+Round and frame: `arc` `donut` `radialBar` `radar` `funnel`
 
 ## Keyboard
 

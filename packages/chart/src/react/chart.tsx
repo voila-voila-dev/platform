@@ -192,6 +192,7 @@ export function Chart({
 					scene={scene}
 					stops={stops}
 					caption={messages.dataTable(ariaLabel)}
+					seriesHeading={messages.series}
 				/>
 			) : null}
 		</div>

@@ -15,10 +15,12 @@ export function ChartDataTable({
 	scene,
 	stops,
 	caption,
+	seriesHeading,
 }: {
 	scene: ChartScene;
 	stops: ReadonlyArray<ChartFocusStop>;
 	caption: string;
+	seriesHeading: string;
 }) {
 	if (stops.length === 0) {
 		return null;
@@ -29,6 +31,37 @@ export function ChartDataTable({
 		if (!series.has(key)) {
 			series.set(key, point.seriesLabel ?? scene.yLabel);
 		}
+	}
+	// A pie or a scatter: one row per point, the series only when it says
+	// something the row heading does not.
+	if (scene.focusOrder === "point") {
+		const named = scene.points.some(
+			(point) =>
+				point.seriesLabel !== undefined && point.seriesLabel !== point.title,
+		);
+		return (
+			<div style={SR_ONLY}>
+				<table data-slot="chart-data-table">
+					<caption>{caption}</caption>
+					<thead>
+						<tr>
+							<th scope="col">{scene.xLabel}</th>
+							{named ? <th scope="col">{seriesHeading}</th> : null}
+							<th scope="col">{scene.yLabel}</th>
+						</tr>
+					</thead>
+					<tbody>
+						{scene.points.map((point) => (
+							<tr key={point.key}>
+								<th scope="row">{point.title}</th>
+								{named ? <td>{point.seriesLabel}</td> : null}
+								<td>{point.value}</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
+		);
 	}
 	const columns = [...series.entries()];
 	return (

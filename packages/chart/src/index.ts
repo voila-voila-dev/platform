@@ -13,7 +13,17 @@ export { type AreaOptions, areaX, areaY } from "#/core/marks/area.ts";
 export { type BarOptions, barX, barY } from "#/core/marks/bar.ts";
 export { type CellOptions, cell } from "#/core/marks/cell.ts";
 export { type DotOptions, dot } from "#/core/marks/dot.ts";
+export { type FunnelOptions, funnel } from "#/core/marks/funnel.ts";
 export { type LineOptions, lineX, lineY } from "#/core/marks/line.ts";
+export {
+	type ArcOptions,
+	arc,
+	donut,
+	type RadarOptions,
+	type RadialBarOptions,
+	radar,
+	radialBar,
+} from "#/core/marks/polar.ts";
 export { type RuleOptions, ruleX, ruleY } from "#/core/marks/rule.ts";
 export type { ChartMarkOptions } from "#/core/marks/shared.ts";
 export { type TextOptions, text } from "#/core/marks/text.ts";

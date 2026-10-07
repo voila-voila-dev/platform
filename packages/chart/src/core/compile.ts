@@ -339,7 +339,10 @@ export function compileChart(
 		legend.push(...(rendered.legend ?? []));
 	}
 
-	if (color?.kind === "ordinal" && spec.color?.legend !== false) {
+	const colored = marks.filter((mark) => mark.channels.color !== undefined);
+	const legendWanted =
+		spec.color?.legend ?? colored.some((mark) => mark.colorLegend !== false);
+	if (color?.kind === "ordinal" && legendWanted) {
 		for (const value of color.domain) {
 			legend.push({
 				key: categoryKey(value),
@@ -368,8 +371,14 @@ export function compileChart(
 		legend: distinctBy(legend, (item) => item.key),
 		focusOrder: focusOrderOf(spec, marks, x, y),
 		scales,
-		xLabel: xPlan?.label ?? "x",
-		yLabel: yPlan?.label ?? "y",
+		xLabel:
+			xPlan?.label ??
+			marks.find((mark) => mark.titles?.category)?.titles?.category ??
+			"x",
+		yLabel:
+			yPlan?.label ??
+			marks.find((mark) => mark.titles?.value)?.titles?.value ??
+			"y",
 		theme,
 		locale,
 	};

@@ -1,12 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
 import {
+	arc,
 	areaY,
 	barX,
 	barY,
 	cell,
 	defineChart,
+	donut,
 	dot,
+	funnel,
 	lineY,
+	radar,
+	radialBar,
 	ruleY,
 } from "@voila.dev/chart";
 import { CanvasRenderer } from "@voila.dev/chart/canvas";
@@ -193,6 +198,86 @@ export const ThousandPointsOnCanvas: Story = {
 						value: 50 + 20 * Math.sin(index / 30) + ((index * 17) % 9),
 					})),
 					{ x: "at", y: "value", label: "Mesure", strokeWidth: 1.5 },
+				),
+			],
+		}),
+	},
+};
+
+const professions = [
+	{ profession: "Kiné", missions: 48 },
+	{ profession: "Médecin", missions: 21 },
+	{ profession: "Ostéopathe", missions: 14 },
+	{ profession: "Infirmier", missions: 9 },
+];
+
+export const Pie: Story = {
+	args: {
+		ariaLabel: "Missions par profession",
+		definition: defineChart({
+			marks: [arc(professions, { category: "profession", value: "missions" })],
+		}),
+	},
+};
+
+export const Donut: Story = {
+	args: {
+		ariaLabel: "Missions par profession",
+		definition: defineChart({
+			marks: [
+				donut(professions, { category: "profession", value: "missions" }),
+			],
+		}),
+	},
+};
+
+export const RadialBars: Story = {
+	args: {
+		ariaLabel: "Objectifs atteints par profession",
+		definition: defineChart({
+			marks: [
+				radialBar(professions, {
+					category: "profession",
+					value: "missions",
+					max: 50,
+				}),
+			],
+		}),
+	},
+};
+
+export const Radar: Story = {
+	args: {
+		ariaLabel: "Profil de deux joueurs",
+		definition: defineChart({
+			marks: [
+				radar(
+					["Vitesse", "Force", "Endurance", "Souplesse", "Équilibre"].flatMap(
+						(axis, index) => [
+							{ axis, player: "Joueur A", score: 4 + (index % 3) * 2 },
+							{ axis, player: "Joueur B", score: 9 - index },
+						],
+					),
+					{ axis: "axis", value: "score", color: "player", max: 10 },
+				),
+			],
+		}),
+	},
+};
+
+export const Funnel: Story = {
+	args: {
+		ariaLabel: "Du visiteur à la mission",
+		definition: defineChart({
+			marks: [
+				funnel(
+					[
+						{ step: "Visites", count: 4200 },
+						{ step: "Inscriptions", count: 980 },
+						{ step: "Profils vérifiés", count: 610 },
+						{ step: "Missions", count: 240 },
+					],
+					{ category: "step", value: "count" },
 				),
 			],
 		}),

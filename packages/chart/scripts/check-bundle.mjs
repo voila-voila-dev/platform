@@ -16,6 +16,7 @@ const BUDGETS = {
 	line: 14_000,
 	cartesian: 18_000,
 	canvas: 16_000,
+	polar: 17_000,
 };
 
 const FORBIDDEN = [/node_modules\/d3-/];

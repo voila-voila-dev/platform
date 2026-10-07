@@ -306,5 +306,12 @@ export interface ChartMark {
 	};
 	/** The keyboard order this mark reads best in. */
 	readonly focusOrder?: ChartFocusOrder;
+	/** `false` when the mark already names its colours itself (a labelled funnel). */
+	readonly colorLegend?: boolean;
+	/** What a frame mark's categories and values are called, for the table and the tooltip. */
+	readonly titles?: {
+		readonly category?: string;
+		readonly value?: string;
+	};
 	readonly render: (context: ChartMarkContext) => ChartMarkScene;
 }
