@@ -19,7 +19,7 @@ function mix(from: number, to: number, t: number): number {
 }
 
 /** Two paths can tween when only their numbers differ. */
-function tweenPath(from: string, to: string, t: number): string {
+export function tweenPath(from: string, to: string, t: number): string {
 	const fromNumbers = from.match(NUMBER);
 	const toNumbers = to.match(NUMBER);
 	if (

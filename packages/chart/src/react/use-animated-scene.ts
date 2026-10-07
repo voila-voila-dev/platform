@@ -1,57 +1,57 @@
+import { cancelFrame, frame, shouldReduceMotion } from "@voila.dev/motion";
 import * as React from "react";
-import { easeOutCubic, tweenScene } from "#/core/motion/tween.ts";
+import {
+	createMotionStore,
+	type MotionStore,
+} from "#/core/motion/motion-store.ts";
+import type { ChartTiming } from "#/core/motion/timing.ts";
 import type { ChartScene } from "#/core/types.ts";
-
-function prefersReducedMotion(): boolean {
-	return (
-		typeof window !== "undefined" &&
-		window.matchMedia?.("(prefers-reduced-motion: reduce)").matches === true
-	);
-}
 
 /**
  * The scene to draw this frame. A data change (`trigger` changed: a new
- * definition, a series toggled) tweens from what is on screen to the new
- * scene; a resize snaps, since watching bars slide while a window is dragged
- * helps no one. Reduced motion always snaps. An update that lands mid-tween
- * starts from the frame already painted, so nothing jumps.
+ * definition, a series toggled) moves from what is on screen to the new
+ * scene on springs; one landing mid-flight keeps every node's speed. A
+ * resize snaps, since watching bars slide while a window is dragged helps no
+ * one. Reduced motion always snaps.
  */
 export function useAnimatedScene(
 	scene: ChartScene,
 	trigger: unknown,
-	duration: number,
+	timing: ChartTiming | null,
 ): ChartScene {
 	const [shown, setShown] = React.useState(scene);
-	const shownRef = React.useRef(scene);
 	const triggerRef = React.useRef(trigger);
+	const storeRef = React.useRef<{
+		store: MotionStore;
+		timing: ChartTiming;
+	} | null>(null);
 
 	React.useLayoutEffect(() => {
 		const changed = triggerRef.current !== trigger;
 		triggerRef.current = trigger;
-		if (!changed || duration <= 0 || prefersReducedMotion()) {
-			shownRef.current = scene;
+		if (timing && storeRef.current?.timing !== timing) {
+			storeRef.current = { store: createMotionStore(scene, timing), timing };
+		}
+		const store = storeRef.current?.store;
+		if (!changed || !timing || !store || shouldReduceMotion()) {
+			store?.snap(scene);
 			setShown(scene);
 			return;
 		}
-		const from = shownRef.current;
-		// Frame zero now, before paint: nodes that left are gone at once.
-		const first = tweenScene(from, scene, 0);
-		shownRef.current = first;
-		setShown(first);
-		const start = performance.now();
-		let frame = 0;
-		function step(now: number) {
-			const t = Math.min(1, (now - start) / duration);
-			const next = tweenScene(from, scene, easeOutCubic(t));
-			shownRef.current = next;
-			setShown(next);
-			if (t < 1) {
-				frame = requestAnimationFrame(step);
+		store.retarget(scene, performance.now());
+		function tick() {
+			const now = performance.now();
+			if (store?.settled(now)) {
+				cancelFrame(tick);
+				setShown(scene);
+				return;
 			}
+			setShown(store?.frame(now) ?? scene);
 		}
-		frame = requestAnimationFrame(step);
-		return () => cancelAnimationFrame(frame);
-	}, [scene, trigger, duration]);
+		tick();
+		frame.update(tick, true);
+		return () => cancelFrame(tick);
+	}, [scene, trigger, timing]);
 
 	return shown;
 }

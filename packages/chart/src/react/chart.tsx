@@ -1,6 +1,7 @@
 import * as React from "react";
 import { compileChart } from "#/core/compile.ts";
 import type { ChartDefinition } from "#/core/define-chart.ts";
+import { type ChartAnimation, chartTiming } from "#/core/motion/timing.ts";
 import { findNearest, focusStops } from "#/core/nearest.ts";
 import { toNumber } from "#/core/scales/continuous.ts";
 import type { ChartPoint } from "#/core/types.ts";
@@ -29,7 +30,6 @@ import { useTextMeasurer } from "#/react/use-text-measurer.ts";
 
 const DEFAULT_HEIGHT = 300;
 const DEFAULT_INITIAL_WIDTH = 640;
-const DEFAULT_DURATION = 300;
 
 /** Focus ring, forced colours and reduced motion: what inline styles cannot say. */
 const CHART_CSS = `
@@ -69,8 +69,12 @@ interface Props
 	readonly legend?: boolean;
 	/** The visually hidden table of the values. On by default; turn it off only when the page shows the same table. */
 	readonly dataTable?: boolean;
-	/** Tween a data update, in milliseconds; `false` snaps. Reduced motion always snaps. */
-	readonly animate?: boolean | number;
+	/**
+	 * How a data update moves: `true` (a spring with no bounce), a perceived
+	 * duration in milliseconds, or `{ duration, bounce, stagger }` and
+	 * `{ type: "tween", easing }`. `false` snaps; reduced motion always does.
+	 */
+	readonly animate?: boolean | number | ChartAnimation;
 	/**
 	 * Zoom a continuous x: the wheel while the chart has focus, + and −,
 	 * Shift and the arrows to pan, a drag to pan when zoomed, 0 to reset.
@@ -172,11 +176,13 @@ export function Chart({
 		() => [definition, hidden],
 		[definition, hidden],
 	);
-	const shown = useAnimatedScene(
-		scene,
-		animationTrigger,
-		animate === false ? 0 : animate === true ? DEFAULT_DURATION : animate,
+	// An inline `animate={{ … }}` object is read by value, not identity.
+	const animateKey = JSON.stringify(animate);
+	const timing = React.useMemo(
+		() => chartTiming(JSON.parse(animateKey)),
+		[animateKey],
 	);
+	const shown = useAnimatedScene(scene, animationTrigger, timing);
 	const messages = messagesFor(scene.locale);
 	const { active, handlers } = useChartFocus({
 		stops,

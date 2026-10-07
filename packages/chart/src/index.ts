@@ -60,6 +60,15 @@ export {
 export { type WaffleOptions, waffleY } from "#/core/marks/stats/waffle.ts";
 export { type TextOptions, text } from "#/core/marks/text.ts";
 export { type TickOptions, tickX, tickY } from "#/core/marks/tick.ts";
+export {
+	createMotionStore,
+	type MotionStore,
+} from "#/core/motion/motion-store.ts";
+export {
+	type ChartAnimation,
+	type ChartTiming,
+	chartTiming,
+} from "#/core/motion/timing.ts";
 export { easeOutCubic, tweenScene } from "#/core/motion/tween.ts";
 export {
 	type ChartFocusStop,
