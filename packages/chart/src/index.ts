@@ -59,6 +59,7 @@ export {
 } from "#/core/marks/stats/statistics.ts";
 export { type WaffleOptions, waffleY } from "#/core/marks/stats/waffle.ts";
 export { type TextOptions, text } from "#/core/marks/text.ts";
+export { type TickOptions, tickX, tickY } from "#/core/marks/tick.ts";
 export { easeOutCubic, tweenScene } from "#/core/motion/tween.ts";
 export {
 	type ChartFocusStop,

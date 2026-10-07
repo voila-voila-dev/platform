@@ -27,10 +27,13 @@ side; `projected` hatches the bars that are pencilled in rather than recorded.
 	<Example.Projected />
 </Preview>
 
+`tickY` puts a short stroke on each bar (a target per month), `tickX` one per
+value along a category (a strip plot).
+
 ## Lines and areas
 
 `lineY`, `lineX`, `areaY`, `areaX`. A gap in the data is a gap in the line;
-areas stack by colour.
+areas stack by colour, and `from`/`to` draw a band between two values.
 
 <Preview layout="stack" label="Stacked areas">
 	<Example.StackedArea />

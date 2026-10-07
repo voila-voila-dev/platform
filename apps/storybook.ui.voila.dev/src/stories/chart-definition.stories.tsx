@@ -14,6 +14,8 @@ import {
 	radialBar,
 	ruleX,
 	ruleY,
+	tickX,
+	tickY,
 } from "@voila.dev/chart";
 import { CanvasRenderer } from "@voila.dev/chart/canvas";
 import { Chart, ChartEmpty, ChartSkeleton } from "@voila.dev/chart/react";
@@ -131,6 +133,45 @@ export const TargetLine: Story = {
 			marks: [
 				barY(months, { x: "month", y: "missions", label: "Missions" }),
 				ruleY([40], { label: "Objectif", strokeDasharray: "4 4" }),
+			],
+		}),
+	},
+};
+
+/** A tick per bar: each month's target, without a line implying a trend between them. */
+export const TargetTicks: Story = {
+	args: {
+		ariaLabel: "Missions par mois et objectif du mois",
+		definition: defineChart({
+			marks: [
+				barY(months, { x: "month", y: "missions", label: "Missions" }),
+				tickY(months, {
+					x: "month",
+					y: (row) => row.bookings + 12,
+					label: "Objectif",
+					stroke: "var(--chart-2)",
+				}),
+			],
+		}),
+	},
+};
+
+/** One stroke per value along a category: every value visible, none summarised away. */
+export const Strip: Story = {
+	args: {
+		ariaLabel: "Tarif horaire des pros par profession",
+		definition: defineChart({
+			x: { label: "Tarif horaire (€)" },
+			marks: [
+				tickX(
+					["Kiné", "Médecin", "Ostéopathe"].flatMap((profession, row) =>
+						Array.from({ length: 14 }, (_unused, index) => ({
+							profession,
+							rate: 35 + row * 12 + ((index * 17) % 30),
+						})),
+					),
+					{ x: "rate", y: "profession", label: "Tarif" },
+				),
 			],
 		}),
 	},

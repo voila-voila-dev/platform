@@ -306,9 +306,12 @@ export function treeMark<TNode>(
 					.leaves()
 					.map((leaf) => measureText(options.name(leaf.data), theme.fontSize)),
 			);
+			// The root's label sits left of it, the leaves' right of them: both inside the plot.
+			const rootLabel =
+				measureText(options.name(rootNode.data), theme.fontSize) + LABEL_GAP;
 			const width = Math.max(
 				0,
-				plot.width - leafLabel - LABEL_GAP - NODE_RADIUS * 2,
+				plot.width - rootLabel - leafLabel - LABEL_GAP - NODE_RADIUS * 2,
 			);
 			const laid = tree<TNode>().size([plot.height, width])(
 				rootNode,
@@ -316,7 +319,7 @@ export function treeMark<TNode>(
 			const position = (
 				node: HierarchyNode<TNode> & { x?: number; y?: number },
 			) => ({
-				x: plot.x + NODE_RADIUS + (node.y ?? 0),
+				x: plot.x + rootLabel + NODE_RADIUS + (node.y ?? 0),
 				y: plot.y + (node.x ?? 0),
 			});
 			const nodes: SceneNode[] = [];

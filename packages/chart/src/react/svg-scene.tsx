@@ -11,7 +11,7 @@ const BASELINE: Record<
 	NonNullable<ChartTextPaint["baseline"]>,
 	React.SVGAttributes<SVGTextElement>["dominantBaseline"]
 > = {
-	top: "hanging",
+	top: "text-before-edge",
 	middle: "central",
 	bottom: "text-after-edge",
 	alphabetic: "alphabetic",
