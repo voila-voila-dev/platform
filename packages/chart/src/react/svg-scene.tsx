@@ -53,7 +53,11 @@ function paintProps(
 				: (paint.fill ?? "none"),
 		stroke: paint.stroke,
 		strokeWidth: paint.strokeWidth,
-		strokeDasharray: paint.strokeDasharray,
+		strokeDasharray: paint.drawn ? "1 1" : paint.strokeDasharray,
+		// Measured in path lengths: the dash shows the first `fraction` of the line.
+		...(paint.drawn
+			? { pathLength: 1, strokeDashoffset: 1 - paint.drawn.fraction }
+			: {}),
 		strokeLinecap: paint.strokeLinecap,
 		strokeLinejoin: paint.strokeLinejoin,
 		opacity: paint.opacity,

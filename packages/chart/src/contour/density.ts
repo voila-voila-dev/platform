@@ -1,3 +1,4 @@
+import { mixPath } from "@voila.dev/motion";
 import { contourDensity } from "d3-contour";
 import { isPlaceable, readChannel } from "#/core/channel.ts";
 import { markId, valueOn } from "#/core/marks/shared.ts";
@@ -72,6 +73,7 @@ export function density2d<TDatum>(
 					key: `${id}:${index}`,
 					role: "mark",
 					d: multiPolygonPath(level.coordinates as never, plot.x, plot.y),
+					morph: mixPath,
 					paint: options.stroke
 						? {
 								fill: "none",

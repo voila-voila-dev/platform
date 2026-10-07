@@ -14,7 +14,8 @@ import {
 	tips,
 } from "#/core/marks/shared.ts";
 import { stackSegments } from "#/core/marks/stack.ts";
-import { areaPath, type ChartXY, linePath } from "#/core/paths.ts";
+import { POINTS_MOTION, pointsPath } from "#/core/motion/points-motion.ts";
+import { type ChartXY, linePath } from "#/core/paths.ts";
 import { categoryKey } from "#/core/scales/discrete.ts";
 import type {
 	ChartAccessor,
@@ -22,6 +23,7 @@ import type {
 	ChartMark,
 	ChartPoint,
 	ChartValue,
+	GeometryPoint,
 	SceneNode,
 } from "#/core/types.ts";
 
@@ -135,21 +137,23 @@ function areaMark<TDatum>(
 				data.length,
 				seriesOf,
 			).values()) {
-				const runs: Array<{ top: ChartXY[]; bottom: ChartXY[] }> = [
-					{ top: [], bottom: [] },
-				];
+				const runs: GeometryPoint[][] = [[]];
 				for (const index of indices) {
 					const position = positions[index];
 					const edge = edges[index];
 					if (!isPlaceable(position) || edge === undefined) {
-						runs.push({ top: [], bottom: [] });
+						runs.push([]);
 						continue;
 					}
 					const along = positionScale.center(position);
 					const top = place(along, edge.high);
-					const run = runs[runs.length - 1];
-					run.top.push(top);
-					run.bottom.push(place(along, edge.low));
+					const bottom = place(along, edge.low);
+					runs[runs.length - 1].push({
+						key: categoryKey(position),
+						...top,
+						x0: bottom.x,
+						y0: bottom.y,
+					});
 					if (!tips(options.tip, data[index], index)) {
 						continue;
 					}
@@ -172,15 +176,23 @@ function areaMark<TDatum>(
 						value: vertical ? context.formatY(value) : context.formatX(value),
 					});
 				}
-				const shaped = runs.filter((run) => run.top.length > 0);
+				const shaped = runs.filter((run) => run.length > 0);
+				const area = {
+					kind: "points" as const,
+					runs: shaped,
+					shape: "area" as const,
+					curve: options.curve,
+				};
+				const enter = options.enter ?? "grow";
 				nodes.push({
 					kind: "path",
 					key: `${id}:area:${series.key}`,
 					series: series.key,
 					role: "mark",
-					d: shaped
-						.map((run) => areaPath(run.top, run.bottom, options.curve))
-						.join(""),
+					d: pointsPath(area),
+					geometry: area,
+					motion: POINTS_MOTION,
+					enter,
 					paint: paint({
 						fill: series.color,
 						fillOpacity: options.fillOpacity ?? DEFAULT_FILL_OPACITY,
@@ -193,7 +205,10 @@ function areaMark<TDatum>(
 						key: `${id}:line:${series.key}`,
 						series: series.key,
 						role: "mark",
-						d: shaped.map((run) => linePath(run.top, options.curve)).join(""),
+						d: shaped.map((run) => linePath(run, options.curve)).join(""),
+						geometry: { ...area, shape: "line" },
+						motion: POINTS_MOTION,
+						enter,
 						paint: paint({
 							fill: "none",
 							stroke: series.color,

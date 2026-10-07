@@ -1,7 +1,24 @@
 import { type Generator, spring, tween } from "@voila.dev/motion";
+import { enterFrom, exitTo } from "#/core/motion/enter-exit.ts";
+import {
+	type LeavingGuide,
+	leavingGuides,
+	withLeaving,
+} from "#/core/motion/leaving.ts";
+import {
+	STRING_CHANNELS,
+	type StringChannel,
+	stringMixer,
+	stringOf,
+	withStrings,
+} from "#/core/motion/strings.ts";
 import { type ChartTiming, staggerDelay } from "#/core/motion/timing.ts";
-import { tweenPath } from "#/core/motion/tween.ts";
-import type { ChartScene, SceneNode } from "#/core/types.ts";
+import type {
+	ChartScene,
+	GeometryMotion,
+	GeometryPlan,
+	SceneNode,
+} from "#/core/types.ts";
 
 /**
  * Every moving number of a chart, as springs keyed by node and channel. A
@@ -9,10 +26,13 @@ import type { ChartScene, SceneNode } from "#/core/types.ts";
  * the speed it has, so an update landing mid-flight bends the motion instead
  * of kinking it. Pure and clocked from outside (milliseconds), so the SVG and
  * Canvas renderers move identically and tests step it by hand. Hit-testing
- * and focus never read it: they read the scene it moves towards.
+ * and focus never read it: they read the scene it moves towards, which never
+ * holds the marks collapsing or the guides fading on their way out.
  */
 export interface MotionStore {
 	retarget(scene: ChartScene, now: number): void;
+	/** The first render: lines that `enter: "draw"` trace themselves in. False when none does. */
+	introduce(now: number): boolean;
 	/** Jumps to `scene`: a resize, or reduced motion. */
 	snap(scene: ChartScene): void;
 	frame(now: number): ChartScene;
@@ -25,14 +45,26 @@ interface Motion {
 	readonly start: number;
 }
 
-interface PathMotion extends Motion {
-	readonly from: string;
-	readonly to: string;
+/** A path or a colour: a progress from 0 to 1, and the mix it reads. */
+interface StringMotion extends Motion {
+	readonly mix: (progress: number) => string;
+}
+
+/** A guide fading out where it stood. */
+interface GuideMotion extends Motion {
+	readonly guide: LeavingGuide;
+}
+
+/** A data mark collapsing on its way out: drawn after its old sibling until its springs settle. */
+interface Leaving {
+	readonly node: SceneNode;
+	readonly after: string | undefined;
+	readonly siblings: readonly SceneNode[];
 }
 
 type Numeric = Record<string, number>;
 
-const CHANNELS: Record<SceneNode["kind"], readonly string[]> = {
+const FIELDS: Record<SceneNode["kind"], readonly string[]> = {
 	rect: ["x", "y", "width", "height"],
 	circle: ["cx", "cy", "r"],
 	line: ["x1", "y1", "x2", "y2"],
@@ -42,20 +74,31 @@ const CHANNELS: Record<SceneNode["kind"], readonly string[]> = {
 };
 
 const OPACITY = "opacity";
+const DRAWN = "drawn";
+const SEPARATOR = "\u0000";
 
-function flatten(
+function walk(
 	nodes: readonly SceneNode[],
-	into = new Map<string, SceneNode>(),
+	visit: (node: SceneNode, siblings: readonly SceneNode[]) => void,
 ) {
 	for (const node of nodes) {
-		into.set(node.key, node);
-		if (node.kind === "group") flatten(node.children, into);
+		visit(node, nodes);
+		if (node.kind === "group") walk(node.children, visit);
 	}
-	return into;
+}
+
+function index(nodes: readonly SceneNode[]) {
+	const byKey = new Map<string, SceneNode>();
+	const siblings = new Map<string, readonly SceneNode[]>();
+	walk(nodes, (node, list) => {
+		byKey.set(node.key, node);
+		siblings.set(node.key, list);
+	});
+	return { byKey, siblings };
 }
 
 function channelKey(node: string, channel: string): string {
-	return `${node}\u0000${channel}`;
+	return `${node}${SEPARATOR}${channel}`;
 }
 
 function elapsed(motion: Motion, now: number): number {
@@ -66,13 +109,23 @@ function done(motion: Motion, now: number): boolean {
 	return elapsed(motion, now) >= motion.generator.duration;
 }
 
+function clamp(value: number): number {
+	return Math.min(1, Math.max(0, value));
+}
+
 export function createMotionStore(
 	initial: ChartScene,
 	timing: ChartTiming,
 ): MotionStore {
 	let target = initial;
 	const numbers = new Map<string, Motion>();
-	const paths = new Map<string, PathMotion>();
+	const strings = new Map<string, StringMotion>();
+	const guides = new Map<string, GuideMotion>();
+	const shapes = new Map<
+		string,
+		{ readonly plan: GeometryPlan; readonly motion: GeometryMotion }
+	>();
+	const leaving = new Map<string, Leaving>();
 
 	function generator(from: number, to: number, velocity: number): Generator {
 		return timing.type === "spring"
@@ -90,137 +143,307 @@ export function createMotionStore(
 				});
 	}
 
-	function pathNow(key: string, fallback: string | undefined, now: number) {
-		const motion = paths.get(key);
-		if (!motion) return fallback;
-		return tweenPath(
-			motion.from,
-			motion.to,
-			motion.generator.at(elapsed(motion, now)).value,
-		);
+	function value(node: string, channel: string, fallback: number, now: number) {
+		const motion = numbers.get(channelKey(node, channel));
+		return motion ? motion.generator.at(elapsed(motion, now)).value : fallback;
 	}
 
-	function moveNode(
-		node: SceneNode,
-		before: SceneNode | undefined,
+	/** Springs one channel from `from` to `to`, at the speed it already has. */
+	function spring1(
+		node: string,
+		channel: string,
+		from: number,
+		to: number,
 		start: number,
 		now: number,
 	) {
-		for (const channel of CHANNELS[node.kind]) {
-			const key = channelKey(node.key, channel);
-			const running = numbers.get(key);
-			const state = running?.generator.at(elapsed(running, now));
-			const from =
-				state?.value ?? (before as unknown as Numeric | undefined)?.[channel];
-			const to = (node as unknown as Numeric)[channel] as number;
-			numbers.delete(key);
-			if (from === undefined || (from === to && !state?.velocity)) continue;
-			numbers.set(key, {
-				generator: generator(from, to, state?.velocity ?? 0),
-				start,
-			});
-		}
-		if (node.kind === "path") {
-			const from = pathNow(
-				node.key,
-				before?.kind === "path" ? before.d : undefined,
-				now,
-			);
-			paths.delete(node.key);
-			if (from !== undefined && from !== node.d) {
-				paths.set(node.key, {
-					generator: generator(0, 1, 0),
-					start,
-					from,
-					to: node.d,
-				});
-			}
-		}
-		const fading = channelKey(node.key, OPACITY);
-		const fade = numbers.get(fading);
-		if (before === undefined || fade) {
-			const from = fade ? fade.generator.at(elapsed(fade, now)).value : 0;
-			numbers.set(fading, { generator: generator(from, 1, 0), start });
-		}
+		const key = channelKey(node, channel);
+		const running = numbers.get(key);
+		const velocity = running
+			? running.generator.at(elapsed(running, now)).velocity
+			: 0;
+		numbers.delete(key);
+		if (from === to && velocity === 0) return;
+		numbers.set(key, { generator: generator(from, to, velocity), start });
 	}
 
-	function paint(node: SceneNode, now: number): SceneNode {
+	/** Mixes one string channel from what is painted to what `to` asks for. */
+	function mixString(
+		from: SceneNode,
+		to: SceneNode,
+		channel: StringChannel,
+		start: number,
+	) {
+		const key = channelKey(to.key, channel);
+		strings.delete(key);
+		const was = stringOf(from, channel);
+		const goal = stringOf(to, channel);
+		if (was === undefined || goal === undefined || was === goal) return;
+		strings.set(key, {
+			generator: generator(0, 1, 0),
+			start,
+			mix: stringMixer(to, channel, was, goal),
+		});
+	}
+
+	function drop(node: string) {
+		for (const motions of [numbers, strings]) {
+			for (const key of motions.keys()) {
+				if (key.startsWith(node + SEPARATOR)) motions.delete(key);
+			}
+		}
+		shapes.delete(node);
+		leaving.delete(node);
+	}
+
+	/** `from` is the node as painted now (or the shape it enters from), `to` where it goes. */
+	function move(from: SceneNode, to: SceneNode, start: number, now: number) {
+		const key = to.key;
+		for (const field of FIELDS[to.kind]) {
+			const was = (from as unknown as Numeric)[field] as number;
+			spring1(
+				key,
+				field,
+				was,
+				(to as unknown as Numeric)[field] as number,
+				start,
+				now,
+			);
+		}
+		mixString(from, to, "fill", start);
+		mixString(from, to, "stroke", start);
+		if (to.kind !== "path" || from.kind !== "path") return;
+		const previous = shapes.get(key);
+		shapes.delete(key);
+		strings.delete(channelKey(key, "d"));
+		const motion = to.motion;
+		const plan =
+			motion && from.geometry && to.geometry
+				? motion.plan(from.geometry, to.geometry)
+				: undefined;
+		if (!plan) {
+			// No meaning to move: the node's own morph, else the numbers of `d`.
+			mixString(from, to, "d", start);
+			return;
+		}
+		for (const channel of previous?.plan.targets.keys() ?? []) {
+			if (!plan.targets.has(channel)) {
+				numbers.delete(channelKey(key, `g${channel}`));
+			}
+		}
+		for (const [channel, goal] of plan.targets) {
+			const was = plan.starts.get(channel) ?? goal;
+			spring1(key, `g${channel}`, was, goal, start, now);
+		}
+		shapes.set(key, { plan, motion: motion as GeometryMotion });
+	}
+
+	function paintNode(node: SceneNode, now: number): SceneNode {
 		if (node.kind === "group") {
-			return {
-				...node,
-				children: node.children.map((child) => paint(child, now)),
-			};
+			return { ...node, children: paintList(node.children, node.key, now) };
 		}
+		const key = node.key;
 		const moved: Numeric = {};
-		for (const channel of [...CHANNELS[node.kind], OPACITY]) {
-			const motion = numbers.get(channelKey(node.key, channel));
-			if (!motion) continue;
-			moved[channel] = motion.generator.at(elapsed(motion, now)).value;
+		for (const field of FIELDS[node.kind]) {
+			moved[field] = value(
+				key,
+				field,
+				(node as unknown as Numeric)[field] as number,
+				now,
+			);
 		}
-		const d = node.kind === "path" ? pathNow(node.key, node.d, now) : undefined;
-		const { [OPACITY]: opacity, ...geometry } = moved;
-		const next = {
-			...node,
-			...geometry,
-			...(d === undefined ? {} : { d }),
-		} as SceneNode;
-		if (opacity === undefined) return next;
-		const shown = Math.min(1, Math.max(0, opacity));
-		const painted = next as Exclude<SceneNode, { kind: "group" }>;
+		let next = { ...node, ...moved } as Exclude<SceneNode, { kind: "group" }>;
+		const shape = shapes.get(key);
+		if (next.kind === "path" && shape) {
+			const geometry = shape.plan.build((channel) =>
+				value(key, `g${channel}`, shape.plan.targets.get(channel) ?? 0, now),
+			);
+			next = { ...next, geometry, d: shape.motion.draw(geometry) };
+		}
+		const mixed: Partial<Record<StringChannel, string>> = {};
+		for (const channel of STRING_CHANNELS) {
+			const motion = strings.get(channelKey(key, channel));
+			if (motion) {
+				mixed[channel] = motion.mix(
+					motion.generator.at(elapsed(motion, now)).value,
+				);
+			}
+		}
+		next = withStrings(next, mixed) as typeof next;
+		const opacity = value(key, OPACITY, 1, now);
+		const drawn = value(key, DRAWN, 1, now);
+		if (opacity === 1 && drawn === 1) return next;
+		const geometry = next.kind === "path" ? next.geometry : undefined;
+		const length =
+			geometry && next.kind === "path" ? next.motion?.length?.(geometry) : 0;
 		return {
-			...painted,
+			...next,
 			paint: {
-				...painted.paint,
-				opacity: (painted.paint.opacity ?? 1) * shown,
+				...next.paint,
+				opacity: (next.paint.opacity ?? 1) * clamp(opacity),
+				...(drawn < 1 && geometry
+					? {
+							drawn: {
+								fraction: clamp(drawn),
+								length: length ?? 0,
+							},
+						}
+					: {}),
 			},
 		} as SceneNode;
 	}
 
+	/**
+	 * The painted list, with the marks still collapsing after the sibling they
+	 * followed, and the guides still fading back at their places.
+	 */
+	function paintList(
+		list: readonly SceneNode[],
+		parent: string | null,
+		now: number,
+	): SceneNode[] {
+		const out: SceneNode[] = [];
+		function place(after: string | undefined) {
+			for (const [key, exit] of leaving) {
+				if (exit.after !== after) continue;
+				out.push(paintNode(exit.node, now));
+				place(key);
+			}
+		}
+		if (parent === null) place(undefined);
+		for (const node of list) {
+			out.push(paintNode(node, now));
+			place(node.key);
+		}
+		if (guides.size === 0) return out;
+		const fading = [...guides.values()].map(
+			(motion) =>
+				[
+					motion.guide,
+					Math.max(0, motion.generator.at(elapsed(motion, now)).value),
+				] as const,
+		);
+		return withLeaving(out, parent, fading);
+	}
+
+	function prune(now: number) {
+		for (const motions of [numbers, strings, guides]) {
+			for (const [key, motion] of motions) {
+				if (done(motion, now)) motions.delete(key);
+			}
+		}
+		const moving = new Set(
+			[...numbers.keys(), ...strings.keys()].map(
+				(key) => key.split(SEPARATOR)[0],
+			),
+		);
+		for (const key of shapes.keys()) {
+			if (!moving.has(key)) shapes.delete(key);
+		}
+		for (const key of leaving.keys()) {
+			if (!moving.has(key)) leaving.delete(key);
+		}
+	}
+
 	return {
 		retarget(scene, now) {
-			const before = flatten(target.nodes);
-			const after = flatten(scene.nodes);
-			const marks = [...after.values()].filter((node) => node.role === "mark");
-			const order = new Map(marks.map((node, index) => [node.key, index]));
-			for (const key of before.keys()) {
-				if (after.has(key)) continue;
-				paths.delete(key);
-				for (const channel of [
-					...(CHANNELS[before.get(key)?.kind ?? "group"] ?? []),
-					OPACITY,
-				]) {
-					numbers.delete(channelKey(key, channel));
+			const before = index(target.nodes);
+			const after = index(scene.nodes);
+			function painted(key: string): SceneNode | undefined {
+				const node =
+					before.byKey.get(key) ??
+					leaving.get(key)?.node ??
+					guides.get(key)?.guide.node;
+				return node && paintNode(node, now);
+			}
+			// Read before the exits below drop what the guides were showing.
+			for (const guide of leavingGuides(target.nodes, (key) =>
+				after.byKey.has(key),
+			)) {
+				guides.set(guide.node.key, {
+					generator: generator(value(guide.node.key, OPACITY, 1, now), 0, 0),
+					start: now,
+					guide,
+				});
+			}
+			for (const key of new Set([...before.byKey.keys(), ...leaving.keys()])) {
+				if (after.byKey.has(key)) continue;
+				const base = (before.byKey.get(key) ??
+					leaving.get(key)?.node) as SceneNode;
+				const siblings =
+					before.siblings.get(key) ?? leaving.get(key)?.siblings ?? [];
+				const goal = exitTo(base, siblings, after.byKey);
+				const from = painted(key);
+				if (!goal || !from) {
+					drop(key);
+					continue;
+				}
+				move(from, goal, now, now);
+				const at = siblings.findIndex((node) => node.key === key);
+				leaving.set(key, {
+					node: goal,
+					after: siblings[at - 1]?.key,
+					siblings,
+				});
+			}
+			const marks = [...after.byKey.values()].filter(
+				(node) => node.role === "mark",
+			);
+			const order = new Map(marks.map((node, at) => [node.key, at]));
+			for (const node of after.byKey.values()) {
+				if (node.kind === "group") continue;
+				const start =
+					now +
+					staggerDelay(timing, order.get(node.key) ?? 0, marks.length) * 1000;
+				const old = painted(node.key);
+				leaving.delete(node.key);
+				const from =
+					old ??
+					enterFrom(node, after.siblings.get(node.key) ?? [], before.byKey);
+				if (from) move(from, node, start, now);
+				const fading = numbers.get(channelKey(node.key, OPACITY));
+				const returning = guides.get(node.key);
+				if ((!from && node.enter !== "none") || fading || returning) {
+					const shown = returning
+						? Math.max(0, returning.generator.at(elapsed(returning, now)).value)
+						: fading
+							? value(node.key, OPACITY, 1, now)
+							: 0;
+					spring1(node.key, OPACITY, shown, 1, start, now);
 				}
 			}
-			for (const node of after.values()) {
-				const delay = staggerDelay(
-					timing,
-					order.get(node.key) ?? 0,
-					marks.length,
-				);
-				moveNode(node, before.get(node.key), now + delay * 1000, now);
-			}
+			for (const key of after.byKey.keys()) guides.delete(key);
 			target = scene;
 		},
+		introduce(now) {
+			let any = false;
+			walk(target.nodes, (node) => {
+				if (node.kind !== "path" || node.enter !== "draw") return;
+				if (node.geometry?.kind !== "points" || node.paint.strokeDasharray) {
+					return;
+				}
+				spring1(node.key, DRAWN, 0, 1, now, now);
+				any = true;
+			});
+			return any;
+		},
 		snap(scene) {
-			numbers.clear();
-			paths.clear();
+			for (const motions of [numbers, strings, guides, shapes, leaving]) {
+				motions.clear();
+			}
 			target = scene;
 		},
 		frame(now) {
-			for (const [key, motion] of numbers) {
-				if (done(motion, now)) numbers.delete(key);
-			}
-			for (const [key, motion] of paths) {
-				if (done(motion, now)) paths.delete(key);
-			}
-			if (numbers.size === 0 && paths.size === 0) return target;
-			return { ...target, nodes: target.nodes.map((node) => paint(node, now)) };
+			prune(now);
+			if (numbers.size + strings.size + guides.size === 0) return target;
+			return { ...target, nodes: paintList(target.nodes, null, now) };
 		},
 		settled(now) {
-			return [...numbers.values(), ...paths.values()].every((motion) =>
-				done(motion, now),
-			);
+			return [
+				...numbers.values(),
+				...strings.values(),
+				...guides.values(),
+			].every((motion) => done(motion, now));
 		},
 	};
 }

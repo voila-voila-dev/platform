@@ -9,13 +9,15 @@ import {
 	tips,
 	valueOn,
 } from "#/core/marks/shared.ts";
-import { type ChartXY, linePath } from "#/core/paths.ts";
+import { POINTS_MOTION, pointsPath } from "#/core/motion/points-motion.ts";
+import { categoryKey } from "#/core/scales/discrete.ts";
 import type {
 	ChartAccessor,
 	ChartCurve,
 	ChartMark,
 	ChartPoint,
 	ChartValue,
+	GeometryPoint,
 	SceneNode,
 } from "#/core/types.ts";
 
@@ -98,7 +100,7 @@ function lineMark<TDatum>(
 				seriesOf,
 			).values()) {
 				// A gap in the data is a gap in the line, not a dive to zero.
-				const runs: ChartXY[][] = [[]];
+				const runs: GeometryPoint[][] = [[]];
 				for (const index of indices) {
 					const position = positions[index];
 					const value = valueOn(valueScale, values[index]);
@@ -111,7 +113,7 @@ function lineMark<TDatum>(
 					const xy = vertical
 						? { x: along, y: across }
 						: { x: across, y: along };
-					runs[runs.length - 1].push(xy);
+					runs[runs.length - 1].push({ key: categoryKey(position), ...xy });
 					if (tips(options.tip, data[index], index)) {
 						points.push({
 							key: `${id}:${index}`,
@@ -149,16 +151,21 @@ function lineMark<TDatum>(
 						});
 					}
 				}
-				const d = runs
-					.map((run) => linePath(run, options.curve))
-					.filter((part) => part !== "")
-					.join("");
+				const geometry = {
+					kind: "points" as const,
+					runs: runs.filter((run) => run.length > 1),
+					shape: "line" as const,
+					curve: options.curve,
+				};
 				lines.push({
 					kind: "path",
 					key: `${id}:line:${series.key}`,
 					series: series.key,
 					role: "mark",
-					d,
+					d: pointsPath(geometry),
+					geometry,
+					motion: POINTS_MOTION,
+					enter: options.enter,
 					paint: paint({
 						stroke: series.color,
 						strokeWidth: options.strokeWidth ?? DEFAULT_STROKE_WIDTH,

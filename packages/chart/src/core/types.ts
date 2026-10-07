@@ -92,6 +92,12 @@ export interface ChartPaint {
 	readonly strokeOpacity?: number;
 	/** Fill with diagonal hatching in the fill colour: a value pencilled in, not yet true. */
 	readonly hatch?: boolean;
+	/**
+	 * Only the first `fraction` of the stroke is drawn: a line tracing itself
+	 * in. `length` is the path's length in pixels, which Canvas needs for its
+	 * dash and SVG doesn't (it measures with `pathLength`).
+	 */
+	readonly drawn?: { readonly fraction: number; readonly length: number };
 }
 
 export interface ChartTextPaint extends ChartPaint {
@@ -108,7 +114,16 @@ interface SceneNodeBase {
 	readonly series?: string;
 	/** A role for styling and tests: "mark", "axis", "grid", "label"… */
 	readonly role?: string;
+	/** How the node appears when an update adds it: see `ChartEnter`. Fades by default. */
+	readonly enter?: ChartEnter;
 }
+
+/**
+ * How a data mark appears. "grow" rises from its baseline (bars, areas) or
+ * opens from its neighbour (slices); "draw" traces a line in on the first
+ * render; "fade" fades in; "none" is there at once.
+ */
+export type ChartEnter = "grow" | "draw" | "fade" | "none";
 
 export interface SceneGroup extends SceneNodeBase {
 	readonly kind: "group";
@@ -125,6 +140,8 @@ export interface SceneRect extends SceneNodeBase {
 	readonly width: number;
 	readonly height: number;
 	readonly corners?: ChartCorners;
+	/** The edge a bar grows from and shrinks back to: `y` for a column, `x` for a bar, in pixels. */
+	readonly baseline?: { readonly axis: "x" | "y"; readonly at: number };
 	readonly paint: ChartPaint;
 }
 
@@ -132,8 +149,89 @@ export interface SceneRect extends SceneNodeBase {
 export interface ScenePath extends SceneNodeBase {
 	readonly kind: "path";
 	readonly d: string;
+	/** What the shape means, when it has a simple meaning: motion moves that, then redraws `d`. */
+	readonly geometry?: SceneGeometry;
+	/**
+	 * How that geometry moves, brought by the mark that drew it (like
+	 * `morph`), so a chart only loads the motion of the shapes it has.
+	 */
+	readonly motion?: GeometryMotion;
 	readonly paint: ChartPaint;
+	/**
+	 * How an update moves this outline into a new one whose commands differ:
+	 * a country, a contour, a cell. Set by the marks whose shapes have no
+	 * simpler meaning, so the morph only loads with them; without it, paths
+	 * whose commands differ swap at the end.
+	 */
+	readonly morph?: PathMorpher;
 }
+
+/** A point of a line, an area or a radar, keyed by its position so an update can slide it. */
+export interface GeometryPoint {
+	readonly key: string;
+	readonly x: number;
+	readonly y: number;
+	/** The area's lower edge under this point. */
+	readonly x0?: number;
+	readonly y0?: number;
+}
+
+export type SceneGeometry =
+	| {
+			readonly kind: "points";
+			/** One run per unbroken stretch: a gap in the data splits the line. */
+			readonly runs: ReadonlyArray<ReadonlyArray<GeometryPoint>>;
+			readonly shape: "line" | "area" | "polygon";
+			readonly curve?: ChartCurve;
+	  }
+	| {
+			readonly kind: "arc";
+			readonly cx: number;
+			readonly cy: number;
+			readonly innerRadius: number;
+			readonly outerRadius: number;
+			readonly startAngle: number;
+			readonly endAngle: number;
+	  };
+
+/**
+ * A geometry in motion: every number it has, by channel name, where each
+ * starts and where it goes, and how to rebuild the shape from the numbers of
+ * one frame. The store springs the numbers; the plan only knows shapes.
+ */
+export interface GeometryPlan {
+	readonly starts: ReadonlyMap<string, number>;
+	readonly targets: ReadonlyMap<string, number>;
+	build(value: (channel: string) => number): SceneGeometry;
+}
+
+/** What the motion store asks of a kind of geometry. */
+export interface GeometryMotion {
+	/** How `from` (what is painted) becomes `to`; undefined to tween the path instead. */
+	plan(from: SceneGeometry, to: SceneGeometry): GeometryPlan | undefined;
+	/** The path data of one frame, through the mark's own builder, so every frame is a valid shape. */
+	draw(geometry: SceneGeometry): string;
+	/** Its length in pixels: what Canvas dashes against to trace a line in. */
+	length?(geometry: SceneGeometry): number;
+	/** The shape a node an update adds grows from; `siblings` is its new list, `known` the old scene. */
+	enter?(
+		node: ScenePath,
+		siblings: readonly SceneNode[],
+		known: ReadonlyMap<string, SceneNode>,
+	): ScenePath | undefined;
+	/** The shape a node an update removes collapses to; `siblings` is its old list, `known` the new scene. */
+	exit?(
+		node: ScenePath,
+		siblings: readonly SceneNode[],
+		known: ReadonlyMap<string, SceneNode>,
+	): ScenePath | undefined;
+}
+
+/** The outlines between two paths, 0 at `from` and 1 at `to`. */
+export type PathMorpher = (
+	from: string,
+	to: string,
+) => (progress: number) => string;
 
 export interface SceneCircle extends SceneNodeBase {
 	readonly kind: "circle";

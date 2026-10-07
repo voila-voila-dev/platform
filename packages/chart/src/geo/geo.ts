@@ -1,3 +1,4 @@
+import { mixPath } from "@voila.dev/motion";
 import {
 	type GeoPermissibleObjects,
 	type GeoProjection,
@@ -202,6 +203,7 @@ export function geoShape<TFeature extends Feature>(
 					key: `${id}:${name}`,
 					role: "mark",
 					d,
+					morph: mixPath,
 					paint: paint({
 						fill,
 						stroke: options.stroke ?? context.theme.background,

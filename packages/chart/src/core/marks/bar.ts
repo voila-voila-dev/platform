@@ -198,6 +198,8 @@ function barMark<TDatum>(
 					role: "mark",
 					...rect,
 					corners: corners(vertical, bar, radius, explicit),
+					baseline: { axis: vertical ? "y" : "x", at: lowPixel },
+					enter: options.enter ?? "grow",
 					paint: paint(
 						options.projected?.(data[bar.index], bar.index)
 							? {

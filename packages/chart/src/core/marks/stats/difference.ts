@@ -5,12 +5,16 @@ import {
 	readChannel,
 } from "#/core/channel.ts";
 import { markId, paint, valueOn } from "#/core/marks/shared.ts";
-import { areaPath, type ChartXY, linePath } from "#/core/paths.ts";
+import { POINTS_MOTION, pointsPath } from "#/core/motion/points-motion.ts";
+import { areaPath, type ChartXY } from "#/core/paths.ts";
+import { categoryKey } from "#/core/scales/discrete.ts";
 import type {
 	ChartAccessor,
 	ChartMark,
 	ChartPoint,
 	ChartValue,
+	GeometryMotion,
+	SceneGeometry,
 	SceneNode,
 } from "#/core/types.ts";
 
@@ -32,6 +36,25 @@ interface Sample {
 	readonly x: number;
 	readonly top: number;
 	readonly bottom: number;
+}
+
+/** One of the two lines, keyed by x so an update slides it like any line. */
+function keyedLine(
+	samples: readonly (Sample & { readonly key: string })[],
+	edge: "top" | "bottom",
+): { d: string; geometry: SceneGeometry; motion: GeometryMotion } {
+	const geometry: SceneGeometry = {
+		kind: "points",
+		shape: "line",
+		runs: [
+			samples.map((sample) => ({
+				key: sample.key,
+				x: sample.x,
+				y: sample[edge],
+			})),
+		],
+	};
+	return { d: pointsPath(geometry), geometry, motion: POINTS_MOTION };
 }
 
 /** Splits the band between two lines into runs of one sign, cut where they cross. */
@@ -99,7 +122,7 @@ export function differenceY<TDatum>(
 			}
 			const positive = options.positiveFill ?? context.paletteColor(1);
 			const negative = options.negativeFill ?? context.paletteColor(0);
-			const samples: Sample[] = [];
+			const samples: Array<Sample & { readonly key: string }> = [];
 			const points: ChartPoint[] = [];
 			for (const [index, raw] of xs.entries()) {
 				const x = valueOn(xScale, raw);
@@ -107,6 +130,7 @@ export function differenceY<TDatum>(
 				const b = second[index];
 				if (x === undefined || a === undefined || b === undefined) continue;
 				const sample = {
+					key: categoryKey(x),
 					x: xScale.center(x),
 					top: yScale.map(a),
 					bottom: yScale.map(b),
@@ -157,9 +181,7 @@ export function differenceY<TDatum>(
 					key: `${id}:line:y1`,
 					series: `${id}:y1`,
 					role: "mark",
-					d: linePath(
-						samples.map((sample) => ({ x: sample.x, y: sample.top })),
-					),
+					...keyedLine(samples, "top"),
 					paint: {
 						fill: "none",
 						stroke: context.theme.foreground,
@@ -171,9 +193,7 @@ export function differenceY<TDatum>(
 					key: `${id}:line:y2`,
 					series: `${id}:y2`,
 					role: "mark",
-					d: linePath(
-						samples.map((sample) => ({ x: sample.x, y: sample.bottom })),
-					),
+					...keyedLine(samples, "bottom"),
 					paint: {
 						fill: "none",
 						stroke: context.theme.muted,

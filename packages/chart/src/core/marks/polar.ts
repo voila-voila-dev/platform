@@ -12,6 +12,8 @@ import {
 	seriesResolver,
 	tips,
 } from "#/core/marks/shared.ts";
+import { ARC_MOTION } from "#/core/motion/arc-motion.ts";
+import { POINTS_MOTION } from "#/core/motion/points-motion.ts";
 import {
 	arcPath,
 	type ChartXY,
@@ -181,6 +183,9 @@ export function arc<TDatum>(
 					series: series.key,
 					role: "mark",
 					d: arcPath(shape),
+					geometry: { kind: "arc", ...shape },
+					motion: ARC_MOTION,
+					enter: options.enter ?? "grow",
 					paint: paint({
 						fill: series.color,
 						stroke: options.stroke ?? context.theme.background,
@@ -306,6 +311,9 @@ export function radialBar<TDatum>(
 					series: series.key,
 					role: "mark",
 					d: arcPath(shape),
+					geometry: { kind: "arc", ...shape },
+					motion: ARC_MOTION,
+					enter: options.enter ?? "grow",
 					paint: paint({ fill: series.color, opacity: options.opacity }),
 				});
 				if (!tips(options.tip, data[index], index)) {
@@ -532,16 +540,25 @@ export function radar<TDatum>(
 				}
 			}
 			for (const [key, polygon] of polygons) {
+				const geometry = {
+					kind: "points" as const,
+					shape: "polygon" as const,
+					runs: [
+						polygon.vertices.map((vertex, spoke) => ({
+							key: categoryKey(axes[spoke] as ChartValue),
+							...(vertex ?? { x: frame.cx, y: frame.cy }),
+						})),
+					],
+				};
 				nodes.push({
 					kind: "path",
 					key: `${id}:shape:${key}`,
 					series: key,
 					role: "mark",
-					d: polygonPath(
-						polygon.vertices.map(
-							(vertex) => vertex ?? { x: frame.cx, y: frame.cy },
-						),
-					),
+					d: polygonPath(geometry.runs[0]),
+					geometry,
+					motion: POINTS_MOTION,
+					enter: options.enter,
 					paint: paint({
 						fill: polygon.color,
 						fillOpacity: options.fillOpacity ?? 0.2,

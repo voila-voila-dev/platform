@@ -8,6 +8,7 @@ import { categoryKey } from "#/core/scales/discrete.ts";
 import type {
 	ChartAccessor,
 	ChartChannel,
+	ChartEnter,
 	ChartMarkContext,
 	ChartPaint,
 	ChartPositionScale,
@@ -29,6 +30,13 @@ export interface ChartMarkOptions<TDatum> {
 	 */
 	readonly tip?: boolean | ((datum: TDatum, index: number) => boolean);
 	readonly opacity?: number;
+	/**
+	 * How the mark appears when an update adds it: "grow" from its baseline
+	 * or neighbour (the default for bars, areas and slices), "fade" (the
+	 * default otherwise), "none". A line can also "draw": trace itself in on
+	 * the first render.
+	 */
+	readonly enter?: ChartEnter;
 }
 
 export function markId(

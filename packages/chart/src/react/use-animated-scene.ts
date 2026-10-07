@@ -21,6 +21,8 @@ export function useAnimatedScene(
 ): ChartScene {
 	const [shown, setShown] = React.useState(scene);
 	const triggerRef = React.useRef(trigger);
+	// The first render may play once: lines that `enter: "draw"` trace themselves in.
+	const introduced = React.useRef(false);
 	const storeRef = React.useRef<{
 		store: MotionStore;
 		timing: ChartTiming;
@@ -33,15 +35,24 @@ export function useAnimatedScene(
 			storeRef.current = { store: createMotionStore(scene, timing), timing };
 		}
 		const store = storeRef.current?.store;
-		if (!changed || !timing || !store || shouldReduceMotion()) {
+		const still = !timing || !store || shouldReduceMotion();
+		const intro =
+			!still &&
+			!changed &&
+			!introduced.current &&
+			store.introduce(performance.now());
+		if (still || (!changed && !intro)) {
+			introduced.current = true;
 			store?.snap(scene);
 			setShown(scene);
 			return;
 		}
-		store.retarget(scene, performance.now());
+		if (changed) store.retarget(scene, performance.now());
 		function tick() {
 			const now = performance.now();
 			if (store?.settled(now)) {
+				// Only once it has played: StrictMode's rerun of the effect starts it again.
+				introduced.current = true;
 				cancelFrame(tick);
 				setShown(scene);
 				return;

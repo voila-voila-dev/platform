@@ -1,3 +1,4 @@
+import { mixPath } from "@voila.dev/motion";
 import { Delaunay } from "d3-delaunay";
 import { isPlaceable, readChannel } from "#/core/channel.ts";
 import { markId, valueOn } from "#/core/marks/shared.ts";
@@ -66,6 +67,7 @@ export function voronoi<TDatum>(
 				key: `${id}:${dataIndex}`,
 				role: "mark",
 				d: diagram.renderCell(cell) ?? "",
+				morph: mixPath,
 				paint: options.fill
 					? {
 							fill: options.fill(data[dataIndex], dataIndex),

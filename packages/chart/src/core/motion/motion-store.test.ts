@@ -125,3 +125,86 @@ function createMotionStoreAt(at: number): ChartScene {
 	store.retarget(scene([bar(100)]), 0);
 	return store.frame(at);
 }
+
+describe("colours and guides", () => {
+	const tween = chartTiming({
+		type: "tween",
+		duration: 400,
+		easing: "linear",
+	}) as ChartTiming;
+
+	function tinted(fill: string): SceneNode {
+		return {
+			...(bar(20) as Extract<SceneNode, { kind: "rect" }>),
+			paint: { fill },
+		};
+	}
+
+	it("mixes a fill in 2 % steps and lands on the exact colour", () => {
+		const store = createMotionStore(scene([tinted("var(--chart-1)")]), tween);
+		store.retarget(scene([tinted("var(--chart-2)")]), 0);
+		const fills = new Set<string>();
+		for (let now = 0; now <= 400; now += 1) {
+			fills.add(
+				(store.frame(now).nodes[0] as { paint: { fill: string } }).paint.fill,
+			);
+		}
+		expect(fills.size).toBeLessThanOrEqual(51);
+		expect([...fills]).toContain(
+			"color-mix(in oklab, var(--chart-2) 50%, var(--chart-1))",
+		);
+		expect(
+			(store.frame(400).nodes[0] as { paint: { fill: string } }).paint.fill,
+		).toBe("var(--chart-2)");
+	});
+
+	function tick(key: string, x: number): SceneNode {
+		return {
+			kind: "line",
+			key,
+			role: "grid",
+			x1: x,
+			y1: 0,
+			x2: x,
+			y2: 100,
+			paint: { stroke: "grey" },
+		};
+	}
+
+	function opacityOf(frame: ChartScene, key: string): number | undefined {
+		const node = frame.nodes.find((one) => one.key === key) as
+			| { paint: { opacity?: number } }
+			| undefined;
+		return node && (node.paint.opacity ?? 1);
+	}
+
+	it("fades a leaving grid line out where it stood, then drops it", () => {
+		const store = createMotionStore(
+			scene([tick("grid:10", 10), tick("grid:20", 20)]),
+			tween,
+		);
+		store.retarget(scene([tick("grid:20", 30)]), 0);
+		const halfway = store.frame(200);
+		expect(halfway.nodes.map((node) => node.key)).toEqual([
+			"grid:10",
+			"grid:20",
+		]);
+		expect(opacityOf(halfway, "grid:10")).toBeCloseTo(0.5, 1);
+		expect(store.settled(400)).toBe(true);
+		expect(store.frame(400).nodes.map((node) => node.key)).toEqual(["grid:20"]);
+	});
+
+	it("never lingers a data mark", () => {
+		const store = createMotionStore(scene([bar(20, "a"), bar(20, "b")]), tween);
+		store.retarget(scene([bar(20, "a")]), 0);
+		expect(store.frame(10).nodes.map((node) => node.key)).toEqual(["a"]);
+	});
+
+	it("brings back a guide from the opacity it had faded to", () => {
+		const store = createMotionStore(scene([tick("grid:10", 10)]), tween);
+		store.retarget(scene([]), 0);
+		store.retarget(scene([tick("grid:10", 10)]), 200);
+		expect(opacityOf(store.frame(200), "grid:10")).toBeCloseTo(0.5, 1);
+		expect(opacityOf(store.frame(400), "grid:10")).toBeGreaterThan(0.5);
+	});
+});

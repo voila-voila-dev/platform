@@ -92,7 +92,11 @@ function fillAndStroke(
 		context.lineWidth = paint.strokeWidth ?? 1;
 		context.lineCap = paint.strokeLinecap ?? "butt";
 		context.lineJoin = paint.strokeLinejoin ?? "miter";
-		context.setLineDash(dashes(paint.strokeDasharray));
+		context.setLineDash(
+			paint.drawn
+				? [paint.drawn.fraction * paint.drawn.length, paint.drawn.length]
+				: dashes(paint.strokeDasharray),
+		);
 		draw("stroke");
 		context.setLineDash([]);
 	}
