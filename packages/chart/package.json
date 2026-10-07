@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"private": true,
 	"type": "module",
-	"description": "Charts as data: a definition of marks, channels and scales, drawn to SVG or Canvas, keyboard and screen-reader accessible. The core has no dependencies; the heavy layouts (geo, hierarchy, sankey…) sit behind their own subpaths.",
+	"description": "Charts as data: a definition of marks, channels and scales, drawn to SVG or Canvas, keyboard and screen-reader accessible. The core has no dependencies; the heavy layouts (geo, hierarchy, sankey\u2026) sit behind their own subpaths.",
 	"license": "MIT",
 	"homepage": "https://ui.voila.dev",
 	"repository": {
@@ -31,7 +31,9 @@
 	"exports": {
 		".": "./src/index.ts",
 		"./react": "./src/react/index.ts",
-		"./canvas": "./src/canvas/index.ts"
+		"./canvas": "./src/canvas/index.ts",
+		"./contour": "./src/contour/index.ts",
+		"./voronoi": "./src/voronoi/index.ts"
 	},
 	"imports": {
 		"#/*": "./src/*"
@@ -59,6 +61,8 @@
 	},
 	"devDependencies": {
 		"@testing-library/react": "^16.3.3",
+		"@types/d3-contour": "^3.0.6",
+		"@types/d3-delaunay": "^6.0.4",
 		"@types/react": "^19.3.0",
 		"@types/react-dom": "^19.3.0",
 		"@vitest/browser-playwright": "5.0.0",
@@ -72,5 +76,9 @@
 		"typescript": "catalog:",
 		"vitest": "catalog:"
 	},
-	"sideEffects": false
+	"sideEffects": false,
+	"dependencies": {
+		"d3-contour": "4.0.2",
+		"d3-delaunay": "6.0.4"
+	}
 }

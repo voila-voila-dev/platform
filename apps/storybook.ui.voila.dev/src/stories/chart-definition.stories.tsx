@@ -16,6 +16,7 @@ import {
 } from "@voila.dev/chart";
 import { CanvasRenderer } from "@voila.dev/chart/canvas";
 import { Chart } from "@voila.dev/chart/react";
+import { useMemo, useState } from "react";
 import { expect, userEvent, within } from "storybook/test";
 
 const months = [
@@ -282,4 +283,41 @@ export const Funnel: Story = {
 			],
 		}),
 	},
+};
+
+function AnimatedBars() {
+	const [round, setRound] = useState(0);
+	const definition = useMemo(
+		() =>
+			defineChart({
+				marks: [
+					barY(
+						months.map((row, index) => ({
+							...row,
+							missions: 10 + ((row.missions * (round + 3) + index * 7) % 40),
+						})),
+						{ x: "month", y: "missions", label: "Missions" },
+					),
+				],
+			}),
+		[round],
+	);
+	return (
+		<div className="grid w-full max-w-xl gap-2">
+			<button
+				type="button"
+				className="justify-self-start rounded border px-2 py-1 text-sm"
+				onClick={() => setRound((value) => value + 1)}
+			>
+				Nouvelles données
+			</button>
+			<Chart definition={definition} ariaLabel="Missions par mois" />
+		</div>
+	);
+}
+
+/** A data update tweens from the frame on screen; reduced motion snaps. */
+export const Animated: Story = {
+	args: { ariaLabel: "", definition: defineChart({ marks: [] }) },
+	render: () => <AnimatedBars />,
 };

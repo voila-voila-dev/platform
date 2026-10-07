@@ -296,3 +296,28 @@ export function arcPath(options: ArcOptions): string {
 		"Z",
 	].join("");
 }
+
+/**
+ * Path data for GeoJSON polygon rings already in chart pixels (what
+ * d3-contour returns): every ring closed, holes drawn with the even-odd rule
+ * the renderers default to.
+ */
+export function multiPolygonPath(
+	polygons: ReadonlyArray<
+		ReadonlyArray<
+			ReadonlyArray<readonly [number, number] | ReadonlyArray<number>>
+		>
+	>,
+	offsetX = 0,
+	offsetY = 0,
+): string {
+	return polygons
+		.flatMap((rings) =>
+			rings.map((ring) =>
+				ring.length === 0
+					? ""
+					: `M${ring.map(([x, y]) => point(x + offsetX, y + offsetY)).join("L")}Z`,
+			),
+		)
+		.join("");
+}

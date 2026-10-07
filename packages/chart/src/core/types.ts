@@ -251,6 +251,8 @@ export interface ChartChannel {
 	readonly inset?: number;
 	/** Band padding the mark draws best with: cells touch, bars breathe. */
 	readonly padding?: number;
+	/** Outer band padding, when it differs: room for a ridge rising past its row. */
+	readonly paddingOuter?: number;
 }
 
 export type ChartTextMeasurer = (

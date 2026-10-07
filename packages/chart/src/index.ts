@@ -24,9 +24,39 @@ export {
 	radar,
 	radialBar,
 } from "#/core/marks/polar.ts";
+export { type RectOptions, rectY } from "#/core/marks/rect.ts";
 export { type RuleOptions, ruleX, ruleY } from "#/core/marks/rule.ts";
 export type { ChartMarkOptions } from "#/core/marks/shared.ts";
+export {
+	type DifferenceOptions,
+	differenceY,
+} from "#/core/marks/stats/difference.ts";
+export {
+	type BoxOptions,
+	boxY,
+	type RidgelineOptions,
+	ridgeline,
+	violinY,
+} from "#/core/marks/stats/distribution.ts";
+export { type DodgeOptions, dodgeY } from "#/core/marks/stats/dodge.ts";
+export { type HexbinOptions, hexbin } from "#/core/marks/stats/hexbin.ts";
+export {
+	type HistogramOptions,
+	histogram,
+} from "#/core/marks/stats/histogram.ts";
+export {
+	type RegressionOptions,
+	regressionY,
+} from "#/core/marks/stats/regression.ts";
+export {
+	boxSummary,
+	kernelDensity,
+	linearFit,
+	quantile,
+} from "#/core/marks/stats/statistics.ts";
+export { type WaffleOptions, waffleY } from "#/core/marks/stats/waffle.ts";
 export { type TextOptions, text } from "#/core/marks/text.ts";
+export { easeOutCubic, tweenScene } from "#/core/motion/tween.ts";
 export {
 	type ChartFocusStop,
 	findNearest,

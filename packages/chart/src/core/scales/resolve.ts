@@ -21,6 +21,7 @@ export interface ScalePlan {
 	readonly label: string | undefined;
 	/** The band padding a mark asked for, when the options name none. */
 	readonly padding?: number;
+	readonly paddingOuter?: number;
 }
 
 function inferKind(
@@ -98,11 +99,15 @@ export function planScale(
 		const padding = channels.find(
 			(channel) => channel.padding !== undefined,
 		)?.padding;
+		const paddingOuter = channels.find(
+			(channel) => channel.paddingOuter !== undefined,
+		)?.paddingOuter;
 		return {
 			kind,
 			domain: options?.domain ?? distinct(values),
 			label,
 			padding,
+			paddingOuter: paddingOuter ?? padding,
 		};
 	}
 	if (options?.domain !== undefined) {
@@ -136,7 +141,7 @@ export function buildScale(
 			range: ordered,
 			locale,
 			paddingInner: options?.paddingInner ?? plan.padding,
-			paddingOuter: options?.paddingOuter ?? plan.padding,
+			paddingOuter: options?.paddingOuter ?? plan.paddingOuter,
 		};
 		return plan.kind === "band" ? bandScale(discrete) : pointScale(discrete);
 	}

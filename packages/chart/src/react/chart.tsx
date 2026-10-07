@@ -15,12 +15,14 @@ import { messagesFor } from "#/react/messages.ts";
 import type { ChartRenderer } from "#/react/renderer.ts";
 import { SR_ONLY } from "#/react/sr-only.ts";
 import { SvgRenderer } from "#/react/svg-renderer.tsx";
+import { useAnimatedScene } from "#/react/use-animated-scene.ts";
 import { useChartFocus } from "#/react/use-chart-focus.ts";
 import { useChartWidth } from "#/react/use-chart-width.ts";
 import { useTextMeasurer } from "#/react/use-text-measurer.ts";
 
 const DEFAULT_HEIGHT = 300;
 const DEFAULT_INITIAL_WIDTH = 640;
+const DEFAULT_DURATION = 300;
 
 /** Focus ring, forced colours and reduced motion: what inline styles cannot say. */
 const CHART_CSS = `
@@ -60,6 +62,8 @@ interface Props
 	readonly legend?: boolean;
 	/** The visually hidden table of the values. On by default; turn it off only when the page shows the same table. */
 	readonly dataTable?: boolean;
+	/** Tween a data update, in milliseconds; `false` snaps. Reduced motion always snaps. */
+	readonly animate?: boolean | number;
 	readonly onFocusChange?: (point: ChartPoint | null) => void;
 	readonly onSelect?: (point: ChartPoint | null) => void;
 }
@@ -80,6 +84,7 @@ export function Chart({
 	tooltip = true,
 	legend,
 	dataTable = true,
+	animate = true,
 	onFocusChange,
 	onSelect,
 	style,
@@ -105,6 +110,15 @@ export function Chart({
 		[definition, width, chartHeight, measureText, hidden],
 	);
 	const stops = React.useMemo(() => focusStops(scene), [scene]);
+	const animationTrigger = React.useMemo(
+		() => [definition, hidden],
+		[definition, hidden],
+	);
+	const shown = useAnimatedScene(
+		scene,
+		animationTrigger,
+		animate === false ? 0 : animate === true ? DEFAULT_DURATION : animate,
+	);
 	const messages = messagesFor(scene.locale);
 	const { active, handlers } = useChartFocus({
 		stops,
@@ -166,7 +180,7 @@ export function Chart({
 				}}
 				{...handlers}
 			>
-				<Renderer scene={scene} chartId={chartId} />
+				<Renderer scene={shown} chartId={chartId} />
 				<FocusOverlay scene={scene} active={active} theme={scene.theme} />
 				{tooltip !== false && active !== null ? (
 					<ChartTooltip active={active} scene={scene} render={renderTooltip} />

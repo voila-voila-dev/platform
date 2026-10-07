@@ -45,6 +45,13 @@ Cartesian: `lineY` `lineX` `areaY` `areaX` `barY` `barX` `dot` `cell` `ruleY` `r
 
 Round and frame: `arc` `donut` `radialBar` `radar` `funnel`
 
+Statistical (no d3): `histogram` `rectY` `boxY` `violinY` `ridgeline`
+`dodgeY` `waffleY` `differenceY` `regressionY` `hexbin`
+
+Behind their own subpath, with the d3 module they need:
+`@voila.dev/chart/contour` (`density2d`, d3-contour),
+`@voila.dev/chart/voronoi` (`voronoi`, d3-delaunay).
+
 ## Keyboard
 
 Tab reaches the chart. The arrows move along the values (a column of a
