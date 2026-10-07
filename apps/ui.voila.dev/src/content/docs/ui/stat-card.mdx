@@ -125,6 +125,21 @@ inside the card instead of bleeding to its edges like a real chart.
 `size="sm"` on the root tightens the padding and the gaps; the anatomy is
 unchanged.
 
+<Preview layout="center" label="A number that counts to its new value">
+	<Example.AnimatedValue />
+</Preview>
+
+Give `StatCard.Value` a `value` instead of children and it springs from the
+old number to the new one when the data refreshes, with
+[`@voila.dev/motion`](/motion/quick-start/). `format` takes an
+`Intl.NumberFormat` or a function. Each frame writes the text directly, so the
+card doesn't re-render while it counts. A screen reader hears only the final
+value, the server renders it, and reduced motion jumps straight to it.
+
+```tsx
+<StatCard.Value value={projects} format={new Intl.NumberFormat("en-GB")} />
+```
+
 <Preview layout="stack" label="A KPI strip">
 	<Example.KpiStrip />
 </Preview>

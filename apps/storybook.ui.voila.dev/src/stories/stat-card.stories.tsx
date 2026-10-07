@@ -7,7 +7,9 @@ import {
 	lineY,
 } from "@voila.dev/chart";
 import { Chart, ChartEmpty, ChartSkeleton } from "@voila.dev/chart/react";
+import { Button } from "@voila.dev/ui/button";
 import { StatCard } from "@voila.dev/ui/stat-card";
+import { useState } from "react";
 
 const sparklineData = [
 	{ month: "January", projects: 24, cancellations: 31 },
@@ -391,4 +393,36 @@ export const KpiStrip: Story = {
 export const KpiStripDark: Story = {
 	...KpiStrip,
 	globals: { theme: "dark" },
+};
+
+/**
+ * `value` instead of children: the number springs to its new value when the
+ * data refreshes. Screen readers hear the final value only; reduced motion
+ * jumps.
+ */
+export const AnimatedValue: Story = {
+	render: function AnimatedValueStory() {
+		const [index, setIndex] = useState(0);
+		const counts = [1284, 1342, 1297];
+		return (
+			<div className="grid justify-items-center gap-3">
+				<StatCard.Root className="w-64">
+					<StatCard.Header>
+						<StatCard.Label>Projects published</StatCard.Label>
+					</StatCard.Header>
+					<StatCard.Value
+						value={counts[index] ?? 0}
+						format={new Intl.NumberFormat("fr-FR")}
+					/>
+				</StatCard.Root>
+				<Button
+					variant="outline"
+					size="sm"
+					onClick={() => setIndex((index + 1) % counts.length)}
+				>
+					Rafraîchir
+				</Button>
+			</div>
+		);
+	},
 };

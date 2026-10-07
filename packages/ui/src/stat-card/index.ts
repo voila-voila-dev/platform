@@ -1,5 +1,6 @@
 export {
 	StatCard,
+	type StatCardFormat,
 	type StatCardStatus,
 	type StatCardTrend,
 } from "#/stat-card/components/stat-card.tsx";

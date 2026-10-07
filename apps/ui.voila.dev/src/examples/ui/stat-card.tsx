@@ -6,7 +6,9 @@ import {
 	lineY,
 } from "@voila.dev/chart";
 import { Chart, ChartEmpty, ChartSkeleton } from "@voila.dev/chart/react";
+import { Button } from "@voila.dev/ui/button";
 import { StatCard } from "@voila.dev/ui/stat-card";
+import { useState } from "react";
 
 const sparklineData = [
 	{ month: "January", projects: 24, cancellations: 31 },
@@ -268,6 +270,30 @@ export function KpiStrip() {
 					<Sparkline mark="bars" interactive />
 				</StatCard.Chart>
 			</StatCard.Root>
+		</div>
+	);
+}
+
+const counts = [1284, 1342, 1297];
+const projectsFormat = new Intl.NumberFormat("en-GB");
+
+export function AnimatedValue() {
+	const [index, setIndex] = useState(0);
+	return (
+		<div className="grid justify-items-center gap-3">
+			<StatCard.Root className="w-64">
+				<StatCard.Header>
+					<StatCard.Label>Projects published</StatCard.Label>
+				</StatCard.Header>
+				<StatCard.Value value={counts[index] ?? 0} format={projectsFormat} />
+			</StatCard.Root>
+			<Button
+				variant="outline"
+				size="sm"
+				onClick={() => setIndex((index + 1) % counts.length)}
+			>
+				Refresh
+			</Button>
 		</div>
 	);
 }

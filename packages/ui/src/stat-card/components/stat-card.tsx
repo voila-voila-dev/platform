@@ -8,6 +8,7 @@ import { StatCardValue } from "#/stat-card/components/stat-card-value.tsx";
 
 export type { StatCardTrend } from "#/stat-card/components/stat-card-delta.tsx";
 export { statCardDeltaVariants } from "#/stat-card/components/stat-card-delta-variants.ts";
+export type { StatCardFormat } from "#/stat-card/components/stat-card-number.tsx";
 export type { StatCardStatus } from "#/stat-card/components/stat-card-root.tsx";
 export { statCardRootVariants } from "#/stat-card/components/stat-card-root-variants.ts";
 
