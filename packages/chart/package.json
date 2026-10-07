@@ -1,0 +1,76 @@
+{
+	"name": "@voila.dev/chart",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"description": "Charts as data: a definition of marks, channels and scales, drawn to SVG or Canvas, keyboard and screen-reader accessible. The core has no dependencies; the heavy layouts (geo, hierarchy, sankey…) sit behind their own subpaths.",
+	"license": "MIT",
+	"homepage": "https://ui.voila.dev",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/voila-voila-dev/ui.git",
+		"directory": "packages/chart"
+	},
+	"keywords": [
+		"react",
+		"charts",
+		"svg",
+		"canvas",
+		"accessibility",
+		"dataviz"
+	],
+	"publishConfig": {
+		"access": "public"
+	},
+	"files": [
+		"src",
+		"dist",
+		"!src/**/*.test.ts",
+		"!src/**/*.test.tsx"
+	],
+	"exports": {
+		".": "./src/index.ts",
+		"./react": "./src/react/index.ts",
+		"./canvas": "./src/canvas/index.ts"
+	},
+	"imports": {
+		"#/*": "./src/*"
+	},
+	"scripts": {
+		"build": "bun ../../scripts/build-package.mjs",
+		"check": "biome check",
+		"check-types": "tsc --noEmit",
+		"check-bundle": "bun scripts/check-bundle.mjs",
+		"format": "biome format",
+		"lint": "biome lint",
+		"test": "vitest run && bun scripts/check-bundle.mjs"
+	},
+	"peerDependencies": {
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0"
+	},
+	"peerDependenciesMeta": {
+		"react": {
+			"optional": true
+		},
+		"react-dom": {
+			"optional": true
+		}
+	},
+	"devDependencies": {
+		"@testing-library/react": "^16.3.3",
+		"@types/react": "^19.3.0",
+		"@types/react-dom": "^19.3.0",
+		"@vitest/browser-playwright": "5.0.0",
+		"@voila.dev/typescript-config": "workspace:*",
+		"axe-core": "^4.11.0",
+		"esbuild": "^0.28.2",
+		"jsdom": "30.0.1",
+		"playwright": "^1.63.0",
+		"react": "catalog:react",
+		"react-dom": "catalog:react",
+		"typescript": "catalog:",
+		"vitest": "catalog:"
+	},
+	"sideEffects": false
+}

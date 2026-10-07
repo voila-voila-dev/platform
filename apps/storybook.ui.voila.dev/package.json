@@ -13,6 +13,7 @@
 	},
 	"dependencies": {
 		"@phosphor-icons/react": "catalog:react",
+		"@voila.dev/chart": "workspace:*",
 		"@voila.dev/ui": "workspace:*",
 		"@voila.dev/ui-branding": "workspace:*",
 		"input-otp": "^1.5.0",
