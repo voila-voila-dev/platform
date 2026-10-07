@@ -111,7 +111,17 @@ export function planScale(
 		};
 	}
 	if (options?.domain !== undefined) {
-		return { kind, domain: options.domain.map(toNumber), label };
+		const [low, high] = options.domain.map(toNumber);
+		// An explicit domain still widens to round ticks when asked to: the
+		// data's own maximum as the top of the axis would end it mid-air.
+		return {
+			kind,
+			domain:
+				options.nice === true && kind === "linear"
+					? niceDomain(low, high)
+					: [low, high],
+			label,
+		};
 	}
 	const zero =
 		options?.zero ?? channels.some((channel) => channel.includeZero === true);

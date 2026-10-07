@@ -7,7 +7,7 @@ import { barX, barY } from "#/core/marks/bar.ts";
 import { cell } from "#/core/marks/cell.ts";
 import { dot } from "#/core/marks/dot.ts";
 import { lineY } from "#/core/marks/line.ts";
-import { ruleY } from "#/core/marks/rule.ts";
+import { ruleX, ruleY } from "#/core/marks/rule.ts";
 import { findNearest, focusStops } from "#/core/nearest.ts";
 import type { ChartScene, SceneNode } from "#/core/types.ts";
 
@@ -256,5 +256,39 @@ describe("compileChart", () => {
 			SIZE,
 		);
 		expect(scene.points.map((point) => point.index)).toEqual([1, 2]);
+	});
+
+	it("rounds an explicit domain when nice is asked", () => {
+		const scene = compileChart(
+			defineChart({
+				y: { domain: [0, 18], nice: true },
+				marks: [lineY(months, { x: "month", y: "missions" })],
+			}),
+			SIZE,
+		);
+		expect(scene.scales.y?.domain).toEqual([0, 20]);
+	});
+
+	it("draws a rule before a band, between it and the previous one", () => {
+		const rows = [
+			{ week: "S1", n: 1 },
+			{ week: "S2", n: 2 },
+		];
+		const scene = compileChart(
+			defineChart({
+				marks: [
+					barY(rows, { x: "week", y: "n" }),
+					ruleX(["S2"], { position: "before" }),
+				],
+			}),
+			SIZE,
+		);
+		const x = scene.scales.x;
+		if (x === undefined) throw new Error("no x");
+		const rule = byRole(scene, "rule")[0];
+		const gapStart = x.map("S1") + x.bandwidth;
+		expect(rule.kind === "line" && rule.x1).toBeCloseTo(
+			(gapStart + x.map("S2")) / 2,
+		);
 	});
 });

@@ -1,8 +1,10 @@
 import { isPlaceable, readChannel } from "#/core/channel.ts";
 import { markId, paint, valueOn } from "#/core/marks/shared.ts";
+import { categoryKey } from "#/core/scales/discrete.ts";
 import type {
 	ChartAccessor,
 	ChartMark,
+	ChartPositionScale,
 	ChartValue,
 	SceneNode,
 } from "#/core/types.ts";
@@ -17,9 +19,29 @@ export interface RuleOptions<TDatum> {
 	readonly opacity?: number;
 	/** Text written at the end of the rule: "Objectif", "Moyenne". */
 	readonly label?: string;
+	/**
+	 * On a band or point axis, `before` draws the rule between the value's
+	 * column and the one before it: where a period starts, not its middle.
+	 */
+	readonly position?: "center" | "before";
 }
 
 const LABEL_GAP = 4;
+
+/** Halfway between a category's slot and the previous one's, or its own start for the first. */
+function before(scale: ChartPositionScale, value: ChartValue): number {
+	if (scale.kind !== "band" && scale.kind !== "point") {
+		return scale.center(value);
+	}
+	const index = scale.domain.findIndex(
+		(candidate) => categoryKey(candidate) === categoryKey(value),
+	);
+	const previous = scale.domain[index - 1];
+	if (index <= 0 || previous === undefined) {
+		return scale.map(value);
+	}
+	return (scale.map(previous) + scale.bandwidth + scale.map(value)) / 2;
+}
 
 function ruleMark<TDatum>(
 	kind: "ruleY" | "ruleX",
@@ -50,7 +72,10 @@ function ruleMark<TDatum>(
 				if (value === undefined) {
 					continue;
 				}
-				const at = scale.center(value);
+				const at =
+					options.position === "before"
+						? before(scale, value)
+						: scale.center(value);
 				nodes.push({
 					kind: "line",
 					key: `${id}:${index}`,
