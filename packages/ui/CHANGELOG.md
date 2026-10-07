@@ -4,6 +4,30 @@ Versions are `MAJOR.MINOR.<CI run number>`: every push to `main` publishes, and
 the major moves by hand when a release breaks callers. This file records those
 moves — not every publish.
 
+## 5.0 — charts move to their own package
+
+`@voila.dev/ui/chart` is gone. Charts are now
+[`@voila.dev/chart`](https://ui.voila.dev/chart/quick-start): a chart is a
+definition of marks passed to `<Chart>`, drawn to SVG or Canvas, every value
+reachable from the keyboard. `@voila.dev/ui` 4.x keeps the old module for
+callers that have not moved yet.
+
+### Breaking
+
+| Was | Is |
+| --- | --- |
+| `import { Chart } from "@voila.dev/ui/chart"` | `import { Chart } from "@voila.dev/chart/react"`, marks from `@voila.dev/chart` |
+| `<Chart.Root config data x y>` with `<Chart.Bars />`, `<Chart.Line />`… as children | `<Chart definition={defineChart({ marks: [barY(data, { x, y })] })} ariaLabel />` |
+| `ChartConfig` (label and colour per key) | the mark's `label` and `fill`/`stroke`, or `color: { domain, range, labels }` on the definition |
+| `Chart.Tooltip`, `Chart.Legend`, `Chart.Cursor` | built into `<Chart>`: `tooltip`, `legend`, focus and cursor |
+| `Chart.ReferenceLine value / category` | `ruleY([value])`, `ruleX([category], { position: "before" })` |
+| `Chart.Bars projected` | `barY({ projected })` |
+| `Chart.LabelList` | a `text` mark |
+| `Chart.Empty`, `Chart.Skeleton` | `ChartEmpty`, `ChartSkeleton` from `@voila.dev/chart/react` |
+| `useChartContext()` and custom SVG children | a mark (`ChartMark`), or two marks on two slices of the data |
+
+`@voila.dev/chart` versions move with the kit: 5.0 for both.
+
 ## 4.0 — the email block editor is removed
 
 `@voila.dev/ui/email-block-editor` is gone. The content editor replaces it:

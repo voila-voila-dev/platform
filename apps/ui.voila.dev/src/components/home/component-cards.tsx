@@ -1,8 +1,9 @@
+import { barY, defineChart } from "@voila.dev/chart";
+import { Chart } from "@voila.dev/chart/react";
 import { Avatar } from "@voila.dev/ui/avatar";
 import { Badge } from "@voila.dev/ui/badge";
 import { Button } from "@voila.dev/ui/button";
 import { Card } from "@voila.dev/ui/card";
-import { Chart, type ChartConfig } from "@voila.dev/ui/chart";
 import { Checkbox } from "@voila.dev/ui/checkbox";
 import { DatePicker } from "@voila.dev/ui/date-picker";
 import { Field } from "@voila.dev/ui/field";
@@ -24,9 +25,20 @@ const revenueData = [
 	{ month: "Jul", mrr: 13.6 },
 ];
 
-const revenueConfig = {
-	mrr: { label: "MRR", color: "var(--chart-1)" },
-} satisfies ChartConfig;
+const revenueChart = defineChart({
+	x: { axis: false },
+	y: { axis: false, grid: false },
+	margin: { top: 4, right: 0, bottom: 0, left: 0 },
+	marks: [
+		barY(revenueData, {
+			x: "month",
+			y: "mrr",
+			label: "MRR",
+			fill: "var(--chart-1)",
+			radius: 2,
+		}),
+	],
+});
 
 const alertPreferences = [
 	{
@@ -113,7 +125,7 @@ function MilestoneCard() {
 	);
 }
 
-/** A dashboard KPI tile with a live SVG chart from ui-chart underneath. */
+/** A dashboard KPI tile with a live chart from @voila.dev/chart underneath. */
 function RevenueCard() {
 	return (
 		<StatCard.Root>
@@ -123,16 +135,12 @@ function RevenueCard() {
 			</StatCard.Header>
 			<StatCard.Value>$13,600</StatCard.Value>
 			<StatCard.Chart>
-				<Chart.Root
-					config={revenueConfig}
-					data={revenueData}
-					x={{ key: "month" }}
-					y={{ keys: ["mrr"] }}
-					className="h-24 w-full"
-					margin={{ top: 4, right: 0, bottom: 0, left: 0 }}
-				>
-					<Chart.Bars />
-				</Chart.Root>
+				<Chart
+					definition={revenueChart}
+					ariaLabel="Monthly recurring revenue"
+					height={96}
+					legend={false}
+				/>
 			</StatCard.Chart>
 		</StatCard.Root>
 	);

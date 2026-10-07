@@ -1,0 +1,103 @@
+---
+title: "Gallery"
+description: "Every mark the package draws, live."
+sidebar:
+  order: 1
+---
+
+import * as Example from "@/examples/chart/examples";
+
+Every preview is a `<Chart>` with one definition. Tab into any of them and use
+the arrow keys.
+
+## Bars
+
+`barY` and `barX`. Series stack by colour; `group: true` puts them side by
+side; `projected` hatches the bars that are pencilled in rather than recorded.
+
+<Preview layout="stack" label="Stacked by colour">
+	<Example.StackedBars />
+</Preview>
+
+<Preview layout="stack" label="On their side">
+	<Example.HorizontalBars />
+</Preview>
+
+<Preview layout="stack" label="Projected bars, and a rule before a column">
+	<Example.Projected />
+</Preview>
+
+## Lines and areas
+
+`lineY`, `lineX`, `areaY`, `areaX`. A gap in the data is a gap in the line;
+areas stack by colour.
+
+<Preview layout="stack" label="Stacked areas">
+	<Example.StackedArea />
+</Preview>
+
+## Round marks
+
+`arc` (a pie), `donut`, `radialBar`, `radar`, `funnel`.
+
+<Preview layout="stack" label="Donut">
+	<Example.Donut />
+</Preview>
+
+<Preview layout="stack" label="Radar">
+	<Example.Radar />
+</Preview>
+
+<Preview layout="stack" label="Funnel, with the conversion from each step">
+	<Example.Funnel />
+</Preview>
+
+## Statistics
+
+`histogram`, `boxY`, `violinY`, `ridgeline`, `dodgeY` (a beeswarm), `waffleY`,
+`differenceY`, `regressionY`, `hexbin`, `cell` — written in-house, no
+dependency.
+
+<Preview layout="stack" label="Box plots">
+	<Example.Statistics />
+</Preview>
+
+<Preview layout="stack" label="Histogram">
+	<Example.Histogram />
+</Preview>
+
+<Preview layout="stack" label="Regression over a scatter">
+	<Example.Regression />
+</Preview>
+
+<Preview layout="stack" label="Heatmap">
+	<Example.Heatmap />
+</Preview>
+
+## Hierarchies, flows and maps
+
+Each behind its own subpath, with the d3 layout it needs:
+`@voila.dev/chart/hierarchy` (`treemap`, `sunburst`, `tree`),
+`@voila.dev/chart/sankey`, `@voila.dev/chart/force` (`forceGraph`),
+`@voila.dev/chart/geo` (`projection`, `geoShape`, `geoDot`),
+`@voila.dev/chart/contour` (`density2d`), `@voila.dev/chart/voronoi`.
+
+<Preview layout="stack" label="Treemap">
+	<Example.Treemap />
+</Preview>
+
+<Preview layout="stack" label="Sankey">
+	<Example.Sankey />
+</Preview>
+
+```tsx
+import { geoDot, geoShape, projection } from "@voila.dev/chart/geo";
+
+defineChart({
+	projection: projection("france", { domain: regions }),
+	marks: [
+		geoShape(regions.features, { name: (r) => r.properties.nom, color: (r) => r.properties.missions }),
+		geoDot(cities, { longitude: "lon", latitude: "lat", name: "city", r: "missions" }),
+	],
+});
+```

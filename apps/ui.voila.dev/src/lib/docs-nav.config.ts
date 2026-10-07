@@ -102,13 +102,13 @@ export const docsSections: DocsSectionConfig[] = [
 		},
 	},
 	{
-		label: "ui/chart",
-		dir: "ui-chart",
+		label: "chart",
+		dir: "chart",
 		collapsed: true,
 		showcase: {
 			order: 4,
 			blurb:
-				"Charts with zero charting library. SVG you can read, scales included.",
+				"Charts as a definition of marks, SVG or Canvas, every value reachable from the keyboard.",
 		},
 	},
 	{

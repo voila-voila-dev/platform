@@ -13,8 +13,9 @@ interface Props
 /**
  * KPI tile for dashboards: a Card composition pairing a muted label, a large
  * value, an optional trend delta and an optional full-bleed sparkline. Put a
- * `Chart.Root` inside `StatCard.Chart` — or `Chart.Skeleton` / `Chart.Empty`
- * (from `@voila.dev/ui/chart`) while the metric is loading or has no data.
+ * `<Chart>` inside `StatCard.Chart` — or `ChartSkeleton` / `ChartEmpty` (all
+ * three from `@voila.dev/chart/react`) while the metric is loading or has no
+ * data.
  * `status` tints the frame by how the metric stands against its objective.
  */
 export function StatCardRoot({ className, status, ...props }: Props) {

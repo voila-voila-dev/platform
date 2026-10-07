@@ -1,11 +1,11 @@
 # @voila.dev/ui
 
 React components in one package, `@voila.dev/ui`. Use them as a dependency or
-make them your own — including the hard ones: email editor, spreadsheet,
-charts, maps.
+make them your own — including the hard ones: content editor, spreadsheet,
+maps. Charts are their own package, `@voila.dev/chart`.
 
 Every module is its own subpath export (`@voila.dev/ui/button`,
-`@voila.dev/ui/chart`, …) and the published output is per-file ESM, so
+`@voila.dev/ui/data-table`, …) and the published output is per-file ESM, so
 you only ever bundle what you import. The `src/` `.tsx` files ship alongside
 `dist/`, so your editor and your AI agent both land on real source when they
 open a component.
@@ -58,7 +58,7 @@ which is the bundle tax the subpaths exist to avoid. Import
 | `@voila.dev/ui/content-editor` | A rich content editor, and the email editor, that live in your app, from one feature registry. |
 | `@voila.dev/ui/spreadsheet` | An editable, virtualized grid your users will mistake for a native app. |
 | `@voila.dev/ui/data-table` | Sorting, pinning, CSV export — the table you keep rebuilding, finished. |
-| `@voila.dev/ui/chart` | Charts with zero charting library. SVG you can read, scales included. |
+| `@voila.dev/chart` | Charts as a definition of marks, SVG or Canvas, every value reachable from the keyboard. |
 | `@voila.dev/ui/map-view`, `@voila.dev/ui/globe-view`, `@voila.dev/ui/radius-map` | Maps and a globe on free vector tiles. No API key, no bundle tax. |
 | `@voila.dev/ui/filter` | Composable filters that survive real product requirements — including geo. |
 | `@voila.dev/ui/landing` | Your marketing site, from the same system as your product. |

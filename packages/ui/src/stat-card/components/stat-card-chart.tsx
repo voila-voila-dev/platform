@@ -6,8 +6,8 @@ interface Props extends React.ComponentProps<"div"> {}
 /**
  * Full-bleed chart slot pinned to the bottom edge of the card: the negative
  * margin cancels the card's bottom padding and the card's `overflow-hidden`
- * clips the chart to the rounded corners. Constrain the chart's height on the
- * `Chart.Root` itself (e.g. `className="h-16 w-full"`).
+ * clips the chart to the rounded corners. Give the chart its own height
+ * (`<Chart height={64} />` from `@voila.dev/chart/react`).
  */
 export function StatCardChart({ className, ...props }: Props) {
 	return (

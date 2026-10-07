@@ -1,0 +1,64 @@
+---
+title: "Interaction"
+description: "Keyboard, tooltip, legend, zoom, brush, small multiples and animation."
+sidebar:
+  order: 2
+---
+
+import { Brush, SmallMultiples, Zoom } from "@/examples/chart/examples";
+
+## Keyboard and screen readers
+
+Every chart is one tab stop. The arrows move along the values — on a chart
+with several series, a column is one stop and the other arrows move inside it —
+Home and End jump to the ends, Enter pins the tooltip and fires `onSelect`,
+Escape unpins and then leaves.
+
+A live region reads the focused value ("March 2026: Projects 28, Bookings
+25"), and a visually hidden table lists every value, so the numbers are never
+locked inside the picture. Turn the table off with `dataTable={false}` only
+when the page shows the same table.
+
+## Tooltip and legend
+
+The tooltip follows the pointer and the keyboard. `tooltip={false}` turns it
+off; a function replaces its content. The legend appears when there is more
+than one series; each entry is a toggle that hides its series without moving
+the axes. `legend={false}` hides it, for a page that draws its own.
+
+## Zoom
+
+`<Chart zoom />` zooms a continuous x axis. The wheel zooms only while the
+chart has focus, so a page still scrolls past it; + and − zoom around the
+focused value, Shift and the arrows pan, a drag pans when zoomed, 0 or the
+reset button goes back. The live region says what is on show.
+
+<Preview layout="stack" label="Tab in, then press +">
+	<Zoom />
+</Preview>
+
+## Brush
+
+`brushX({ onBrush })` from `@voila.dev/chart/brush` selects a range of x by
+dragging — or, from the keyboard, with two sliders that sit outside the
+graphic where assistive tech can reach them.
+
+<Preview layout="stack">
+	<Brush />
+</Preview>
+
+## Small multiples
+
+`facet({ values, marks })` draws the chart once per value, every cell on the
+same x, y and colour domains so the cells compare at a glance.
+
+<Preview layout="stack">
+	<SmallMultiples />
+</Preview>
+
+## Animation
+
+A data update — a new definition, a series toggled — tweens from what is on
+screen to the new scene: shapes move, new ones fade in, removed ones go at
+once. A resize snaps, and so does `prefers-reduced-motion`. `animate={false}`
+or a number of milliseconds changes it.

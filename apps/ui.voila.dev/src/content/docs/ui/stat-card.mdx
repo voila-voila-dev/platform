@@ -42,29 +42,30 @@ you would want to read as good.
 
 `StatCard.Chart` is a full-bleed slot pinned to the bottom edge: it cancels the
 card's bottom padding and the card clips the chart to its rounded corners.
-Constrain the height on the `Chart.Root` itself and drop the margins, since a
-sparkline has no axes to make room for.
+Give the [`<Chart>`](/chart/quick-start) a height, hide its axes and drop the
+margins, since a sparkline has no axes to make room for.
 
 ```tsx
+import { areaY, defineChart } from "@voila.dev/chart";
+import { Chart } from "@voila.dev/chart/react";
+
 <StatCard.Chart>
-	<Chart.Root
-		config={config}
-		data={data}
-		x={{ key: "month", type: "point" }}
-		y={{ keys: ["projects"] }}
-		className="aspect-auto h-16 w-full"
-		margin={{ top: 4, right: 0, bottom: 0, left: 0 }}
-		interactive
-	>
-		<Chart.Cursor />
-		<Chart.Area />
-		<Chart.Tooltip />
-	</Chart.Root>
+	<Chart
+		ariaLabel="Projects published"
+		height={64}
+		legend={false}
+		definition={defineChart({
+			x: { axis: false },
+			y: { axis: false, grid: false },
+			margin: { top: 4, right: 0, bottom: 0, left: 0 },
+			marks: [areaY(data, { x: "month", y: "projects", line: true })],
+		})}
+	/>
 </StatCard.Chart>
 ```
 
-The cursor and the tooltip work in a 64-pixel-tall chart exactly as they do in
-a full-size one, so a sparkline can still be read value by value.
+The cursor, the tooltip and the keyboard work in a 64-pixel-tall chart exactly
+as they do in a full-size one, so a sparkline can still be read value by value.
 
 <Preview layout="stack" label="The three sparkline shapes">
 	<Example.SparklineShapes />
@@ -112,7 +113,8 @@ refers to. The copy is yours — the component only sets the muted small type.
 	<Example.States />
 </Preview>
 
-`Chart.Skeleton` and `Chart.Empty` slot straight into `StatCard.Chart`. Pad the
+`ChartSkeleton` and `ChartEmpty` (from `@voila.dev/chart/react`) slot straight
+into `StatCard.Chart`. Pad the
 slot back (`px-4`, plus `pb-4` for the empty state) so the placeholder sits
 inside the card instead of bleeding to its edges like a real chart.
 

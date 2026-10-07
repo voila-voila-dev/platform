@@ -1,7 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { Chart, type ChartConfig } from "@voila.dev/ui/chart";
+import {
+	areaY,
+	barY,
+	type ChartMark,
+	defineChart,
+	lineY,
+} from "@voila.dev/chart";
+import { Chart, ChartEmpty, ChartSkeleton } from "@voila.dev/chart/react";
 import { StatCard } from "@voila.dev/ui/stat-card";
-import type * as React from "react";
 
 const sparklineData = [
 	{ month: "January", projects: 24, cancellations: 31 },
@@ -12,23 +18,40 @@ const sparklineData = [
 	{ month: "June", projects: 38, cancellations: 17 },
 ];
 
-const sparklineConfig = {
+const sparklineSeries = {
 	projects: { label: "Projects published", color: "var(--chart-1)" },
 	cancellations: { label: "Cancellations", color: "var(--chart-2)" },
-} satisfies ChartConfig;
+} as const;
 
-type SparklineKey = keyof typeof sparklineConfig;
+type SparklineKey = keyof typeof sparklineSeries;
 type SparklineMark = "area" | "line" | "bars";
 
-/** Bars need a slot to sit in; a line or an area wants the full width. */
-const sparklineMarks = {
-	area: { node: <Chart.Area />, axis: "point" },
-	line: { node: <Chart.Line />, axis: "point" },
-	bars: { node: <Chart.Bars radius={2} gap={3} />, axis: "band" },
-} as const satisfies Record<
-	SparklineMark,
-	{ node: React.ReactNode; axis: "band" | "point" }
->;
+const sparklineMarks: Record<SparklineMark, (key: SparklineKey) => ChartMark> =
+	{
+		area: (key) =>
+			areaY(sparklineData, {
+				x: "month",
+				y: key,
+				label: sparklineSeries[key].label,
+				fill: sparklineSeries[key].color,
+				line: true,
+			}),
+		line: (key) =>
+			lineY(sparklineData, {
+				x: "month",
+				y: key,
+				label: sparklineSeries[key].label,
+				stroke: sparklineSeries[key].color,
+			}),
+		bars: (key) =>
+			barY(sparklineData, {
+				x: "month",
+				y: key,
+				label: sparklineSeries[key].label,
+				fill: sparklineSeries[key].color,
+				radius: 2,
+			}),
+	};
 
 /**
  * A chart with no axes and no chrome: the shape is the whole message, so the
@@ -44,19 +67,18 @@ function Sparkline({
 	readonly interactive?: boolean;
 }) {
 	return (
-		<Chart.Root
-			config={sparklineConfig}
-			data={sparklineData}
-			x={{ key: "month", type: sparklineMarks[mark].axis }}
-			y={{ keys: [seriesKey] }}
-			className="aspect-auto h-16 w-full"
-			margin={{ top: 4, right: 0, bottom: 0, left: 0 }}
-			interactive={interactive}
-		>
-			{interactive ? <Chart.Cursor /> : null}
-			{sparklineMarks[mark].node}
-			{interactive ? <Chart.Tooltip /> : null}
-		</Chart.Root>
+		<Chart
+			ariaLabel={sparklineSeries[seriesKey].label}
+			height={64}
+			legend={false}
+			tooltip={interactive}
+			definition={defineChart({
+				x: { axis: false },
+				y: { axis: false, grid: false },
+				margin: { top: 4, right: 0, bottom: 0, left: 0 },
+				marks: [sparklineMarks[mark](seriesKey)],
+			})}
+		/>
 	);
 }
 
@@ -151,7 +173,7 @@ export const Loading: Story = {
 			</StatCard.Header>
 			<StatCard.Value>—</StatCard.Value>
 			<StatCard.Chart className="px-4">
-				<Chart.Skeleton className="h-16" />
+				<ChartSkeleton style={{ height: 64 }} />
 			</StatCard.Chart>
 		</StatCard.Root>
 	),
@@ -165,7 +187,7 @@ export const Empty: Story = {
 			</StatCard.Header>
 			<StatCard.Value>0</StatCard.Value>
 			<StatCard.Chart className="px-4 pb-4">
-				<Chart.Empty className="h-16">No data yet</Chart.Empty>
+				<ChartEmpty style={{ height: 64 }}>No data yet</ChartEmpty>
 			</StatCard.Chart>
 		</StatCard.Root>
 	),
@@ -339,7 +361,7 @@ export const KpiStrip: Story = {
 				</StatCard.Header>
 				<StatCard.Value>—</StatCard.Value>
 				<StatCard.Chart className="px-4">
-					<Chart.Skeleton className="h-16" />
+					<ChartSkeleton style={{ height: 64 }} />
 				</StatCard.Chart>
 			</StatCard.Root>
 			<StatCard.Root>
@@ -348,7 +370,7 @@ export const KpiStrip: Story = {
 				</StatCard.Header>
 				<StatCard.Value>0</StatCard.Value>
 				<StatCard.Chart className="px-4 pb-4">
-					<Chart.Empty className="h-16">No data yet</Chart.Empty>
+					<ChartEmpty style={{ height: 64 }}>No data yet</ChartEmpty>
 				</StatCard.Chart>
 			</StatCard.Root>
 			<StatCard.Root>

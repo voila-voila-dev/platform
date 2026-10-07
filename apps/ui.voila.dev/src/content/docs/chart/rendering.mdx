@@ -1,0 +1,57 @@
+---
+title: "Rendering"
+description: "Canvas, server rendering, size, and the subpaths that bring d3 in."
+sidebar:
+  order: 3
+---
+
+import { OnCanvas } from "@/examples/chart/examples";
+
+## How a chart is drawn
+
+`compileChart(definition, { width, height })` is pure: the marks declare
+channels, the channels resolve the scales, the axes are measured and laid out,
+and each mark returns scene nodes and focusable points. The scene is plain data
+with stable keys. The SVG renderer and the Canvas renderer draw the same scene;
+hit-testing, keyboard focus, the tooltip and the data table all read it, never
+the DOM.
+
+## Canvas
+
+For thousands of marks, paint on a canvas. Nothing else changes.
+
+<Preview layout="stack">
+	<OnCanvas />
+</Preview>
+
+```tsx
+import { CanvasRenderer } from "@voila.dev/chart/canvas";
+
+<Chart definition={definition} ariaLabel="…" renderer={CanvasRenderer} />;
+```
+
+Colours stay CSS (`var(--chart-1)`, `color-mix(…)`): the canvas resolves them
+against the page and repaints when the theme changes.
+
+## Server rendering
+
+The server and the first client render lay out with the same width
+(`initialWidth`, 640 by default) and the same text-width estimate, so the
+hydrated markup always matches. Real text metrics and the measured width
+follow right after.
+
+## Size
+
+A line chart with its tooltip, keyboard focus and data table is about 16 KB
+gzip. Facets and the brush ship only with the charts that use them. The core
+has no dependency; the heavy layouts reuse d3, each behind its own subpath, so
+a page without a map never loads `d3-geo`:
+
+| Subpath | Brings |
+| --- | --- |
+| `@voila.dev/chart/contour` | `d3-contour` |
+| `@voila.dev/chart/voronoi` | `d3-delaunay` |
+| `@voila.dev/chart/hierarchy` | `d3-hierarchy` |
+| `@voila.dev/chart/sankey` | `d3-sankey` |
+| `@voila.dev/chart/force` | `d3-force` |
+| `@voila.dev/chart/geo` | `d3-geo` |
