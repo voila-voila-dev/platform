@@ -172,9 +172,12 @@ export function Chart({
 		moved: boolean;
 	} | null>(null);
 	const stops = React.useMemo(() => focusStops(scene), [scene]);
+	// A step zoom from the keyboard moves like a data update; the wheel and a
+	// drag are direct manipulation, so they snap.
+	const [keyboardZooms, setKeyboardZooms] = React.useState(0);
 	const animationTrigger = React.useMemo(
-		() => [definition, hidden],
-		[definition, hidden],
+		() => [definition, hidden, keyboardZooms],
+		[definition, hidden, keyboardZooms],
 	);
 	// An inline `animate={{ … }}` object is read by value, not identity.
 	const animateKey = JSON.stringify(animate);
@@ -283,16 +286,19 @@ export function Chart({
 			if (event.key === "+" || event.key === "=") {
 				event.preventDefault();
 				viewport.zoomAround(center, ZOOM_STEP);
+				setKeyboardZooms((count) => count + 1);
 				return;
 			}
 			if (event.key === "-" || event.key === "_") {
 				event.preventDefault();
 				viewport.zoomAround(center, 1 / ZOOM_STEP);
+				setKeyboardZooms((count) => count + 1);
 				return;
 			}
 			if (event.key === "0") {
 				event.preventDefault();
 				viewport.reset();
+				setKeyboardZooms((count) => count + 1);
 				return;
 			}
 			if (

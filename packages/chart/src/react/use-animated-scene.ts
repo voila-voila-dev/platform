@@ -23,6 +23,7 @@ export function useAnimatedScene(
 	const triggerRef = React.useRef(trigger);
 	// The first render may play once: lines that `enter: "draw"` trace themselves in.
 	const introduced = React.useRef(false);
+	const introStart = React.useRef<number | null>(null);
 	const storeRef = React.useRef<{
 		store: MotionStore;
 		timing: ChartTiming;
@@ -36,11 +37,15 @@ export function useAnimatedScene(
 		}
 		const store = storeRef.current?.store;
 		const still = !timing || !store || shouldReduceMotion();
-		const intro =
-			!still &&
-			!changed &&
-			!introduced.current &&
-			store.introduce(performance.now());
+		let intro = false;
+		if (!still && !changed && !introduced.current) {
+			const start = introStart.current ?? performance.now();
+			// A re-render mid-intro (the width measured after mount, fonts loaded): the
+			// new geometry, drawn from where the intro already is, never from scratch.
+			if (introStart.current !== null) store.snap(scene);
+			intro = store.introduce(start);
+			if (intro) introStart.current = start;
+		}
 		if (still || (!changed && !intro)) {
 			introduced.current = true;
 			store?.snap(scene);

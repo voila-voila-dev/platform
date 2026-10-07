@@ -1,6 +1,6 @@
 ---
 title: "Interaction"
-description: "Keyboard, tooltip, legend, zoom, brush, small multiples and animation."
+description: "Keyboard, tooltip, legend, zoom, brush and small multiples."
 sidebar:
   order: 2
 ---
@@ -58,7 +58,6 @@ same x, y and colour domains so the cells compare at a glance.
 
 ## Animation
 
-A data update — a new definition, a series toggled — tweens from what is on
-screen to the new scene: shapes move, new ones fade in, removed ones go at
-once. A resize snaps, and so does `prefers-reduced-motion`. `animate={false}`
-or a number of milliseconds changes it.
+A data update moves on springs, from what is on screen to the new data: lines
+slide, bars grow, slices open, maps morph. A resize snaps, and so does
+`prefers-reduced-motion`. See [Animation](/chart/animation/) for the options.

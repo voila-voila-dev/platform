@@ -1,0 +1,129 @@
+---
+title: "Animation"
+description: "Springs that keep their speed, shapes that move by what they mean, morphing maps and tinting colours."
+sidebar:
+  order: 3
+---
+
+import {
+	Bounce,
+	DrawIn,
+	HeatmapColours,
+	MorphingMap,
+	PieSlices,
+	SlidingWindow,
+	Stagger,
+} from "@/examples/chart/animation";
+
+A data update moves from what is on screen to the new data. Every number moves
+on a spring, built on [`@voila.dev/motion`](/motion/quick-start/). When an
+update lands mid-flight, each spring starts from where it is painted, at the
+speed it has. The motion bends instead of kinking.
+
+Hit-testing, keyboard focus, the tooltip and the data table always read the
+data the chart is moving towards, never a frame in between.
+
+## Lines slide
+
+A line is a list of points keyed by x. When the window moves, the points slide.
+A new month enters from the last point the line had. A month that drops off
+folds into its neighbour.
+
+<Preview layout="stack">
+	<SlidingWindow />
+</Preview>
+
+Areas, stacked areas, radar charts and the difference mark move the same way.
+
+## Slices open and close
+
+A slice moves by its angles, not by its path, so no frame ever folds back on
+itself. A new slice opens from the place where it will sit. A removed one
+closes onto its neighbour.
+
+<Preview layout="stack">
+	<PieSlices />
+</Preview>
+
+## Timing
+
+`animate` takes:
+
+| Value | Means |
+| --- | --- |
+| `true` | The default spring: 300 ms, no bounce. |
+| `false` | Snap. |
+| a number | A spring of that perceived duration, in milliseconds. |
+| `{ duration, bounce, stagger }` | A spring. `bounce` goes from 0 to 0.5. |
+| `{ type: "tween", duration, easing, stagger }` | A fixed curve: `"easeOut"`, `"easeInOut"`… |
+
+The default spring never overshoots. A bar that passes its value shows a number
+the data doesn't have. Bounce is opt-in:
+
+<Preview layout="stack">
+	<Bounce />
+</Preview>
+
+```tsx
+<Chart definition={definition} ariaLabel="…" animate={{ duration: 500, bounce: 0.35 }} />
+```
+
+`stagger` puts milliseconds between marks, in focus order. The whole cascade is
+capped at 300 ms, so a long series doesn't make its last bar wait.
+
+<Preview layout="stack">
+	<Stagger />
+</Preview>
+
+## How a mark enters
+
+The `enter` option of a mark says how it appears when an update adds it:
+
+- `"grow"`: from its baseline (bars, areas) or its neighbour (slices). The
+  default for bars, areas and slices.
+- `"fade"`: fades in. The default for the other marks.
+- `"none"`: there at once.
+- `"draw"`: a line traces itself in, left to right, on the first render.
+
+<Preview layout="stack">
+	<DrawIn />
+</Preview>
+
+```tsx
+lineY(months, { x: "month", y: "bookings", enter: "draw" });
+```
+
+Data marks never linger after they leave: a bar shrinks to its baseline, and
+a slice closes. Guides are different: ticks, grid lines and their labels fade
+out where they stood.
+
+## Maps and other outlines morph
+
+Some shapes have no simple meaning to animate: a country, a contour, a Voronoi
+cell. When their outline changes, the chart morphs one outline into the other.
+It resamples both and matches their rings. The morph loads only with
+`@voila.dev/chart/geo`, `/contour` and `/voronoi`. A line chart doesn't pay for
+it.
+
+<Preview layout="stack">
+	<MorphingMap />
+</Preview>
+
+## Colours tint
+
+A fill or a stroke that changes colour moves through
+`color-mix(in oklab, …)`. Theme tokens like `var(--chart-1)` mix as they are,
+and the canvas resolves them against the page.
+
+<Preview layout="stack">
+	<HeatmapColours />
+</Preview>
+
+## Reduced motion
+
+With `prefers-reduced-motion: reduce`, every update snaps, on SVG and Canvas
+alike. `setReducedMotion("always" | "never" | "user")` from
+`@voila.dev/motion` sets the policy for the whole page.
+
+A resize always snaps. So does zooming with the pointer, which is direct
+manipulation. Zooming with + and − uses the spring.

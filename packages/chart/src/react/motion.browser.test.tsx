@@ -71,6 +71,36 @@ describe("motion in the SVG renderer", () => {
 		expect(line()?.hasAttribute("pathLength")).toBe(false);
 	});
 
+	it("keeps drawing a line in when the chart is resized mid-draw", async () => {
+		const container = await mount(
+			<Chart
+				ariaLabel="Missions"
+				animate={1500}
+				definition={defineChart({
+					marks: [lineY([4, 8, 6, 9], { enter: "draw", label: "Missions" })],
+				})}
+			/>,
+		);
+		const offset = () => {
+			const path = container.querySelector(
+				"[data-slot=chart-svg] path[data-role=mark]",
+			);
+			return path?.hasAttribute("pathLength")
+				? Number(path.getAttribute("stroke-dashoffset"))
+				: 0;
+		};
+		const before = await sample(300, offset);
+		// The container measures again, as it does right after mount on a real page.
+		container.style.width = "320px";
+		const after = await sample(4000, offset);
+		const readings = [...before, ...after].filter((value) => value > 0);
+		// The draw only moves forward: a resize must not start it over.
+		for (const [index, value] of readings.entries()) {
+			expect(value).toBeLessThanOrEqual((readings[index - 1] ?? 1) + 1e-6);
+		}
+		expect(after.at(-1)).toBe(0);
+	});
+
 	it("grows a new bar from the baseline", async () => {
 		function bars(values: number[]) {
 			return defineChart({
@@ -84,19 +114,25 @@ describe("motion in the SVG renderer", () => {
 			});
 		}
 		const container = await mount(
-			<Chart ariaLabel="Clubs" definition={bars([10, 20])} />,
+			<Chart ariaLabel="Clubs" animate={1500} definition={bars([10, 20])} />,
 		);
 		// The width is measured after mount; a resize snaps, so let it land first.
 		await wait(100);
 		await act(async () =>
-			root?.render(<Chart ariaLabel="Clubs" definition={bars([10, 20, 30])} />),
+			root?.render(
+				<Chart
+					ariaLabel="Clubs"
+					animate={1500}
+					definition={bars([10, 20, 30])}
+				/>,
+			),
 		);
 		const third = () =>
 			[
 				...container.querySelectorAll("[data-slot=chart-svg] [data-role=mark]"),
 			][2];
 		const heights = await sample(
-			1500,
+			4000,
 			() => third()?.getBoundingClientRect().height ?? 0,
 		);
 		const settled = heights.at(-1) ?? 0;
