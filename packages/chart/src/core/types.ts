@@ -110,6 +110,8 @@ interface SceneNodeBase {
 
 export interface SceneGroup extends SceneNodeBase {
 	readonly kind: "group";
+	/** Shifts the children: a facet's cell drawn at its place in the grid. Clips are in the shifted space. */
+	readonly translate?: { readonly x: number; readonly y: number };
 	readonly clip?: ChartRect;
 	readonly children: ReadonlyArray<SceneNode>;
 }
@@ -202,6 +204,8 @@ export interface ChartPoint<TDatum = unknown> {
 	/** Its value, formatted: "1 240". */
 	readonly value: string;
 	readonly hit?: ChartHitShape;
+	/** The facet cell the point belongs to, on a faceted chart. */
+	readonly facet?: string;
 }
 
 export interface ChartLegendItem {
@@ -232,6 +236,18 @@ export interface ChartScene {
 	readonly yLabel: string;
 	readonly theme: ChartTheme;
 	readonly locale: string;
+	/** A faceted chart's cells, each with its own plot, in reading order. */
+	readonly cells?: ReadonlyArray<{
+		readonly key: string;
+		readonly label: string;
+		readonly plot: ChartRect;
+	}>;
+	/** The sequential colour scale's ramp, for its legend: the colours and the ends' labels. */
+	readonly colorRamp?: {
+		readonly stops: ReadonlyArray<string>;
+		readonly low: string;
+		readonly high: string;
+	};
 }
 
 // ---------------------------------------------------------------------------
@@ -253,6 +269,27 @@ export interface ChartChannel {
 	readonly padding?: number;
 	/** Outer band padding, when it differs: room for a ridge rising past its row. */
 	readonly paddingOuter?: number;
+}
+
+/**
+ * A map projection, described without naming the library that implements it
+ * (`@voila.dev/chart/geo` does, with d3-geo). Declared once on the
+ * definition and fitted to the plot, so every map mark draws on the same one.
+ */
+export interface ChartProjection {
+	readonly fit: (plot: ChartRect) => ChartFittedProjection;
+}
+
+export interface ChartFittedProjection {
+	/** Longitude and latitude to chart pixels; `undefined` when clipped away. */
+	readonly project: (
+		longitude: number,
+		latitude: number,
+	) => { x: number; y: number } | undefined;
+	/** Path data for a GeoJSON object. */
+	readonly path: (geometry: unknown) => string;
+	readonly centroid: (geometry: unknown) => { x: number; y: number };
+	readonly bounds: (geometry: unknown) => ChartRect;
 }
 
 export type ChartTextMeasurer = (
@@ -285,6 +322,8 @@ export interface ChartMarkContext {
 	readonly formatX: (value: ChartValue) => string;
 	readonly formatY: (value: ChartValue) => string;
 	readonly markIndex: number;
+	/** The definition's projection, fitted to the plot. Map marks need it. */
+	readonly projection?: ChartFittedProjection;
 }
 
 export interface ChartMarkScene {

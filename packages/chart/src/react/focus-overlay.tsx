@@ -81,7 +81,11 @@ export function FocusOverlay({
 	if (active === null) {
 		return null;
 	}
-	const { plot, focusOrder, scales } = scene;
+	const { focusOrder, scales } = scene;
+	// On a faceted chart the cursor spans the focused point's own cell.
+	const plot =
+		scene.cells?.find((cell) => cell.key === active.point.facet)?.plot ??
+		scene.plot;
 	const keyboard = active.source === "keyboard";
 	const along = focusOrder === "y" ? scales.y : scales.x;
 	const band = along?.kind === "band" ? along.bandwidth : 0;

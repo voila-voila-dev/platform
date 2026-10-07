@@ -1,4 +1,4 @@
-import type { ChartLegendItem } from "#/core/types.ts";
+import type { ChartLegendItem, ChartScene } from "#/core/types.ts";
 
 function Swatch({ item }: { item: ChartLegendItem }) {
 	const base = { flex: "none" as const, display: "inline-block" };
@@ -90,5 +90,41 @@ export function ChartLegend({
 				);
 			})}
 		</ul>
+	);
+}
+
+/** The ramp of a sequential colour scale: a gradient bar between its two ends. */
+export function ChartColorRamp({
+	ramp,
+	label,
+}: {
+	ramp: NonNullable<ChartScene["colorRamp"]>;
+	label: string;
+}) {
+	return (
+		<div
+			role="img"
+			aria-label={`${label} : ${ramp.low} – ${ramp.high}`}
+			data-slot="chart-color-ramp"
+			style={{
+				display: "flex",
+				alignItems: "center",
+				justifyContent: "center",
+				gap: 8,
+				fontSize: 12,
+			}}
+		>
+			<span>{ramp.low}</span>
+			<span
+				aria-hidden="true"
+				style={{
+					width: 120,
+					height: 8,
+					borderRadius: 4,
+					background: `linear-gradient(to right, ${ramp.stops.join(", ")})`,
+				}}
+			/>
+			<span>{ramp.high}</span>
+		</div>
 	);
 }

@@ -1,3 +1,4 @@
+export type { ChartBrush, ChartBrushRange } from "#/react/brush-contract.ts";
 export { Chart } from "#/react/chart.tsx";
 export {
 	ChartTooltipContent,

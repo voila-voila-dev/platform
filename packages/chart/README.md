@@ -50,7 +50,11 @@ Statistical (no d3): `histogram` `rectY` `boxY` `violinY` `ridgeline`
 
 Behind their own subpath, with the d3 module they need:
 `@voila.dev/chart/contour` (`density2d`, d3-contour),
-`@voila.dev/chart/voronoi` (`voronoi`, d3-delaunay).
+`@voila.dev/chart/voronoi` (`voronoi`, d3-delaunay),
+`@voila.dev/chart/hierarchy` (`treemap`, `sunburst`, `tree`, d3-hierarchy),
+`@voila.dev/chart/sankey` (`sankey`, d3-sankey),
+`@voila.dev/chart/force` (`forceGraph`, d3-force, seeded so it settles the same way every time),
+`@voila.dev/chart/geo` (`projection`, `geoShape`, `geoDot`, d3-geo; RFC 7946 rings are rewound for you).
 
 ## Keyboard
 
@@ -58,6 +62,21 @@ Tab reaches the chart. The arrows move along the values (a column of a
 multi-series chart is one stop, the other arrows move inside it), Home and
 End jump to the ends, Enter pins the tooltip and fires `onSelect`, Escape
 unpins then leaves.
+
+## Small multiples, zoom and brush
+
+`defineChart({ facet: facet({ values, marks: (value) => [...] }) })` draws the chart
+once per value on a grid, every cell on the same x, y and colour domains.
+The keyboard walks one cell at a time; the tooltip names the cell.
+
+`<Chart zoom />` zooms a continuous x: the wheel while the chart has focus
+(never while the page scrolls past it), + and −, Shift and the arrows to
+pan, a drag to pan when zoomed, 0 or the reset button to go back. The live
+region says what is on show.
+
+`<Chart brush={brushX({ onBrush })} />` (from `@voila.dev/chart/brush`) selects a range of x by dragging, or
+with two sliders from the keyboard (arrows, Page keys, Home, End, Escape).
+The sliders sit outside the graphic, where assistive tech can reach them.
 
 ## Size budget
 

@@ -55,6 +55,8 @@ export interface CompileOptions {
 	readonly measureText?: ChartTextMeasurer;
 	/** Series the legend has switched off. The scales keep their domain, so the axes hold still. */
 	readonly hiddenSeries?: ReadonlySet<string>;
+	/** The part of a continuous x on show, when zoomed. */
+	readonly xDomain?: readonly [number, number];
 }
 
 function distinctBy<T>(
@@ -72,11 +74,29 @@ function distinctBy<T>(
 	});
 }
 
-function isMark(mark: ChartMark | false | null | undefined): mark is ChartMark {
+const RAMP_STOPS = 5;
+
+function rampOf(
+	color: ChartColorScale,
+	format: (value: ChartValue) => string,
+): ChartScene["colorRamp"] {
+	const [low, high] = color.domain.map(toNumber);
+	return {
+		stops: Array.from({ length: RAMP_STOPS }, (_unused, index) =>
+			color.map(low + ((high - low) * index) / (RAMP_STOPS - 1)),
+		),
+		low: format(low),
+		high: format(high),
+	};
+}
+
+export function isMark(
+	mark: ChartMark | false | null | undefined,
+): mark is ChartMark {
 	return Boolean(mark);
 }
 
-function channelsOf(
+export function channelsOf(
 	marks: ReadonlyArray<ChartMark>,
 	name: "x" | "y" | "color",
 ): ReadonlyArray<ChartChannel> {
@@ -182,16 +202,40 @@ export function compileChart(
 	definition: ChartDefinition,
 	options: CompileOptions,
 ): ChartScene {
+	const spec = definition.build({
+		width: options.width,
+		height: options.height,
+	});
+	return spec.facet === undefined
+		? compileSpec(spec, options)
+		: spec.facet.compile(spec, { ...options, compileCell: compileSpec });
+}
+
+/** One chart's scene from its spec: what `compileChart` does once per facet cell. */
+export function compileSpec(
+	spec: ChartSpec,
+	options: CompileOptions,
+): ChartScene {
 	const { width, height } = options;
 	const measureText = options.measureText ?? estimateTextWidth;
 	const hidden = options.hiddenSeries ?? new Set<string>();
-	const spec = definition.build({ width, height });
 	const locale = spec.locale ?? DEFAULT_LOCALE;
 	const theme: ChartTheme = { ...DEFAULT_THEME, ...spec.theme };
-	const marks = spec.marks.filter(isMark);
+	const marks = (spec.marks ?? []).filter(isMark);
 	const cartesian = marks.filter((mark) => mark.coordinate === "cartesian");
 
-	const xPlan = planScale(channelsOf(cartesian, "x"), spec.x, "x");
+	const plannedX = planScale(channelsOf(cartesian, "x"), spec.x, "x");
+	// A zoomed chart shows part of a continuous x: the viewport replaces the
+	// domain, and the marks are clipped to the plot.
+	const zoomed =
+		options.xDomain !== undefined &&
+		plannedX !== undefined &&
+		plannedX.kind !== "band" &&
+		plannedX.kind !== "point";
+	const xPlan =
+		zoomed && plannedX && options.xDomain
+			? { ...plannedX, domain: options.xDomain }
+			: plannedX;
 	const yPlan = planScale(channelsOf(cartesian, "y"), spec.y, "y");
 
 	// First pass: scales over the whole chart, only to measure tick labels.
@@ -316,6 +360,7 @@ export function compileChart(
 	const legend: ChartLegendItem[] = [];
 	const paletteColor = (index: number) =>
 		theme.palette[index % theme.palette.length];
+	const projection = spec.projection?.fit(plot);
 	for (const [markIndex, mark] of marks.entries()) {
 		const rendered = mark.render({
 			scales,
@@ -329,6 +374,7 @@ export function compileChart(
 			formatX,
 			formatY,
 			markIndex,
+			projection,
 		});
 		markNodes.push(...rendered.nodes);
 		points.push(
@@ -363,6 +409,7 @@ export function compileChart(
 				kind: "group",
 				key: "marks",
 				role: "marks",
+				clip: zoomed ? plot : undefined,
 				children: withoutHidden(markNodes, hidden),
 			},
 			{ kind: "group", key: "axes", role: "axes", children: guides },
@@ -381,5 +428,9 @@ export function compileChart(
 			"y",
 		theme,
 		locale,
+		colorRamp:
+			color?.kind === "sequential" && spec.color?.legend !== false
+				? rampOf(color, (value) => formatValue(value, locale))
+				: undefined,
 	};
 }

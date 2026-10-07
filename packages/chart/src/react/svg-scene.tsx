@@ -43,7 +43,15 @@ function SceneElement({
 		case "group": {
 			const clipId = node.clip ? `${clipPrefix}-${node.key}` : undefined;
 			return (
-				<g {...data} clipPath={clipId ? `url(#${clipId})` : undefined}>
+				<g
+					{...data}
+					transform={
+						node.translate
+							? `translate(${node.translate.x} ${node.translate.y})`
+							: undefined
+					}
+					clipPath={clipId ? `url(#${clipId})` : undefined}
+				>
 					{node.clip && clipId ? (
 						<clipPath id={clipId}>
 							<rect {...node.clip} />

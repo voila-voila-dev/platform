@@ -3,6 +3,9 @@ import type {
 	ChartMargin,
 	ChartMark,
 	ChartPositionScaleKind,
+	ChartProjection,
+	ChartScene,
+	ChartTextMeasurer,
 	ChartTheme,
 	ChartValue,
 } from "#/core/types.ts";
@@ -42,15 +45,63 @@ export interface ChartColorOptions {
 	readonly labels?: Readonly<Record<string, string>>;
 }
 
+/**
+ * Small multiples: the same chart once per value, on a grid, every cell on
+ * the same scales so the cells compare at a glance.
+ */
+export interface ChartFacetOptions {
+	readonly values: ReadonlyArray<ChartValue>;
+	/** The marks of one cell. */
+	readonly marks: (
+		value: ChartValue,
+		index: number,
+	) => ReadonlyArray<ChartMark | false | null | undefined>;
+	readonly label?: (value: ChartValue) => string;
+	/** Cells per row. Defaults to three, or fewer when there are fewer values. */
+	readonly columns?: number;
+	/** Pixels between two cells. */
+	readonly gap?: number;
+}
+
+/**
+ * What `facet(…)` returns: the options, and the compiler that lays the cells
+ * out. Carried by the spec rather than imported by the core, so a chart
+ * without facets never ships the facet code.
+ */
+export interface ChartFacet {
+	readonly options: ChartFacetOptions;
+	readonly compile: (
+		spec: ChartSpec,
+		options: ChartFacetCompileOptions,
+	) => ChartScene;
+}
+
+/** The compile options a facet compiler is handed, plus the per-cell compiler. */
+export interface ChartFacetCompileOptions {
+	readonly width: number;
+	readonly height: number;
+	readonly measureText?: ChartTextMeasurer;
+	readonly hiddenSeries?: ReadonlySet<string>;
+	readonly xDomain?: readonly [number, number];
+	readonly compileCell: (
+		spec: ChartSpec,
+		options: Omit<ChartFacetCompileOptions, "compileCell">,
+	) => ChartScene;
+}
+
 export interface ChartSpec {
-	/** Falsy entries are skipped, so a mark can be switched on with `&&`. */
-	readonly marks: ReadonlyArray<ChartMark | false | null | undefined>;
+	/** Falsy entries are skipped, so a mark can be switched on with `&&`. Unused with `facet`. */
+	readonly marks?: ReadonlyArray<ChartMark | false | null | undefined>;
 	readonly x?: ChartPositionScaleOptions;
 	readonly y?: ChartPositionScaleOptions;
 	readonly color?: ChartColorOptions;
 	/** Overrides the margins the axes would reserve, side by side. */
 	readonly margin?: Partial<ChartMargin>;
 	readonly focus?: ChartFocusOrder;
+	/** Small multiples, from `facet(…)`. With it, `marks` is ignored: each cell takes its own. */
+	readonly facet?: ChartFacet;
+	/** For maps: how longitude and latitude become pixels. */
+	readonly projection?: ChartProjection;
 	readonly locale?: string;
 	readonly theme?: Partial<ChartTheme>;
 }

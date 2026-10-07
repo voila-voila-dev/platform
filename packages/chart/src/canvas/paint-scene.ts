@@ -60,6 +60,9 @@ function paintNode(environment: PaintEnvironment, node: SceneNode) {
 	switch (node.kind) {
 		case "group":
 			context.save();
+			if (node.translate) {
+				context.translate(node.translate.x, node.translate.y);
+			}
 			if (node.clip) {
 				context.beginPath();
 				context.rect(

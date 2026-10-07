@@ -4,10 +4,13 @@ export {
 	type ChartBuildContext,
 	type ChartColorOptions,
 	type ChartDefinition,
+	type ChartFacet,
+	type ChartFacetOptions,
 	type ChartPositionScaleOptions,
 	type ChartSpec,
 	defineChart,
 } from "#/core/define-chart.ts";
+export { facet } from "#/core/facet.ts";
 export { formatDate, formatNumber, formatValue } from "#/core/format.ts";
 export { type AreaOptions, areaX, areaY } from "#/core/marks/area.ts";
 export { type BarOptions, barX, barY } from "#/core/marks/bar.ts";
