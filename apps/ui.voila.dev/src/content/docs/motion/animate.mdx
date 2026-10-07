@@ -1,0 +1,128 @@
+---
+title: "Animate"
+description: "One function for elements, motion values, plain values, objects and sequences."
+sidebar:
+  order: 1
+---
+
+import { Counter, Sequence, SpringOrTween, StaggerList } from "@/examples/motion/examples";
+
+## Elements
+
+```ts
+animate(element, { x: 100, opacity: 1 });
+animate(".card", { scale: [0.96, 1] }, { duration: 0.3 });
+```
+
+The target is an element, a list of elements or a selector. Keyframes take
+any CSS property in camelCase, and these independent transforms:
+
+| Key | Animates | Unit |
+| --- | --- | --- |
+| `x`, `y`, `z` | `translate` | px |
+| `scale`, `scaleX`, `scaleY` | `scale` | none |
+| `rotate` | `rotate` | deg |
+
+Each transform runs as its own browser animation with `composite: "add"`. So
+`x` and `y` both run on the compositor and add up, and you can interrupt one
+without touching the other. When they finish, they write their values into
+the element's inline `translate`, `scale` and `rotate`. Those three styles
+belong to motion: don't set them yourself on an animated element.
+
+A single value animates from the current one. An array lists every keyframe.
+Numbers take the property's unit; strings pass through (`"50%"`, `"2rem"`).
+CSS variables (`"--progress"`) and SVG attributes (`d`, `cx`, `r`, `points`,
+`attrX`…) run on the frame loop, because the browser can't interpolate them.
+
+## Spring or tween
+
+Two numeric keyframes spring by default. Ask for a tween with
+`type: "tween"`, or give an `ease`. More than two keyframes always tween.
+
+<Preview layout="stack">
+	<SpringOrTween />
+</Preview>
+
+```ts
+animate(element, { x: 240 }, { duration: 0.5, bounce: 0.25 });                // spring
+animate(element, { x: 240 }, { type: "tween", duration: 0.5, ease: "easeInOut" });
+animate(element, { x: [0, 240, 120] }, { times: [0, 0.7, 1] });               // three keyframes
+animate(element, { x: 240 }, { stiffness: 300, damping: 20, mass: 1 });        // physical spring
+```
+
+`ease` takes a name (`"easeOut"`, `"backOut"`…), a cubic Bézier
+`[x1, y1, x2, y2]`, a function, or one per segment. `repeat` and
+`repeatType: "reverse"` loop.
+
+## Controls
+
+Every call returns the same controls, whatever plays the animation:
+
+```ts
+const controls = animate(element, { x: 100 });
+controls.pause();
+controls.time = 0.2;   // seconds, delay included
+controls.speed = 0.5;
+controls.play();
+controls.stop();       // stays where it is
+controls.cancel();     // back to the start
+controls.complete();   // jump to the end
+await controls;        // or controls.finished
+```
+
+## Values and objects
+
+```ts
+const count = motionValue(0);
+animate(count, 1280, { duration: 0.8 });
+
+animate(0, 100, { onUpdate: (value) => (label.textContent = value.toFixed(0)) });
+animate("#2563eb", "#e11d48", { onUpdate: (colour) => (swatch.style.background = colour) });
+animate(state, { progress: 1 }, { onUpdate: draw });
+```
+
+A motion value starts from its current value and keeps its velocity. Plain
+values mix with [`mix`](/motion/interpolation): numbers, colours, paths,
+strings with numbers in them. An object gets its keys written back, and one
+`onUpdate` per frame once they have all moved.
+
+<Preview>
+	<Counter />
+</Preview>
+
+## Stagger
+
+`stagger(gap, { from, ease, startDelay })` makes a `delay` that grows by
+`gap` seconds from one element to the next.
+
+<Preview layout="stack">
+	<StaggerList />
+</Preview>
+
+```ts
+animate("li", { y: [16, 0], opacity: [0, 1] }, { delay: stagger(0.06, { from: "center" }) });
+```
+
+## Sequences
+
+Pass a list of segments to animate them on one timeline. A segment starts
+after the previous one ends, unless its `at` says otherwise: a number of
+seconds from the start, `"+0.1"` or `"-0.2"` from the end of the previous
+segment, `"<"` with the previous segment, or a label.
+
+<Preview layout="stack">
+	<Sequence />
+</Preview>
+
+```ts
+animate([
+	[card, { scale: [0.94, 1], opacity: [0, 1] }],
+	[title, { y: [10, 0] }, { at: "-0.2" }],
+	"details",
+	[body, { opacity: [0, 1] }, { at: "details" }],
+]);
+```
+
+All segments share one clock, so the sequence's controls can pause and scrub
+it. When two segments animate the same property of the same target, the
+second waits for the first to finish, then starts from where it ended.

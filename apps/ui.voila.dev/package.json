@@ -18,6 +18,7 @@
 		"@tanstack/react-router": "^1.170.34",
 		"@tanstack/react-start": "^1.168.51",
 		"@voila.dev/chart": "workspace:*",
+		"@voila.dev/motion": "workspace:*",
 		"@voila.dev/ui": "workspace:*",
 		"@voila.dev/ui-branding": "workspace:*",
 		"maplibre-gl": "catalog:maplibre",

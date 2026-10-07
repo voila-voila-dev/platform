@@ -1,0 +1,62 @@
+---
+title: "Values"
+description: "Motion values, derived values and the shared frame loop."
+sidebar:
+  order: 3
+---
+
+import { Counter } from "@/examples/motion/examples";
+
+## motionValue
+
+A motion value holds a value that changes over time and knows its velocity.
+`animate` reads that velocity, so a new target mid-flight keeps the speed.
+
+```ts
+const x = motionValue(0);
+const stop = x.on("change", (value) => (dot.style.translate = `${value}px 0`));
+animate(x, 200);
+x.getVelocity(); // units per second
+x.jump(0);       // no velocity, stops the animation
+stop();
+```
+
+Listeners also hear `"animationStart"`, `"animationComplete"` and
+`"animationCancel"`. A value updated through `set` doesn't re-render
+anything: write it to the page in a `"change"` listener.
+
+<Preview>
+	<Counter />
+</Preview>
+
+## transformValue
+
+A value derived from others, updated with them:
+
+```ts
+const opacity = transformValue(x, [0, 200], [1, 0]);
+const distance = transformValue([x, y], (x, y) => Math.hypot(x, y));
+opacity.destroy(); // lets go of x
+```
+
+The range form takes the same options as
+[`interpolate`](/motion/interpolation).
+
+## The frame loop
+
+Everything animated in JavaScript runs on one `requestAnimationFrame` loop.
+Each frame has three phases, in order: `read`, `update`, `render`. Read
+layout in `read` and write the DOM in `render`, and a frame never forces a
+layout twice.
+
+```ts
+import { cancelFrame, frame } from "@voila.dev/motion";
+
+frame.read(() => (height = element.offsetHeight));
+frame.render(() => (shadow.style.height = `${height}px`));
+const tick = frame.update(step, true); // every frame until cancelled
+cancelFrame(tick);
+```
+
+The loop only requests frames while something is scheduled. Nothing touches
+`window` when the module loads, so it imports on the server.

@@ -1,0 +1,112 @@
+---
+title: "React"
+description: "Scoped animations, springs that follow, derived values and exit animations."
+sidebar:
+  order: 5
+---
+
+import { FollowPointer, PresenceCard, PresenceList, StaggerList } from "@/examples/motion/examples";
+
+```ts
+import {
+	Presence,
+	useAnimate,
+	useMotionValue,
+	usePresence,
+	useReducedMotion,
+	useSpring,
+	useTransform,
+} from "@voila.dev/motion/react";
+```
+
+The hooks render on the server without touching `window`. Animations start
+in effects, after hydration.
+
+## useAnimate
+
+```tsx
+const [scope, animate] = useAnimate<HTMLUListElement>();
+
+useEffect(() => {
+	animate("li", { opacity: [0, 1] }, { delay: stagger(0.05) });
+}, [animate]);
+
+return <ul ref={scope}>…</ul>;
+```
+
+Selectors only match inside the scope's element. Every animation started
+through it stops when the component unmounts.
+
+<Preview layout="stack">
+	<StaggerList />
+</Preview>
+
+## useMotionValue, useSpring and useTransform
+
+`useMotionValue(initial)` creates a motion value once. `useSpring(target,
+options)` springs towards `target`: a number from props, or another motion
+value it follows. `useTransform` derives a value, from a range or a
+function. None of them re-renders the component when the value moves.
+
+<Preview layout="stack">
+	<FollowPointer />
+</Preview>
+
+```tsx
+const pointerX = useMotionValue(0);
+const x = useSpring(pointerX, { duration: 0.5, bounce: 0.25 });
+const colour = useTransform(x, [0, 400], ["var(--chart-1)", "var(--chart-2)"]);
+
+useEffect(() => x.on("change", (value) => (dot.current.style.translate = `${value}px 0`)), [x]);
+```
+
+## useReducedMotion
+
+`true` when motion should be reduced, following both the global policy and
+the reader's setting as they change. See [Accessibility](/motion/accessibility).
+
+## Presence
+
+`Presence` keeps a removed child on screen until its exit has played. Give
+each child a stable `key`, and an `exit` that receives the child's element
+and returns the animation:
+
+<Preview layout="stack">
+	<PresenceList />
+</Preview>
+
+```tsx
+<Presence>
+	{toasts.map((toast) => (
+		<li key={toast.id} exit={(element) => animate(element, { opacity: 0, x: 40 })}>
+			{toast.text}
+		</li>
+	))}
+</Presence>
+```
+
+Presence reaches the element through the child's `ref`: host elements pass
+it, and a component must pass its `ref` prop to its root element. An exiting
+child is `inert`, so it can't take focus or clicks on its way out. A child
+that comes back before its exit ends stays.
+
+A component can also play its own exit with `usePresence()`, which returns
+whether it is still wanted and a function to call when it may go:
+
+<Preview layout="stack">
+	<PresenceCard />
+</Preview>
+
+```tsx
+function Card() {
+	const [isPresent, safeToRemove] = usePresence();
+	const [scope, animate] = useAnimate<HTMLDivElement>();
+	useEffect(() => {
+		if (isPresent) animate(scope.current, { opacity: [0, 1] });
+		else animate(scope.current, { opacity: 0 }).then(safeToRemove);
+	}, [isPresent]);
+	return <div ref={scope}>…</div>;
+}
+```
+
+`onExitComplete` fires each time the last exiting child is gone.

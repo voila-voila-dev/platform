@@ -112,6 +112,16 @@ export const docsSections: DocsSectionConfig[] = [
 		},
 	},
 	{
+		label: "motion",
+		dir: "motion",
+		collapsed: true,
+		showcase: {
+			order: 11,
+			blurb:
+				"Springs played by the browser, values on one frame loop, exits React waits for.",
+		},
+	},
+	{
 		label: "ui/datatable",
 		dir: "ui-datatable",
 		collapsed: true,

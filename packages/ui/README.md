@@ -2,7 +2,8 @@
 
 React components in one package, `@voila.dev/ui`. Use them as a dependency or
 make them your own — including the hard ones: content editor, spreadsheet,
-maps. Charts are their own package, `@voila.dev/chart`.
+maps. Charts are their own package, `@voila.dev/chart`, and so is animation,
+`@voila.dev/motion`.
 
 Every module is its own subpath export (`@voila.dev/ui/button`,
 `@voila.dev/ui/data-table`, …) and the published output is per-file ESM, so
@@ -59,6 +60,7 @@ which is the bundle tax the subpaths exist to avoid. Import
 | `@voila.dev/ui/spreadsheet` | An editable, virtualized grid your users will mistake for a native app. |
 | `@voila.dev/ui/data-table` | Sorting, pinning, CSV export — the table you keep rebuilding, finished. |
 | `@voila.dev/chart` | Charts as a definition of marks, SVG or Canvas, every value reachable from the keyboard. |
+| `@voila.dev/motion` | Springs played by the browser, values on one frame loop, exits React waits for. |
 | `@voila.dev/ui/map-view`, `@voila.dev/ui/globe-view`, `@voila.dev/ui/radius-map` | Maps and a globe on free vector tiles. No API key, no bundle tax. |
 | `@voila.dev/ui/filter` | Composable filters that survive real product requirements — including geo. |
 | `@voila.dev/ui/landing` | Your marketing site, from the same system as your product. |
@@ -107,7 +109,9 @@ apps/
   ui.voila.dev             # the docs site (TanStack Start)
 packages/
   ui                       # the published package: components + one folder per
-                           # domain (chart, map, filter, spreadsheet, …)
+                           # domain (map, filter, spreadsheet, …)
+  chart                    # @voila.dev/chart: charts as data
+  motion                   # @voila.dev/motion: animation, no dependency
   ui-branding              # private: the voila.dev brand
   typescript-config        # private: shared tsconfig bases
 ```
