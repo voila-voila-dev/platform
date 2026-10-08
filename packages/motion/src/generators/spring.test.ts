@@ -91,6 +91,48 @@ describe("spring", () => {
 		expect(generator.at(0.02).value).toBeGreaterThan(0);
 	});
 
+	it.each([
+		["under-damped", { duration: 0.4, bounce: 0.5 }],
+		["barely under-damped", { stiffness: 100, damping: 19.99, mass: 1 }],
+		["critically damped", { duration: 0.3 }],
+		["barely over-damped", { stiffness: 100, damping: 20.01, mass: 1 }],
+		["over-damped", { stiffness: 100, damping: 80, mass: 1 }],
+	])("%s stays at rest once its duration has passed", (_name, options) => {
+		for (const velocity of [0, 2000, -2000]) {
+			const generator = spring({ ...options, from: 0, to: 100, velocity });
+			const exact = spring({
+				...options,
+				from: 0,
+				to: 100,
+				velocity,
+				restDelta: 1e-9,
+				restSpeed: 1e-9,
+			});
+			for (let t = generator.duration; t < generator.duration + 2; t += 1e-3) {
+				const state = exact.at(t);
+				expect(Math.abs(state.value - 100)).toBeLessThanOrEqual(0.1 + 1e-9);
+				expect(Math.abs(state.velocity)).toBeLessThanOrEqual(1 + 1e-9);
+			}
+		}
+	});
+
+	it("settles when the motion stops showing, not long after", () => {
+		// The chart's default is critically damped, where the bound is exact.
+		expect(spring({ from: 0, to: 1, duration: 0.3 }).duration).toBeCloseTo(
+			0.4745,
+			3,
+		);
+		// Overshooting then turning back costs little more than starting still.
+		const turning = spring({
+			from: 0,
+			to: 100,
+			velocity: -2000,
+			duration: 0.3,
+		});
+		const still = spring({ from: 0, to: 100, duration: 0.3 });
+		expect(turning.duration).toBeLessThan(still.duration * 1.2);
+	});
+
 	it("is done at once when there is nothing to move", () => {
 		expect(spring({ from: 5, to: 5 }).duration).toBe(0);
 	});
