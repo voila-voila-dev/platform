@@ -56,7 +56,8 @@ describe("zoom", () => {
 		await expect
 			.poll(() => container.querySelector("[data-slot=chart-reset-zoom]"))
 			.not.toBeNull();
-		expect(ticks()).not.toBe(before);
+		// The labels the zoom drops fade out where they stood before they go.
+		await expect.poll(ticks).not.toBe(before);
 		await expect
 			.poll(() => container.querySelector("[aria-live]")?.textContent ?? "")
 			.toMatch(/^Affiché/);
@@ -64,7 +65,7 @@ describe("zoom", () => {
 		await expect
 			.poll(() => container.querySelector("[data-slot=chart-reset-zoom]"))
 			.toBeNull();
-		expect(ticks()).toBe(before);
+		await expect.poll(ticks).toBe(before);
 	});
 
 	it("zooms with the wheel only while the chart has focus", async () => {

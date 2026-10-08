@@ -191,6 +191,43 @@ describe("colours and guides", () => {
 		expect(store.frame(400).nodes.map((node) => node.key)).toEqual(["grid:20"]);
 	});
 
+	it("fades a leaving first grid line inside its group", () => {
+		const grid = (...lines: SceneNode[]): SceneNode => ({
+			kind: "group",
+			key: "grid",
+			role: "grid",
+			children: lines,
+		});
+		const store = createMotionStore(
+			scene([grid(tick("grid:10", 10), tick("grid:20", 20))]),
+			linear,
+		);
+		store.retarget(scene([grid(tick("grid:20", 20))]), 0);
+		const [group] = store.frame(200).nodes;
+		expect(store.frame(200).nodes).toHaveLength(1);
+		expect(
+			(group as Extract<SceneNode, { kind: "group" }>).children.map(
+				(node) => node.key,
+			),
+		).toEqual(["grid:10", "grid:20"]);
+	});
+
+	it("drops a whole grid at once", () => {
+		const store = createMotionStore(
+			scene([
+				{
+					kind: "group",
+					key: "grid",
+					role: "grid",
+					children: [tick("grid:10", 10)],
+				},
+			]),
+			linear,
+		);
+		store.retarget(scene([]), 0);
+		expect(store.frame(10).nodes).toEqual([]);
+	});
+
 	it("never lingers a data mark", () => {
 		const store = createMotionStore(
 			scene([bar(20, "a"), bar(20, "b")]),

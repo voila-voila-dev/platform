@@ -1,11 +1,6 @@
 import type { Generator } from "@voila.dev/motion";
 import { enterFrom, exitTo } from "#/core/motion/enter-exit.ts";
 import {
-	type LeavingGuide,
-	leavingGuides,
-	withLeaving,
-} from "#/core/motion/leaving.ts";
-import {
 	STRING_CHANNELS,
 	type StringChannel,
 	stringMixer,
@@ -47,9 +42,13 @@ interface Motion {
 	readonly mix?: (progress: number) => string;
 }
 
-/** A data mark collapsing on its way out: drawn after its old sibling until its springs settle. */
+/**
+ * A node on its way out, drawn after its old sibling until its springs
+ * settle: a data mark collapsing, or a guide fading where it stood.
+ */
 interface Leaving {
 	readonly node: SceneNode;
+	/** Its old previous sibling's key, else its group's `first` marker. */
 	readonly after: string | undefined;
 	readonly siblings: readonly SceneNode[];
 }
@@ -68,25 +67,46 @@ const FIELDS: Record<SceneNode["kind"], readonly string[]> = {
 const OPACITY = "opacity";
 const DRAWN = "drawn";
 const SEPARATOR = "\u0000";
+/**
+ * A tick label or a grid line vanishing at once reads as a glitch, so they
+ * fade out. Data marks never linger: a bar the data no longer has would show
+ * a value that isn't true.
+ */
+const GUIDE_ROLES = new Set(["grid", "axis"]);
 
+/** Where the leaving first children of the group `parent` are drawn. */
+function first(parent: string | null): string | undefined {
+	return parent === null ? undefined : parent + SEPARATOR;
+}
+
+/** Visits every node with its list and the key it is drawn after when it leaves (see `Leaving`). */
 function walk(
 	nodes: readonly SceneNode[],
-	visit: (node: SceneNode, siblings: readonly SceneNode[]) => void,
+	visit: (
+		node: SceneNode,
+		siblings: readonly SceneNode[],
+		after: string | undefined,
+	) => void,
+	parent: string | null = null,
 ) {
+	let after = first(parent);
 	for (const node of nodes) {
-		visit(node, nodes);
-		if (node.kind === "group") walk(node.children, visit);
+		visit(node, nodes, after);
+		if (node.kind === "group") walk(node.children, visit, node.key);
+		after = node.key;
 	}
 }
 
 function index(nodes: readonly SceneNode[]) {
 	const byKey = new Map<string, SceneNode>();
 	const siblings = new Map<string, readonly SceneNode[]>();
-	walk(nodes, (node, list) => {
+	const afters = new Map<string, string | undefined>();
+	walk(nodes, (node, list, after) => {
 		byKey.set(node.key, node);
 		siblings.set(node.key, list);
+		afters.set(node.key, after);
 	});
-	return { byKey, siblings };
+	return { byKey, siblings, afters };
 }
 
 function channelKey(node: string, channel: string): string {
@@ -115,8 +135,6 @@ export function createMotionStore(
 ): MotionStore {
 	let target = initial;
 	const channels = new Map<string, Motion>();
-	/** Fading out on their opacity channel. */
-	const guides = new Map<string, LeavingGuide>();
 	const shapes = new Map<
 		string,
 		{ readonly plan: GeometryPlan; readonly motion: GeometryMotion }
@@ -262,10 +280,7 @@ export function createMotionStore(
 		} as SceneNode;
 	}
 
-	/**
-	 * The painted list, with the marks still collapsing after the sibling they
-	 * followed, and the guides still fading back at their places.
-	 */
+	/** The painted list, with the nodes still leaving after the sibling they followed. */
 	function paintList(
 		list: readonly SceneNode[],
 		parent: string | null,
@@ -279,15 +294,12 @@ export function createMotionStore(
 				place(key);
 			}
 		}
-		if (parent === null) place(undefined);
+		place(first(parent));
 		for (const node of list) {
 			out.push(paintNode(node, now));
 			place(node.key);
 		}
-		if (guides.size === 0) return out;
-		return withLeaving(out, parent, guides.values(), (node) =>
-			paintNode(node, now),
-		);
+		return out;
 	}
 
 	function prune(now: number) {
@@ -297,7 +309,7 @@ export function createMotionStore(
 		const moving = new Set(
 			[...channels.keys()].map((key) => key.split(SEPARATOR)[0]),
 		);
-		for (const byNode of [shapes, leaving, guides]) {
+		for (const byNode of [shapes, leaving]) {
 			for (const key of byNode.keys()) {
 				if (!moving.has(key)) byNode.delete(key);
 			}
@@ -309,43 +321,31 @@ export function createMotionStore(
 			const before = index(target.nodes);
 			const after = index(scene.nodes);
 			function painted(key: string): SceneNode | undefined {
-				const node =
-					before.byKey.get(key) ??
-					leaving.get(key)?.node ??
-					guides.get(key)?.node;
+				const node = before.byKey.get(key) ?? leaving.get(key)?.node;
 				return node && paintNode(node, now);
 			}
-			// Read before the exits below drop what the guides were showing.
-			const fadingGuides = leavingGuides(target.nodes, (key) =>
-				after.byKey.has(key),
-			).map(
-				(guide) => [guide, value(guide.node.key, OPACITY, 1, now)] as const,
-			);
 			for (const key of new Set([...before.byKey.keys(), ...leaving.keys()])) {
 				if (after.byKey.has(key)) continue;
 				const base = (before.byKey.get(key) ??
 					leaving.get(key)?.node) as SceneNode;
-				const siblings =
-					before.siblings.get(key) ?? leaving.get(key)?.siblings ?? [];
-				const goal = exitTo(base, siblings, after.byKey);
+				const exit = leaving.get(key);
+				const siblings = exit?.siblings ?? before.siblings.get(key) ?? [];
+				// A whole guide group leaving goes at once, its lines with it.
+				const guide = base.kind !== "group" && GUIDE_ROLES.has(base.role ?? "");
+				const goal = exitTo(base, siblings, after.byKey) ?? (guide && base);
 				const from = painted(key);
 				if (!goal || !from) {
 					drop(key);
 					continue;
 				}
 				move(from, goal, now, now);
-				const at = siblings.findIndex((node) => node.key === key);
+				if (guide) {
+					spring1(key, OPACITY, value(key, OPACITY, 1, now), 0, now, now);
+				}
 				leaving.set(key, {
 					node: goal,
-					after: siblings[at - 1]?.key,
+					after: exit ? exit.after : before.afters.get(key),
 					siblings,
-				});
-			}
-			for (const [guide, shown] of fadingGuides) {
-				guides.set(guide.node.key, guide);
-				channels.set(channelKey(guide.node.key, OPACITY), {
-					generator: timing.motion(shown, 0, 0),
-					start: now,
 				});
 			}
 			const marks = [...after.byKey.values()].filter(
@@ -358,7 +358,7 @@ export function createMotionStore(
 					now +
 					staggerDelay(timing, order.get(node.key) ?? 0, marks.length) * 1000;
 				const old = painted(node.key);
-				leaving.delete(node.key);
+				const returning = leaving.delete(node.key);
 				const from =
 					old ??
 					enterFrom(node, after.siblings.get(node.key) ?? [], before.byKey);
@@ -367,12 +367,10 @@ export function createMotionStore(
 				if ((!from && node.enter !== "none") || fading) {
 					const shown = fading ? Math.max(0, sample(fading, now).value) : 0;
 					// A guide coming back starts from rest: its fade-out speed points the wrong way.
-					if (guides.has(node.key))
-						channels.delete(channelKey(node.key, OPACITY));
+					if (returning) channels.delete(channelKey(node.key, OPACITY));
 					spring1(node.key, OPACITY, shown, 1, start, now);
 				}
 			}
-			for (const key of after.byKey.keys()) guides.delete(key);
 			target = scene;
 		},
 		introduce(now) {
@@ -388,7 +386,7 @@ export function createMotionStore(
 			return any;
 		},
 		snap(scene) {
-			for (const motions of [channels, guides, shapes, leaving]) {
+			for (const motions of [channels, shapes, leaving]) {
 				motions.clear();
 			}
 			target = scene;
