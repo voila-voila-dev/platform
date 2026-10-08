@@ -11,6 +11,11 @@ type Points = Extract<SceneGeometry, { kind: "points" }>;
 
 const POINT_FIELDS = ["x", "y", "x0", "y0"] as const;
 
+/** Where `point` sits on its area's lower edge. */
+function lowerEdge(point: GeometryPoint): GeometryPoint {
+	return { ...point, x: point.x0 ?? point.x, y: point.y0 ?? point.y };
+}
+
 /** A line, an area or a radar outline through its points. */
 export function pointsPath(geometry: SceneGeometry): string {
 	if (geometry.kind !== "points") return "";
@@ -19,14 +24,7 @@ export function pointsPath(geometry: SceneGeometry): string {
 	return runs
 		.map((run) =>
 			shape === "area"
-				? areaPath(
-						run,
-						run.map((point) => ({
-							x: point.x0 ?? point.x,
-							y: point.y0 ?? point.y,
-						})),
-						curve,
-					)
+				? areaPath(run, run.map(lowerEdge), curve)
 				: linePath(run, curve),
 		)
 		.join("");
@@ -36,16 +34,12 @@ function channel(key: string, field: string): string {
 	return `${key}\u0001${field}`;
 }
 
-function fields(point: GeometryPoint, into: Map<string, number>) {
+/** `point`'s numbers under `key`'s channel names: `point` may be a neighbour that `key` enters from or folds into. */
+function fields(key: string, point: GeometryPoint, into: Map<string, number>) {
 	for (const field of POINT_FIELDS) {
 		const value = point[field];
-		if (value !== undefined) into.set(channel(point.key, field), value);
+		if (value !== undefined) into.set(channel(key, field), value);
 	}
-}
-
-/** `point`'s numbers under `key`'s channel names: a point entering from, or folding into, a neighbour. */
-function as(key: string, point: GeometryPoint): GeometryPoint {
-	return { ...point, key };
 }
 
 /** The nearest of `order` around `index` that `has` knows: looking back first, then ahead. */
@@ -113,8 +107,8 @@ function pointsPlan(from: Points, to: Points): GeometryPlan | undefined {
 			const target = next.get(key) ?? neighbour(order, at, next);
 			const start = old.get(key) ?? neighbour(order, at, old) ?? target;
 			if (target === undefined || start === undefined) continue;
-			fields(as(key, start), starts);
-			fields(as(key, target), targets);
+			fields(key, start, starts);
+			fields(key, target, targets);
 		}
 		return order;
 	});
@@ -167,13 +161,7 @@ function collapsed(node: ScenePath): ScenePath | undefined {
 		...node,
 		geometry: {
 			...geometry,
-			runs: geometry.runs.map((run) =>
-				run.map((point) => ({
-					...point,
-					x: point.x0 ?? point.x,
-					y: point.y0 ?? point.y,
-				})),
-			),
+			runs: geometry.runs.map((run) => run.map(lowerEdge)),
 		},
 	};
 }

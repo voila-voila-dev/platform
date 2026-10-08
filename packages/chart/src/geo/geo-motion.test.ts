@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { compileChart } from "#/core/compile.ts";
 import { defineChart } from "#/core/define-chart.ts";
 import { createMotionStore } from "#/core/motion/motion-store.ts";
-import { type ChartTiming, chartTiming } from "#/core/motion/timing.ts";
+import { tween } from "#/core/motion/tween-timing.ts";
 import type { ChartScene, SceneNode } from "#/core/types.ts";
 import { geoShape, projection } from "#/geo/geo.ts";
 
@@ -72,11 +72,7 @@ function ouest(scene: ChartScene): Extract<SceneNode, { kind: "path" }> {
 const VALID_PATH = /^M[-\d.,\sMLZ]+$/;
 
 describe("a map update", () => {
-	const timing = chartTiming({
-		type: "tween",
-		duration: 400,
-		easing: "linear",
-	}) as ChartTiming;
+	const timing = tween({ duration: 400, easing: "linear" });
 
 	it("morphs a region whose outline changed shape instead of swapping it", () => {
 		const before = map(square, 10);

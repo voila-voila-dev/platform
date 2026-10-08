@@ -33,23 +33,17 @@ export function leavingGuides(
 	return into;
 }
 
-/** `children` with the leaving guides of `parent` back at their places, faded to `opacity`. */
+/** `children` with the leaving guides of `parent` back at their places, as `paint` draws them. */
 export function withLeaving(
 	children: readonly SceneNode[],
 	parent: string | null,
-	leaving: ReadonlyArray<readonly [LeavingGuide, number]>,
+	leaving: Iterable<LeavingGuide>,
+	paint: (node: SceneNode) => SceneNode,
 ): SceneNode[] {
 	const placed = [...children];
-	for (const [guide, opacity] of leaving) {
-		if (guide.parent !== parent || guide.node.kind === "group") continue;
-		const faded = {
-			...guide.node,
-			paint: {
-				...guide.node.paint,
-				opacity: (guide.node.paint.opacity ?? 1) * opacity,
-			},
-		} as SceneNode;
-		placed.splice(Math.min(guide.index, placed.length), 0, faded);
+	for (const guide of leaving) {
+		if (guide.parent !== parent) continue;
+		placed.splice(Math.min(guide.index, placed.length), 0, paint(guide.node));
 	}
 	return placed;
 }

@@ -4,6 +4,23 @@ Versions are `MAJOR.MINOR.<CI run number>`: every push to `main` publishes, and
 the major moves by hand when a release breaks callers. This file records those
 moves — not every publish.
 
+## 6.0 — the chart's tween is an import
+
+A chart that animates on the default spring no longer loads the tween and
+its easings, about 0.8 KB gzip of `@voila.dev/chart`'s `line` entry. The
+tween moved from an `animate` object to a function you import.
+
+### Breaking
+
+| Was | Is |
+| --- | --- |
+| `<Chart animate={{ type: "tween", duration, easing, stagger }} />` | `<Chart animate={tween({ duration, easing, stagger })} />`, `tween` from `@voila.dev/chart` |
+| `ChartTiming` with `type`, `duration`, `bounce`, `easing` | `ChartTiming` is `{ stagger, motion(from, to, velocity) }`; the spring options are `ChartSpring` |
+
+The spring forms (`true`, a number, `{ duration, bounce, stagger }`) are
+unchanged. `@voila.dev/ui` and `@voila.dev/motion` move to 6.0 with the chart
+and change nothing else.
+
 ## 5.0 — charts move to their own package
 
 `@voila.dev/ui/chart` is gone. Charts are now

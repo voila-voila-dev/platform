@@ -66,10 +66,12 @@ export {
 } from "#/core/motion/motion-store.ts";
 export {
 	type ChartAnimation,
+	type ChartSpring,
 	type ChartTiming,
 	chartTiming,
 } from "#/core/motion/timing.ts";
 export { easeOutCubic, tweenScene } from "#/core/motion/tween.ts";
+export { type ChartTweenOptions, tween } from "#/core/motion/tween-timing.ts";
 export {
 	type ChartFocusStop,
 	findNearest,

@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { createMotionStore } from "#/core/motion/motion-store.ts";
 import { type ChartTiming, chartTiming } from "#/core/motion/timing.ts";
+import { tween } from "#/core/motion/tween-timing.ts";
 import { DEFAULT_THEME } from "#/core/theme.ts";
 import type { ChartScene, SceneNode } from "#/core/types.ts";
 
@@ -127,11 +128,7 @@ function createMotionStoreAt(at: number): ChartScene {
 }
 
 describe("colours and guides", () => {
-	const tween = chartTiming({
-		type: "tween",
-		duration: 400,
-		easing: "linear",
-	}) as ChartTiming;
+	const linear = tween({ duration: 400, easing: "linear" });
 
 	function tinted(fill: string): SceneNode {
 		return {
@@ -141,7 +138,7 @@ describe("colours and guides", () => {
 	}
 
 	it("mixes a fill in 2 % steps and lands on the exact colour", () => {
-		const store = createMotionStore(scene([tinted("var(--chart-1)")]), tween);
+		const store = createMotionStore(scene([tinted("var(--chart-1)")]), linear);
 		store.retarget(scene([tinted("var(--chart-2)")]), 0);
 		const fills = new Set<string>();
 		for (let now = 0; now <= 400; now += 1) {
@@ -181,7 +178,7 @@ describe("colours and guides", () => {
 	it("fades a leaving grid line out where it stood, then drops it", () => {
 		const store = createMotionStore(
 			scene([tick("grid:10", 10), tick("grid:20", 20)]),
-			tween,
+			linear,
 		);
 		store.retarget(scene([tick("grid:20", 30)]), 0);
 		const halfway = store.frame(200);
@@ -195,13 +192,16 @@ describe("colours and guides", () => {
 	});
 
 	it("never lingers a data mark", () => {
-		const store = createMotionStore(scene([bar(20, "a"), bar(20, "b")]), tween);
+		const store = createMotionStore(
+			scene([bar(20, "a"), bar(20, "b")]),
+			linear,
+		);
 		store.retarget(scene([bar(20, "a")]), 0);
 		expect(store.frame(10).nodes.map((node) => node.key)).toEqual(["a"]);
 	});
 
 	it("brings back a guide from the opacity it had faded to", () => {
-		const store = createMotionStore(scene([tick("grid:10", 10)]), tween);
+		const store = createMotionStore(scene([tick("grid:10", 10)]), linear);
 		store.retarget(scene([]), 0);
 		store.retarget(scene([tick("grid:10", 10)]), 200);
 		expect(opacityOf(store.frame(200), "grid:10")).toBeCloseTo(0.5, 1);

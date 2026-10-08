@@ -55,7 +55,16 @@ closes onto its neighbour.
 | `false` | Snap. |
 | a number | A spring of that perceived duration, in milliseconds. |
 | `{ duration, bounce, stagger }` | A spring. `bounce` goes from 0 to 0.5. |
-| `{ type: "tween", duration, easing, stagger }` | A fixed curve: `"easeOut"`, `"easeInOut"`… |
+| `tween({ duration, easing, stagger })` | A fixed curve: `"easeOut"`, `"easeInOut"`… |
+
+`tween` is its own import, so a chart that only springs never loads the
+easings:
+
+```tsx
+import { tween } from "@voila.dev/chart";
+
+<Chart definition={definition} ariaLabel="…" animate={tween({ duration: 300, easing: "easeInOut" })} />
+```
 
 The default spring never overshoots. A bar that passes its value shows a number
 the data doesn't have. Bounce is opt-in:

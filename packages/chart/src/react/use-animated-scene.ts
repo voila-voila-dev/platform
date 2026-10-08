@@ -1,4 +1,4 @@
-import { cancelFrame, frame, shouldReduceMotion } from "@voila.dev/motion";
+import { shouldReduceMotion } from "@voila.dev/motion";
 import * as React from "react";
 import {
 	createMotionStore,
@@ -53,20 +53,22 @@ export function useAnimatedScene(
 			return;
 		}
 		if (changed) store.retarget(scene, performance.now());
+		// One chart needs one callback a frame: a plain requestAnimationFrame
+		// keeps motion's shared frame loop out of every chart bundle.
+		let request = 0;
 		function tick() {
 			const now = performance.now();
 			if (store?.settled(now)) {
 				// Only once it has played: StrictMode's rerun of the effect starts it again.
 				introduced.current = true;
-				cancelFrame(tick);
 				setShown(scene);
 				return;
 			}
 			setShown(store?.frame(now) ?? scene);
+			request = requestAnimationFrame(tick);
 		}
 		tick();
-		frame.update(tick, true);
-		return () => cancelFrame(tick);
+		return () => cancelAnimationFrame(request);
 	}, [scene, trigger, timing]);
 
 	return shown;

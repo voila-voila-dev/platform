@@ -53,16 +53,13 @@ export function stringMixer(
 	return morph ? morph(from, to) : (progress) => tweenPath(from, to, progress);
 }
 
-/** `node` with each string channel set to its moving value. */
-export function withStrings(
-	node: SceneNode,
-	values: Partial<Record<StringChannel, string>>,
-): SceneNode {
-	if (node.kind === "group") return node;
-	const { d, ...colours } = values;
-	const shaped =
-		d === undefined || node.kind !== "path" ? node : { ...node, d };
-	return Object.keys(colours).length === 0
-		? shaped
-		: ({ ...shaped, paint: { ...shaped.paint, ...colours } } as SceneNode);
+/** `node` with one string channel set to its moving value. */
+export function withString<Node extends Exclude<SceneNode, { kind: "group" }>>(
+	node: Node,
+	channel: StringChannel,
+	value: string,
+): Node {
+	if (channel !== "d")
+		return { ...node, paint: { ...node.paint, [channel]: value } };
+	return node.kind === "path" ? { ...node, d: value } : node;
 }

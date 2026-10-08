@@ -71,8 +71,9 @@ interface Props
 	readonly dataTable?: boolean;
 	/**
 	 * How a data update moves: `true` (a spring with no bounce), a perceived
-	 * duration in milliseconds, or `{ duration, bounce, stagger }` and
-	 * `{ type: "tween", easing }`. `false` snaps; reduced motion always does.
+	 * duration in milliseconds, `{ duration, bounce, stagger }`, or
+	 * `tween({ duration, easing, stagger })`. `false` snaps; reduced motion
+	 * always does.
 	 */
 	readonly animate?: boolean | number | ChartAnimation;
 	/**
@@ -179,10 +180,14 @@ export function Chart({
 		() => [definition, hidden, keyboardZooms],
 		[definition, hidden, keyboardZooms],
 	);
-	// An inline `animate={{ … }}` object is read by value, not identity.
+	// An inline `animate={{ … }}` or `tween({ … })` is read by value, not
+	// identity: a new object each render must not restart the motion.
+	const latestAnimate = React.useRef(animate);
+	latestAnimate.current = animate;
 	const animateKey = JSON.stringify(animate);
+	// biome-ignore lint/correctness/useExhaustiveDependencies: keyed on the value of `animate`.
 	const timing = React.useMemo(
-		() => chartTiming(JSON.parse(animateKey)),
+		() => chartTiming(latestAnimate.current),
 		[animateKey],
 	);
 	const shown = useAnimatedScene(scene, animationTrigger, timing);
