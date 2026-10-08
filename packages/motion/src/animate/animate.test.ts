@@ -279,6 +279,76 @@ describe("sequence speed", () => {
 	});
 });
 
+describe("sequence controls", () => {
+	const linear = { type: "tween", ease: "linear", duration: 0.2 } as const;
+	function twoSegments() {
+		const value = motionValue(0);
+		const controls = animate([
+			[value, 10, linear],
+			[value, 20, linear],
+		]);
+		return { value, controls };
+	}
+	function settle() {
+		return new Promise((resolve) => setTimeout(resolve));
+	}
+
+	it("pauses a segment that started late", async () => {
+		const { value, controls } = twoSegments();
+		clock.advance(220);
+		await settle();
+		clock.advance(100);
+		controls.pause();
+		const held = value.get();
+		expect(held).toBeGreaterThan(10);
+		clock.advance(300);
+		expect(value.get()).toBe(held);
+		controls.play();
+		clock.advance(300);
+		await controls;
+		expect(value.get()).toBe(20);
+	});
+
+	it("doesn't run the clock of a waiting segment while paused", async () => {
+		const { value, controls } = twoSegments();
+		clock.advance(100);
+		controls.pause();
+		clock.advance(1000);
+		await settle();
+		expect(value.get()).toBeCloseTo(5, 0);
+		expect(controls.time).toBeCloseTo(0.1, 1);
+	});
+
+	it("seeks a paused sequence into a segment that hasn't started", () => {
+		const { value, controls } = twoSegments();
+		controls.pause();
+		controls.time = 0.3;
+		expect(value.get()).toBeCloseTo(15);
+		expect(controls.time).toBeCloseTo(0.3);
+	});
+
+	it("never starts a waiting segment once cancelled", async () => {
+		const { value, controls } = twoSegments();
+		clock.advance(100);
+		controls.cancel();
+		await settle();
+		clock.advance(500);
+		await controls;
+		expect(value.get()).toBe(0);
+	});
+
+	it("never starts a waiting segment once stopped", async () => {
+		const { value, controls } = twoSegments();
+		clock.advance(100);
+		controls.stop();
+		const held = value.get();
+		await settle();
+		clock.advance(500);
+		await controls;
+		expect(value.get()).toBe(held);
+	});
+});
+
 describe("sequence cursor", () => {
 	it("measures a relative time from the end of the segment just before", () => {
 		const a = motionValue(0);

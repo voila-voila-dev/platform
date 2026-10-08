@@ -13,10 +13,10 @@ import { build } from "esbuild";
 /** Gzip bytes. Raise one only with the reason in the commit message. */
 const BUDGETS = {
 	dom: 5_100,
-	animate: 12_300,
-	values: 12_300,
-	sequence: 12_400,
-	view: 13_800,
+	animate: 12_500,
+	values: 12_500,
+	sequence: 12_600,
+	view: 14_000,
 	react: 14_000,
 };
 

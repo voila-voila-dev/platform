@@ -95,17 +95,28 @@ export function animateSequence(
 	let rate = 1;
 	let base = 0;
 	let since = now();
+	let paused = false;
+	/** Stopped or cancelled: a segment still waiting never starts. */
+	let halted = false;
+	let completing = false;
 	function elapsed(): number {
-		return base + ((now() - since) / 1000) * rate;
+		return paused ? base : base + ((now() - since) / 1000) * rate;
+	}
+	function retime(seconds: number) {
+		base = seconds;
+		since = now();
 	}
 	const labels = new Map<string, number>();
 	const busy = new Map<
 		object,
 		Map<string, { readonly finished: Promise<void>; readonly end: number }>
 	>();
+	/** Live: a segment that waited joins it once launched, and the controls reach it. */
 	const children: AnimationControls[] = [];
-	/** The segments that waited, once launched: they take later speed changes too. */
-	const late: AnimationControls[] = [];
+	/** The sequence time each late segment's own time counts from. */
+	const origins = new Map<AnimationControls, number>();
+	/** Opens the segments still waiting that a seek reaches, in order. */
+	const openers: ((seconds: number) => void)[] = [];
 	const waits: Promise<void>[] = [];
 	let end = 0;
 	let cursor = 0;
@@ -159,14 +170,26 @@ export function animateSequence(
 			finished = controls.finished;
 			ends = Math.max(start, controls.duration);
 		} else {
-			// Played backwards, the sequence went back past it: it never starts.
+			const begins = start + (typeof delay === "number" ? delay : 0);
+			let opened: AnimationControls | undefined;
+			// Played backwards past it, stopped or cancelled, it never starts.
+			function open(): Promise<void> | undefined {
+				if (opened || halted || rate < 0) return opened?.finished;
+				const at = elapsed();
+				opened = launch();
+				const origin = Math.min(at, begins);
+				origins.set(opened, origin);
+				opened.time = at - origin;
+				if (paused) opened.pause();
+				if (completing) opened.complete();
+				children.push(opened);
+				return opened.finished;
+			}
+			openers.push((seconds) => {
+				if (seconds >= begins) open();
+			});
 			finished = Promise.all(before.map((earlier) => earlier.finished)).then(
-				() => {
-					if (rate < 0) return;
-					const controls = launch();
-					late.push(controls);
-					return controls.finished;
-				},
+				open,
 			);
 			waits.push(finished);
 			ends = start + plannedDuration(keyframes, { ...options, ...own });
@@ -184,16 +207,52 @@ export function animateSequence(
 	const finished = Promise.all([group.finished, ...waits]).then(
 		() => undefined,
 	);
+	/** The group's own action, after the sequence's clock or flags have moved. */
+	function around(action: keyof AnimationControls, first: () => void) {
+		const own = group[action] as () => void;
+		return {
+			value() {
+				first();
+				own();
+			},
+		};
+	}
 	Object.defineProperties(group, {
+		time: {
+			get: elapsed,
+			set(seconds: number) {
+				retime(seconds);
+				for (const child of children) {
+					child.time = seconds - (origins.get(child) ?? 0);
+				}
+				for (const opener of openers) opener(seconds);
+			},
+		},
+		pause: around("pause", () => {
+			retime(elapsed());
+			paused = true;
+		}),
+		play: around("play", () => {
+			retime(elapsed());
+			paused = false;
+		}),
+		stop: around("stop", () => {
+			halted = true;
+		}),
+		cancel: around("cancel", () => {
+			halted = true;
+		}),
+		complete: around("complete", () => {
+			completing = true;
+		}),
 		// The segments still waiting count too: they end after the ones launched.
 		duration: { value: Math.max(end, group.duration) },
 		speed: {
 			get: () => rate,
 			set(next: number) {
-				base = elapsed();
-				since = now();
+				retime(elapsed());
 				rate = next;
-				for (const child of [...children, ...late]) child.speed = next;
+				for (const child of children) child.speed = next;
 			},
 		},
 	});
