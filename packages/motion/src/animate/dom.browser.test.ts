@@ -51,6 +51,56 @@ describe("animate on elements", () => {
 		expect(getComputedStyle(element).translate).toBe("100px 50px");
 	});
 
+	it("tilts and skews through transform, added on top of the rest", async () => {
+		const element = box();
+		const controls = animate(
+			element,
+			{ rotateX: 40, rotateY: 30, skewX: 10, x: 20 },
+			{ duration: 0.2 },
+		);
+		const effects = element
+			.getAnimations()
+			.map((animation) => animation.effect as KeyframeEffect);
+		expect(effects.every((effect) => effect.composite === "add")).toBe(true);
+		const mid = effects.find((effect) =>
+			String(effect.getKeyframes().at(-1)?.transform).startsWith("rotateX"),
+		);
+		expect(mid?.getKeyframes().at(-1)?.transform).toBe("rotateX(40deg)");
+		await controls;
+		expect(element.style.transform).toBe(
+			"rotateX(40deg) rotateY(30deg) skew(0deg) skewX(10deg) skewY(0deg)",
+		);
+		expect(getComputedStyle(element).translate).toBe("20px");
+	});
+
+	it("leaves transform to the page on an element that only moves", async () => {
+		const element = box();
+		element.style.transform = "scale(2)";
+		await animate(element, { x: 10 }, { duration: 0.05 });
+		expect(element.style.transform).toBe("scale(2)");
+	});
+
+	it("snaps a skew under reduced motion", async () => {
+		await commands.emulateMedia({ reducedMotion: "reduce" });
+		const element = box();
+		await animate(element, { skew: 15 }, { duration: 0.2 });
+		expect(element.style.transform).toContain("skew(15deg)");
+	});
+
+	it("plays backwards in the browser and leaves the first keyframe", async () => {
+		const element = box();
+		const controls = animate(
+			element,
+			{ opacity: [0.2, 1], x: [0, 100] },
+			{ type: "tween", duration: 0.4 },
+		);
+		await new Promise((resolve) => setTimeout(resolve, 100));
+		controls.speed = -1;
+		await controls;
+		expect(element.style.opacity).toBe("0.2");
+		expect(translateX(element)).toBe(0);
+	});
+
 	it("can be interrupted mid-flight without a jump", async () => {
 		const element = box();
 		animate(element, { x: 300 }, { duration: 0.8 });

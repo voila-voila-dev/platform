@@ -79,17 +79,25 @@ export function jsAnimation<T>(config: JsAnimationConfig<T>): JsAnimation<T> {
 		resolve();
 	}
 
+	/** Played backwards, it ends where it started, the way WAAPI does. */
+	function finish() {
+		time = speed < 0 ? 0 : duration;
+		apply(speed < 0 ? (keyframes[0] as T) : last);
+		settle("finished");
+		config.onComplete?.();
+	}
+
 	function tick(data: FrameData) {
-		time = Math.max(0, time + ((data.timestamp - previous) / 1000) * speed);
+		time = Math.min(
+			duration,
+			Math.max(0, time + ((data.timestamp - previous) / 1000) * speed),
+		);
 		previous = data.timestamp;
-		if (time < duration) {
+		if (speed < 0 ? time > 0 : time < duration) {
 			render();
 			return;
 		}
-		time = duration;
-		render();
-		settle("finished");
-		config.onComplete?.();
+		finish();
 	}
 
 	function play() {
@@ -133,11 +141,7 @@ export function jsAnimation<T>(config: JsAnimationConfig<T>): JsAnimation<T> {
 			settle("finished");
 		},
 		complete() {
-			if (state === "finished") return;
-			time = duration;
-			render();
-			settle("finished");
-			config.onComplete?.();
+			if (state !== "finished") finish();
 		},
 		attachTimeline: () => false,
 		current() {

@@ -59,8 +59,8 @@ export type Keyframes<T = KeyframeValue> = T | readonly T[];
 
 /**
  * DOM keyframes: any CSS property (camelCase), a CSS variable (`--name`),
- * the independent transforms (`x`, `y`, `z`, `scale`, `scaleX`, `scaleY`,
- * `rotate`), or an SVG attribute. A single value animates from the current
+ * the transforms (`x`, `y`, `z`, `scale`, `scaleX`, `scaleY`,
+ * `rotate`, `rotateX`, `rotateY`, `skew`, `skewX`, `skewY`), or an SVG attribute. A single value animates from the current
  * one; an array lists every keyframe. Numbers take the property's unit (px,
  * deg) when it has one.
  */

@@ -131,6 +131,11 @@ export function waapiAnimation(
 			: keyframes.length - 1
 	] as KeyframeValue;
 
+	/** Played backwards, it ends on its first keyframe. */
+	function end(): KeyframeValue {
+		return animation.playbackRate < 0 ? (keyframes[0] as KeyframeValue) : last;
+	}
+
 	let settled = false;
 	/** What stayed on screen when it settled: where a following animation starts. */
 	let held: KeyframeValue = keyframes[0] as KeyframeValue;
@@ -170,7 +175,7 @@ export function waapiAnimation(
 	animation.finished.then(
 		() => {
 			if (settled) return;
-			settle(last);
+			settle(end());
 			config.onComplete?.();
 		},
 		() => settle(undefined),
@@ -201,7 +206,7 @@ export function waapiAnimation(
 		// The browser refuses to finish an endless animation: settle on its last frame instead.
 		complete: () =>
 			iterations === Number.POSITIVE_INFINITY
-				? settle(last)
+				? settle(end())
 				: animation.finish(),
 		attachTimeline(timeline) {
 			animation.timeline = timeline;

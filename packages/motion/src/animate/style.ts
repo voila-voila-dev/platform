@@ -1,6 +1,6 @@
 import type { KeyframeValue } from "#/animate/types.ts";
 
-type TransformProperty = "translate" | "scale" | "rotate";
+type TransformProperty = "translate" | "scale" | "rotate" | "transform";
 
 interface TransformChannel {
 	readonly property: TransformProperty;
@@ -9,6 +9,13 @@ interface TransformChannel {
 	/** The channel alone as a value of its property, the other axes at identity. */
 	readonly alone: (value: string) => string;
 }
+
+/**
+ * The transforms with no CSS property of their own (`rotate` takes one axis,
+ * and skew has none): they go through `transform`, in this order, after
+ * `translate`, `rotate` and `scale`.
+ */
+const LISTED = ["rotateX", "rotateY", "skew", "skewX", "skewY"];
 
 /**
  * The independent transforms. Each animates its CSS property alone with
@@ -38,6 +45,17 @@ export const TRANSFORMS: Readonly<Record<string, TransformChannel>> = {
 		identity: 0,
 		alone: (v) => `${v}`,
 	},
+	...Object.fromEntries(
+		LISTED.map((key) => [
+			key,
+			{
+				property: "transform",
+				unit: "deg",
+				identity: 0,
+				alone: (v: string) => `${key}(${v})`,
+			},
+		]),
+	),
 };
 
 const UNITLESS = new Set([
@@ -102,6 +120,15 @@ export function writeTransforms(element: Element) {
 	const uniform = Number.parseFloat(at("scale"));
 	style.scale = `${uniform * Number.parseFloat(at("scaleX"))} ${uniform * Number.parseFloat(at("scaleY"))}`;
 	style.rotate = at("rotate");
+	// `transform` stays the page's on an element that never animates these.
+	if (
+		LISTED.some(
+			(key) =>
+				committed.get(element)?.has(key) || animating.get(element)?.has(key),
+		)
+	) {
+		style.transform = LISTED.map((key) => `${key}(${at(key)})`).join(" ");
+	}
 }
 
 export function beginTransform(element: Element, key: string) {

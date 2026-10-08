@@ -46,7 +46,10 @@ React 19 is an optional peer, used only by `/react`. The core never imports it.
   with `composite: "add"`. They run on the compositor, add up, and stop
   independently. When they finish, their values are written into the
   element's inline `translate`, `scale` and `rotate`: those three styles
-  belong to motion on an element it animates.
+  belong to motion on an element it animates. `rotateX`, `rotateY`, `skew`,
+  `skewX` and `skewY` have no property of their own: they animate
+  `transform` the same way, and once one has run on an element, its inline
+  `transform` belongs to motion too.
 - **Interruption.** A new animation on a property starts from what is
   painted, at the speed the last one had. For numbers, motion keeps the
   generator behind each browser animation and reads both from it; for

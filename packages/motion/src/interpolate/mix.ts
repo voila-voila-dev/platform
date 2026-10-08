@@ -18,8 +18,9 @@ function bothStrings(from: unknown, to: unknown): [string, string] | undefined {
 }
 
 /**
- * A colour pair needs one side written out, or both to be variables: two bare
- * words are as likely `auto` and `none` as `red` and `blue`.
+ * A colour pair needs one side spelled out (a name counts where a browser can
+ * spell it), or both to be variables: two other bare words are as likely
+ * `auto` and `none` as colours.
  */
 function colors(from: string, to: string): boolean {
 	const resolved =

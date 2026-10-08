@@ -117,7 +117,36 @@ function parseHex(hex: string): Rgba | undefined {
 	};
 }
 
-/** A colour written out in full; `undefined` for what only the page can resolve (`var()`, names). */
+const names = new Map<string, Rgba | undefined>();
+let probe: CanvasRenderingContext2D | null | undefined;
+const SENTINEL = "#010203";
+
+/**
+ * A colour name (`red`, `rebeccapurple`) as the browser spells it out: a
+ * canvas drops what isn't a colour (`auto`, `none`) and hands back hex for
+ * what is. The 148 names would weigh more than this; without a browser a
+ * name stays unknown and the page mixes it.
+ */
+function parseName(name: string): Rgba | undefined {
+	if (name === "currentcolor" || !/^[a-z]+$/.test(name)) return undefined;
+	if (!names.has(name)) {
+		probe ??=
+			typeof document === "undefined"
+				? null
+				: document.createElement("canvas").getContext("2d");
+		let resolved: Rgba | undefined;
+		if (probe) {
+			probe.fillStyle = SENTINEL;
+			probe.fillStyle = name;
+			const spelled = String(probe.fillStyle);
+			resolved = spelled === SENTINEL ? undefined : parseColor(spelled);
+		}
+		names.set(name, resolved);
+	}
+	return names.get(name);
+}
+
+/** A colour written out in full, or a name the browser knows; `undefined` for what only the page can resolve (`var()`, `currentColor`). */
 export function parseColor(text: string): Rgba | undefined {
 	const trimmed = text.trim();
 	if (trimmed.toLowerCase() === "transparent") {
@@ -128,7 +157,7 @@ export function parseColor(text: string): Rgba | undefined {
 	}
 	const match = FUNCTION.exec(trimmed);
 	if (match === null) {
-		return undefined;
+		return parseName(trimmed.toLowerCase());
 	}
 	const name = (match[1] as string).toLowerCase().replace(/a$/, "");
 	const args = (match[2] as string).split(/[\s,/]+/).filter(Boolean);

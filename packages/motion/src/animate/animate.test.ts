@@ -74,6 +74,38 @@ describe("animate a motion value", () => {
 		expect(value.get()).toBe(100);
 	});
 
+	it("plays backwards at a negative speed and finishes where it started", async () => {
+		const value = motionValue(0);
+		const completed = vi.fn();
+		value.on("animationComplete", completed);
+		const controls = animate(value, [0, 100], {
+			type: "tween",
+			duration: 1,
+			ease: "linear",
+		});
+		clock.advance(500);
+		const halfway = value.get();
+		controls.speed = -1;
+		clock.advance(250);
+		expect(value.get()).toBeLessThan(halfway);
+		expect(controls.state).toBe("running");
+		clock.advance(500);
+		await controls;
+		expect(value.get()).toBe(0);
+		expect(controls.time).toBe(0);
+		expect(completed).toHaveBeenCalledTimes(1);
+	});
+
+	it("completes backwards to the start at a negative speed", async () => {
+		const value = motionValue(0);
+		const controls = animate(value, [0, 100], { type: "tween", duration: 1 });
+		clock.advance(300);
+		controls.speed = -2;
+		controls.complete();
+		await controls;
+		expect(value.get()).toBe(0);
+	});
+
 	it("repeats, reversing every other time", () => {
 		const value = motionValue(0);
 		const controls = animate(value, [0, 10], {
@@ -175,6 +207,35 @@ describe("sequences", () => {
 		clock.advance(300);
 		await controls;
 		expect(value.get()).toBe(20);
+	});
+});
+
+describe("sequence duration", () => {
+	it("counts a segment that waits for an earlier one on the same value", () => {
+		const value = motionValue(0);
+		const other = motionValue(0);
+		const tween = { type: "tween", duration: 0.2 } as const;
+		const controls = animate([
+			[value, 10, tween],
+			[value, 20, { ...tween, at: "<" }],
+			[other, 1, { ...tween, at: "<" }],
+			[other, 2, { ...tween, delay: 0.1 }],
+		]);
+		// value runs 0 → 0.2 then 0.2 → 0.4; other starts with its second
+		// segment (0.2 → 0.4), then waits out its delay and runs 0.5 → 0.7.
+		expect(controls.duration).toBeCloseTo(0.7);
+	});
+
+	it("places the segment after a waiting one at its end", () => {
+		const value = motionValue(0);
+		const next = motionValue(0);
+		const tween = { type: "tween", duration: 0.2 } as const;
+		const controls = animate([
+			[value, 10, tween],
+			[value, 20, { ...tween, at: 0 }],
+			[next, 1, tween],
+		]);
+		expect(controls.duration).toBeCloseTo(0.6);
 	});
 });
 

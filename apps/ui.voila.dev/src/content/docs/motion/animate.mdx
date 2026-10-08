@@ -22,12 +22,16 @@ any CSS property in camelCase, and these independent transforms:
 | `x`, `y`, `z` | `translate` | px |
 | `scale`, `scaleX`, `scaleY` | `scale` | none |
 | `rotate` | `rotate` | deg |
+| `rotateX`, `rotateY`, `skew`, `skewX`, `skewY` | `transform` | deg |
 
 Each transform runs as its own browser animation with `composite: "add"`. So
 `x` and `y` both run on the compositor and add up, and you can interrupt one
 without touching the other. When they finish, they write their values into
 the element's inline `translate`, `scale` and `rotate`. Those three styles
-belong to motion: don't set them yourself on an animated element.
+belong to motion: don't set them yourself on an animated element. The tilts
+and skews have no property of their own, so they share `transform`, applied
+after the other three. Once one has run on an element, motion owns its
+inline `transform` too.
 
 A single value animates from the current one. An array lists every keyframe.
 Numbers take the property's unit; strings pass through (`"50%"`, `"2rem"`).
@@ -62,11 +66,11 @@ Every call returns the same controls, whatever plays the animation:
 const controls = animate(element, { x: 100 });
 controls.pause();
 controls.time = 0.2;   // seconds, delay included
-controls.speed = 0.5;
+controls.speed = 0.5;   // -1 plays it backwards, to finish at the start
 controls.play();
 controls.stop();       // stays where it is
 controls.cancel();     // back to the start
-controls.complete();   // jump to the end
+controls.complete();   // jump to the end (the start when played backwards)
 await controls;        // or controls.finished
 ```
 

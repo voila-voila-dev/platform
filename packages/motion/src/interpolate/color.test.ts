@@ -24,6 +24,7 @@ describe("parseColor", () => {
 
 	it("leaves to the page what only the page knows", () => {
 		expect(parseColor("var(--chart-1)")).toBeUndefined();
+		// Without a browser to spell it out, a name is the page's too.
 		expect(parseColor("red")).toBeUndefined();
 	});
 });
