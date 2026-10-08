@@ -1,6 +1,6 @@
 import { act } from "react";
 import { createRoot, type Root } from "react-dom/client";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { defineChart } from "#/core/define-chart.ts";
 import { barY } from "#/core/marks/bar.ts";
 import { lineY } from "#/core/marks/line.ts";
@@ -39,6 +39,31 @@ async function sample<T>(ms: number, read: () => T): Promise<T[]> {
 	return readings;
 }
 
+/**
+ * The chart reads time through `performance.now()`: the test sets it, so a
+ * slow runner can't skip past the middle of a motion before anything reads it.
+ */
+function testClock() {
+	let now = 0;
+	const spy = vi.spyOn(performance, "now").mockImplementation(() => now);
+	return {
+		set(ms: number) {
+			now = ms;
+		},
+		restore: () => spy.mockRestore(),
+	};
+}
+
+/** A few painted frames, outside `act` so React commits each one. */
+async function frames(count = 3) {
+	const scope = globalThis as { IS_REACT_ACT_ENVIRONMENT?: boolean };
+	scope.IS_REACT_ACT_ENVIRONMENT = false;
+	for (let index = 0; index < count; index += 1) {
+		await new Promise((resolve) => requestAnimationFrame(resolve));
+	}
+	scope.IS_REACT_ACT_ENVIRONMENT = true;
+}
+
 afterEach(async () => {
 	await act(async () => root?.unmount());
 	host?.remove();
@@ -48,27 +73,30 @@ afterEach(async () => {
 
 describe("motion in the SVG renderer", () => {
 	it("traces a line in on the first render, then leaves it whole", async () => {
-		const container = await mount(
-			<Chart
-				ariaLabel="Missions"
-				// Slow enough that a busy runner can't finish the draw before the first reading.
-				animate={1500}
-				definition={defineChart({
-					marks: [lineY([4, 8, 6, 9], { enter: "draw", label: "Missions" })],
-				})}
-			/>,
-		);
-		const line = () =>
-			container.querySelector("[data-slot=chart-svg] path[data-role=mark]");
-		const offsets = await sample(4000, () => {
-			const path = line();
-			return path?.hasAttribute("pathLength")
-				? Number(path.getAttribute("stroke-dashoffset"))
-				: 0;
-		});
-		// Seen part-drawn on the way: a slow runner may miss the first frames, never all of them.
-		expect(offsets.some((offset) => offset > 0.05 && offset < 0.95)).toBe(true);
-		expect(line()?.hasAttribute("pathLength")).toBe(false);
+		const clock = testClock();
+		try {
+			const container = await mount(
+				<Chart
+					ariaLabel="Missions"
+					definition={defineChart({
+						marks: [lineY([4, 8, 6, 9], { enter: "draw", label: "Missions" })],
+					})}
+				/>,
+			);
+			const line = () =>
+				container.querySelector("[data-slot=chart-svg] path[data-role=mark]");
+			clock.set(150);
+			await frames();
+			expect(line()?.getAttribute("pathLength")).toBe("1");
+			const offset = Number(line()?.getAttribute("stroke-dashoffset"));
+			expect(offset).toBeGreaterThan(0.05);
+			expect(offset).toBeLessThan(0.95);
+			clock.set(10_000);
+			await frames();
+			expect(line()?.hasAttribute("pathLength")).toBe(false);
+		} finally {
+			clock.restore();
+		}
 	});
 
 	it("keeps drawing a line in when the chart is resized mid-draw", async () => {
