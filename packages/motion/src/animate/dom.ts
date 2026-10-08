@@ -47,6 +47,18 @@ export type ScriptedChannel = (
 	config: JsAnimationConfig<KeyframeValue>,
 ) => JsAnimation<KeyframeValue>;
 
+/**
+ * The independent transforms add up. The listed ones (`transform`)
+ * accumulate: function by function, so their order never depends on which
+ * started first.
+ */
+const COMPOSITES: Readonly<Record<string, CompositeOperation>> = {
+	translate: "add",
+	scale: "add",
+	rotate: "add",
+	transform: "accumulate",
+};
+
 const running = new WeakMap<Element, Map<string, JsAnimation<KeyframeValue>>>();
 
 interface Channel {
@@ -133,7 +145,7 @@ function animateChannel(
 					transform
 						? transform.alone(withUnit(key, frame))
 						: withUnit(key, frame),
-				composite: transform ? "add" : "replace",
+				composite: COMPOSITES[transform?.property ?? ""] ?? "replace",
 				commit: channel.write,
 			})
 		: (scripted as ScriptedChannel)({ ...config, apply: channel.write });

@@ -61,16 +61,52 @@ describe("animate on elements", () => {
 		const effects = element
 			.getAnimations()
 			.map((animation) => animation.effect as KeyframeEffect);
-		expect(effects.every((effect) => effect.composite === "add")).toBe(true);
-		const mid = effects.find((effect) =>
-			String(effect.getKeyframes().at(-1)?.transform).startsWith("rotateX"),
+		expect(effects.map((effect) => effect.composite).sort()).toEqual([
+			"accumulate",
+			"accumulate",
+			"accumulate",
+			"add",
+		]);
+		const tilt = effects.find(
+			(effect) =>
+				effect.getKeyframes().at(-1)?.transform ===
+				"rotateX(40deg) rotateY(0deg) skew(0deg) skewX(0deg) skewY(0deg)",
 		);
-		expect(mid?.getKeyframes().at(-1)?.transform).toBe("rotateX(40deg)");
+		expect(tilt).toBeDefined();
 		await controls;
 		expect(element.style.transform).toBe(
 			"rotateX(40deg) rotateY(30deg) skew(0deg) skewX(10deg) skewY(0deg)",
 		);
 		expect(getComputedStyle(element).translate).toBe("20px");
+	});
+
+	it("keeps the tilts in a fixed order whichever starts first", async () => {
+		const element = box();
+		const linear = { type: "tween", ease: "linear", duration: 1 } as const;
+		// rotateY starts first and rotateX finishes first: composed by start
+		// order, the element would turn about the other axis order, then jump
+		// when rotateX hands its value to the inline list.
+		const tiltY = animate(element, { rotateY: [0, 60] }, linear);
+		const tiltX = animate(element, { rotateX: [0, 60] }, linear);
+		tiltY.pause();
+		tiltX.pause();
+		tiltY.time = 0.5;
+		tiltX.time = 0.5;
+		await nextFrame();
+		const painted = new DOMMatrix(getComputedStyle(element).transform);
+		const fixed = new DOMMatrix("rotateX(30deg) rotateY(30deg)");
+		for (const entry of ["m11", "m13", "m22", "m23", "m31", "m33"] as const) {
+			expect(painted[entry]).toBeCloseTo(fixed[entry], 3);
+		}
+		tiltX.complete();
+		await tiltX;
+		const after = new DOMMatrix(getComputedStyle(element).transform);
+		const fixedAfter = new DOMMatrix("rotateX(60deg) rotateY(30deg)");
+		for (const entry of ["m11", "m13", "m22", "m23", "m31", "m33"] as const) {
+			expect(after[entry]).toBeCloseTo(fixedAfter[entry], 3);
+		}
+		tiltY.complete();
+		await tiltY;
 	});
 
 	it("leaves transform to the page on an element that only moves", async () => {

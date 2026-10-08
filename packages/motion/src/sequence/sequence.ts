@@ -91,13 +91,21 @@ export function animateSequence(
 	animateOne: AnimateOne,
 	resolveTargets: ResolveTargets,
 ): AnimationControls {
-	const begun = now();
+	/** The sequence's own clock: it runs at the speed the sequence is set to. */
+	let rate = 1;
+	let base = 0;
+	let since = now();
+	function elapsed(): number {
+		return base + ((now() - since) / 1000) * rate;
+	}
 	const labels = new Map<string, number>();
 	const busy = new Map<
 		object,
 		Map<string, { readonly finished: Promise<void>; readonly end: number }>
 	>();
 	const children: AnimationControls[] = [];
+	/** The segments that waited, once launched: they take later speed changes too. */
+	const late: AnimationControls[] = [];
 	const waits: Promise<void>[] = [];
 	let end = 0;
 	let cursor = 0;
@@ -138,8 +146,11 @@ export function animateSequence(
 						: Math.max(0, offset + (delay ?? 0)),
 			};
 		}
-		const launch = () =>
-			animateOne(target, keyframes, optionsAt((now() - begun) / 1000));
+		function launch(): AnimationControls {
+			const controls = animateOne(target, keyframes, optionsAt(elapsed()));
+			controls.speed = rate;
+			return controls;
+		}
 		let finished: Promise<void>;
 		let ends: number;
 		if (before.length === 0) {
@@ -148,8 +159,14 @@ export function animateSequence(
 			finished = controls.finished;
 			ends = Math.max(start, controls.duration);
 		} else {
+			// Played backwards, the sequence went back past it: it never starts.
 			finished = Promise.all(before.map((earlier) => earlier.finished)).then(
-				() => launch().finished,
+				() => {
+					if (rate < 0) return;
+					const controls = launch();
+					late.push(controls);
+					return controls.finished;
+				},
 			);
 			waits.push(finished);
 			ends = start + plannedDuration(keyframes, { ...options, ...own });
@@ -167,9 +184,18 @@ export function animateSequence(
 	const finished = Promise.all([group.finished, ...waits]).then(
 		() => undefined,
 	);
-	// The segments still waiting count too: they end after the ones launched.
-	Object.defineProperty(group, "duration", {
-		value: Math.max(end, group.duration),
+	Object.defineProperties(group, {
+		// The segments still waiting count too: they end after the ones launched.
+		duration: { value: Math.max(end, group.duration) },
+		speed: {
+			get: () => rate,
+			set(next: number) {
+				base = elapsed();
+				since = now();
+				rate = next;
+				for (const child of [...children, ...late]) child.speed = next;
+			},
+		},
 	});
 	return Object.assign(group, thenable(finished));
 }

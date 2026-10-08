@@ -52,7 +52,10 @@ export const TRANSFORMS: Readonly<Record<string, TransformChannel>> = {
 				property: "transform",
 				unit: "deg",
 				identity: 0,
-				alone: (v: string) => `${key}(${v})`,
+				// The whole list, the others at identity: accumulated onto the
+				// inline list, every function keeps its place whatever starts when.
+				alone: (v: string) =>
+					LISTED.map((one) => `${one}(${one === key ? v : "0deg"})`).join(" "),
 			},
 		]),
 	),

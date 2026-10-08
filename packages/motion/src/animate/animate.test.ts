@@ -239,6 +239,46 @@ describe("sequence duration", () => {
 	});
 });
 
+describe("sequence speed", () => {
+	it("reaches a segment that waits, and times its start by the sequence", async () => {
+		const value = motionValue(0);
+		const linear = { type: "tween", ease: "linear", duration: 0.2 } as const;
+		const controls = animate([
+			[value, 10, linear],
+			[value, 20, linear],
+		]);
+		controls.speed = 2;
+		clock.advance(110);
+		expect(value.get()).toBe(10);
+		await new Promise((resolve) => setTimeout(resolve));
+		// At twice the speed, the second 0.2 s segment takes 0.1 s.
+		clock.advance(50);
+		// At speed 1 with a wall-clock start it would not have moved yet.
+		expect(value.get()).toBeGreaterThan(12);
+		expect(value.get()).toBeLessThan(20);
+		clock.advance(60);
+		await controls;
+		expect(value.get()).toBe(20);
+		expect(controls.speed).toBe(2);
+	});
+
+	it("never starts a waiting segment the sequence plays back past", async () => {
+		const value = motionValue(0);
+		const linear = { type: "tween", ease: "linear", duration: 0.2 } as const;
+		const controls = animate([
+			[value, 10, linear],
+			[value, 20, linear],
+		]);
+		clock.advance(100);
+		controls.speed = -1;
+		clock.advance(150);
+		await new Promise((resolve) => setTimeout(resolve));
+		await controls;
+		clock.advance(300);
+		expect(value.get()).toBe(0);
+	});
+});
+
 describe("sequence cursor", () => {
 	it("measures a relative time from the end of the segment just before", () => {
 		const a = motionValue(0);
