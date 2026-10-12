@@ -49,6 +49,11 @@ export function tickLabel(
 	return options?.tickFormat?.(value) ?? scale.format(value);
 }
 
+/** Two ticks can share a label ("11:00" on two days), never a value. */
+function tickKey(value: ChartValue): string {
+	return value instanceof Date ? String(value.getTime()) : String(value);
+}
+
 /** Cuts a label down to `maxWidth`, ending on an ellipsis. */
 export function truncate(
 	text: string,
@@ -157,7 +162,7 @@ export function bottomAxis(
 	const gridNodes: SceneNode[] = grid
 		? ticks.map((tick, index) => ({
 				kind: "line",
-				key: `grid-x:${tickLabel(scale, options, tick)}`,
+				key: `grid-x:${tickKey(tick)}`,
 				role: "grid",
 				x1: positions[index],
 				y1: plot.y,
@@ -175,7 +180,7 @@ export function bottomAxis(
 	const labels: SceneNode[] = thinned(ticks, widths, positions).map(
 		(index) => ({
 			kind: "text",
-			key: `tick-x:${texts[index]}`,
+			key: `tick-x:${tickKey(ticks[index])}`,
 			role: "axis",
 			x: positions[index],
 			y: baseline,
@@ -220,7 +225,7 @@ export function leftAxis(
 	const gridNodes: SceneNode[] = grid
 		? ticks.map((tick, index) => ({
 				kind: "line",
-				key: `grid-y:${tickLabel(scale, options, tick)}`,
+				key: `grid-y:${tickKey(tick)}`,
 				role: "grid",
 				x1: plot.x,
 				y1: positions[index],
@@ -248,7 +253,7 @@ export function leftAxis(
 	const labels: SceneNode[] = thinned(ticks, heights, positions).map(
 		(index) => ({
 			kind: "text",
-			key: `tick-y:${texts[index]}`,
+			key: `tick-y:${tickKey(ticks[index])}`,
 			role: "axis",
 			x: plot.x - TICK_GAP,
 			y: positions[index],

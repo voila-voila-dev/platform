@@ -291,4 +291,29 @@ describe("compileChart", () => {
 			(gapStart + x.map("S2")) / 2,
 		);
 	});
+	it("keys each axis tick by its value, so two ticks sharing a label stay apart", () => {
+		const hours = [0, 6, 12, 18, 24, 30, 36, 42].map((hour) => ({
+			at: new Date(Date.UTC(2026, 9, 11, hour)),
+			requests: hour,
+		}));
+		const scene = compileChart(
+			defineChart({
+				marks: [lineY(hours, { x: "at", y: "requests" })],
+				x: {
+					ticks: hours.map((row) => row.at),
+					tickFormat: (value) =>
+						`${String((value as Date).getUTCHours()).padStart(2, "0")}:00`,
+				},
+				y: { tickFormat: () => "n" },
+			}),
+			{ width: 2000, height: 320 },
+		);
+		const keys = [...byRole(scene, "axis"), ...byRole(scene, "grid")].map(
+			(node) => node.key,
+		);
+		expect(
+			byRole(scene, "axis").filter((node) => node.key.startsWith("tick-x:")),
+		).toHaveLength(8);
+		expect(new Set(keys).size).toBe(keys.length);
+	});
 });
