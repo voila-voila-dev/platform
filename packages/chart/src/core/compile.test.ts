@@ -316,4 +316,25 @@ describe("compileChart", () => {
 		).toHaveLength(8);
 		expect(new Set(keys).size).toBe(keys.length);
 	});
+	it("writes a label once while the ticks under it keep reading the same", () => {
+		const hours = Array.from({ length: 13 }, (_tick, index) => ({
+			at: new Date(Date.UTC(2026, 9, 8, 6 * index)),
+			requests: index,
+		}));
+		const scene = compileChart(
+			defineChart({
+				marks: [lineY(hours, { x: "at", y: "requests" })],
+				x: {
+					ticks: hours.map((row) => row.at),
+					tickFormat: (value) => `${(value as Date).getUTCDate()} oct.`,
+				},
+			}),
+			{ width: 2000, height: 320 },
+		);
+		expect(
+			byRole(scene, "axis")
+				.filter((node) => node.key.startsWith("tick-x:"))
+				.map((node) => (node.kind === "text" ? node.text : "")),
+		).toEqual(["8 oct.", "9 oct.", "10 oct.", "11 oct."]);
+	});
 });

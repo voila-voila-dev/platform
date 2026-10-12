@@ -132,23 +132,33 @@ export interface AxisNodes {
 }
 
 /**
- * Every `step`-th label, so neighbours never overlap. The step is the same
- * across the axis: thinning by skipping single labels reads as noise.
+ * The first tick of each run that reads the same ("9 oct." on four ticks six
+ * hours apart says the day once), then every `step`-th of those, so neighbours
+ * never overlap. The step is the same across the axis: thinning by skipping
+ * single labels reads as noise.
  */
 function thinned(
-	ticks: ReadonlyArray<ChartValue>,
+	texts: ReadonlyArray<string>,
 	widths: ReadonlyArray<number>,
 	positions: ReadonlyArray<number>,
 ): ReadonlyArray<number> {
-	if (ticks.length < 2) {
-		return ticks.map((_tick, index) => index);
+	const distinct = texts
+		.map((_text, index) => index)
+		.filter((index) => index === 0 || texts[index] !== texts[index - 1]);
+	if (distinct.length < 2) {
+		return distinct;
 	}
-	const spacing = Math.abs(positions[1] - positions[0]) || 1;
-	const widest = Math.max(...widths);
+	const spacing =
+		Math.min(
+			...distinct
+				.slice(1)
+				.map((index, at) =>
+					Math.abs(positions[index] - positions[distinct[at]]),
+				),
+		) || 1;
+	const widest = Math.max(...distinct.map((index) => widths[index]));
 	const step = Math.max(1, Math.ceil((widest + LABEL_SPACING) / spacing));
-	return ticks
-		.map((_tick, index) => index)
-		.filter((index) => index % step === 0);
+	return distinct.filter((_index, at) => at % step === 0);
 }
 
 export function bottomAxis(
@@ -177,7 +187,7 @@ export function bottomAxis(
 	const texts = ticks.map((tick) => tickLabel(scale, options, tick));
 	const widths = texts.map((text) => measureText(text, theme.fontSize));
 	const baseline = plot.y + plot.height + TICK_GAP;
-	const labels: SceneNode[] = thinned(ticks, widths, positions).map(
+	const labels: SceneNode[] = thinned(texts, widths, positions).map(
 		(index) => ({
 			kind: "text",
 			key: `tick-x:${tickKey(ticks[index])}`,
@@ -250,7 +260,7 @@ export function leftAxis(
 		),
 	);
 	const heights = texts.map(() => theme.fontSize);
-	const labels: SceneNode[] = thinned(ticks, heights, positions).map(
+	const labels: SceneNode[] = thinned(texts, heights, positions).map(
 		(index) => ({
 			kind: "text",
 			key: `tick-y:${tickKey(ticks[index])}`,
