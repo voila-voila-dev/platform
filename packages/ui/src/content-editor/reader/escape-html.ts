@@ -29,3 +29,26 @@ export function kitClassName(
 		options.classNameFor?.(type) ?? (options.unstyled ? undefined : fallback)
 	);
 }
+
+const SAFE_SCHEMES = new Set(["http", "https", "mailto", "tel"]);
+
+/**
+ * A URL ready for an `href` or a `src`, `#` in place of a scheme that runs
+ * code (`javascript:`, `vbscript:`, a `data:` that is not an image). The
+ * tabs and newlines are dropped first because a browser drops them too
+ * before reading the scheme.
+ */
+export function escapeUrl(url: string): string {
+	const readable = url.replace(/[\t\n\r]/g, "");
+	let start = 0;
+	while (start < readable.length && readable.charCodeAt(start) <= 32) {
+		start += 1;
+	}
+	const target = readable.slice(start);
+	const scheme = /^([a-z][a-z\d+.-]*):/i.exec(target)?.[1]?.toLowerCase();
+	const safe =
+		scheme === undefined ||
+		SAFE_SCHEMES.has(scheme) ||
+		/^data:image\//i.test(target);
+	return escapeHtml(safe ? url : "#");
+}

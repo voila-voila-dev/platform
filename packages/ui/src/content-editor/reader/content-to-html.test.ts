@@ -83,6 +83,49 @@ describe("contentToHtml", () => {
 		);
 	});
 
+	it("writes # in place of a link or image URL whose scheme runs code", () => {
+		const link = (url: string) =>
+			html([
+				{
+					type: "p",
+					children: [{ type: "a", url, children: [{ text: "x" }] }],
+				},
+			]).match(/href="([^"]*)"/)?.[1];
+		expect(
+			[
+				"javascript:alert(1)",
+				" JavaScript:alert(1)",
+				"java\tscript:alert(1)",
+				"vbscript:x",
+				"data:text/html,<script>",
+				"https://x",
+				"mailto:a@b.c",
+				"tel:+33",
+				"/blog",
+				"#top",
+				"page?q=a:b",
+			].map(link),
+		).toEqual([
+			"#",
+			"#",
+			"#",
+			"#",
+			"#",
+			"https://x",
+			"mailto:a@b.c",
+			"tel:+33",
+			"/blog",
+			"#top",
+			"page?q=a:b",
+		]);
+		const image = (url: string) =>
+			html([{ type: "image", url, children: [{ text: "" }] }]).match(
+				/src="([^"]*)"/,
+			)?.[1];
+		expect(image("data:image/png;base64,AA")).toBe("data:image/png;base64,AA");
+		expect(image("javascript:alert(1)")).toBe("#");
+	});
+
 	it("renders the void nodes and reads image sizes from the options", () => {
 		const imageDimensions = new Map([
 			["https://i/1.png", { width: 800, height: 600 }],

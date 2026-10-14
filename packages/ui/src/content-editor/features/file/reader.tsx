@@ -8,6 +8,7 @@ import { mdxRule } from "#/content-editor/lib/mdx-rule.ts";
 import {
 	classAttribute,
 	escapeHtml,
+	escapeUrl,
 	idAttribute,
 	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
@@ -57,7 +58,7 @@ export const fileNode: ContentInsertableNodeReader<ContentFileNode> = {
 		</a>
 	),
 	toHtml: (node, _children, options) =>
-		`<a${idAttribute(options.idFor?.(node) ?? node.id)} href="${escapeHtml(node.url)}" download="${escapeHtml(node.name)}"${classAttribute(options.classNameFor?.("file"))}>${escapeHtml(node.name)}</a>`,
+		`<a${idAttribute(options.idFor?.(node) ?? node.id)} href="${escapeUrl(node.url)}" download="${escapeHtml(node.name)}"${classAttribute(options.classNameFor?.("file"))}>${escapeHtml(node.name)}</a>`,
 };
 
 export const fileReader = {

@@ -121,7 +121,10 @@ export {
 	contentToHtml,
 	contentToInlineHtml,
 } from "#/content-editor/reader/content-to-html.ts";
-export { escapeHtml } from "#/content-editor/reader/escape-html.ts";
+export {
+	escapeHtml,
+	escapeUrl,
+} from "#/content-editor/reader/escape-html.ts";
 export {
 	type ContentCorrespondenceOptions,
 	type ContentEmailOptions,

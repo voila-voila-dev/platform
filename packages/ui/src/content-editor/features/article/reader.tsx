@@ -11,6 +11,7 @@ import { formatContentDate } from "#/content-editor/lib/dates.ts";
 import {
 	classAttribute,
 	escapeHtml,
+	escapeUrl,
 	idAttribute,
 	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
@@ -88,10 +89,10 @@ export const articleNode: ContentNodeReader<ContentArticleNode> = {
 		const node = { ...ARTICLE_DEFAULTS, ...stored };
 		const meta = articleMeta(node, options.locale ?? DEFAULT_LOCALE);
 		const title = node.href
-			? `<a href="${escapeHtml(node.href)}">${escapeHtml(node.title)}</a>`
+			? `<a href="${escapeUrl(node.href)}">${escapeHtml(node.title)}</a>`
 			: escapeHtml(node.title);
 		const image = node.image.src
-			? `<img src="${escapeHtml(node.image.src)}" alt="${escapeHtml(node.image.alt)}" loading="lazy">`
+			? `<img src="${escapeUrl(node.image.src)}" alt="${escapeHtml(node.image.alt)}" loading="lazy">`
 			: "";
 		const byline = meta ? `<p>${escapeHtml(meta)}</p>` : "";
 		const description = node.description

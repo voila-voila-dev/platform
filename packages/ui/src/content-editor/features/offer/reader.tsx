@@ -12,6 +12,7 @@ import { formatPreviewPrice } from "#/content-editor/lib/money.ts";
 import {
 	classAttribute,
 	escapeHtml,
+	escapeUrl,
 	idAttribute,
 	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
@@ -124,7 +125,7 @@ export const offerNode: ContentNodeReader<ContentOfferNode> = {
 		const node = { ...DEFAULTS, ...stored };
 		const features = node.features.filter((feature) => feature !== "");
 		const image = node.image.src
-			? `<img src="${escapeHtml(node.image.src)}" alt="${escapeHtml(node.image.alt)}" loading="lazy">`
+			? `<img src="${escapeUrl(node.image.src)}" alt="${escapeHtml(node.image.alt)}" loading="lazy">`
 			: "";
 		const eyebrow = node.eyebrow ? `<p>${escapeHtml(node.eyebrow)}</p>` : "";
 		const period = node.period ? ` ${escapeHtml(node.period)}` : "";
@@ -138,7 +139,7 @@ export const offerNode: ContentNodeReader<ContentOfferNode> = {
 				: "";
 		const button =
 			node.buttonHref && node.buttonLabel
-				? `<p><a href="${escapeHtml(node.buttonHref)}">${escapeHtml(node.buttonLabel)}</a></p>`
+				? `<p><a href="${escapeUrl(node.buttonHref)}">${escapeHtml(node.buttonLabel)}</a></p>`
 				: "";
 		const highlighted = node.highlighted ? " data-highlighted" : "";
 		return `<article${idAttribute(options.idFor?.(node) ?? node.id)}${classAttribute(options.classNameFor?.("offer"))}${highlighted}>${image}${eyebrow}<h3>${escapeHtml(node.name)}</h3>${price}${description}${list}${button}</article>`;

@@ -7,6 +7,7 @@ import { newContentNodeId } from "#/content-editor/lib/ids.ts";
 import {
 	classAttribute,
 	escapeHtml,
+	escapeUrl,
 	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
 
@@ -85,7 +86,7 @@ export const linkNode: ContentInsertableNodeReader<ContentLinkNode> = {
 		</a>
 	),
 	toHtml: (node, children, options) =>
-		`<a href="${escapeHtml(node.url)}"${node.title ? ` title="${escapeHtml(node.title)}"` : ""}${node.target ? ` target="${escapeHtml(node.target)}"` : ""}${isExternalLink(node, options.siteOrigin) ? ' rel="noopener noreferrer"' : ""}${classAttribute(options.classNameFor?.("a"))}>${children}</a>`,
+		`<a href="${escapeUrl(node.url)}"${node.title ? ` title="${escapeHtml(node.title)}"` : ""}${node.target ? ` target="${escapeHtml(node.target)}"` : ""}${isExternalLink(node, options.siteOrigin) ? ' rel="noopener noreferrer"' : ""}${classAttribute(options.classNameFor?.("a"))}>${children}</a>`,
 };
 
 export const linkReader = {

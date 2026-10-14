@@ -12,6 +12,7 @@ import { formatPreviewPrice } from "#/content-editor/lib/money.ts";
 import {
 	classAttribute,
 	escapeHtml,
+	escapeUrl,
 	idAttribute,
 	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
@@ -105,7 +106,7 @@ export const productNode: ContentNodeReader<ContentProductNode> = {
 		const node = { ...DEFAULTS, ...stored };
 		const locale = options.locale ?? DEFAULT_LOCALE;
 		const image = node.image.src
-			? `<img src="${escapeHtml(node.image.src)}" alt="${escapeHtml(node.image.alt)}" loading="lazy">`
+			? `<img src="${escapeUrl(node.image.src)}" alt="${escapeHtml(node.image.alt)}" loading="lazy">`
 			: "";
 		const description = node.description
 			? `<p>${escapeHtml(node.description)}</p>`
@@ -116,7 +117,7 @@ export const productNode: ContentNodeReader<ContentProductNode> = {
 				: ` <s>${escapeHtml(formatPreviewPrice(node.compareAtPrice, locale))}</s>`;
 		const button =
 			node.href && node.buttonLabel
-				? `<p><a href="${escapeHtml(node.href)}">${escapeHtml(node.buttonLabel)}</a></p>`
+				? `<p><a href="${escapeUrl(node.href)}">${escapeHtml(node.buttonLabel)}</a></p>`
 				: "";
 		return `<article${idAttribute(options.idFor?.(node) ?? node.id)}${classAttribute(options.classNameFor?.("product"))}>${image}<h3>${escapeHtml(node.name)}</h3>${description}<p><strong>${escapeHtml(formatPreviewPrice(node.price, locale))}</strong>${compareAt}</p>${button}</article>`;
 	},

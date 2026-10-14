@@ -7,6 +7,7 @@ import type {
 import {
 	classAttribute,
 	escapeHtml,
+	escapeUrl,
 	idAttribute,
 	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
@@ -55,7 +56,7 @@ const SCORE_STYLE =
 function stepHtml(node: ContentRatingNode, rating: number): string {
 	const inner = `<span aria-hidden="true">${STAR[node.style]}</span><span style="${SCORE_STYLE}">${rating}</span>`;
 	return node.href
-		? `<a href="${escapeHtml(ratingStepHref(node.href, rating))}">${inner}</a>`
+		? `<a href="${escapeUrl(ratingStepHref(node.href, rating))}">${inner}</a>`
 		: `<span>${inner}</span>`;
 }
 

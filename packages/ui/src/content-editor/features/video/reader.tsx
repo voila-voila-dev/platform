@@ -8,6 +8,7 @@ import { mdxRule } from "#/content-editor/lib/mdx-rule.ts";
 import {
 	classAttribute,
 	escapeHtml,
+	escapeUrl,
 	idAttribute,
 	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
@@ -58,7 +59,7 @@ export const videoNode: ContentInsertableNodeReader<ContentVideoNode> = {
 		</figure>
 	),
 	toHtml: (node, _children, options) =>
-		`<figure${idAttribute(options.idFor?.(node) ?? node.id)}${classAttribute(options.classNameFor?.("video"))}><video src="${escapeHtml(node.url)}" controls></video>${node.caption ? `<figcaption>${escapeHtml(node.caption)}</figcaption>` : ""}</figure>`,
+		`<figure${idAttribute(options.idFor?.(node) ?? node.id)}${classAttribute(options.classNameFor?.("video"))}><video src="${escapeUrl(node.url)}" controls></video>${node.caption ? `<figcaption>${escapeHtml(node.caption)}</figcaption>` : ""}</figure>`,
 };
 
 export const videoReader = {

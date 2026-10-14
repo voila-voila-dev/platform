@@ -6,6 +6,7 @@ import type {
 import {
 	classAttribute,
 	escapeHtml,
+	escapeUrl,
 	idAttribute,
 	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
@@ -132,9 +133,9 @@ export const imageNode: ContentNodeReader<ContentImageNode> = {
 		const caption = node.caption
 			? `<figcaption>${escapeHtml(node.caption)}</figcaption>`
 			: "";
-		const img = `<img src="${escapeHtml(node.url)}" alt="${escapeHtml(node.alt ?? node.caption ?? "")}"${sizes} loading="lazy">`;
+		const img = `<img src="${escapeUrl(node.url)}" alt="${escapeHtml(node.alt ?? node.caption ?? "")}"${sizes} loading="lazy">`;
 		const linked = node.href
-			? `<a href="${escapeHtml(node.href)}">${img}</a>`
+			? `<a href="${escapeUrl(node.href)}">${img}</a>`
 			: img;
 		const contained =
 			node.size === "contained"

@@ -12,6 +12,7 @@ import { mdxRule } from "#/content-editor/lib/mdx-rule.ts";
 import {
 	classAttribute,
 	escapeHtml,
+	escapeUrl,
 	idAttribute,
 	kitClassName,
 } from "#/content-editor/reader/escape-html.ts";
@@ -71,7 +72,7 @@ export const buttonNode: ContentNodeReader<ContentButtonNode> = {
 			return "";
 		}
 		const variant = node.variant ?? "primary";
-		const href = node.href ? ` href="${escapeHtml(node.href)}"` : "";
+		const href = node.href ? ` href="${escapeUrl(node.href)}"` : "";
 		return `<p${idAttribute(options.idFor?.(node) ?? node.id)}${classAttribute(options.classNameFor?.("button"))}${alignStyleAttribute(node.align ?? "center")}><a${href} class="button button-${escapeHtml(variant)}">${escapeHtml(node.label)}</a></p>`;
 	},
 };
