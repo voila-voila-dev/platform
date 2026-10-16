@@ -1,4 +1,5 @@
 import * as React from "react";
+import type { ChatEmojiPickerLabels } from "#/chat/components/chat-emoji-picker.tsx";
 import { ChatMessageHoverBar } from "#/chat/components/chat-message-hover-bar.tsx";
 import {
 	ChatMessagePressSurface,
@@ -25,10 +26,6 @@ const HOVER_CLOSE_DELAY = 120;
 // A pointer crossing the thread on its way somewhere else passes over a dozen
 // bubbles; the bar waits for one it stops on, rather than flashing at each.
 const HOVER_OPEN_DELAY = 300;
-// About the width of the full bar: six emojis, a divider and three actions.
-// Beside a bubble with less room than this, the bar starts as one small
-// button rather than spilling over the message above.
-const FULL_BAR_ROOM = 352;
 
 /**
  * Closes the one bar currently on screen. A thread is a column of adjacent
@@ -94,6 +91,8 @@ interface Props {
 	hoverBar?: boolean;
 	/** The menu items, composed by the caller from `Chat.MessageAction`. */
 	actions?: React.ReactNode;
+	/** The hover bar's "+" to every emoji, and the picker's copy. */
+	emojiPicker?: ChatEmojiPickerLabels & { moreLabel?: string };
 	className?: string;
 }
 
@@ -118,6 +117,7 @@ export function ChatMessageActions({
 	menuLabel,
 	hoverBar = true,
 	actions,
+	emojiPicker,
 	className,
 }: Props) {
 	const active = React.useMemo(
@@ -129,7 +129,6 @@ export function ChatMessageActions({
 	const triggerRef = React.useRef<HTMLDivElement | null>(null);
 	const [menuOpen, setMenuOpen] = React.useState(false);
 	const [barAlign, setBarAlign] = React.useState<"start" | "end" | null>(null);
-	const [barCompact, setBarCompact] = React.useState(false);
 	const [pressed, setPressed] = React.useState<ChatPressedMessage | null>(null);
 	const barCloseTimeout = React.useRef<number | undefined>(undefined);
 	const barOpenTimeout = React.useRef<number | undefined>(undefined);
@@ -141,17 +140,6 @@ export function ChatMessageActions({
 
 	const endAligned = (): boolean =>
 		(bubbleElement()?.closest("[data-align=end]") ?? null) !== null;
-
-	// The free width on the bar's side of the bubble, within the message row.
-	// Without layout (a test DOM measures nothing) there is no reason to shrink.
-	const roomBeside = (end: boolean): number => {
-		const bubble = bubbleElement()?.getBoundingClientRect();
-		const row = triggerRef.current?.getBoundingClientRect();
-		if (bubble === undefined || row === undefined || row.width === 0) {
-			return Number.POSITIVE_INFINITY;
-		}
-		return end ? bubble.left - row.left : row.right - bubble.right;
-	};
 
 	const cancelBarClose = () => window.clearTimeout(barCloseTimeout.current);
 	const cancelBarOpen = () => window.clearTimeout(barOpenTimeout.current);
@@ -178,9 +166,7 @@ export function ChatMessageActions({
 			closeOpenBar?.();
 		}
 		closeOpenBar = closeBar;
-		const end = endAligned();
-		setBarCompact(roomBeside(end) < FULL_BAR_ROOM);
-		setBarAlign(end ? "end" : "start");
+		setBarAlign(endAligned() ? "end" : "start");
 	};
 	const scheduleBarOpen = () => {
 		cancelBarClose();
@@ -277,7 +263,7 @@ export function ChatMessageActions({
 					anchor={bubbleElement}
 					container={triggerRef}
 					align={barAlign ?? "start"}
-					compact={barCompact}
+					emojiPicker={emojiPicker}
 					emojis={emojis}
 					activeEmojis={active}
 					onReact={onReact}

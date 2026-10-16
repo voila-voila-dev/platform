@@ -1,6 +1,10 @@
 import { Popover as PopoverPrimitive } from "@base-ui/react/popover";
-import { DotsThreeIcon, SmileyIcon } from "@phosphor-icons/react";
+import { PlusIcon, SmileyIcon } from "@phosphor-icons/react";
 import * as React from "react";
+import {
+	ChatEmojiPicker,
+	type ChatEmojiPickerLabels,
+} from "#/chat/components/chat-emoji-picker.tsx";
 import { ChatQuickReactionRow } from "#/chat/components/chat-quick-reaction-row.tsx";
 import { ChatMessageActionsHostContext } from "#/chat/context/chat-message-actions-host-context.ts";
 import { cn } from "#/lib/utils.ts";
@@ -15,32 +19,36 @@ interface Props {
 	container: React.RefObject<HTMLDivElement | null>;
 	/** The bubble's side of the thread; the bar opens on its other side, in the free space. */
 	align: "start" | "end";
-	/** No room beside the bubble for the whole bar: start as one button that opens it. */
-	compact: boolean;
 	emojis: ReadonlyArray<string>;
 	activeEmojis: ReadonlySet<string>;
 	onReact?: (emoji: string) => void;
 	reactionsLabel?: string;
+	/** The "+" that opens every emoji, and the picker's own copy. */
+	emojiPicker?: ChatEmojiPickerLabels & { moreLabel?: string };
 	/** The same tree the menu gets; only the actions carrying an icon show. */
 	actions?: React.ReactNode;
 }
 
+/** What the bar shows: its icons, then the quick emojis, then every emoji. */
+type BarStage = "actions" | "reactions" | "picker";
+
+const pill =
+	"flex items-center gap-0.5 rounded-full bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10";
+
+const iconButton =
+	"flex size-7 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground [&_svg]:size-4";
+
 /**
- * The floating bar a fine pointer summons by hovering a bubble: the one-tap
- * emoji row, then the actions themselves as icons.
+ * The floating bar a fine pointer summons by hovering a bubble: one smiley,
+ * then the actions as icons (copy, edit, delete), each one press away. The
+ * smiley opens the quick emojis in place, and their "+" every emoji, searchable.
  *
- * The actions are inline rather than behind a "…" because the bar exists to
- * save a click, and a menu that opens a menu saves none — copy, edit and
- * delete are one press each here. Right-click still opens the full menu, which
- * is where an action with no icon lives.
- *
- * It opens beside the bubble, level with its top: to the left of a message
- * of ours, to the right of one from the other side, in the empty part of the
- * thread. Above the bubble it covered the message before, which is the one a
- * reader scrolling back up is reading. Beside a bubble too wide to leave room
- * for the whole bar, it starts as a single button, and only a click on it
- * opens the bar, above the bubble: covering a message is then something the
- * reader asked for.
+ * It stays small on purpose. It opens beside the bubble, level with its top,
+ * in the empty side of the thread: left of a message of ours, right of one
+ * from the other side. A bar wide enough to hold six emojis did not fit there
+ * beside a long message, and fell back over the message above, which is the
+ * one a reader scrolling up is reading. Right-click still opens the full menu,
+ * which is where an action with no icon lives.
  *
  * Portaled into the trigger itself so it sits right after the bubble in the
  * DOM and a keyboard reaches it with Tab; the positioner still flips and
@@ -52,22 +60,24 @@ export function ChatMessageHoverBar({
 	anchor,
 	container,
 	align,
-	compact,
 	emojis,
 	activeEmojis,
 	onReact,
 	reactionsLabel,
+	emojiPicker,
 	actions,
 }: Props) {
 	const hasReactions = onReact !== undefined && emojis.length > 0;
-	const [expanded, setExpanded] = React.useState(false);
+	const [stage, setStage] = React.useState<BarStage>("actions");
 	React.useEffect(() => {
 		if (!open) {
-			setExpanded(false);
+			setStage("actions");
 		}
 	}, [open]);
-	const folded = compact && !expanded;
-	const above = compact && expanded;
+	const react = (emoji: string) => {
+		onReact?.(emoji);
+		onClose();
+	};
 	return (
 		<PopoverPrimitive.Root
 			open={open}
@@ -80,8 +90,8 @@ export function ChatMessageHoverBar({
 			<PopoverPrimitive.Portal container={container}>
 				<PopoverPrimitive.Positioner
 					anchor={anchor}
-					side={above ? "top" : align === "end" ? "left" : "right"}
-					align={above ? align : "start"}
+					side={align === "end" ? "left" : "right"}
+					align="start"
 					collisionAvoidance={{
 						side: "flip",
 						align: "shift",
@@ -108,35 +118,40 @@ export function ChatMessageHoverBar({
 							"data-open:fade-in-0 data-closed:fade-out-0 data-open:animate-in data-closed:animate-out duration-150 motion-reduce:animate-none",
 						)}
 					>
-						{folded ? (
-							<button
-								type="button"
-								data-slot="chat-message-hover-bar-open"
-								aria-label={reactionsLabel}
-								onClick={() => setExpanded(true)}
-								className="flex size-8 items-center justify-center rounded-full bg-popover text-muted-foreground shadow-md ring-1 ring-foreground/10 transition-colors hover:text-foreground"
-							>
-								{hasReactions ? (
-									<SmileyIcon className="size-4" />
-								) : (
-									<DotsThreeIcon className="size-4" />
-								)}
-							</button>
+						{stage === "picker" ? (
+							<div className="overflow-hidden rounded-xl bg-popover text-popover-foreground shadow-md ring-1 ring-foreground/10">
+								<ChatEmojiPicker onPick={react} {...emojiPicker} />
+							</div>
+						) : stage === "reactions" ? (
+							<div className={pill}>
+								<ChatQuickReactionRow
+									emojis={emojis}
+									activeEmojis={activeEmojis}
+									label={reactionsLabel}
+									onReact={react}
+								/>
+								<button
+									type="button"
+									data-slot="chat-message-hover-bar-more"
+									aria-label={emojiPicker?.moreLabel}
+									onClick={() => setStage("picker")}
+									className={iconButton}
+								>
+									<PlusIcon />
+								</button>
+							</div>
 						) : (
-							<div className="flex items-center gap-0.5 rounded-full bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10">
+							<div className={pill}>
 								{hasReactions && (
-									<ChatQuickReactionRow
-										emojis={emojis}
-										activeEmojis={activeEmojis}
-										label={reactionsLabel}
-										onReact={(emoji) => {
-											onReact(emoji);
-											onClose();
-										}}
-									/>
-								)}
-								{hasReactions && actions !== undefined && (
-									<div aria-hidden className="h-5 w-px bg-border" />
+									<button
+										type="button"
+										data-slot="chat-message-hover-bar-react"
+										aria-label={reactionsLabel}
+										onClick={() => setStage("reactions")}
+										className={iconButton}
+									>
+										<SmileyIcon />
+									</button>
 								)}
 								<ChatMessageActionsHostContext.Provider
 									value={{ host: "bar", close: onClose }}

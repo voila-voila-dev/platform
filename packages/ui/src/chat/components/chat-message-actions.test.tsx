@@ -12,6 +12,7 @@ import { Chat } from "#/chat/components/chat.tsx";
 
 afterEach(() => {
 	cleanup();
+	vi.unstubAllGlobals();
 	vi.useRealTimers();
 	Reflect.deleteProperty(window, "matchMedia");
 });
@@ -192,7 +193,7 @@ describe("Chat.MessageActions hover bar", () => {
 		expect(screen.queryByLabelText("React")).toBeNull();
 	});
 
-	it("appears when a fine pointer hovers the message", () => {
+	it("appears when a fine pointer hovers the message, the emojis one press away", () => {
 		mockPointer("fine");
 		render(
 			<Chat.MessageActions onReact={() => {}} reactionsLabel="React">
@@ -200,7 +201,8 @@ describe("Chat.MessageActions hover bar", () => {
 			</Chat.MessageActions>,
 		);
 		hover(trigger());
-		expect(screen.getByLabelText("React")).toBeTruthy();
+		expect(screen.queryByRole("button", { name: "👍" })).toBeNull();
+		fireEvent.click(screen.getByRole("button", { name: "React" }));
 		expect(screen.getByRole("button", { name: "👍" })).toBeTruthy();
 	});
 
@@ -219,11 +221,16 @@ describe("Chat.MessageActions hover bar", () => {
 		mockPointer("fine");
 		const onReact = vi.fn();
 		render(
-			<Chat.MessageActions onReact={onReact} emojis={["👍"]}>
+			<Chat.MessageActions
+				onReact={onReact}
+				emojis={["👍"]}
+				reactionsLabel="React"
+			>
 				<span>hello</span>
 			</Chat.MessageActions>,
 		);
 		hover(trigger());
+		fireEvent.click(screen.getByRole("button", { name: "React" }));
 		fireEvent.click(screen.getByRole("button", { name: "👍" }));
 		expect(onReact).toHaveBeenCalledWith("👍");
 	});
@@ -304,27 +311,30 @@ describe("Chat.MessageActions hover bar", () => {
 		expect(screen.queryByLabelText("React")).toBeNull();
 	});
 
-	it("starts as one button beside a bubble that leaves no room for the bar", () => {
+	it("offers every emoji behind the quick ones' plus", () => {
 		mockPointer("fine");
+		// The picker sizes its rows with a ResizeObserver, which jsdom lacks.
+		vi.stubGlobal(
+			"ResizeObserver",
+			class {
+				observe() {}
+				unobserve() {}
+				disconnect() {}
+			},
+		);
 		render(
-			<Chat.MessageActions onReact={() => {}} reactionsLabel="React">
-				<span data-slot="chat-bubble">hello</span>
+			<Chat.MessageActions
+				onReact={() => {}}
+				reactionsLabel="React"
+				emojiPicker={{ moreLabel: "More", searchPlaceholder: "Search" }}
+			>
+				<span>hello</span>
 			</Chat.MessageActions>,
 		);
-		const bubble = screen.getByText("hello");
-		const row = bubble.parentElement as HTMLElement;
-		// A wide bubble: 100px of free row on its right, where the bar would go.
-		vi.spyOn(row, "getBoundingClientRect").mockReturnValue(
-			DOMRect.fromRect({ x: 0, y: 0, width: 800, height: 40 }),
-		);
-		vi.spyOn(bubble, "getBoundingClientRect").mockReturnValue(
-			DOMRect.fromRect({ x: 0, y: 0, width: 700, height: 40 }),
-		);
-
-		hover(row);
-		expect(screen.queryByRole("button", { name: "👍" })).toBeNull();
+		hover(trigger());
 		fireEvent.click(screen.getByRole("button", { name: "React" }));
-		expect(screen.getByRole("button", { name: "👍" })).toBeTruthy();
+		fireEvent.click(screen.getByRole("button", { name: "More" }));
+		expect(screen.getByPlaceholderText("Search")).toBeTruthy();
 	});
 
 	it("keeps an action without an icon out of the bar", () => {
