@@ -6,7 +6,7 @@ import {
 	render,
 	screen,
 } from "@testing-library/react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { Chat } from "#/chat/components/chat.tsx";
 
@@ -38,6 +38,14 @@ function longPress(target: HTMLElement) {
 	});
 	act(() => {
 		vi.advanceTimersByTime(600);
+	});
+}
+
+/** A fine pointer that stops on the message long enough for the bar. */
+function hover(target: HTMLElement) {
+	fireEvent.pointerEnter(target);
+	act(() => {
+		vi.advanceTimersByTime(300);
 	});
 }
 
@@ -160,7 +168,11 @@ describe("Chat.Reactions", () => {
 });
 
 describe("Chat.MessageActions hover bar", () => {
-	it("appears when a fine pointer hovers the message", () => {
+	beforeEach(() => {
+		vi.useFakeTimers();
+	});
+
+	it("waits for the pointer to settle, and gives up when it moves on", () => {
 		mockPointer("fine");
 		render(
 			<Chat.MessageActions onReact={() => {}} reactionsLabel="React">
@@ -168,6 +180,26 @@ describe("Chat.MessageActions hover bar", () => {
 			</Chat.MessageActions>,
 		);
 		fireEvent.pointerEnter(trigger());
+		act(() => {
+			vi.advanceTimersByTime(200);
+		});
+		expect(screen.queryByLabelText("React")).toBeNull();
+
+		fireEvent.pointerLeave(trigger());
+		act(() => {
+			vi.advanceTimersByTime(400);
+		});
+		expect(screen.queryByLabelText("React")).toBeNull();
+	});
+
+	it("appears when a fine pointer hovers the message", () => {
+		mockPointer("fine");
+		render(
+			<Chat.MessageActions onReact={() => {}} reactionsLabel="React">
+				<span>hello</span>
+			</Chat.MessageActions>,
+		);
+		hover(trigger());
 		expect(screen.getByLabelText("React")).toBeTruthy();
 		expect(screen.getByRole("button", { name: "👍" })).toBeTruthy();
 	});
@@ -179,7 +211,7 @@ describe("Chat.MessageActions hover bar", () => {
 				<span>hello</span>
 			</Chat.MessageActions>,
 		);
-		fireEvent.pointerEnter(trigger());
+		hover(trigger());
 		expect(screen.queryByLabelText("React")).toBeNull();
 	});
 
@@ -191,7 +223,7 @@ describe("Chat.MessageActions hover bar", () => {
 				<span>hello</span>
 			</Chat.MessageActions>,
 		);
-		fireEvent.pointerEnter(trigger());
+		hover(trigger());
 		fireEvent.click(screen.getByRole("button", { name: "👍" }));
 		expect(onReact).toHaveBeenCalledWith("👍");
 	});
@@ -210,7 +242,7 @@ describe("Chat.MessageActions hover bar", () => {
 				<span>hello</span>
 			</Chat.MessageActions>,
 		);
-		fireEvent.pointerEnter(trigger());
+		hover(trigger());
 		const action = screen.getByRole("button", { name: "Copy" });
 		expect(action.textContent).toBe("");
 		fireEvent.click(action);
@@ -230,12 +262,8 @@ describe("Chat.MessageActions hover bar", () => {
 				</Chat.MessageActions>
 			</>,
 		);
-		fireEvent.pointerEnter(
-			screen.getByText("first").parentElement as HTMLElement,
-		);
-		fireEvent.pointerEnter(
-			screen.getByText("second").parentElement as HTMLElement,
-		);
+		hover(screen.getByText("first").parentElement as HTMLElement);
+		hover(screen.getByText("second").parentElement as HTMLElement);
 		expect(screen.getAllByLabelText("React")).toHaveLength(1);
 	});
 
@@ -250,7 +278,7 @@ describe("Chat.MessageActions hover bar", () => {
 				<span>hello</span>
 			</Chat.MessageActions>,
 		);
-		fireEvent.pointerEnter(trigger());
+		hover(trigger());
 		expect(screen.queryByLabelText("React")).toBeNull();
 	});
 
@@ -261,7 +289,7 @@ describe("Chat.MessageActions hover bar", () => {
 				<span>hello</span>
 			</Chat.MessageActions>,
 		);
-		fireEvent.pointerEnter(trigger());
+		hover(trigger());
 		expect(screen.getByLabelText("React")).toBeTruthy();
 
 		rerender(
@@ -285,7 +313,7 @@ describe("Chat.MessageActions hover bar", () => {
 				<span>hello</span>
 			</Chat.MessageActions>,
 		);
-		fireEvent.pointerEnter(trigger());
+		hover(trigger());
 		expect(screen.queryByText("Copy")).toBeNull();
 	});
 });

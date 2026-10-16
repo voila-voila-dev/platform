@@ -22,6 +22,9 @@ export const CHAT_QUICK_REACTIONS: ReadonlyArray<string> = [
 
 /** How long the bar lingers once the pointer has left the message. */
 const HOVER_CLOSE_DELAY = 120;
+// A pointer crossing the thread on its way somewhere else passes over a dozen
+// bubbles; the bar waits for one it stops on, rather than flashing at each.
+const HOVER_OPEN_DELAY = 300;
 
 /**
  * Closes the one bar currently on screen. A thread is a column of adjacent
@@ -124,6 +127,7 @@ export function ChatMessageActions({
 	const [barAlign, setBarAlign] = React.useState<"start" | "end" | null>(null);
 	const [pressed, setPressed] = React.useState<ChatPressedMessage | null>(null);
 	const barCloseTimeout = React.useRef<number | undefined>(undefined);
+	const barOpenTimeout = React.useRef<number | undefined>(undefined);
 
 	const bubbleElement = (): HTMLElement | null =>
 		triggerRef.current?.querySelector<HTMLElement>(
@@ -134,6 +138,7 @@ export function ChatMessageActions({
 		(bubbleElement()?.closest("[data-align=end]") ?? null) !== null;
 
 	const cancelBarClose = () => window.clearTimeout(barCloseTimeout.current);
+	const cancelBarOpen = () => window.clearTimeout(barOpenTimeout.current);
 	// Stable across renders so it can be handed to (and compared against) the
 	// module-level owner of the open bar.
 	const closeBar = React.useCallback(function close() {
@@ -144,6 +149,7 @@ export function ChatMessageActions({
 		setBarAlign(null);
 	}, []);
 	const scheduleBarClose = () => {
+		cancelBarOpen();
 		cancelBarClose();
 		barCloseTimeout.current = window.setTimeout(closeBar, HOVER_CLOSE_DELAY);
 	};
@@ -158,7 +164,18 @@ export function ChatMessageActions({
 		closeOpenBar = closeBar;
 		setBarAlign(endAligned() ? "end" : "start");
 	};
-	React.useEffect(() => closeBar, [closeBar]);
+	const scheduleBarOpen = () => {
+		cancelBarClose();
+		cancelBarOpen();
+		barOpenTimeout.current = window.setTimeout(openBar, HOVER_OPEN_DELAY);
+	};
+	React.useEffect(
+		() => () => {
+			window.clearTimeout(barOpenTimeout.current);
+			closeBar();
+		},
+		[closeBar],
+	);
 	// A message that stops offering the bar takes the open one down with it.
 	React.useEffect(() => {
 		if (!hoverBar) {
@@ -192,7 +209,7 @@ export function ChatMessageActions({
 				tabIndex={0}
 				onPointerEnter={() => {
 					if (finePointer()) {
-						openBar();
+						scheduleBarOpen();
 					}
 				}}
 				onPointerLeave={scheduleBarClose}

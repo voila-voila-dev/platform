@@ -8,11 +8,11 @@ interface Props {
 	open: boolean;
 	/** Only ever called with `false` — closing is the popover's business. */
 	onClose: () => void;
-	/** The bubble the bar floats above. */
+	/** The bubble the bar floats beside. */
 	anchor: () => Element | null;
 	/** The trigger wrapper the bar portals into, keeping it next in tab order. */
 	container: React.RefObject<HTMLDivElement | null>;
-	/** Same side as the bubble, so the bar overflows toward the thread. */
+	/** The bubble's side of the thread; the bar opens on its other side, in the free space. */
 	align: "start" | "end";
 	emojis: ReadonlyArray<string>;
 	activeEmojis: ReadonlySet<string>;
@@ -30,6 +30,12 @@ interface Props {
  * save a click, and a menu that opens a menu saves none — copy, edit and
  * delete are one press each here. Right-click still opens the full menu, which
  * is where an action with no icon lives.
+ *
+ * It opens beside the bubble, level with its top: to the left of a message
+ * of ours, to the right of one from the other side, in the empty part of the
+ * thread. Above the bubble it covered the message before, which is the one a
+ * reader scrolling back up is reading. A bubble too wide to leave room on
+ * either side gets the bar above it, as a last resort.
  *
  * Portaled into the trigger itself so it sits right after the bubble in the
  * DOM and a keyboard reaches it with Tab; the positioner still flips and
@@ -60,13 +66,18 @@ export function ChatMessageHoverBar({
 			<PopoverPrimitive.Portal container={container}>
 				<PopoverPrimitive.Positioner
 					anchor={anchor}
-					side="top"
-					align={align}
+					side={align === "end" ? "left" : "right"}
+					align="start"
+					collisionAvoidance={{
+						side: "flip",
+						align: "shift",
+						fallbackAxisSide: "start",
+					}}
 					// No gap: the popup carries the visual offset as padding instead,
 					// so its hit area touches the bubble. A real gap is a dead strip
-					// the pointer has to cross on its way up, and that strip belongs
-					// to the message above — which would open *its* bar and close the
-					// one the reader was reaching for.
+					// the pointer has to cross, and on the fallback above the bubble
+					// that strip belongs to the message above — which would open
+					// *its* bar and close the one the reader was reaching for.
 					sideOffset={0}
 					collisionPadding={8}
 					// Above every bubble in the thread, including the messages the bar
@@ -78,8 +89,9 @@ export function ChatMessageHoverBar({
 						initialFocus={false}
 						finalFocus={false}
 						className={cn(
-							"pb-1.5",
-							"data-open:fade-in-0 data-open:slide-in-from-bottom-1 data-closed:fade-out-0 data-open:animate-in data-closed:animate-out duration-150 motion-reduce:animate-none",
+							"data-[side=left]:pr-1.5 data-[side=right]:pl-1.5 data-[side=top]:pb-1.5 data-[side=bottom]:pt-1.5",
+							"data-[side=left]:data-open:slide-in-from-right-1 data-[side=right]:data-open:slide-in-from-left-1 data-[side=top]:data-open:slide-in-from-bottom-1 data-[side=bottom]:data-open:slide-in-from-top-1",
+							"data-open:fade-in-0 data-closed:fade-out-0 data-open:animate-in data-closed:animate-out duration-150 motion-reduce:animate-none",
 						)}
 					>
 						<div className="flex items-center gap-0.5 rounded-full bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10">
