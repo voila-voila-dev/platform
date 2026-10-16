@@ -1,5 +1,4 @@
 import * as React from "react";
-import type { ChatEmojiPickerLabels } from "#/chat/components/chat-emoji-picker.tsx";
 import { ChatMessageHoverBar } from "#/chat/components/chat-message-hover-bar.tsx";
 import {
 	ChatMessagePressSurface,
@@ -9,6 +8,7 @@ import { ChatQuickReactionRow } from "#/chat/components/chat-quick-reaction-row.
 import { ContextMenuContent } from "#/context-menu/components/context-menu-content.tsx";
 import { ContextMenuRoot } from "#/context-menu/components/context-menu-root.tsx";
 import { ContextMenuTrigger } from "#/context-menu/components/context-menu-trigger.tsx";
+import type { EmojiPickerLabels } from "#/emoji-picker/components/emoji-picker.tsx";
 import { cn } from "#/lib/utils.ts";
 
 /** The emoji row every chat app opens with. Override per surface. */
@@ -92,7 +92,7 @@ interface Props {
 	/** The menu items, composed by the caller from `Chat.MessageAction`. */
 	actions?: React.ReactNode;
 	/** The hover bar's "+" to every emoji, and the picker's copy. */
-	emojiPicker?: ChatEmojiPickerLabels & { moreLabel?: string };
+	emojiPicker?: EmojiPickerLabels & { moreLabel?: string };
 	className?: string;
 }
 

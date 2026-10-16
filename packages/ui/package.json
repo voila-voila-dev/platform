@@ -91,6 +91,7 @@
 		"./hooks": "./src/hooks/index.ts",
 		"./hover-card": "./src/hover-card/index.ts",
 		"./icon": "./src/icon/index.ts",
+		"./emoji-picker": "./src/emoji-picker/index.ts",
 		"./icon-picker": "./src/icon-picker/index.ts",
 		"./image-cropper": "./src/image-cropper/index.ts",
 		"./image-upload-field": "./src/image-upload-field/index.ts",

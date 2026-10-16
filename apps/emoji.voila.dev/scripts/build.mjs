@@ -27,12 +27,12 @@ const { version } = JSON.parse(
 // The kit names the version it reads in its URL; serving another one would
 // answer every picker with a 404.
 const kitUrl = await readFile(
-	join(app, "../../packages/ui/src/chat/lib/emojibase-url.ts"),
+	join(app, "../../packages/ui/src/emoji-picker/lib/emojibase-url.ts"),
 	"utf8",
 );
 if (!kitUrl.includes(`/emojibase-data/${version}"`)) {
 	throw new Error(
-		`packages/ui/src/chat/lib/emojibase-url.ts does not point at emojibase-data@${version}: bump both together.`,
+		`packages/ui/src/emoji-picker/lib/emojibase-url.ts does not point at emojibase-data@${version}: bump both together.`,
 	);
 }
 

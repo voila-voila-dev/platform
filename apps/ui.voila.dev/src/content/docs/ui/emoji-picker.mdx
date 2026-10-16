@@ -1,0 +1,27 @@
+---
+title: "EmojiPicker"
+description: "Search and pick any emoji, filed by category."
+category: "forms"
+---
+
+import * as Example from "@/examples/ui/emoji-picker";
+
+<Preview layout="center">
+	<Example.Default />
+</Preview>
+
+```tsx
+<EmojiPicker locale="fr" onEmojiSelect={setEmoji} />
+```
+
+A panel, not a trigger: put it in a popover, a sheet or a page. The emoji data
+comes from [emoji.voila.dev](https://emoji.voila.dev/emojibase-data/17.0.0/fr/data.json)
+in the picker's `locale` on first render and is cached by the browser
+afterwards; `emojibaseUrl` points it at another copy of Emojibase. The kit ships
+no copy, so pass the search placeholder and the loading and empty states.
+
+The chat's hover bar opens this same picker behind its "+".
+
+## API
+
+<PropTable of="EmojiPicker" />

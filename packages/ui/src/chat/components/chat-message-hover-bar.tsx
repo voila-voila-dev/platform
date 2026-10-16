@@ -1,12 +1,12 @@
 import { Popover as PopoverPrimitive } from "@base-ui/react/popover";
 import { PlusIcon, SmileyIcon } from "@phosphor-icons/react";
 import * as React from "react";
-import {
-	ChatEmojiPicker,
-	type ChatEmojiPickerLabels,
-} from "#/chat/components/chat-emoji-picker.tsx";
 import { ChatQuickReactionRow } from "#/chat/components/chat-quick-reaction-row.tsx";
 import { ChatMessageActionsHostContext } from "#/chat/context/chat-message-actions-host-context.ts";
+import {
+	EmojiPicker,
+	type EmojiPickerLabels,
+} from "#/emoji-picker/components/emoji-picker.tsx";
 import { cn } from "#/lib/utils.ts";
 
 interface Props {
@@ -24,7 +24,7 @@ interface Props {
 	onReact?: (emoji: string) => void;
 	reactionsLabel?: string;
 	/** The "+" that opens every emoji, and the picker's own copy. */
-	emojiPicker?: ChatEmojiPickerLabels & { moreLabel?: string };
+	emojiPicker?: EmojiPickerLabels & { moreLabel?: string };
 	/** The same tree the menu gets; only the actions carrying an icon show. */
 	actions?: React.ReactNode;
 }
@@ -68,6 +68,7 @@ export function ChatMessageHoverBar({
 	actions,
 }: Props) {
 	const hasReactions = onReact !== undefined && emojis.length > 0;
+	const { moreLabel, ...pickerLabels } = emojiPicker ?? {};
 	const [stage, setStage] = React.useState<BarStage>("actions");
 	React.useEffect(() => {
 		if (!open) {
@@ -120,7 +121,11 @@ export function ChatMessageHoverBar({
 					>
 						{stage === "picker" ? (
 							<div className="overflow-hidden rounded-xl bg-popover text-popover-foreground shadow-md ring-1 ring-foreground/10">
-								<ChatEmojiPicker onPick={react} {...emojiPicker} />
+								<EmojiPicker
+									onEmojiSelect={react}
+									autoFocus
+									{...pickerLabels}
+								/>
 							</div>
 						) : stage === "reactions" ? (
 							<div className={pill}>
@@ -133,7 +138,7 @@ export function ChatMessageHoverBar({
 								<button
 									type="button"
 									data-slot="chat-message-hover-bar-more"
-									aria-label={emojiPicker?.moreLabel}
+									aria-label={moreLabel}
 									onClick={() => setStage("picker")}
 									className={iconButton}
 								>
