@@ -1,6 +1,6 @@
 name: 'Deploy a site'
 description: >
-  Build one of the two static sites and deploy it to Cloudflare Workers, either
+  Build one of the static sites and deploy it to Cloudflare Workers, either
   to its production worker (bound to a custom domain) or to an isolated per-PR
   preview worker reached through its *.workers.dev URL.
 inputs:

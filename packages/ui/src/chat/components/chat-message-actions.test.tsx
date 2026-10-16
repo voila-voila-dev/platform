@@ -337,6 +337,37 @@ describe("Chat.MessageActions hover bar", () => {
 		expect(screen.getByPlaceholderText("Search")).toBeTruthy();
 	});
 
+	it("reads the emoji data from emoji.voila.dev", async () => {
+		mockPointer("fine");
+		vi.stubGlobal(
+			"ResizeObserver",
+			class {
+				observe() {}
+				unobserve() {}
+				disconnect() {}
+			},
+		);
+		const fetch = vi.fn((_url: string) => new Promise<Response>(() => {}));
+		vi.stubGlobal("fetch", fetch);
+		render(
+			<Chat.MessageActions
+				onReact={() => {}}
+				reactionsLabel="React"
+				emojiPicker={{ moreLabel: "More", locale: "fr" }}
+			>
+				<span>hello</span>
+			</Chat.MessageActions>,
+		);
+		hover(trigger());
+		fireEvent.click(screen.getByRole("button", { name: "React" }));
+		fireEvent.click(screen.getByRole("button", { name: "More" }));
+		await vi.waitFor(() =>
+			expect(fetch.mock.calls.map(([url]) => String(url))).toContain(
+				"https://emoji.voila.dev/emojibase-data@17.0.0/fr/data.json",
+			),
+		);
+	});
+
 	it("keeps an action without an icon out of the bar", () => {
 		mockPointer("fine");
 		render(

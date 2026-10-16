@@ -1,5 +1,6 @@
 import { EmojiPicker } from "frimousse";
 import type * as React from "react";
+import { EMOJIBASE_URL } from "#/chat/lib/emojibase-url.ts";
 import { cn } from "#/lib/utils.ts";
 
 type EmojiLocale = React.ComponentProps<typeof EmojiPicker.Root>["locale"];
@@ -14,6 +15,8 @@ export interface ChatEmojiPickerLabels {
 	loadingLabel?: string;
 	/** Shown when the search matches nothing. */
 	emptyLabel?: string;
+	/** Where the Emojibase data lives; emoji.voila.dev by default. */
+	emojibaseUrl?: string;
 }
 
 interface Props extends ChatEmojiPickerLabels {
@@ -23,8 +26,8 @@ interface Props extends ChatEmojiPickerLabels {
 
 /**
  * Every emoji, searchable and filed by category: what the reader reaches for
- * when the six quick reactions do not say it. The data comes from Emojibase on
- * first open and is cached by the browser afterwards.
+ * when the six quick reactions do not say it. The Emojibase data comes from
+ * emoji.voila.dev on first open and is cached by the browser afterwards.
  *
  * The kit ships no copy: the placeholder and the two states arrive as props.
  */
@@ -34,6 +37,7 @@ export function ChatEmojiPicker({
 	searchPlaceholder,
 	loadingLabel,
 	emptyLabel,
+	emojibaseUrl = EMOJIBASE_URL,
 	className,
 }: Props) {
 	return (
@@ -41,6 +45,7 @@ export function ChatEmojiPicker({
 			data-slot="chat-emoji-picker"
 			onEmojiSelect={({ emoji }) => onPick(emoji)}
 			locale={locale}
+			emojibaseUrl={emojibaseUrl}
 			columns={8}
 			className={cn("flex h-80 w-[19rem] flex-col", className)}
 		>
