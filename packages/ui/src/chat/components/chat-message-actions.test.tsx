@@ -304,6 +304,29 @@ describe("Chat.MessageActions hover bar", () => {
 		expect(screen.queryByLabelText("React")).toBeNull();
 	});
 
+	it("starts as one button beside a bubble that leaves no room for the bar", () => {
+		mockPointer("fine");
+		render(
+			<Chat.MessageActions onReact={() => {}} reactionsLabel="React">
+				<span data-slot="chat-bubble">hello</span>
+			</Chat.MessageActions>,
+		);
+		const bubble = screen.getByText("hello");
+		const row = bubble.parentElement as HTMLElement;
+		// A wide bubble: 100px of free row on its right, where the bar would go.
+		vi.spyOn(row, "getBoundingClientRect").mockReturnValue(
+			DOMRect.fromRect({ x: 0, y: 0, width: 800, height: 40 }),
+		);
+		vi.spyOn(bubble, "getBoundingClientRect").mockReturnValue(
+			DOMRect.fromRect({ x: 0, y: 0, width: 700, height: 40 }),
+		);
+
+		hover(row);
+		expect(screen.queryByRole("button", { name: "👍" })).toBeNull();
+		fireEvent.click(screen.getByRole("button", { name: "React" }));
+		expect(screen.getByRole("button", { name: "👍" })).toBeTruthy();
+	});
+
 	it("keeps an action without an icon out of the bar", () => {
 		mockPointer("fine");
 		render(
