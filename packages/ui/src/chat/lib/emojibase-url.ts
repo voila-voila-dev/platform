@@ -5,4 +5,4 @@
  * cached forever; apps/emoji.voila.dev refuses to build when its pinned
  * emojibase-data differs from this one.
  */
-export const EMOJIBASE_URL = "https://emoji.voila.dev/emojibase-data@17.0.0";
+export const EMOJIBASE_URL = "https://emoji.voila.dev/emojibase-data/17.0.0";

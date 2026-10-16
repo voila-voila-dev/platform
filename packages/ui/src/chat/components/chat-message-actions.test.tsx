@@ -363,7 +363,7 @@ describe("Chat.MessageActions hover bar", () => {
 		fireEvent.click(screen.getByRole("button", { name: "More" }));
 		await vi.waitFor(() =>
 			expect(fetch.mock.calls.map(([url]) => String(url))).toContain(
-				"https://emoji.voila.dev/emojibase-data@17.0.0/fr/data.json",
+				"https://emoji.voila.dev/emojibase-data/17.0.0/fr/data.json",
 			),
 		);
 	});

@@ -30,7 +30,7 @@ const kitUrl = await readFile(
 	join(app, "../../packages/ui/src/chat/lib/emojibase-url.ts"),
 	"utf8",
 );
-if (!kitUrl.includes(`/emojibase-data@${version}"`)) {
+if (!kitUrl.includes(`/emojibase-data/${version}"`)) {
 	throw new Error(
 		`packages/ui/src/chat/lib/emojibase-url.ts does not point at emojibase-data@${version}: bump both together.`,
 	);
@@ -50,7 +50,9 @@ const locales = [];
 for (const entry of entries) {
 	if (await isLocale(entry)) locales.push(entry.name);
 }
-const root = join(dist, `emojibase-data@${version}`);
+// No "@" in the path: the assets server redirects it to "%40", one more
+// round trip before every first picker.
+const root = join(dist, "emojibase-data", version);
 for (const locale of locales) {
 	await mkdir(join(root, locale), { recursive: true });
 	for (const file of FILES) {
