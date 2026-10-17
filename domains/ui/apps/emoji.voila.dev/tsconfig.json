@@ -1,0 +1,4 @@
+{
+	"extends": "@voila.dev/typescript-config/scripts.json",
+	"include": ["src"]
+}

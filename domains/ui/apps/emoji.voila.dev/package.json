@@ -4,13 +4,19 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"build": "node scripts/build.mjs",
+		"build": "bun src/index.ts",
 		"format": "biome format",
 		"lint": "biome lint",
 		"check": "biome check"
 	},
+	"dependencies": {
+		"@effect/platform-bun": "catalog:",
+		"effect": "catalog:"
+	},
 	"devDependencies": {
 		"@biomejs/biome": "catalog:",
+		"@types/bun": "catalog:",
+		"@voila.dev/typescript-config": "workspace:*",
 		"emojibase-data": "17.0.0",
 		"wrangler": "^4.130.0"
 	}
