@@ -81,7 +81,7 @@ describe("Accordion", () => {
 			</Accordion.Root>,
 		);
 		const trigger = screen.getByRole("button", { name: "Locked question" });
-		expect(trigger.getAttribute("aria-disabled")).toBe("true");
+		expect(trigger.hasAttribute("disabled")).toBe(true);
 
 		fireEvent.click(trigger);
 		await waitFor(() => {
