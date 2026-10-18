@@ -1,6 +1,10 @@
 import { describe, expect, it } from "bun:test";
 import { join } from "node:path";
-import { type ExportsMap, exportProblems } from "./structure/export-rules.ts";
+import {
+	exportProblems,
+	importMapProblems,
+	type Manifest,
+} from "./structure/export-rules.ts";
 import {
 	importViolations,
 	type ModuleDependency,
@@ -15,8 +19,7 @@ const MODULE_DEPENDENCIES: ReadonlyArray<ModuleDependency> = [];
 
 const packageRoot = join(import.meta.dir, "..");
 const files = listSourceFiles(join(packageRoot, "src"));
-const manifest: {
-	exports: ExportsMap;
+const manifest: Manifest & {
 	peerDependencies?: Record<string, string>;
 	peerDependenciesMeta?: Record<string, { optional?: boolean }>;
 } = await Bun.file(join(packageRoot, "package.json")).json();
@@ -48,8 +51,12 @@ describe("package structure", () => {
 		expect(
 			exportProblems(
 				files.map((file) => file.path),
-				manifest.exports,
+				manifest,
 			),
 		).toStrictEqual([]);
+	});
+
+	it("maps # to the source in the repository and to the built files once published", () => {
+		expect(importMapProblems(manifest)).toStrictEqual([]);
 	});
 });

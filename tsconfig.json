@@ -19,8 +19,7 @@
 		"noUnusedLocals": true,
 		"noUnusedParameters": true,
 		"skipLibCheck": true,
-		"types": ["bun"],
-		"customConditions": ["@voila.dev/source"]
+		"types": ["bun"]
 	},
-	"include": ["src", "test"]
+	"include": ["src", "test", "scripts"]
 }

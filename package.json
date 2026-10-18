@@ -12,18 +12,10 @@
 		"url": "git+https://github.com/voila-voila-dev/platform.git"
 	},
 	"exports": {
-		".": {
-			"@voila.dev/source": "./src/index.ts",
-			"types": "./dist/index.d.ts",
-			"default": "./dist/index.js"
-		}
+		".": "./src/index.ts"
 	},
 	"imports": {
-		"#*": {
-			"@voila.dev/source": "./src/*.ts",
-			"types": "./dist/*.d.ts",
-			"default": "./dist/*.js"
-		}
+		"#*": "./src/*.ts"
 	},
 	"files": [
 		"dist",
@@ -31,6 +23,15 @@
 		"!src/**/*.test.ts",
 		"!src/**/*.test-helper.ts"
 	],
+	"publishConfig": {
+		"access": "public",
+		"exports": {
+			".": "./dist/index.js"
+		},
+		"imports": {
+			"#*": "./dist/*.js"
+		}
+	},
 	"scripts": {
 		"build": "rm -rf dist && tsc -p tsconfig.build.json",
 		"check": "biome check",
@@ -38,7 +39,9 @@
 		"ci": "biome ci && tsc --noEmit && bun run test && bun run build",
 		"format": "biome format --write",
 		"lint": "biome lint --write",
-		"test": "bun test --conditions=@voila.dev/source"
+		"postpack": "bun scripts/publish-manifest/src/index.ts restore",
+		"prepack": "bun run build && bun scripts/publish-manifest/src/index.ts apply",
+		"test": "bun test"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.5.15",
@@ -48,5 +51,8 @@
 	},
 	"peerDependencies": {
 		"effect": "^4.0.0"
-	}
+	},
+	"workspaces": [
+		"scripts/*"
+	]
 }

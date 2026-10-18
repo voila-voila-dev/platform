@@ -47,7 +47,7 @@ src/email/
 
 `test/structure.test.ts` checks these rules on every run:
 
-- **Files import each other through `#`** (`#link-tracking/link/aggregates/tracked-link`), never through a relative path. The `#` imports carry no extension: they resolve to `src/*.ts` under the `@voila.dev/source` condition, and to `dist/*.js` once published.
+- **Files import each other through `#`** (`#link-tracking/link/aggregates/tracked-link`), never through a relative path. The `#` imports carry no extension, so the same import reads `src/*.ts` in the repository and `dist/*.js` once published.
 - **The core imports no module.**
 - **A module's domain and contract** may end up in a browser bundle. They never import an adapter, `node:*`, `bun`, or an adapter library.
 - **An adapter** imports the domain of its own module and the core. It may also import the domain of a module its module depends on. It never imports another adapter.
@@ -68,3 +68,12 @@ The package is `sideEffects: false`: no module may run anything when it is loade
 bun install
 bun run ci   # biome, tsc, tests, build
 ```
+
+## Publishing
+
+In the repository, `exports` and `imports` point at `src/*.ts`, so nothing needs building to run or test. `publishConfig.exports` and `publishConfig.imports` hold the same entries pointing at `dist/*.js`, which is how Effect lays out its package. pnpm swaps those fields on publish, but Bun and npm do not, so `scripts/publish-manifest` does it:
+
+- `prepack` builds, keeps `package.json` aside, and writes the published form.
+- `postpack` puts the repository's `package.json` back.
+
+`bun pm pack` and `bun publish` both run these two hooks. The structure test checks that `publishConfig` mirrors `exports` and `imports`.
