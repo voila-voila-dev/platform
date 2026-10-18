@@ -1,6 +1,7 @@
 // Where a file sits, read from its path relative to `src/`:
 //
 //   index.ts, core/**              the core
+//     core/adapters/<name>/**      one implementation of its ports, exported as /<name>
 //   <module>/                      a module: a brick, or a subdomain nested in one
 //     index.ts, <layer>/**         its domain
 //     http/**                      its HttpApi contract
@@ -38,8 +39,15 @@ const DOMAIN: Part = { kind: "domain" };
 
 export function locate(path: string): Location {
 	const folders = path.split("/").slice(0, -1);
-	if (folders.length === 0 || folders[0] === "core")
-		return { module: undefined, part: DOMAIN };
+	if (folders.length === 0) return { module: undefined, part: DOMAIN };
+	if (folders[0] === "core")
+		return {
+			module: undefined,
+			part:
+				folders[1] === "adapters"
+					? { kind: "adapter", name: folders[2] ?? "" }
+					: DOMAIN,
+		};
 	const module: Array<string> = [];
 	for (const [index, folder] of folders.entries()) {
 		if (module.length > 0 && LAYER_FOLDERS.has(folder)) break;
@@ -58,7 +66,13 @@ export function locate(path: string): Location {
 /** The subpath a file is exported as, when it is an entry point: `./link-tracking/click/drizzle`. */
 export function exportKeyOf(path: string): string | undefined {
 	const { module, part } = locate(path);
-	if (module === undefined) return path === "index.ts" ? "." : undefined;
+	if (module === undefined) {
+		if (path === "index.ts") return ".";
+		return part.kind === "adapter" &&
+			path === `core/adapters/${part.name}/index.ts`
+			? `./${part.name}`
+			: undefined;
+	}
 	switch (part.kind) {
 		case "domain":
 			return path === `${module}/index.ts` ? `./${module}` : undefined;
@@ -74,7 +88,8 @@ export function exportKeyOf(path: string): string | undefined {
 }
 
 export function describe({ module, part }: Location): string {
-	if (module === undefined) return "core";
+	if (module === undefined)
+		return part.kind === "adapter" ? `core (${part.name} adapter)` : "core";
 	if (part.kind === "adapter") return `${module} (${part.name} adapter)`;
 	if (part.kind === "http") return `${module} (http)`;
 	return module;

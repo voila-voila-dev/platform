@@ -82,11 +82,57 @@ describe("importViolations", () => {
 			]),
 		).toHaveLength(1);
 		expect(
+			violations("link-tracking/click/adapters/drizzle/tables.ts", [
+				"#link-tracking/link/adapters/drizzle/tables",
+			]),
+		).toHaveLength(1);
+		expect(
 			violations(
 				"link-tracking/click/adapters/drizzle/tables.ts",
 				["#link-tracking/link/adapters/drizzle/tables"],
 				CLICK_NEEDS_LINK,
 			),
+		).toStrictEqual([]);
+		expect(
+			violations(
+				"link-tracking/click/adapters/drizzle/tables.ts",
+				["#link-tracking/link/adapters/memory/repository"],
+				CLICK_NEEDS_LINK,
+			),
+		).toHaveLength(1);
+	});
+
+	it("lets an adapter use the core's adapter of the same name, and nothing else of the core's adapters", () => {
+		expect(
+			violations("link-tracking/link/adapters/drizzle/repository.ts", [
+				"#core/adapters/drizzle/query",
+			]),
+		).toStrictEqual([]);
+		expect(
+			violations("link-tracking/link/adapters/drizzle/repository.ts", [
+				"#core/adapters/memory/in-memory-entity-store",
+			]),
+		).toHaveLength(1);
+		expect(
+			violations("link-tracking/link/use-cases/create.ts", [
+				"#core/adapters/memory/in-memory-entity-store",
+			]),
+		).toHaveLength(1);
+		expect(
+			violations("core/adapters/drizzle/paged-query.ts", [
+				"drizzle-orm",
+				"#core/search/value-objects/pagination",
+				"#core/adapters/drizzle/query",
+			]),
+		).toStrictEqual([]);
+		expect(
+			violations("core/adapters/drizzle/query.ts", ["#core/adapters/bun/id"]),
+		).toHaveLength(1);
+		expect(
+			violations("core/ids/id.ts", ["#core/adapters/bun/id"]),
+		).toHaveLength(1);
+		expect(
+			violations("core/adapters/memory/store.ts", ["#link-tracking/index"]),
 		).toHaveLength(1);
 	});
 
