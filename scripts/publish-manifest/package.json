@@ -1,0 +1,9 @@
+{
+	"name": "@voila.dev/publish-manifest",
+	"private": true,
+	"description": "Swaps package.json to its published form around a pack: `apply` before (prepack), `restore` after (postpack).",
+	"type": "module",
+	"scripts": {
+		"test": "bun test"
+	}
+}

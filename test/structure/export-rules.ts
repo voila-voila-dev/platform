@@ -1,18 +1,29 @@
 import { exportKeyOf } from "./layout.ts";
 
-export type ExportsMap = Readonly<
-	Record<string, Readonly<Record<string, string>>>
->;
+type PathMap = Readonly<Record<string, string>>;
+
+/** The fields of `package.json` that point at files. */
+export interface Manifest {
+	readonly exports?: PathMap;
+	readonly imports?: PathMap;
+	readonly publishConfig?: {
+		readonly exports?: PathMap;
+		readonly imports?: PathMap;
+	};
+}
 
 /**
- * The `exports` map lists exactly the entry points the folders define, each
- * with its source and the built files that mirror it, and no two entry points
- * claim the same subpath (an adapter named like a submodule).
+ * `exports` lists exactly the entry points the folders define, pointing at
+ * their source, and `publishConfig.exports` lists the same subpaths, pointing
+ * at the built files. No two entry points claim the same subpath (an adapter
+ * named like a submodule).
  */
 export function exportProblems(
 	paths: ReadonlyArray<string>,
-	exports: ExportsMap,
+	manifest: Manifest,
 ): ReadonlyArray<string> {
+	const exports = manifest.exports ?? {};
+	const published = manifest.publishConfig?.exports ?? {};
 	const entries = new Map<string, Array<string>>();
 	for (const path of paths) {
 		const key = exportKeyOf(path);
@@ -22,33 +33,44 @@ export function exportProblems(
 	const collisions = Array.from(entries)
 		.filter(([, sources]) => sources.length > 1)
 		.map(([key, sources]) => `${key} is claimed by ${sources.join(" and ")}`);
-	const missing = Array.from(entries.keys())
-		.filter((key) => exports[key] === undefined)
-		.map((key) => `${key} is missing from exports`);
-	const unexpected = Object.keys(exports)
-		.filter((key) => !entries.has(key))
-		.map((key) => `${key} matches no entry point`);
+	const unexpected = [
+		...Object.keys(exports).filter((key) => !entries.has(key)),
+		...Object.keys(published).filter((key) => !entries.has(key)),
+	].map((key) => `${key} matches no entry point`);
 	const mismatched = Array.from(entries).flatMap(([key, sources]) => {
-		const conditions = exports[key];
 		const [source, ...others] = sources;
-		return conditions === undefined || source === undefined || others.length > 0
-			? []
-			: conditionProblems(key, source, conditions);
+		if (source === undefined || others.length > 0) return [];
+		return [
+			expectPath(`exports["${key}"]`, exports[key], `./src/${source}`),
+			expectPath(
+				`publishConfig.exports["${key}"]`,
+				published[key],
+				`./dist/${source.replace(/\.ts$/, ".js")}`,
+			),
+		].flat();
 	});
-	return [...collisions, ...missing, ...unexpected, ...mismatched];
+	return [...collisions, ...unexpected, ...mismatched];
 }
 
-function conditionProblems(
-	key: string,
-	source: string,
-	conditions: Readonly<Record<string, string>>,
+/** `#` imports read the source in the repository and the built files once published. */
+export function importMapProblems(manifest: Manifest): ReadonlyArray<string> {
+	return [
+		expectPath('imports["#*"]', manifest.imports?.["#*"], "./src/*.ts"),
+		expectPath(
+			'publishConfig.imports["#*"]',
+			manifest.publishConfig?.imports?.["#*"],
+			"./dist/*.js",
+		),
+	].flat();
+}
+
+function expectPath(
+	field: string,
+	actual: string | undefined,
+	expected: string,
 ): ReadonlyArray<string> {
-	const expected: Record<string, string> = {
-		"@voila.dev/source": `./src/${source}`,
-		types: `./dist/${source.replace(/\.ts$/, ".d.ts")}`,
-		default: `./dist/${source.replace(/\.ts$/, ".js")}`,
-	};
-	return Object.entries(expected)
-		.filter(([condition, value]) => conditions[condition] !== value)
-		.map(([condition, value]) => `${key}: ${condition} should be ${value}`);
+	if (actual === expected) return [];
+	return actual === undefined
+		? [`${field} is missing: it should be ${expected}`]
+		: [`${field} should be ${expected}, not ${actual}`];
 }

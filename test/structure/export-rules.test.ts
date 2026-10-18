@@ -1,13 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { exportProblems } from "./export-rules.ts";
-
-function entry(source: string) {
-	return {
-		"@voila.dev/source": `./src/${source}`,
-		types: `./dist/${source.replace(/\.ts$/, ".d.ts")}`,
-		default: `./dist/${source.replace(/\.ts$/, ".js")}`,
-	};
-}
+import { exportProblems, importMapProblems } from "./export-rules.ts";
 
 describe("exportProblems", () => {
 	it("accepts exports that mirror the entry points", () => {
@@ -20,24 +12,38 @@ describe("exportProblems", () => {
 					"email/adapters/resend/client.ts",
 				],
 				{
-					".": entry("index.ts"),
-					"./email": entry("email/index.ts"),
-					"./email/resend": entry("email/adapters/resend/index.ts"),
+					exports: {
+						".": "./src/index.ts",
+						"./email": "./src/email/index.ts",
+						"./email/resend": "./src/email/adapters/resend/index.ts",
+					},
+					publishConfig: {
+						exports: {
+							".": "./dist/index.js",
+							"./email": "./dist/email/index.js",
+							"./email/resend": "./dist/email/adapters/resend/index.js",
+						},
+					},
 				},
 			),
 		).toStrictEqual([]);
 	});
 
-	it("reports a missing export, an export with no entry point, and wrong built paths", () => {
+	it("reports a missing export, an export with no entry point, and a wrong path", () => {
 		expect(
 			exportProblems(["index.ts", "email/index.ts"], {
-				".": { ...entry("index.ts"), types: "./dist/other.d.ts" },
-				"./sms": entry("sms/index.ts"),
+				exports: { ".": "./src/index.ts", "./sms": "./src/sms/index.ts" },
+				publishConfig: {
+					exports: {
+						".": "./dist/other.js",
+						"./email": "./dist/email/index.js",
+					},
+				},
 			}),
 		).toStrictEqual([
-			"./email is missing from exports",
 			"./sms matches no entry point",
-			".: types should be ./dist/index.d.ts",
+			'publishConfig.exports["."] should be ./dist/index.js, not ./dist/other.js',
+			'exports["./email"] is missing: it should be ./src/email/index.ts',
 		]);
 	});
 
@@ -45,10 +51,30 @@ describe("exportProblems", () => {
 		expect(
 			exportProblems(
 				["email/adapters/inbound/index.ts", "email/inbound/index.ts"],
-				{ "./email/inbound": entry("email/inbound/index.ts") },
+				{
+					exports: { "./email/inbound": "./src/email/inbound/index.ts" },
+					publishConfig: {
+						exports: { "./email/inbound": "./dist/email/inbound/index.js" },
+					},
+				},
 			),
 		).toStrictEqual([
 			"./email/inbound is claimed by email/adapters/inbound/index.ts and email/inbound/index.ts",
+		]);
+	});
+});
+
+describe("importMapProblems", () => {
+	it("expects # to read src in the repository and dist once published", () => {
+		expect(
+			importMapProblems({
+				imports: { "#*": "./src/*.ts" },
+				publishConfig: { imports: { "#*": "./dist/*.js" } },
+			}),
+		).toStrictEqual([]);
+		expect(importMapProblems({ imports: { "#*": "./src/*" } })).toStrictEqual([
+			'imports["#*"] should be ./src/*.ts, not ./src/*',
+			'publishConfig.imports["#*"] is missing: it should be ./dist/*.js',
 		]);
 	});
 });
