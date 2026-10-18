@@ -12,8 +12,12 @@
         "typescript": "7.0.2",
       },
       "peerDependencies": {
+        "drizzle-orm": "^1.0.0-rc.5-5935859",
         "effect": "^4.0.0",
       },
+      "optionalPeers": [
+        "drizzle-orm",
+      ],
     },
     "scripts/publish-manifest": {
       "name": "@voila.dev/publish-manifest",

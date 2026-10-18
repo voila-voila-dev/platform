@@ -16,7 +16,7 @@ import {
 	makeGate,
 } from "#core/authorization/gate-constructors";
 import { permissionRef } from "#core/authorization/permission-ref";
-import type { UserId } from "#core/ids/user-id";
+import type { UserId } from "#core/value-objects/user-id";
 
 export interface WithActor {
 	readonly actor: Actor;

@@ -7,7 +7,7 @@ import {
 	permissionRef,
 } from "#core/authorization/permission-ref";
 import { checked } from "#core/authorization/permission-tracing";
-import type { UserId } from "#core/ids/user-id";
+import type { UserId } from "#core/value-objects/user-id";
 
 const allow: Effect.Effect<void, AccessDeniedError> = Effect.void;
 const deny: Effect.Effect<void, AccessDeniedError> = Effect.fail(

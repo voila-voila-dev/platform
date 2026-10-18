@@ -1,5 +1,5 @@
 import { Schema } from "effect";
-import { Id } from "#core/ids/id";
+import { Id } from "#core/value-objects/id";
 
 export const OrganizationId = Id.pipe(Schema.brand("OrganizationId"));
 

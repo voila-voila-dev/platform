@@ -32,9 +32,11 @@ describe("importViolations", () => {
 
 	it("keeps the core free of modules", () => {
 		expect(violations("index.ts", ["#email/index"])).toHaveLength(1);
-		expect(violations("core/ids/user-id.ts", ["#email/index"])).toHaveLength(1);
 		expect(
-			violations("index.ts", ["#core/ids/user-id", "effect"]),
+			violations("core/value-objects/user-id.ts", ["#email/index"]),
+		).toHaveLength(1);
+		expect(
+			violations("index.ts", ["#core/value-objects/user-id", "effect"]),
 		).toStrictEqual([]);
 	});
 
@@ -62,7 +64,7 @@ describe("importViolations", () => {
 				"node:crypto",
 				"#email/services/sender",
 				"#email/adapters/resend/client",
-				"#core/ids/user-id",
+				"#core/value-objects/user-id",
 			]),
 		).toStrictEqual([]);
 		expect(
@@ -129,7 +131,7 @@ describe("importViolations", () => {
 			violations("core/adapters/drizzle/query.ts", ["#core/adapters/bun/id"]),
 		).toHaveLength(1);
 		expect(
-			violations("core/ids/id.ts", ["#core/adapters/bun/id"]),
+			violations("core/value-objects/id.ts", ["#core/adapters/bun/id"]),
 		).toHaveLength(1);
 		expect(
 			violations("core/adapters/memory/store.ts", ["#link-tracking/index"]),

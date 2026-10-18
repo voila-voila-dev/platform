@@ -4,7 +4,7 @@ import { exportKeyOf, locate } from "./layout.ts";
 describe("locate", () => {
 	it("reads the core", () => {
 		expect(locate("index.ts").module).toBeUndefined();
-		expect(locate("core/ids/user-id.ts").module).toBeUndefined();
+		expect(locate("core/value-objects/user-id.ts").module).toBeUndefined();
 	});
 
 	it("reads the core's adapters", () => {
