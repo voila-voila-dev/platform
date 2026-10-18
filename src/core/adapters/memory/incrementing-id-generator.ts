@@ -1,6 +1,6 @@
 import { Effect, Layer } from "effect";
-import { Id } from "#core/ids/id";
 import { IdGenerator } from "#core/services/id-generator";
+import { Id } from "#core/value-objects/id";
 
 export function incrementingIdGenerator() {
 	let counter = 0;

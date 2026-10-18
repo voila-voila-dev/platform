@@ -5,7 +5,7 @@ import { StaffActor } from "#core/actor/staff-actor";
 import { UserActor } from "#core/actor/user-actor";
 import { countingSecureRandom } from "#core/adapters/memory/counting-secure-random";
 import { incrementingIdGenerator } from "#core/adapters/memory/incrementing-id-generator";
-import { UserId } from "#core/ids/user-id";
+import { UserId } from "#core/value-objects/user-id";
 import { inMemoryTrackedLinkRepository } from "#link-tracking/link/adapters/memory/in-memory-tracked-link-repository";
 import { TrackedLink } from "#link-tracking/link/aggregates/tracked-link";
 import { ArchiveTrackedLinkUseCase } from "#link-tracking/link/use-cases/archive-tracked-link-use-case";

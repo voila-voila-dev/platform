@@ -26,9 +26,6 @@ export {
 	splitPermissionChecked,
 } from "#core/authorization/permission-tracing";
 export { DatabaseError } from "#core/errors/database-error";
-export { Id } from "#core/ids/id";
-export { OrganizationId } from "#core/ids/organization-id";
-export { UserId } from "#core/ids/user-id";
 export {
 	UNIT_OUTCOME_ATTRIBUTE,
 	type UnitKind,
@@ -55,3 +52,6 @@ export type {
 	UnitInput,
 	UseCaseDeclaration,
 } from "#core/use-case/use-case";
+export { Id } from "#core/value-objects/id";
+export { OrganizationId } from "#core/value-objects/organization-id";
+export { UserId } from "#core/value-objects/user-id";

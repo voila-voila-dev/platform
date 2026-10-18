@@ -30,8 +30,8 @@ src/
 
 | Module | Exports |
 |---|---|
-| core | `.` (ids, `Actor`, `Gate`, `UseCase`, `IdGenerator`, `SecureRandom`, `CurrentActor`, `DatabaseError`), `/memory`, `/drizzle`, `/bun`, `/http-server` |
-| rate-limiting | `/rate-limiting` (`RateLimiter`, `RateLimitedError`), `/rate-limiting/memory` |
+| core | `.` (ids and shared value objects, `Actor`, `Gate`, `UseCase`, `IdGenerator`, `SecureRandom`, `CurrentActor`, `DatabaseError`), `/memory`, `/drizzle`, `/bun`, `/http-server` |
+| rate-limiting | `/rate-limiting` (`RateLimiter`, `RateLimitedError`), `/rate-limiting/memory` (`inMemoryRateLimiter`, `stubRateLimiter`), `/rate-limiting/redis` (`redisRateLimiter`, on the application's `Redis`) |
 | search | `/search` (`Pagination`, `PagedResult`, filters, `makeSearchUseCase`), `/search/memory`, `/search/drizzle` (`pagedQuery`, accent-insensitive search, `searchFunctionsSql`) |
 | link-tracking/link | `/link-tracking/link`, `/http` (`TrackedLinksApiGroup`), `/memory`, `/drizzle` (tables, repository, `trackedLinkSearchIndexesSql`), `/http-server` (`trackedLinksHandlers`) |
 | link-tracking/click | `/link-tracking/click`, `/memory`, `/drizzle`, `/http-server` (`redirectToLink`) |
@@ -96,6 +96,9 @@ The Drizzle adapters export their tables for the application's schema. Search ne
 The package is `sideEffects: false`: no module may run anything when it is loaded.
 
 ## Workflow
+
+`*.integration.test.ts` files need a real service and skip without it: `REDIS_URL=redis://localhost:6379 bun run test` runs the Redis ones.
+
 
 ```sh
 bun install

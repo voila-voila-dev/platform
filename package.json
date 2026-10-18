@@ -29,6 +29,7 @@
 		"./memory": "./src/core/adapters/memory/index.ts",
 		"./rate-limiting": "./src/rate-limiting/index.ts",
 		"./rate-limiting/memory": "./src/rate-limiting/adapters/memory/index.ts",
+		"./rate-limiting/redis": "./src/rate-limiting/adapters/redis/index.ts",
 		"./search": "./src/search/index.ts",
 		"./search/drizzle": "./src/search/adapters/drizzle/index.ts",
 		"./search/memory": "./src/search/adapters/memory/index.ts"
@@ -62,6 +63,7 @@
 			"./memory": "./dist/core/adapters/memory/index.js",
 			"./rate-limiting": "./dist/rate-limiting/index.js",
 			"./rate-limiting/memory": "./dist/rate-limiting/adapters/memory/index.js",
+			"./rate-limiting/redis": "./dist/rate-limiting/adapters/redis/index.js",
 			"./search": "./dist/search/index.js",
 			"./search/drizzle": "./dist/search/adapters/drizzle/index.js",
 			"./search/memory": "./dist/search/adapters/memory/index.js"
