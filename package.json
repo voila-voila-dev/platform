@@ -1,0 +1,45 @@
+{
+	"name": "@voila.dev/platform",
+	"version": "0.0.0",
+	"description": "The technical bricks of a B2B platform on Effect, one subpath per brick: a small core at the root, then link tracking and the rest, each with its storage and HTTP adapters.",
+	"license": "UNLICENSED",
+	"author": "voila.dev",
+	"type": "module",
+	"sideEffects": false,
+	"packageManager": "bun@1.4.3",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/voila-voila-dev/platform.git"
+	},
+	"exports": {
+		".": {
+			"@voila.dev/source": "./src/index.ts",
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		}
+	},
+	"files": [
+		"dist",
+		"src",
+		"!src/**/*.test.ts",
+		"!src/**/*.test-helper.ts"
+	],
+	"scripts": {
+		"build": "rm -rf dist && tsc -p tsconfig.build.json",
+		"check": "biome check",
+		"check-types": "tsc --noEmit",
+		"ci": "biome ci && tsc --noEmit && bun test && bun run build",
+		"format": "biome format --write",
+		"lint": "biome lint --write",
+		"test": "bun test"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.5.15",
+		"@types/bun": "1.4.3",
+		"effect": "4.0.3",
+		"typescript": "7.0.2"
+	},
+	"peerDependencies": {
+		"effect": "^4.0.0"
+	}
+}
