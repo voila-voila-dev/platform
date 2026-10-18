@@ -18,6 +18,13 @@
 			"default": "./dist/index.js"
 		}
 	},
+	"imports": {
+		"#*": {
+			"@voila.dev/source": "./src/*.ts",
+			"types": "./dist/*.d.ts",
+			"default": "./dist/*.js"
+		}
+	},
 	"files": [
 		"dist",
 		"src",
@@ -28,10 +35,10 @@
 		"build": "rm -rf dist && tsc -p tsconfig.build.json",
 		"check": "biome check",
 		"check-types": "tsc --noEmit",
-		"ci": "biome ci && tsc --noEmit && bun test && bun run build",
+		"ci": "biome ci && tsc --noEmit && bun run test && bun run build",
 		"format": "biome format --write",
 		"lint": "biome lint --write",
-		"test": "bun test"
+		"test": "bun test --conditions=@voila.dev/source"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.5.15",
