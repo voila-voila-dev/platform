@@ -12,7 +12,8 @@ const RUNTIME_PACKAGES = [/^node:/, /^bun(:|$)/];
  * - the core imports no module;
  * - a module's domain and contract import no adapter, no runtime module and
  *   no adapter library (the optional peer dependencies);
- * - an adapter imports no other adapter;
+ * - an adapter imports only adapters of its own name: the core's, and those
+ *   of the modules its module depends on (`link/drizzle` → `search/drizzle`);
  * - a module imports another only when the dependency is declared, except a
  *   module re-exporting its own submodules.
  */
@@ -71,25 +72,19 @@ function checkImport(
 		return undefined;
 	}
 	const to = locate(target);
+	if (to.part.kind === "adapter") {
+		if (from.part.kind !== "adapter")
+			return `${describe(from)} imports no adapter`;
+		if (from.part.name !== to.part.name)
+			return "an adapter imports only adapters of its own name";
+		if (to.module === undefined || to.module === from.module) return undefined;
+	}
 	if (to.module === undefined) return undefined;
 	if (from.module === undefined) return "the core imports no module";
-	if (to.part.kind === "adapter" && !isSameAdapter(from, to))
-		return isAdapter
-			? "an adapter imports no other adapter"
-			: `${describe(from)} imports no adapter`;
 	if (from.module === to.module || isSubmodule(to.module, from.module))
 		return undefined;
 	if (declared.has(dependencyKey([from.module, to.module]))) return undefined;
 	return `undeclared dependency ${from.module} → ${to.module}`;
-}
-
-function isSameAdapter(from: Location, to: Location): boolean {
-	return (
-		from.module === to.module &&
-		from.part.kind === "adapter" &&
-		to.part.kind === "adapter" &&
-		from.part.name === to.part.name
-	);
 }
 
 function isSubmodule(module: string, parent: string): boolean {

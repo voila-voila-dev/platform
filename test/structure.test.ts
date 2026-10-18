@@ -15,7 +15,12 @@ import { listSourceFiles } from "./structure/source-files.ts";
 
 // A dependency between two modules is a deliberate edit here. Modules refer to
 // each other's aggregates by id only, so no adapter needs another module's.
-const MODULE_DEPENDENCIES: ReadonlyArray<ModuleDependency> = [];
+const MODULE_DEPENDENCIES: ReadonlyArray<ModuleDependency> = [
+	["link-tracking/click", "link-tracking/link"],
+	["link-tracking/link", "rate-limiting"],
+	["link-tracking/link", "search"],
+	["search", "rate-limiting"],
+];
 
 const packageRoot = join(import.meta.dir, "..");
 const files = listSourceFiles(join(packageRoot, "src"));

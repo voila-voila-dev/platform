@@ -12,7 +12,26 @@
 		"url": "git+https://github.com/voila-voila-dev/platform.git"
 	},
 	"exports": {
-		".": "./src/index.ts"
+		".": "./src/index.ts",
+		"./bun": "./src/core/adapters/bun/index.ts",
+		"./drizzle": "./src/core/adapters/drizzle/index.ts",
+		"./http-server": "./src/core/adapters/http-server/index.ts",
+		"./link-tracking": "./src/link-tracking/index.ts",
+		"./link-tracking/click": "./src/link-tracking/click/index.ts",
+		"./link-tracking/click/drizzle": "./src/link-tracking/click/adapters/drizzle/index.ts",
+		"./link-tracking/click/http-server": "./src/link-tracking/click/adapters/http-server/index.ts",
+		"./link-tracking/click/memory": "./src/link-tracking/click/adapters/memory/index.ts",
+		"./link-tracking/link": "./src/link-tracking/link/index.ts",
+		"./link-tracking/link/drizzle": "./src/link-tracking/link/adapters/drizzle/index.ts",
+		"./link-tracking/link/http": "./src/link-tracking/link/http/index.ts",
+		"./link-tracking/link/http-server": "./src/link-tracking/link/adapters/http-server/index.ts",
+		"./link-tracking/link/memory": "./src/link-tracking/link/adapters/memory/index.ts",
+		"./memory": "./src/core/adapters/memory/index.ts",
+		"./rate-limiting": "./src/rate-limiting/index.ts",
+		"./rate-limiting/memory": "./src/rate-limiting/adapters/memory/index.ts",
+		"./search": "./src/search/index.ts",
+		"./search/drizzle": "./src/search/adapters/drizzle/index.ts",
+		"./search/memory": "./src/search/adapters/memory/index.ts"
 	},
 	"imports": {
 		"#*": "./src/*.ts"
@@ -26,7 +45,26 @@
 	"publishConfig": {
 		"access": "public",
 		"exports": {
-			".": "./dist/index.js"
+			".": "./dist/index.js",
+			"./bun": "./dist/core/adapters/bun/index.js",
+			"./drizzle": "./dist/core/adapters/drizzle/index.js",
+			"./http-server": "./dist/core/adapters/http-server/index.js",
+			"./link-tracking": "./dist/link-tracking/index.js",
+			"./link-tracking/click": "./dist/link-tracking/click/index.js",
+			"./link-tracking/click/drizzle": "./dist/link-tracking/click/adapters/drizzle/index.js",
+			"./link-tracking/click/http-server": "./dist/link-tracking/click/adapters/http-server/index.js",
+			"./link-tracking/click/memory": "./dist/link-tracking/click/adapters/memory/index.js",
+			"./link-tracking/link": "./dist/link-tracking/link/index.js",
+			"./link-tracking/link/drizzle": "./dist/link-tracking/link/adapters/drizzle/index.js",
+			"./link-tracking/link/http": "./dist/link-tracking/link/http/index.js",
+			"./link-tracking/link/http-server": "./dist/link-tracking/link/adapters/http-server/index.js",
+			"./link-tracking/link/memory": "./dist/link-tracking/link/adapters/memory/index.js",
+			"./memory": "./dist/core/adapters/memory/index.js",
+			"./rate-limiting": "./dist/rate-limiting/index.js",
+			"./rate-limiting/memory": "./dist/rate-limiting/adapters/memory/index.js",
+			"./search": "./dist/search/index.js",
+			"./search/drizzle": "./dist/search/adapters/drizzle/index.js",
+			"./search/memory": "./dist/search/adapters/memory/index.js"
 		},
 		"imports": {
 			"#*": "./dist/*.js"
@@ -46,13 +84,20 @@
 	"devDependencies": {
 		"@biomejs/biome": "2.5.15",
 		"@types/bun": "1.4.3",
+		"drizzle-orm": "1.0.0-rc.5-5935859",
 		"effect": "4.0.3",
 		"typescript": "7.0.2"
 	},
 	"peerDependencies": {
+		"drizzle-orm": "^1.0.0-rc.5-5935859",
 		"effect": "^4.0.0"
 	},
 	"workspaces": [
 		"scripts/*"
-	]
+	],
+	"peerDependenciesMeta": {
+		"drizzle-orm": {
+			"optional": true
+		}
+	}
 }

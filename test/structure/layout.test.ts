@@ -7,6 +7,13 @@ describe("locate", () => {
 		expect(locate("core/ids/user-id.ts").module).toBeUndefined();
 	});
 
+	it("reads the core's adapters", () => {
+		expect(locate("core/adapters/drizzle/query.ts")).toStrictEqual({
+			module: undefined,
+			part: { kind: "adapter", name: "drizzle" },
+		});
+	});
+
 	it("reads a module's domain, contract and adapters", () => {
 		expect(locate("email/use-cases/send-email.ts")).toStrictEqual({
 			module: "email",
@@ -52,6 +59,7 @@ describe("exportKeyOf", () => {
 		expect(exportKeyOf("email/adapters/resend/index.ts")).toBe(
 			"./email/resend",
 		);
+		expect(exportKeyOf("core/adapters/drizzle/index.ts")).toBe("./drizzle");
 	});
 
 	it("leaves the other files out", () => {
