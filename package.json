@@ -13,6 +13,12 @@
 	},
 	"exports": {
 		".": "./src/index.ts",
+		"./bulk-import": "./src/bulk-import/index.ts",
+		"./bulk-import/drizzle": "./src/bulk-import/adapters/drizzle/index.ts",
+		"./bulk-import/http": "./src/bulk-import/http/index.ts",
+		"./bulk-import/http-server": "./src/bulk-import/adapters/http-server/index.ts",
+		"./bulk-import/memory": "./src/bulk-import/adapters/memory/index.ts",
+		"./bulk-import/xlsx": "./src/bulk-import/adapters/xlsx/index.ts",
 		"./bun": "./src/core/adapters/bun/index.ts",
 		"./drizzle": "./src/core/adapters/drizzle/index.ts",
 		"./http-server": "./src/core/adapters/http-server/index.ts",
@@ -47,6 +53,12 @@
 		"access": "public",
 		"exports": {
 			".": "./dist/index.js",
+			"./bulk-import": "./dist/bulk-import/index.js",
+			"./bulk-import/drizzle": "./dist/bulk-import/adapters/drizzle/index.js",
+			"./bulk-import/http": "./dist/bulk-import/http/index.js",
+			"./bulk-import/http-server": "./dist/bulk-import/adapters/http-server/index.js",
+			"./bulk-import/memory": "./dist/bulk-import/adapters/memory/index.js",
+			"./bulk-import/xlsx": "./dist/bulk-import/adapters/xlsx/index.js",
 			"./bun": "./dist/core/adapters/bun/index.js",
 			"./drizzle": "./dist/core/adapters/drizzle/index.js",
 			"./http-server": "./dist/core/adapters/http-server/index.js",
@@ -93,11 +105,13 @@
 		"@types/bun": "1.4.3",
 		"drizzle-orm": "1.0.0-rc.5-5935859",
 		"effect": "4.0.3",
+		"exceljs": "^4.4.0",
 		"typescript": "7.0.2"
 	},
 	"peerDependencies": {
 		"drizzle-orm": "^1.0.0-rc.5-5935859",
-		"effect": "^4.0.0"
+		"effect": "^4.0.0",
+		"exceljs": "^4.4.0"
 	},
 	"workspaces": [
 		".",
@@ -105,6 +119,9 @@
 	],
 	"peerDependenciesMeta": {
 		"drizzle-orm": {
+			"optional": true
+		},
+		"exceljs": {
 			"optional": true
 		}
 	}
