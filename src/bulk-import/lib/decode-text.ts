@@ -1,11 +1,9 @@
-import { Effect } from "effect";
-import { ImportFileRejectedError } from "#bulk-import/errors/import-file-rejected-error";
-
-export function decodeText(
-	bytes: Uint8Array,
-): Effect.Effect<string, ImportFileRejectedError> {
-	return Effect.try({
-		try: () => new TextDecoder("utf-8", { fatal: true }).decode(bytes),
-		catch: () => new ImportFileRejectedError({ reason: "Unreadable" }),
-	});
+// Spreadsheets saved as « CSV » by Excel are Windows-1252 rather than UTF-8:
+// any byte sequence UTF-8 refuses reads as that.
+export function decodeText(bytes: Uint8Array): string {
+	try {
+		return new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+	} catch {
+		return new TextDecoder("windows-1252").decode(bytes);
+	}
 }

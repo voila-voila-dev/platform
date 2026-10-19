@@ -88,7 +88,7 @@ describe("CreateImportDraftUseCase", () => {
 		]);
 		expect(draft.validRows.map((row) => row.index)).toStrictEqual([0]);
 		expect(draft.rows[2]?.issues).toStrictEqual([
-			{ column: "email", issue: "Duplicate" },
+			{ column: "email", issue: "duplicate" },
 		]);
 	});
 
@@ -133,9 +133,9 @@ describe("CreateImportDraftUseCase", () => {
 				"reason" in failure ? failure.reason : failure._tag,
 			),
 		).toStrictEqual([
-			"UnsupportedFormat",
-			"TooLarge",
-			"Empty",
+			"unsupportedFormat",
+			"tooLarge",
+			"empty",
 			"ImportTargetNotFoundError",
 		]);
 	});
@@ -189,8 +189,8 @@ describe("a draft's review and import", () => {
 			),
 		);
 
-		expect(result.first.draft.status).toBe("Importing");
-		expect(result.second.draft.status).toBe("Imported");
+		expect(result.first.draft.status).toBe("importing");
+		expect(result.second.draft.status).toBe("imported");
 		expect(result.second.draft.outcome.created).toBe(3);
 		expect(result.again._tag).toBe("ImportDraftAlreadyImportedError");
 		expect(imported).toHaveLength(3);

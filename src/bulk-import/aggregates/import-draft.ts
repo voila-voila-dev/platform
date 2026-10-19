@@ -61,7 +61,7 @@ export class ImportDraft extends Schema.TaggedClass<ImportDraft>()(
 			(now) =>
 				new ImportDraft({
 					...fields,
-					status: "Reviewing",
+					status: "reviewing",
 					importedRowCount: 0,
 					outcome: emptyImportOutcome,
 					expiresAt: expiryFrom(now, lifetimeDays),
@@ -81,7 +81,7 @@ export class ImportDraft extends Schema.TaggedClass<ImportDraft>()(
 	}
 
 	get isImported(): boolean {
-		return this.status === "Imported";
+		return this.status === "imported";
 	}
 
 	nextBatch(size: number): ReadonlyArray<ImportRow> {
@@ -100,7 +100,7 @@ export class ImportDraft extends Schema.TaggedClass<ImportDraft>()(
 	}): Effect.Effect<ImportDraft, ImportDraftNotEditableError> {
 		const self = this;
 		return Effect.gen(function* () {
-			if (self.status !== "Reviewing")
+			if (self.status !== "reviewing")
 				return yield* new ImportDraftNotEditableError({
 					id: self.id,
 					status: self.status,
@@ -140,7 +140,7 @@ export class ImportDraft extends Schema.TaggedClass<ImportDraft>()(
 			const done = importedRowCount >= self.validRows.length;
 			return new ImportDraft({
 				...self,
-				status: done ? "Imported" : "Importing",
+				status: done ? "imported" : "importing",
 				importedRowCount,
 				outcome: addImportOutcome(self.outcome, input.outcome),
 				importedAt: done ? now : null,

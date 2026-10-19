@@ -94,13 +94,13 @@ describe("decodeImportTable", () => {
 	it("flags an invalid email against the domain schema", () => {
 		const result = decodeCsvRows(contactSchema, "email\npas-une-adresse");
 
-		expect(issuesFor(result, 0)).toEqual(["email:InvalidValue"]);
+		expect(issuesFor(result, 0)).toEqual(["email:invalidValue"]);
 	});
 
 	it("flags an empty required cell as required, not invalid", () => {
 		const result = decodeCsvRows(contactSchema, "prénom,email\nMarie,");
 
-		expect(issuesFor(result, 0)).toEqual(["email:Required"]);
+		expect(issuesFor(result, 0)).toEqual(["email:required"]);
 	});
 
 	it("leaves an empty optional cell clean", () => {
@@ -117,8 +117,8 @@ describe("decodeImportTable", () => {
 		);
 
 		expect(result.missingColumns).toEqual(["email"]);
-		expect(issuesFor(result, 0)).toEqual(["email:MissingColumn"]);
-		expect(issuesFor(result, 1)).toEqual(["email:MissingColumn"]);
+		expect(issuesFor(result, 0)).toEqual(["email:missingColumn"]);
+		expect(issuesFor(result, 1)).toEqual(["email:missingColumn"]);
 	});
 
 	it("keeps the first of a duplicate pair clean and flags the later row", () => {
@@ -130,14 +130,14 @@ describe("decodeImportTable", () => {
 		expect(rowAt(result.rows, 0).issues).toEqual([]);
 		expect(rowAt(result.rows, 1).issues).toEqual([]);
 		// Row 2 only collides once `normalize` has folded the case.
-		expect(issuesFor(result, 2)).toEqual(["email:Duplicate"]);
+		expect(issuesFor(result, 2)).toEqual(["email:duplicate"]);
 	});
 
 	it("pads rows that are short of cells", () => {
 		const result = decodeCsvRows(contactSchema, "prénom,nom,email\nMarie");
 
 		expect(rowAt(result.rows, 0).values.lastName).toBe("");
-		expect(issuesFor(result, 0)).toEqual(["email:Required"]);
+		expect(issuesFor(result, 0)).toEqual(["email:required"]);
 	});
 
 	it("returns nothing for an empty file", () => {
@@ -173,7 +173,7 @@ describe("revalidateImportRows", () => {
 
 		expect(rowAt(validated, 0).issues).toEqual([]);
 		expect(rowAt(validated, 1).issues).toEqual([
-			{ column: "email", issue: "Duplicate" },
+			{ column: "email", issue: "duplicate" },
 		]);
 	});
 
@@ -196,7 +196,7 @@ describe("revalidateImportRows", () => {
 		]);
 		expect(rowAt(collided, 0).issues).toEqual([]);
 		expect(rowAt(collided, 1).issues).toEqual([
-			{ column: "email", issue: "Duplicate" },
+			{ column: "email", issue: "duplicate" },
 		]);
 	});
 });

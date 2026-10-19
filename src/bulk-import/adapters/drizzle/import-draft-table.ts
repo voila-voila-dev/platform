@@ -1,7 +1,5 @@
 import { index, jsonb, pgTable, timestamp, uuid } from "drizzle-orm/pg-core";
 
-// The rows are a nested shape nothing queries into, so the draft is stored
-// whole; `expires_at` stands apart for the retention sweep.
 export const importDraftTable = pgTable(
 	"import_draft",
 	{

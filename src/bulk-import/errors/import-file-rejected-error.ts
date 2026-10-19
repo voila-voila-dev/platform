@@ -1,11 +1,11 @@
 import { Schema } from "effect";
 
 export const ImportRejection = Schema.Literals([
-	"TooLarge",
-	"TooManyRows",
-	"Empty",
-	"Unreadable",
-	"UnsupportedFormat",
+	"tooLarge",
+	"tooManyRows",
+	"empty",
+	"unreadable",
+	"unsupportedFormat",
 ]);
 
 export type ImportRejection = typeof ImportRejection.Type;

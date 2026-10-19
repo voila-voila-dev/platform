@@ -33,16 +33,14 @@ export function jsonTable(
 export const jsonImportReader: ImportReader = {
 	format: "json",
 	read: (bytes) =>
-		Effect.flatMap(decodeText(bytes), (text) =>
-			Effect.try({
-				try: () => jsonTable(JSON.parse(text)),
-				catch: () => new ImportFileRejectedError({ reason: "Unreadable" }),
-			}).pipe(
-				Effect.flatMap((table) =>
-					table === undefined
-						? Effect.fail(new ImportFileRejectedError({ reason: "Unreadable" }))
-						: Effect.succeed(table),
-				),
+		Effect.try({
+			try: () => jsonTable(JSON.parse(decodeText(bytes))),
+			catch: () => new ImportFileRejectedError({ reason: "unreadable" }),
+		}).pipe(
+			Effect.flatMap((table) =>
+				table === undefined
+					? Effect.fail(new ImportFileRejectedError({ reason: "unreadable" }))
+					: Effect.succeed(table),
 			),
 		),
 };
