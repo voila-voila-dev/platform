@@ -2,6 +2,10 @@ export { createdAtRangeFilterFields } from "#search/constants/created-at-range-f
 export { consumeSearchBudget } from "#search/lib/consume-search-budget";
 export { makePagedResult } from "#search/lib/make-paged-result";
 export { makeSearchUseCase } from "#search/lib/make-search-use-case";
+export {
+	SearchBudget,
+	type SearchBudgetLimits,
+} from "#search/services/search-budget";
 export { PagedResult } from "#search/value-objects/paged-result";
 export { Pagination } from "#search/value-objects/pagination";
 export { PaginationSkip } from "#search/value-objects/pagination-skip";
