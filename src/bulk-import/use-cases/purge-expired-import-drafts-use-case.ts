@@ -4,7 +4,6 @@ import { Actor } from "#core/actor/actor";
 import { Gate } from "#core/authorization/gates";
 import { UseCase } from "#core/use-case/make-use-case";
 
-// A draft is a copy of somebody's file, kept only while it may be reviewed.
 export const PurgeExpiredImportDraftsUseCase = UseCase.make({
 	name: "bulk-import.purge-expired-import-drafts",
 	input: Schema.Struct({ actor: Actor }),

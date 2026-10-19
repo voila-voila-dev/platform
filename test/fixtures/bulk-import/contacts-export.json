@@ -1,0 +1,37 @@
+[
+	{
+		"prenom": "Zoé",
+		"nom": "Lefèvre",
+		"email": "zoe.lefevre@exemple.fr",
+		"telephone": "06 12 34 56 78",
+		"inscrit_le": "2024-03-14",
+		"newsletter": true,
+		"tags": ["fidèle"]
+	},
+	{
+		"prenom": "Jérôme",
+		"nom": "Dupont-Garçon",
+		"email": "JEROME@EXEMPLE.FR",
+		"telephone": "+33 6 98 76 54 32",
+		"inscrit_le": "2025-01-02",
+		"newsletter": false,
+		"tags": []
+	},
+	{
+		"prenom": "Anaïs",
+		"nom": "Œuvray",
+		"email": "pas-une-adresse",
+		"telephone": null,
+		"inscrit_le": null,
+		"newsletter": false
+	},
+	{
+		"prenom": "Jürgen",
+		"nom": "Müller",
+		"email": "jurgen@exemple.de",
+		"telephone": null,
+		"inscrit_le": null,
+		"newsletter": true,
+		"tags": ["panier"]
+	}
+]

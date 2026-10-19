@@ -1,9 +1,9 @@
 import { Schema } from "effect";
 
 export const ImportDraftStatus = Schema.Literals([
-	"Reviewing",
-	"Importing",
-	"Imported",
+	"reviewing",
+	"importing",
+	"imported",
 ]);
 
 export type ImportDraftStatus = typeof ImportDraftStatus.Type;

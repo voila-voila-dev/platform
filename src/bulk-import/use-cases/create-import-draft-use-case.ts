@@ -46,23 +46,23 @@ export const CreateImportDraftUseCase = UseCase.make({
 		Effect.gen(function* () {
 			const limits = yield* ImportLimits;
 			if (payload.content.length > limits.maxBytes)
-				return yield* rejected("TooLarge");
+				return yield* rejected("tooLarge");
 
 			const format = payload.format ?? importFormatOf(payload.fileName);
 			const reader = (yield* ImportReaders).find(
 				(candidate) => candidate.format === format,
 			);
 			if (format === undefined || reader === undefined)
-				return yield* rejected("UnsupportedFormat");
+				return yield* rejected("unsupportedFormat");
 
 			const schema = yield* requireImportSchema(payload.target);
 			const decoded = decodeImportTable(
 				schema,
 				yield* reader.read(payload.content),
 			);
-			if (decoded.rows.length === 0) return yield* rejected("Empty");
+			if (decoded.rows.length === 0) return yield* rejected("empty");
 			if (decoded.rows.length > limits.maxRows)
-				return yield* rejected("TooManyRows");
+				return yield* rejected("tooManyRows");
 
 			const draft = yield* ImportDraft.create({
 				id: ImportDraftId.make(yield* (yield* IdGenerator).generate()),

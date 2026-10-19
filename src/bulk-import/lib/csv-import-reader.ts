@@ -5,5 +5,5 @@ import type { ImportReader } from "#bulk-import/services/import-readers";
 
 export const csvImportReader: ImportReader = {
 	format: "csv",
-	read: (bytes) => Effect.map(decodeText(bytes), (text) => parseCsv(text).rows),
+	read: (bytes) => Effect.sync(() => parseCsv(decodeText(bytes)).rows),
 };

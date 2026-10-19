@@ -80,7 +80,7 @@ function duplicateIssue(
 		seen.set(value, rowIndex);
 		return null;
 	}
-	return owner === rowIndex ? null : "Duplicate";
+	return owner === rowIndex ? null : "duplicate";
 }
 
 function cellIssue(
@@ -90,12 +90,12 @@ function cellIssue(
 	missing: ReadonlySet<string>,
 	seenValues: SeenValues,
 ): ImportIssue | null {
-	if (missing.has(column.key)) return "MissingColumn";
+	if (missing.has(column.key)) return "missingColumn";
 
 	const value = canonicalValue(column, raw);
-	if (value === "") return column.required === true ? "Required" : null;
+	if (value === "") return column.required === true ? "required" : null;
 	if (column.validate !== undefined && !column.validate(value))
-		return "InvalidValue";
+		return "invalidValue";
 	return duplicateIssue(column, value, rowIndex, seenValues);
 }
 
@@ -128,7 +128,7 @@ export function revalidateImportRows(
 }
 
 // Columns are matched by header when the first line names any of them, by
-// position otherwise.
+// position otherwise; blank lines are dropped.
 export function decodeImportTable(
 	schema: ImportSchema,
 	table: ReadonlyArray<ReadonlyArray<string>>,
@@ -137,7 +137,10 @@ export function decodeImportTable(
 		return { rows: [], missingColumns: [], hasHeaderRow: false };
 
 	const mapping = matchHeaderRow(schema, table[0] ?? []);
-	const lines = mapping === null ? table : table.slice(1);
+	// Spreadsheets write an emptied row as a line of bare separators.
+	const lines = (mapping === null ? table : table.slice(1)).filter((line) =>
+		line.some((cell) => cell.trim() !== ""),
+	);
 
 	function indexOf(column: ImportColumn, position: number) {
 		return mapping === null ? position : mapping.get(column.key);

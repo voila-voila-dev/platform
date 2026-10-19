@@ -1,6 +1,5 @@
 import { Schema } from "effect";
 
-// Open: an application adds a format by providing its reader.
 export const ImportFormat = Schema.NonEmptyString.pipe(
 	Schema.brand("ImportFormat"),
 );
