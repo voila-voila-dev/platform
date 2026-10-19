@@ -32,7 +32,7 @@ src/
 |---|---|
 | core | `.` (ids and shared value objects, `Actor`, `Gate`, `UseCase`, `IdGenerator`, `SecureRandom`, `CurrentActor`, `DatabaseError`), `/memory`, `/drizzle`, `/bun`, `/http-server` |
 | rate-limiting | `/rate-limiting` (`RateLimiter`, `RateLimitedError`), `/rate-limiting/memory` (`inMemoryRateLimiter`, `stubRateLimiter`), `/rate-limiting/redis` (`redisRateLimiter`, on the application's `Redis`) |
-| search | `/search` (`Pagination`, `PagedResult`, filters, `makeSearchUseCase`), `/search/memory`, `/search/drizzle` (`pagedQuery`, accent-insensitive search, `searchFunctionsSql`) |
+| search | `/search` (`Pagination`, `PagedResult`, filters, `makeSearchUseCase`, `SearchBudget`), `/search/memory`, `/search/drizzle` (`pagedQuery`, accent-insensitive search, `searchFunctionsSql`) |
 | link-tracking/link | `/link-tracking/link`, `/http` (`TrackedLinksApiGroup`), `/memory`, `/drizzle` (tables, repository, `trackedLinkSearchIndexesSql`), `/http-server` (`trackedLinksHandlers`) |
 | link-tracking/click | `/link-tracking/click`, `/memory`, `/drizzle`, `/http-server` (`redirectToLink`) |
 
@@ -88,6 +88,14 @@ const TrackedLinksLive = HttpApiBuilder.group(Api, "trackedLinks", (handlers) =>
 ```
 
 A gate's refusal answers 403. A `DatabaseError` becomes a defect, so a 500.
+
+## Search budget
+
+Every search spends a budget per caller and per surface: 60 a minute per caller, 600 for everyone. `SearchBudget` is a reference with these defaults; the application provides its own limits:
+
+```ts
+Layer.succeed(SearchBudget, { windowSeconds: 60, perCaller: 120, global: 1200 });
+```
 
 ## Database
 
