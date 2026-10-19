@@ -33,6 +33,7 @@ src/
 | core | `.` (ids and shared value objects, `Actor`, `Gate`, `UseCase`, `IdGenerator`, `SecureRandom`, `CurrentActor`, `DatabaseError`), `/memory`, `/drizzle`, `/bun`, `/http-server` |
 | rate-limiting | `/rate-limiting` (`RateLimiter`, `RateLimitedError`), `/rate-limiting/memory` (`inMemoryRateLimiter`, `stubRateLimiter`), `/rate-limiting/redis` (`redisRateLimiter`, on the application's `Redis`) |
 | search | `/search` (`Pagination`, `PagedResult`, filters, `makeSearchUseCase`, `SearchBudget`), `/search/memory`, `/search/drizzle` (`pagedQuery`, accent-insensitive search, `searchFunctionsSql`) |
+| bulk-import | `/bulk-import` (`ImportDraft`, `ImportSchemas`, `ImportReaders`, `ImportLimits`, `importNextBatch`, CSV and JSON readers), `/http` (`BulkImportsApiGroup`), `/memory`, `/drizzle` (`importDraftTable`), `/xlsx` (`xlsxImportReader`, on exceljs), `/http-server` (`bulkImportsHandlers`) |
 | link-tracking/link | `/link-tracking/link`, `/http` (`TrackedLinksApiGroup`), `/memory`, `/drizzle` (tables, repository, `trackedLinkSearchIndexesSql`), `/http-server` (`trackedLinksHandlers`) |
 | link-tracking/click | `/link-tracking/click`, `/memory`, `/drizzle`, `/http-server` (`redirectToLink`) |
 
@@ -95,6 +96,20 @@ Every search spends a budget per caller and per surface: 60 a minute per caller,
 
 ```ts
 Layer.succeed(SearchBudget, { windowSeconds: 60, perCaller: 120, global: 1200 });
+```
+
+## Bulk import
+
+A file becomes a draft the user reviews before anything is written: it is read into a table, each line checked against the target's columns (required, unique, normalized, validated), and the problems shown cell by cell until fixed. The application then imports the valid rows batch by batch with `importNextBatch`, its own use case deciding what a row becomes.
+
+```ts
+const schemas = Layer.succeed(ImportSchemas, {
+	schemaFor: (target) =>
+		target === "contacts" ? Option.some(contactColumns) : Option.none(),
+});
+// CSV and JSON are read by default; add a format by providing its reader.
+Layer.succeed(ImportReaders, [csvImportReader, jsonImportReader, xlsxImportReader]);
+Layer.succeed(ImportLimits, { maxBytes: 5_000_000, maxRows: 50_000, batchSize: 500, draftLifetimeDays: 7 });
 ```
 
 ## Database
