@@ -115,9 +115,13 @@ bun run ci   # biome, tsc, tests, build
 
 ## Publishing
 
+Every pull request that changes what the package ships adds a changeset: `bun changeset`, pick the bump and describe the change for the changelog (`bun changeset --empty` when it ships nothing). The CI refuses a pull request without one.
+
+Merging to `main` opens or updates the "chore: version packages" pull request, which bumps the version and writes `CHANGELOG.md`. Merging that one publishes to npm from `.github/workflows/release.yml`, through npm trusted publishing: no token is stored, the registry trusts the workflow's OIDC token.
+
 In the repository, `exports` and `imports` point at `src/*.ts`, so nothing needs building to run or test. `publishConfig.exports` and `publishConfig.imports` hold the same entries pointing at `dist/*.js`, which is how Effect lays out its package. pnpm swaps those fields on publish, but Bun and npm do not, so `scripts/publish-manifest` does it:
 
 - `prepack` builds, keeps `package.json` aside, and writes the published form.
 - `postpack` puts the repository's `package.json` back.
 
-`bun pm pack` and `bun publish` both run these two hooks. The structure test checks that `publishConfig` mirrors `exports` and `imports`.
+`npm publish`, `bun pm pack` and `bun publish` all run these two hooks. The structure test checks that `publishConfig` mirrors `exports` and `imports`.
