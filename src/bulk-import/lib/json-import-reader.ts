@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import { ImportFileRejectedError } from "#bulk-import/errors/import-file-rejected-error";
 import { decodeText } from "#bulk-import/lib/decode-text";
 import type { ImportReader } from "#bulk-import/services/import-readers";
+import { ImportFormat } from "#bulk-import/value-objects/import-format";
 
 function cellText(value: unknown): string {
 	if (value === null || value === undefined) return "";
@@ -16,13 +17,11 @@ function isRecord(value: unknown): value is Record<string, unknown> {
 
 // An array of objects reads as a header of every key, in order of first
 // appearance, then one line per object; an array of arrays reads as is.
-export function jsonTable(
-	value: unknown,
-): ReadonlyArray<ReadonlyArray<string>> | undefined {
-	if (!Array.isArray(value)) return undefined;
+function jsonTable(value: unknown): ReadonlyArray<ReadonlyArray<string>> {
+	if (!Array.isArray(value)) throw new TypeError("not an array");
 	if (value.every(Array.isArray))
 		return value.map((line: ReadonlyArray<unknown>) => line.map(cellText));
-	if (!value.every(isRecord)) return undefined;
+	if (!value.every(isRecord)) throw new TypeError("not a table");
 	const header = [...new Set(value.flatMap((record) => Object.keys(record)))];
 	return [
 		header,
@@ -31,16 +30,10 @@ export function jsonTable(
 }
 
 export const jsonImportReader: ImportReader = {
-	format: "json",
+	format: ImportFormat.make("json"),
 	read: (bytes) =>
 		Effect.try({
 			try: () => jsonTable(JSON.parse(decodeText(bytes))),
 			catch: () => new ImportFileRejectedError({ reason: "unreadable" }),
-		}).pipe(
-			Effect.flatMap((table) =>
-				table === undefined
-					? Effect.fail(new ImportFileRejectedError({ reason: "unreadable" }))
-					: Effect.succeed(table),
-			),
-		),
+		}),
 };

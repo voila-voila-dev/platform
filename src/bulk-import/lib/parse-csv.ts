@@ -1,11 +1,6 @@
 const CANDIDATE_DELIMITERS = [",", ";", "\t"] as const;
 
-export type CsvDelimiter = (typeof CANDIDATE_DELIMITERS)[number];
-
-interface CsvTable {
-	readonly rows: ReadonlyArray<ReadonlyArray<string>>;
-	readonly delimiter: CsvDelimiter;
-}
+type CsvDelimiter = (typeof CANDIDATE_DELIMITERS)[number];
 
 const BOM = "﻿";
 function isLineBreak(character: string | undefined): boolean {
@@ -95,7 +90,7 @@ function readPlainField(
 	return { value: text.slice(start, index).trim(), next: index };
 }
 
-export function parseCsv(input: string): CsvTable {
+export function parseCsv(input: string): ReadonlyArray<ReadonlyArray<string>> {
 	const text = input.startsWith(BOM) ? input.slice(BOM.length) : input;
 	const delimiter = sniffCsvDelimiter(text);
 
@@ -131,5 +126,13 @@ export function parseCsv(input: string): CsvTable {
 
 	if (row.length > 0) endRow();
 
-	return { rows, delimiter };
+	return rows;
+}
+
+export function formatCsvLine(cells: ReadonlyArray<string>): string {
+	return cells
+		.map((cell) =>
+			/[",\n\r]/u.test(cell) ? `"${cell.replaceAll('"', '""')}"` : cell,
+		)
+		.join(",");
 }

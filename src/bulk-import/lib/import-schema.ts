@@ -1,179 +1,96 @@
-import { Option, Schema } from "effect";
-import type { ImportIssue } from "#bulk-import/payloads/import-issue";
-import type { ImportRow } from "#bulk-import/payloads/import-row";
+import { Schema } from "effect";
+import type { ImportCellIssue } from "#bulk-import/value-objects/import-row";
 
-export interface ImportColumn {
-	readonly key: string;
-	readonly headerAliases: ReadonlyArray<string>;
+// A cell is trimmed, then decoded by `schema`: what it encodes back is the
+// cell's canonical text, the one deduplicated and kept in the intent.
+export interface ImportColumn<A = unknown> {
+	readonly schema: Schema.Codec<A, string>;
+	// Shown to whoever fills the file, and matched as a header like the key and aliases.
+	readonly label?: string;
+	readonly aliases?: ReadonlyArray<string>;
 	readonly required?: boolean;
 	readonly unique?: boolean;
-	readonly normalize?: (value: string) => string;
-	readonly validate?: (value: string) => boolean;
+	// Replaces the schema's own message on an invalid cell.
+	readonly message?: string;
 }
 
-export interface ImportSchema {
-	readonly columns: ReadonlyArray<ImportColumn>;
+export type ImportColumns = Readonly<Record<string, ImportColumn>>;
+
+type ColumnCodec<Column extends ImportColumn> = Schema.Codec<
+	Column["schema"]["Type"],
+	string
+>;
+
+type ImportRecordFields<Columns extends ImportColumns> = {
+	readonly [K in keyof Columns]: Columns[K]["required"] extends true
+		? ColumnCodec<Columns[K]>
+		: Schema.optionalKey<ColumnCodec<Columns[K]>>;
+};
+
+export type ImportRecordOf<Columns extends ImportColumns> = Schema.Struct.Type<
+	ImportRecordFields<Columns>
+>;
+
+// Columns are matched by key, label or alias when the file has a header, in
+// declaration order otherwise. The target tells one schema's intents from another's.
+export interface ImportSchema<
+	Target extends string = string,
+	Columns extends ImportColumns = ImportColumns,
+> {
+	readonly target: Target;
+	readonly columns: Columns;
+	// Checks a row whose cells are all valid, across its columns.
+	check?(
+		record: ImportRecordOf<NoInfer<Columns>>,
+	): ReadonlyArray<ImportCellIssue<NoInfer<keyof Columns & string>>>;
 }
 
-export interface DecodedImport {
-	readonly rows: ReadonlyArray<ImportRow>;
-	readonly missingColumns: ReadonlyArray<string>;
-	readonly hasHeaderRow: boolean;
+export const ImportSchema = {
+	make: <const Target extends string, const Columns extends ImportColumns>(
+		schema: ImportSchema<Target, Columns>,
+	): ImportSchema<Target, Columns> => schema,
+};
+
+export type ImportColumnKey<S extends ImportSchema> = keyof S["columns"] &
+	string;
+
+export type ImportRecord<S extends ImportSchema> = ImportRecordOf<S["columns"]>;
+
+// Object.keys types an object's keys as string, whatever the object.
+export function importColumnKeys<S extends ImportSchema>(
+	schema: S,
+): ReadonlyArray<ImportColumnKey<S>> {
+	return Object.keys(schema.columns) as Array<ImportColumnKey<S>>;
 }
 
-export function cellMatchesSchema(schema: Schema.Decoder<unknown>) {
-	return (value: string): boolean =>
-		Option.isSome(Schema.decodeUnknownOption(schema)(value));
+export function isImportColumn<S extends ImportSchema>(
+	schema: S,
+	column: string,
+): column is ImportColumnKey<S> {
+	return Object.hasOwn(schema.columns, column);
 }
 
-function normalizeHeader(header: string): string {
-	return header
-		.normalize("NFD")
-		.replace(/\p{Diacritic}/gu, "")
-		.toLowerCase()
-		.replace(/[^a-z0-9]/gu, "");
-}
-
-function matchHeaderRow(
-	schema: ImportSchema,
-	header: ReadonlyArray<string>,
-): ReadonlyMap<string, number> | null {
-	const normalizedHeader = header.map(normalizeHeader);
-	const mapping = new Map<string, number>();
-	const taken = new Set<number>();
-
-	for (const column of schema.columns) {
-		for (const alias of [column.key, ...column.headerAliases]) {
-			const wanted = normalizeHeader(alias);
-			const at = normalizedHeader.findIndex(
-				(candidate, index) => candidate === wanted && !taken.has(index),
-			);
-			if (at !== -1) {
-				mapping.set(column.key, at);
-				taken.add(at);
-				break;
-			}
-		}
-	}
-
-	return mapping.size === 0 ? null : mapping;
-}
-
-function canonicalValue(column: ImportColumn, raw: string): string {
-	const trimmed = raw.trim();
-	return column.normalize === undefined ? trimmed : column.normalize(trimmed);
-}
-
-type SeenValues = ReadonlyMap<string, Map<string, number>>;
-
-function duplicateIssue(
-	column: ImportColumn,
-	value: string,
-	rowIndex: number,
-	seenValues: SeenValues,
-): ImportIssue | null {
-	const seen = seenValues.get(column.key);
-	if (seen === undefined) return null;
-
-	const owner = seen.get(value);
-	if (owner === undefined) {
-		seen.set(value, rowIndex);
-		return null;
-	}
-	return owner === rowIndex ? null : "duplicate";
-}
-
-function cellIssue(
-	column: ImportColumn,
-	raw: string,
-	rowIndex: number,
-	missing: ReadonlySet<string>,
-	seenValues: SeenValues,
-): ImportIssue | null {
-	if (missing.has(column.key)) return "missingColumn";
-
-	const value = canonicalValue(column, raw);
-	if (value === "") return column.required === true ? "required" : null;
-	if (column.validate !== undefined && !column.validate(value))
-		return "invalidValue";
-	return duplicateIssue(column, value, rowIndex, seenValues);
-}
-
-// Duplicates are file-wide, so one edit can clear or raise an issue on another row.
-export function revalidateImportRows(
-	schema: ImportSchema,
-	rows: ReadonlyArray<ImportRow>,
-	missingColumns: ReadonlyArray<string> = [],
-): ReadonlyArray<ImportRow> {
-	const missing = new Set(missingColumns);
-	const seenValues = new Map<string, Map<string, number>>(
-		schema.columns
-			.filter((column) => column.unique === true)
-			.map((column) => [column.key, new Map()]),
+export function importRecordSchema<S extends ImportSchema>(
+	schema: S,
+): Schema.Struct<ImportRecordFields<S["columns"]>> {
+	const fields = Object.fromEntries(
+		Object.entries(schema.columns).map(([key, column]) => [
+			key,
+			column.required === true
+				? column.schema
+				: Schema.optionalKey(column.schema),
+		]),
 	);
-
-	return rows.map((row) => ({
-		...row,
-		issues: schema.columns.flatMap((column) => {
-			const issue = cellIssue(
-				column,
-				row.values[column.key] ?? "",
-				row.index,
-				missing,
-				seenValues,
-			);
-			return issue === null ? [] : [{ column: column.key, issue }];
-		}),
-	}));
+	return Schema.Struct(fields as ImportRecordFields<S["columns"]>);
 }
 
-// Columns are matched by header when the first line names any of them, by
-// position otherwise; blank lines are dropped.
-export function decodeImportTable(
-	schema: ImportSchema,
-	table: ReadonlyArray<ReadonlyArray<string>>,
-): DecodedImport {
-	if (table.length === 0)
-		return { rows: [], missingColumns: [], hasHeaderRow: false };
-
-	const mapping = matchHeaderRow(schema, table[0] ?? []);
-	// Spreadsheets write an emptied row as a line of bare separators.
-	const lines = (mapping === null ? table : table.slice(1)).filter((line) =>
-		line.some((cell) => cell.trim() !== ""),
-	);
-
-	function indexOf(column: ImportColumn, position: number) {
-		return mapping === null ? position : mapping.get(column.key);
-	}
-
-	const missingColumns = schema.columns
-		.filter(
-			(column, position) =>
-				column.required === true && indexOf(column, position) === undefined,
-		)
-		.map((column) => column.key);
-
-	const rows = lines.map((line, index) => ({
-		index,
-		values: Object.fromEntries(
-			schema.columns.map((column, position) => {
-				const at = indexOf(column, position);
-				const raw = at === undefined ? "" : (line[at] ?? "");
-				return [column.key, canonicalValue(column, raw)];
-			}),
-		),
-		issues: [],
-	}));
-
-	return {
-		rows: revalidateImportRows(schema, rows, missingColumns),
-		missingColumns,
-		hasHeaderRow: mapping !== null,
-	};
-}
-
-export function validImportRows(
-	rows: ReadonlyArray<ImportRow>,
-): ReadonlyArray<ImportRow> {
-	return rows.filter((row) => row.issues.length === 0);
+// Decodes a row's cells, an empty one being an absent value.
+export function importRecordDecoder<S extends ImportSchema>(schema: S) {
+	const decode = Schema.decodeUnknownExit(importRecordSchema(schema));
+	return (values: Readonly<Record<string, string>>) =>
+		decode(
+			Object.fromEntries(
+				Object.entries(values).filter(([, text]) => text !== ""),
+			),
+		);
 }

@@ -28,7 +28,7 @@ describe("sniffCsvDelimiter", () => {
 
 describe("parseCsv", () => {
 	it("reads a plain comma file", () => {
-		expect(parseCsv("a,b\n1,2").rows).toEqual([
+		expect(parseCsv("a,b\n1,2")).toEqual([
 			["a", "b"],
 			["1", "2"],
 		]);
@@ -36,22 +36,19 @@ describe("parseCsv", () => {
 
 	it("strips a UTF-8 BOM so the first header still matches", () => {
 		// Excel writes one, and it would otherwise glue onto the first header.
-		expect(parseCsv("﻿email\nm@x.fr").rows).toEqual([["email"], ["m@x.fr"]]);
+		expect(parseCsv("﻿email\nm@x.fr")).toEqual([["email"], ["m@x.fr"]]);
 	});
 
 	it("keeps delimiters and newlines inside quoted fields", () => {
-		expect(parseCsv('nom,adresse\n"Dupont","1 rue A, Paris"').rows).toEqual([
+		expect(parseCsv('nom,adresse\n"Dupont","1 rue A, Paris"')).toEqual([
 			["nom", "adresse"],
 			["Dupont", "1 rue A, Paris"],
 		]);
-		expect(parseCsv('a\n"line1\nline2"').rows).toEqual([
-			["a"],
-			["line1\nline2"],
-		]);
+		expect(parseCsv('a\n"line1\nline2"')).toEqual([["a"], ["line1\nline2"]]);
 	});
 
 	it("unescapes doubled quotes", () => {
-		expect(parseCsv('a\n"say ""hi"""').rows).toEqual([["a"], ['say "hi"']]);
+		expect(parseCsv('a\n"say ""hi"""')).toEqual([["a"], ['say "hi"']]);
 	});
 
 	it.each([
@@ -59,28 +56,28 @@ describe("parseCsv", () => {
 		["LF", "a,b\n1,2"],
 		["CR", "a,b\r1,2"],
 	])("handles %s line endings", (_label, text) => {
-		expect(parseCsv(text).rows).toEqual([
+		expect(parseCsv(text)).toEqual([
 			["a", "b"],
 			["1", "2"],
 		]);
 	});
 
 	it("does not emit a phantom row for a trailing newline", () => {
-		expect(parseCsv("a,b\n1,2\n").rows).toHaveLength(2);
+		expect(parseCsv("a,b\n1,2\n")).toHaveLength(2);
 	});
 
 	it("drops entirely blank lines", () => {
-		expect(parseCsv("a,b\n\n1,2").rows).toEqual([
+		expect(parseCsv("a,b\n\n1,2")).toEqual([
 			["a", "b"],
 			["1", "2"],
 		]);
 	});
 
 	it("trims unquoted cells but preserves quoted whitespace", () => {
-		expect(parseCsv('a,b\n  1  ,"  2  "').rows[1]).toEqual(["1", "  2  "]);
+		expect(parseCsv('a,b\n  1  ,"  2  "')[1]).toEqual(["1", "  2  "]);
 	});
 
 	it("returns no rows for empty input", () => {
-		expect(parseCsv("").rows).toEqual([]);
+		expect(parseCsv("")).toEqual([]);
 	});
 });

@@ -2,6 +2,7 @@ import { Effect } from "effect";
 import ExcelJS from "exceljs";
 import { ImportFileRejectedError } from "#bulk-import/errors/import-file-rejected-error";
 import type { ImportReader } from "#bulk-import/services/import-readers";
+import { ImportFormat } from "#bulk-import/value-objects/import-format";
 
 // Excel stores a date as a day count it shows in the reader's locale; ISO 8601
 // reads the same anywhere. Its dates carry no zone, so exceljs reads them as UTC.
@@ -30,7 +31,7 @@ async function readFirstWorksheet(bytes: Uint8Array) {
 
 // Reads the first worksheet, each cell as Excel displays it but dates.
 export const xlsxImportReader: ImportReader = {
-	format: "xlsx",
+	format: ImportFormat.make("xlsx"),
 	read: (bytes) =>
 		Effect.tryPromise({
 			try: () => readFirstWorksheet(bytes),
