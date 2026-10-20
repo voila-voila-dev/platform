@@ -33,7 +33,7 @@ src/
 | core | `.` (ids and shared value objects, `Actor`, `Gate`, `UseCase`, `IdGenerator`, `SecureRandom`, `CurrentActor`, `DatabaseError`), `/memory`, `/drizzle`, `/bun`, `/http-server` |
 | rate-limiting | `/rate-limiting` (`RateLimiter`, `RateLimitedError`), `/rate-limiting/memory` (`inMemoryRateLimiter`, `stubRateLimiter`), `/rate-limiting/redis` (`redisRateLimiter`, on the application's `Redis`) |
 | search | `/search` (`Pagination`, `PagedResult`, filters, `makeSearchUseCase`, `SearchBudget`), `/search/memory`, `/search/drizzle` (`pagedQuery`, accent-insensitive search, `searchFunctionsSql`) |
-| bulk-import | `/bulk-import` (`BulkImport`, `ImportSchema`, `ImportIntent`, `ImportReaders`, `ImportLimits`, CSV and JSON readers), `/memory`, `/drizzle` (`importIntentTable`), `/xlsx` (`xlsxImportReader`, on exceljs) |
+| bulk-import | `/bulk-import` (`BulkImport`, `ImportSchema`, `ImportIntent`, `ImportLimits`), `/csv` (`csvImportReader`), `/json` (`jsonImportReader`), `/memory` (`inMemoryBulkImport`), `/drizzle` (`importIntentTable`), `/xlsx` (`xlsxImportReader`, on exceljs) |
 | link-tracking/link | `/link-tracking/link`, `/http` (`TrackedLinksApiGroup`), `/memory`, `/drizzle` (tables, repository, `trackedLinkSearchIndexesSql`), `/http-server` (`trackedLinksHandlers`) |
 | link-tracking/click | `/link-tracking/click`, `/memory`, `/drizzle`, `/http-server` (`redirectToLink`) |
 
@@ -105,7 +105,7 @@ A file becomes an import intent reviewed before anything is written: it is read 
 No user calls bulk import directly: they import contacts, products… The domain that imports declares its schema, gates its own use cases and endpoints, and keeps the intent's id in its own table next to what the request was for (a segment, a source, who asked and when).
 
 ```ts
-const contactsImport = BulkImport.make(
+const ContactBulkImport = BulkImport.make(
 	{
 		target: "contacts",
 		columns: {
@@ -120,26 +120,26 @@ const contactsImport = BulkImport.make(
 				? [{ column: "phone", issue: "required", message: "Un e-mail ou un téléphone" }]
 				: [],
 	},
-	// Overrides the `ImportLimits` and `ImportReaders` references for this import only.
+	// The formats it accepts; `limits` overrides the `ImportLimits` reference for this import only.
 	{ limits: { maxRows: 5_000 }, readers: [csvImportReader, xlsxImportReader] },
 );
 
 // In the contacts domain's use cases:
-const intent = yield* contactsImport.create({ fileName, content });
+const intent = yield* ContactBulkImport.create({ fileName, content });
 yield* contactsImports.insert({ importIntentId: intent.id, segmentId, source, fileName });
-yield* contactsImport.editCell(intent.id, { rowIndex, column: "email", value });
+yield* ContactBulkImport.editCell(intent.id, { rowIndex, column: "email", value });
 // One result per entry, in order. `record` is `{ email?: EmailAddress; name?: string; phone?: string }`,
 // `index` is the row's, stable across retries: write by it or by a natural key.
-yield* contactsImport.importNextBatch(intent.id, (batch) => upsertContacts(segmentId, batch));
+yield* ContactBulkImport.importNextBatch(intent.id, (batch) => upsertContacts(segmentId, batch));
 // Or every batch at once, in a background job.
-yield* contactsImport.importAll(intent.id, (batch) => upsertContacts(segmentId, batch));
+yield* ContactBulkImport.importAll(intent.id, (batch) => upsertContacts(segmentId, batch));
 ImportIntent.summary(intent); // { rows, invalid, created, updated, rejected, remaining }
 
 // For its endpoints:
-contactsImport.Intent; // response
-Schema.Struct({ ...contactsImport.CreatePayload.fields, segmentId: SegmentId }); // upload
-contactsImport.EditCellPayload; // { rowIndex, column: "name" | "email" | "phone", value }
-contactsImport.template(); // a CSV of the labels, to download and fill
+ContactBulkImport.Intent; // response
+Schema.Struct({ ...ContactBulkImport.CreatePayload.fields, segmentId: SegmentId }); // upload
+ContactBulkImport.EditCellPayload; // { rowIndex, column: "name" | "email" | "phone", value }
+ContactBulkImport.template(); // a CSV of the labels, to download and fill
 
 // In its tests:
 const { layer } = inMemoryBulkImport();

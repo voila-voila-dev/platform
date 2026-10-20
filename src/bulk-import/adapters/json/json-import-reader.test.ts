@@ -1,6 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { Effect, Exit } from "effect";
-import { jsonImportReader } from "#bulk-import/lib/json-import-reader";
+import { jsonImportReader } from "#bulk-import/adapters/json/json-import-reader";
 
 function read(value: string) {
 	return Effect.runPromiseExit(

@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import ExcelJS from "exceljs";
 import { ImportFileRejectedError } from "#bulk-import/errors/import-file-rejected-error";
-import type { ImportReader } from "#bulk-import/services/import-readers";
+import type { ImportReader } from "#bulk-import/services/import-reader";
 import { ImportFormat } from "#bulk-import/value-objects/import-format";
 
 // Excel stores a date as a day count it shows in the reader's locale; ISO 8601

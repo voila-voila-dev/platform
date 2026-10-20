@@ -1,5 +1,8 @@
 import { describe, expect, it } from "bun:test";
-import { parseCsv, sniffCsvDelimiter } from "#bulk-import/lib/parse-csv";
+import {
+	parseCsv,
+	sniffCsvDelimiter,
+} from "#bulk-import/adapters/csv/parse-csv";
 
 describe("sniffCsvDelimiter", () => {
 	it("defaults to a comma", () => {

@@ -3,6 +3,7 @@ import { ImportIntent } from "#bulk-import/aggregates/import-intent";
 import { ImportColumnsMissingError } from "#bulk-import/errors/import-columns-missing-error";
 import { ImportFileRejectedError } from "#bulk-import/errors/import-file-rejected-error";
 import { ImportIntentNotFoundError } from "#bulk-import/errors/import-intent-not-found-error";
+import { formatCsvLine } from "#bulk-import/lib/format-csv-line";
 import {
 	type ImportColumns,
 	type ImportRecord,
@@ -11,27 +12,24 @@ import {
 	importRecordDecoder,
 } from "#bulk-import/lib/import-schema";
 import { decodeImportTable } from "#bulk-import/lib/import-table";
-import { formatCsvLine } from "#bulk-import/lib/parse-csv";
 import { ImportFileFields } from "#bulk-import/payloads/import-file";
 import { ImportIntentRepository } from "#bulk-import/services/import-intent-repository";
 import {
 	ImportLimits,
 	type ImportLimitValues,
 } from "#bulk-import/services/import-limits";
-import {
-	type ImportReader,
-	ImportReaders,
-} from "#bulk-import/services/import-readers";
+import type { ImportReader } from "#bulk-import/services/import-reader";
 import { importFormatOf } from "#bulk-import/value-objects/import-format";
 import { ImportIntentId } from "#bulk-import/value-objects/import-intent-id";
 import type { ImportRowResult } from "#bulk-import/value-objects/import-row-result";
 import { IdGenerator } from "#core/services/id-generator";
 import { NonNegativeInt } from "#core/value-objects/non-negative-int";
 
-// Override the `ImportLimits` and `ImportReaders` references for this import only.
 export interface BulkImportOptions {
+	// The formats this import accepts, from `/bulk-import/csv`, `/json`, `/xlsx` or the application's own.
+	readonly readers: ReadonlyArray<ImportReader>;
+	// Overrides the `ImportLimits` reference for this import only.
 	readonly limits?: Partial<ImportLimitValues>;
-	readonly readers?: ReadonlyArray<ImportReader>;
 }
 
 // The row's index stays the same across retries: an import that writes by it,
@@ -63,10 +61,6 @@ function bind<S extends ImportSchema>(schema: S, options: BulkImportOptions) {
 		...defaults,
 		...options.limits,
 	}));
-	const readers =
-		options.readers === undefined
-			? Effect.service(ImportReaders)
-			: Effect.succeed(options.readers);
 
 	function update(previous: ImportIntent<S>, next: ImportIntent<S>) {
 		const saved: ImportIntent<S> = { ...next, version: previous.version + 1 };
@@ -162,7 +156,7 @@ function bind<S extends ImportSchema>(schema: S, options: BulkImportOptions) {
 				if (file.content.length > maxBytes) return yield* rejected("tooLarge");
 
 				const format = file.format ?? importFormatOf(file.fileName);
-				const reader = (yield* readers).find(
+				const reader = options.readers.find(
 					(candidate) => candidate.format === format,
 				);
 				if (reader === undefined) return yield* rejected("unsupportedFormat");
@@ -223,7 +217,7 @@ function bind<S extends ImportSchema>(schema: S, options: BulkImportOptions) {
 // Takes the schema's columns and target as written, so a `check` keeps them typed.
 function make<const Target extends string, const Columns extends ImportColumns>(
 	schema: ImportSchema<Target, Columns>,
-	options: BulkImportOptions = {},
+	options: BulkImportOptions,
 ) {
 	return bind(schema, options);
 }

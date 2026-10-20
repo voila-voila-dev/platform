@@ -1,12 +1,12 @@
 import { describe, expect, it } from "bun:test";
 
 import { Schema, SchemaTransformation } from "effect";
+import { parseCsv } from "#bulk-import/adapters/csv/parse-csv";
 import { ImportSchema } from "#bulk-import/lib/import-schema";
 import {
 	decodeImportTable,
 	validateImportRows,
 } from "#bulk-import/lib/import-table";
-import { parseCsv } from "#bulk-import/lib/parse-csv";
 import type { ImportRow } from "#bulk-import/value-objects/import-row";
 
 const EmailAddress = Schema.String.pipe(

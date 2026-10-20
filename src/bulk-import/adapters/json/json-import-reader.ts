@@ -1,7 +1,7 @@
 import { Effect } from "effect";
 import { ImportFileRejectedError } from "#bulk-import/errors/import-file-rejected-error";
 import { decodeText } from "#bulk-import/lib/decode-text";
-import type { ImportReader } from "#bulk-import/services/import-readers";
+import type { ImportReader } from "#bulk-import/services/import-reader";
 import { ImportFormat } from "#bulk-import/value-objects/import-format";
 
 function cellText(value: unknown): string {

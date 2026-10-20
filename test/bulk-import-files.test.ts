@@ -1,13 +1,12 @@
 import { describe, expect, it } from "bun:test";
 import { join } from "node:path";
-import { Effect, Layer, Schema, SchemaTransformation } from "effect";
+import { Effect, Schema, SchemaTransformation } from "effect";
+import { csvImportReader } from "#bulk-import/adapters/csv/csv-import-reader";
+import { jsonImportReader } from "#bulk-import/adapters/json/json-import-reader";
 import { inMemoryBulkImport } from "#bulk-import/adapters/memory/in-memory-bulk-import";
 import { xlsxImportReader } from "#bulk-import/adapters/xlsx/xlsx-import-reader";
 import { BulkImport } from "#bulk-import/lib/bulk-import";
-import { csvImportReader } from "#bulk-import/lib/csv-import-reader";
 import { ImportSchema } from "#bulk-import/lib/import-schema";
-import { jsonImportReader } from "#bulk-import/lib/json-import-reader";
-import { ImportReaders } from "#bulk-import/services/import-readers";
 
 // Files as Excel, Google Sheets and an API export write them.
 function fixture(fileName: string) {
@@ -161,7 +160,7 @@ describe("xlsxImportReader on a real file", () => {
 });
 
 describe("an intent from each real file", () => {
-	const contactsImport = BulkImport.make(
+	const ContactBulkImport = BulkImport.make(
 		ImportSchema.make({
 			target: "contacts",
 			columns: {
@@ -177,15 +176,9 @@ describe("an intent from each real file", () => {
 				telephone: { schema: Schema.String },
 			},
 		}),
+		{ readers: [csvImportReader, jsonImportReader, xlsxImportReader] },
 	);
-	const layer = Layer.mergeAll(
-		inMemoryBulkImport().layer,
-		Layer.succeed(ImportReaders, [
-			csvImportReader,
-			jsonImportReader,
-			xlsxImportReader,
-		]),
-	);
+	const { layer } = inMemoryBulkImport();
 
 	for (const fileName of [
 		"contacts-excel-utf8.csv",
@@ -198,7 +191,7 @@ describe("an intent from each real file", () => {
 			const intent = await Effect.runPromise(
 				Effect.flatMap(
 					Effect.promise(() => fixture(fileName)),
-					(content) => contactsImport.create({ fileName, content }),
+					(content) => ContactBulkImport.create({ fileName, content }),
 				).pipe(Effect.provide(layer)),
 			);
 

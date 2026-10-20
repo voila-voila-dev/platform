@@ -1,12 +1,13 @@
 import { describe, expect, it } from "bun:test";
 import { Effect, Schema, SchemaTransformation } from "effect";
+import { csvImportReader } from "#bulk-import/adapters/csv/csv-import-reader";
+import { jsonImportReader } from "#bulk-import/adapters/json/json-import-reader";
 import { inMemoryBulkImport } from "#bulk-import/adapters/memory/in-memory-bulk-import";
 import { ImportIntent } from "#bulk-import/aggregates/import-intent";
 import {
 	BulkImport as Bulk,
 	type BulkImport,
 } from "#bulk-import/lib/bulk-import";
-import { csvImportReader } from "#bulk-import/lib/csv-import-reader";
 import { ImportSchema } from "#bulk-import/lib/import-schema";
 import { ImportIntentRepository } from "#bulk-import/services/import-intent-repository";
 import { ImportFormat } from "#bulk-import/value-objects/import-format";
@@ -28,15 +29,20 @@ const columns = {
 } as const;
 
 const contactsSchema = ImportSchema.make({ target: "contacts", columns });
-const contactsImport = Bulk.make(contactsSchema, { limits: { batchSize: 2 } });
-const productsImport = Bulk.make(
+const readers = [csvImportReader, jsonImportReader];
+const ContactBulkImport = Bulk.make(contactsSchema, {
+	readers,
+	limits: { batchSize: 2 },
+});
+const ProductBulkImport = Bulk.make(
 	ImportSchema.make({ target: "products", columns }),
+	{ readers },
 );
 
 type ContactsImport = BulkImport<typeof contactsSchema>;
 
 function upload(fileName: string, text: string, format?: string) {
-	return contactsImport.create({
+	return ContactBulkImport.create({
 		fileName,
 		...(format === undefined ? {} : { format: ImportFormat.make(format) }),
 		content: new TextEncoder().encode(text),
@@ -90,7 +96,10 @@ describe("BulkImport.create", () => {
 
 	it("refuses what it cannot import", async () => {
 		const { layer } = inMemoryBulkImport();
-		const tiny = Bulk.make(contactsSchema, { limits: { maxBytes: 4 } });
+		const tiny = Bulk.make(contactsSchema, {
+			readers,
+			limits: { maxBytes: 4 },
+		});
 		const csvOnly = Bulk.make(contactsSchema, { readers: [csvImportReader] });
 		function content(text: string) {
 			return new TextEncoder().encode(text);
@@ -124,24 +133,27 @@ describe("BulkImport.create", () => {
 
 	it("checks a row across its columns once its cells are valid", async () => {
 		const { layer } = inMemoryBulkImport();
-		const pairs = Bulk.make({
-			target: "pairs",
-			columns: {
-				name: { schema: Schema.String },
-				email: { schema: Email },
-				phone: { schema: Schema.String },
+		const pairs = Bulk.make(
+			{
+				target: "pairs",
+				columns: {
+					name: { schema: Schema.String },
+					email: { schema: Email },
+					phone: { schema: Schema.String },
+				},
+				check: (record) =>
+					record.email === undefined && record.phone === undefined
+						? [
+								{
+									column: "email",
+									issue: "required",
+									message: "Ou un téléphone",
+								},
+							]
+						: [],
 			},
-			check: (record) =>
-				record.email === undefined && record.phone === undefined
-					? [
-							{
-								column: "email",
-								issue: "required",
-								message: "Ou un téléphone",
-							},
-						]
-					: [],
-		});
+			{ readers },
+		);
 		const intent = await Effect.runPromise(
 			pairs
 				.create({
@@ -164,7 +176,7 @@ describe("BulkImport.create", () => {
 describe("BulkImport.template", () => {
 	it("writes the labels a file is read back by", async () => {
 		const { layer } = inMemoryBulkImport();
-		const template = contactsImport.template();
+		const template = ContactBulkImport.template();
 		expect(template).toBe("﻿Nom,E-mail\n");
 
 		const intent = await Effect.runPromise(
@@ -190,7 +202,7 @@ describe("an intent's review and import", () => {
 					"contacts.csv",
 					"nom,email\nAna,a@x.fr\n,cassé\nCarl,c@x.fr",
 				);
-				const fixed = yield* contactsImport.editCell(intent.id, {
+				const fixed = yield* ContactBulkImport.editCell(intent.id, {
 					rowIndex: 1,
 					column: "email",
 					value: " B@X.FR ",
@@ -210,17 +222,18 @@ describe("an intent's review and import", () => {
 						),
 					);
 				}
-				const first = yield* contactsImport.importNextBatch(
+				const first = yield* ContactBulkImport.importNextBatch(
 					intent.id,
 					importBatch,
 				);
-				const second = yield* contactsImport.importNextBatch(
+				const second = yield* ContactBulkImport.importNextBatch(
 					intent.id,
 					importBatch,
 				);
-				const again = yield* contactsImport
-					.importNextBatch(intent.id, importBatch)
-					.pipe(Effect.flip);
+				const again = yield* ContactBulkImport.importNextBatch(
+					intent.id,
+					importBatch,
+				).pipe(Effect.flip);
 				return { first, second, again };
 			}).pipe(Effect.provide(layer)),
 		);
@@ -254,7 +267,7 @@ describe("an intent's review and import", () => {
 					"contacts.csv",
 					"email\na@x.fr\nb@x.fr\nc@x.fr\nd@x.fr\ne@x.fr",
 				);
-				return yield* contactsImport.importAll(created.id, createAll);
+				return yield* ContactBulkImport.importAll(created.id, createAll);
 			}).pipe(Effect.provide(layer)),
 		);
 
@@ -267,17 +280,19 @@ describe("an intent's review and import", () => {
 		const result = await Effect.runPromise(
 			Effect.gen(function* () {
 				const intent = yield* upload("contacts.csv", "email\na@x.fr\nb@x.fr");
-				const concurrent = yield* contactsImport
-					.importNextBatch(intent.id, (batch) =>
+				const concurrent = yield* ContactBulkImport.importNextBatch(
+					intent.id,
+					(batch) =>
 						Effect.andThen(
-							Effect.flip(contactsImport.importNextBatch(intent.id, createAll)),
+							Effect.flip(
+								ContactBulkImport.importNextBatch(intent.id, createAll),
+							),
 							(failure) => {
 								expect(failure._tag).toBe("ImportIntentConflictError");
 								return createAll(batch);
 							},
 						),
-					)
-					.pipe(Effect.map((done) => done.status));
+				).pipe(Effect.map((done) => done.status));
 
 				const abandoned = yield* upload("again.csv", "email\na@x.fr");
 				const [stored] = intents
@@ -285,7 +300,7 @@ describe("an intent's review and import", () => {
 					.filter((candidate) => candidate.id === abandoned.id);
 				if (stored !== undefined)
 					intents.seed([{ ...stored, status: "importing", leasedUntil: 1 }]);
-				const resumed = yield* contactsImport.importNextBatch(
+				const resumed = yield* ContactBulkImport.importNextBatch(
 					abandoned.id,
 					createAll,
 				);
@@ -304,7 +319,7 @@ describe("an intent's review and import", () => {
 		const failure = await Effect.runPromise(
 			Effect.gen(function* () {
 				const intent = yield* upload("contacts.csv", "email\na@x.fr");
-				yield* contactsImport.editCell(intent.id, {
+				yield* ContactBulkImport.editCell(intent.id, {
 					rowIndex: 0,
 					column: "email",
 					value: "b@x.fr",
@@ -330,9 +345,9 @@ describe("an intent's review and import", () => {
 				];
 				return yield* Effect.all(
 					edits.map((cell) =>
-						contactsImport
-							.editCell(intent.id, { ...cell, value: "x" })
-							.pipe(Effect.flip),
+						ContactBulkImport.editCell(intent.id, { ...cell, value: "x" }).pipe(
+							Effect.flip,
+						),
 					),
 				);
 			}).pipe(Effect.provide(layer)),
@@ -349,7 +364,7 @@ describe("an intent's review and import", () => {
 		const failure = await Effect.runPromise(
 			Effect.gen(function* () {
 				const intent = yield* upload("contacts.csv", "email\na@x.fr");
-				return yield* productsImport.get(intent.id).pipe(Effect.flip);
+				return yield* ProductBulkImport.get(intent.id).pipe(Effect.flip);
 			}).pipe(Effect.provide(layer)),
 		);
 
@@ -363,6 +378,7 @@ describe("an intent's review and import", () => {
 				target: "contacts",
 				columns: { ...columns, phone: { schema: Schema.String } },
 			}),
+			{ readers },
 		);
 		const failure = await Effect.runPromise(
 			Effect.gen(function* () {
@@ -380,7 +396,7 @@ describe("an intent's review and import", () => {
 			Effect.gen(function* () {
 				const kept = yield* upload("a.csv", "email\na@x.fr");
 				const discarded = yield* upload("b.csv", "email\nb@x.fr");
-				yield* contactsImport.discard(discarded.id);
+				yield* ContactBulkImport.discard(discarded.id);
 				expect(intents.values().map((intent) => intent.id)).toStrictEqual([
 					kept.id,
 				]);
@@ -393,16 +409,16 @@ describe("an intent's review and import", () => {
 		const intent = await Effect.runPromise(
 			upload("contacts.csv", "email\na@x.fr").pipe(Effect.provide(layer)),
 		);
-		const encoded = Schema.encodeSync(contactsImport.Intent)(intent);
+		const encoded = Schema.encodeSync(ContactBulkImport.Intent)(intent);
 
 		expect(
-			Schema.decodeUnknownSync(contactsImport.Intent)(encoded),
+			Schema.decodeUnknownSync(ContactBulkImport.Intent)(encoded),
 		).toStrictEqual(intent);
 		expect(() =>
-			Schema.decodeUnknownSync(productsImport.Intent)(encoded),
+			Schema.decodeUnknownSync(ProductBulkImport.Intent)(encoded),
 		).toThrow();
 		expect(() =>
-			Schema.decodeUnknownSync(contactsImport.EditCellPayload)({
+			Schema.decodeUnknownSync(ContactBulkImport.EditCellPayload)({
 				rowIndex: 0,
 				column: "age",
 				value: "x",
@@ -411,7 +427,7 @@ describe("an intent's review and import", () => {
 		expect(
 			Schema.decodeUnknownSync(
 				Schema.Struct({
-					...contactsImport.CreatePayload.fields,
+					...ContactBulkImport.CreatePayload.fields,
 					segmentId: Schema.String,
 				}),
 			)({ fileName: "a.csv", content: "ZW1haWw=", segmentId: "s" }).content,

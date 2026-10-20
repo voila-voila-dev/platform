@@ -16,7 +16,6 @@ export {
 	type BulkImportOptions,
 	type ImportBatchEntry,
 } from "#bulk-import/lib/bulk-import";
-export { csvImportReader } from "#bulk-import/lib/csv-import-reader";
 export {
 	type ImportColumn,
 	type ImportColumnKey,
@@ -25,16 +24,12 @@ export {
 	type ImportRecordOf,
 	ImportSchema,
 } from "#bulk-import/lib/import-schema";
-export { jsonImportReader } from "#bulk-import/lib/json-import-reader";
 export { ImportIntentRepository } from "#bulk-import/services/import-intent-repository";
 export {
 	ImportLimits,
 	type ImportLimitValues,
 } from "#bulk-import/services/import-limits";
-export {
-	type ImportReader,
-	ImportReaders,
-} from "#bulk-import/services/import-readers";
+export type { ImportReader } from "#bulk-import/services/import-reader";
 export { ImportFormat } from "#bulk-import/value-objects/import-format";
 export { ImportIntentId } from "#bulk-import/value-objects/import-intent-id";
 export { ImportIntentStatus } from "#bulk-import/value-objects/import-intent-status";
