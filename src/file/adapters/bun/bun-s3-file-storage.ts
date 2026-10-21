@@ -12,16 +12,11 @@ export interface S3Credentials {
 }
 
 export interface BunS3FileStorageOptions {
-	// The account-level endpoint, without the bucket.
 	readonly endpoint: string;
 	readonly bucket: string;
-	// Asked before every call; a different object than the last means the
-	// credentials rotated (an ECS task role), and the client is rebuilt.
 	readonly credentials: () => Promise<S3Credentials>;
 }
 
-// Every call is idempotent, so a transient failure (Bun reports a 5xx or a
-// dropped connection as a bare `S3Error`) is retried before it becomes a defect.
 const transientRetry = {
 	schedule: Schedule.jittered(Schedule.exponential("100 millis")),
 	times: 3,
@@ -35,8 +30,6 @@ interface ObjectReader {
 	readonly exists: (key: string) => Promise<boolean>;
 }
 
-// A failed read asks `exists` what happened: a missing key answers `null`,
-// anything else rethrows, so a transient failure is retried, not taken for a 404.
 async function orNullWhenMissing<A>(
 	client: ObjectReader,
 	key: string,

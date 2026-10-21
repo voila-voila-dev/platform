@@ -19,11 +19,8 @@ export interface FileUploadRule {
 
 export interface FileKind {
 	readonly prefix: `${string}/`;
-	// A public file is served to anyone holding its key; any other needs a download link.
 	readonly visibility: "public" | "private";
-	// Only a kind with an upload rule can be uploaded from a browser.
 	readonly upload?: FileUploadRule;
-	// The widths an image of this kind is also stored at.
 	readonly variantWidths?: ReadonlyArray<number>;
 }
 
@@ -39,7 +36,6 @@ export type UploadableKind<Kinds extends FileKinds> = {
 
 export interface FilesConfig<Kinds extends FileKinds> {
 	readonly kinds: Kinds;
-	// For an image whose kind declares no widths, or whose key matches no kind.
 	readonly defaultVariantWidths?: ReadonlyArray<number>;
 }
 
@@ -47,8 +43,6 @@ function rejected(reason: FileUploadRejectedError["reason"]) {
 	return Effect.fail(new FileUploadRejectedError({ reason }));
 }
 
-// The application makes one, declaring every kind of file it stores. A key
-// is `<prefix><segment>/<segment>…`; the segments mean what the kind's domain says.
 function make<const Kinds extends FileKinds>(config: FilesConfig<Kinds>) {
 	type Name = keyof Kinds & string;
 	const byLongestPrefix = (
@@ -81,8 +75,6 @@ function make<const Kinds extends FileKinds>(config: FilesConfig<Kinds>) {
 		});
 	}
 
-	// The declared type and length only gate the link: the bytes that land
-	// are whatever the browser PUTs.
 	function acceptedContentType(
 		name: UploadableKind<Kinds>,
 		input: { readonly contentType: string; readonly contentLength: number },
@@ -110,14 +102,11 @@ function make<const Kinds extends FileKinds>(config: FilesConfig<Kinds>) {
 				segments: key.slice(kind.prefix.length).split("/"),
 			})),
 
-		// A key matching no kind is private.
 		isPublic: (key: string) =>
 			Option.exists(kindOf(key), ([, kind]) => kind.visibility === "public"),
 
 		variantWidths,
 
-		// A preview that crossed the wire may claim widths never stored, and a
-		// `srcset` candidate that 404s breaks the picture for every reader.
 		withDeclaredVariantWidths: (ref: ImageRef): ImageRef => {
 			if (ref.preview === undefined) return ref;
 			const declared = variantWidths(ref.key);
@@ -137,7 +126,6 @@ function make<const Kinds extends FileKinds>(config: FilesConfig<Kinds>) {
 			input: { readonly contentType: string; readonly contentLength: number },
 		) => Effect.asVoid(acceptedContentType(name, input)),
 
-		// `<prefix><scope>/<id>.<extension>`, or `<prefix><id>.<extension>` without a scope.
 		requestUpload: (
 			name: UploadableKind<Kinds>,
 			input: {

@@ -59,7 +59,6 @@ describe("minted url cache, in batch", () => {
 		expect(called).toBe(false);
 	});
 
-	// One medium the batch came back without must not blank its neighbours.
 	it("keeps the keys the answer carried when one is missing from it", async () => {
 		const cache = createMintedUrlCache();
 

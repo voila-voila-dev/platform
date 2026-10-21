@@ -4,11 +4,9 @@ import type { FileKey } from "#file/value-objects/file-key";
 import type { FileLink } from "#file/value-objects/file-link";
 import type { FileStat } from "#file/value-objects/file-stat";
 
-// A storage failure is a defect: the callers can do nothing but fail too.
 export class FileStorage extends Context.Service<
 	FileStorage,
 	{
-		// Where the browser PUTs the declared file, so its bytes never cross the server.
 		readonly uploadUrl: (input: {
 			readonly key: FileKey;
 			readonly contentType: ContentType;

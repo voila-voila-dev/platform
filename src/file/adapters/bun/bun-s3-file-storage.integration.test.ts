@@ -6,7 +6,6 @@ import { fileStorageContract } from "#file/services/file-storage.test-helper";
 import { ContentType } from "#file/value-objects/content-type";
 import { FileKey } from "#file/value-objects/file-key";
 
-// Any S3-compatible store with the bucket created, as in CI.
 const endpoint = process.env.S3_ENDPOINT;
 
 const layer = bunS3FileStorage({

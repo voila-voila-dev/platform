@@ -5,7 +5,6 @@ import { ContentType } from "#file/value-objects/content-type";
 import { FileKey } from "#file/value-objects/file-key";
 import { FileStat } from "#file/value-objects/file-stat";
 
-// What every `FileStorage` does, run against each adapter.
 export function fileStorageContract(
 	name: string,
 	layer: Layer.Layer<FileStorage>,

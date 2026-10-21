@@ -39,7 +39,6 @@ describe("hmacFileTokens", () => {
 		expect(await verify(KEY, await mint())).toBe("valid");
 	});
 
-	// Links minted before an upgrade must keep working until they expire.
 	it("mints the f.<expiry>.<mac> tokens tries.care has always minted", async () => {
 		const expiresAt = DateTime.makeUnsafe(1_900_000_000_000);
 		const expiry = (1_900_000_000).toString(36);

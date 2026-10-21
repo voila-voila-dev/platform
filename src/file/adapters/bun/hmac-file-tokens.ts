@@ -2,9 +2,6 @@ import { DateTime, Effect, Layer, Redacted } from "effect";
 import { InvalidFileTokenError } from "#file/errors/invalid-file-token-error";
 import { FileTokens } from "#file/services/file-tokens";
 
-// `f.<expiry>.<mac>`: the expiry in base36 epoch seconds, the mac a 128-bit
-// HMAC-SHA256 of `f.<key>.<expiry>`. The key travels in the URL, not the
-// token, but the mac binds it, so a token for one file cannot read another.
 const MAC_HEX_LENGTH = 32;
 
 const utf8 = new TextEncoder();

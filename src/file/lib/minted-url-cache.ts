@@ -1,6 +1,5 @@
 import type { Exit } from "effect";
 
-// Never hand back a URL about to expire in the middle of loading the media.
 const EXPIRY_MARGIN_MS = 60_000;
 
 interface MintedTicket {
@@ -8,16 +7,13 @@ interface MintedTicket {
 	readonly expiresAt: Date;
 }
 
-// A batch endpoint answers de-duplicated, so each ticket names its key.
 export interface KeyedMintedTicket extends MintedTicket {
 	readonly key: string;
 }
 
 export type MintedUrlCache = ReturnType<typeof createMintedUrlCache>;
 
-// Client side: minted URLs are kept until they near expiry, and mints run one
-// at a time, since callers usually write through one shared mutation whose
-// result two concurrent mints would overwrite.
+// Mints run one at a time: callers share one mutation, whose result a concurrent mint would overwrite.
 export function createMintedUrlCache() {
 	const minted = new Map<string, { url: string; expiresAt: number }>();
 	let queue: Promise<unknown> = Promise.resolve();
@@ -53,8 +49,6 @@ export function createMintedUrlCache() {
 		return exit.value.url;
 	}
 
-	// Asks only for the keys not held. Keys the answer lacks (a denial, a
-	// vanished file) are absent from the result, so one never blanks the others.
 	async function resolveAll(
 		keys: ReadonlyArray<string>,
 		request: (
@@ -79,8 +73,6 @@ export function createMintedUrlCache() {
 		return resolved;
 	}
 
-	// `resolveAll` in chunks, publishing after each so a large set fills in
-	// batch by batch.
 	async function resolveAllBatched(input: {
 		readonly keys: ReadonlyArray<string>;
 		readonly batchSize: number;

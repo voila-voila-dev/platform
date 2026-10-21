@@ -7,7 +7,6 @@ import { secureFileDownloads } from "#file/lib/secure-file-downloads";
 export const IN_MEMORY_SECURE_FILES_URL =
 	"https://files.memory.test/secure-files";
 
-// Everything the file brick needs, for the calling domain's tests.
 export function inMemoryFiles() {
 	const storage = inMemoryFileStorage();
 	const tokens = inMemoryFileTokens();

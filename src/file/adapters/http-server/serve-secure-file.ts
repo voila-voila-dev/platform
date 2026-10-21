@@ -13,7 +13,6 @@ function notFound() {
 }
 
 export interface ServeSecureFileOptions {
-	// Where the application mounts the route, the path of `secureFileDownloads`' `baseUrl`.
 	readonly path: string;
 }
 
@@ -34,7 +33,6 @@ function keyFromPath(pathname: string, path: string) {
 	}
 }
 
-// Every failure answers the same 404, so the route tells nobody which keys exist.
 export function serveSecureFile(url: URL, options: ServeSecureFileOptions) {
 	return Effect.gen(function* () {
 		const key = keyFromPath(url.pathname, options.path);
@@ -53,7 +51,6 @@ export function serveSecureFile(url: URL, options: ServeSecureFileOptions) {
 		return HttpServerResponse.uint8Array(bytes.value, {
 			contentType: contentTypeOfKey(key.value),
 			headers: {
-				// The token is one caller's capability: only that browser may cache the answer.
 				"cache-control": `private, max-age=${Duration.toSeconds(lifetimes.download)}, immutable`,
 				"x-content-type-options": "nosniff",
 				"content-disposition": `inline; filename*=UTF-8''${encodeURIComponent(fileName)}`,

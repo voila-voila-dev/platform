@@ -32,7 +32,6 @@ export function extensionFromContentType(contentType: ContentType): string {
 	return contentType.split("/")[1] ?? "bin";
 }
 
-// A header from outside (a browser, an inbound email, the store) as a `ContentType`.
 export function normalizeContentType(raw: string): Option.Option<ContentType> {
 	return decodeContentType((raw.split(";")[0] ?? "").trim().toLowerCase());
 }
