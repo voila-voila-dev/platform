@@ -7,30 +7,33 @@ Users never call it directly. A domain (contacts, products…) declares its sche
 ## Declare the import
 
 ```ts
-import { BulkImport } from "@voila.dev/platform/bulk-import";
+import { BulkImport, ImportSchema } from "@voila.dev/platform/bulk-import";
 import { csvImportReader } from "@voila.dev/platform/bulk-import/csv";
 import { xlsxImportReader } from "@voila.dev/platform/bulk-import/xlsx";
 
-export const ContactBulkImport = BulkImport.make(
-	{
-		target: "contacts",
-		columns: {
-			name: { schema: Schema.String, label: "Nom" },
-			email: { schema: EmailAddress, label: "E-mail", unique: true, message: "Une adresse e-mail" },
-			phone: { schema: Schema.String, aliases: ["tél"] },
-		},
-		check: (record) =>
-			record.email === undefined && record.phone === undefined
-				? [{ column: "phone", issue: "required", message: "Un e-mail ou un téléphone" }]
-				: [],
+export const ContactImportSchema = ImportSchema.make({
+	target: "contacts",
+	columns: {
+		name: { schema: Schema.String, label: "Nom" },
+		email: { schema: EmailAddress, label: "E-mail", unique: true, message: "Une adresse e-mail" },
+		phone: { schema: Schema.String, aliases: ["tél"] },
 	},
-	{ limits: { maxRows: 5_000 }, readers: [csvImportReader, xlsxImportReader] },
-);
+	check: (record) =>
+		record.email === undefined && record.phone === undefined
+			? [{ column: "phone", issue: "required", message: "Un e-mail ou un téléphone" }]
+			: [],
+});
+
+export const ContactBulkImport = BulkImport.make(ContactImportSchema, {
+	limits: { maxRows: 5_000 },
+	readers: [csvImportReader, xlsxImportReader],
+});
 ```
 
 - Each cell is trimmed, then decoded by its column's `schema` (a `Codec<A, string>`). The cell keeps the text the schema encodes back, which is also the text compared for `unique`.
 - Header cells are matched against each column's key, `label` and `aliases`, ignoring case and accents. A file without a header is read by column order.
 - `check` runs on rows whose cells are all valid, to check across columns.
+- A schema kept in its own constant can be shared without the readers, with a review screen for instance. Declared inline in another generic call, TypeScript widens the columns `check` returns.
 - `readers` lists the formats this import accepts. `limits` overrides the `ImportLimits` reference (2 MiB, 20,000 rows, batches of 200) for this import only.
 
 ## Use it in the domain's use cases
