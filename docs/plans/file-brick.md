@@ -30,11 +30,11 @@ Facts from reading the code (tries `origin/main`; local `main` is 17 commits beh
 | policies/owns-file-key, read-file, rewrite-file | **stay in tries** (`platform/file-access`) | Role-based access rules (principle 4). They use `files.parse(key)` to find the owner segment. |
 | services/file-storage-service | **generalised** → `FileStorage` port | Drop `consumeUploadAuthorization` (it only exists for the local-disk dev proxy). Merge `getDownloadBytes`/`readBytes` into `read` plus the `readFile` helper. |
 | services/file-storage-service.test-helper | **replaced** by `/file/memory` `inMemoryFileStorage()` | Used by 70 test files. |
-| services/files-token-service (+ test-helper) | **stays in tries** (`platform/file-access`) | HMAC token and the `/secure-files` route are tries' choices. |
+| services/files-token-service (+ test-helper) | **brick** (`FileTokens`, `hmacFileTokens`) | Decision 2 (section 8). |
 | services/video-stream-service (+ test-helper) | **stays in tries** (`platform/video`) | Q1. |
 | use-cases/complete-file-upload | **stays in tries** (`file-access`) | Only for the local dev upload proxy. |
 | use-cases/get-file-download-url(s) | **stay in tries** (`file-access`) | User-facing endpoints with tries' gate (principle 1). |
-| use-cases/get-secure-file-bytes, read-file-bytes | **stay in tries** (`file-access`) | Token route and system read used by tries routes. |
+| use-cases/get-secure-file-bytes → brick `serveSecureFile`; read-file-bytes | **stays in tries** (`file-access`) | Token route and system read used by tries routes. |
 | use-cases/index | **stays in tries** | Feeds `use-case-registry.ts`. |
 | value-objects/file-keys | **split**: the mechanism goes to the brick (`Files.make({ kinds })`); the 25 prefixes, public list and widths become tries' kinds declaration | The prefixes are tries config. `PUBLIC_FILE_KEY_PREFIXES` and `fileKeyOwnerId` **disappear** (dead outside the folder; replaced by the kind's `visibility` and `files.parse`). |
 | value-objects/file-ref, image-ref, image-preview | **brick** (`FileRef`, `ImageRef`, `ImagePreview`, `imageVariantKey`) | Generic and persisted by callers. `withDeclaredVariantWidths` becomes `files.withDeclaredVariantWidths`. |
@@ -220,13 +220,24 @@ Bundling:
 - The `file-access` use case tests and the compile tests.
 - The 70 consumer tests switch to `inMemoryFileStorage()`. Tests that relied on `statObject` → `image/webp` seed the content type instead.
 
-## 8. Decisions for you
+## 8. Decisions (taken 2026-10-21)
 
-1. **Video in this brick?** I recommend **no**. `VideoStream` leaks Cloudflare (`customerSubdomain`, tus) and its adapter uses tries' instrumentation. Move it to tries `platform/video` now, and make it a separate brick later if a second app needs it.
-2. **Signed download links**: I recommend the HMAC token and `/secure-files` **stay in tries**, with the S3 adapter taking a `downloadUrl` option (presigned GET by default). The alternative is a `FileLinkSigner` port plus a `/file/http-server` route in the brick; that's more code and only one consumer would use it.
-3. **Brand `FileKey`?** I recommend **yes**: keys can then only come from `TriesFiles.key`/`requestUpload`. The cost is about 70 test files rewriting their fixtures as `FileKey.make(…)` (codemod in T2).
-4. **Name of the tries remainder**: I recommend **`platform/file-access`** (policies, tokens, endpoint use cases) rather than shrinking `platform/file`, which would be confused with the brick.
-5. **`platform/image` as the next brick?** It depends heavily on `file` (`ImageService`, previews, normalize). I recommend extracting it right after, not in the same step.
+1. **Video stays in tries** (`platform/video`).
+2. **Signed download links move into the brick**, which supersedes sections 1, 3 and 5 on that point:
+   - `FileTokens` port (`mint`, `verify` → `InvalidFileTokenError`), with `hmacFileTokens(secret)` in `/file/bun`, wire-compatible with tries' `f.<expiry>.<mac>` tokens. The rule refusing the development secret outside local runs stays in tries.
+   - `FileDownloads` port (`link(key)`), implemented by `secureFileDownloads({ baseUrl })` from `/file`. `FileStorage` loses `downloadUrl`: it only stores bytes and hands upload links.
+   - `serveSecureFile(url, { path })` in `/file/http-server` replaces tries' `/secure-files` handler, `GetSecureFileBytesUseCase`, `FilesTokenService` and the HMAC service.
+   - `bunS3FileStorage` takes `{ endpoint, bucket, credentials: () => Promise<S3Credentials> }`, without a `downloadUrl` option.
+3. **`FileKey` is branded.**
+4. **The tries remainder is `platform/file-access`**: owner and public read policies, the download-URL use cases, the local upload completion and the system read.
+5. `platform/image` comes next, as its own step.
+6. **Value objects, not interfaces**, which supersedes section 3 on these types:
+   - `ContentType` is branded (`type/subtype`, lowercase, no parameters) and types `FileRef.contentType`, `FileStat`, `FileStorage.put`/`uploadUrl` and the kinds' `upload.contentTypes`. Raw headers go through `normalizeContentType` (`Option`) or `normalizeContentTypeOrOctetStream`.
+   - `FileLink`, `FileStat`, `FileUpload` (what `requestUpload` returns) and `FileLinkLifetimes` (`upload`/`download` as `Duration`) are `Schema.Class`es, so tries' RPC answers reuse them.
+   - `FileRef.sizeBytes` is a non-negative integer.
+   - **Before T2**, list the distinct `contentType`s stored in tries' refs (jsonb and the flattened `*_content_type` columns): a value that is not `type/subtype` in lowercase would no longer decode, and needs a data migration normalising it first.
+
+The S3 contract test runs in CI against RustFS: MinIO no longer publishes images.
 
 ## Verification
 

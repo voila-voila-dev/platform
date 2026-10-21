@@ -34,6 +34,7 @@ src/
 | rate-limiting | `/rate-limiting` (`RateLimiter`, `RateLimitedError`), `/rate-limiting/memory` (`inMemoryRateLimiter`, `stubRateLimiter`), `/rate-limiting/redis` (`redisRateLimiter`, on the application's `Redis`) |
 | search | `/search` (`Pagination`, `PagedResult`, filters, `makeSearchUseCase`, `SearchBudget`), `/search/memory`, `/search/drizzle` (`pagedQuery`, accent-insensitive search, `searchFunctionsSql`) |
 | bulk-import | `/bulk-import` (`BulkImport`, `ImportSchema`, `ImportIntent`, `ImportLimits`), `/csv` (`csvImportReader`), `/json` (`jsonImportReader`), `/memory` (`inMemoryBulkImport`), `/drizzle` (`importIntentTable`), `/xlsx` (`xlsxImportReader`, on exceljs) |
+| file | `/file` (`Files`, `FileStorage`, `FileDownloads`, `FileTokens`, `FileRef`, `ImageRef`, `FileLinkLifetime`), `/file/memory` (`inMemoryFiles`), `/file/bun` (`bunS3FileStorage`, `hmacFileTokens`), `/file/http-server` (`serveSecureFile`) |
 | link-tracking/link | `/link-tracking/link`, `/http` (`TrackedLinksApiGroup`), `/memory`, `/drizzle` (tables, repository, `trackedLinkSearchIndexesSql`), `/http-server` (`trackedLinksHandlers`) |
 | link-tracking/click | `/link-tracking/click`, `/memory`, `/drizzle`, `/http-server` (`redirectToLink`) |
 
@@ -161,7 +162,7 @@ The package is `sideEffects: false`: no module may run anything when it is loade
 
 ## Workflow
 
-`*.integration.test.ts` files need a real service and skip without it: `REDIS_URL=redis://localhost:6379 bun run test` runs the Redis ones.
+`*.integration.test.ts` files need a real service and skip without it: `REDIS_URL=redis://localhost:6379 bun run test` runs the Redis ones, and `S3_ENDPOINT` (with `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY` and a `platform-test` bucket) the S3 ones.
 
 
 ```sh
