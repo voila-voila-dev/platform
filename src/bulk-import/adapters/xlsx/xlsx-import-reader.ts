@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import ExcelJS from "exceljs";
+import type ExcelJS from "exceljs";
 import { ImportFileRejectedError } from "#bulk-import/errors/import-file-rejected-error";
 import type { ImportReader } from "#bulk-import/services/import-reader";
 import { ImportFormat } from "#bulk-import/value-objects/import-format";
@@ -15,7 +15,10 @@ function cellText(cell: ExcelJS.Cell) {
 }
 
 async function readFirstWorksheet(bytes: Uint8Array) {
-	const workbook = new ExcelJS.Workbook();
+	// Loaded on the first read: an import declared next to the schemas a browser
+	// bundle shares keeps exceljs out of that bundle.
+	const { default: Excel } = await import("exceljs");
+	const workbook = new Excel.Workbook();
 	await workbook.xlsx.load(new Uint8Array(bytes).buffer);
 	const sheet = workbook.worksheets[0];
 	if (sheet === undefined) return [];
