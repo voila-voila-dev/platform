@@ -105,24 +105,26 @@ A file becomes an import intent reviewed before anything is written: it is read 
 No user calls bulk import directly: they import contacts, products… The domain that imports declares its schema, gates its own use cases and endpoints, and keeps the intent's id in its own table next to what the request was for (a segment, a source, who asked and when).
 
 ```ts
-const ContactBulkImport = BulkImport.make(
-	{
-		target: "contacts",
-		columns: {
-			name: { schema: Schema.String, label: "Nom" },
-			// What the schema encodes back is the cell kept: here, lowercased.
-			email: { schema: EmailAddress, label: "E-mail", unique: true, message: "Une adresse e-mail" },
-			phone: { schema: Schema.String, aliases: ["tél"] },
-		},
-		// Rows whose cells are all valid, checked across their columns.
-		check: (record) =>
-			record.email === undefined && record.phone === undefined
-				? [{ column: "phone", issue: "required", message: "Un e-mail ou un téléphone" }]
-				: [],
+const ContactImportSchema = ImportSchema.make({
+	target: "contacts",
+	columns: {
+		name: { schema: Schema.String, label: "Nom" },
+		// What the schema encodes back is the cell kept: here, lowercased.
+		email: { schema: EmailAddress, label: "E-mail", unique: true, message: "Une adresse e-mail" },
+		phone: { schema: Schema.String, aliases: ["tél"] },
 	},
-	// The formats it accepts; `limits` overrides the `ImportLimits` reference for this import only.
-	{ limits: { maxRows: 5_000 }, readers: [csvImportReader, xlsxImportReader] },
-);
+	// Rows whose cells are all valid, checked across their columns.
+	check: (record) =>
+		record.email === undefined && record.phone === undefined
+			? [{ column: "phone", issue: "required", message: "Un e-mail ou un téléphone" }]
+			: [],
+});
+
+// The formats it accepts; `limits` overrides the `ImportLimits` reference for this import only.
+const ContactBulkImport = BulkImport.make(ContactImportSchema, {
+	limits: { maxRows: 5_000 },
+	readers: [csvImportReader, xlsxImportReader],
+});
 
 // In the contacts domain's use cases:
 const intent = yield* ContactBulkImport.create({ fileName, content });
@@ -147,7 +149,7 @@ const { layer } = inMemoryBulkImport();
 
 An intent is versioned and a batch leased to the import that took it, so concurrent changes fail with `ImportIntentConflictError` instead of overwriting or importing a row twice. A lease outlives a crashed import by `ImportLimits.batchLeaseMillis` (5 minutes by default); the next import then takes the batch again.
 
-`ImportSchema.make` types a schema kept apart from its `BulkImport`. Passed inline to another generic call, TypeScript widens what its `check` returns: write the schema in `BulkImport.make` itself, or as a constant.
+`ImportSchema.make` types a schema kept apart from its `BulkImport`, to share it without the readers. Passed inline to another generic call, TypeScript widens what its `check` returns: keep it in a constant, or write it in `BulkImport.make` itself.
 
 ```
 
