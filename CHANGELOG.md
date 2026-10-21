@@ -1,5 +1,11 @@
 # @voila.dev/platform
 
+## 0.5.0
+
+### Minor Changes
+
+- [#13](https://github.com/voila-voila-dev/platform/pull/13) [`6929729`](https://github.com/voila-voila-dev/platform/commit/6929729795f14aa24c10c40fc7ae2bb7b2f4f177) Thanks [@emilienbidet](https://github.com/emilienbidet)! - Add the `file` brick: `Files.make({ kinds })` declares the application's kinds of files (prefix, visibility, upload rule, image widths) and hands typed keys and upload links; `FileStorage`, `FileDownloads` and `FileTokens` ports with `FileRef`, `ImageRef` and `FileLinkLifetime`; `/file/bun` (`bunS3FileStorage`, `hmacFileTokens`), `/file/http-server` (`serveSecureFile`) and `/file/memory` (`inMemoryFiles`).
+
 ## 0.4.1
 
 ### Patch Changes
