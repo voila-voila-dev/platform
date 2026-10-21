@@ -33,7 +33,7 @@ src/
 | core | `.` (ids and shared value objects, `Actor`, `Gate`, `UseCase`, `IdGenerator`, `SecureRandom`, `CurrentActor`, `DatabaseError`), `/memory`, `/drizzle`, `/bun`, `/http-server` |
 | rate-limiting | `/rate-limiting` (`RateLimiter`, `RateLimitedError`), `/rate-limiting/memory` (`inMemoryRateLimiter`, `stubRateLimiter`), `/rate-limiting/redis` (`redisRateLimiter`, on the application's `Redis`) |
 | search | `/search` (`Pagination`, `PagedResult`, filters, `makeSearchUseCase`, `SearchBudget`), `/search/memory`, `/search/drizzle` (`pagedQuery`, accent-insensitive search, `searchFunctionsSql`) |
-| bulk-import | `/bulk-import` (`ImportDraft`, `ImportSchemas`, `ImportReaders`, `ImportLimits`, `importNextBatch`, CSV and JSON readers), `/http` (`BulkImportsApiGroup`), `/memory`, `/drizzle` (`importDraftTable`), `/xlsx` (`xlsxImportReader`, on exceljs), `/http-server` (`bulkImportsHandlers`) |
+| bulk-import | `/bulk-import` (`BulkImport`, `ImportSchema`, `ImportIntent`, `ImportLimits`), `/csv` (`csvImportReader`), `/json` (`jsonImportReader`), `/memory` (`inMemoryBulkImport`), `/drizzle` (`importIntentTable`), `/xlsx` (`xlsxImportReader`, on exceljs) |
 | link-tracking/link | `/link-tracking/link`, `/http` (`TrackedLinksApiGroup`), `/memory`, `/drizzle` (tables, repository, `trackedLinkSearchIndexesSql`), `/http-server` (`trackedLinksHandlers`) |
 | link-tracking/click | `/link-tracking/click`, `/memory`, `/drizzle`, `/http-server` (`redirectToLink`) |
 
@@ -100,16 +100,55 @@ Layer.succeed(SearchBudget, { windowSeconds: 60, perCaller: 120, global: 1200 })
 
 ## Bulk import
 
-A file becomes a draft the user reviews before anything is written: it is read into a table, each line checked against the target's columns (required, unique, normalized, validated), and the problems shown cell by cell until fixed. The application then imports the valid rows batch by batch with `importNextBatch`, its own use case deciding what a row becomes.
+A file becomes an import intent reviewed before anything is written: it is read into a table, each cell decoded by its column's schema (required, unique), and the problems shown cell by cell until fixed. The valid rows are then imported batch by batch, decoded into typed records.
+
+No user calls bulk import directly: they import contacts, products… The domain that imports declares its schema, gates its own use cases and endpoints, and keeps the intent's id in its own table next to what the request was for (a segment, a source, who asked and when).
 
 ```ts
-const schemas = Layer.succeed(ImportSchemas, {
-	schemaFor: (target) =>
-		target === "contacts" ? Option.some(contactColumns) : Option.none(),
-});
-// CSV and JSON are read by default; add a format by providing its reader.
-Layer.succeed(ImportReaders, [csvImportReader, jsonImportReader, xlsxImportReader]);
-Layer.succeed(ImportLimits, { maxBytes: 5_000_000, maxRows: 50_000, batchSize: 500, draftLifetimeDays: 7 });
+const ContactBulkImport = BulkImport.make(
+	{
+		target: "contacts",
+		columns: {
+			name: { schema: Schema.String, label: "Nom" },
+			// What the schema encodes back is the cell kept: here, lowercased.
+			email: { schema: EmailAddress, label: "E-mail", unique: true, message: "Une adresse e-mail" },
+			phone: { schema: Schema.String, aliases: ["tél"] },
+		},
+		// Rows whose cells are all valid, checked across their columns.
+		check: (record) =>
+			record.email === undefined && record.phone === undefined
+				? [{ column: "phone", issue: "required", message: "Un e-mail ou un téléphone" }]
+				: [],
+	},
+	// The formats it accepts; `limits` overrides the `ImportLimits` reference for this import only.
+	{ limits: { maxRows: 5_000 }, readers: [csvImportReader, xlsxImportReader] },
+);
+
+// In the contacts domain's use cases:
+const intent = yield* ContactBulkImport.create({ fileName, content });
+yield* contactsImports.insert({ importIntentId: intent.id, segmentId, source, fileName });
+yield* ContactBulkImport.editCell(intent.id, { rowIndex, column: "email", value });
+// One result per entry, in order. `record` is `{ email?: EmailAddress; name?: string; phone?: string }`,
+// `index` is the row's, stable across retries: write by it or by a natural key.
+yield* ContactBulkImport.importNextBatch(intent.id, (batch) => upsertContacts(segmentId, batch));
+// Or every batch at once, in a background job.
+yield* ContactBulkImport.importAll(intent.id, (batch) => upsertContacts(segmentId, batch));
+ImportIntent.summary(intent); // { rows, invalid, created, updated, rejected, remaining }
+
+// For its endpoints:
+ContactBulkImport.Intent; // response
+Schema.Struct({ ...ContactBulkImport.CreatePayload.fields, segmentId: SegmentId }); // upload
+ContactBulkImport.EditCellPayload; // { rowIndex, column: "name" | "email" | "phone", value }
+ContactBulkImport.template(); // a CSV of the labels, to download and fill
+
+// In its tests:
+const { layer } = inMemoryBulkImport();
+```
+
+An intent is versioned and a batch leased to the import that took it, so concurrent changes fail with `ImportIntentConflictError` instead of overwriting or importing a row twice. A lease outlives a crashed import by `ImportLimits.batchLeaseMillis` (5 minutes by default); the next import then takes the batch again.
+
+`ImportSchema.make` types a schema kept apart from its `BulkImport`. Passed inline to another generic call, TypeScript widens what its `check` returns: write the schema in `BulkImport.make` itself, or as a constant.
+
 ```
 
 ## Database

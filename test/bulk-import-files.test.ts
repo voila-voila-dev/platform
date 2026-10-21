@@ -1,17 +1,12 @@
 import { describe, expect, it } from "bun:test";
 import { join } from "node:path";
-import { Effect, Layer } from "effect";
-import { inMemoryImportDraftRepository } from "#bulk-import/adapters/memory/in-memory-import-draft-repository";
-import { staticImportSchemas } from "#bulk-import/adapters/memory/static-import-schemas";
+import { Effect, Schema, SchemaTransformation } from "effect";
+import { csvImportReader } from "#bulk-import/adapters/csv/csv-import-reader";
+import { jsonImportReader } from "#bulk-import/adapters/json/json-import-reader";
+import { inMemoryBulkImport } from "#bulk-import/adapters/memory/in-memory-bulk-import";
 import { xlsxImportReader } from "#bulk-import/adapters/xlsx/xlsx-import-reader";
-import { csvImportReader } from "#bulk-import/lib/csv-import-reader";
-import { jsonImportReader } from "#bulk-import/lib/json-import-reader";
-import { ImportReaders } from "#bulk-import/services/import-readers";
-import { CreateImportDraftUseCase } from "#bulk-import/use-cases/create-import-draft-use-case";
-import { ImportTarget } from "#bulk-import/value-objects/import-target";
-import { StaffActor } from "#core/actor/staff-actor";
-import { incrementingIdGenerator } from "#core/adapters/memory/incrementing-id-generator";
-import { UserId } from "#core/value-objects/user-id";
+import { BulkImport } from "#bulk-import/lib/bulk-import";
+import { ImportSchema } from "#bulk-import/lib/import-schema";
 
 // Files as Excel, Google Sheets and an API export write them.
 function fixture(fileName: string) {
@@ -164,34 +159,26 @@ describe("xlsxImportReader on a real file", () => {
 	});
 });
 
-describe("a draft from each real file", () => {
-	const contacts = ImportTarget.make("contacts");
-	const layer = Layer.mergeAll(
-		inMemoryImportDraftRepository().layer,
-		incrementingIdGenerator().layer,
-		staticImportSchemas({
-			contacts: {
-				columns: [
-					{ key: "prenom", headerAliases: [] },
-					{ key: "nom", headerAliases: [] },
-					{
-						key: "email",
-						headerAliases: [],
-						required: true,
-						unique: true,
-						normalize: (value) => value.toLowerCase(),
-						validate: (value) => value.includes("@"),
-					},
-					{ key: "telephone", headerAliases: [] },
-				],
+describe("an intent from each real file", () => {
+	const ContactBulkImport = BulkImport.make(
+		ImportSchema.make({
+			target: "contacts",
+			columns: {
+				prenom: { schema: Schema.String },
+				nom: { schema: Schema.String },
+				email: {
+					schema: Schema.String.pipe(
+						Schema.decode(SchemaTransformation.toLowerCase()),
+					).check(Schema.isIncluding("@")),
+					required: true,
+					unique: true,
+				},
+				telephone: { schema: Schema.String },
 			},
 		}),
-		Layer.succeed(ImportReaders, [
-			csvImportReader,
-			jsonImportReader,
-			xlsxImportReader,
-		]),
+		{ readers: [csvImportReader, jsonImportReader, xlsxImportReader] },
 	);
+	const { layer } = inMemoryBulkImport();
 
 	for (const fileName of [
 		"contacts-excel-utf8.csv",
@@ -201,27 +188,14 @@ describe("a draft from each real file", () => {
 		"contacts-excel.xlsx",
 	])
 		it(`reads the same contacts from ${fileName}`, async () => {
-			const draft = await Effect.runPromise(
+			const intent = await Effect.runPromise(
 				Effect.flatMap(
 					Effect.promise(() => fixture(fileName)),
-					(content) =>
-						CreateImportDraftUseCase.execute({
-							actor: new StaffActor({
-								userId: UserId.make("00000000-0000-0000-0000-0000000000a1"),
-							}),
-							payload: {
-								target: contacts,
-								targetId: null,
-								targetLabel: null,
-								fileName,
-								content,
-							},
-						}),
+					(content) => ContactBulkImport.create({ fileName, content }),
 				).pipe(Effect.provide(layer)),
 			);
 
-			expect(draft.missingColumns).toStrictEqual([]);
-			expect(draft.rows.map((row) => row.values)).toStrictEqual([
+			expect(intent.rows.map((row) => row.values)).toStrictEqual([
 				{
 					prenom: "Zoé",
 					nom: "Lefèvre",
@@ -247,10 +221,16 @@ describe("a draft from each real file", () => {
 					telephone: "",
 				},
 			]);
-			expect(draft.rows.map((row) => row.issues)).toStrictEqual([
+			expect(intent.rows.map((row) => row.issues)).toStrictEqual([
 				[],
 				[],
-				[{ column: "email", issue: "invalidValue" }],
+				[
+					{
+						column: "email",
+						issue: "invalidValue",
+						message: 'Expected a string including "@"',
+					},
+				],
 				[],
 			]);
 		});

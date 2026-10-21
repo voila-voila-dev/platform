@@ -53,5 +53,6 @@ export type {
 	UseCaseDeclaration,
 } from "#core/use-case/use-case";
 export { Id } from "#core/value-objects/id";
+export { NonNegativeInt } from "#core/value-objects/non-negative-int";
 export { OrganizationId } from "#core/value-objects/organization-id";
 export { UserId } from "#core/value-objects/user-id";

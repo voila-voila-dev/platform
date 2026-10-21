@@ -1,51 +1,41 @@
-export { ImportDraft } from "#bulk-import/aggregates/import-draft";
-export { ImportDraftAlreadyImportedError } from "#bulk-import/errors/import-draft-already-imported-error";
-export { ImportDraftNotEditableError } from "#bulk-import/errors/import-draft-not-editable-error";
-export { ImportDraftNotFoundError } from "#bulk-import/errors/import-draft-not-found-error";
+export {
+	ImportIntent,
+	type ImportSummary,
+} from "#bulk-import/aggregates/import-intent";
+export { ImportColumnsMissingError } from "#bulk-import/errors/import-columns-missing-error";
 export {
 	ImportFileRejectedError,
 	ImportRejection,
 } from "#bulk-import/errors/import-file-rejected-error";
-export { ImportTargetNotFoundError } from "#bulk-import/errors/import-target-not-found-error";
-export { csvImportReader } from "#bulk-import/lib/csv-import-reader";
-export { importNextBatch } from "#bulk-import/lib/import-next-batch";
+export { ImportIntentCellNotFoundError } from "#bulk-import/errors/import-intent-cell-not-found-error";
+export { ImportIntentConflictError } from "#bulk-import/errors/import-intent-conflict-error";
+export { ImportIntentNotFoundError } from "#bulk-import/errors/import-intent-not-found-error";
+export { ImportIntentStatusError } from "#bulk-import/errors/import-intent-status-error";
 export {
-	cellMatchesSchema,
-	type DecodedImport,
-	decodeImportTable,
+	BulkImport,
+	type BulkImportOptions,
+	type ImportBatchEntry,
+} from "#bulk-import/lib/bulk-import";
+export {
 	type ImportColumn,
-	type ImportSchema,
-	revalidateImportRows,
-	validImportRows,
+	type ImportColumnKey,
+	type ImportColumns,
+	type ImportRecord,
+	type ImportRecordOf,
+	ImportSchema,
 } from "#bulk-import/lib/import-schema";
-export { jsonImportReader } from "#bulk-import/lib/json-import-reader";
-export { type CsvDelimiter, parseCsv } from "#bulk-import/lib/parse-csv";
-export { ImportIssue } from "#bulk-import/payloads/import-issue";
-export { ImportCellIssue, ImportRow } from "#bulk-import/payloads/import-row";
-export { ImportDraftRepository } from "#bulk-import/services/import-draft-repository";
+export { ImportIntentRepository } from "#bulk-import/services/import-intent-repository";
 export {
 	ImportLimits,
 	type ImportLimitValues,
 } from "#bulk-import/services/import-limits";
-export {
-	type ImportReader,
-	ImportReaders,
-} from "#bulk-import/services/import-readers";
-export { ImportSchemas } from "#bulk-import/services/import-schemas";
-export { CreateImportDraftUseCase } from "#bulk-import/use-cases/create-import-draft-use-case";
-export { DiscardImportDraftUseCase } from "#bulk-import/use-cases/discard-import-draft-use-case";
-export { GetImportDraftUseCase } from "#bulk-import/use-cases/get-import-draft-use-case";
-export { PurgeExpiredImportDraftsUseCase } from "#bulk-import/use-cases/purge-expired-import-drafts-use-case";
-export { UpdateImportDraftCellUseCase } from "#bulk-import/use-cases/update-import-draft-cell-use-case";
-export { ImportDraftId } from "#bulk-import/value-objects/import-draft-id";
-export { ImportDraftStatus } from "#bulk-import/value-objects/import-draft-status";
-export {
-	ImportFormat,
-	importFormatOf,
-} from "#bulk-import/value-objects/import-format";
-export {
-	addImportOutcome,
-	emptyImportOutcome,
-	ImportOutcome,
-} from "#bulk-import/value-objects/import-outcome";
-export { ImportTarget } from "#bulk-import/value-objects/import-target";
+export type { ImportReader } from "#bulk-import/services/import-reader";
+export { ImportFormat } from "#bulk-import/value-objects/import-format";
+export { ImportIntentId } from "#bulk-import/value-objects/import-intent-id";
+export { ImportIntentStatus } from "#bulk-import/value-objects/import-intent-status";
+export { ImportIssue } from "#bulk-import/value-objects/import-issue";
+export type {
+	ImportCellIssue,
+	ImportRow,
+} from "#bulk-import/value-objects/import-row";
+export { ImportRowResult } from "#bulk-import/value-objects/import-row-result";

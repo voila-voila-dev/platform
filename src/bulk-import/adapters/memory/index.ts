@@ -1,2 +1,2 @@
-export { inMemoryImportDraftRepository } from "#bulk-import/adapters/memory/in-memory-import-draft-repository";
-export { staticImportSchemas } from "#bulk-import/adapters/memory/static-import-schemas";
+export { inMemoryBulkImport } from "#bulk-import/adapters/memory/in-memory-bulk-import";
+export { inMemoryImportIntentRepository } from "#bulk-import/adapters/memory/in-memory-import-intent-repository";

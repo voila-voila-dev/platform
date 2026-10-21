@@ -14,9 +14,9 @@
 	"exports": {
 		".": "./src/index.ts",
 		"./bulk-import": "./src/bulk-import/index.ts",
+		"./bulk-import/csv": "./src/bulk-import/adapters/csv/index.ts",
 		"./bulk-import/drizzle": "./src/bulk-import/adapters/drizzle/index.ts",
-		"./bulk-import/http": "./src/bulk-import/http/index.ts",
-		"./bulk-import/http-server": "./src/bulk-import/adapters/http-server/index.ts",
+		"./bulk-import/json": "./src/bulk-import/adapters/json/index.ts",
 		"./bulk-import/memory": "./src/bulk-import/adapters/memory/index.ts",
 		"./bulk-import/xlsx": "./src/bulk-import/adapters/xlsx/index.ts",
 		"./bun": "./src/core/adapters/bun/index.ts",
@@ -54,9 +54,9 @@
 		"exports": {
 			".": "./dist/index.js",
 			"./bulk-import": "./dist/bulk-import/index.js",
+			"./bulk-import/csv": "./dist/bulk-import/adapters/csv/index.js",
 			"./bulk-import/drizzle": "./dist/bulk-import/adapters/drizzle/index.js",
-			"./bulk-import/http": "./dist/bulk-import/http/index.js",
-			"./bulk-import/http-server": "./dist/bulk-import/adapters/http-server/index.js",
+			"./bulk-import/json": "./dist/bulk-import/adapters/json/index.js",
 			"./bulk-import/memory": "./dist/bulk-import/adapters/memory/index.js",
 			"./bulk-import/xlsx": "./dist/bulk-import/adapters/xlsx/index.js",
 			"./bun": "./dist/core/adapters/bun/index.js",
