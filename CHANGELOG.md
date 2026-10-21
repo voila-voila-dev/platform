@@ -1,5 +1,11 @@
 # @voila.dev/platform
 
+## 0.4.1
+
+### Patch Changes
+
+- [#9](https://github.com/voila-voila-dev/platform/pull/9) [`6a8fcbc`](https://github.com/voila-voila-dev/platform/commit/6a8fcbc53201c5156993365b1fd9d99cc3652083) Thanks [@emilienbidet](https://github.com/emilienbidet)! - `xlsxImportReader` loads exceljs on its first read, so a `BulkImport` declared in code a browser bundle shares no longer pulls exceljs into that bundle.
+
 ## 0.4.0
 
 ### Minor Changes
