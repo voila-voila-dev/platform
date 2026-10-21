@@ -1,15 +1,8 @@
 import { Context, type Effect, type Option } from "effect";
+import type { ContentType } from "#file/value-objects/content-type";
 import type { FileKey } from "#file/value-objects/file-key";
-
-export interface FileLink {
-	readonly url: string;
-	readonly expiresAt: Date;
-}
-
-export interface FileStat {
-	readonly contentType: string;
-	readonly sizeBytes: number;
-}
+import type { FileLink } from "#file/value-objects/file-link";
+import type { FileStat } from "#file/value-objects/file-stat";
 
 // A storage failure is a defect: the callers can do nothing but fail too.
 export class FileStorage extends Context.Service<
@@ -18,13 +11,13 @@ export class FileStorage extends Context.Service<
 		// Where the browser PUTs the declared file, so its bytes never cross the server.
 		readonly uploadUrl: (input: {
 			readonly key: FileKey;
-			readonly contentType: string;
+			readonly contentType: ContentType;
 			readonly contentLength: number;
 		}) => Effect.Effect<FileLink>;
 		readonly put: (input: {
 			readonly key: FileKey;
 			readonly bytes: Uint8Array;
-			readonly contentType: string;
+			readonly contentType: ContentType;
 		}) => Effect.Effect<void>;
 		readonly read: (key: FileKey) => Effect.Effect<Option.Option<Uint8Array>>;
 		readonly stat: (key: FileKey) => Effect.Effect<Option.Option<FileStat>>;

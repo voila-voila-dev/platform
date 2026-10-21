@@ -1,6 +1,6 @@
 import { Context, type Effect } from "effect";
-import type { FileLink } from "#file/services/file-storage";
 import type { FileKey } from "#file/value-objects/file-key";
+import type { FileLink } from "#file/value-objects/file-link";
 
 export class FileDownloads extends Context.Service<
 	FileDownloads,

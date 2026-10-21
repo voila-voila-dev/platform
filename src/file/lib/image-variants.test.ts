@@ -1,5 +1,6 @@
 import { describe, expect, it } from "bun:test";
 import { narrowestVariantKeyCovering } from "#file/lib/image-variants";
+import { ContentType } from "#file/value-objects/content-type";
 import { FileKey } from "#file/value-objects/file-key";
 import { ImagePreview } from "#file/value-objects/image-preview";
 import { ImageRef } from "#file/value-objects/image-ref";
@@ -9,7 +10,7 @@ const KEY = FileKey.make("message-attachment/conversation/photo.webp");
 function imageRef(variantWidths?: ReadonlyArray<number>): ImageRef {
 	return ImageRef.make({
 		key: KEY,
-		contentType: "image/webp",
+		contentType: ContentType.make("image/webp"),
 		sizeBytes: 12_000,
 		...(variantWidths === undefined
 			? {}

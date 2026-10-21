@@ -7,7 +7,9 @@ Users never call it directly. A domain (documents, messaging…) gates its own u
 ## Declare the kinds of files
 
 ```ts
-import { Files } from "@voila.dev/platform/file";
+import { ContentType, Files } from "@voila.dev/platform/file";
+
+const IMAGES = ["image/png", "image/jpeg", "image/webp"].map(ContentType.make);
 
 export const AppFiles = Files.make({
 	defaultVariantWidths: [320, 640, 1280],
@@ -15,13 +17,13 @@ export const AppFiles = Files.make({
 		userAvatar: {
 			prefix: "user-avatar/",
 			visibility: "public",
-			upload: { contentTypes: ["image/png", "image/jpeg", "image/webp"], maxBytes: 10 * 1024 * 1024 },
+			upload: { contentTypes: IMAGES, maxBytes: 10 * 1024 * 1024 },
 			variantWidths: [64, 128, 256],
 		},
 		businessProof: {
 			prefix: "business-proof/",
 			visibility: "private",
-			upload: { contentTypes: ["application/pdf"], maxBytes: 20 * 1024 * 1024 },
+			upload: { contentTypes: [ContentType.make("application/pdf")], maxBytes: 20 * 1024 * 1024 },
 		},
 		invoice: { prefix: "invoice/", visibility: "private" },
 	},
@@ -36,16 +38,16 @@ export const AppFiles = Files.make({
 ## Use it in the domain's use cases
 
 ```ts
-// The browser PUTs the file to `uploadUrl`; the domain then stores a `FileRef` with the key.
+// A `FileUpload`: the browser PUTs the file to `uploadUrl`; the domain then stores a `FileRef` with the key.
 const { key, uploadUrl, expiresAt } = yield* AppFiles.requestUpload("businessProof", {
 	scope: profileId,
 	contentType,
 	contentLength,
 });
 
-yield* (yield* FileStorage).put({ key, bytes, contentType: "application/pdf" });
+yield* (yield* FileStorage).put({ key, bytes, contentType: ContentType.make("application/pdf") });
 const bytes = yield* readFile(key); // fails with FileNotFoundError
-const link = yield* (yield* FileDownloads).link(key); // { url, expiresAt }
+const link = yield* (yield* FileDownloads).link(key); // a `FileLink`: { url, expiresAt }
 ```
 
 ## Serve the downloads
@@ -67,6 +69,10 @@ HttpRouter.add("GET", "/secure-files/*", Effect.gen(function* () {
 Every failure answers the same 404. The answer is cached by that browser only, for the link's lifetime.
 
 `FileLinkLifetime` sets how long upload and download links last (15 minutes each by default).
+
+## Content types
+
+A `ContentType` is `type/subtype`, lowercase, without parameters. A header from outside (a browser, an inbound email) becomes one through `normalizeContentType` (an `Option`) or `normalizeContentTypeOrOctetStream`; `requestUpload` and `validateUpload` take the raw header and normalize it themselves.
 
 ## Errors
 

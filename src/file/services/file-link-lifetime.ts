@@ -1,13 +1,13 @@
-import { Context } from "effect";
+import { Context, Duration } from "effect";
+import { FileLinkLifetimes } from "#file/value-objects/file-link-lifetimes";
 
-export interface FileLinkLifetimeValues {
-	readonly uploadSeconds: number;
-	readonly downloadSeconds: number;
-}
-
-export const FileLinkLifetime = Context.Reference<FileLinkLifetimeValues>(
+export const FileLinkLifetime = Context.Reference<FileLinkLifetimes>(
 	"@voila.dev/platform/FileLinkLifetime",
 	{
-		defaultValue: () => ({ uploadSeconds: 15 * 60, downloadSeconds: 15 * 60 }),
+		defaultValue: () =>
+			new FileLinkLifetimes({
+				upload: Duration.minutes(15),
+				download: Duration.minutes(15),
+			}),
 	},
 );

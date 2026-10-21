@@ -1,7 +1,9 @@
 import { describe, expect, it } from "bun:test";
 import { Effect, type Layer, Option } from "effect";
 import { FileStorage } from "#file/services/file-storage";
+import { ContentType } from "#file/value-objects/content-type";
 import { FileKey } from "#file/value-objects/file-key";
+import { FileStat } from "#file/value-objects/file-stat";
 
 // What every `FileStorage` does, run against each adapter.
 export function fileStorageContract(
@@ -17,6 +19,7 @@ export function fileStorageContract(
 
 	const key = FileKey.make(`contract/${crypto.randomUUID()}/pièce.pdf`);
 	const bytes = new TextEncoder().encode("%PDF-1.7");
+	const PDF = ContentType.make("application/pdf");
 
 	describe.skipIf(options.skip === true)(`${name} as a FileStorage`, () => {
 		it("misses a key never written", async () => {
@@ -29,17 +32,14 @@ export function fileStorageContract(
 		});
 
 		it("reads back what it was given, with its type and size", async () => {
-			await run((storage) =>
-				storage.put({ key, bytes, contentType: "application/pdf" }),
-			);
+			await run((storage) => storage.put({ key, bytes, contentType: PDF }));
 			expect(await run((storage) => storage.read(key))).toStrictEqual(
 				Option.some(bytes),
 			);
 			expect(await run((storage) => storage.stat(key))).toStrictEqual(
-				Option.some({
-					contentType: "application/pdf",
-					sizeBytes: bytes.length,
-				}),
+				Option.some(
+					new FileStat({ contentType: PDF, sizeBytes: bytes.length }),
+				),
 			);
 		});
 
@@ -53,7 +53,11 @@ export function fileStorageContract(
 
 		it("hands an upload link that expires", async () => {
 			const link = await run((storage) =>
-				storage.uploadUrl({ key, contentType: "image/png", contentLength: 10 }),
+				storage.uploadUrl({
+					key,
+					contentType: ContentType.make("image/png"),
+					contentLength: 10,
+				}),
 			);
 			expect(link.url).toContain("contract/");
 			expect(link.expiresAt.getTime()).toBeGreaterThan(Date.now());

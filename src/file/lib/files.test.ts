@@ -3,7 +3,9 @@ import { Effect, Exit, Option } from "effect";
 import { inMemoryFiles } from "#file/adapters/memory/in-memory-files";
 import { FileUploadRejectedError } from "#file/errors/file-upload-rejected-error";
 import { Files } from "#file/lib/files";
+import { ContentType } from "#file/value-objects/content-type";
 import { FileKey } from "#file/value-objects/file-key";
+import { FileUpload } from "#file/value-objects/file-upload";
 import { ImagePreview } from "#file/value-objects/image-preview";
 import { ImageRef } from "#file/value-objects/image-ref";
 
@@ -13,7 +15,13 @@ const AppFiles = Files.make({
 		avatar: {
 			prefix: "user-avatar/",
 			visibility: "public",
-			upload: { contentTypes: ["image/png", "image/webp"], maxBytes: 1_000 },
+			upload: {
+				contentTypes: [
+					ContentType.make("image/png"),
+					ContentType.make("image/webp"),
+				],
+				maxBytes: 1_000,
+			},
 			variantWidths: [64, 128],
 		},
 		invoice: { prefix: "invoice/", visibility: "private" },
@@ -68,7 +76,7 @@ describe("Files", () => {
 	it("drops the preview widths its kind does not declare", () => {
 		const ref = new ImageRef({
 			key: FileKey.make("user-avatar/u1/a.webp"),
-			contentType: "image/webp",
+			contentType: ContentType.make("image/webp"),
 			sizeBytes: 10,
 			preview: new ImagePreview({
 				width: 1,
@@ -84,16 +92,15 @@ describe("Files", () => {
 
 	it("hands an upload link for a declared file, under a fresh key", async () => {
 		const exit = await upload("image/PNG; charset=binary", 500);
-		expect(exit).toStrictEqual(
-			Exit.succeed({
-				key: FileKey.make(
-					"user-avatar/u1/00000000-0000-0000-0000-000000000001.png",
-				),
-				uploadUrl:
-					"https://upload.memory.test/user-avatar/u1/00000000-0000-0000-0000-000000000001.png",
-				expiresAt: expect.any(Date),
-			}),
-		);
+		const requested = Exit.isSuccess(exit) ? exit.value : undefined;
+		expect(requested).toBeInstanceOf(FileUpload);
+		expect(requested).toMatchObject({
+			key: FileKey.make(
+				"user-avatar/u1/00000000-0000-0000-0000-000000000001.png",
+			),
+			uploadUrl:
+				"https://upload.memory.test/user-avatar/u1/00000000-0000-0000-0000-000000000001.png",
+		});
 	});
 
 	it("rejects an upload of another type, empty, or too large", async () => {

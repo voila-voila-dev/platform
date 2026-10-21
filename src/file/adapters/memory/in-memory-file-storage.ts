@@ -1,11 +1,14 @@
 import { DateTime, Effect, Layer, Option } from "effect";
 import { FileLinkLifetime } from "#file/services/file-link-lifetime";
 import { FileStorage } from "#file/services/file-storage";
+import type { ContentType } from "#file/value-objects/content-type";
 import type { FileKey } from "#file/value-objects/file-key";
+import { FileLink } from "#file/value-objects/file-link";
+import { FileStat } from "#file/value-objects/file-stat";
 
 export interface StoredFile {
 	readonly bytes: Uint8Array;
-	readonly contentType: string;
+	readonly contentType: ContentType;
 }
 
 export function inMemoryFileStorage() {
@@ -16,14 +19,14 @@ export function inMemoryFileStorage() {
 		layer: Layer.succeed(FileStorage, {
 			uploadUrl: ({ key }) =>
 				Effect.gen(function* () {
-					const { uploadSeconds } = yield* FileLinkLifetime;
+					const lifetimes = yield* FileLinkLifetime;
 					const now = yield* DateTime.now;
-					return {
+					return new FileLink({
 						url: `https://upload.memory.test/${key}`,
 						expiresAt: DateTime.toDateUtc(
-							DateTime.add(now, { seconds: uploadSeconds }),
+							DateTime.addDuration(now, lifetimes.upload),
 						),
-					};
+					});
 				}),
 			put: ({ key, bytes, contentType }) =>
 				Effect.sync(() => {
@@ -38,10 +41,14 @@ export function inMemoryFileStorage() {
 				),
 			stat: (key) =>
 				Effect.sync(() =>
-					Option.map(Option.fromNullishOr(files.get(key)), (file) => ({
-						contentType: file.contentType,
-						sizeBytes: file.bytes.length,
-					})),
+					Option.map(
+						Option.fromNullishOr(files.get(key)),
+						(file) =>
+							new FileStat({
+								contentType: file.contentType,
+								sizeBytes: file.bytes.length,
+							}),
+					),
 				),
 			delete: (key) =>
 				Effect.sync(() => {

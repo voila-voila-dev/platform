@@ -1,34 +1,42 @@
-const CONTENT_TYPE_BY_EXTENSION: Record<string, string> = {
-	png: "image/png",
-	jpg: "image/jpeg",
-	jpeg: "image/jpeg",
-	gif: "image/gif",
-	webp: "image/webp",
-	svg: "image/svg+xml",
-	ico: "image/x-icon",
-	pdf: "application/pdf",
-	mp4: "video/mp4",
+import { Option, Schema } from "effect";
+import { ContentType } from "#file/value-objects/content-type";
+
+const OCTET_STREAM = ContentType.make("application/octet-stream");
+
+const CONTENT_TYPE_BY_EXTENSION: Record<string, ContentType> = {
+	png: ContentType.make("image/png"),
+	jpg: ContentType.make("image/jpeg"),
+	jpeg: ContentType.make("image/jpeg"),
+	gif: ContentType.make("image/gif"),
+	webp: ContentType.make("image/webp"),
+	svg: ContentType.make("image/svg+xml"),
+	ico: ContentType.make("image/x-icon"),
+	pdf: ContentType.make("application/pdf"),
+	mp4: ContentType.make("video/mp4"),
 	// `video/webm` also plays in an `<audio>` element, so voice notes stored as webm still play.
-	webm: "video/webm",
-	mpeg: "audio/mpeg",
-	mp3: "audio/mpeg",
-	ogg: "audio/ogg",
-	m4a: "audio/mp4",
+	webm: ContentType.make("video/webm"),
+	mpeg: ContentType.make("audio/mpeg"),
+	mp3: ContentType.make("audio/mpeg"),
+	ogg: ContentType.make("audio/ogg"),
+	m4a: ContentType.make("audio/mp4"),
 };
 
-export function contentTypeOfKey(key: string): string {
+const decodeContentType = Schema.decodeUnknownOption(ContentType);
+
+export function contentTypeOfKey(key: string): ContentType {
 	const extension = key.split(".").pop() ?? "";
-	return (
-		CONTENT_TYPE_BY_EXTENSION[extension.toLowerCase()] ??
-		"application/octet-stream"
-	);
+	return CONTENT_TYPE_BY_EXTENSION[extension.toLowerCase()] ?? OCTET_STREAM;
 }
 
-export function extensionFromContentType(contentType: string): string {
-	const subtype = contentType.split("/")[1] ?? "bin";
-	return (subtype.split(";")[0] ?? "bin").trim() || "bin";
+export function extensionFromContentType(contentType: ContentType): string {
+	return contentType.split("/")[1] ?? "bin";
 }
 
-export function normalizeContentType(contentType: string): string {
-	return (contentType.split(";")[0] ?? "").trim().toLowerCase();
+// A header from outside (a browser, an inbound email, the store) as a `ContentType`.
+export function normalizeContentType(raw: string): Option.Option<ContentType> {
+	return decodeContentType((raw.split(";")[0] ?? "").trim().toLowerCase());
+}
+
+export function normalizeContentTypeOrOctetStream(raw: string): ContentType {
+	return Option.getOrElse(normalizeContentType(raw), () => OCTET_STREAM);
 }

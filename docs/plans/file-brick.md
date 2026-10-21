@@ -231,6 +231,11 @@ Bundling:
 3. **`FileKey` is branded.**
 4. **The tries remainder is `platform/file-access`**: owner and public read policies, the download-URL use cases, the local upload completion and the system read.
 5. `platform/image` comes next, as its own step.
+6. **Value objects, not interfaces**, which supersedes section 3 on these types:
+   - `ContentType` is branded (`type/subtype`, lowercase, no parameters) and types `FileRef.contentType`, `FileStat`, `FileStorage.put`/`uploadUrl` and the kinds' `upload.contentTypes`. Raw headers go through `normalizeContentType` (`Option`) or `normalizeContentTypeOrOctetStream`.
+   - `FileLink`, `FileStat`, `FileUpload` (what `requestUpload` returns) and `FileLinkLifetimes` (`upload`/`download` as `Duration`) are `Schema.Class`es, so tries' RPC answers reuse them.
+   - `FileRef.sizeBytes` is a non-negative integer.
+   - **Before T2**, list the distinct `contentType`s stored in tries' refs (jsonb and the flattened `*_content_type` columns): a value that is not `type/subtype` in lowercase would no longer decode, and needs a data migration normalising it first.
 
 The S3 contract test runs in CI against RustFS: MinIO no longer publishes images.
 

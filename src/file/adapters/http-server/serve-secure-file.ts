@@ -1,4 +1,4 @@
-import { Effect, Option, Schema } from "effect";
+import { Duration, Effect, Option, Schema } from "effect";
 import { HttpServerResponse } from "effect/http";
 import { contentTypeOfKey } from "#file/lib/content-type";
 import { FileLinkLifetime } from "#file/services/file-link-lifetime";
@@ -48,13 +48,13 @@ export function serveSecureFile(url: URL, options: ServeSecureFileOptions) {
 		const bytes = yield* (yield* FileStorage).read(key.value);
 		if (Option.isNone(bytes)) return notFound();
 
-		const { downloadSeconds } = yield* FileLinkLifetime;
+		const lifetimes = yield* FileLinkLifetime;
 		const fileName = key.value.split("/").at(-1) ?? "file";
 		return HttpServerResponse.uint8Array(bytes.value, {
 			contentType: contentTypeOfKey(key.value),
 			headers: {
 				// The token is one caller's capability: only that browser may cache the answer.
-				"cache-control": `private, max-age=${downloadSeconds}, immutable`,
+				"cache-control": `private, max-age=${Duration.toSeconds(lifetimes.download)}, immutable`,
 				"x-content-type-options": "nosniff",
 				"content-disposition": `inline; filename*=UTF-8''${encodeURIComponent(fileName)}`,
 			},

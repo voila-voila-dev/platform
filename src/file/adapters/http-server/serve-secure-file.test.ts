@@ -4,6 +4,7 @@ import { HttpServerResponse } from "effect/http";
 import { serveSecureFile } from "#file/adapters/http-server/serve-secure-file";
 import { inMemoryFiles } from "#file/adapters/memory/in-memory-files";
 import { FileDownloads } from "#file/services/file-downloads";
+import { ContentType } from "#file/value-objects/content-type";
 import { FileKey } from "#file/value-objects/file-key";
 
 const KEY = FileKey.make("signature-request/r1/contrat signé.pdf");
@@ -13,7 +14,7 @@ function serve(url: (link: string) => string, seeded = true) {
 	if (seeded)
 		files.storage.files.set(KEY, {
 			bytes: new Uint8Array([1, 2, 3]),
-			contentType: "application/pdf",
+			contentType: ContentType.make("application/pdf"),
 		});
 	return Effect.runPromise(
 		Effect.gen(function* () {

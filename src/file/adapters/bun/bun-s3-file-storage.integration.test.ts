@@ -3,6 +3,7 @@ import { Effect, Option } from "effect";
 import { bunS3FileStorage } from "#file/adapters/bun/bun-s3-file-storage";
 import { FileStorage } from "#file/services/file-storage";
 import { fileStorageContract } from "#file/services/file-storage.test-helper";
+import { ContentType } from "#file/value-objects/content-type";
 import { FileKey } from "#file/value-objects/file-key";
 
 // Any S3-compatible store with the bucket created, as in CI.
@@ -31,7 +32,7 @@ describe.skipIf(endpoint === undefined)("bunS3FileStorage", () => {
 				const storage = yield* FileStorage;
 				const link = yield* storage.uploadUrl({
 					key,
-					contentType: "image/png",
+					contentType: ContentType.make("image/png"),
 					contentLength: bytes.length,
 				});
 				const response = yield* Effect.promise(() =>

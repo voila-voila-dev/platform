@@ -1,7 +1,6 @@
 import type { FileKey } from "#file/value-objects/file-key";
 import { type ImageRef, imageVariantKey } from "#file/value-objects/image-ref";
 
-// The original when every variant is narrower than the box: a picture is never upscaled.
 export function narrowestVariantKeyCovering(
 	ref: ImageRef,
 	targetPx: number,

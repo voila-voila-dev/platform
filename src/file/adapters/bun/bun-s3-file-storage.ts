@@ -1,6 +1,9 @@
-import { DateTime, Effect, Layer, Option, Schedule } from "effect";
+import { DateTime, Duration, Effect, Layer, Option, Schedule } from "effect";
+import { normalizeContentTypeOrOctetStream } from "#file/lib/content-type";
 import { FileLinkLifetime } from "#file/services/file-link-lifetime";
 import { FileStorage } from "#file/services/file-storage";
+import { FileLink } from "#file/value-objects/file-link";
+import { FileStat } from "#file/value-objects/file-stat";
 
 export interface S3Credentials {
 	readonly accessKeyId: string;
@@ -58,7 +61,10 @@ export function readObjectBytes(client: ObjectReader, key: string) {
 export function statObject(client: ObjectReader, key: string) {
 	return orNullWhenMissing(client, key, async () => {
 		const stat = await client.stat(key);
-		return { contentType: stat.type, sizeBytes: stat.size };
+		return new FileStat({
+			contentType: normalizeContentTypeOrOctetStream(stat.type),
+			sizeBytes: stat.size,
+		});
 	});
 }
 
@@ -97,21 +103,21 @@ export function bunS3FileStorage(options: BunS3FileStorageOptions) {
 	return Layer.succeed(FileStorage, {
 		uploadUrl: ({ key, contentType }) =>
 			Effect.gen(function* () {
-				const { uploadSeconds } = yield* FileLinkLifetime;
+				const lifetimes = yield* FileLinkLifetime;
 				const now = yield* DateTime.now;
 				const url = yield* call("uploadUrl", async (s3) =>
 					s3.presign(key, {
 						method: "PUT",
-						expiresIn: uploadSeconds,
+						expiresIn: Duration.toSeconds(lifetimes.upload),
 						type: contentType,
 					}),
 				);
-				return {
+				return new FileLink({
 					url,
 					expiresAt: DateTime.toDateUtc(
-						DateTime.add(now, { seconds: uploadSeconds }),
+						DateTime.addDuration(now, lifetimes.upload),
 					),
-				};
+				});
 			}),
 		put: ({ key, bytes, contentType }) =>
 			Effect.asVoid(

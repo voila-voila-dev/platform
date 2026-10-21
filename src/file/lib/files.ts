@@ -6,12 +6,14 @@ import {
 	normalizeContentType,
 } from "#file/lib/content-type";
 import { FileStorage } from "#file/services/file-storage";
+import type { ContentType } from "#file/value-objects/content-type";
 import { FileKey } from "#file/value-objects/file-key";
+import { FileUpload } from "#file/value-objects/file-upload";
 import { ImagePreview } from "#file/value-objects/image-preview";
 import { ImageRef } from "#file/value-objects/image-ref";
 
 export interface FileUploadRule {
-	readonly contentTypes: ReadonlyArray<string>;
+	readonly contentTypes: ReadonlyArray<ContentType>;
 	readonly maxBytes: number;
 }
 
@@ -79,18 +81,21 @@ function make<const Kinds extends FileKinds>(config: FilesConfig<Kinds>) {
 		});
 	}
 
-	function validateUpload(
+	// The declared type and length only gate the link: the bytes that land
+	// are whatever the browser PUTs.
+	function acceptedContentType(
 		name: UploadableKind<Kinds>,
 		input: { readonly contentType: string; readonly contentLength: number },
-	): Effect.Effect<void, FileUploadRejectedError> {
+	): Effect.Effect<ContentType, FileUploadRejectedError> {
 		const rule = uploadRule(name);
-		// The declared type and length only gate the link: the bytes that land
-		// are whatever the browser PUTs.
-		if (!rule.contentTypes.includes(normalizeContentType(input.contentType)))
-			return rejected("unsupportedContentType");
+		const contentType = Option.filter(
+			normalizeContentType(input.contentType),
+			(type) => rule.contentTypes.includes(type),
+		);
+		if (Option.isNone(contentType)) return rejected("unsupportedContentType");
 		if (!(input.contentLength > 0)) return rejected("empty");
 		if (!(input.contentLength <= rule.maxBytes)) return rejected("tooLarge");
-		return Effect.void;
+		return Effect.succeed(contentType.value);
 	}
 
 	return {
@@ -127,7 +132,10 @@ function make<const Kinds extends FileKinds>(config: FilesConfig<Kinds>) {
 			});
 		},
 
-		validateUpload,
+		validateUpload: (
+			name: UploadableKind<Kinds>,
+			input: { readonly contentType: string; readonly contentLength: number },
+		) => Effect.asVoid(acceptedContentType(name, input)),
 
 		// `<prefix><scope>/<id>.<extension>`, or `<prefix><id>.<extension>` without a scope.
 		requestUpload: (
@@ -139,19 +147,23 @@ function make<const Kinds extends FileKinds>(config: FilesConfig<Kinds>) {
 			},
 		) =>
 			Effect.gen(function* () {
-				yield* validateUpload(name, input);
+				const contentType = yield* acceptedContentType(name, input);
 				const id = yield* (yield* IdGenerator).generate();
-				const fileName = `${id}.${extensionFromContentType(normalizeContentType(input.contentType))}`;
+				const fileName = `${id}.${extensionFromContentType(contentType)}`;
 				const key = keyIn(
 					name,
 					input.scope === undefined ? fileName : `${input.scope}/${fileName}`,
 				);
 				const link = yield* (yield* FileStorage).uploadUrl({
 					key,
-					contentType: input.contentType,
+					contentType,
 					contentLength: input.contentLength,
 				});
-				return { key, uploadUrl: link.url, expiresAt: link.expiresAt };
+				return new FileUpload({
+					key,
+					uploadUrl: link.url,
+					expiresAt: link.expiresAt,
+				});
 			}),
 	};
 }

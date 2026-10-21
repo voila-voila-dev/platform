@@ -1,9 +1,10 @@
 import { Schema } from "effect";
+import { ContentType } from "#file/value-objects/content-type";
 import { FileKey } from "#file/value-objects/file-key";
 
 export class FileRef extends Schema.Class<FileRef>("FileRef")({
 	key: FileKey,
-	contentType: Schema.String,
-	sizeBytes: Schema.Int,
+	contentType: ContentType,
+	sizeBytes: Schema.Int.check(Schema.isGreaterThanOrEqualTo(0)),
 	originalFilename: Schema.optional(Schema.String),
 }) {}
