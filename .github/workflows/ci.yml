@@ -20,14 +20,29 @@ jobs:
           POSTGRES_DB: platform_test
         ports: ["5432:5432"]
         options: --health-cmd pg_isready --health-interval 2s --health-retries 15
+      # MinIO no longer publishes images; RustFS speaks the same S3 API.
+      s3:
+        image: rustfs/rustfs:1.0.3
+        env:
+          RUSTFS_ACCESS_KEY: s3-test
+          RUSTFS_SECRET_KEY: s3-test-secret
+        ports: ["9000:9000"]
     env:
       DATABASE_URL: postgres://postgres:test@localhost:5432/platform_test
+      S3_ENDPOINT: http://localhost:9000
+      S3_ACCESS_KEY_ID: s3-test
+      S3_SECRET_ACCESS_KEY: s3-test-secret
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2.2.0
         with:
           bun-version-file: package.json
       - run: bun install --frozen-lockfile
+      - name: Create the S3 test bucket
+        run: |
+          for attempt in $(seq 1 30); do curl -s -o /dev/null "$S3_ENDPOINT" && break; sleep 1; done
+          docker run --rm --network host -e AWS_ACCESS_KEY_ID=s3-test -e AWS_SECRET_ACCESS_KEY=s3-test-secret -e AWS_REGION=us-east-1 \
+            amazon/aws-cli:2.27.0 --endpoint-url "$S3_ENDPOINT" s3 mb s3://platform-test
       - run: bun run ci
 
   changeset:
