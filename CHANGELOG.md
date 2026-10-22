@@ -1,5 +1,15 @@
 # @voila.dev/platform
 
+## 0.6.0
+
+### Minor Changes
+
+- [#16](https://github.com/voila-voila-dev/platform/pull/16) [`d768e26`](https://github.com/voila-voila-dev/platform/commit/d768e2669082f23c029f98d3bcf09b7cd6b86dac) Thanks [@emilienbidet](https://github.com/emilienbidet)! - Core exports the `EmailAddress` and `Phone` (E.164) branded value objects, so bricks can share them without depending on an email or phone brick.
+
+### Patch Changes
+
+- [#18](https://github.com/voila-voila-dev/platform/pull/18) [`c3a8064`](https://github.com/voila-voila-dev/platform/commit/c3a8064b9f1d81ff1fc0f9fa151cf9096cb39231) Thanks [@emilienbidet](https://github.com/emilienbidet)! - `ContentType` decodes a raw header (`Text/CSV; charset=utf-8` becomes `text/csv`), so `FileRef`s stored with parameters or uppercase types still decode. `ContentType.make` and `Schema.is` stay strict.
+
 ## 0.5.0
 
 ### Minor Changes
