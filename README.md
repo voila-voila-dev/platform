@@ -71,7 +71,7 @@ src/email/
 Two rules hold between modules:
 
 - **No foreign key between two modules.** A module refers to another module's aggregate by its typed id (`UserId`, `TrackedLinkId`): the column gets an index, but no `references()`. Consistency comes from events (`UserDeleted` → each module cleans up) and from archiving instead of deleting. Inside a module, foreign keys are fine.
-- **Shared id types live in the core; tables do not.** `UserId` and `OrganizationId` are branded types in `@voila.dev/platform`. Only the identity module knows its tables.
+- **Shared id types live in the core; tables do not.** `UserId` and `OrganizationId` are branded types in `@voila.dev/platform`, as are the value objects many modules pass around (`EmailAddress`, `Phone`). Only the identity module knows its tables.
 
 ## HTTP
 
