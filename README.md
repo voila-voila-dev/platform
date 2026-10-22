@@ -33,6 +33,8 @@ src/
 | core | `.` (ids and shared value objects, `Actor`, `Gate`, `UseCase`, `IdGenerator`, `SecureRandom`, `CurrentActor`, `DatabaseError`), `/memory`, `/drizzle`, `/bun`, `/http-server` |
 | rate-limiting | `/rate-limiting` (`RateLimiter`, `RateLimitedError`), `/rate-limiting/memory` (`inMemoryRateLimiter`, `stubRateLimiter`), `/rate-limiting/redis` (`redisRateLimiter`, on the application's `Redis`) |
 | search | `/search` (`Pagination`, `PagedResult`, filters, `makeSearchUseCase`, `SearchBudget`), `/search/memory`, `/search/drizzle` (`pagedQuery`, accent-insensitive search, `searchFunctionsSql`) |
+| locale | `/locale` (`Locale`, `Language`, `SupportedLocales`) |
+| location | `/location` (`Address`, `LocatedAddress`, `Coordinates`, `CountryCode`, `LocationProvider`, `SupportedCountries`, `locateAddress`, `resolveAddressCoordinates`, `distanceKm`, `countryName`), `/location/memory` (`stubLocationProvider`) |
 | bulk-import | `/bulk-import` (`BulkImport`, `ImportSchema`, `ImportIntent`, `ImportLimits`), `/csv` (`csvImportReader`), `/json` (`jsonImportReader`), `/memory` (`inMemoryBulkImport`), `/drizzle` (`importIntentTable`), `/xlsx` (`xlsxImportReader`, on exceljs) |
 | file | `/file` (`Files`, `FileStorage`, `FileDownloads`, `FileTokens`, `FileRef`, `ImageRef`, `FileLinkLifetime`), `/file/memory` (`inMemoryFiles`), `/file/bun` (`bunS3FileStorage`, `hmacFileTokens`), `/file/http-server` (`serveSecureFile`) |
 | link-tracking/link | `/link-tracking/link`, `/http` (`TrackedLinksApiGroup`), `/memory`, `/drizzle` (tables, repository, `trackedLinkSearchIndexesSql`), `/http-server` (`trackedLinksHandlers`) |
