@@ -110,9 +110,9 @@ function make<const Kinds extends FileKinds>(config: FilesConfig<Kinds>) {
 		withDeclaredVariantWidths: (ref: ImageRef): ImageRef => {
 			if (ref.preview === undefined) return ref;
 			const declared = variantWidths(ref.key);
-			return new ImageRef({
+			return ImageRef.make({
 				...ref,
-				preview: new ImagePreview({
+				preview: ImagePreview.make({
 					...ref.preview,
 					variantWidths: ref.preview.variantWidths.filter((width) =>
 						declared.includes(width),

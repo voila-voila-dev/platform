@@ -74,11 +74,11 @@ describe("Files", () => {
 	});
 
 	it("drops the preview widths its kind does not declare", () => {
-		const ref = new ImageRef({
+		const ref = ImageRef.make({
 			key: FileKey.make("user-avatar/u1/a.webp"),
 			contentType: ContentType.make("image/webp"),
 			sizeBytes: 10,
-			preview: new ImagePreview({
+			preview: ImagePreview.make({
 				width: 1,
 				height: 1,
 				placeholder: "",
