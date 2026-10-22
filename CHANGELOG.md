@@ -1,5 +1,15 @@
 # @voila.dev/platform
 
+## 0.8.0
+
+### Minor Changes
+
+- [#20](https://github.com/voila-voila-dev/platform/pull/20) [`5dab614`](https://github.com/voila-voila-dev/platform/commit/5dab6147c1520b566885af416b6c72071cd11a6e) Thanks [@emilienbidet](https://github.com/emilienbidet)! - `FileRef`, `ImageRef`, `ImagePreview`, `FileLink`, `FileStat`, `FileUpload` and `FileLinkLifetimes` are `Schema.Struct`s instead of `Schema.Class`es: their values are plain objects. Build them with `FileLink.make({...})` instead of `new FileLink({...})`, and check them with `Schema.is(FileLink)` instead of `instanceof`.
+
+- [#20](https://github.com/voila-voila-dev/platform/pull/20) [`5dab614`](https://github.com/voila-voila-dev/platform/commit/5dab6147c1520b566885af416b6c72071cd11a6e) Thanks [@emilienbidet](https://github.com/emilienbidet)! - New `locale` and `location` bricks. `locale` has the ISO `Locale` and `Language` lists and `SupportedLocales.make` for the locales an app renders. `location` has addresses, coordinates, country codes, the `LocationProvider` port with `locateAddress` and `resolveAddressCoordinates`, and `SupportedCountries.make` for an app's markets. `AddressFormatter` writes an address the way its country's post does, for every country (formats from Google libaddressinput), and takes an app's own format per country. Adapters: `/location/ban` (Base Adresse Nationale), `/location/here` (HERE), `/location/memory`, and `routedLocationProvider` to chain them.
+
+- [#23](https://github.com/voila-voila-dev/platform/pull/23) [`2d0ad57`](https://github.com/voila-voila-dev/platform/commit/2d0ad575d057548e00e9a35c8a8ecedae1ad6f7c) Thanks [@emilienbidet](https://github.com/emilienbidet)! - New `search-engine` brick: the `SearchEngine` port for web searches, from a country and in a locale's language, an in-memory engine with synthetic results and a stub in `/search-engine/memory`, and a DataForSEO engine in `/search-engine/dataforseo`, which maps the country and the locale to its own location and language codes. `/location` adds `numericCountryCode`.
+
 ## 0.7.0
 
 ### Minor Changes
