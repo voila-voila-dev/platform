@@ -34,6 +34,7 @@ src/
 | rate-limiting | `/rate-limiting` (`RateLimiter`, `RateLimitedError`), `/rate-limiting/memory` (`inMemoryRateLimiter`, `stubRateLimiter`), `/rate-limiting/redis` (`redisRateLimiter`, on the application's `Redis`) |
 | search | `/search` (`Pagination`, `PagedResult`, filters, `makeSearchUseCase`, `SearchBudget`), `/search/memory`, `/search/drizzle` (`pagedQuery`, accent-insensitive search, `searchFunctionsSql`) |
 | bulk-import | `/bulk-import` (`BulkImport`, `ImportSchema`, `ImportIntent`, `ImportLimits`), `/csv` (`csvImportReader`), `/json` (`jsonImportReader`), `/memory` (`inMemoryBulkImport`), `/drizzle` (`importIntentTable`), `/xlsx` (`xlsxImportReader`, on exceljs) |
+| money | `/money` (`Money`, `Currency`, `currencyDecimals`, `formatMoney`, `parseMoneyInput`, `BasisPoints`, `TaxRate`) |
 | file | `/file` (`Files`, `FileStorage`, `FileDownloads`, `FileTokens`, `FileRef`, `ImageRef`, `FileLinkLifetime`), `/file/memory` (`inMemoryFiles`), `/file/bun` (`bunS3FileStorage`, `hmacFileTokens`), `/file/http-server` (`serveSecureFile`) |
 | link-tracking/link | `/link-tracking/link`, `/http` (`TrackedLinksApiGroup`), `/memory`, `/drizzle` (tables, repository, `trackedLinkSearchIndexesSql`), `/http-server` (`trackedLinksHandlers`) |
 | link-tracking/click | `/link-tracking/click`, `/memory`, `/drizzle`, `/http-server` (`redirectToLink`) |
