@@ -54,7 +54,10 @@
 		"./search/memory": "./src/search/adapters/memory/index.ts",
 		"./search-engine": "./src/search-engine/index.ts",
 		"./search-engine/dataforseo": "./src/search-engine/adapters/dataforseo/index.ts",
-		"./search-engine/memory": "./src/search-engine/adapters/memory/index.ts"
+		"./search-engine/memory": "./src/search-engine/adapters/memory/index.ts",
+		"./spreadsheet": "./src/spreadsheet/index.ts",
+		"./spreadsheet/memory": "./src/spreadsheet/adapters/memory/index.ts",
+		"./spreadsheet/xlsx": "./src/spreadsheet/adapters/xlsx/index.ts"
 	},
 	"imports": {
 		"#*": "./src/*.ts"
@@ -110,7 +113,10 @@
 			"./search/memory": "./dist/search/adapters/memory/index.js",
 			"./search-engine": "./dist/search-engine/index.js",
 			"./search-engine/dataforseo": "./dist/search-engine/adapters/dataforseo/index.js",
-			"./search-engine/memory": "./dist/search-engine/adapters/memory/index.js"
+			"./search-engine/memory": "./dist/search-engine/adapters/memory/index.js",
+			"./spreadsheet": "./dist/spreadsheet/index.js",
+			"./spreadsheet/memory": "./dist/spreadsheet/adapters/memory/index.js",
+			"./spreadsheet/xlsx": "./dist/spreadsheet/adapters/xlsx/index.js"
 		},
 		"imports": {
 			"#*": "./dist/*.js"
