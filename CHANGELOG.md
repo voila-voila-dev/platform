@@ -1,5 +1,11 @@
 # @voila.dev/platform
 
+## 0.7.0
+
+### Minor Changes
+
+- [#19](https://github.com/voila-voila-dev/platform/pull/19) [`9d5d46c`](https://github.com/voila-voila-dev/platform/commit/9d5d46c2882efa2a4041973869c3aa61387b8069) Thanks [@emilienbidet](https://github.com/emilienbidet)! - Add the `money` brick: `Money` in minor units with an ISO 4217 `Currency` and its `currencyDecimals`, `formatMoney` through `Intl`, `parseMoneyInput` and `moneyInput` for what a form shows, and the basis-point rates (`BasisPoints`, `TaxRate`, `applyBasisPoints`).
+
 ## 0.6.0
 
 ### Minor Changes
