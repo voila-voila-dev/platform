@@ -52,7 +52,9 @@ export type {
 	UnitInput,
 	UseCaseDeclaration,
 } from "#core/use-case/use-case";
+export { EmailAddress } from "#core/value-objects/email-address";
 export { Id } from "#core/value-objects/id";
 export { NonNegativeInt } from "#core/value-objects/non-negative-int";
 export { OrganizationId } from "#core/value-objects/organization-id";
+export { Phone } from "#core/value-objects/phone";
 export { UserId } from "#core/value-objects/user-id";
