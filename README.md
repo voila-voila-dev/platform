@@ -31,6 +31,7 @@ src/
 | Module | Exports |
 |---|---|
 | core | `.` (ids and shared value objects, `Actor`, `Gate`, `UseCase`, `IdGenerator`, `SecureRandom`, `CurrentActor`, `DatabaseError`), `/memory`, `/drizzle`, `/bun`, `/http-server` |
+| cache | `/cache` (`KeyValueCache`, `CacheMissError`, `CacheTransportError`, `readCachedValue`, `writeCachedValue`, `readSingleUseCacheEntry`), `/cache/memory` (`inMemoryKeyValueCache`), `/cache/redis` (`redisKeyValueCache`, on the application's `Redis`) |
 | rate-limiting | `/rate-limiting` (`RateLimiter`, `RateLimitedError`), `/rate-limiting/memory` (`inMemoryRateLimiter`, `stubRateLimiter`), `/rate-limiting/redis` (`redisRateLimiter`, on the application's `Redis`) |
 | search | `/search` (`Pagination`, `PagedResult`, filters, `makeSearchUseCase`, `SearchBudget`), `/search/memory`, `/search/drizzle` (`pagedQuery`, accent-insensitive search, `searchFunctionsSql`) |
 | locale | `/locale` (`Locale`, `Language`, `SupportedLocales`) |
