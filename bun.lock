@@ -24,6 +24,9 @@
         "exceljs",
       ],
     },
+    "scripts/country-data": {
+      "name": "@voila.dev/country-data",
+    },
     "scripts/publish-manifest": {
       "name": "@voila.dev/publish-manifest",
     },
@@ -140,6 +143,8 @@
     "@typescript/typescript-win32-arm64": ["@typescript/typescript-win32-arm64@7.0.2", "", { "os": "win32", "cpu": "arm64" }, "sha512-Gyl1Vy6OsWesLzmq+EP0Fb7b4Nid5232AvcA2SFcdYreldpNtYFFofPjnt62y9hQy7VTaZp65ICJjuAQRaVcIQ=="],
 
     "@typescript/typescript-win32-x64": ["@typescript/typescript-win32-x64@7.0.2", "", { "os": "win32", "cpu": "x64" }, "sha512-0BQ3HkAHHlKLSp1qRvf3SUhGpGsDuhB/jgFw75guyqbxJqEaS0Cw/VFO8i2nHglJUzQCRtMMR/IBAKE3ETMC4g=="],
+
+    "@voila.dev/country-data": ["@voila.dev/country-data@workspace:scripts/country-data"],
 
     "@voila.dev/publish-manifest": ["@voila.dev/publish-manifest@workspace:scripts/publish-manifest"],
 

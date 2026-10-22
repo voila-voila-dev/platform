@@ -54,7 +54,7 @@ export function readObjectBytes(client: ObjectReader, key: string) {
 export function statObject(client: ObjectReader, key: string) {
 	return orNullWhenMissing(client, key, async () => {
 		const stat = await client.stat(key);
-		return new FileStat({
+		return FileStat.make({
 			contentType: normalizeContentTypeOrOctetStream(stat.type),
 			sizeBytes: stat.size,
 		});
@@ -105,7 +105,7 @@ export function bunS3FileStorage(options: BunS3FileStorageOptions) {
 						type: contentType,
 					}),
 				);
-				return new FileLink({
+				return FileLink.make({
 					url,
 					expiresAt: DateTime.toDateUtc(
 						DateTime.addDuration(now, lifetimes.upload),

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { Effect, Exit, Option } from "effect";
+import { Effect, Exit, Option, Schema } from "effect";
 import { inMemoryFiles } from "#file/adapters/memory/in-memory-files";
 import { FileUploadRejectedError } from "#file/errors/file-upload-rejected-error";
 import { Files } from "#file/lib/files";
@@ -74,11 +74,11 @@ describe("Files", () => {
 	});
 
 	it("drops the preview widths its kind does not declare", () => {
-		const ref = new ImageRef({
+		const ref = ImageRef.make({
 			key: FileKey.make("user-avatar/u1/a.webp"),
 			contentType: ContentType.make("image/webp"),
 			sizeBytes: 10,
-			preview: new ImagePreview({
+			preview: ImagePreview.make({
 				width: 1,
 				height: 1,
 				placeholder: "",
@@ -93,7 +93,7 @@ describe("Files", () => {
 	it("hands an upload link for a declared file, under a fresh key", async () => {
 		const exit = await upload("image/PNG; charset=binary", 500);
 		const requested = Exit.isSuccess(exit) ? exit.value : undefined;
-		expect(requested).toBeInstanceOf(FileUpload);
+		expect(Schema.is(FileUpload)(requested)).toBe(true);
 		expect(requested).toMatchObject({
 			key: FileKey.make(
 				"user-avatar/u1/00000000-0000-0000-0000-000000000001.png",

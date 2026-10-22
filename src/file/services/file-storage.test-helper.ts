@@ -37,7 +37,7 @@ export function fileStorageContract(
 			);
 			expect(await run((storage) => storage.stat(key))).toStrictEqual(
 				Option.some(
-					new FileStat({ contentType: PDF, sizeBytes: bytes.length }),
+					FileStat.make({ contentType: PDF, sizeBytes: bytes.length }),
 				),
 			);
 		});

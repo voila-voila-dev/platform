@@ -1,0 +1,10 @@
+{
+	"name": "@voila.dev/country-data",
+	"private": true,
+	"description": "Regenerates the location brick's per-country data: postal address formats from Google libaddressinput, ISO 3166-1 alpha-3 codes from i18n-iso-countries.",
+	"type": "module",
+	"scripts": {
+		"generate": "bun src/index.ts && biome format --write ../../src/location/lib/generated",
+		"test": "bun test"
+	}
+}

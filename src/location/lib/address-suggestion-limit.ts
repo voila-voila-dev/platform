@@ -1,0 +1,1 @@
+export const DEFAULT_ADDRESS_SUGGESTION_LIMIT = 5;
