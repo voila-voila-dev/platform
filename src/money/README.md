@@ -17,5 +17,5 @@ applyBasisPoints(price.amount, vat); // 510
 
 - `Currency` is every active ISO 4217 national currency; `currencyDecimals` its minor-unit exponent (JPY 0, EUR 2, KWD 3). Which currencies an application transacts in is its own configuration.
 - `parseMoneyInput` refuses negative amounts and more decimals than the currency has.
-- `BasisPoints` and `TaxRate` are integers from 0 to 10 000 (1 % = 100). `boundedBasisPoints(label)` builds another rate brand on the same check.
+- `BasisPoints` is an integer from 0 to 10 000 (1 % = 100) and the base of every rate: `TaxRate` is `BasisPoints.pipe(Schema.brand("TaxRate"))`, and an application brands its own rates the same way. `applyBasisPoints` and `percentFromBasisPoints` take any of them.
 - A non-negative amount is core's `NonNegativeInt`.
