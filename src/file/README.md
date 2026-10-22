@@ -72,7 +72,7 @@ Every failure answers the same 404. The answer is cached by that browser only, f
 
 ## Content types
 
-A `ContentType` is `type/subtype`, lowercase, without parameters. A header from outside (a browser, an inbound email) becomes one through `normalizeContentType` (an `Option`) or `normalizeContentTypeOrOctetStream`; `requestUpload` and `validateUpload` take the raw header and normalize it themselves.
+A `ContentType` is `type/subtype`, lowercase, without parameters. `ContentType.make` only takes that form; decoding (a stored `FileRef`, a request body) also takes a raw header such as `Text/CSV; charset=utf-8` and keeps `text/csv`, so refs written before the brand still decode. A header from outside (a browser, an inbound email) becomes one through `normalizeContentType` (an `Option`) or `normalizeContentTypeOrOctetStream`; `requestUpload` and `validateUpload` take the raw header and normalize it themselves.
 
 ## Errors
 
