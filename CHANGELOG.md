@@ -1,5 +1,11 @@
 # @voila.dev/platform
 
+## 0.9.0
+
+### Minor Changes
+
+- [#24](https://github.com/voila-voila-dev/platform/pull/24) [`403906f`](https://github.com/voila-voila-dev/platform/commit/403906fdd218b22deaa802ad923003c6ff5d3837) Thanks [@emilienbidet](https://github.com/emilienbidet)! - `BasisPoints` is the base of every rate: `TaxRate` is `BasisPoints.pipe(Schema.brand("TaxRate"))`, so a `TaxRate` is also `BasisPoints`, and an application brands its own rates the same way. `boundedBasisPoints(label)` is gone. `applyBasisPoints` and `percentFromBasisPoints` take a `BasisPoints` (any rate) instead of a `number`; `basisPointsFromPercent` still returns a plain number for the caller to brand.
+
 ## 0.8.0
 
 ### Minor Changes
