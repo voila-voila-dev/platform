@@ -19,6 +19,7 @@ export { countryCodeFromName, countryName } from "#location/lib/country-names";
 export { distanceKm } from "#location/lib/distance-km";
 export { geocodeMatchesLocality } from "#location/lib/geocode-locality-match";
 export { MINIMUM_ADDRESS_QUERY_LENGTH } from "#location/lib/minimum-address-query-length";
+export { numericCountryCode } from "#location/lib/numeric-country-code";
 export {
 	firstLocated,
 	firstSuggested,
