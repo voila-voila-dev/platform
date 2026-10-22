@@ -13,7 +13,7 @@ const provider = Effect.runSync(
 	),
 );
 
-const address = new Address({
+const address = Address.make({
 	street: Street.make("8 Boulevard du Port"),
 	city: City.make("Amiens"),
 	postalCode: PostalCode.make("80000"),
@@ -50,7 +50,7 @@ describe("inMemoryLocationProvider", () => {
 	});
 
 	it("scatters different addresses to different points", async () => {
-		const other = new Address({
+		const other = Address.make({
 			street: Street.make("1 Rue de la Paix"),
 			city: City.make("Paris"),
 			postalCode: PostalCode.make("75002"),

@@ -198,7 +198,7 @@ describe("hereLocationProvider", () => {
 		stubFetch({ items: [item()] });
 		const coordinates = await Effect.runPromise(
 			provider.geocode(
-				new Address({
+				Address.make({
 					street: Street.make("Friedrichstraße 1"),
 					city: City.make("Berlin"),
 					postalCode: PostalCode.make("10969"),

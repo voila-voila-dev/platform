@@ -14,7 +14,7 @@ import { Longitude } from "#location/value-objects/longitude";
 import { PostalCode } from "#location/value-objects/postal-code";
 import { Street } from "#location/value-objects/street";
 
-const point = new Coordinates({
+const point = Coordinates.make({
 	latitude: Latitude.make(46.669_845),
 	longitude: Longitude.make(-1.441_402),
 });
@@ -83,9 +83,9 @@ function noMatches() {
 function matches(label: string) {
 	return () =>
 		Effect.succeed<ReadonlyArray<AddressMatch>>([
-			new AddressMatch({
+			AddressMatch.make({
 				label,
-				address: new Address({
+				address: Address.make({
 					street: Street.make(label),
 					city: City.make("La Roche-sur-Yon"),
 					postalCode: PostalCode.make("85000"),

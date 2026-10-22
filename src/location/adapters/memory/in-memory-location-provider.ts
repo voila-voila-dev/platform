@@ -22,7 +22,7 @@ function hashToUnit(text: string) {
 
 // Same input, same point, scattered around Paris: stable fixtures, not geography.
 function syntheticCoordinates(seed: string) {
-	return new Coordinates({
+	return Coordinates.make({
 		latitude: Latitude.make(PARIS.latitude + (hashToUnit(seed) - 0.5) * 4),
 		longitude: Longitude.make(
 			PARIS.longitude + (hashToUnit(`${seed}:lng`) - 0.5) * 4,
@@ -36,9 +36,9 @@ export const inMemoryLocationProvider = Layer.succeed(LocationProvider, {
 			query.query.trim().length === 0
 				? []
 				: [
-						new AddressMatch({
+						AddressMatch.make({
 							label: query.query,
-							address: new Address({
+							address: Address.make({
 								street: Street.make(query.query),
 								city: City.make("Dev"),
 								postalCode: PostalCode.make("00000"),

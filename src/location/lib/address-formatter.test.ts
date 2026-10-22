@@ -12,7 +12,7 @@ function address(
 	postalCode: string,
 	city: string,
 ) {
-	return new Address({
+	return Address.make({
 		street: Street.make(street),
 		city: City.make(city),
 		postalCode: PostalCode.make(postalCode),

@@ -51,7 +51,7 @@ function toCoordinates(
 ): Coordinates | null {
 	if (coordinates === undefined || coordinates === null) return null;
 	const [longitude, latitude] = coordinates;
-	return new Coordinates({
+	return Coordinates.make({
 		latitude: Latitude.make(latitude),
 		longitude: Longitude.make(longitude),
 	});
@@ -68,9 +68,9 @@ function toMatch(feature: BanFeature): AddressMatch | null {
 	const coordinates = toCoordinates(feature.geometry?.coordinates);
 	if (coordinates === null) return null;
 	try {
-		return new AddressMatch({
+		return AddressMatch.make({
 			label: textOrEmpty(properties.label),
-			address: new Address({
+			address: Address.make({
 				street: Street.make(textOrEmpty(properties.name)),
 				city: City.make(textOrEmpty(properties.city)),
 				postalCode: PostalCode.make(textOrEmpty(properties.postcode)),

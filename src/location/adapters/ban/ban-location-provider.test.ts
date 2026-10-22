@@ -86,7 +86,7 @@ describe("banLocationProvider", () => {
 		stubFetch({ features: [feature()] });
 		const coordinates = await Effect.runPromise(
 			provider.geocode(
-				new Address({
+				Address.make({
 					street: Street.make("8 Boulevard du Port"),
 					city: City.make("Amiens"),
 					postalCode: PostalCode.make("80000"),
@@ -113,7 +113,7 @@ describe("banLocationProvider", () => {
 		});
 		const coordinates = await Effect.runPromise(
 			provider.geocode(
-				new Address({
+				Address.make({
 					street: Street.make("Stade Henri Desgrange"),
 					city: City.make("La Roche sur Yon"),
 					postalCode: PostalCode.make("85000"),
@@ -147,7 +147,7 @@ describe("banLocationProvider", () => {
 		});
 		const coordinates = await Effect.runPromise(
 			provider.geocode(
-				new Address({
+				Address.make({
 					street: Street.make("Stade Henri Desgrange"),
 					// Spelt without the hyphens BAN uses: the commune still matches.
 					city: City.make("La Roche sur Yon"),
@@ -176,7 +176,7 @@ describe("banLocationProvider", () => {
 		});
 		const coordinates = await Effect.runPromise(
 			provider.geocodeLocality(
-				new Address({
+				Address.make({
 					street: Street.make("Stade Henri Desgrange"),
 					city: City.make("La Roche sur Yon"),
 					postalCode: PostalCode.make("85000"),
@@ -209,7 +209,7 @@ describe("banLocationProvider", () => {
 		};
 		const coordinates = await Effect.runPromise(
 			provider.geocode(
-				new Address({
+				Address.make({
 					street: Street.make("Friedrichstrasse 1"),
 					city: City.make("Berlin"),
 					postalCode: PostalCode.make("10117"),

@@ -17,19 +17,19 @@ import { stubRateLimiter } from "#rate-limiting/adapters/memory/stub-rate-limite
 
 const budget = { key: "user-1" };
 
-const venue = new Address({
+const venue = Address.make({
 	street: Street.make("Stade de Bon Rencontre - Boulevard Aristide Briand"),
 	city: City.make("Toulon"),
 	postalCode: PostalCode.make("83200"),
 	country: "FR",
 });
 
-const geocoded = new Coordinates({
+const geocoded = Coordinates.make({
 	latitude: Latitude.make(43.126_12),
 	longitude: Longitude.make(5.902_18),
 });
 
-const pickedPin = new Coordinates({
+const pickedPin = Coordinates.make({
 	latitude: Latitude.make(48.8566),
 	longitude: Longitude.make(2.3522),
 });
@@ -74,7 +74,7 @@ describe("locateAddress", () => {
 	});
 
 	it("keeps the coordinates a picked suggestion carries", async () => {
-		const picked = new Address({ ...venue, coordinates: pickedPin });
+		const picked = Address.make({ ...venue, coordinates: pickedPin });
 
 		const located = await Effect.runPromise(
 			locateAddress(picked, budget).pipe(Effect.provide(layer(geocoded))),

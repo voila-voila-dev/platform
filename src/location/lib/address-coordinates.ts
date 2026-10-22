@@ -41,7 +41,7 @@ export function resolveAddressCoordinates(
 		);
 		return Option.match(coordinates, {
 			onNone: () => address,
-			onSome: (found) => new Address({ ...address, coordinates: found }),
+			onSome: (found) => Address.make({ ...address, coordinates: found }),
 		});
 	});
 }
@@ -56,7 +56,7 @@ export function locateAddress(address: Address, budget: GeocodingBudget) {
 		if (resolved.coordinates === undefined) {
 			return yield* new AddressNotLocatableError();
 		}
-		return new LocatedAddress({
+		return LocatedAddress.make({
 			street: resolved.street,
 			city: resolved.city,
 			postalCode: resolved.postalCode,

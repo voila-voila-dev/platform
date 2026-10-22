@@ -53,7 +53,7 @@ type HereResponse = typeof HereResponse.Type;
 
 function toCoordinates(position: HereItem["position"]): Coordinates | null {
 	if (position?.lat === undefined || position.lng === undefined) return null;
-	return new Coordinates({
+	return Coordinates.make({
 		latitude: Latitude.make(position.lat),
 		longitude: Longitude.make(position.lng),
 	});
@@ -98,9 +98,9 @@ function toMatch(
 			: countryCodeFromAlpha3(address.countryCode));
 	if (country === undefined) return null;
 	try {
-		return new AddressMatch({
+		return AddressMatch.make({
 			label: address.label ?? item.title ?? "",
-			address: new Address({
+			address: Address.make({
 				street: Street.make(toStreetLine(item)),
 				city: City.make(address.city ?? ""),
 				postalCode: PostalCode.make(address.postalCode ?? ""),

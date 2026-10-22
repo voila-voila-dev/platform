@@ -5,7 +5,7 @@ import { Latitude } from "#location/value-objects/latitude";
 import { Longitude } from "#location/value-objects/longitude";
 
 function at(latitude: number, longitude: number): Coordinates {
-	return new Coordinates({
+	return Coordinates.make({
 		latitude: Latitude.make(latitude),
 		longitude: Longitude.make(longitude),
 	});
