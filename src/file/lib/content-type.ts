@@ -33,7 +33,7 @@ export function extensionFromContentType(contentType: ContentType): string {
 }
 
 export function normalizeContentType(raw: string): Option.Option<ContentType> {
-	return decodeContentType((raw.split(";")[0] ?? "").trim().toLowerCase());
+	return decodeContentType(raw);
 }
 
 export function normalizeContentTypeOrOctetStream(raw: string): ContentType {
