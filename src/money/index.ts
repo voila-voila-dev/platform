@@ -5,7 +5,6 @@ export {
 	BASIS_POINTS,
 	BasisPoints,
 	basisPointsFromPercent,
-	boundedBasisPoints,
 	percentFromBasisPoints,
 } from "#money/value-objects/basis-points";
 export {
