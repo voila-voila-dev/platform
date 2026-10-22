@@ -5,7 +5,7 @@ export const FileLinkLifetime = Context.Reference<FileLinkLifetimes>(
 	"@voila.dev/platform/FileLinkLifetime",
 	{
 		defaultValue: () =>
-			new FileLinkLifetimes({
+			FileLinkLifetimes.make({
 				upload: Duration.minutes(15),
 				download: Duration.minutes(15),
 			}),

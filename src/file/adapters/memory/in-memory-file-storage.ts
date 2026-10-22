@@ -21,7 +21,7 @@ export function inMemoryFileStorage() {
 				Effect.gen(function* () {
 					const lifetimes = yield* FileLinkLifetime;
 					const now = yield* DateTime.now;
-					return new FileLink({
+					return FileLink.make({
 						url: `https://upload.memory.test/${key}`,
 						expiresAt: DateTime.toDateUtc(
 							DateTime.addDuration(now, lifetimes.upload),
@@ -41,13 +41,11 @@ export function inMemoryFileStorage() {
 				),
 			stat: (key) =>
 				Effect.sync(() =>
-					Option.map(
-						Option.fromNullishOr(files.get(key)),
-						(file) =>
-							new FileStat({
-								contentType: file.contentType,
-								sizeBytes: file.bytes.length,
-							}),
+					Option.map(Option.fromNullishOr(files.get(key)), (file) =>
+						FileStat.make({
+							contentType: file.contentType,
+							sizeBytes: file.bytes.length,
+						}),
 					),
 				),
 			delete: (key) =>

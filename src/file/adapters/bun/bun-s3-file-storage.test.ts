@@ -47,7 +47,7 @@ describe.each([
 	[
 		"statObject",
 		statObject,
-		new FileStat({ contentType: ContentType.make("image/png"), sizeBytes: 4 }),
+		FileStat.make({ contentType: ContentType.make("image/png"), sizeBytes: 4 }),
 	],
 ] as const)("%s", (_name, read, expected) => {
 	it("answers in one round trip", async () => {

@@ -23,7 +23,7 @@ export function secureFileDownloads(options: { readonly baseUrl: string }) {
 							lifetimes.download,
 						);
 						const token = yield* tokens.mint({ key, expiresAt });
-						return new FileLink({
+						return FileLink.make({
 							url: `${options.baseUrl}/${encodeFileKeyPath(key)}?token=${token}`,
 							expiresAt: DateTime.toDateUtc(expiresAt),
 						});

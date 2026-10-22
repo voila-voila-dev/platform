@@ -147,7 +147,7 @@ function make<const Kinds extends FileKinds>(config: FilesConfig<Kinds>) {
 					contentType,
 					contentLength: input.contentLength,
 				});
-				return new FileUpload({
+				return FileUpload.make({
 					key,
 					uploadUrl: link.url,
 					expiresAt: link.expiresAt,

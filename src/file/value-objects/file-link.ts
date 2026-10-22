@@ -1,6 +1,8 @@
 import { Schema } from "effect";
 
-export class FileLink extends Schema.Class<FileLink>("FileLink")({
+export const FileLink = Schema.Struct({
 	url: Schema.String,
 	expiresAt: Schema.Date,
-}) {}
+});
+
+export type FileLink = typeof FileLink.Type;
