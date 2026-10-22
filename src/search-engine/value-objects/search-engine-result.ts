@@ -1,9 +1,8 @@
 import { Schema } from "effect";
 
-export class SearchEngineResult extends Schema.Class<SearchEngineResult>(
-	"SearchEngineResult",
-)({
+export const SearchEngineResult = Schema.Struct({
 	url: Schema.String,
 	title: Schema.String,
 	description: Schema.String,
-}) {}
+});
+export type SearchEngineResult = typeof SearchEngineResult.Type;

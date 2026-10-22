@@ -1,4 +1,7 @@
 import { Duration, Effect, Layer, Redacted, Schema } from "effect";
+import type { Locale } from "#locale/value-objects/locale";
+import { numericCountryCode } from "#location/lib/numeric-country-code";
+import type { CountryCode } from "#location/value-objects/country-code";
 import { SearchEngineError } from "#search-engine/errors/search-engine-error";
 import { SearchEngine } from "#search-engine/services/search-engine";
 import { SearchEngineResult } from "#search-engine/value-objects/search-engine-result";
@@ -65,7 +68,7 @@ function organicResults(answer: DataForSeoAnswer, resultCount: number) {
 		.flatMap((item) =>
 			item.type === "organic" && typeof item.url === "string"
 				? [
-						new SearchEngineResult({
+						SearchEngineResult.make({
 							url: item.url,
 							title: item.title ?? "",
 							description: item.description ?? "",
@@ -76,12 +79,21 @@ function organicResults(answer: DataForSeoAnswer, resultCount: number) {
 		.slice(0, resultCount);
 }
 
+// A DataForSEO country location is 2000 plus the ISO numeric code: 2250 for France.
+function locationCode(country: CountryCode) {
+	return 2000 + numericCountryCode(country);
+}
+
+// DataForSEO splits Chinese by script, which the language code alone does not tell.
+function languageCode(locale: Locale, country: CountryCode) {
+	const language = locale.slice(0, locale.indexOf("-"));
+	if (language !== "zh") return language;
+	return ["TW", "HK", "MO"].includes(country) ? "zh-TW" : "zh-CN";
+}
+
 export interface DataForSeoSearchEngineOptions {
 	readonly login: string;
 	readonly password: Redacted.Redacted<string>;
-	/** A DataForSEO location, such as 2250 for France: the same query gives another SERP elsewhere. */
-	readonly locationCode: number;
-	readonly languageCode: string;
 	readonly timeout?: Duration.Input;
 	readonly endpoint?: string;
 	readonly fetch?: typeof fetch;
@@ -95,8 +107,10 @@ export function dataForSeoSearchEngine(options: DataForSeoSearchEngineOptions) {
 	const decodeAnswer = Schema.decodeUnknownSync(DataForSeoAnswer);
 
 	return Layer.succeed(SearchEngine, {
-		search: ({ query, resultCount }) =>
-			Effect.tryPromise({
+		search: ({ query, resultCount, locale, country }) => {
+			const location = locationCode(country);
+			const language = languageCode(locale, country);
+			return Effect.tryPromise({
 				try: async () => {
 					const response = await fetchFunction(endpoint, {
 						method: "POST",
@@ -104,8 +118,8 @@ export function dataForSeoSearchEngine(options: DataForSeoSearchEngineOptions) {
 						body: JSON.stringify([
 							{
 								keyword: query,
-								location_code: options.locationCode,
-								language_code: options.languageCode,
+								location_code: location,
+								language_code: language,
 								depth: Math.max(resultCount, 10),
 							},
 						]),
@@ -130,10 +144,11 @@ export function dataForSeoSearchEngine(options: DataForSeoSearchEngineOptions) {
 				Effect.withSpan("outbound.dataforseo.organicSearch", {
 					attributes: {
 						partner: "dataforseo",
-						"search.location_code": options.locationCode,
-						"search.language_code": options.languageCode,
+						"search.location_code": location,
+						"search.language_code": language,
 					},
 				}),
-			),
+			);
+		},
 	});
 }

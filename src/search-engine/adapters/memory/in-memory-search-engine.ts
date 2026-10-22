@@ -13,11 +13,11 @@ function fnv1a(text: string) {
 
 // Same query, same synthetic page: local development never calls a metered SERP API.
 export const inMemorySearchEngine = Layer.succeed(SearchEngine, {
-	search: ({ query, resultCount }) =>
+	search: ({ query, resultCount, locale, country }) =>
 		Effect.succeed(
 			Array.from({ length: resultCount }, (_, index) => {
-				const seed = fnv1a(`${query}:${index}`);
-				return new SearchEngineResult({
+				const seed = fnv1a(`${locale}:${country}:${query}:${index}`);
+				return SearchEngineResult.make({
 					url: `https://search.invalid/${seed}`,
 					title: `${query} — result ${index + 1}`,
 					description: `Synthetic search result for "${query}" (${seed}).`,

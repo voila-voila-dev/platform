@@ -1,7 +1,10 @@
 import { describe, expect, it } from "bun:test";
 import { Effect, Redacted } from "effect";
 import { dataForSeoSearchEngine } from "#search-engine/adapters/dataforseo/dataforseo-search-engine";
-import { SearchEngine } from "#search-engine/services/search-engine";
+import {
+	SearchEngine,
+	type SearchEngineQuery,
+} from "#search-engine/services/search-engine";
 
 const OK = 20_000;
 
@@ -28,13 +31,18 @@ function engineAnswering(answer: () => unknown) {
 	const layer = dataForSeoSearchEngine({
 		login: "user@example.com",
 		password: Redacted.make("secret"),
-		locationCode: 2250,
-		languageCode: "fr",
 		fetch: fetchStub,
 	});
-	function search(query: string, resultCount: number) {
+	function search(
+		query: string,
+		resultCount: number,
+		where: Pick<SearchEngineQuery, "locale" | "country"> = {
+			locale: "fr-FR",
+			country: "FR",
+		},
+	) {
 		return SearchEngine.use((engine) =>
-			engine.search({ query, resultCount }),
+			engine.search({ query, resultCount, ...where }),
 		).pipe(Effect.provide(layer));
 	}
 	return { calls, search };
@@ -79,6 +87,22 @@ describe("dataForSeoSearchEngine", () => {
 				language_code: "fr",
 				depth: 10,
 			},
+		]);
+	});
+
+	it("searches from the country, in the locale's language", async () => {
+		const engine = engineAnswering(() => answerWithItems([]));
+
+		await Effect.runPromise(
+			engine.search("club", 3, { locale: "en-US", country: "BE" }),
+		);
+		await Effect.runPromise(
+			engine.search("club", 3, { locale: "zh-CN", country: "TW" }),
+		);
+
+		expect(engine.calls.map(({ body }) => body)).toMatchObject([
+			[{ location_code: 2056, language_code: "en" }],
+			[{ location_code: 2158, language_code: "zh-TW" }],
 		]);
 	});
 

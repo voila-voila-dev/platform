@@ -1,13 +1,18 @@
 import { describe, expect, it } from "bun:test";
 import { Effect } from "effect";
+import type { CountryCode } from "#location/value-objects/country-code";
 import { inMemorySearchEngine } from "#search-engine/adapters/memory/in-memory-search-engine";
 import { SearchEngine } from "#search-engine/services/search-engine";
 
-function search(query: string, resultCount: number) {
+function search(
+	query: string,
+	resultCount: number,
+	country: CountryCode = "FR",
+) {
 	return Effect.runPromise(
-		SearchEngine.use((engine) => engine.search({ query, resultCount })).pipe(
-			Effect.provide(inMemorySearchEngine),
-		),
+		SearchEngine.use((engine) =>
+			engine.search({ query, resultCount, locale: "fr-FR", country }),
+		).pipe(Effect.provide(inMemorySearchEngine)),
 	);
 }
 
@@ -22,5 +27,9 @@ describe("inMemorySearchEngine", () => {
 
 	it("returns different results for different queries", async () => {
 		expect(await search("club a", 1)).not.toEqual(await search("club b", 1));
+	});
+
+	it("returns different results from another country", async () => {
+		expect(await search("club", 1, "BE")).not.toEqual(await search("club", 1));
 	});
 });

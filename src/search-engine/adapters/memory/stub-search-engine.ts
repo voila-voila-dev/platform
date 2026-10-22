@@ -1,17 +1,20 @@
 import { Effect, Layer } from "effect";
-import { SearchEngine } from "#search-engine/services/search-engine";
+import {
+	SearchEngine,
+	type SearchEngineQuery,
+} from "#search-engine/services/search-engine";
 import type { SearchEngineResult } from "#search-engine/value-objects/search-engine-result";
 
 export function stubSearchEngine(
 	results: ReadonlyArray<SearchEngineResult> = [],
 ) {
-	const queries: Array<string> = [];
+	const searches: Array<SearchEngineQuery> = [];
 	return {
-		queries,
+		searches,
 		layer: Layer.succeed(SearchEngine, {
-			search: ({ query }) =>
+			search: (search) =>
 				Effect.sync(() => {
-					queries.push(query);
+					searches.push(search);
 					return results;
 				}),
 		}),
