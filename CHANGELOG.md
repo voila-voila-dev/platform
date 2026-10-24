@@ -1,5 +1,17 @@
 # @voila.dev/platform
 
+## 0.10.0
+
+### Minor Changes
+
+- [#26](https://github.com/voila-voila-dev/platform/pull/26) [`a3997da`](https://github.com/voila-voila-dev/platform/commit/a3997dac5a60ae373ffdc448f556800f5ae70888) Thanks [@emilienbidet](https://github.com/emilienbidet)! - Add the `cache` brick: `KeyValueCache` (string values with a time to live, an atomic `increment`, typed `CacheMissError` and `CacheTransportError`), `readCachedValue` and `writeCachedValue` for a cache in front of a source of truth, `readSingleUseCacheEntry` for a cache that is the token store, with `/cache/memory` (`inMemoryKeyValueCache`, on the Effect `Clock`) and `/cache/redis` (`redisKeyValueCache`, on the application's `Redis`).
+
+- [#30](https://github.com/voila-voila-dev/platform/pull/30) [`d46ffcd`](https://github.com/voila-voila-dev/platform/commit/d46ffcd3fa4831d2fb21e15be6705588dde3536e) Thanks [@emilienbidet](https://github.com/emilienbidet)! - Add the `readonly-database` brick: the `ReadonlyDatabase` port, `guardQuery` (one read-only statement over a table allowlist, withheld columns, a row cap) and `maskRows` for personal data columns, with `/readonly-database/pg` (`pgReadonlyDatabase`, on `pg`, an optional peer dependency) and `/readonly-database/memory` (`stubReadonlyDatabase`, `unavailableReadonlyDatabase`).
+
+- [#29](https://github.com/voila-voila-dev/platform/pull/29) [`2dc18ee`](https://github.com/voila-voila-dev/platform/commit/2dc18eed5accb801342ecfb2e7726d8255580184) Thanks [@emilienbidet](https://github.com/emilienbidet)! - Add the `screenshot` brick: `Screenshots.capture({ url, width, height })` renders a page in a fresh, signed-out browser and returns its viewport as a `Screenshot` PNG of exactly that size, or a `ScreenshotError`; `/screenshot/bun` (`bunWebViewScreenshots`, one `Bun.WebView` per capture, WebKit on macOS and Chromium elsewhere, `settle` and `timeout` options) and `/screenshot/memory` (`stubScreenshots`).
+
+- [#28](https://github.com/voila-voila-dev/platform/pull/28) [`d66115c`](https://github.com/voila-voila-dev/platform/commit/d66115c5a595ecaed5a0065e7bf17f7977722de1) Thanks [@emilienbidet](https://github.com/emilienbidet)! - Add the spreadsheet brick: `/spreadsheet` describes a styled workbook (`SpreadsheetDocument`, its sheets, rows, cells and images, `cell`/`mergedCell`/`cellStyle`) and writes CSV that Excel opens as is (`serializeCsv`); `SpreadsheetRenderer` turns a document into a file, with `/spreadsheet/xlsx` (`xlsxSpreadsheetRenderer`, on exceljs) and `/spreadsheet/memory` (`stubSpreadsheetRenderer`).
+
 ## 0.9.0
 
 ### Minor Changes
