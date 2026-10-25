@@ -1,5 +1,11 @@
 # @voila.dev/platform
 
+## 0.12.1
+
+### Patch Changes
+
+- [#34](https://github.com/voila-voila-dev/platform/pull/34) [`f870b33`](https://github.com/voila-voila-dev/platform/commit/f870b33ae7cfa06ea7f9f3e45d18dc68b456f899) Thanks [@emilienbidet](https://github.com/emilienbidet)! - `pgReadonlyDatabase` logs only the message of a lost idle connection: the pg error holds the client, and the connection password with it.
+
 ## 0.12.0
 
 ### Minor Changes
