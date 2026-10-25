@@ -1,11 +1,10 @@
 export { QueryRejectedError } from "#readonly-database/errors/query-rejected-error";
 export { ReadonlyQueryError } from "#readonly-database/errors/readonly-query-error";
 export {
-	isPiiColumn,
 	MASKED_VALUE,
 	type MaskOptions,
 	maskRows,
-} from "#readonly-database/lib/pii-columns";
+} from "#readonly-database/lib/mask-rows";
 export {
 	guardQuery,
 	MAX_QUERY_ROWS,

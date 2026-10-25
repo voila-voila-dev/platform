@@ -1,32 +1,32 @@
 import type { Schema } from "effect";
 import type { JsonRow } from "#readonly-database/services/readonly-database";
 
-// Wider than email, phone, IBAN and address on purpose: a name column is what
-// turns a row into a person.
-const PII_COLUMN =
-	/(^|_)(email|e_mail|phone|mobile|tel|iban|bic|address|street|address_line|postal_code|zip|first_name|last_name|full_name|display_name|birth|date_of_birth|ssn|social_security|passport|id_number|tax_id|siret|siren)(_|$)|(^|_)(line1|line2)$|\biban\b/iu;
-
 export const MASKED_VALUE = "[masked]";
 
-export function isPiiColumn(column: string): boolean {
-	return PII_COLUMN.test(column);
+export interface MaskOptions {
+	// What counts as personal data is the application's: its column naming and
+	// its jurisdiction (a SIRET, an SSN) decide.
+	readonly piiColumns: RegExp | ((column: string) => boolean);
+	readonly maskedValue?: Schema.Json;
 }
 
-export interface MaskOptions {
-	readonly isPii?: (column: string) => boolean;
-	readonly maskedValue?: Schema.Json;
+function isPii(piiColumns: MaskOptions["piiColumns"], column: string) {
+	// `search` ignores `lastIndex`, so a global pattern stays stateless.
+	return typeof piiColumns === "function"
+		? piiColumns(column)
+		: column.search(piiColumns) !== -1;
 }
 
 export function maskRows(
 	columns: ReadonlyArray<string>,
 	rows: ReadonlyArray<JsonRow>,
-	options: MaskOptions = {},
+	options: MaskOptions,
 ): {
 	readonly rows: ReadonlyArray<JsonRow>;
 	readonly masked: ReadonlyArray<string>;
 } {
-	const { isPii = isPiiColumn, maskedValue = MASKED_VALUE } = options;
-	const masked = columns.filter(isPii);
+	const { piiColumns, maskedValue = MASKED_VALUE } = options;
+	const masked = columns.filter((column) => isPii(piiColumns, column));
 	if (masked.length === 0) return { rows, masked };
 	const maskedSet = new Set(masked);
 	return {
