@@ -1,6 +1,6 @@
 {
 	"name": "@voila.dev/platform",
-	"version": "0.12.0",
+	"version": "0.12.1",
 	"description": "The technical bricks of a B2B platform on Effect, one subpath per brick: a small core at the root, then link tracking and the rest, each with its storage and HTTP adapters.",
 	"license": "MIT",
 	"author": "voila.dev",
