@@ -1,5 +1,13 @@
 # @voila.dev/platform
 
+## 0.11.0
+
+### Minor Changes
+
+- [#31](https://github.com/voila-voila-dev/platform/pull/31) [`c6aaa49`](https://github.com/voila-voila-dev/platform/commit/c6aaa49f62258bdd760042168b1ee9832532d44d) Thanks [@emilienbidet](https://github.com/emilienbidet)! - `maskRows` takes the application's personal data columns, `piiColumns` (a pattern or a predicate on the column name), and the brick no longer ships a list: `isPiiColumn` is removed.
+  
+  `ColumnDescription`, `JsonRow` and `ReadonlyQueryResult` are value objects (`Schema.Struct`, `Schema.Record`), so an application can use them in its own contracts.
+
 ## 0.10.0
 
 ### Minor Changes
