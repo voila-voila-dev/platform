@@ -35,6 +35,7 @@ A port is a service named `<Thing>Service` (`RateLimiterService`, `FileStorageSe
 | core | `.` (ids and shared value objects, `Actor`, `Gate`, `UseCase`, `IdGeneratorService`, `SecureRandomService`, `CurrentActor`, `DatabaseError`), `/memory`, `/drizzle`, `/bun`, `/http-server` |
 | cache | `/cache` (`KeyValueCacheService`, `CacheMissError`, `CacheTransportError`, `readCachedValue`, `writeCachedValue`, `readSingleUseCacheEntry`), `/cache/memory` (`inMemoryKeyValueCache`), `/cache/redis` (`redisKeyValueCache`, on the application's `Redis`) |
 | lock-manager | `/lock-manager` (`LockManagerService`, `LockAcquisitionError`), `/lock-manager/memory` (`inMemoryLockManager`), `/lock-manager/redis` (`redisLockManager`, lease-based, on the application's `Redis`) |
+| security | `/security` (`HashService`, `Sha256Hex`, `SecretBoxService`, `SecretBoxError`, `redactPii`, `redactSecrets`), `/security/memory` (`plainSecretBox`, `unavailableSecretBox`, `stubHashService`), `/security/bun` (`bunHashService`, `aesGcmSecretBox`, AES-256-GCM over Web Crypto) |
 | rate-limiting | `/rate-limiting` (`RateLimiterService`, `RateLimitedError`), `/rate-limiting/memory` (`inMemoryRateLimiter`, `stubRateLimiter`), `/rate-limiting/redis` (`redisRateLimiter`, on the application's `Redis`) |
 | search | `/search` (`Pagination`, `PagedResult`, filters, `makeSearchUseCase`, `SearchBudget`), `/search/memory`, `/search/drizzle` (`pagedQuery`, accent-insensitive search, `searchFunctionsSql`) |
 | locale | `/locale` (`Locale`, `Language`, `SupportedLocales`) |
