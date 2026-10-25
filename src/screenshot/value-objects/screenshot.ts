@@ -1,7 +1,9 @@
 import { Schema } from "effect";
+import { ContentType } from "#file/value-objects/content-type";
 
 export const Screenshot = Schema.Struct({
-	png: Schema.Uint8Array,
+	content: Schema.Uint8Array,
+	contentType: ContentType,
 	width: Schema.Number,
 	height: Schema.Number,
 });

@@ -20,6 +20,7 @@ const MODULE_DEPENDENCIES: ReadonlyArray<ModuleDependency> = [
 	["link-tracking/link", "rate-limiting"],
 	["link-tracking/link", "search"],
 	["location", "rate-limiting"],
+	["screenshot", "file"],
 	["search-engine", "location"],
 	["search", "rate-limiting"],
 ];

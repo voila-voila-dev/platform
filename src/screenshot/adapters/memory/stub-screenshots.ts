@@ -1,12 +1,11 @@
 import { Effect, Layer } from "effect";
+import { ContentType } from "#file/value-objects/content-type";
 import { ScreenshotError } from "#screenshot/errors/screenshot-error";
-import {
-	type ScreenshotRequest,
-	Screenshots,
-} from "#screenshot/services/screenshots";
+import { Screenshots } from "#screenshot/services/screenshots";
 import { Screenshot } from "#screenshot/value-objects/screenshot";
+import type { ScreenshotRequest } from "#screenshot/value-objects/screenshot-request";
 
-// The PNG holds `png:<url>`, so a test can tell which page a capture came from.
+// The content is `png:<url>`, so a test can tell which page a capture came from.
 export function stubScreenshots(
 	options: { readonly failing?: ReadonlyArray<string> } = {},
 ) {
@@ -25,7 +24,8 @@ export function stubScreenshots(
 					: Effect.sync(() => {
 							captured.push(request);
 							return Screenshot.make({
-								png: new TextEncoder().encode(`png:${request.url}`),
+								content: new TextEncoder().encode(`png:${request.url}`),
+								contentType: ContentType.make("image/png"),
 								width: request.width,
 								height: request.height,
 							});
