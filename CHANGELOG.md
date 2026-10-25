@@ -1,5 +1,15 @@
 # @voila.dev/platform
 
+## 0.12.0
+
+### Minor Changes
+
+- [#33](https://github.com/voila-voila-dev/platform/pull/33) [`fbcf04f`](https://github.com/voila-voila-dev/platform/commit/fbcf04f627786f8074cc314dd2fd518672120632) Thanks [@emilienbidet](https://github.com/emilienbidet)! - `Screenshot` carries its bytes as `content` (was `png`) with a `contentType` (`ContentType` from `/file`, `image/png` from both adapters).
+
+### Patch Changes
+
+- [#33](https://github.com/voila-voila-dev/platform/pull/33) [`fbcf04f`](https://github.com/voila-voila-dev/platform/commit/fbcf04f627786f8074cc314dd2fd518672120632) Thanks [@emilienbidet](https://github.com/emilienbidet)! - `ScreenshotRequest` is a `Schema.Struct` value object (`ScreenshotRequest.make({ url, width, height })`) instead of a plain interface, so an application can decode a capture request at its boundary.
+
 ## 0.11.0
 
 ### Minor Changes
