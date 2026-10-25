@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from "bun:test";
 import { SQL } from "bun";
-import { Effect, Fiber } from "effect";
+import { Effect } from "effect";
 import { pgReadonlyDatabase } from "#readonly-database/adapters/pg/pg-readonly-database";
 import { ReadonlyDatabase } from "#readonly-database/services/readonly-database";
 
