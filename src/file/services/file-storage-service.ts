@@ -4,8 +4,8 @@ import type { FileKey } from "#file/value-objects/file-key";
 import type { FileLink } from "#file/value-objects/file-link";
 import type { FileStat } from "#file/value-objects/file-stat";
 
-export class FileStorage extends Context.Service<
-	FileStorage,
+export class FileStorageService extends Context.Service<
+	FileStorageService,
 	{
 		readonly uploadUrl: (input: {
 			readonly key: FileKey;
@@ -21,4 +21,4 @@ export class FileStorage extends Context.Service<
 		readonly stat: (key: FileKey) => Effect.Effect<Option.Option<FileStat>>;
 		readonly delete: (key: FileKey) => Effect.Effect<void>;
 	}
->()("@voila.dev/platform/FileStorage") {}
+>()("@voila.dev/platform/FileStorageService") {}

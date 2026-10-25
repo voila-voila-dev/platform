@@ -27,7 +27,7 @@ export {
 	routedLocationProvider,
 } from "#location/lib/routed-location-provider";
 export { SupportedCountries } from "#location/lib/supported-countries";
-export { LocationProvider } from "#location/services/location-provider";
+export { LocationProviderService } from "#location/services/location-provider-service";
 export { Address } from "#location/value-objects/address";
 export { AddressMatch } from "#location/value-objects/address-match";
 export { AddressSuggestQuery } from "#location/value-objects/address-suggest-query";

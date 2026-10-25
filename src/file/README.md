@@ -45,9 +45,9 @@ const { key, uploadUrl, expiresAt } = yield* AppFiles.requestUpload("businessPro
 	contentLength,
 });
 
-yield* (yield* FileStorage).put({ key, bytes, contentType: ContentType.make("application/pdf") });
+yield* (yield* FileStorageService).put({ key, bytes, contentType: ContentType.make("application/pdf") });
 const bytes = yield* readFile(key); // fails with FileNotFoundError
-const link = yield* (yield* FileDownloads).link(key); // a `FileLink`: { url, expiresAt }
+const link = yield* (yield* FileDownloadsService).link(key); // a `FileLink`: { url, expiresAt }
 ```
 
 ## Serve the downloads

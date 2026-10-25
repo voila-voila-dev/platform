@@ -1,12 +1,12 @@
 import { Effect, Layer } from "effect";
-import { SecureRandom } from "#core/services/secure-random";
+import { SecureRandomService } from "#core/services/secure-random-service";
 
 export function countingSecureRandom(
 	options: { readonly prefix?: string } = {},
 ) {
 	const prefix = options.prefix ?? "token-";
 	let counter = 0;
-	return Layer.succeed(SecureRandom, {
+	return Layer.succeed(SecureRandomService, {
 		digitCode: (length) =>
 			Effect.sync(() => {
 				counter += 1;

@@ -26,23 +26,25 @@ src/
     <submodule>/               any other folder: a module with the same shape
 ```
 
+A port is a service named `<Thing>Service` (`RateLimiterService`, `FileStorageService`), a repository `<Aggregate>Repository`. An adapter is named after what it is (`redisRateLimiter`, `bunS3FileStorage`).
+
 ## Modules
 
 | Module | Exports |
 |---|---|
-| core | `.` (ids and shared value objects, `Actor`, `Gate`, `UseCase`, `IdGenerator`, `SecureRandom`, `CurrentActor`, `DatabaseError`), `/memory`, `/drizzle`, `/bun`, `/http-server` |
-| cache | `/cache` (`KeyValueCache`, `CacheMissError`, `CacheTransportError`, `readCachedValue`, `writeCachedValue`, `readSingleUseCacheEntry`), `/cache/memory` (`inMemoryKeyValueCache`), `/cache/redis` (`redisKeyValueCache`, on the application's `Redis`) |
-| rate-limiting | `/rate-limiting` (`RateLimiter`, `RateLimitedError`), `/rate-limiting/memory` (`inMemoryRateLimiter`, `stubRateLimiter`), `/rate-limiting/redis` (`redisRateLimiter`, on the application's `Redis`) |
+| core | `.` (ids and shared value objects, `Actor`, `Gate`, `UseCase`, `IdGeneratorService`, `SecureRandomService`, `CurrentActor`, `DatabaseError`), `/memory`, `/drizzle`, `/bun`, `/http-server` |
+| cache | `/cache` (`KeyValueCacheService`, `CacheMissError`, `CacheTransportError`, `readCachedValue`, `writeCachedValue`, `readSingleUseCacheEntry`), `/cache/memory` (`inMemoryKeyValueCache`), `/cache/redis` (`redisKeyValueCache`, on the application's `Redis`) |
+| rate-limiting | `/rate-limiting` (`RateLimiterService`, `RateLimitedError`), `/rate-limiting/memory` (`inMemoryRateLimiter`, `stubRateLimiter`), `/rate-limiting/redis` (`redisRateLimiter`, on the application's `Redis`) |
 | search | `/search` (`Pagination`, `PagedResult`, filters, `makeSearchUseCase`, `SearchBudget`), `/search/memory`, `/search/drizzle` (`pagedQuery`, accent-insensitive search, `searchFunctionsSql`) |
 | locale | `/locale` (`Locale`, `Language`, `SupportedLocales`) |
-| location | `/location` (`Address`, `LocatedAddress`, `Coordinates`, `CountryCode`, `LocationProvider`, `routedLocationProvider`, `AddressFormatter`, `SupportedCountries`, `locateAddress`, `resolveAddressCoordinates`, `distanceKm`, `countryName`), `/location/memory` (`inMemoryLocationProvider`, `stubLocationProvider`), `/location/ban` (`banLocationProvider`, France), `/location/here` (`hereLocationProvider`, every country) |
-| search-engine | `/search-engine` (`SearchEngine`, `SearchEngineQuery`, `SearchEngineResult`, `SearchEngineError`), `/search-engine/memory` (`inMemorySearchEngine`, `stubSearchEngine`), `/search-engine/dataforseo` (`dataForSeoSearchEngine`) |
-| readonly-database | `/readonly-database` (`ReadonlyDatabase`, `ReadonlyQueryResult`, `ColumnDescription`, `JsonRow`, `guardQuery`, `QueryPolicy`, `maskRows`, `QueryRejectedError`, `ReadonlyQueryError`), `/readonly-database/memory` (`stubReadonlyDatabase`, `unavailableReadonlyDatabase`), `/readonly-database/pg` (`pgReadonlyDatabase`, on pg) |
+| location | `/location` (`Address`, `LocatedAddress`, `Coordinates`, `CountryCode`, `LocationProviderService`, `routedLocationProvider`, `AddressFormatter`, `SupportedCountries`, `locateAddress`, `resolveAddressCoordinates`, `distanceKm`, `countryName`), `/location/memory` (`inMemoryLocationProvider`, `stubLocationProvider`), `/location/ban` (`banLocationProvider`, France), `/location/here` (`hereLocationProvider`, every country) |
+| search-engine | `/search-engine` (`SearchEngineService`, `SearchEngineQuery`, `SearchEngineResult`, `SearchEngineError`), `/search-engine/memory` (`inMemorySearchEngine`, `stubSearchEngine`), `/search-engine/dataforseo` (`dataForSeoSearchEngine`) |
+| readonly-database | `/readonly-database` (`ReadonlyDatabaseService`, `ReadonlyQueryResult`, `ColumnDescription`, `JsonRow`, `guardQuery`, `QueryPolicy`, `maskRows`, `QueryRejectedError`, `ReadonlyQueryError`), `/readonly-database/memory` (`stubReadonlyDatabase`, `unavailableReadonlyDatabase`), `/readonly-database/pg` (`pgReadonlyDatabase`, on pg) |
 | bulk-import | `/bulk-import` (`BulkImport`, `ImportSchema`, `ImportIntent`, `ImportLimits`), `/csv` (`csvImportReader`), `/json` (`jsonImportReader`), `/memory` (`inMemoryBulkImport`), `/drizzle` (`importIntentTable`), `/xlsx` (`xlsxImportReader`, on exceljs) |
 | money | `/money` (`Money`, `Currency`, `currencyDecimals`, `formatMoney`, `parseMoneyInput`, `BasisPoints`, `TaxRate`) |
-| screenshot | `/screenshot` (`Screenshots`, `ScreenshotRequest`, `Screenshot`, `ScreenshotError`), `/screenshot/memory` (`stubScreenshots`), `/screenshot/bun` (`bunWebViewScreenshots`, on `Bun.WebView`: WebKit on macOS, Chromium elsewhere) |
-| spreadsheet | `/spreadsheet` (`SpreadsheetDocument`, `SpreadsheetSheet`, `SpreadsheetImage`, `cell`, `mergedCell`, `cellStyle`, `serializeCsv`, `SpreadsheetRenderer`), `/spreadsheet/memory` (`stubSpreadsheetRenderer`), `/spreadsheet/xlsx` (`xlsxSpreadsheetRenderer`, on exceljs) |
-| file | `/file` (`Files`, `FileStorage`, `FileDownloads`, `FileTokens`, `FileRef`, `ImageRef`, `FileLinkLifetime`), `/file/memory` (`inMemoryFiles`), `/file/bun` (`bunS3FileStorage`, `hmacFileTokens`), `/file/http-server` (`serveSecureFile`) |
+| screenshot | `/screenshot` (`ScreenshotService`, `ScreenshotRequest`, `Screenshot`, `ScreenshotError`), `/screenshot/memory` (`stubScreenshots`), `/screenshot/bun` (`bunWebViewScreenshots`, on `Bun.WebView`: WebKit on macOS, Chromium elsewhere) |
+| spreadsheet | `/spreadsheet` (`SpreadsheetDocument`, `SpreadsheetSheet`, `SpreadsheetImage`, `cell`, `mergedCell`, `cellStyle`, `serializeCsv`, `SpreadsheetService`), `/spreadsheet/memory` (`stubSpreadsheetRenderer`), `/spreadsheet/xlsx` (`xlsxSpreadsheetRenderer`, on exceljs) |
+| file | `/file` (`Files`, `FileStorageService`, `FileDownloadsService`, `FileTokensService`, `FileRef`, `ImageRef`, `FileLinkLifetime`), `/file/memory` (`inMemoryFiles`), `/file/bun` (`bunS3FileStorage`, `hmacFileTokens`), `/file/http-server` (`serveSecureFile`) |
 | link-tracking/link | `/link-tracking/link`, `/http` (`TrackedLinksApiGroup`), `/memory`, `/drizzle` (tables, repository, `trackedLinkSearchIndexesSql`), `/http-server` (`trackedLinksHandlers`) |
 | link-tracking/click | `/link-tracking/click`, `/memory`, `/drizzle`, `/http-server` (`redirectToLink`) |
 

@@ -1,8 +1,8 @@
 import { describe, expect, it } from "bun:test";
 import { Effect, Option } from "effect";
 import { bunS3FileStorage } from "#file/adapters/bun/bun-s3-file-storage";
-import { FileStorage } from "#file/services/file-storage";
-import { fileStorageContract } from "#file/services/file-storage.test-helper";
+import { FileStorageService } from "#file/services/file-storage-service";
+import { fileStorageContract } from "#file/services/file-storage-service.test-helper";
 import { ContentType } from "#file/value-objects/content-type";
 import { FileKey } from "#file/value-objects/file-key";
 
@@ -28,7 +28,7 @@ describe.skipIf(endpoint === undefined)("bunS3FileStorage", () => {
 		const bytes = new Uint8Array([137, 80, 78, 71]);
 		const read = await Effect.runPromise(
 			Effect.gen(function* () {
-				const storage = yield* FileStorage;
+				const storage = yield* FileStorageService;
 				const link = yield* storage.uploadUrl({
 					key,
 					contentType: ContentType.make("image/png"),

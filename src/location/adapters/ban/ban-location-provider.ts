@@ -2,7 +2,7 @@ import { Duration, Effect, Layer, Option, Schema } from "effect";
 import { LocationProviderError } from "#location/errors/location-provider-error";
 import { DEFAULT_ADDRESS_SUGGESTION_LIMIT } from "#location/lib/address-suggestion-limit";
 import { geocodeMatchesLocality } from "#location/lib/geocode-locality-match";
-import { LocationProvider } from "#location/services/location-provider";
+import { LocationProviderService } from "#location/services/location-provider-service";
 import { Address } from "#location/value-objects/address";
 import { AddressMatch } from "#location/value-objects/address-match";
 import { City } from "#location/value-objects/city";
@@ -110,7 +110,7 @@ export interface BanLocationProviderOptions {
 
 export function makeBanLocationProvider(
 	options: BanLocationProviderOptions = {},
-): typeof LocationProvider.Service {
+): typeof LocationProviderService.Service {
 	const fetchFunction = options.fetch ?? fetch;
 	const endpoint = options.endpoint ?? SEARCH_ENDPOINT;
 	const timeoutMillis = Duration.toMillis(options.timeout ?? "15 seconds");
@@ -179,5 +179,8 @@ export function makeBanLocationProvider(
 }
 
 export function banLocationProvider(options: BanLocationProviderOptions = {}) {
-	return Layer.succeed(LocationProvider, makeBanLocationProvider(options));
+	return Layer.succeed(
+		LocationProviderService,
+		makeBanLocationProvider(options),
+	);
 }

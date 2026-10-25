@@ -1,7 +1,7 @@
 import { Duration, Effect, Layer } from "effect";
 import { ContentType } from "#file/value-objects/content-type";
 import { ScreenshotError } from "#screenshot/errors/screenshot-error";
-import { Screenshots } from "#screenshot/services/screenshots";
+import { ScreenshotService } from "#screenshot/services/screenshot-service";
 import { Screenshot } from "#screenshot/value-objects/screenshot";
 
 export interface BunWebViewScreenshotsOptions {
@@ -46,7 +46,7 @@ export function bunWebViewScreenshots(
 	const settle = Duration.toMillis(options.settle ?? "800 millis");
 	const timeout = options.timeout ?? "30 seconds";
 	const backend = options.backend ?? defaultBackend();
-	return Layer.succeed(Screenshots, {
+	return Layer.succeed(ScreenshotService, {
 		capture: ({ url, width, height }) =>
 			Effect.tryPromise({
 				try: async (signal) => {

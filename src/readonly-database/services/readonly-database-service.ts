@@ -6,8 +6,8 @@ import type { ReadonlyQueryResult } from "#readonly-database/value-objects/reado
 // The posture (a read-only role, a statement timeout, a result cap) belongs to
 // the adapter; callers still run every statement through `guardQuery` so a
 // refusal is explained rather than surfacing as a permission error.
-export class ReadonlyDatabase extends Context.Service<
-	ReadonlyDatabase,
+export class ReadonlyDatabaseService extends Context.Service<
+	ReadonlyDatabaseService,
 	{
 		readonly query: (
 			sql: string,
@@ -16,4 +16,4 @@ export class ReadonlyDatabase extends Context.Service<
 			tables: ReadonlyArray<string>,
 		) => Effect.Effect<ReadonlyArray<ColumnDescription>, ReadonlyQueryError>;
 	}
->()("@voila.dev/platform/ReadonlyDatabase") {}
+>()("@voila.dev/platform/ReadonlyDatabaseService") {}

@@ -1,5 +1,5 @@
 import { Effect, Layer } from "effect";
-import { SearchEngine } from "#search-engine/services/search-engine";
+import { SearchEngineService } from "#search-engine/services/search-engine-service";
 import { SearchEngineResult } from "#search-engine/value-objects/search-engine-result";
 
 function fnv1a(text: string) {
@@ -12,7 +12,7 @@ function fnv1a(text: string) {
 }
 
 // Same query, same synthetic page: local development never calls a metered SERP API.
-export const inMemorySearchEngine = Layer.succeed(SearchEngine, {
+export const inMemorySearchEngine = Layer.succeed(SearchEngineService, {
 	search: ({ query, resultCount, locale, country }) =>
 		Effect.succeed(
 			Array.from({ length: resultCount }, (_, index) => {

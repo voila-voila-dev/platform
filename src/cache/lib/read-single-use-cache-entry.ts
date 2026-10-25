@@ -1,11 +1,11 @@
 import { Effect, Option } from "effect";
-import type { KeyValueCache } from "#cache/services/key-value-cache";
+import type { KeyValueCacheService } from "#cache/services/key-value-cache-service";
 
 // For a cache that is the token store: a miss is an unknown, consumed or
 // expired token, but an outage dies, so it never makes a valid token look
 // invalid.
 export function readSingleUseCacheEntry(
-	cache: KeyValueCache["Service"],
+	cache: KeyValueCacheService["Service"],
 	key: string,
 ): Effect.Effect<Option.Option<string>> {
 	return cache.get(key).pipe(

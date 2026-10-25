@@ -5,8 +5,8 @@ import type { CacheTransportError } from "#cache/errors/cache-transport-error";
 // Never best-effort: a cache in front of a database and a cache that is the
 // only store of a one-time token want opposite answers to a miss or an
 // outage, so the caller decides.
-export class KeyValueCache extends Context.Service<
-	KeyValueCache,
+export class KeyValueCacheService extends Context.Service<
+	KeyValueCacheService,
 	{
 		readonly get: (
 			key: string,
@@ -24,4 +24,4 @@ export class KeyValueCache extends Context.Service<
 		) => Effect.Effect<number, CacheTransportError>;
 		readonly delete: (key: string) => Effect.Effect<void, CacheTransportError>;
 	}
->()("@voila.dev/platform/KeyValueCache") {}
+>()("@voila.dev/platform/KeyValueCacheService") {}

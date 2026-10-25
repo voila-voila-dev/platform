@@ -5,7 +5,7 @@ export {
 	cellStyle,
 	mergedCell,
 } from "#spreadsheet/lib/spreadsheet-cell-builders";
-export { SpreadsheetRenderer } from "#spreadsheet/services/spreadsheet-renderer";
+export { SpreadsheetService } from "#spreadsheet/services/spreadsheet-service";
 export { SpreadsheetCell } from "#spreadsheet/value-objects/spreadsheet-cell";
 export { SpreadsheetCellStyle } from "#spreadsheet/value-objects/spreadsheet-cell-style";
 export { SpreadsheetCellValue } from "#spreadsheet/value-objects/spreadsheet-cell-value";

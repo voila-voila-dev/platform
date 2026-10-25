@@ -3,7 +3,7 @@ import { RedisClient } from "bun";
 import { Effect, Layer } from "effect";
 import { Redis } from "effect/persistence";
 import { redisKeyValueCache } from "#cache/adapters/redis/redis-key-value-cache";
-import { KeyValueCache } from "#cache/services/key-value-cache";
+import { KeyValueCacheService } from "#cache/services/key-value-cache-service";
 
 const url = process.env.REDIS_URL;
 
@@ -28,7 +28,7 @@ function bunRedis(redisUrl: string) {
 }
 
 describe.skipIf(url === undefined)("redisKeyValueCache", () => {
-	function run<A, E>(effect: Effect.Effect<A, E, KeyValueCache>) {
+	function run<A, E>(effect: Effect.Effect<A, E, KeyValueCacheService>) {
 		const prefix = `test-${crypto.randomUUID()}:`;
 		return Effect.runPromise(
 			effect.pipe(
@@ -44,7 +44,7 @@ describe.skipIf(url === undefined)("redisKeyValueCache", () => {
 	it("reads back a value, then misses it once deleted", async () => {
 		const reads = await run(
 			Effect.gen(function* () {
-				const cache = yield* KeyValueCache;
+				const cache = yield* KeyValueCacheService;
 				yield* cache.set("key", "value", 60);
 				const stored = yield* cache.get("key");
 				yield* cache.delete("key");
@@ -58,7 +58,7 @@ describe.skipIf(url === undefined)("redisKeyValueCache", () => {
 
 	it("counts atomically", async () => {
 		const totals = await run(
-			KeyValueCache.use((cache) =>
+			KeyValueCacheService.use((cache) =>
 				Effect.all(
 					Array.from({ length: 5 }, () => cache.increment("counter", 60)),
 					{ concurrency: "unbounded" },

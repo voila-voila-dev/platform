@@ -1,9 +1,9 @@
 import { Cause, Effect, Option } from "effect";
 import { AddressNotLocatableError } from "#location/errors/address-not-locatable-error";
-import { LocationProvider } from "#location/services/location-provider";
+import { LocationProviderService } from "#location/services/location-provider-service";
 import { Address } from "#location/value-objects/address";
 import { LocatedAddress } from "#location/value-objects/located-address";
-import { RateLimiter } from "#rate-limiting/services/rate-limiter";
+import { RateLimiterService } from "#rate-limiting/services/rate-limiter-service";
 
 export interface GeocodingBudget {
 	// Whose budget the call spends, such as `actorRateLimitKey(actor)`.
@@ -18,7 +18,7 @@ export function resolveAddressCoordinates(
 	budget: GeocodingBudget,
 ) {
 	return Effect.gen(function* () {
-		const withinBudget = yield* RateLimiter.use((rateLimiter) =>
+		const withinBudget = yield* RateLimiterService.use((rateLimiter) =>
 			rateLimiter.consumeMany(
 				`location:geocode:${budget.key}`,
 				budget.windowSeconds ?? 60,
@@ -30,7 +30,7 @@ export function resolveAddressCoordinates(
 		);
 		if (!withinBudget) return address;
 
-		const coordinates = yield* LocationProvider.use((provider) =>
+		const coordinates = yield* LocationProviderService.use((provider) =>
 			provider.geocode(address),
 		).pipe(
 			Effect.catchCause((cause) =>

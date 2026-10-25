@@ -3,7 +3,7 @@ import { Effect } from "effect";
 import { HttpServerResponse } from "effect/http";
 import { serveSecureFile } from "#file/adapters/http-server/serve-secure-file";
 import { inMemoryFiles } from "#file/adapters/memory/in-memory-files";
-import { FileDownloads } from "#file/services/file-downloads";
+import { FileDownloadsService } from "#file/services/file-downloads-service";
 import { ContentType } from "#file/value-objects/content-type";
 import { FileKey } from "#file/value-objects/file-key";
 
@@ -18,7 +18,7 @@ function serve(url: (link: string) => string, seeded = true) {
 		});
 	return Effect.runPromise(
 		Effect.gen(function* () {
-			const link = yield* (yield* FileDownloads).link(KEY);
+			const link = yield* (yield* FileDownloadsService).link(KEY);
 			return yield* serveSecureFile(new URL(url(link.url)), {
 				path: "/secure-files",
 			});

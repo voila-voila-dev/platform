@@ -3,12 +3,12 @@ import { Effect, Exit, Layer, Option } from "effect";
 import { inMemoryKeyValueCache } from "#cache/adapters/memory/in-memory-key-value-cache";
 import { CacheTransportError } from "#cache/errors/cache-transport-error";
 import { readSingleUseCacheEntry } from "#cache/lib/read-single-use-cache-entry";
-import { KeyValueCache } from "#cache/services/key-value-cache";
+import { KeyValueCacheService } from "#cache/services/key-value-cache-service";
 
-function read(layer: Layer.Layer<KeyValueCache>) {
+function read(layer: Layer.Layer<KeyValueCacheService>) {
 	return Effect.runPromise(
 		Effect.exit(
-			KeyValueCache.use((cache) =>
+			KeyValueCacheService.use((cache) =>
 				readSingleUseCacheEntry(cache, "token"),
 			).pipe(Effect.provide(layer)),
 		),
@@ -33,7 +33,7 @@ describe("readSingleUseCacheEntry", () => {
 
 	it("dies when the cache is unreachable", async () => {
 		const exit = await read(
-			Layer.succeed(KeyValueCache, {
+			Layer.succeed(KeyValueCacheService, {
 				get: (key) =>
 					Effect.fail(new CacheTransportError({ key, reason: "down" })),
 				set: () => Effect.void,

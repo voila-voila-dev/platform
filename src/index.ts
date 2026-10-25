@@ -36,8 +36,8 @@ export {
 	unitRuns,
 } from "#core/metrics/unit-metrics";
 export { CurrentActor } from "#core/services/current-actor";
-export { IdGenerator } from "#core/services/id-generator";
-export { SecureRandom } from "#core/services/secure-random";
+export { IdGeneratorService } from "#core/services/id-generator-service";
+export { SecureRandomService } from "#core/services/secure-random-service";
 export {
 	makeUseCaseConstructor,
 	UseCase,

@@ -22,7 +22,7 @@ import type { ImportReader } from "#bulk-import/services/import-reader";
 import { importFormatOf } from "#bulk-import/value-objects/import-format";
 import { ImportIntentId } from "#bulk-import/value-objects/import-intent-id";
 import type { ImportRowResult } from "#bulk-import/value-objects/import-row-result";
-import { IdGenerator } from "#core/services/id-generator";
+import { IdGeneratorService } from "#core/services/id-generator-service";
 import { NonNegativeInt } from "#core/value-objects/non-negative-int";
 
 export interface BulkImportOptions {
@@ -174,7 +174,9 @@ function bind<S extends ImportSchema>(schema: S, options: BulkImportOptions) {
 				if (table.rows.length > maxRows) return yield* rejected("tooManyRows");
 
 				const intent = ImportIntent.create(schema, {
-					id: ImportIntentId.make(yield* (yield* IdGenerator).generate()),
+					id: ImportIntentId.make(
+						yield* (yield* IdGeneratorService).generate(),
+					),
 					rows: table.rows,
 				});
 				yield* (yield* ImportIntentRepository).insert(intent);

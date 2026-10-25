@@ -1,5 +1,5 @@
 import { Effect, Layer } from "effect";
-import { IdGenerator } from "#core/services/id-generator";
+import { IdGeneratorService } from "#core/services/id-generator-service";
 import { Id } from "#core/value-objects/id";
 
 export function incrementingIdGenerator() {
@@ -7,7 +7,7 @@ export function incrementingIdGenerator() {
 	const generated: Array<Id> = [];
 	return {
 		generated,
-		layer: Layer.succeed(IdGenerator, {
+		layer: Layer.succeed(IdGeneratorService, {
 			generate: () =>
 				Effect.sync(() => {
 					counter += 1;

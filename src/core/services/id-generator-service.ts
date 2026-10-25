@@ -1,9 +1,9 @@
 import { Context, type Effect } from "effect";
 import type { Id } from "#core/value-objects/id";
 
-export class IdGenerator extends Context.Service<
-	IdGenerator,
+export class IdGeneratorService extends Context.Service<
+	IdGeneratorService,
 	{
 		readonly generate: () => Effect.Effect<Id>;
 	}
->()("@voila.dev/platform/IdGenerator") {}
+>()("@voila.dev/platform/IdGeneratorService") {}

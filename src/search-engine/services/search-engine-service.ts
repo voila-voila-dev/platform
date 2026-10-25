@@ -13,11 +13,11 @@ export interface SearchEngineQuery {
 	readonly country: CountryCode;
 }
 
-export class SearchEngine extends Context.Service<
-	SearchEngine,
+export class SearchEngineService extends Context.Service<
+	SearchEngineService,
 	{
 		readonly search: (
 			query: SearchEngineQuery,
 		) => Effect.Effect<ReadonlyArray<SearchEngineResult>, SearchEngineError>;
 	}
->()("@voila.dev/platform/SearchEngine") {}
+>()("@voila.dev/platform/SearchEngineService") {}

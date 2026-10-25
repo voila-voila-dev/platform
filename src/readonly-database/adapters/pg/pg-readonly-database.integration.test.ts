@@ -2,7 +2,7 @@ import { afterAll, beforeAll, describe, expect, it } from "bun:test";
 import { SQL } from "bun";
 import { Effect } from "effect";
 import { pgReadonlyDatabase } from "#readonly-database/adapters/pg/pg-readonly-database";
-import { ReadonlyDatabase } from "#readonly-database/services/readonly-database";
+import { ReadonlyDatabaseService } from "#readonly-database/services/readonly-database-service";
 
 const url = process.env.DATABASE_URL;
 const table = `readonly_database_test_${crypto.randomUUID().replaceAll("-", "")}`;
@@ -25,7 +25,7 @@ describe.skipIf(url === undefined)("pgReadonlyDatabase", () => {
 	});
 
 	function run<A, E>(
-		effect: Effect.Effect<A, E, ReadonlyDatabase>,
+		effect: Effect.Effect<A, E, ReadonlyDatabaseService>,
 		options?: Parameters<typeof pgReadonlyDatabase>[1],
 	) {
 		return Effect.runPromise(
@@ -39,7 +39,7 @@ describe.skipIf(url === undefined)("pgReadonlyDatabase", () => {
 
 	it("answers rows as JSON, columns kept on an empty result", async () => {
 		const [rows, empty] = await run(
-			ReadonlyDatabase.use((database) =>
+			ReadonlyDatabaseService.use((database) =>
 				Effect.all([
 					database.query(`SELECT * FROM ${table} ORDER BY id`),
 					database.query(`SELECT id, label FROM ${table} WHERE false`),
@@ -60,7 +60,7 @@ describe.skipIf(url === undefined)("pgReadonlyDatabase", () => {
 
 	it("cuts a result past the byte cap", async () => {
 		const result = await run(
-			ReadonlyDatabase.use((database) =>
+			ReadonlyDatabaseService.use((database) =>
 				database.query(`SELECT * FROM ${table} ORDER BY id`),
 			),
 			{ maxResultBytes: 60 },
@@ -72,7 +72,7 @@ describe.skipIf(url === undefined)("pgReadonlyDatabase", () => {
 
 	it("cannot write, and stops a slow statement", async () => {
 		const [write, slow] = await run(
-			ReadonlyDatabase.use((database) =>
+			ReadonlyDatabaseService.use((database) =>
 				Effect.all([
 					Effect.flip(database.query(`DELETE FROM ${table}`)),
 					Effect.flip(database.query("SELECT pg_sleep(1)")),
@@ -88,7 +88,7 @@ describe.skipIf(url === undefined)("pgReadonlyDatabase", () => {
 	it("survives its idle connection being cut", async () => {
 		const applicationName = `readonly-test-${crypto.randomUUID()}`;
 		const rows = await Effect.runPromise(
-			ReadonlyDatabase.use((database) =>
+			ReadonlyDatabaseService.use((database) =>
 				Effect.gen(function* () {
 					yield* database.query("SELECT 1");
 					yield* Effect.promise(() =>
@@ -115,7 +115,7 @@ describe.skipIf(url === undefined)("pgReadonlyDatabase", () => {
 
 	it("names the code, hint and position of a failed statement", async () => {
 		const error = await run(
-			ReadonlyDatabase.use((database) =>
+			ReadonlyDatabaseService.use((database) =>
 				Effect.flip(database.query(`SELECT lable FROM ${table}`)),
 			),
 		);
@@ -127,7 +127,9 @@ describe.skipIf(url === undefined)("pgReadonlyDatabase", () => {
 
 	it("describes the asked tables", async () => {
 		const columns = await run(
-			ReadonlyDatabase.use((database) => database.describeTables([table])),
+			ReadonlyDatabaseService.use((database) =>
+				database.describeTables([table]),
+			),
 		);
 
 		expect(columns).toStrictEqual([

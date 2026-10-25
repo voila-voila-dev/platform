@@ -1,8 +1,8 @@
 import { DateTime, Effect, Schema } from "effect";
 import { Actor } from "#core/actor/actor";
 import { Gate } from "#core/authorization/gates";
-import { IdGenerator } from "#core/services/id-generator";
-import { SecureRandom } from "#core/services/secure-random";
+import { IdGeneratorService } from "#core/services/id-generator-service";
+import { SecureRandomService } from "#core/services/secure-random-service";
 import { UseCase } from "#core/use-case/make-use-case";
 import { TrackedLink } from "#link-tracking/link/aggregates/tracked-link";
 import { LINK_CODE_BYTE_LENGTH } from "#link-tracking/link/constants/link-code-byte-length";
@@ -22,8 +22,8 @@ export const CreateTrackedLinkUseCase = UseCase.make({
 	gate: Gate.staff(),
 	execute: ({ payload }) =>
 		Effect.gen(function* () {
-			const ids = yield* IdGenerator;
-			const random = yield* SecureRandom;
+			const ids = yield* IdGeneratorService;
+			const random = yield* SecureRandomService;
 			const repository = yield* TrackedLinkRepository;
 
 			const link = new TrackedLink({

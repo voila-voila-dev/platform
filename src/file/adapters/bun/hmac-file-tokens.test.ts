@@ -2,7 +2,7 @@ import { describe, expect, it } from "bun:test";
 import { createHmac } from "node:crypto";
 import { DateTime, Effect, Redacted } from "effect";
 import { hmacFileTokens } from "#file/adapters/bun/hmac-file-tokens";
-import { FileTokens } from "#file/services/file-tokens";
+import { FileTokensService } from "#file/services/file-tokens-service";
 import { FileKey } from "#file/value-objects/file-key";
 
 const SECRET = Redacted.make("files-secret");
@@ -16,7 +16,7 @@ function inMinutes(minutes: number): DateTime.Utc {
 
 function mint(key: FileKey = KEY, expiresAt = inMinutes(15), secret = SECRET) {
 	return Effect.runPromise(
-		Effect.flatMap(FileTokens, (tokens) =>
+		Effect.flatMap(FileTokensService, (tokens) =>
 			tokens.mint({ key, expiresAt }),
 		).pipe(Effect.provide(hmacFileTokens(secret))),
 	);
@@ -24,7 +24,9 @@ function mint(key: FileKey = KEY, expiresAt = inMinutes(15), secret = SECRET) {
 
 function verify(key: FileKey, token: string) {
 	return Effect.runPromise(
-		Effect.flatMap(FileTokens, (tokens) => tokens.verify({ key, token })).pipe(
+		Effect.flatMap(FileTokensService, (tokens) =>
+			tokens.verify({ key, token }),
+		).pipe(
 			Effect.as("valid" as const),
 			Effect.catchTag("InvalidFileTokenError", () =>
 				Effect.succeed("invalid" as const),

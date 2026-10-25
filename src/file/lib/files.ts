@@ -1,11 +1,11 @@
 import { Effect, Option } from "effect";
-import { IdGenerator } from "#core/services/id-generator";
+import { IdGeneratorService } from "#core/services/id-generator-service";
 import { FileUploadRejectedError } from "#file/errors/file-upload-rejected-error";
 import {
 	extensionFromContentType,
 	normalizeContentType,
 } from "#file/lib/content-type";
-import { FileStorage } from "#file/services/file-storage";
+import { FileStorageService } from "#file/services/file-storage-service";
 import type { ContentType } from "#file/value-objects/content-type";
 import { FileKey } from "#file/value-objects/file-key";
 import { FileUpload } from "#file/value-objects/file-upload";
@@ -136,13 +136,13 @@ function make<const Kinds extends FileKinds>(config: FilesConfig<Kinds>) {
 		) =>
 			Effect.gen(function* () {
 				const contentType = yield* acceptedContentType(name, input);
-				const id = yield* (yield* IdGenerator).generate();
+				const id = yield* (yield* IdGeneratorService).generate();
 				const fileName = `${id}.${extensionFromContentType(contentType)}`;
 				const key = keyIn(
 					name,
 					input.scope === undefined ? fileName : `${input.scope}/${fileName}`,
 				);
-				const link = yield* (yield* FileStorage).uploadUrl({
+				const link = yield* (yield* FileStorageService).uploadUrl({
 					key,
 					contentType,
 					contentLength: input.contentLength,

@@ -4,7 +4,7 @@ import {
 	atViewportSize,
 	bunWebViewScreenshots,
 } from "#screenshot/adapters/bun/bun-web-view-screenshots";
-import { Screenshots } from "#screenshot/services/screenshots";
+import { ScreenshotService } from "#screenshot/services/screenshot-service";
 
 const onePixel = Uint8Array.fromBase64(
 	"iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=",
@@ -38,7 +38,7 @@ describe.skipIf(process.platform !== "darwin")("bunWebViewScreenshots", () => {
 	it("captures the viewport at the requested size", async () => {
 		const screenshot = await Effect.runPromise(
 			Effect.gen(function* () {
-				const screenshots = yield* Screenshots;
+				const screenshots = yield* ScreenshotService;
 				return yield* screenshots.capture({
 					url: server.url.href,
 					width: 320,
@@ -60,7 +60,7 @@ describe.skipIf(process.platform !== "darwin")("bunWebViewScreenshots", () => {
 	it("fails with a ScreenshotError when the page never loads in time", async () => {
 		const error = await Effect.runPromise(
 			Effect.gen(function* () {
-				const screenshots = yield* Screenshots;
+				const screenshots = yield* ScreenshotService;
 				return yield* screenshots.capture({
 					url: server.url.href,
 					width: 320,

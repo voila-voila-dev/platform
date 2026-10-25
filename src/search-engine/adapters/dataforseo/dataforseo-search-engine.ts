@@ -3,7 +3,7 @@ import type { Locale } from "#locale/value-objects/locale";
 import { numericCountryCode } from "#location/lib/numeric-country-code";
 import type { CountryCode } from "#location/value-objects/country-code";
 import { SearchEngineError } from "#search-engine/errors/search-engine-error";
-import { SearchEngine } from "#search-engine/services/search-engine";
+import { SearchEngineService } from "#search-engine/services/search-engine-service";
 import { SearchEngineResult } from "#search-engine/value-objects/search-engine-result";
 
 const ENDPOINT =
@@ -106,7 +106,7 @@ export function dataForSeoSearchEngine(options: DataForSeoSearchEngineOptions) {
 	const authorization = `Basic ${btoa(`${options.login}:${Redacted.value(options.password)}`)}`;
 	const decodeAnswer = Schema.decodeUnknownSync(DataForSeoAnswer);
 
-	return Layer.succeed(SearchEngine, {
+	return Layer.succeed(SearchEngineService, {
 		search: ({ query, resultCount, locale, country }) => {
 			const location = locationCode(country);
 			const language = languageCode(locale, country);

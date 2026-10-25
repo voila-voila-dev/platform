@@ -1,8 +1,8 @@
 import { Context, type Effect } from "effect";
 import type { RateLimitedError } from "#rate-limiting/errors/rate-limited-error";
 
-export class RateLimiter extends Context.Service<
-	RateLimiter,
+export class RateLimiterService extends Context.Service<
+	RateLimiterService,
 	{
 		readonly consume: (
 			key: string,
@@ -19,4 +19,4 @@ export class RateLimiter extends Context.Service<
 			limit: number,
 		) => Effect.Effect<void, RateLimitedError>;
 	}
->()("@voila.dev/platform/RateLimiter") {}
+>()("@voila.dev/platform/RateLimiterService") {}

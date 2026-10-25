@@ -1,7 +1,7 @@
 import { describe, expect, it } from "bun:test";
 import { Effect, Layer } from "effect";
 import { SystemActor } from "#core/actor/system-actor";
-import { RateLimiter } from "#rate-limiting/services/rate-limiter";
+import { RateLimiterService } from "#rate-limiting/services/rate-limiter-service";
 import { consumeSearchBudget } from "#search/lib/consume-search-budget";
 import { SearchBudget } from "#search/services/search-budget";
 
@@ -9,7 +9,7 @@ function recordingRateLimiter() {
 	const consumed: Array<readonly [string, number, number]> = [];
 	return {
 		consumed,
-		layer: Layer.succeed(RateLimiter, {
+		layer: Layer.succeed(RateLimiterService, {
 			consume: () => Effect.void,
 			consumeMany: (key, windowSeconds, limit) =>
 				Effect.sync(() => {

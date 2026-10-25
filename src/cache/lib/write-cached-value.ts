@@ -1,10 +1,10 @@
 import { Effect, Schema } from "effect";
-import type { KeyValueCache } from "#cache/services/key-value-cache";
+import type { KeyValueCacheService } from "#cache/services/key-value-cache-service";
 
 // The value already comes from the source of truth, so a failed write is
 // logged and skipped rather than failing the caller.
 export function writeCachedValue<A, I>(
-	cache: KeyValueCache["Service"],
+	cache: KeyValueCacheService["Service"],
 	options: {
 		readonly key: string;
 		readonly schema: Schema.Codec<A, I>;

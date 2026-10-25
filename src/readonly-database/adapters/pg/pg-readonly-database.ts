@@ -2,7 +2,7 @@ import { Effect, Layer } from "effect";
 import { Pool, type PoolConfig } from "pg";
 import { toJsonValue } from "#readonly-database/adapters/pg/to-json-value";
 import { ReadonlyQueryError } from "#readonly-database/errors/readonly-query-error";
-import { ReadonlyDatabase } from "#readonly-database/services/readonly-database";
+import { ReadonlyDatabaseService } from "#readonly-database/services/readonly-database-service";
 import { ColumnDescription } from "#readonly-database/value-objects/column-description";
 import type { JsonRow } from "#readonly-database/value-objects/json-row";
 import { ReadonlyQueryResult } from "#readonly-database/value-objects/readonly-query-result";
@@ -74,7 +74,7 @@ export function pgReadonlyDatabase(
 		schema = "public",
 	} = options;
 	return Layer.effect(
-		ReadonlyDatabase,
+		ReadonlyDatabaseService,
 		Effect.gen(function* () {
 			const context = yield* Effect.context();
 			const pool = yield* Effect.acquireRelease(
