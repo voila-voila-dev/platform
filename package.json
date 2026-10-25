@@ -63,7 +63,10 @@
 		"./screenshot/memory": "./src/screenshot/adapters/memory/index.ts",
 		"./spreadsheet": "./src/spreadsheet/index.ts",
 		"./spreadsheet/memory": "./src/spreadsheet/adapters/memory/index.ts",
-		"./spreadsheet/xlsx": "./src/spreadsheet/adapters/xlsx/index.ts"
+		"./spreadsheet/xlsx": "./src/spreadsheet/adapters/xlsx/index.ts",
+		"./time-zone": "./src/time-zone/index.ts",
+		"./time-zone/memory": "./src/time-zone/adapters/memory/index.ts",
+		"./time-zone/tz-lookup": "./src/time-zone/adapters/tz-lookup/index.ts"
 	},
 	"imports": {
 		"#*": "./src/*.ts"
@@ -128,7 +131,10 @@
 			"./screenshot/memory": "./dist/screenshot/adapters/memory/index.js",
 			"./spreadsheet": "./dist/spreadsheet/index.js",
 			"./spreadsheet/memory": "./dist/spreadsheet/adapters/memory/index.js",
-			"./spreadsheet/xlsx": "./dist/spreadsheet/adapters/xlsx/index.js"
+			"./spreadsheet/xlsx": "./dist/spreadsheet/adapters/xlsx/index.js",
+			"./time-zone": "./dist/time-zone/index.js",
+			"./time-zone/memory": "./dist/time-zone/adapters/memory/index.js",
+			"./time-zone/tz-lookup": "./dist/time-zone/adapters/tz-lookup/index.js"
 		},
 		"imports": {
 			"#*": "./dist/*.js"
@@ -154,17 +160,20 @@
 		"@changesets/cli": "3.0.3",
 		"@types/bun": "1.4.3",
 		"@types/pg": "^8.23.1",
+		"@types/tz-lookup": "^6.1.2",
 		"drizzle-orm": "1.0.0-rc.5-5935859",
 		"effect": "4.0.3",
 		"exceljs": "^4.4.0",
 		"pg": "^8.23.1",
-		"typescript": "7.0.2"
+		"typescript": "7.0.2",
+		"tz-lookup": "^6.1.25"
 	},
 	"peerDependencies": {
 		"drizzle-orm": "^1.0.0-rc.5-5935859",
 		"effect": "^4.0.0",
 		"exceljs": "^4.4.0",
-		"pg": "^8.23.1"
+		"pg": "^8.23.1",
+		"tz-lookup": "^6.1.25"
 	},
 	"workspaces": [
 		".",
@@ -178,6 +187,9 @@
 			"optional": true
 		},
 		"pg": {
+			"optional": true
+		},
+		"tz-lookup": {
 			"optional": true
 		}
 	}
