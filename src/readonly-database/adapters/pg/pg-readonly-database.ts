@@ -34,12 +34,31 @@ function boundRows(
 	return { rows: kept, truncated: false };
 }
 
-// A pg error also carries the client that raised it, password included: only
-// its message leaves this adapter.
-function failure(cause: unknown): ReadonlyQueryError {
-	return new ReadonlyQueryError({
-		message: cause instanceof Error ? cause.message : String(cause),
+// What a reader needs to fix its statement. An allowlist, because a pg error
+// also carries the client that raised it, password included.
+const ERROR_FIELDS = [
+	"code",
+	"detail",
+	"hint",
+	"position",
+	"table",
+	"column",
+	"constraint",
+] as const;
+
+export function describeFailure(cause: unknown): string {
+	if (!(cause instanceof Error)) return String(cause);
+	const fields = ERROR_FIELDS.flatMap((field) => {
+		const value: unknown = Reflect.get(cause, field);
+		return typeof value === "string" && value.length > 0
+			? [`${field}=${value}`]
+			: [];
 	});
+	return [cause.message, ...fields].join(" ");
+}
+
+function failure(cause: unknown): ReadonlyQueryError {
+	return new ReadonlyQueryError({ message: describeFailure(cause) });
 }
 
 // The posture is set on the connection itself, on top of whatever grants the

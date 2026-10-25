@@ -113,6 +113,18 @@ describe.skipIf(url === undefined)("pgReadonlyDatabase", () => {
 		expect(rows).toStrictEqual([{ one: 1 }]);
 	});
 
+	it("names the code, hint and position of a failed statement", async () => {
+		const error = await run(
+			ReadonlyDatabase.use((database) =>
+				Effect.flip(database.query(`SELECT lable FROM ${table}`)),
+			),
+		);
+
+		expect(error.message).toBe(
+			`column "lable" does not exist code=42703 hint=Perhaps you meant to reference the column "${table}.label". position=8`,
+		);
+	});
+
 	it("describes the asked tables", async () => {
 		const columns = await run(
 			ReadonlyDatabase.use((database) => database.describeTables([table])),
