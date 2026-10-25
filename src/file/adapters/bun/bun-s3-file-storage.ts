@@ -1,7 +1,7 @@
 import { DateTime, Duration, Effect, Layer, Option, Schedule } from "effect";
 import { normalizeContentTypeOrOctetStream } from "#file/lib/content-type";
 import { FileLinkLifetime } from "#file/services/file-link-lifetime";
-import { FileStorage } from "#file/services/file-storage";
+import { FileStorageService } from "#file/services/file-storage-service";
 import { FileLink } from "#file/value-objects/file-link";
 import { FileStat } from "#file/value-objects/file-stat";
 
@@ -89,11 +89,11 @@ export function bunS3FileStorage(options: BunS3FileStorageOptions) {
 		}).pipe(
 			Effect.retry(transientRetry),
 			Effect.orDie,
-			Effect.withSpan(`FileStorage.${name}`),
+			Effect.withSpan(`FileStorageService.${name}`),
 		);
 	}
 
-	return Layer.succeed(FileStorage, {
+	return Layer.succeed(FileStorageService, {
 		uploadUrl: ({ key, contentType }) =>
 			Effect.gen(function* () {
 				const lifetimes = yield* FileLinkLifetime;

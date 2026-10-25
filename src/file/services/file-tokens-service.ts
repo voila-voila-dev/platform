@@ -2,8 +2,8 @@ import { Context, type DateTime, type Effect } from "effect";
 import type { InvalidFileTokenError } from "#file/errors/invalid-file-token-error";
 import type { FileKey } from "#file/value-objects/file-key";
 
-export class FileTokens extends Context.Service<
-	FileTokens,
+export class FileTokensService extends Context.Service<
+	FileTokensService,
 	{
 		readonly mint: (grant: {
 			readonly key: FileKey;
@@ -14,4 +14,4 @@ export class FileTokens extends Context.Service<
 			readonly token: string;
 		}) => Effect.Effect<void, InvalidFileTokenError>;
 	}
->()("@voila.dev/platform/FileTokens") {}
+>()("@voila.dev/platform/FileTokensService") {}

@@ -1,11 +1,11 @@
 import { Array as Arr, Effect, Option, Result } from "effect";
 import type { LocationProviderError } from "#location/errors/location-provider-error";
-import type { LocationProvider } from "#location/services/location-provider";
+import type { LocationProviderService } from "#location/services/location-provider-service";
 import type { AddressMatch } from "#location/value-objects/address-match";
 import type { Coordinates } from "#location/value-objects/coordinates";
 import type { CountryCode } from "#location/value-objects/country-code";
 
-type LocationProviderShape = typeof LocationProvider.Service;
+type LocationProviderShape = typeof LocationProviderService.Service;
 
 type Attempt<A> = () => Effect.Effect<A, LocationProviderError>;
 

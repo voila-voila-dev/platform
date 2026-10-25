@@ -2,9 +2,9 @@ import { describe, expect, it } from "bun:test";
 import { Effect, Layer } from "effect";
 import { TestClock } from "effect/testing";
 import { inMemoryKeyValueCache } from "#cache/adapters/memory/in-memory-key-value-cache";
-import { KeyValueCache } from "#cache/services/key-value-cache";
+import { KeyValueCacheService } from "#cache/services/key-value-cache-service";
 
-function run<A, E>(effect: Effect.Effect<A, E, KeyValueCache>) {
+function run<A, E>(effect: Effect.Effect<A, E, KeyValueCacheService>) {
 	return Effect.runPromise(
 		effect.pipe(
 			Effect.provide(
@@ -18,7 +18,7 @@ describe("inMemoryKeyValueCache", () => {
 	it("reads back a value until its time to live runs out", async () => {
 		const reads = await run(
 			Effect.gen(function* () {
-				const cache = yield* KeyValueCache;
+				const cache = yield* KeyValueCacheService;
 				yield* cache.set("key", "value", 60);
 				const fresh = yield* cache.get("key");
 				yield* TestClock.adjust("60 seconds");
@@ -33,7 +33,7 @@ describe("inMemoryKeyValueCache", () => {
 	it("keeps a counter's first expiry", async () => {
 		const totals = await run(
 			Effect.gen(function* () {
-				const cache = yield* KeyValueCache;
+				const cache = yield* KeyValueCacheService;
 				const first = yield* cache.increment("counter", 60);
 				yield* TestClock.adjust("30 seconds");
 				const second = yield* cache.increment("counter", 60);
@@ -52,7 +52,7 @@ describe("inMemoryKeyValueCache", () => {
 
 		const exit = await Effect.runPromise(
 			Effect.exit(
-				KeyValueCache.use((kv) =>
+				KeyValueCacheService.use((kv) =>
 					Effect.andThen(kv.delete("key"), kv.get("key")),
 				).pipe(Effect.provide(cache.layer)),
 			),

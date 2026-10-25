@@ -3,11 +3,11 @@
 A string-to-string cache with a time to live per entry. A miss and an outage are typed errors, and what they mean is the caller's decision.
 
 ```ts
-import { KeyValueCache, readCachedValue, writeCachedValue } from "@voila.dev/platform/cache";
+import { KeyValueCacheService, readCachedValue, writeCachedValue } from "@voila.dev/platform/cache";
 
 const profile = (id: string) =>
 	Effect.gen(function* () {
-		const cache = yield* KeyValueCache;
+		const cache = yield* KeyValueCacheService;
 		const cached = yield* readCachedValue(cache, `profile:${id}`, Profile);
 		if (Option.isSome(cached)) return cached.value;
 		const fresh = yield* loadProfile(id);

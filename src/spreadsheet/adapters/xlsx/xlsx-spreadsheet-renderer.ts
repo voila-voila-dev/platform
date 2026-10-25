@@ -1,7 +1,7 @@
 import { Buffer } from "node:buffer";
 import { Effect, Layer } from "effect";
 import type ExcelJS from "exceljs";
-import { SpreadsheetRenderer } from "#spreadsheet/services/spreadsheet-renderer";
+import { SpreadsheetService } from "#spreadsheet/services/spreadsheet-service";
 import type { SpreadsheetCellStyle } from "#spreadsheet/value-objects/spreadsheet-cell-style";
 import type { SpreadsheetDocument } from "#spreadsheet/value-objects/spreadsheet-document";
 import type { SpreadsheetSheet } from "#spreadsheet/value-objects/spreadsheet-sheet";
@@ -91,6 +91,6 @@ async function renderWorkbook(document: SpreadsheetDocument) {
 	return new Uint8Array(await workbook.xlsx.writeBuffer());
 }
 
-export const xlsxSpreadsheetRenderer = Layer.succeed(SpreadsheetRenderer, {
+export const xlsxSpreadsheetRenderer = Layer.succeed(SpreadsheetService, {
 	render: (document) => Effect.promise(() => renderWorkbook(document)),
 });

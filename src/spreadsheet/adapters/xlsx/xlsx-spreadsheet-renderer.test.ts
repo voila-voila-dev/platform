@@ -3,7 +3,7 @@ import { Effect } from "effect";
 import ExcelJS from "exceljs";
 import { xlsxSpreadsheetRenderer } from "#spreadsheet/adapters/xlsx/xlsx-spreadsheet-renderer";
 import { cell, mergedCell } from "#spreadsheet/lib/spreadsheet-cell-builders";
-import { SpreadsheetRenderer } from "#spreadsheet/services/spreadsheet-renderer";
+import { SpreadsheetService } from "#spreadsheet/services/spreadsheet-service";
 import type { SpreadsheetDocument } from "#spreadsheet/value-objects/spreadsheet-document";
 
 // A 1×1 transparent PNG.
@@ -16,7 +16,7 @@ const PIXEL = Uint8Array.from(
 
 async function render(document: SpreadsheetDocument) {
 	const bytes = await Effect.runPromise(
-		SpreadsheetRenderer.use((renderer) => renderer.render(document)).pipe(
+		SpreadsheetService.use((renderer) => renderer.render(document)).pipe(
 			Effect.provide(xlsxSpreadsheetRenderer),
 		),
 	);

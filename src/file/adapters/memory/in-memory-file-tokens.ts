@@ -1,6 +1,6 @@
 import { DateTime, Effect, Layer } from "effect";
 import { InvalidFileTokenError } from "#file/errors/invalid-file-token-error";
-import { FileTokens } from "#file/services/file-tokens";
+import { FileTokensService } from "#file/services/file-tokens-service";
 import type { FileKey } from "#file/value-objects/file-key";
 
 export function inMemoryFileTokens() {
@@ -11,7 +11,7 @@ export function inMemoryFileTokens() {
 
 	return {
 		minted,
-		layer: Layer.succeed(FileTokens, {
+		layer: Layer.succeed(FileTokensService, {
 			mint: (grant) =>
 				Effect.sync(() => {
 					const token = `token-${minted.size + 1}`;

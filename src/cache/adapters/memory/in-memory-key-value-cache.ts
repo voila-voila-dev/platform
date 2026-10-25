@@ -1,6 +1,6 @@
 import { Clock, Effect, Layer } from "effect";
 import { CacheMissError } from "#cache/errors/cache-miss-error";
-import { KeyValueCache } from "#cache/services/key-value-cache";
+import { KeyValueCacheService } from "#cache/services/key-value-cache-service";
 
 // Expiry reads the Effect `Clock`, so a test moves time with `TestClock`. A
 // test may seed or inspect `store` directly; an entry written there never
@@ -26,8 +26,8 @@ export function inMemoryKeyValueCache() {
 	return {
 		store,
 		layer: Layer.succeed(
-			KeyValueCache,
-			KeyValueCache.of({
+			KeyValueCacheService,
+			KeyValueCacheService.of({
 				get: (key) =>
 					Effect.flatMap(Clock.currentTimeMillis, (now) => {
 						const value = live(key, now);

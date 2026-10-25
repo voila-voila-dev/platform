@@ -29,10 +29,10 @@ export {
 	encodeFileKeyPath,
 	secureFileDownloads,
 } from "#file/lib/secure-file-downloads";
-export { FileDownloads } from "#file/services/file-downloads";
+export { FileDownloadsService } from "#file/services/file-downloads-service";
 export { FileLinkLifetime } from "#file/services/file-link-lifetime";
-export { FileStorage } from "#file/services/file-storage";
-export { FileTokens } from "#file/services/file-tokens";
+export { FileStorageService } from "#file/services/file-storage-service";
+export { FileTokensService } from "#file/services/file-tokens-service";
 export { ContentType } from "#file/value-objects/content-type";
 export { FileKey } from "#file/value-objects/file-key";
 export { FileLink } from "#file/value-objects/file-link";

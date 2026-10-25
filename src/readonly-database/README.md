@@ -3,7 +3,7 @@
 Read-only SQL over a database, for exploration by a person or an assistant. The adapter holds the posture (a read-only session, a statement timeout, a byte cap on the result); `guardQuery` explains a refusal before the statement reaches it.
 
 ```ts
-import { guardQuery, maskRows, ReadonlyDatabase } from "@voila.dev/platform/readonly-database";
+import { guardQuery, maskRows, ReadonlyDatabaseService } from "@voila.dev/platform/readonly-database";
 
 const policy = {
 	tables: new Set(["mission", "mission_report"]),
@@ -13,7 +13,7 @@ const policy = {
 
 const explore = (rawSql: string) =>
 	Effect.gen(function* () {
-		const database = yield* ReadonlyDatabase;
+		const database = yield* ReadonlyDatabaseService;
 		const sql = yield* guardQuery(rawSql, policy);
 		const result = yield* database.query(sql);
 		return {

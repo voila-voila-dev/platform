@@ -1,10 +1,10 @@
 import { Effect, Option, Schema } from "effect";
-import type { KeyValueCache } from "#cache/services/key-value-cache";
+import type { KeyValueCacheService } from "#cache/services/key-value-cache-service";
 
 // For a cache in front of a source of truth: every failure reads as absent.
 // An entry written before a schema change (a deploy) is absent too.
 export function readCachedValue<A, I>(
-	cache: KeyValueCache["Service"],
+	cache: KeyValueCacheService["Service"],
 	key: string,
 	schema: Schema.Codec<A, I>,
 ): Effect.Effect<Option.Option<A>> {

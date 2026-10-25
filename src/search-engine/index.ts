@@ -1,6 +1,6 @@
 export { SearchEngineError } from "#search-engine/errors/search-engine-error";
 export {
-	SearchEngine,
 	type SearchEngineQuery,
-} from "#search-engine/services/search-engine";
+	SearchEngineService,
+} from "#search-engine/services/search-engine-service";
 export { SearchEngineResult } from "#search-engine/value-objects/search-engine-result";

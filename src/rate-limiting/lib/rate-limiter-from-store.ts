@@ -1,18 +1,18 @@
 import { Duration, Effect, Layer } from "effect";
 import { RateLimiter as EffectRateLimiter } from "effect/persistence";
 import { RateLimitedError } from "#rate-limiting/errors/rate-limited-error";
-import { RateLimiter } from "#rate-limiting/services/rate-limiter";
+import { RateLimiterService } from "#rate-limiting/services/rate-limiter-service";
 
 // When the store is down, a throttle against spam lets the call through (an
 // outage must not stop a code from being sent), while an attempt cap denies:
 // it is the brute-force control. Keys name the email, phone or IP they count,
 // so they stay out of the logs.
 export const rateLimiterFromStore: Layer.Layer<
-	RateLimiter,
+	RateLimiterService,
 	never,
 	EffectRateLimiter.RateLimiterStore
 > = Layer.effect(
-	RateLimiter,
+	RateLimiterService,
 	Effect.map(EffectRateLimiter.make, (limiter) => {
 		function consume(
 			key: string,

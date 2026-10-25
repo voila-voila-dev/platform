@@ -2,9 +2,9 @@ import { describe, expect, it } from "bun:test";
 import { Effect, Redacted } from "effect";
 import { dataForSeoSearchEngine } from "#search-engine/adapters/dataforseo/dataforseo-search-engine";
 import {
-	SearchEngine,
 	type SearchEngineQuery,
-} from "#search-engine/services/search-engine";
+	SearchEngineService,
+} from "#search-engine/services/search-engine-service";
 
 const OK = 20_000;
 
@@ -41,7 +41,7 @@ function engineAnswering(answer: () => unknown) {
 			country: "FR",
 		},
 	) {
-		return SearchEngine.use((engine) =>
+		return SearchEngineService.use((engine) =>
 			engine.search({ query, resultCount, ...where }),
 		).pipe(Effect.provide(layer));
 	}

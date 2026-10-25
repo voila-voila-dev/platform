@@ -1,6 +1,6 @@
 import { DateTime, Effect, Layer, Redacted } from "effect";
 import { InvalidFileTokenError } from "#file/errors/invalid-file-token-error";
-import { FileTokens } from "#file/services/file-tokens";
+import { FileTokensService } from "#file/services/file-tokens-service";
 
 const MAC_HEX_LENGTH = 32;
 
@@ -26,7 +26,7 @@ function epochSeconds(dateTime: DateTime.Utc): number {
 
 export function hmacFileTokens(secret: Redacted.Redacted<string>) {
 	return Layer.effect(
-		FileTokens,
+		FileTokensService,
 		Effect.map(
 			Effect.promise(() =>
 				crypto.subtle.importKey(

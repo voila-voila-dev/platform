@@ -1,7 +1,7 @@
 import { DateTime, Effect, Option, Schema } from "effect";
 import { Actor } from "#core/actor/actor";
 import { Gate } from "#core/authorization/gates";
-import { IdGenerator } from "#core/services/id-generator";
+import { IdGeneratorService } from "#core/services/id-generator-service";
 import { UseCase } from "#core/use-case/make-use-case";
 import { LinkClick } from "#link-tracking/click/aggregates/link-click";
 import { isWebUrl } from "#link-tracking/click/lib/is-web-url";
@@ -34,7 +34,9 @@ export const RecordLinkClickUseCase = UseCase.make({
 				return Option.none();
 			const link = found.value;
 
-			const clickId = LinkClickId.make(yield* (yield* IdGenerator).generate());
+			const clickId = LinkClickId.make(
+				yield* (yield* IdGeneratorService).generate(),
+			);
 			yield* (yield* LinkClickRepository).save(
 				new LinkClick({
 					id: clickId,

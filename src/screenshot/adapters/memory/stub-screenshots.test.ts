@@ -1,11 +1,11 @@
 import { describe, expect, it } from "bun:test";
 import { Effect } from "effect";
 import { stubScreenshots } from "#screenshot/adapters/memory/stub-screenshots";
-import { Screenshots } from "#screenshot/services/screenshots";
+import { ScreenshotService } from "#screenshot/services/screenshot-service";
 
 function capture(url: string) {
 	return Effect.gen(function* () {
-		const screenshots = yield* Screenshots;
+		const screenshots = yield* ScreenshotService;
 		return yield* screenshots.capture({ url, width: 1200, height: 630 });
 	});
 }

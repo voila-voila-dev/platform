@@ -1,5 +1,5 @@
 import { Effect, Layer } from "effect";
-import { SecureRandom } from "#core/services/secure-random";
+import { SecureRandomService } from "#core/services/secure-random-service";
 
 function randomBytes(length: number): Uint8Array {
 	return crypto.getRandomValues(new Uint8Array(length));
@@ -19,7 +19,7 @@ function randomDigitCode(length: number): string {
 	return digits.join("");
 }
 
-export const webCryptoSecureRandom = Layer.succeed(SecureRandom, {
+export const webCryptoSecureRandom = Layer.succeed(SecureRandomService, {
 	digitCode: (length) => Effect.sync(() => randomDigitCode(length)),
 	token: (byteLength) => Effect.sync(() => randomToken(byteLength)),
 });

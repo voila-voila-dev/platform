@@ -1,6 +1,6 @@
 import { DateTime, Effect, Layer, Option } from "effect";
 import { FileLinkLifetime } from "#file/services/file-link-lifetime";
-import { FileStorage } from "#file/services/file-storage";
+import { FileStorageService } from "#file/services/file-storage-service";
 import type { ContentType } from "#file/value-objects/content-type";
 import type { FileKey } from "#file/value-objects/file-key";
 import { FileLink } from "#file/value-objects/file-link";
@@ -16,7 +16,7 @@ export function inMemoryFileStorage() {
 
 	return {
 		files,
-		layer: Layer.succeed(FileStorage, {
+		layer: Layer.succeed(FileStorageService, {
 			uploadUrl: ({ key }) =>
 				Effect.gen(function* () {
 					const lifetimes = yield* FileLinkLifetime;

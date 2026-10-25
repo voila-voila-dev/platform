@@ -2,7 +2,7 @@ import { describe, expect, it } from "bun:test";
 import { Effect } from "effect";
 import type { CountryCode } from "#location/value-objects/country-code";
 import { inMemorySearchEngine } from "#search-engine/adapters/memory/in-memory-search-engine";
-import { SearchEngine } from "#search-engine/services/search-engine";
+import { SearchEngineService } from "#search-engine/services/search-engine-service";
 
 function search(
 	query: string,
@@ -10,7 +10,7 @@ function search(
 	country: CountryCode = "FR",
 ) {
 	return Effect.runPromise(
-		SearchEngine.use((engine) =>
+		SearchEngineService.use((engine) =>
 			engine.search({ query, resultCount, locale: "fr-FR", country }),
 		).pipe(Effect.provide(inMemorySearchEngine)),
 	);

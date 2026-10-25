@@ -5,8 +5,8 @@ import type { AddressMatch } from "#location/value-objects/address-match";
 import type { AddressSuggestQuery } from "#location/value-objects/address-suggest-query";
 import type { Coordinates } from "#location/value-objects/coordinates";
 
-export class LocationProvider extends Context.Service<
-	LocationProvider,
+export class LocationProviderService extends Context.Service<
+	LocationProviderService,
 	{
 		readonly suggest: (
 			query: AddressSuggestQuery,
@@ -20,4 +20,4 @@ export class LocationProvider extends Context.Service<
 			address: Address,
 		) => Effect.Effect<Option.Option<Coordinates>, LocationProviderError>;
 	}
->()("@voila.dev/platform/LocationProvider") {}
+>()("@voila.dev/platform/LocationProviderService") {}

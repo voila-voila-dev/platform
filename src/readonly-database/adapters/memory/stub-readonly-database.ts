@@ -1,5 +1,5 @@
 import { Effect, Layer } from "effect";
-import { ReadonlyDatabase } from "#readonly-database/services/readonly-database";
+import { ReadonlyDatabaseService } from "#readonly-database/services/readonly-database-service";
 import type { ColumnDescription } from "#readonly-database/value-objects/column-description";
 import type { ReadonlyQueryResult } from "#readonly-database/value-objects/readonly-query-result";
 
@@ -14,7 +14,7 @@ export function stubReadonlyDatabase(
 		options;
 	return {
 		queries,
-		layer: Layer.succeed(ReadonlyDatabase, {
+		layer: Layer.succeed(ReadonlyDatabaseService, {
 			query: (sql) =>
 				Effect.sync(() => {
 					queries.push(sql);

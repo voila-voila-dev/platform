@@ -2,7 +2,7 @@ import { Effect, Layer } from "effect";
 import { Redis } from "effect/persistence";
 import { CacheMissError } from "#cache/errors/cache-miss-error";
 import { CacheTransportError } from "#cache/errors/cache-transport-error";
-import { KeyValueCache } from "#cache/services/key-value-cache";
+import { KeyValueCacheService } from "#cache/services/key-value-cache-service";
 
 // INCR creates the key without a TTL, so only the first increment of a window
 // sets one, or a busy window would push its own expiry out. One script keeps
@@ -22,10 +22,10 @@ return total`,
 // prefix.
 export function redisKeyValueCache(
 	options: { readonly prefix?: string } = {},
-): Layer.Layer<KeyValueCache, never, Redis.Redis> {
+): Layer.Layer<KeyValueCacheService, never, Redis.Redis> {
 	const prefix = options.prefix ?? "cache:";
 	return Layer.effect(
-		KeyValueCache,
+		KeyValueCacheService,
 		Redis.Redis.useSync((redis) => {
 			const increment = redis.eval(incrementScript);
 			function transport(key: string, verb: string) {
@@ -35,7 +35,7 @@ export function redisKeyValueCache(
 						reason: `${verb} failed: ${error.cause}`,
 					});
 			}
-			return KeyValueCache.of({
+			return KeyValueCacheService.of({
 				get: (key) =>
 					redis.send<string | null>("GET", `${prefix}${key}`).pipe(
 						Effect.mapError(transport(key, "get")),

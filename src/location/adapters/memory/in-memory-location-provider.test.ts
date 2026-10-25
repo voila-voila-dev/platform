@@ -1,14 +1,14 @@
 import { describe, expect, it } from "bun:test";
 import { Effect, Option } from "effect";
 import { inMemoryLocationProvider } from "#location/adapters/memory/in-memory-location-provider";
-import { LocationProvider } from "#location/services/location-provider";
+import { LocationProviderService } from "#location/services/location-provider-service";
 import { Address } from "#location/value-objects/address";
 import { City } from "#location/value-objects/city";
 import { PostalCode } from "#location/value-objects/postal-code";
 import { Street } from "#location/value-objects/street";
 
 const provider = Effect.runSync(
-	LocationProvider.use(Effect.succeed).pipe(
+	LocationProviderService.use(Effect.succeed).pipe(
 		Effect.provide(inMemoryLocationProvider),
 	),
 );

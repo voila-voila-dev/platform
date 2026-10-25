@@ -1,5 +1,5 @@
 import { Effect, Layer, Option } from "effect";
-import { LocationProvider } from "#location/services/location-provider";
+import { LocationProviderService } from "#location/services/location-provider-service";
 import { Address } from "#location/value-objects/address";
 import { AddressMatch } from "#location/value-objects/address-match";
 import { City } from "#location/value-objects/city";
@@ -30,7 +30,7 @@ function syntheticCoordinates(seed: string) {
 	});
 }
 
-export const inMemoryLocationProvider = Layer.succeed(LocationProvider, {
+export const inMemoryLocationProvider = Layer.succeed(LocationProviderService, {
 	suggest: (query) =>
 		Effect.succeed(
 			query.query.trim().length === 0

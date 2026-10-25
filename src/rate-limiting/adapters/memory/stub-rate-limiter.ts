@@ -1,6 +1,6 @@
 import { Effect, Layer } from "effect";
 import { RateLimitedError } from "#rate-limiting/errors/rate-limited-error";
-import { RateLimiter } from "#rate-limiting/services/rate-limiter";
+import { RateLimiterService } from "#rate-limiting/services/rate-limiter-service";
 
 export function stubRateLimiter(failOn?: string) {
 	function guard(key: string) {
@@ -8,7 +8,7 @@ export function stubRateLimiter(failOn?: string) {
 			? Effect.fail(new RateLimitedError({ retryAfterSeconds: 60 }))
 			: Effect.void;
 	}
-	return Layer.succeed(RateLimiter, {
+	return Layer.succeed(RateLimiterService, {
 		consume: (key) => guard(key),
 		consumeMany: (key) => guard(key),
 		consumeAttempt: (key) => guard(key),

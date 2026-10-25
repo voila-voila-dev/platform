@@ -2,8 +2,8 @@ import { Duration, Effect, Option, Schema } from "effect";
 import { HttpServerResponse } from "effect/http";
 import { contentTypeOfKey } from "#file/lib/content-type";
 import { FileLinkLifetime } from "#file/services/file-link-lifetime";
-import { FileStorage } from "#file/services/file-storage";
-import { FileTokens } from "#file/services/file-tokens";
+import { FileStorageService } from "#file/services/file-storage-service";
+import { FileTokensService } from "#file/services/file-tokens-service";
 import { FileKey } from "#file/value-objects/file-key";
 
 const decodeFileKey = Schema.decodeUnknownOption(FileKey);
@@ -40,10 +40,10 @@ export function serveSecureFile(url: URL, options: ServeSecureFileOptions) {
 		if (Option.isNone(key) || token === null) return notFound();
 
 		const verified = yield* Effect.isSuccess(
-			(yield* FileTokens).verify({ key: key.value, token }),
+			(yield* FileTokensService).verify({ key: key.value, token }),
 		);
 		if (!verified) return notFound();
-		const bytes = yield* (yield* FileStorage).read(key.value);
+		const bytes = yield* (yield* FileStorageService).read(key.value);
 		if (Option.isNone(bytes)) return notFound();
 
 		const lifetimes = yield* FileLinkLifetime;

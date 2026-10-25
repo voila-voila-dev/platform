@@ -1,7 +1,7 @@
 import { Effect, Layer } from "effect";
 import { ContentType } from "#file/value-objects/content-type";
 import { ScreenshotError } from "#screenshot/errors/screenshot-error";
-import { Screenshots } from "#screenshot/services/screenshots";
+import { ScreenshotService } from "#screenshot/services/screenshot-service";
 import { Screenshot } from "#screenshot/value-objects/screenshot";
 import type { ScreenshotRequest } from "#screenshot/value-objects/screenshot-request";
 
@@ -12,7 +12,7 @@ export function stubScreenshots(
 	const captured: Array<ScreenshotRequest> = [];
 	return {
 		captured,
-		layer: Layer.succeed(Screenshots, {
+		layer: Layer.succeed(ScreenshotService, {
 			capture: (request) =>
 				options.failing?.includes(request.url)
 					? Effect.fail(

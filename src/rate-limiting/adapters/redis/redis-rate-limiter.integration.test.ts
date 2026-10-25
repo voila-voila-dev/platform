@@ -3,7 +3,7 @@ import { RedisClient } from "bun";
 import { Effect, Layer } from "effect";
 import { Redis } from "effect/persistence";
 import { redisRateLimiter } from "#rate-limiting/adapters/redis/redis-rate-limiter";
-import { RateLimiter } from "#rate-limiting/services/rate-limiter";
+import { RateLimiterService } from "#rate-limiting/services/rate-limiter-service";
 
 const url = process.env.REDIS_URL;
 
@@ -38,7 +38,7 @@ describe.skipIf(url === undefined)("redisRateLimiter", () => {
 		function consume() {
 			return Effect.runPromise(
 				Effect.exit(
-					Effect.flatMap(RateLimiter, (rateLimiter) =>
+					Effect.flatMap(RateLimiterService, (rateLimiter) =>
 						rateLimiter.consumeMany("key", 60, 2),
 					).pipe(Effect.provide(limiter())),
 				),

@@ -2,7 +2,7 @@ import { describe, expect, it } from "bun:test";
 import { Effect } from "effect";
 import { stubReadonlyDatabase } from "#readonly-database/adapters/memory/stub-readonly-database";
 import { unavailableReadonlyDatabase } from "#readonly-database/adapters/memory/unavailable-readonly-database";
-import { ReadonlyDatabase } from "#readonly-database/services/readonly-database";
+import { ReadonlyDatabaseService } from "#readonly-database/services/readonly-database-service";
 
 describe("stubReadonlyDatabase", () => {
 	it("records the queries and describes only the asked tables", async () => {
@@ -15,7 +15,7 @@ describe("stubReadonlyDatabase", () => {
 		});
 
 		const [result, columns] = await Effect.runPromise(
-			ReadonlyDatabase.use((database) =>
+			ReadonlyDatabaseService.use((database) =>
 				Effect.all([
 					database.query("select id from users"),
 					database.describeTables(["users"]),
@@ -32,7 +32,9 @@ describe("stubReadonlyDatabase", () => {
 describe("unavailableReadonlyDatabase", () => {
 	it("refuses every call with the message", async () => {
 		const error = await Effect.runPromise(
-			ReadonlyDatabase.use((database) => database.query("select 1")).pipe(
+			ReadonlyDatabaseService.use((database) =>
+				database.query("select 1"),
+			).pipe(
 				Effect.flip,
 				Effect.provide(unavailableReadonlyDatabase("not configured")),
 			),
