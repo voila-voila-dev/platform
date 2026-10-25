@@ -1,5 +1,11 @@
 # @voila.dev/platform
 
+## 0.13.0
+
+### Minor Changes
+
+- [#40](https://github.com/voila-voila-dev/platform/pull/40) [`38451e4`](https://github.com/voila-voila-dev/platform/commit/38451e434bfffaaa3e83a551ab1c95d137c6d921) Thanks [@emilienbidet](https://github.com/emilienbidet)! - Every port is now named `<Thing>Service`: `IdGeneratorService`, `SecureRandomService`, `KeyValueCacheService`, `FileStorageService`, `FileDownloadsService`, `FileTokensService`, `LocationProviderService`, `RateLimiterService`, `ReadonlyDatabaseService`, `ScreenshotService` (was `Screenshots`), `SearchEngineService` and `SpreadsheetService` (was `SpreadsheetRenderer`). Their files follow (`services/rate-limiter-service.ts`…). Repositories, references and adapters keep their names.
+
 ## 0.12.2
 
 ### Patch Changes
