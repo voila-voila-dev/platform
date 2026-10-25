@@ -47,8 +47,9 @@ describe.skipIf(process.platform !== "darwin")("bunWebViewScreenshots", () => {
 			}).pipe(Effect.provide(bunWebViewScreenshots({ settle: "100 millis" }))),
 		);
 		const { width, height, format } = await new Bun.Image(
-			screenshot.png,
+			screenshot.content,
 		).metadata();
+		expect<string>(screenshot.contentType).toBe("image/png");
 		expect({ width, height, format }).toEqual({
 			width: 320,
 			height: 200,

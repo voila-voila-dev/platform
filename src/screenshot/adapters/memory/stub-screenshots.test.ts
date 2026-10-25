@@ -16,7 +16,7 @@ describe("stubScreenshots", () => {
 		const screenshot = await Effect.runPromise(
 			capture("https://example.com").pipe(Effect.provide(stub.layer)),
 		);
-		expect(new TextDecoder().decode(screenshot.png)).toBe(
+		expect(new TextDecoder().decode(screenshot.content)).toBe(
 			"png:https://example.com",
 		);
 		expect(screenshot.width).toBe(1200);

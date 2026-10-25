@@ -1,4 +1,5 @@
 import { Duration, Effect, Layer } from "effect";
+import { ContentType } from "#file/value-objects/content-type";
 import { ScreenshotError } from "#screenshot/errors/screenshot-error";
 import { Screenshots } from "#screenshot/services/screenshots";
 import { Screenshot } from "#screenshot/value-objects/screenshot";
@@ -61,7 +62,8 @@ export function bunWebViewScreenshots(
 							format: "png",
 						});
 						return Screenshot.make({
-							png: await atViewportSize(new Uint8Array(png), width, height),
+							content: await atViewportSize(new Uint8Array(png), width, height),
+							contentType: ContentType.make("image/png"),
 							width,
 							height,
 						});
