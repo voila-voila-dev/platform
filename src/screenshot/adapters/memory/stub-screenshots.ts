@@ -1,10 +1,8 @@
 import { Effect, Layer } from "effect";
 import { ScreenshotError } from "#screenshot/errors/screenshot-error";
-import {
-	type ScreenshotRequest,
-	Screenshots,
-} from "#screenshot/services/screenshots";
+import { Screenshots } from "#screenshot/services/screenshots";
 import { Screenshot } from "#screenshot/value-objects/screenshot";
+import type { ScreenshotRequest } from "#screenshot/value-objects/screenshot-request";
 
 // The PNG holds `png:<url>`, so a test can tell which page a capture came from.
 export function stubScreenshots(
