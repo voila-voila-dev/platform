@@ -2,10 +2,10 @@ import { Effect, Layer } from "effect";
 import { Pool, type PoolConfig } from "pg";
 import { toJsonValue } from "#readonly-database/adapters/pg/to-json-value";
 import { ReadonlyQueryError } from "#readonly-database/errors/readonly-query-error";
-import {
-	type JsonRow,
-	ReadonlyDatabase,
-} from "#readonly-database/services/readonly-database";
+import { ReadonlyDatabase } from "#readonly-database/services/readonly-database";
+import { ColumnDescription } from "#readonly-database/value-objects/column-description";
+import type { JsonRow } from "#readonly-database/value-objects/json-row";
+import { ReadonlyQueryResult } from "#readonly-database/value-objects/readonly-query-result";
 
 export interface PgReadonlyDatabaseOptions {
 	readonly maxResultBytes?: number;
@@ -92,10 +92,12 @@ export function pgReadonlyDatabase(
 			return {
 				query: (sql) =>
 					run(sql).pipe(
-						Effect.map((result) => ({
-							columns: result.fields.map((field) => field.name),
-							...boundRows(result.rows.map(toJsonRow), maxResultBytes),
-						})),
+						Effect.map((result) =>
+							ReadonlyQueryResult.make({
+								columns: result.fields.map((field) => field.name),
+								...boundRows(result.rows.map(toJsonRow), maxResultBytes),
+							}),
+						),
 					),
 				describeTables: (tables) =>
 					run<{
@@ -111,12 +113,14 @@ export function pgReadonlyDatabase(
 						[schema, [...tables]],
 					).pipe(
 						Effect.map((result) =>
-							result.rows.map((row) => ({
-								table: row.table_name,
-								column: row.column_name,
-								type: row.data_type,
-								nullable: row.is_nullable === "YES",
-							})),
+							result.rows.map((row) =>
+								ColumnDescription.make({
+									table: row.table_name,
+									column: row.column_name,
+									type: row.data_type,
+									nullable: row.is_nullable === "YES",
+								}),
+							),
 						),
 					),
 			};

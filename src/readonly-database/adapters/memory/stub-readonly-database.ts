@@ -1,9 +1,7 @@
 import { Effect, Layer } from "effect";
-import {
-	type ColumnDescription,
-	ReadonlyDatabase,
-	type ReadonlyQueryResult,
-} from "#readonly-database/services/readonly-database";
+import { ReadonlyDatabase } from "#readonly-database/services/readonly-database";
+import type { ColumnDescription } from "#readonly-database/value-objects/column-description";
+import type { ReadonlyQueryResult } from "#readonly-database/value-objects/readonly-query-result";
 
 export function stubReadonlyDatabase(
 	options: {

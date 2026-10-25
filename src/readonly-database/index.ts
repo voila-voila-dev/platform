@@ -1,11 +1,10 @@
 export { QueryRejectedError } from "#readonly-database/errors/query-rejected-error";
 export { ReadonlyQueryError } from "#readonly-database/errors/readonly-query-error";
 export {
-	isPiiColumn,
 	MASKED_VALUE,
 	type MaskOptions,
 	maskRows,
-} from "#readonly-database/lib/pii-columns";
+} from "#readonly-database/lib/mask-rows";
 export {
 	guardQuery,
 	MAX_QUERY_ROWS,
@@ -16,9 +15,7 @@ export {
 	type WithheldColumns,
 	withheldColumnRead,
 } from "#readonly-database/lib/withheld-columns";
-export {
-	type ColumnDescription,
-	type JsonRow,
-	ReadonlyDatabase,
-	type ReadonlyQueryResult,
-} from "#readonly-database/services/readonly-database";
+export { ReadonlyDatabase } from "#readonly-database/services/readonly-database";
+export { ColumnDescription } from "#readonly-database/value-objects/column-description";
+export { JsonRow } from "#readonly-database/value-objects/json-row";
+export { ReadonlyQueryResult } from "#readonly-database/value-objects/readonly-query-result";
