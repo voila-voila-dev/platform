@@ -15,9 +15,7 @@ export {
 	type WithheldColumns,
 	withheldColumnRead,
 } from "#readonly-database/lib/withheld-columns";
-export {
-	type ColumnDescription,
-	type JsonRow,
-	ReadonlyDatabase,
-	type ReadonlyQueryResult,
-} from "#readonly-database/services/readonly-database";
+export { ReadonlyDatabase } from "#readonly-database/services/readonly-database";
+export { ColumnDescription } from "#readonly-database/value-objects/column-description";
+export { JsonRow } from "#readonly-database/value-objects/json-row";
+export { ReadonlyQueryResult } from "#readonly-database/value-objects/readonly-query-result";

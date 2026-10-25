@@ -1,5 +1,5 @@
 import type { Schema } from "effect";
-import type { JsonRow } from "#readonly-database/services/readonly-database";
+import type { JsonRow } from "#readonly-database/value-objects/json-row";
 
 export const MASKED_VALUE = "[masked]";
 
