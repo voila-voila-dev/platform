@@ -68,10 +68,13 @@ export function pgReadonlyDatabase(
 							.filter((option) => option !== undefined)
 							.join(" "),
 					});
-					// An idle client losing its connection must not crash the process.
+					// An idle client losing its connection must not crash the process. Only the
+					// message is logged: the error holds the client, and its password.
 					created.on("error", (error) =>
 						Effect.runForkWith(context)(
-							Effect.logWarning("readonly database connection lost", error),
+							Effect.logWarning(
+								`readonly database connection lost: ${error.message}`,
+							),
 						),
 					);
 					return created;

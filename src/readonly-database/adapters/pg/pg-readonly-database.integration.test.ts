@@ -1,6 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from "bun:test";
 import { SQL } from "bun";
-import { Effect } from "effect";
+import { Effect, Fiber } from "effect";
 import { pgReadonlyDatabase } from "#readonly-database/adapters/pg/pg-readonly-database";
 import { ReadonlyDatabase } from "#readonly-database/services/readonly-database";
 
@@ -83,6 +83,34 @@ describe.skipIf(url === undefined)("pgReadonlyDatabase", () => {
 
 		expect(write.message).toContain("read-only transaction");
 		expect(slow.message).toContain("statement timeout");
+	});
+
+	it("survives its idle connection being cut", async () => {
+		const applicationName = `readonly-test-${crypto.randomUUID()}`;
+		const rows = await Effect.runPromise(
+			ReadonlyDatabase.use((database) =>
+				Effect.gen(function* () {
+					yield* database.query("SELECT 1");
+					yield* Effect.promise(() =>
+						admin.unsafe(
+							"SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE application_name = $1",
+							[applicationName],
+						),
+					);
+					yield* Effect.sleep("200 millis");
+					return (yield* database.query("SELECT 1 AS one")).rows;
+				}),
+			).pipe(
+				Effect.provide(
+					pgReadonlyDatabase({
+						connectionString: url ?? "",
+						application_name: applicationName,
+					}),
+				),
+			),
+		);
+
+		expect(rows).toStrictEqual([{ one: 1 }]);
 	});
 
 	it("describes the asked tables", async () => {
