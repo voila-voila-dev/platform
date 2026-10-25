@@ -45,6 +45,7 @@ A port is a service named `<Thing>Service` (`RateLimiterService`, `FileStorageSe
 | money | `/money` (`Money`, `Currency`, `currencyDecimals`, `formatMoney`, `parseMoneyInput`, `BasisPoints`, `TaxRate`) |
 | screenshot | `/screenshot` (`ScreenshotService`, `ScreenshotRequest`, `Screenshot`, `ScreenshotError`), `/screenshot/memory` (`stubScreenshots`), `/screenshot/bun` (`bunWebViewScreenshots`, on `Bun.WebView`: WebKit on macOS, Chromium elsewhere) |
 | spreadsheet | `/spreadsheet` (`SpreadsheetDocument`, `SpreadsheetSheet`, `SpreadsheetImage`, `cell`, `mergedCell`, `cellStyle`, `serializeCsv`, `SpreadsheetService`), `/spreadsheet/memory` (`stubSpreadsheetRenderer`), `/spreadsheet/xlsx` (`xlsxSpreadsheetRenderer`, on exceljs) |
+| time-zone | `/time-zone` (`TimeZone`, `TIME_ZONES`, `TimeZoneResolverService`, `TimeZoneResolverError`), `/time-zone/memory` (`stubTimeZoneResolver`), `/time-zone/tz-lookup` (`tzLookupTimeZoneResolver`, offline, on tz-lookup) |
 | file | `/file` (`Files`, `FileStorageService`, `FileDownloadsService`, `FileTokensService`, `FileRef`, `ImageRef`, `FileLinkLifetime`), `/file/memory` (`inMemoryFiles`), `/file/bun` (`bunS3FileStorage`, `hmacFileTokens`), `/file/http-server` (`serveSecureFile`) |
 | link-tracking/link | `/link-tracking/link`, `/http` (`TrackedLinksApiGroup`), `/memory`, `/drizzle` (tables, repository, `trackedLinkSearchIndexesSql`), `/http-server` (`trackedLinksHandlers`) |
 | link-tracking/click | `/link-tracking/click`, `/memory`, `/drizzle`, `/http-server` (`redirectToLink`) |
