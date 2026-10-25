@@ -1,5 +1,11 @@
 # @voila.dev/platform
 
+## 0.12.2
+
+### Patch Changes
+
+- [#37](https://github.com/voila-voila-dev/platform/pull/37) [`57891b4`](https://github.com/voila-voila-dev/platform/commit/57891b4ac0d35d04195cc64214dd54a10b15efcb) Thanks [@emilienbidet](https://github.com/emilienbidet)! - `pgReadonlyDatabase` describes a failed statement with the Postgres `code`, `detail`, `hint`, `position`, `table`, `column` and `constraint` after its message, so the reader can fix its SQL. Only those fields are read from the pg error.
+
 ## 0.12.1
 
 ### Patch Changes
