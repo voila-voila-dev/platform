@@ -1,5 +1,17 @@
 # @voila.dev/platform
 
+## 0.14.0
+
+### Minor Changes
+
+- [#45](https://github.com/voila-voila-dev/platform/pull/45) [`bc122fe`](https://github.com/voila-voila-dev/platform/commit/bc122fe53faa00af07a88375ccaaeb790c711cdf) Thanks [@emilienbidet](https://github.com/emilienbidet)! - `/http`: the outbound HTTP brick from tries.care. `HttpService.send(HttpRequest)` answers an `HttpResponse` (`isSuccess`, `text`, `ensureSuccess()`, `json(schema)`) or fails with `HttpError` (`blocked`, `network`, `timeout`, `interrupted`). `/http/memory` has `scriptedHttp`; `/http/bun` has `guardedHttp({ userAgent?, resolve?, fetch?, lookupTimeoutMs? })`, which only reaches public addresses: a GET follows up to three redirects, each one checked, and other methods go over https on 443 to the address that was checked.
+
+- [#39](https://github.com/voila-voila-dev/platform/pull/39) [`4d552cc`](https://github.com/voila-voila-dev/platform/commit/4d552cc97553e8a40c85724040da50291494f9f9) Thanks [@emilienbidet](https://github.com/emilienbidet)! - Add the `lock-manager` brick: `LockManagerService.withLock(key, effect)` runs the effect while holding the key and releases it however it ends, failing with `LockAcquisitionError` when the key cannot be taken. `/lock-manager/memory` has `inMemoryLockManager` (one semaphore per key). `/lock-manager/redis` has `redisLockManager({ prefix, lease, acquireTimeout, retryDelay })`: `SET NX PX` to acquire and a compare-and-delete script to release, on the application's `Redis`.
+
+- [#44](https://github.com/voila-voila-dev/platform/pull/44) [`86796dc`](https://github.com/voila-voila-dev/platform/commit/86796dcae7a3b5f3dbe9634bfb61fb8455384ccc) Thanks [@emilienbidet](https://github.com/emilienbidet)! - New `security` brick: `/security` (`HashService`, `Sha256Hex`, `SecretBoxService`, `SecretBoxError`, `redactPii`, `redactSecrets`, `REDACTED_SECRET`), `/security/bun` (`bunHashService`, `aesGcmSecretBox`, `makeAesGcmSecretBox`, `AES_GCM_KEY_BYTES`; sealed texts are wire-compatible with `@voila.dev/crypto`) and `/security/memory` (`plainSecretBox`, `plainSealed`, `unavailableSecretBox`, `stubHashService`).
+
+- [#42](https://github.com/voila-voila-dev/platform/pull/42) [`e82836e`](https://github.com/voila-voila-dev/platform/commit/e82836e9b3ed549b6036b5a15b80599e15e0038b) Thanks [@emilienbidet](https://github.com/emilienbidet)! - Add the `time-zone` brick: `TimeZone` (the IANA zones Bun and Node can construct, plus `UTC`, listed in `TIME_ZONES`) and `TimeZoneResolverService.resolve(coordinates)`, which returns the zone a point lies in, `None` for a zone outside `TIME_ZONES`, or a `TimeZoneResolverError`; `/time-zone/tz-lookup` (`tzLookupTimeZoneResolver`, offline, on the optional `tz-lookup` peer) and `/time-zone/memory` (`stubTimeZoneResolver`).
+
 ## 0.13.0
 
 ### Minor Changes
