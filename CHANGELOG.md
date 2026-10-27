@@ -1,5 +1,13 @@
 # @voila.dev/platform
 
+## 0.15.0
+
+### Minor Changes
+
+- [#46](https://github.com/voila-voila-dev/platform/pull/46) [`8e168b7`](https://github.com/voila-voila-dev/platform/commit/8e168b73f3125534e96d7e1cbff0f9c79d84b647) Thanks [@emilienbidet](https://github.com/emilienbidet)! - `/http` gains what `@voila.dev/http` gave tries: the `Fetch` type and `globalFetch`, the `OutboundFetch` reference with `outboundFetch(partner)` and `outboundHttpClientLayer(partner)`, `RetryPolicy`/`retryPolicy`, `OutboundTimeout`, `answerField`, and request recording (`recordingFetch`, `RecordedRequest`, `RequestOutcome`; failures are masked with `redactPii` by default). The new `/http/webhooks` checks Stripe, Svix, Twilio and SNS signatures. `/security` gains `@voila.dev/crypto`'s byte helpers (`constantTimeEquals`, `hexFromBytes`, `utf8Bytes`, `textFromUtf8`, base64 and base64url) and `TokenDigest`/`tokenDigest`.
+  
+  Breaking: `Fetch` is no longer exported from `/http/bun`; import it from `/http`.
+
 ## 0.14.0
 
 ### Minor Changes
