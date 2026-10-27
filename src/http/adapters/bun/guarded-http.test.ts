@@ -1,11 +1,11 @@
 import { describe, expect, it } from "bun:test";
 import { Effect, Result } from "effect";
 import {
-	type Fetch,
 	guardedHttp,
 	type HostResolver,
 } from "#http/adapters/bun/guarded-http";
 import type { HttpError } from "#http/errors/http-error";
+import type { Fetch } from "#http/lib/fetch";
 import { HttpService } from "#http/services/http-service";
 import { HttpRequest, httpGet } from "#http/value-objects/http-request";
 import type { HttpResponse } from "#http/value-objects/http-response";

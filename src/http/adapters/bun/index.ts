@@ -1,5 +1,4 @@
 export {
-	type Fetch,
 	type GuardedHttpOptions,
 	guardedHttp,
 	type HostResolver,

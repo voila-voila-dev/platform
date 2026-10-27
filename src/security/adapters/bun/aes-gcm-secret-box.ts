@@ -1,5 +1,7 @@
 import { type Config, Effect, Layer, Redacted } from "effect";
 import { SecretBoxError } from "#security/errors/secret-box-error";
+import { base64FromBytes, bytesFromBase64 } from "#security/lib/base64";
+import { textFromUtf8, utf8Bytes } from "#security/lib/utf8";
 import { SecretBoxService } from "#security/services/secret-box-service";
 
 export const AES_GCM_KEY_BYTES = 32;
@@ -8,26 +10,6 @@ const NONCE_BYTES = 12;
 const FORMAT = "v1";
 
 const unreadable = new SecretBoxError({ reason: "unreadable" });
-const encoder = new TextEncoder();
-const decoder = new TextDecoder("utf-8", { fatal: true });
-
-function utf8Bytes(value: string): Uint8Array<ArrayBuffer> {
-	return new Uint8Array(encoder.encode(value));
-}
-
-function base64FromBytes(bytes: ArrayBuffer | Uint8Array): string {
-	let binary = "";
-	for (const byte of new Uint8Array(bytes)) binary += String.fromCharCode(byte);
-	return btoa(binary);
-}
-
-function bytesFromBase64(text: string): Uint8Array<ArrayBuffer> | null {
-	try {
-		return Uint8Array.from(atob(text), (character) => character.charCodeAt(0));
-	} catch {
-		return null;
-	}
-}
 
 /**
  * AES-256-GCM through Web Crypto: the sealed text is `v1.<nonce>.<ciphertext>`
@@ -80,15 +62,17 @@ export function makeAesGcmSecretBox(
 				}
 				return Effect.tryPromise({
 					try: async () =>
-						decoder.decode(
-							await crypto.subtle.decrypt(
-								{
-									name: "AES-GCM",
-									iv: nonceBytes,
-									additionalData: utf8Bytes(boundTo),
-								},
-								cryptoKey,
-								ciphertextBytes,
+						textFromUtf8(
+							new Uint8Array(
+								await crypto.subtle.decrypt(
+									{
+										name: "AES-GCM",
+										iv: nonceBytes,
+										additionalData: utf8Bytes(boundTo),
+									},
+									cryptoKey,
+									ciphertextBytes,
+								),
 							),
 						),
 					catch: () => unreadable,
