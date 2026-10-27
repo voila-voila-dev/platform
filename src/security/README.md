@@ -15,6 +15,8 @@ const storeApiKey = (rowId: string, apiKey: string) =>
 
 - `SecretBoxService.seal(plaintext, boundTo)`: `boundTo` is the id of the record that stores it, so a sealed text copied onto another record does not open there. Failures are `SecretBoxError` (`missing-key`, `unreadable`) and never carry the value.
 - `HashService` gives a `Sha256Hex` of text or bytes.
+- `tokenDigest(token)` gives the `TokenDigest` (SHA-256 hex) a table stores in place of a session token, API key or one-time code.
+- Bytes: `constantTimeEquals` (MAC comparison), `hexFromBytes`, `utf8Bytes`/`textFromUtf8`, `base64FromBytes`/`bytesFromBase64` and their URL-safe `base64Url` pair. Web Crypto and `btoa`/`atob` only, so they run in Bun, Node and Workers.
 - `redactPii` masks emails, phone numbers and long digit runs (cards, social security, RPPS) as `«email»`, `«phone»`, `«id»`; it over-masks on purpose. `redactSecrets(text, secrets)` replaces known secrets with `[redacted]`.
 - `/security/bun`: `bunHashService` (`Bun.CryptoHasher`), `aesGcmSecretBox(Config.Redacted(...))` for a 32-byte base64 key (`openssl rand -base64 32`), or `makeAesGcmSecretBox(bytes)` when the app decodes the key itself. The sealed text is `v1.<nonce>.<ciphertext>`, the same as `@voila.dev/crypto`'s.
 - `/security/memory`: `plainSecretBox` (seals as `plainSealed(plaintext, boundTo)`), `unavailableSecretBox` (every call fails `missing-key`, for a deployment with no key), `stubHashService`.

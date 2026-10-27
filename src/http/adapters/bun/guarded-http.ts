@@ -4,14 +4,10 @@ import { Effect, Layer, Predicate } from "effect";
 import { boundedBody } from "#http/adapters/bun/bounded-body";
 import { isPrivateAddress } from "#http/adapters/bun/private-address";
 import { HttpError } from "#http/errors/http-error";
+import { type Fetch, globalFetch } from "#http/lib/fetch";
 import { HttpService } from "#http/services/http-service";
 import type { HttpRequest } from "#http/value-objects/http-request";
 import { HttpResponse } from "#http/value-objects/http-response";
-
-export type Fetch = (
-	input: string | URL | Request,
-	init?: RequestInit,
-) => Promise<Response>;
 
 /** Every address a hostname resolves to; a test passes a table instead of asking DNS. */
 export type HostResolver = (hostname: string) => Promise<ReadonlyArray<string>>;
@@ -50,8 +46,6 @@ const NOT_CONNECTED_CODES: ReadonlySet<string> = new Set([
 	"EHOSTUNREACH",
 	"ENETUNREACH",
 ]);
-
-const globalFetch: Fetch = (input, init) => fetch(input, init);
 
 async function resolveWithDns(
 	hostname: string,
