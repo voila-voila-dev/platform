@@ -1,0 +1,79 @@
+{
+	"name": "@voila.dev/ui-landing",
+	"version": "6.0.134",
+	"type": "module",
+	"description": "Marketing pages on @voila.dev/ui: hero, sections, grids, testimonials, site header and footer, and the readers that print an article written in its content editor.",
+	"license": "MIT",
+	"homepage": "https://ui.voila.dev",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/voila-voila-dev/platform.git",
+		"directory": "packages/ui-landing"
+	},
+	"keywords": [
+		"react",
+		"landing",
+		"marketing",
+		"tailwindcss",
+		"base-ui",
+		"blog"
+	],
+	"publishConfig": {
+		"access": "public",
+		"exports": {
+			"./package.json": "./package.json",
+			".": "./dist/index.js",
+			"./article": "./dist/article/index.js",
+			"./styles/*.css": "./dist/styles/*.css"
+		}
+	},
+	"files": [
+		"src",
+		"dist",
+		"!src/**/*.test.ts",
+		"!src/**/*.test.tsx"
+	],
+	"sideEffects": [
+		"**/*.css"
+	],
+	"exports": {
+		"./package.json": "./package.json",
+		".": "./src/index.ts",
+		"./article": "./src/article/index.ts",
+		"./styles/*.css": "./src/styles/*.css"
+	},
+	"imports": {
+		"#/*": "./src/*"
+	},
+	"scripts": {
+		"build": "bun ../../scripts/ui/build-package.mjs",
+		"check": "biome check",
+		"check-types": "tsc --noEmit",
+		"format": "biome format",
+		"lint": "biome lint",
+		"postpack": "bun ../../scripts/publish-manifest/src/index.ts restore",
+		"prepack": "bun run build && bun ../../scripts/publish-manifest/src/index.ts apply",
+		"test": "vitest run"
+	},
+	"dependencies": {
+		"@base-ui/react": "^1.8.0",
+		"@phosphor-icons/react": "catalog:react",
+		"@voila.dev/ui": "workspace:*"
+	},
+	"peerDependencies": {
+		"react": "^19.0.0",
+		"react-dom": "^19.0.0",
+		"tailwindcss": "^4.0.0"
+	},
+	"devDependencies": {
+		"@testing-library/react": "^16.3.3",
+		"@types/react": "^19.3.0",
+		"@types/react-dom": "^19.3.0",
+		"@voila.dev/typescript-config": "workspace:*",
+		"jsdom": "30.0.1",
+		"react": "catalog:react",
+		"react-dom": "catalog:react",
+		"typescript": "catalog:",
+		"vitest": "catalog:"
+	}
+}

@@ -31,7 +31,7 @@ import {
 	StepTracks,
 	TestimonialGrid,
 	Text,
-} from "@voila.dev/ui/landing";
+} from "@voila.dev/ui-landing";
 import { Fragment } from "react";
 import {
 	BrandLogo,
@@ -50,7 +50,7 @@ import {
 } from "./landing-fixtures";
 
 /**
- * The full home page of acme.dev recomposed from @voila.dev/ui/landing —
+ * The full home page of acme.dev recomposed from @voila.dev/ui-landing —
  * the 1:1 validation artifact against http://localhost:4002 (Astro site).
  */
 const meta = {

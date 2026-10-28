@@ -1,0 +1,8 @@
+/*
+ * Import once from the app's global stylesheet, after
+ * `@voila.dev/ui-landing/styles/landing.css`: the components ship as .tsx
+ * source, so Tailwind has to scan this package. `@source` resolves relative to
+ * this file wherever the package ends up.
+ */
+@source "../";
+@source not "../**/*.test.*";

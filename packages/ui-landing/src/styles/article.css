@@ -1,0 +1,126 @@
+/*
+ * The styles of `@voila.dev/ui-landing/article`: the heading anchors, the
+ * scrolling table frame and the reading progress bar the article readers
+ * print. Import after `landing.css`. A chart's series take
+ * `--article-chart-1` to `-4`, falling back on the theme's `--chart-*`.
+ */
+
+.article-anchor {
+	margin-inline-start: 0.4em;
+	color: color-mix(in oklch, var(--muted-foreground) 60%, transparent);
+	font-weight: 500;
+	text-decoration: none;
+	opacity: 0;
+	transition: opacity 150ms;
+}
+:is(h2, h3):hover > .article-anchor,
+.article-anchor:focus-visible {
+	opacity: 1;
+}
+.article-anchor:hover {
+	color: var(--brand);
+}
+
+.article-table {
+	margin-block: 2.5rem;
+	overflow-x: auto;
+	border: 1px solid var(--border);
+	border-radius: 1rem;
+	font-size: 0.875em;
+
+	& table {
+		margin: 0;
+		min-width: 100%;
+		/* The frame sets the size; the typography plugin's own table size would shrink it twice. */
+		font-size: inherit;
+		line-height: 1.5;
+	}
+
+	& :is(th, td) {
+		padding: 0.75rem 1rem;
+		text-align: start;
+		vertical-align: top;
+	}
+
+	/* A phone scrolls the table rather than folding every figure onto two lines. */
+	& td {
+		min-width: 8rem;
+	}
+
+	& thead th {
+		background-color: var(--muted);
+		color: var(--foreground);
+		font-weight: 600;
+	}
+
+	& tbody th {
+		color: var(--foreground);
+		font-weight: 600;
+	}
+
+	& tbody tr:nth-child(even) {
+		background-color: color-mix(in oklch, var(--muted) 55%, transparent);
+	}
+
+	& tbody tr {
+		border-bottom-color: var(--border);
+	}
+
+	& tbody tr:last-child {
+		border-bottom: 0;
+	}
+}
+
+@supports (animation-timeline: scroll()) {
+	.article-table {
+		animation: article-table-edges linear both;
+		animation-timeline: scroll(self inline);
+	}
+}
+
+@keyframes article-table-edges {
+	from {
+		mask-image: linear-gradient(to left, transparent, black 3rem);
+	}
+	1%,
+	99% {
+		mask-image: linear-gradient(
+			to right,
+			transparent,
+			black 3rem,
+			black calc(100% - 3rem),
+			transparent
+		);
+	}
+	to {
+		mask-image: linear-gradient(to right, transparent, black 3rem);
+	}
+}
+
+.article-progress {
+	display: none;
+}
+
+@supports (animation-timeline: scroll()) {
+	.article-progress {
+		position: fixed;
+		inset-inline: 0;
+		top: 0;
+		z-index: 60;
+		display: block;
+		height: 3px;
+		background-color: var(--brand);
+		transform-origin: left;
+		animation: article-progress linear both;
+		animation-timeline: scroll(root block);
+	}
+}
+
+@keyframes article-progress {
+	from {
+		transform: scaleX(0);
+	}
+	to {
+		transform: scaleX(1);
+	}
+}

@@ -1,5 +1,6 @@
 /**
- * Reads every component's props out of `packages/ui` and hands the docs a table
+ * Reads every component's props out of `packages/ui` and `packages/ui-landing`
+ * and hands the docs a table
  * per part. Node-only: reached from `remark-prop-table.ts` during the MDX
  * transform and from `scripts/check-docs.mjs`, never from client code.
  *
@@ -49,12 +50,22 @@ import type {
 } from "./docs-props.types";
 
 const repoRoot = path.join(import.meta.dirname, "../../../..");
-const packageRoot = path.join(repoRoot, "packages/ui");
-const packageSrc = path.join(packageRoot, "src");
-const configFile = path.join(packageRoot, "tsconfig.json");
+
+/**
+ * The packages the docs document. `ui` has one barrel per component folder;
+ * `ui-landing` is one namespace of components behind a single barrel, filed
+ * under `landing`.
+ */
+const PACKAGES: ReadonlyArray<{
+	readonly dir: string;
+	readonly barrels: "folders" | { readonly folder: string };
+}> = [
+	{ dir: "packages/ui", barrels: "folders" },
+	{ dir: "packages/ui-landing", barrels: { folder: "landing" } },
+];
 
 /** The API lowercases declaration paths, so every comparison does too. */
-const OWN = "/packages/ui/src/";
+const OWN = PACKAGES.map(({ dir }) => `/${dir}/src/`);
 const PRIMITIVE = ["@base-ui", "userender"];
 const DOM = ["@types/react", "lib.dom", "lib.es", "typescript/lib"];
 
@@ -73,7 +84,7 @@ function isPascalCase(name: string): boolean {
 function originOf(symbol: TsSymbol): DocsPropOrigin | undefined {
 	const paths = symbol.declarations.map((d) => d.path.toLowerCase());
 	if (!paths.length) return undefined;
-	if (paths.some((p) => p.includes(OWN))) return "own";
+	if (paths.some((p) => OWN.some((own) => p.includes(own)))) return "own";
 	if (paths.some((p) => PRIMITIVE.some((m) => p.includes(m))))
 		return "primitive";
 	if (paths.every((p) => DOM.some((m) => p.includes(m)))) return undefined;
@@ -156,6 +167,7 @@ interface Context {
 	checker: Checker;
 	program: Program;
 	project: Project;
+	packageSrc: string;
 }
 
 /** One entry, or `undefined` when the export turns out not to be a part. */
@@ -179,7 +191,7 @@ async function extractEntry(
 	const declaration = await handle?.resolve(ctx.project);
 	const source = handle
 		? path
-				.relative(packageSrc.toLowerCase(), handle.path.toLowerCase())
+				.relative(ctx.packageSrc.toLowerCase(), handle.path.toLowerCase())
 				.replaceAll(path.sep, "/")
 		: "";
 
@@ -224,68 +236,90 @@ async function extractEntry(
 	};
 }
 
-/** Every documentable part in the package, keyed by its addressable name. */
+/** Every documentable part in the packages, keyed by its addressable name. */
 export async function readPropsManifest(): Promise<DocsPropsManifest> {
 	const api = new API({ cwd: repoRoot });
 	try {
-		const snapshot = await api.updateSnapshot({ openProjects: [configFile] });
-		const project = await snapshot.getProject(configFile);
-		if (!project) return {};
-		const ctx: Context = {
-			checker: project.checker,
-			program: project.program,
-			project,
-		};
 		const manifest: DocsPropsManifest = {};
-
-		const folders = readdirSync(packageSrc, { withFileTypes: true })
-			.filter((entry) => entry.isDirectory())
-			.map((entry) => entry.name)
-			.sort();
-
-		for (const folder of folders) {
-			const barrel = await ctx.program.getSourceFile(
-				path.join(packageSrc, folder, "index.ts"),
-			);
-			if (!barrel) continue;
-			const moduleSymbol = await ctx.checker.getSymbolAtLocation(barrel);
-			if (!moduleSymbol) continue;
-
-			for (const exported of await ctx.checker.getExportsOfModule(
-				moduleSymbol,
-			)) {
-				const symbol =
-					exported.flags & SymbolFlags.Alias
-						? await ctx.checker.getAliasedSymbol(exported)
-						: exported;
-				if (!symbol || (await ctx.checker.isUnknownSymbol(symbol))) continue;
-				if (!isComponent(exported.name, symbol)) continue;
-
-				// A single component, e.g. `Switch`.
-				const direct = await extractEntry(ctx, exported.name, folder, symbol);
-				if (direct) {
-					manifest[direct.id] = direct;
-					continue;
-				}
-				// A namespace object, e.g. `Empty` holding `Empty.Title`.
-				const namespaceType = await ctx.checker.getTypeOfSymbol(symbol);
-				if (!namespaceType) continue;
-				for (const part of await ctx.checker.getPropertiesOfType(
-					namespaceType,
-				)) {
-					if (!isPascalCase(part.name)) continue;
-					const entry = await extractEntry(
-						ctx,
-						`${exported.name}.${part.name}`,
-						folder,
-						part,
-					);
-					if (entry) manifest[entry.id] = entry;
-				}
+		for (const pkg of PACKAGES) {
+			const packageRoot = path.join(repoRoot, pkg.dir);
+			const packageSrc = path.join(packageRoot, "src");
+			const configFile = path.join(packageRoot, "tsconfig.json");
+			const snapshot = await api.updateSnapshot({ openProjects: [configFile] });
+			const project = await snapshot.getProject(configFile);
+			if (!project) continue;
+			const ctx: Context = {
+				checker: project.checker,
+				program: project.program,
+				project,
+				packageSrc,
+			};
+			for (const { folder, file } of barrelsOf(packageSrc, pkg.barrels)) {
+				await readBarrel(ctx, folder, file, manifest);
 			}
 		}
 		return manifest;
 	} finally {
 		await api.close();
+	}
+}
+
+function barrelsOf(
+	packageSrc: string,
+	barrels: (typeof PACKAGES)[number]["barrels"],
+): ReadonlyArray<{ folder: string; file: string }> {
+	if (barrels !== "folders") {
+		return [
+			{ folder: barrels.folder, file: path.join(packageSrc, "index.ts") },
+		];
+	}
+	return readdirSync(packageSrc, { withFileTypes: true })
+		.filter((entry) => entry.isDirectory())
+		.map((entry) => entry.name)
+		.sort()
+		.map((folder) => ({
+			folder,
+			file: path.join(packageSrc, folder, "index.ts"),
+		}));
+}
+
+async function readBarrel(
+	ctx: Context,
+	folder: string,
+	file: string,
+	manifest: DocsPropsManifest,
+): Promise<void> {
+	const barrel = await ctx.program.getSourceFile(file);
+	if (!barrel) return;
+	const moduleSymbol = await ctx.checker.getSymbolAtLocation(barrel);
+	if (!moduleSymbol) return;
+
+	for (const exported of await ctx.checker.getExportsOfModule(moduleSymbol)) {
+		const symbol =
+			exported.flags & SymbolFlags.Alias
+				? await ctx.checker.getAliasedSymbol(exported)
+				: exported;
+		if (!symbol || (await ctx.checker.isUnknownSymbol(symbol))) continue;
+		if (!isComponent(exported.name, symbol)) continue;
+
+		// A single component, e.g. `Switch`.
+		const direct = await extractEntry(ctx, exported.name, folder, symbol);
+		if (direct) {
+			manifest[direct.id] = direct;
+			continue;
+		}
+		// A namespace object, e.g. `Empty` holding `Empty.Title`.
+		const namespaceType = await ctx.checker.getTypeOfSymbol(symbol);
+		if (!namespaceType) continue;
+		for (const part of await ctx.checker.getPropertiesOfType(namespaceType)) {
+			if (!isPascalCase(part.name)) continue;
+			const entry = await extractEntry(
+				ctx,
+				`${exported.name}.${part.name}`,
+				folder,
+				part,
+			);
+			if (entry) manifest[entry.id] = entry;
+		}
 	}
 }

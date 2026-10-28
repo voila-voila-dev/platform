@@ -4,7 +4,7 @@ import {
 	Eyebrow as EyebrowParts,
 	LandingHero,
 	StatsRow,
-} from "@voila.dev/ui/landing";
+} from "@voila.dev/ui-landing";
 import { Fragment } from "react";
 import { IllustrationPlaceholder, stats } from "./fixtures";
 

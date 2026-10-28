@@ -1,5 +1,5 @@
 import { Button } from "@voila.dev/ui/button";
-import { ContactCards } from "@voila.dev/ui/landing";
+import { ContactCards } from "@voila.dev/ui-landing";
 
 export function Default() {
 	return (

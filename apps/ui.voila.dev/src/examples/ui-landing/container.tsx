@@ -1,4 +1,4 @@
-import { Container } from "@voila.dev/ui/landing";
+import { Container } from "@voila.dev/ui-landing";
 
 export function Default() {
 	return (

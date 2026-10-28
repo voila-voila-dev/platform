@@ -9,7 +9,7 @@ import {
 	featureGridCardVariantOptions,
 	featureGridColumnsOptions,
 	toneOptions,
-} from "@voila.dev/ui/landing";
+} from "@voila.dev/ui-landing";
 
 const meta = {
 	title: "Landing/FeatureGrid",

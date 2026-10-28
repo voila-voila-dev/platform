@@ -1,4 +1,4 @@
-import { LogoMarquee } from "@voila.dev/ui/landing";
+import { LogoMarquee } from "@voila.dev/ui-landing";
 import { partnerLogoDataUri } from "./fixtures";
 
 const partnerNames = ["Northwind", "Globex", "Initech", "Contoso"];

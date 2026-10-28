@@ -1,4 +1,4 @@
-import { ProseArticle as ProseArticleComponent } from "@voila.dev/ui/landing";
+import { ProseArticle as ProseArticleComponent } from "@voila.dev/ui-landing";
 
 export function ProseArticle() {
 	return (

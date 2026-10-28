@@ -15,14 +15,14 @@ import {
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@voila.dev/ui/button";
 import { GlobeView } from "@voila.dev/ui/globe-view";
+import { Skeleton } from "@voila.dev/ui/skeleton";
 import {
 	Eyebrow,
 	FeatureGrid,
 	LandingHero,
 	SectionIntro,
 	StatsRow,
-} from "@voila.dev/ui/landing";
-import { Skeleton } from "@voila.dev/ui/skeleton";
+} from "@voila.dev/ui-landing";
 import {
 	Fragment,
 	lazy,

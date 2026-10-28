@@ -26,11 +26,11 @@ you can open, trace and rewrite.
 ## Install
 
 ```sh
-bun add @voila.dev/ui
+bun add @voila.dev/ui @voila.dev/ui-landing
 ```
 
 ```css title="globals.css"
-@import "@voila.dev/ui/styles/landing.css";
+@import "@voila.dev/ui-landing/styles/landing.css";
 ```
 
 Or copy the source — it's the same files. The landing stylesheet declares the
@@ -45,7 +45,7 @@ A complete section: layout from `Section` and `Container`, an intro, a grid of
 feature cards. This is the shape every marketing page repeats.
 
 ```tsx
-import { Container, FeatureGrid, Section, SectionIntro } from "@voila.dev/ui/landing";
+import { Container, FeatureGrid, Section, SectionIntro } from "@voila.dev/ui-landing";
 
 export function WhyUs() {
 	return (

@@ -3,7 +3,7 @@ import {
 	Section as SectionComponent,
 	sectionBackgroundOptions,
 	Text as TextComponent,
-} from "@voila.dev/ui/landing";
+} from "@voila.dev/ui-landing";
 
 export function Default() {
 	return (

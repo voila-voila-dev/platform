@@ -4,7 +4,7 @@ import {
 	SectionIntro,
 	sectionIntroSpacingOptions,
 	sectionIntroWidthOptions,
-} from "@voila.dev/ui/landing";
+} from "@voila.dev/ui-landing";
 
 const meta = {
 	title: "Landing/SectionIntro",

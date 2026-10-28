@@ -1,4 +1,4 @@
-import { ArticleTags as ArticleTagsParts } from "@voila.dev/ui/landing";
+import { ArticleTags as ArticleTagsParts } from "@voila.dev/ui-landing";
 
 export function ArticleTags() {
 	return (

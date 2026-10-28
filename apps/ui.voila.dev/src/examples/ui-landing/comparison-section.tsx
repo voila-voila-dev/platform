@@ -4,7 +4,7 @@ import {
 	ComparisonSection,
 	Eyebrow as EyebrowParts,
 	Heading as HeadingComponent,
-} from "@voila.dev/ui/landing";
+} from "@voila.dev/ui-landing";
 import { IllustrationPlaceholder } from "./fixtures";
 
 const withoutItems = [

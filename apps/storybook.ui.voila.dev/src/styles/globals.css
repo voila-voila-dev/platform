@@ -1,6 +1,8 @@
 @import "@voila.dev/ui/styles/globals.css";
 @import "@voila.dev/ui/styles/themes/default.css";
-@import "@voila.dev/ui/styles/landing.css";
+@import "@voila.dev/ui-landing/styles/landing.css";
+@import "@voila.dev/ui-landing/styles/article.css";
+@import "@voila.dev/ui-platform/styles/sources.css";
 @import "@voila.dev/ui/styles/content-editor.css";
 
 /* Each package declares its own Tailwind sources, so there are no paths here.

@@ -1,4 +1,4 @@
-import { PageHeader } from "@voila.dev/ui/landing";
+import { PageHeader } from "@voila.dev/ui-landing";
 
 export function Default() {
 	return (

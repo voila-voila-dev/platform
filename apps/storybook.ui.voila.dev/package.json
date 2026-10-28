@@ -16,6 +16,8 @@
 		"@voila.dev/chart": "workspace:*",
 		"@voila.dev/motion": "workspace:*",
 		"@voila.dev/ui": "workspace:*",
+		"@voila.dev/ui-landing": "workspace:*",
+		"@voila.dev/ui-platform": "workspace:*",
 		"@voila.dev/ui-branding": "workspace:*",
 		"input-otp": "^1.5.0",
 		"maplibre-gl": "catalog:maplibre",

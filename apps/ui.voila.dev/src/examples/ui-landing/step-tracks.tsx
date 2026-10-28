@@ -8,7 +8,7 @@ import {
 	TrophyIcon,
 	UserCheckIcon,
 } from "@phosphor-icons/react";
-import { StepTracks } from "@voila.dev/ui/landing";
+import { StepTracks } from "@voila.dev/ui-landing";
 
 const clientSteps = [
 	{

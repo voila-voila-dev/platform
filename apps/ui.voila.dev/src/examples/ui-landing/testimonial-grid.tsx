@@ -1,4 +1,4 @@
-import { TestimonialGrid } from "@voila.dev/ui/landing";
+import { TestimonialGrid } from "@voila.dev/ui-landing";
 
 const testimonials = [
 	{
