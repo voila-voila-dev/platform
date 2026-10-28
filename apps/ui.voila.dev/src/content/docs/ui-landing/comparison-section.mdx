@@ -1,0 +1,74 @@
+---
+title: "ComparisonSection"
+description: "Before and after, side by side, with tags and a call to action."
+sidebar:
+  order: 16
+---
+
+import * as Example from "@/examples/ui-landing/comparison-section";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<ComparisonSection.Root tone="highlight" background="muted">
+	<ComparisonSection.Content>
+		<ComparisonSection.Panels>
+			<ComparisonSection.Panel variant="without">
+				<ComparisonSection.PanelTitle>Traditional hiring</ComparisonSection.PanelTitle>
+				<ComparisonSection.PanelList>
+					<ComparisonSection.PanelItem>Slow shortlists</ComparisonSection.PanelItem>
+				</ComparisonSection.PanelList>
+			</ComparisonSection.Panel>
+			<ComparisonSection.Panel variant="with">…</ComparisonSection.Panel>
+		</ComparisonSection.Panels>
+	</ComparisonSection.Content>
+	<ComparisonSection.Media><Illustration /></ComparisonSection.Media>
+</ComparisonSection.Root>
+```
+
+`variant` on the panel picks the cross or the tick and the panel's colour, so
+the two lists are written identically.
+
+## API
+
+### ComparisonSection.Root
+
+<PropTable of="ComparisonSection.Root" />
+
+### ComparisonSection.Content
+
+<PropTable of="ComparisonSection.Content" />
+
+### ComparisonSection.Media
+
+<PropTable of="ComparisonSection.Media" />
+
+### ComparisonSection.Panel
+
+<PropTable of="ComparisonSection.Panel" />
+
+### ComparisonSection.PanelItem
+
+<PropTable of="ComparisonSection.PanelItem" />
+
+### ComparisonSection.PanelList
+
+<PropTable of="ComparisonSection.PanelList" />
+
+### ComparisonSection.PanelTitle
+
+<PropTable of="ComparisonSection.PanelTitle" />
+
+### ComparisonSection.Panels
+
+<PropTable of="ComparisonSection.Panels" />
+
+### ComparisonSection.Tag
+
+<PropTable of="ComparisonSection.Tag" />
+
+### ComparisonSection.TagList
+
+<PropTable of="ComparisonSection.TagList" />

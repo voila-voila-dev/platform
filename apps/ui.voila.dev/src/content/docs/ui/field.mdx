@@ -1,0 +1,71 @@
+---
+title: "Field"
+description: "Label, control, description and error as one unit."
+category: "forms"
+---
+
+import * as Example from "@/examples/ui/field";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Field.Group>
+	<Field.Root>
+		<Field.Label htmlFor="workspace-name">Client name</Field.Label>
+		<Input id="workspace-name" />
+		<Field.Description>Shown to freelancers on every project.</Field.Description>
+	</Field.Root>
+	<Field.Root data-invalid>
+		<Field.Label htmlFor="contact-email">Contact email</Field.Label>
+		<Input id="contact-email" aria-invalid />
+		<Field.Error>Enter a complete email address.</Field.Error>
+	</Field.Root>
+</Field.Group>
+```
+
+`Field.Set` and `Field.Legend` wrap a group of related fields in the right
+semantics; `Field.Separator` takes a label for an "Optional" divider.
+
+## API
+
+### Field.Root
+
+<PropTable of="Field.Root" />
+
+### Field.Content
+
+<PropTable of="Field.Content" />
+
+### Field.Description
+
+<PropTable of="Field.Description" />
+
+### Field.Error
+
+<PropTable of="Field.Error" />
+
+### Field.Group
+
+<PropTable of="Field.Group" />
+
+### Field.Label
+
+<PropTable of="Field.Label" />
+
+### Field.Legend
+
+<PropTable of="Field.Legend" />
+
+### Field.Separator
+
+<PropTable of="Field.Separator" />
+
+### Field.Set
+
+<PropTable of="Field.Set" />
+
+### Field.Title
+
+<PropTable of="Field.Title" />

@@ -1,0 +1,55 @@
+---
+title: "Carousel"
+description: "A swipeable track of slides."
+category: "data-display"
+---
+
+import * as Example from "@/examples/ui/carousel";
+
+<Preview layout="center">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Carousel.Root opts={{ loop: true }}>
+	<Carousel.Content>
+		<Carousel.Item>…</Carousel.Item>
+	</Carousel.Content>
+	<Carousel.Previous />
+	<Carousel.Next />
+	<Carousel.Dots />
+</Carousel.Root>
+```
+
+Built on [Embla](https://www.embla-carousel.com/); `opts` goes straight to it.
+The arrows sit outside the track, so leave horizontal room around the carousel
+or they will clip.
+
+`basis-1/3` on the items shows three at a time — the track does not have a
+"slides per view" prop because that is what the width is for.
+
+## API
+
+### Carousel.Root
+
+<PropTable of="Carousel.Root" />
+
+### Carousel.Content
+
+<PropTable of="Carousel.Content" />
+
+### Carousel.Dots
+
+<PropTable of="Carousel.Dots" />
+
+### Carousel.Item
+
+<PropTable of="Carousel.Item" />
+
+### Carousel.Next
+
+<PropTable of="Carousel.Next" />
+
+### Carousel.Previous
+
+<PropTable of="Carousel.Previous" />

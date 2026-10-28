@@ -1,0 +1,16 @@
+---
+title: "Number filter"
+description: "A single numeric value."
+sidebar:
+  order: 12
+---
+
+import * as Example from "@/examples/ui-filter/number-filter-field";
+
+<Preview layout="stack">
+	<Example.NumberField />
+</Preview>
+
+```tsx
+const definition: FilterDefinition = { kind: "number", key: "attempts", label: "Attempts" };
+```

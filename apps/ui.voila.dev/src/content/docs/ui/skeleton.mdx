@@ -1,0 +1,30 @@
+---
+title: "Skeleton"
+description: "A shimmering placeholder in the shape of the content that is coming."
+category: "feedback"
+---
+
+import * as Example from "@/examples/ui/skeleton";
+
+<Preview layout="stack">
+	<Example.SkeletonDefault />
+</Preview>
+
+```tsx
+<Skeleton className="h-4 w-40" />
+```
+
+Build the placeholder out of the real layout rather than a generic block, so
+nothing jumps when the data lands.
+
+<Preview layout="stack">
+	<Example.SkeletonCard />
+</Preview>
+
+`Skeleton` is a shape and nothing else. Announcing the wait is the wrapper's
+job: `role="status"` plus a sr-only label, with the placeholder itself
+`aria-hidden`.
+
+## API
+
+<PropTable of="Skeleton" />

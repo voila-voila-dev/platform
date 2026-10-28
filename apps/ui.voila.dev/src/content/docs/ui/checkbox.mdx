@@ -1,0 +1,24 @@
+---
+title: "Checkbox"
+description: "An independent on-off box, with an indeterminate state."
+category: "forms"
+---
+
+import * as Example from "@/examples/ui/checkbox";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Checkbox id="project-terms" />
+<Label htmlFor="project-terms">Accept project terms</Label>
+```
+
+`indeterminate` is the dash for a parent whose children are partly ticked. It
+is separate from `checked`, so the parent can be unchecked and indeterminate at
+the same time — which is what "some of them" means.
+
+## API
+
+<PropTable of="Checkbox" />

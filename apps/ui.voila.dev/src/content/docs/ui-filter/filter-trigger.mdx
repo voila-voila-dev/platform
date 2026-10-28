@@ -1,0 +1,30 @@
+---
+title: "Filter.Trigger"
+description: "The search-shaped button that opens the editor."
+sidebar:
+  order: 4
+---
+
+import * as Example from "@/examples/ui-filter/filter-trigger";
+
+<Preview layout="stack">
+	<Example.Trigger />
+</Preview>
+
+```tsx
+<Filter.Trigger
+	summary={search}
+	activeCount={2}
+	labels={defaultFilterLabels}
+	onClick={() => setOpen(true)}
+/>;
+```
+
+## API
+
+<PropTable of="Filter.Trigger" />
+
+`activeCount` is the prop that matters: pass `countActiveFilters(values)` and a
+filtered list stops looking like a short one. It is a plain `<button>`, so
+`onClick` and the rest are yours — [Filter.Root](/ui-filter/filter-root) wires
+it to [Filter.Panel](/ui-filter/filter-root#filterpanel) for you.

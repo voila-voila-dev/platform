@@ -1,0 +1,28 @@
+---
+title: "Gallery"
+description: "A grid of thumbnails opening into a swipeable lightbox."
+category: "data-display"
+---
+
+import * as Example from "@/examples/ui/gallery";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Gallery.Root images={[{ src, alt }, …]} />
+```
+
+With an empty `images` array it renders its own empty state, which
+`emptyLabel` and `emptyDescription` let you word.
+
+## API
+
+### Gallery.Root
+
+<PropTable of="Gallery.Root" />
+
+### Gallery.Lightbox
+
+<PropTable of="Gallery.Lightbox" />

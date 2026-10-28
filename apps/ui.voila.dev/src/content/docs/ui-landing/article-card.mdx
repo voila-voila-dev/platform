@@ -1,0 +1,95 @@
+---
+title: "ArticleCard"
+description: "A blog post as a linked card: cover, tags, title, meta."
+sidebar:
+  order: 22
+---
+
+import * as Example from "@/examples/ui-landing/article-card";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<ArticleCard.Root href="/blog/my-article">
+	<ArticleCard.Frame>
+		<ArticleCard.Image src={cover} alt="Cover" />
+		<ArticleCard.Content>
+			<ArticleCard.Tags>
+				<ArticleTags.Tag>Hiring</ArticleTags.Tag>
+			</ArticleCard.Tags>
+			<ArticleCard.Title>Why brief your freelancer…</ArticleCard.Title>
+			<ArticleCard.Description>Every kickoff…</ArticleCard.Description>
+			<ArticleCard.Meta>
+				<ArticleCard.MetaItems>
+					<ArticleCard.MetaItem><CalendarBlankIcon />July 12, 2026</ArticleCard.MetaItem>
+				</ArticleCard.MetaItems>
+				<ArticleCard.Arrow />
+			</ArticleCard.Meta>
+		</ArticleCard.Content>
+	</ArticleCard.Frame>
+</ArticleCard.Root>
+```
+
+`Root` is the link, so nothing inside it should be one. Posts with no cover use
+`ArticleCard.ImageFallback`, which keeps the card the same height as its
+neighbours in a grid.
+
+<Preview layout="stack">
+	<Example.Fallback />
+</Preview>
+
+## API
+
+### ArticleCard.Root
+
+<PropTable of="ArticleCard.Root" />
+
+### ArticleCard.Arrow
+
+<PropTable of="ArticleCard.Arrow" />
+
+The five undescribed props on this part are Phosphor's own, shared by every
+icon in the kit and not annotatable from here — see [Icon](/ui-icon/icon),
+which covers what they do.
+
+### ArticleCard.Content
+
+<PropTable of="ArticleCard.Content" />
+
+### ArticleCard.Description
+
+<PropTable of="ArticleCard.Description" />
+
+### ArticleCard.Frame
+
+<PropTable of="ArticleCard.Frame" />
+
+### ArticleCard.Image
+
+<PropTable of="ArticleCard.Image" />
+
+### ArticleCard.ImageFallback
+
+<PropTable of="ArticleCard.ImageFallback" />
+
+### ArticleCard.Meta
+
+<PropTable of="ArticleCard.Meta" />
+
+### ArticleCard.MetaItem
+
+<PropTable of="ArticleCard.MetaItem" />
+
+### ArticleCard.MetaItems
+
+<PropTable of="ArticleCard.MetaItems" />
+
+### ArticleCard.Tags
+
+<PropTable of="ArticleCard.Tags" />
+
+### ArticleCard.Title
+
+<PropTable of="ArticleCard.Title" />

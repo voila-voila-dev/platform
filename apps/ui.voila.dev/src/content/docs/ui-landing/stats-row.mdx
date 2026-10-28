@@ -1,0 +1,48 @@
+---
+title: "StatsRow"
+description: "A row of headline figures, separated by rules."
+sidebar:
+  order: 12
+---
+
+import * as Example from "@/examples/ui-landing/stats-row";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<StatsRow.Root>
+	<StatsRow.Item>
+		<StatsRow.Value>20K+</StatsRow.Value>
+		<StatsRow.Label>Active members</StatsRow.Label>
+	</StatsRow.Item>
+	<StatsRow.Divider />
+	<StatsRow.Item>…</StatsRow.Item>
+</StatsRow.Root>
+```
+
+The dividers are your own children rather than something the root injects, so a
+two-column row and a four-column row both work without a count prop.
+
+## API
+
+### StatsRow.Root
+
+<PropTable of="StatsRow.Root" />
+
+### StatsRow.Divider
+
+<PropTable of="StatsRow.Divider" />
+
+### StatsRow.Item
+
+<PropTable of="StatsRow.Item" />
+
+### StatsRow.Label
+
+<PropTable of="StatsRow.Label" />
+
+### StatsRow.Value
+
+<PropTable of="StatsRow.Value" />

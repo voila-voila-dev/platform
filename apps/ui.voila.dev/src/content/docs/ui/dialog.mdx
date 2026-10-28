@@ -1,0 +1,107 @@
+---
+title: "Dialog"
+description: "A modal window for a focused task."
+category: "overlays"
+---
+
+import * as Example from "@/examples/ui/dialog";
+
+<Preview layout="center">
+	<Example.Default />
+</Preview>
+
+## Usage
+
+```ts
+import { Dialog } from "@voila.dev/ui/dialog";
+```
+
+```tsx
+<Dialog.Root>
+	<Dialog.Trigger render={<Button variant="outline" />}>Invite</Dialog.Trigger>
+	<Dialog.Content>
+		<Dialog.Header>
+			<Dialog.Title>Invite a freelancer</Dialog.Title>
+			<Dialog.Description>Send an invitation so they can…</Dialog.Description>
+		</Dialog.Header>
+		<Dialog.Footer>
+			<Dialog.Close render={<Button variant="outline" />}>Cancel</Dialog.Close>
+			<Button>Send invitation</Button>
+		</Dialog.Footer>
+	</Dialog.Content>
+</Dialog.Root>
+```
+
+A modal window for a task that deserves the whole screen's attention. It traps
+focus and blocks the page behind it, which is the point and also the cost — use
+it when interrupting is correct, and something quieter when it is not. For a
+question with two answers, [AlertDialog](/ui/alert-dialog) or
+[ConfirmDialog](/ui/confirm-dialog) already have the shape. For content that
+belongs beside its trigger rather than over everything,
+[Popover](/ui/popover). On a phone a centred modal is the wrong shape entirely —
+[ResponsiveDialog](/ui/responsive-dialog) is this component that becomes a
+bottom drawer under 768px.
+
+Triggers take a `render` prop rather than wrapping a button, so the trigger *is*
+your button and there is no nested-button markup.
+
+## Recipes
+
+<Preview layout="row" label="Four widths">
+	<Example.Sizes />
+</Preview>
+
+`size` changes the panel width only — padding and type scale hold, so a `xl`
+dialog is a wider dialog rather than a bigger one. Pick it from the content: a
+form with two columns needs `lg`, a confirmation needs `sm`.
+
+`showCloseButton` and `closeButtonLabel` control the X in the corner. Leave the
+X on unless the dialog has its own explicit dismiss in the footer; a modal with
+no visible way out reads as a trap even when Escape works.
+
+## API
+
+### Dialog.Root
+
+<PropTable of="Dialog.Root" />
+
+### Dialog.Close
+
+<PropTable of="Dialog.Close" />
+
+### Dialog.Content
+
+<PropTable of="Dialog.Content" />
+
+### Dialog.Description
+
+<PropTable of="Dialog.Description" />
+
+### Dialog.Footer
+
+<PropTable of="Dialog.Footer" />
+
+### Dialog.Header
+
+<PropTable of="Dialog.Header" />
+
+### Dialog.Overlay
+
+<PropTable of="Dialog.Overlay" />
+
+### Dialog.Portal
+
+<PropTable of="Dialog.Portal" />
+
+### Dialog.Title
+
+<PropTable of="Dialog.Title" />
+
+### Dialog.Trigger
+
+<PropTable of="Dialog.Trigger" />
+
+## Related
+
+[AlertDialog](/ui/alert-dialog) · [ResponsiveDialog](/ui/responsive-dialog) ·
+[Sheet](/ui/sheet) · [Popover](/ui/popover)

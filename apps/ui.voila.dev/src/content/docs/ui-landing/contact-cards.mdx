@@ -1,0 +1,40 @@
+---
+title: "ContactCards"
+description: "One card per way of getting in touch."
+sidebar:
+  order: 21
+---
+
+import * as Example from "@/examples/ui-landing/contact-cards";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<ContactCards.Root>
+	<ContactCards.Card>
+		<ContactCards.Card.Title>Par email</ContactCards.Card.Title>
+		<ContactCards.Card.Description>Pour toute question…</ContactCards.Card.Description>
+		<Button variant="outline" render={<a href="mailto:contact@acme.dev">contact@acme.dev</a>} />
+	</ContactCards.Card>
+</ContactCards.Root>
+```
+
+## API
+
+### ContactCards.Root
+
+<PropTable of="ContactCards.Root" />
+
+### ContactCards.Card
+
+<PropTable of="ContactCards.Card" />
+
+### ContactCards.CardDescription
+
+<PropTable of="ContactCards.CardDescription" />
+
+### ContactCards.CardTitle
+
+<PropTable of="ContactCards.CardTitle" />

@@ -1,0 +1,106 @@
+---
+title: "Drawer"
+description: "A draggable panel anchored to an edge, with the momentum of a native sheet."
+category: "overlays"
+---
+
+import * as Example from "@/examples/ui/drawer";
+
+<Preview layout="center">
+	<Example.Default />
+</Preview>
+
+## Usage
+
+```ts
+import { Drawer } from "@voila.dev/ui/drawer";
+```
+
+```tsx
+<Drawer.Root direction="right">
+	<Drawer.Trigger asChild>
+		<Button variant="outline">View project</Button>
+	</Drawer.Trigger>
+	<Drawer.Content>
+		<Drawer.Header>
+			<Drawer.Title>Launch review — Saturday</Drawer.Title>
+			<Drawer.Description>Kickoff call · Zoom, 14:00.</Drawer.Description>
+		</Drawer.Header>
+		<Drawer.Footer>
+			<Button>Apply to this project</Button>
+		</Drawer.Footer>
+	</Drawer.Content>
+</Drawer.Root>
+```
+
+A panel you can throw. Built on [Vaul](https://vaul.emilkowal.ski/), so it
+drags with momentum and snaps like a native sheet — which is why this one uses
+`asChild` where the rest of the kit uses `render`. Choose it over
+[Sheet](/ui/sheet) when the gesture is part of the point, which on touch it
+usually is. Choose Sheet when the panel is desktop furniture that happens to
+slide.
+
+## Recipes
+
+`direction` sets the edge. Only `top` and `bottom` drawers drag, so
+`showHandle` — the grab bar — is meaningful there and noise on the sides;
+`showCloseButton` exists for exactly that reason, giving `left`/`right` drawers
+a way out that a handle would otherwise have provided.
+
+`overlayClassName` styles the backdrop, `className` the panel. They are separate
+props because dimming the page and shaping the sheet are different decisions.
+
+## API
+
+### Drawer.Root
+
+<PropTable of="Drawer.Root" />
+
+The undescribed props here are [Vaul](https://vaul.emilkowal.ski/)'s own —
+`snapPoints`, `modal`, `nested` and the rest — and cannot be annotated from this
+repo. Vaul's documentation covers them.
+
+### Drawer.Close
+
+<PropTable of="Drawer.Close" />
+
+### Drawer.Content
+
+<PropTable of="Drawer.Content" />
+
+### Drawer.Description
+
+<PropTable of="Drawer.Description" />
+
+### Drawer.Footer
+
+<PropTable of="Drawer.Footer" />
+
+### Drawer.Handle
+
+<PropTable of="Drawer.Handle" />
+
+### Drawer.Header
+
+<PropTable of="Drawer.Header" />
+
+### Drawer.Overlay
+
+<PropTable of="Drawer.Overlay" />
+
+### Drawer.Portal
+
+<PropTable of="Drawer.Portal" />
+
+### Drawer.Title
+
+<PropTable of="Drawer.Title" />
+
+### Drawer.Trigger
+
+<PropTable of="Drawer.Trigger" />
+
+## Related
+
+[Sheet](/ui/sheet) · [ResponsiveSheet](/ui/responsive-sheet) ·
+[ResponsiveDialog](/ui/responsive-dialog) · [Dialog](/ui/dialog)

@@ -1,0 +1,59 @@
+---
+title: "Pagination"
+description: "Page links for a long list."
+category: "navigation"
+---
+
+import * as Example from "@/examples/ui/pagination";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Pagination.Root>
+	<Pagination.Content>
+		<Pagination.Item><Pagination.Previous href="?page=1" /></Pagination.Item>
+		<Pagination.Item><Pagination.Link href="?page=2" isActive>2</Pagination.Link></Pagination.Item>
+		<Pagination.Item><Pagination.Ellipsis /></Pagination.Item>
+		<Pagination.Item><Pagination.Next href="?page=3" /></Pagination.Item>
+	</Pagination.Content>
+</Pagination.Root>
+```
+
+These are links, so the page number belongs in the URL. Omit `href` on
+`Pagination.Previous` or `Pagination.Next` at the ends of the range and they
+render disabled rather than navigating nowhere.
+
+For a paginated table, [DataTable](/ui-datatable/pagination) has this wired up
+already.
+
+## API
+
+### Pagination.Root
+
+<PropTable of="Pagination.Root" />
+
+### Pagination.Content
+
+<PropTable of="Pagination.Content" />
+
+### Pagination.Ellipsis
+
+<PropTable of="Pagination.Ellipsis" />
+
+### Pagination.Item
+
+<PropTable of="Pagination.Item" />
+
+### Pagination.Link
+
+<PropTable of="Pagination.Link" />
+
+### Pagination.Next
+
+<PropTable of="Pagination.Next" />
+
+### Pagination.Previous
+
+<PropTable of="Pagination.Previous" />

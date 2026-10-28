@@ -1,0 +1,37 @@
+---
+title: "CSV export"
+description: "Download exactly what is on screen — filtered, sorted, visible columns only."
+sidebar:
+  order: 11
+---
+
+import * as Example from "@/examples/ui-datatable/export";
+
+<Preview layout="stack">
+	<Example.Export />
+</Preview>
+
+```tsx
+<DataTable.Root
+	columns={columns}
+	data={projects}
+	toolbar={(table) => (
+		<DataTable.Toolbar>
+			<DataTable.Actions>
+				<DataTable.Export table={table} filename="projects.csv" />
+			</DataTable.Actions>
+		</DataTable.Toolbar>
+	)}
+/>;
+```
+
+`dataTableToCsv(table)` returns the same string if you want to send it
+somewhere other than a download. Fields are RFC 4180 quoted.
+
+## API
+
+<PropTable of="DataTable.Export" />
+
+`table` is the live instance, so what lands in the file is the current view —
+sorted, filtered, visible columns only — not the `data` array. That is the whole
+point of taking the instance rather than the rows.

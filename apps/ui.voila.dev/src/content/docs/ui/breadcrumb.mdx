@@ -1,0 +1,59 @@
+---
+title: "Breadcrumb"
+description: "The trail from the root of the app to the current page."
+category: "navigation"
+---
+
+import * as Example from "@/examples/ui/breadcrumb";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Breadcrumb.Root>
+	<Breadcrumb.List>
+		<Breadcrumb.Item>
+			<Breadcrumb.Link href="/projects">Projects</Breadcrumb.Link>
+		</Breadcrumb.Item>
+		<Breadcrumb.Separator />
+		<Breadcrumb.Item>
+			<Breadcrumb.Page>Website redesign</Breadcrumb.Page>
+		</Breadcrumb.Item>
+	</Breadcrumb.List>
+</Breadcrumb.Root>
+```
+
+The last crumb is a `Breadcrumb.Page`, not a link — it carries `aria-current` and
+is not clickable, because it is where you already are. `Breadcrumb.Ellipsis`
+stands in for collapsed middle levels.
+
+## API
+
+### Breadcrumb.Root
+
+<PropTable of="Breadcrumb.Root" />
+
+### Breadcrumb.Ellipsis
+
+<PropTable of="Breadcrumb.Ellipsis" />
+
+### Breadcrumb.Item
+
+<PropTable of="Breadcrumb.Item" />
+
+### Breadcrumb.Link
+
+<PropTable of="Breadcrumb.Link" />
+
+### Breadcrumb.List
+
+<PropTable of="Breadcrumb.List" />
+
+### Breadcrumb.Page
+
+<PropTable of="Breadcrumb.Page" />
+
+### Breadcrumb.Separator
+
+<PropTable of="Breadcrumb.Separator" />

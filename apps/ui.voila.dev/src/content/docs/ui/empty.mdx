@@ -1,0 +1,53 @@
+---
+title: "Empty"
+description: "The empty state of a list, table or panel."
+category: "data-display"
+---
+
+import * as Example from "@/examples/ui/empty";
+
+<Preview layout="stack">
+	<Example.EmptyDefault />
+</Preview>
+
+```tsx
+<Empty.Root bordered>
+	<Empty.Header>
+		<Empty.Media variant="icon"><CalendarPlusIcon /></Empty.Media>
+		<Empty.Title>No projects yet</Empty.Title>
+		<Empty.Description>Create your first project to…</Empty.Description>
+	</Empty.Header>
+	<Empty.Content>
+		<Button>Create a project</Button>
+	</Empty.Content>
+</Empty.Root>
+```
+
+`Empty.Media` takes `variant="icon"` for a tinted icon tile, or plain children
+for anything else — an avatar, an illustration.
+
+## API
+
+### Empty.Root
+
+<PropTable of="Empty.Root" />
+
+### Empty.Content
+
+<PropTable of="Empty.Content" />
+
+### Empty.Description
+
+<PropTable of="Empty.Description" />
+
+### Empty.Header
+
+<PropTable of="Empty.Header" />
+
+### Empty.Media
+
+<PropTable of="Empty.Media" />
+
+### Empty.Title
+
+<PropTable of="Empty.Title" />

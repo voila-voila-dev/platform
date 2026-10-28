@@ -1,0 +1,23 @@
+---
+title: "Label"
+description: "The label for a form control."
+category: "forms"
+---
+
+import * as Example from "@/examples/ui/label";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Label htmlFor="workspace-email">Workspace email</Label>
+<Input id="workspace-email" type="email" />
+```
+
+The label dims when the control it points at is disabled, which it works out
+from the peer relationship rather than from a prop.
+
+## API
+
+<PropTable of="Label" />

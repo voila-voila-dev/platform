@@ -1,0 +1,25 @@
+---
+title: "Section"
+description: "A full-width band: vertical rhythm and background by variant."
+sidebar:
+  order: 5
+---
+
+import * as Example from "@/examples/ui-landing/section";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Section.Root spacing="md" background="muted">
+	<Container>…</Container>
+</Section.Root>
+```
+
+`Section` owns the band, `Container` owns the reading width. Nest them rather
+than putting padding on either one.
+
+## API
+
+<PropTable of="Section" />

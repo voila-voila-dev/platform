@@ -1,0 +1,96 @@
+---
+title: "Quick start"
+description: "85 components, one convention. The floor everything else stands on."
+---
+
+import * as Example from "@/examples/ui/quick-start";
+
+**85 components, one convention. The floor everything else stands on.**
+
+This is the core package: everything from `Button` and `Input` up to `Sidebar`,
+`Chat` and `ImageCropper`, built on [Base UI](https://base-ui.com) for
+behaviour and Tailwind for styling. It ships as source, so every one of those
+85 components is a readable `.tsx` file in `node_modules` that you can open,
+learn from and, when the day comes, copy out and own. One convention runs
+through all of them: Base UI for behaviour, a cva block for variants, tokens
+for colour. Learn it once and you have learnt the whole system, and so has
+your coding agent.
+
+<Preview layout="center">
+	<Example.QuickStartHero />
+</Preview>
+
+Everything above is stock: `Card`, `Field`, `Input`, `Select`, `DatePicker`,
+`Switch`, `Button`, no custom CSS.
+
+## Install
+
+```sh
+bun add @voila.dev/ui
+```
+
+```css title="globals.css"
+@import "tailwindcss";
+@import "@voila.dev/ui/styles/globals.css";
+@import "@voila.dev/ui/styles/themes/default.css";
+```
+
+Or copy the source — it's the same files.
+
+`styles/globals.css` brings the token contract and the Tailwind sources; the
+theme brings the values. Pick exactly one theme — `default` (black and white),
+`indigo`, `iris`, `sand`, `emerald`, `olive`, or your own copy.
+Peers: `react@19`, `react-dom@19`, `tailwindcss@4`.
+
+## The 3-minute win
+
+A labelled, validated field group, wired up the way a real form is:
+
+```tsx title="src/settings-form.tsx"
+import { Button } from "@voila.dev/ui/button";
+import { Field } from "@voila.dev/ui/field";
+import { Input } from "@voila.dev/ui/input";
+
+export function SettingsForm() {
+	return (
+		<Field.Group>
+			<Field.Root>
+				<Field.Label htmlFor="workspace-name">Workspace name</Field.Label>
+				<Input id="workspace-name" placeholder="Acme Physio" />
+			</Field.Root>
+			<Field.Root data-invalid>
+				<Field.Label htmlFor="billing-email">Billing email</Field.Label>
+				<Input id="billing-email" type="email" defaultValue="team@" aria-invalid />
+				<Field.Error>Enter a complete email address.</Field.Error>
+			</Field.Root>
+			<Button type="submit">Save changes</Button>
+		</Field.Group>
+	);
+}
+```
+
+## Mental model
+
+Every component is its own entry point, named after its file:
+
+```ts
+import { cn } from "@voila.dev/ui/utils";
+import { useIsMobile } from "@voila.dev/ui/hooks";
+```
+
+There is no barrel export on purpose: a barrel would pull all 85 components
+into the module graph of any file that imports one. Behind each entry point is
+the same shape. Base UI supplies the behaviour and accessibility, a cva block
+defines the variants, and every colour goes through a semantic token
+(`bg-primary`, `text-muted-foreground`). Restyling means changing a token, not
+forking a component; forking a component means copying one file, not
+untangling a bundle.
+
+## Page map
+
+Every component has its own page, grouped in the sidebar by what it is for:
+Actions, Forms, Dates & time, Overlays, Navigation, Data display, Feedback and
+Layout. The search box takes you straight to any of them.
+
+Start with [Button](/ui/button): it is the reference page for how every
+component is documented.

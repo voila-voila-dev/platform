@@ -1,0 +1,36 @@
+---
+title: "PageHeader"
+description: "The title band of an inner page: contact, about, legal."
+sidebar:
+  order: 11
+---
+
+import * as Example from "@/examples/ui-landing/page-header";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<PageHeader.Root background="muted">
+	<PageHeader.Title>Contact</PageHeader.Title>
+	<PageHeader.Lead>Write to us and we will get back to you quickly.</PageHeader.Lead>
+</PageHeader.Root>
+```
+
+This is the quieter counterpart to `LandingHero` — no illustration, no actions,
+one background band.
+
+## API
+
+### PageHeader.Root
+
+<PropTable of="PageHeader.Root" />
+
+### PageHeader.Lead
+
+<PropTable of="PageHeader.Lead" />
+
+### PageHeader.Title
+
+<PropTable of="PageHeader.Title" />

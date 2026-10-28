@@ -1,0 +1,29 @@
+---
+title: "Email: divider"
+description: "A horizontal rule in the theme's border colour."
+sidebar:
+  order: 27
+---
+
+import * as Example from "@/examples/ui-content-editor/email-blocks";
+
+The divider is part of `createContentFeatures`. It is drawn in
+`theme.color.border`, so the email appearance shows the rule the sent email
+has in the host's palette.
+
+<Preview layout="stack" scroll>
+	<Example.Divider />
+</Preview>
+
+## Typing
+
+- `---` on an empty line, or **Divider** in the slash menu, adds one.
+- It is a void element: the arrow keys select it and Backspace deletes it.
+
+## The stored node
+
+```json
+{ "type": "hr", "children": [{ "text": "" }] }
+```
+
+The email block editor's `divider` block maps to it.

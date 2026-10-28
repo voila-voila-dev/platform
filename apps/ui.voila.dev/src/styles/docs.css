@@ -1,0 +1,358 @@
+/*
+ * Tailwind for the docs site — with Preflight this time. Starlight is gone, so
+ * nothing needs protecting: the whole page is ours.
+ */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "@voila.dev/ui/styles/tokens/colors.css";
+@import "@voila.dev/ui/styles/tokens/typography.css";
+@import "@voila.dev/ui/styles/tokens/animations.css";
+@import "@voila.dev/ui/styles/themes/default.css";
+@import "@voila.dev/ui/styles/landing.css";
+@import "@voila.dev/ui/styles/content-editor.css";
+
+/*
+ * Live previews render real components, so their classes must be generated.
+ * Each package declares its own sources, so these are package imports rather
+ * than paths into node_modules.
+ */
+@import "@voila.dev/ui/styles/sources.css";
+@import "@voila.dev/ui-branding/styles.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+	/* Code blocks, inline code and the wordmark all share it. The progress
+	 * keyframes come with the default theme's animation tokens. */
+	--font-mono: "Intel One Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+@layer base {
+	* {
+		border-color: var(--border);
+	}
+	body {
+		background-color: var(--background);
+		color: var(--foreground);
+		font-family: var(--font-sans);
+	}
+}
+
+/* Scrollable regions that hide their scrollbar (sidebar, command, combobox). */
+@utility no-scrollbar {
+	scrollbar-width: none;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+
+/* --- Article typography --------------------------------------------------- */
+
+.docs-prose {
+	font-size: 0.9375rem;
+	line-height: 1.75;
+	color: var(--foreground);
+
+	& > * + * {
+		margin-top: 1rem;
+	}
+
+	/* Guarded like the links and lists below: a previewed Accordion, Card or
+	 * Alert brings its own headings, and the article's heading font and
+	 * `margin-top` were pushing those components apart from the inside. */
+	& h2:not(.not-prose *),
+	& h3:not(.not-prose *),
+	& h4:not(.not-prose *) {
+		font-family: var(--font-heading);
+		font-weight: 600;
+		letter-spacing: -0.01em;
+		scroll-margin-top: 5rem;
+		color: var(--foreground);
+	}
+	& h2:not(.not-prose *) {
+		margin-top: 2.5rem;
+		font-size: 1.375rem;
+	}
+	& h3:not(.not-prose *) {
+		margin-top: 2rem;
+		font-size: 1.125rem;
+	}
+	& h4:not(.not-prose *) {
+		margin-top: 1.5rem;
+		font-size: 1rem;
+	}
+
+	/* rehype-autolink-headings wraps heading text in an anchor. */
+	& .heading-anchor {
+		color: inherit;
+		text-decoration: none;
+	}
+	& .heading-anchor:hover::after {
+		content: "#";
+		margin-left: 0.375rem;
+		color: var(--muted-foreground);
+	}
+
+	/* `:not(.not-prose *)` keeps article typography out of live previews, which
+	 * render real components inside a `.not-prose` wrapper. */
+	& a:not(.heading-anchor):not(.not-prose *) {
+		color: var(--primary);
+		text-decoration: underline;
+		text-underline-offset: 3px;
+		text-decoration-color: color-mix(in oklab, var(--primary) 40%, transparent);
+	}
+	.dark & a:not(.heading-anchor):not(.not-prose *) {
+		color: oklch(0.78 0.12 275);
+		text-decoration-color: color-mix(
+			in oklab,
+			oklch(0.78 0.12 275) 40%,
+			transparent
+		);
+	}
+	& a:not(.heading-anchor):not(.not-prose *):hover {
+		text-decoration-color: currentColor;
+	}
+
+	& ul:not(.not-prose *),
+	& ol:not(.not-prose *) {
+		padding-left: 1.5rem;
+	}
+	& ul:not(.not-prose *) {
+		list-style: disc;
+	}
+	& ol:not(.not-prose *) {
+		list-style: decimal;
+	}
+	& li:not(.not-prose *) + li {
+		margin-top: 0.375rem;
+	}
+
+	& blockquote {
+		border-left: 3px solid var(--border);
+		padding-left: 1rem;
+		color: var(--muted-foreground);
+	}
+
+	& hr {
+		margin-block: 2rem;
+		border-color: var(--border);
+	}
+
+	& strong {
+		font-weight: 600;
+	}
+
+	/* Inline code. */
+	& :not(pre) > code {
+		font-family: var(--font-mono);
+		font-size: 0.855em;
+		background-color: var(--muted);
+		border: 1px solid var(--border);
+		border-radius: 0.375rem;
+		padding: 0.125rem 0.375rem;
+		white-space: nowrap;
+	}
+
+	/* Tables. Guarded like the links and lists above: a previewed Table,
+	 * DataTable or Spreadsheet brings its own cell padding, and the
+	 * `:first-child { padding-left: 0 }` rule below was knocking that first
+	 * column out of line with the rest. */
+	& table:not(.not-prose *) {
+		width: 100%;
+		font-size: 0.875rem;
+		border-collapse: collapse;
+	}
+	& th:not(.not-prose *) {
+		text-align: left;
+		font-weight: 600;
+		border-bottom: 1px solid var(--border);
+		padding: 0.5rem 0.75rem;
+	}
+	& td:not(.not-prose *) {
+		border-bottom: 1px solid color-mix(in oklab, var(--border) 60%, transparent);
+		padding: 0.5rem 0.75rem;
+		vertical-align: top;
+	}
+	& :is(th, td):first-child:not(.not-prose *) {
+		padding-left: 0;
+	}
+
+	/*
+	 * Generated prop tables (`remark-prop-table`). Always Prop / Type / Default
+	 * / description, so the columns get fixed proportions. Under `auto`, one
+	 * 20-member union claimed 60% of the table and the description column
+	 * collapsed to a 126px ribbon four lines tall.
+	 *
+	 * Only from `md` up. Narrower than that there is no width to divide: fixed
+	 * columns broke `color` into "colo/r" and `"emerald"` across two lines. On
+	 * a phone the table keeps `auto` layout and scrolls inside its own frame,
+	 * which is what the wrapper is there for.
+	 */
+	@media (width >= 48rem) {
+		& table.prop-table {
+			table-layout: fixed;
+		}
+		& .prop-table :is(th, td) {
+			overflow-wrap: anywhere;
+		}
+		/*
+		 * Inline code is `nowrap` everywhere else so a token never breaks
+		 * mid-word. In a type cell that is the wrong trade:
+		 * `ReactElement<unknown, string | JSXElementConstructor<any>>` is one
+		 * unbreakable token wider than the column, and it overprinted the
+		 * description beside it.
+		 */
+		& .prop-table :is(code, code span) {
+			white-space: normal;
+			overflow-wrap: anywhere;
+		}
+		& .prop-table :is(th, td):nth-child(1) {
+			width: 17%;
+		}
+		& .prop-table :is(th, td):nth-child(2) {
+			width: 30%;
+		}
+		& .prop-table :is(th, td):nth-child(3) {
+			width: 15%;
+		}
+		& .prop-table :is(th, td):nth-child(4) {
+			width: 38%;
+		}
+	}
+}
+
+/* --- Code blocks (rehype-pretty-code / shiki) ----------------------------- */
+
+.docs-prose figure[data-rehype-pretty-code-figure] {
+	margin-block: 1.25rem;
+	border: 1px solid var(--border);
+	border-radius: 0.75rem;
+	overflow: hidden;
+	background-color: var(--card);
+}
+
+.docs-prose figcaption[data-rehype-pretty-code-title] {
+	padding: 0.5rem 1rem;
+	font-family: var(--font-mono);
+	font-size: 0.75rem;
+	color: var(--muted-foreground);
+	border-bottom: 1px solid var(--border);
+	background-color: var(--muted);
+}
+
+.docs-prose pre {
+	padding: 1rem;
+	overflow-x: auto;
+	font-family: var(--font-mono);
+	font-size: 0.8125rem;
+	line-height: 1.7;
+}
+
+.docs-prose pre code {
+	display: grid;
+	background: none;
+	border: none;
+	padding: 0;
+}
+
+/* Shiki dual themes: light values inline, dark values via CSS variables. */
+.dark .docs-prose pre span {
+	color: var(--shiki-dark);
+}
+
+/* --- Steps (Starlight replacement) ---------------------------------------- */
+
+.docs-steps > ol {
+	list-style: none;
+	counter-reset: docs-steps;
+	padding-left: 0;
+}
+.docs-steps > ol > li {
+	counter-increment: docs-steps;
+	position: relative;
+	padding-left: 3rem;
+	padding-bottom: 1.25rem;
+}
+.docs-steps > ol > li::before {
+	content: counter(docs-steps);
+	position: absolute;
+	left: 0;
+	top: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 9999px;
+	background-color: var(--muted);
+	border: 1px solid var(--border);
+	font-family: var(--font-heading);
+	font-size: 0.875rem;
+	font-weight: 600;
+}
+.docs-steps > ol > li:not(:last-child)::after {
+	content: "";
+	position: absolute;
+	left: 1rem;
+	top: 2.25rem;
+	bottom: 0.25rem;
+	width: 1px;
+	background-color: var(--border);
+}
+
+/* --- Live preview frame --------------------------------------------------- */
+
+.preview {
+	margin-block: 1.25rem;
+	padding: 1.75rem;
+	border: 1px solid var(--border);
+	border-radius: 0.75rem;
+	background-color: var(--background);
+	color: var(--foreground);
+	/*
+	 * A faint grid, so a transparent or ghost component still reads as sitting
+	 * on a surface rather than floating in the page.
+	 */
+	background-image:
+		linear-gradient(
+			to right,
+			color-mix(in oklab, var(--border) 45%, transparent) 1px,
+			transparent 1px
+		),
+		linear-gradient(
+			to bottom,
+			color-mix(in oklab, var(--border) 45%, transparent) 1px,
+			transparent 1px
+		);
+	background-size: 1.5rem 1.5rem;
+}
+
+.preview__stage {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.75rem;
+}
+
+.preview__stage--stack {
+	flex-direction: column;
+	align-items: stretch;
+}
+
+.preview__stage--center {
+	justify-content: center;
+}
+
+/* Wide previews scroll inside their own frame; the page never does. */
+.preview--scroll .preview__stage {
+	overflow-x: auto;
+	flex-wrap: nowrap;
+}
+
+.preview__label {
+	margin-bottom: 0.75rem;
+	font-size: 0.75rem;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: var(--muted-foreground);
+}

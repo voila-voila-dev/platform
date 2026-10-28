@@ -1,0 +1,17 @@
+{
+	"name": "@voila.dev/emoji.voila.dev",
+	"version": "0.0.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "node scripts/build.mjs",
+		"format": "biome format",
+		"lint": "biome lint",
+		"check": "biome check"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "catalog:",
+		"emojibase-data": "17.0.0",
+		"wrangler": "^4.130.0"
+	}
+}

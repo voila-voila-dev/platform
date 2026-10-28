@@ -1,0 +1,14 @@
+{
+	"extends": "@voila.dev/typescript-config/base.json",
+	"compilerOptions": {
+		"lib": ["ESNext", "DOM", "DOM.Iterable"],
+		"jsx": "react-jsx",
+		"jsxImportSource": "react",
+		"types": ["vite/client", "node"],
+		"paths": {
+			"@/*": ["./src/*"]
+		}
+	},
+	"include": ["src", "vite.config.ts"],
+	"exclude": ["dist", "node_modules"]
+}

@@ -1,0 +1,18 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "storybook-ui-voila-dev",
+	"compatibility_date": "2025-10-01",
+	// Static-asset Worker (no `main`): serves the Storybook static build from
+	// Cloudflare's edge. Storybook navigates via query params on index.html, so
+	// plain static serving is enough (no SPA fallback needed).
+	"assets": {
+		"directory": "./storybook-static"
+	},
+	"observability": {
+		"enabled": true
+	},
+	// workers.dev stays on: per-PR previews are deployed from a derived config
+	// that strips `routes`, and reach the worker through its *.workers.dev URL.
+	"routes": [{ "pattern": "storybook.ui.voila.dev", "custom_domain": true }],
+	"workers_dev": true
+}

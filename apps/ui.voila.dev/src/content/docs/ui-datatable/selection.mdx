@@ -1,0 +1,30 @@
+---
+title: "Row selection"
+description: "A checkbox column, with stable ids so a selection survives paging."
+sidebar:
+  order: 3
+---
+
+import * as Example from "@/examples/ui-datatable/selection";
+
+<Preview layout="stack">
+	<Example.Selection />
+</Preview>
+
+```tsx
+<DataTable.Root
+	columns={[
+		dataTableSelectionColumn<Project>({
+			selectAllLabel: "Select all projects",
+			selectRowLabel: (project) => `Select ${project.reference}`,
+		}),
+		...columns,
+	]}
+	data={projects}
+	enableRowSelection
+	getRowId={(project) => project.reference}
+/>;
+```
+
+`getRowId` is what makes a selection survive pagination — without it rows are
+keyed by index, so page 2 "inherits" page 1's ticks.

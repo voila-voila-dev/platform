@@ -1,0 +1,90 @@
+/*
+ * Iris - the payments look (Stripe): an electric blurple primary over
+ * navy-tinted neutrals, with the surrounding greys pulled toward the same cool
+ * blue so the chrome reads as documentation rather than decoration.
+ *
+ * The sibling indigo theme sits on the same hue family; the two are told apart
+ * by chroma and by their neutrals - indigo stays violet-grey and near-black,
+ * iris stays slate-blue and navy, right down to the page sitting on Stripe's
+ * pale blue-white rather than on paper white.
+ *
+ * A theme overrides identity tokens only; everything else - charts, badges,
+ * status colours - comes from the default theme it imports.
+ */
+@import "./default.css";
+
+:root {
+	--background: oklch(0.981 0.005 248);
+	--foreground: oklch(0.26 0.06 251);
+	--card: oklch(1 0 0);
+	--card-foreground: oklch(0.26 0.06 251);
+	--popover: oklch(1 0 0);
+	--popover-foreground: oklch(0.26 0.06 251);
+
+	--primary: oklch(0.578 0.235 278);
+	--primary-foreground: oklch(0.99 0 0);
+	--secondary: oklch(0.966 0.008 250);
+	--secondary-foreground: oklch(0.3 0.06 251);
+
+	--brand: oklch(0.578 0.235 278);
+	--brand-foreground: oklch(1 0 0);
+	--highlight: oklch(0.558 0.188 256);
+	--highlight-foreground: oklch(1 0 0);
+
+	--muted: oklch(0.966 0.008 250);
+	--muted-foreground: oklch(0.52 0.035 251);
+	--accent: oklch(0.95 0.018 262);
+	--accent-foreground: oklch(0.34 0.1 270);
+
+	--border: oklch(0.912 0.012 250);
+	--input: oklch(0.912 0.012 250);
+	--ring: oklch(0.578 0.235 278);
+
+	--sidebar: oklch(0.981 0.005 248);
+	--sidebar-foreground: oklch(0.26 0.06 251);
+	--sidebar-primary: oklch(0.578 0.235 278);
+	--sidebar-primary-foreground: oklch(0.99 0 0);
+	--sidebar-accent: oklch(0.95 0.018 262);
+	--sidebar-accent-foreground: oklch(0.34 0.1 270);
+	--sidebar-border: oklch(0.912 0.012 250);
+	--sidebar-ring: oklch(0.578 0.235 278);
+
+	--radius: 0.375rem;
+}
+
+.dark {
+	--background: oklch(0.205 0.045 253);
+	--foreground: oklch(0.97 0.008 250);
+	--card: oklch(0.25 0.045 253);
+	--card-foreground: oklch(0.97 0.008 250);
+	--popover: oklch(0.25 0.045 253);
+	--popover-foreground: oklch(0.97 0.008 250);
+
+	--primary: oklch(0.705 0.19 278);
+	--primary-foreground: oklch(0.205 0.045 253);
+	--secondary: oklch(0.3 0.04 253);
+	--secondary-foreground: oklch(0.97 0.008 250);
+
+	--brand: oklch(0.705 0.19 278);
+	--brand-foreground: oklch(0.205 0.045 253);
+	--highlight: oklch(0.7 0.15 256);
+	--highlight-foreground: oklch(0.205 0.045 253);
+
+	--muted: oklch(0.3 0.04 253);
+	--muted-foreground: oklch(0.74 0.03 250);
+	--accent: oklch(0.335 0.055 262);
+	--accent-foreground: oklch(0.97 0.008 250);
+
+	--border: oklch(0.97 0.03 250 / 14%);
+	--input: oklch(0.97 0.03 250 / 18%);
+	--ring: oklch(0.705 0.19 278);
+
+	--sidebar: oklch(0.228 0.045 253);
+	--sidebar-foreground: oklch(0.97 0.008 250);
+	--sidebar-primary: oklch(0.705 0.19 278);
+	--sidebar-primary-foreground: oklch(0.205 0.045 253);
+	--sidebar-accent: oklch(0.335 0.055 262);
+	--sidebar-accent-foreground: oklch(0.97 0.008 250);
+	--sidebar-border: oklch(0.97 0.03 250 / 14%);
+	--sidebar-ring: oklch(0.705 0.19 278);
+}

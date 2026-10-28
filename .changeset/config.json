@@ -9,7 +9,7 @@
 	],
 	"commit": false,
 	"ignore": [],
-	"fixed": [],
+	"fixed": [["@voila.dev/ui", "@voila.dev/chart", "@voila.dev/motion"]],
 	"linked": [],
 	"updateInternalDependencies": "patch",
 	"privatePackages": { "version": false, "tag": false }

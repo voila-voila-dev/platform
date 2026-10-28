@@ -1,0 +1,86 @@
+---
+title: "Files and drop"
+description: "Images inline, every other file to the host, and a drop target as large as the composer."
+sidebar:
+  order: 2
+---
+
+import * as Example from "@/examples/ui-content-editor/files-and-drop";
+
+A file reaches the editor two ways: dropped on it, or pasted into it. Each
+file goes to the first feature that takes it. The image feature takes images
+when the host wired `onUploadImage`: one placeholder per file appears at the
+caret, and each fills in as its upload lands. Every file no feature takes goes
+to `onDropFiles`, in one call per drop or paste, so the host can show it in an
+attachments tray.
+
+<Preview layout="stack" scroll>
+	<Example.AttachmentsTray />
+</Preview>
+
+Drop a PDF anywhere on the card, the toolbar and the footer included: it
+joins the tray. Drop a photo: it lands in the text.
+
+## Where each file goes
+
+| The host wired | Images | Other files |
+| --- | --- | --- |
+| `onUploadImage` and `onDropFiles` | inline, uploaded | `onDropFiles` |
+| `onDropFiles` only | `onDropFiles` | `onDropFiles` |
+| `onUploadImage` only | inline, uploaded | ignored |
+| neither | ignored | ignored |
+
+An ignored file is kept from the browser, which would otherwise open it in
+place of the page, and from Plate, which would try to place a file as text.
+Nothing is inserted and nothing is reported. That is the behaviour of an
+editor without `onDropFiles`, unchanged from before the option existed: a
+document editor has nowhere to put a PDF, and a composer that does says so by
+passing `onDropFiles`. A read-only editor takes no file.
+
+Text drops and text pastes keep Plate's own handling.
+
+## The drop zone
+
+The canvas alone is a small target in a composer whose toolbar, tray and
+footer take half the card. `ContentEditor.DropZone` makes everything it wraps
+a drop target, with an overlay while files are dragged over it. A file dropped
+on the zone goes where it would on the canvas: an image at the caret, the
+rest to `onDropFiles`.
+
+```tsx
+const [attachments, setAttachments] = useState<ReadonlyArray<File>>([]);
+
+<ContentEditor.Root
+	features={FEATURES}
+	value={body}
+	onChange={setBody}
+	onUploadImage={uploadImage}
+	onDropFiles={(files) => setAttachments((current) => [...current, ...files])}
+>
+	<ContentEditor.DropZone className="rounded-xl border p-2">
+		<ContentEditor.Layout>
+			<ContentEditor.Toolbar />
+			<ContentEditor.Canvas />
+		</ContentEditor.Layout>
+		<AttachmentTray files={attachments} />
+	</ContentEditor.DropZone>
+</ContentEditor.Root>
+```
+
+The zone sits inside `ContentEditor.Root`, since it hands files to the
+editor. It renders a `div`, positioned so the overlay covers it; pass `render`
+for another element. While files are over it, it carries `data-dragging`, and
+the overlay is `[data-slot="content-editor-drop-overlay"]`, for a host that
+styles either. The overlay text is the `chrome.dropToUpload` label.
+
+Without a zone, only the canvas takes files, with the same routing.
+
+The tray is the host's: the editor does not hold attachments, since what
+happens to them (an upload, a size limit, a remove button) belongs to the
+product. The kit's [`Attachment`](/ui/attachment) parts draw one.
+
+## API
+
+### ContentEditor.DropZone
+
+<PropTable of="ContentEditor.DropZone" />

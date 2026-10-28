@@ -1,0 +1,254 @@
+---
+title: "Rendering an email"
+description: "Turn the email preset's document into the HTML your server sends, with one exhaustive switch."
+sidebar:
+  order: 35
+---
+
+The editor never produces the email you send. It produces a document: a
+Slate tree of plain JSON that you store as it is and render on the server
+when the email goes out. That split is deliberate. The sent email belongs to
+your server, which knows the recipient's name, locale and unsubscribe link;
+the editor's job is to guarantee the shape of the input.
+
+`contentToHtml` from the [reader entry](/ui-content-editor/server-side-rendering)
+renders a web page, not an email: mail clients need tables, inline styles and
+no CSS variables. The kit therefore ships no email renderer. It ships the
+node types, and the types are the contract: every node is a small readonly
+object with a `type`, and a renderer is one exhaustive `switch`. This page
+walks the shape.
+
+## The document
+
+```ts
+import type {
+	ContentArticleNode,
+	ContentButtonNode,
+	ContentColumnNode,
+	ContentColumnsNode,
+	ContentDividerNode,
+	ContentFinePrintNode,
+	ContentHeadingNode,
+	ContentHighlightNode,
+	ContentImageNode,
+	ContentLinkNode,
+	ContentOfferNode,
+	ContentParagraphNode,
+	ContentProductNode,
+	ContentRatingNode,
+	ContentStatNode,
+	ContentTableNode,
+	ContentText,
+	ContentValue,
+	ContentVariableNode,
+} from "@voila.dev/ui/content-editor/reader";
+
+/** A top-level block, or a block inside a column. */
+type EmailBlock =
+	| ContentParagraphNode
+	| ContentHeadingNode<"h1" | "h2">
+	| ContentHighlightNode
+	| ContentFinePrintNode
+	| ContentRatingNode
+	| ContentButtonNode
+	| ContentStatNode
+	| ContentImageNode
+	| ContentDividerNode
+	| ContentArticleNode
+	| ContentProductNode
+	| ContentOfferNode
+	| ContentTableNode
+	| ContentColumnsNode;
+
+/** What a line of text holds. */
+type EmailInline = ContentText | ContentLinkNode | ContentVariableNode;
+```
+
+`createEmailFeatures()` edits exactly these, and its `strictNodesFeature`
+unwraps anything else before it reaches your database; see
+[Presets](/ui-content-editor/presets). Still decode the stored JSON with a
+schema of your own before you render it: a document outlives the code that
+wrote it.
+
+Four conventions run through every node:
+
+- **Text blocks hold lines, void blocks hold fields.** A paragraph, a
+  heading, a highlight, fine print and a rating's question keep their text in
+  `children`. A button, an image, a card or a key figure keep everything in
+  attributes, and their `children` is one empty text leaf that you ignore.
+- **Placeholders are nodes.** A `variable` node names the value
+  (`firstName`, `lastName`, `email`); substitute it per recipient, never in
+  the editor. A subject line is not a document and keeps plain `{{firstName}}`
+  text.
+- **Money is integers.** A price is `{ amountInMinorUnits, currency }`, never
+  a pre-formatted string, so one campaign can go out in several locales.
+  Format with `Intl.NumberFormat` at render.
+- **A list is a run of paragraphs.** A list item is a `p` with
+  `listStyleType` (`"disc"`, `"decimal"` or `"badge"`) and `indent` (1 for
+  the first level). Group consecutive items into one list.
+
+## Walking it
+
+An honest skeleton, built on the real types. The `switch` is the whole
+architecture: TypeScript narrows each case to its node interface, and the
+`never` check at the end means a document can never contain a block your
+renderer silently drops.
+
+```ts
+import { emailTableRows, escapeHtml, isContentText, ratingStepHref } from "@voila.dev/ui/content-editor/reader";
+
+interface Recipient {
+	readonly firstName: string;
+	readonly lastName: string;
+	readonly email: string;
+}
+
+const renderInline = (node: EmailInline, recipient: Recipient): string => {
+	if (isContentText(node)) {
+		let html = escapeHtml(node.text).replaceAll("\n", "<br>");
+		if (node.bold) html = `<b>${html}</b>`;
+		if (node.italic) html = `<i>${html}</i>`;
+		if (node.underline) html = `<u>${html}</u>`;
+		return html;
+	}
+	switch (node.type) {
+		case "a":
+			return `<a href="${escapeHtml(node.url)}">${renderLine(node.children, recipient)}</a>`;
+		case "variable":
+			return escapeHtml(recipient[node.name as keyof Recipient] ?? "");
+		default:
+			return node satisfies never;
+	}
+};
+
+const renderLine = (children: ContentParagraphNode["children"], recipient: Recipient): string =>
+	children.map((child) => renderInline(child as EmailInline, recipient)).join("");
+
+const renderBlock = (block: EmailBlock, recipient: Recipient): string => {
+	switch (block.type) {
+		case "h1":
+		case "h2": {
+			const size = block.type === "h1" ? "22px" : "17px";
+			return `<${block.type} style="margin:0 0 12px;font-size:${size};color:#151b77">${renderLine(block.children, recipient)}</${block.type}>`;
+		}
+		case "p":
+			// A list item: see "Lists" below.
+			return `<p style="margin:0 0 12px;font-size:15px;line-height:1.6;color:#2a2a33">${renderLine(block.children, recipient)}</p>`;
+		case "button": {
+			const filled = block.variant === "primary";
+			return `<table role="presentation" width="100%"><tr><td align="${block.align}">
+				<a href="${escapeHtml(block.href)}" style="display:inline-block;padding:12px 24px;border-radius:8px;${
+					filled
+						? "background:#151b77;color:#ffffff"
+						: "border:1px solid #151b77;color:#151b77"
+				}">${escapeHtml(block.label)}</a>
+			</td></tr></table>`;
+		}
+		case "hr":
+			return `<hr style="border:none;border-top:1px solid #ececf1;margin:20px 0">`;
+		case "rating":
+			return [1, 2, 3, 4, 5]
+				.map((score) => `<a href="${escapeHtml(ratingStepHref(block.href, score))}">${score}</a>`)
+				.join(" ");
+		case "table": {
+			const rows = emailTableRows(block)
+				.map((cells) => `<tr>${cells.map((cell) => `<td>${escapeHtml(cell)}</td>`).join("")}</tr>`)
+				.join("");
+			return `<table role="presentation" width="100%">${rows}</table>`;
+		}
+		case "columns": {
+			const width = Math.floor(100 / block.desktopColumns);
+			const cells = block.children
+				.map(
+					(column) =>
+						`<td width="${width}%" style="vertical-align:top;padding:8px">${(column as ContentColumnNode).children
+							.map((child) => renderBlock(child as EmailBlock, recipient))
+							.join("")}</td>`,
+				)
+				.join("");
+			return `<table role="presentation" width="100%"><tr>${cells}</tr></table>`;
+		}
+		case "highlight":
+		case "fine-print":
+		case "stat":
+		case "image":
+		case "article":
+		case "product":
+		case "offer":
+			// The remaining blocks follow the same pattern: read the fields,
+			// escape the text, emit table-based markup.
+			return "";
+		default:
+			return block satisfies never;
+	}
+};
+
+export const renderEmailHtml = (body: ContentValue, recipient: Recipient): string =>
+	body.map((block) => renderBlock(block as EmailBlock, recipient)).join("");
+```
+
+Wrap the result in your own chrome: the 600px card, the branded header, the
+footer with contact details and the unsubscribe link. The canvas draws the
+card with `appearance="email"` and your `theme`, because the server owns
+everything around it.
+
+## Lists
+
+Plate stores a list flat, so the renderer rebuilds it. Walk the blocks, and
+while a paragraph carries `listStyleType`, collect it into the current list;
+a deeper `indent` opens a nested list, a shallower one closes it. A badge
+item is a numbered item whose number sits in a brand-coloured disc: render
+it as a two-cell row, the number in the first.
+
+An item's number is its position in the run. Plate writes `listStart` on
+every item but the first; read it to number a list that a paragraph
+interrupts and that carries on after it.
+
+## Columns
+
+A row of columns sits at the top level only, and a column holds leaf blocks
+only: never another row. The editor enforces both, so the renderer is a
+plain recursion of depth two. `mobileColumns` defaults to 1 because plenty of
+mail clients ignore media queries: render the desktop table, and pin the
+mobile count inside a `@media` block for the clients that honour it.
+
+## Keeping the preview honest
+
+Your renderer is the source of truth for what a recipient sees; the canvas
+only has to agree with it closely enough to be an honest preview. Pass your
+renderer's palette to the editor as `theme`, and there is one place to
+change when you rebrand:
+
+```tsx
+<ContentEditor.Root
+	features={createEmailFeatures()}
+	value={body}
+	onChange={setBody}
+	appearance="email"
+	theme={{ color: { brand: "#151b77", canvas: "#f4f4f7" } }}
+>
+```
+
+See [Labels and theming](/ui-content-editor/labels-and-theming). Prices and
+dates in the canvas are previewed in `theme.locale`, mirroring a renderer
+that formats per recipient:
+
+```ts
+import type { ContentMoney } from "@voila.dev/ui/content-editor";
+
+const formatPrice = (price: ContentMoney, locale: string): string =>
+	new Intl.NumberFormat(locale, {
+		style: "currency",
+		currency: price.currency,
+	}).format(price.amountInMinorUnits / 100);
+```
+
+Each of the rating's five steps links to its `href` with `rating=N`
+appended (`ratingStepHref`), so the five scores are five separately counted
+links and the distribution falls out of your click stats.
+
+## Related
+
+[Email blocks](/ui-content-editor/email-blocks) ·
+[Presets](/ui-content-editor/presets) ·
+[Server-side rendering](/ui-content-editor/server-side-rendering)

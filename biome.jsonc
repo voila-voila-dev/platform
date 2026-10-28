@@ -7,7 +7,7 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"includes": ["**", "!**/dist"]
+		"includes": ["**", "!**/dist", "!**/routeTree.gen.ts"]
 	},
 	"formatter": {
 		"enabled": true,
@@ -16,6 +16,11 @@
 	"javascript": {
 		"formatter": {
 			"quoteStyle": "double"
+		}
+	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
 		}
 	},
 	"linter": {
@@ -38,5 +43,82 @@
 				"organizeImports": "on"
 			}
 		}
-	}
+	},
+	// The ui components follow the patterns of the libraries they wrap.
+	"overrides": [
+		// Imported from voila-voila-dev/ui with arrow components; converted later.
+		{
+			"includes": [
+				"apps/**",
+				"packages/{ui,ui-branding,chart,motion}/**",
+				"scripts/ui/**"
+			],
+			"linter": {
+				"rules": { "nursery": { "useConsistentFunctionStyle": "off" } }
+			}
+		},
+		{
+			"includes": [
+				"packages/ui/src/accordion/components/**",
+				"packages/ui/src/button-group/components/**",
+				"packages/ui/src/carousel/components/**",
+				"packages/ui/src/chat/components/**",
+				"packages/ui/src/color-picker/components/**",
+				"packages/ui/src/copyable-text/components/**",
+				"packages/ui/src/field/components/**",
+				"packages/ui/src/image-cropper/components/**",
+				"packages/ui/src/input-group/components/**",
+				"packages/ui/src/input-otp/components/**",
+				"packages/ui/src/rating/components/**",
+				"packages/ui/src/components/**",
+				"packages/ui/src/chart/components/**",
+				"packages/ui/src/data-table/**",
+				"packages/ui/src/spreadsheet/components/**",
+				"packages/ui/src/globe-view/components/**",
+				"packages/ui/src/map-view/components/**",
+				"packages/ui/src/radius-map/components/**",
+				"packages/ui/src/filter/components/**",
+				"packages/ui/src/content-editor/**"
+			],
+			"linter": {
+				"rules": {
+					"a11y": {
+						"useSemanticElements": "off",
+						"useKeyWithClickEvents": "off",
+						"useFocusableInteractive": "off",
+						"useAriaPropsForRole": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": [
+				"packages/ui/src/carousel/components/**",
+				"packages/ui/src/chat/components/**",
+				"packages/ui/src/kbd/components/**",
+				"packages/ui/src/rating/components/**",
+				"packages/ui/src/components/**",
+				"packages/ui/src/chart/components/**",
+				"packages/ui/src/data-table/**",
+				"packages/ui/src/sidebar/components/**",
+				"packages/ui/src/slider/components/**",
+				"packages/ui/src/spreadsheet/**",
+				"packages/ui/src/landing/components/**",
+				"packages/ui/src/content-editor/**"
+			],
+			"linter": {
+				"rules": {
+					"suspicious": {
+						"noArrayIndexKey": "off"
+					},
+					"correctness": {
+						"useExhaustiveDependencies": "off"
+					},
+					"security": {
+						"noDangerouslySetInnerHtml": "off"
+					}
+				}
+			}
+		}
+	]
 }

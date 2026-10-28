@@ -1,0 +1,98 @@
+---
+title: "Sheet"
+description: "A panel that slides in from an edge."
+category: "overlays"
+---
+
+import * as Example from "@/examples/ui/sheet";
+
+<Preview layout="center">
+	<Example.Default />
+</Preview>
+
+## Usage
+
+```ts
+import { Sheet } from "@voila.dev/ui/sheet";
+```
+
+```tsx
+<Sheet.Root>
+	<Sheet.Trigger render={<Button variant="outline" />}>Details</Sheet.Trigger>
+	<Sheet.Content side="right" size="lg">
+		<Sheet.Header>
+			<Sheet.Title>Project details</Sheet.Title>
+			<Sheet.Description>Design sprint starting Saturday.</Sheet.Description>
+		</Sheet.Header>
+		<Sheet.Footer>
+			<Button>Confirm booking</Button>
+		</Sheet.Footer>
+	</Sheet.Content>
+</Sheet.Root>
+```
+
+A panel that slides in from an edge and keeps the page visible behind it. That
+is the difference from [Dialog](/ui/dialog): a sheet is for working *alongside*
+what is on screen — a detail panel, a filter column — where a centred modal
+would say "stop everything". If the panel wants to be dragged and thrown like a
+native surface, that is [Drawer](/ui/drawer). If it is a detail panel that will
+also be read on a phone, use [ResponsiveSheet](/ui/responsive-sheet), which
+becomes a bottom drawer on small screens.
+
+## Recipes
+
+<Preview layout="row" label="Every edge">
+	<Example.Sides />
+</Preview>
+
+`side` picks the edge and `size` measures across it — so `size` is a width on
+`left`/`right` and a height on `top`/`bottom`. `full` covers the axis entirely,
+which is the honest choice on a narrow viewport when a partial panel would leave
+an unusable sliver.
+
+## API
+
+### Sheet.Root
+
+<PropTable of="Sheet.Root" />
+
+### Sheet.Close
+
+<PropTable of="Sheet.Close" />
+
+### Sheet.Content
+
+<PropTable of="Sheet.Content" />
+
+### Sheet.Description
+
+<PropTable of="Sheet.Description" />
+
+### Sheet.Footer
+
+<PropTable of="Sheet.Footer" />
+
+### Sheet.Header
+
+<PropTable of="Sheet.Header" />
+
+### Sheet.Overlay
+
+<PropTable of="Sheet.Overlay" />
+
+### Sheet.Portal
+
+<PropTable of="Sheet.Portal" />
+
+### Sheet.Title
+
+<PropTable of="Sheet.Title" />
+
+### Sheet.Trigger
+
+<PropTable of="Sheet.Trigger" />
+
+## Related
+
+[ResponsiveSheet](/ui/responsive-sheet) · [Drawer](/ui/drawer) ·
+[Dialog](/ui/dialog) · [Popover](/ui/popover)

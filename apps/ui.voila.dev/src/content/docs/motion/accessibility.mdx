@@ -1,0 +1,39 @@
+---
+title: "Accessibility"
+description: "Reduced motion by default, with one global override."
+sidebar:
+  order: 6
+---
+
+import { ReducedMotion } from "@/examples/motion/examples";
+
+## Reduced motion
+
+When the reader asks for reduced motion (`prefers-reduced-motion: reduce`),
+movement jumps to its end. Opacity and colours still animate, as a short
+tween with no bounce, so a change stays visible without anything sliding
+across the screen. Motion values, plain values and objects jump.
+
+<Preview layout="stack">
+	<ReducedMotion />
+</Preview>
+
+## The policy
+
+```ts
+import { setReducedMotion } from "@voila.dev/motion";
+
+setReducedMotion("user");   // the default: follow the reader's setting
+setReducedMotion("always"); // reduce everywhere, e.g. from an app setting
+setReducedMotion("never");  // never reduce: for animations that carry meaning
+```
+
+One animation can override the policy:
+
+```ts
+animate(element, { x: 100 }, { reducedMotion: "never" });
+```
+
+`shouldReduceMotion()` answers for the current policy, and
+`onReducedMotionChange(listener)` hears when the answer changes. In React,
+`useReducedMotion()` re-renders with it.

@@ -1,0 +1,96 @@
+---
+title: "Command"
+description: "A filtered command list — the palette behind ⌘K."
+category: "overlays"
+---
+
+import * as Example from "@/examples/ui/command";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+## Usage
+
+```ts
+import { Command } from "@voila.dev/ui/command";
+```
+
+```tsx
+<Command.Root>
+	<Command.Input placeholder="Search projects, freelancers…" />
+	<Command.List>
+		<Command.Empty>No results found.</Command.Empty>
+		<Command.Group heading="Projects">
+			<Command.Item>
+				<CalendarIcon />
+				Launch review — Saturday
+			</Command.Item>
+		</Command.Group>
+	</Command.List>
+</Command.Root>
+```
+
+A filterable list of commands — the ⌘K palette. It is worth adding once an app
+has more actions than a person can find by looking, and it is dead weight before
+that. `Command.Dialog` is the palette in a modal, which is how it is almost
+always used; the bare `Command` embeds the same list in a page or a
+[Popover](/ui/popover), which is what [Combobox](/ui/combobox) is built on.
+
+## Recipes
+
+`Command.Dialog` takes a `title` and `description` that are visually hidden and
+read by screen readers — the input is the visible cue, but the dialog still needs
+naming. It is controlled the same way as [Dialog](/ui/dialog), so binding it to
+⌘K is a key handler and an `open` prop.
+
+Group items with `Command.Group`, and give each a `Command.Shortcut` where a
+direct key exists, so the palette teaches the shortcuts rather than replacing
+them.
+
+## API
+
+### Command.Root
+
+<PropTable of="Command.Root" />
+
+The undescribed props here come from [cmdk](https://cmdk.paco.me/), which this
+is built on; its documentation covers `filter`, `shouldFilter`, `loop` and the
+others.
+
+### Command.Dialog
+
+<PropTable of="Command.Dialog" />
+
+### Command.Empty
+
+<PropTable of="Command.Empty" />
+
+### Command.Group
+
+<PropTable of="Command.Group" />
+
+### Command.Input
+
+<PropTable of="Command.Input" />
+
+### Command.Item
+
+<PropTable of="Command.Item" />
+
+### Command.List
+
+<PropTable of="Command.List" />
+
+### Command.Separator
+
+<PropTable of="Command.Separator" />
+
+### Command.Shortcut
+
+<PropTable of="Command.Shortcut" />
+
+## Related
+
+[Combobox](/ui/combobox) · [Dialog](/ui/dialog) · [Kbd](/ui/kbd) ·
+[DropdownMenu](/ui/dropdown-menu)

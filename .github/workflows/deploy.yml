@@ -1,0 +1,34 @@
+name: Deploy
+
+# The ui sites go out on every push to main: the docs, the Storybook and the
+# emoji data the emoji picker reads.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy ${{ matrix.app }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [storybook.ui.voila.dev, ui.voila.dev, emoji.voila.dev]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Build and deploy
+        uses: ./.github/actions/deploy-site
+        with:
+          app: ${{ matrix.app }}
+          cloudflare-api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          cloudflare-account-id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

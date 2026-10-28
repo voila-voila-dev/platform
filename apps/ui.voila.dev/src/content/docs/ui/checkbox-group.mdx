@@ -1,0 +1,26 @@
+---
+title: "CheckboxGroup"
+description: "Several checkboxes sharing one value."
+category: "forms"
+---
+
+import * as Example from "@/examples/ui/checkbox-group";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<CheckboxGroup defaultValue={["design"]}>
+	<Checkbox name="design" id="skills-design" />
+	<Label htmlFor="skills-design">Design</Label>
+</CheckboxGroup>
+```
+
+The group's value is the array of ticked `name`s. A box given `parent`, together
+with `allValues` on the group, ticks the whole set and shows the indeterminate
+dash while only some of its children are ticked.
+
+## API
+
+<PropTable of="CheckboxGroup" />

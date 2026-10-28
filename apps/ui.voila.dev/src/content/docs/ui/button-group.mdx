@@ -1,0 +1,41 @@
+---
+title: "ButtonGroup"
+description: "Buttons joined into one control."
+category: "actions"
+---
+
+import * as Example from "@/examples/ui/button-group";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<ButtonGroup.Root>
+	<Button variant="outline">Day</Button>
+	<Button variant="outline">Week</Button>
+	<Button variant="outline">Month</Button>
+</ButtonGroup.Root>
+```
+
+The group strips the inner radii and collapses the shared borders. It groups
+*actions*; for picking one of a set, reach for
+[SegmentedControl](/ui/segmented-control) or
+[ToggleGroup](/ui/toggle-group), which carry the selected state.
+
+`ButtonGroup.Text` and `ButtonGroup.Separator` add a non-interactive label or a
+rule inside the group — an input with a prefix, say.
+
+## API
+
+### ButtonGroup.Root
+
+<PropTable of="ButtonGroup.Root" />
+
+### ButtonGroup.Separator
+
+<PropTable of="ButtonGroup.Separator" />
+
+### ButtonGroup.Text
+
+<PropTable of="ButtonGroup.Text" />

@@ -1,0 +1,23 @@
+---
+title: "Spinner"
+description: "The indeterminate loading glyph."
+category: "feedback"
+---
+
+import * as Example from "@/examples/ui/spinner";
+
+<Preview layout="row">
+	<Example.SpinnerDefault />
+</Preview>
+
+```tsx
+<Spinner className="size-4" />
+```
+
+Size and colour come from `className` — the glyph uses `currentColor`, so a
+role token tints it directly. Inside a button, prefer the button's own
+`loading` prop, which adds the disabled and `aria-busy` semantics too.
+
+## API
+
+<PropTable of="Spinner" />

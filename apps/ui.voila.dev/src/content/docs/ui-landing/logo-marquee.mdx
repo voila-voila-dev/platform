@@ -1,0 +1,56 @@
+---
+title: "LogoMarquee"
+description: "A scrolling or static row of partner logos."
+sidebar:
+  order: 19
+---
+
+import * as Example from "@/examples/ui-landing/logo-marquee";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<LogoMarquee.Root>
+	<LogoMarquee.Title>Ils nous font confiance</LogoMarquee.Title>
+	<LogoMarquee.Viewport>
+		<LogoMarquee.Track duration={30}>
+			<LogoMarquee.Item src={logo} alt="Northwind" />
+		</LogoMarquee.Track>
+	</LogoMarquee.Viewport>
+</LogoMarquee.Root>
+```
+
+`Track` duplicates its children to make the loop seamless. For a handful of
+logos that fit on one line, swap it for `StaticTrack` and drop the viewport.
+
+<Preview layout="stack">
+	<Example.Static />
+</Preview>
+
+## API
+
+### LogoMarquee.Root
+
+<PropTable of="LogoMarquee.Root" />
+
+### LogoMarquee.Item
+
+<PropTable of="LogoMarquee.Item" />
+
+### LogoMarquee.StaticTrack
+
+<PropTable of="LogoMarquee.StaticTrack" />
+
+### LogoMarquee.Title
+
+<PropTable of="LogoMarquee.Title" />
+
+### LogoMarquee.Track
+
+<PropTable of="LogoMarquee.Track" />
+
+### LogoMarquee.Viewport
+
+<PropTable of="LogoMarquee.Viewport" />

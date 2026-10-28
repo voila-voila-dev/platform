@@ -1,0 +1,70 @@
+---
+title: "Interpolation"
+description: "Mix numbers, colours, strings and SVG paths, or map a range onto another."
+sidebar:
+  order: 2
+---
+
+import { ColourMix, Interpolate, PathMorph } from "@/examples/motion/examples";
+
+## mix
+
+`mix(from, to)` returns a function from progress (0 to 1) to a value between
+the two. It picks how to mix from the values:
+
+- numbers;
+- colours, in oklab so the midpoint doesn't go muddy;
+- SVG paths, morphed even when their commands differ;
+- strings with numbers in them (`"10px 20px"`, `"translate(4px) rotate(10deg)"`);
+- arrays and objects, element by element.
+
+Anything else steps at 0.5. At 0 and 1 the function returns the exact inputs.
+
+## Colours
+
+Two colours written out (hex, `rgb()`, `hsl()`, `oklch()`, `oklab()`) mix as
+numbers and come out as `rgba()`. A colour the page resolves later, like
+`var(--chart-1)` or a named colour, mixes with
+`color-mix(in oklab, …)` instead, in steps of 2 %.
+
+<Preview layout="stack">
+	<ColourMix />
+</Preview>
+
+```ts
+const tint = mix("var(--chart-1)", "#e11d48");
+tint(0.5); // "color-mix(in oklab, #e11d48 50%, var(--chart-1))"
+```
+
+## interpolate
+
+`interpolate(input, output, { clamp, ease, mixer })` maps a number through a
+piecewise range. The output can be anything `mix` handles. Clamping is on by
+default.
+
+<Preview layout="stack">
+	<Interpolate />
+</Preview>
+
+```ts
+const colour = interpolate([0, 50, 100], ["#2563eb", "#16a34a", "#e11d48"]);
+const lift = interpolate([0, 100], [0, -24], { ease: "easeOut" });
+```
+
+## Path morphing
+
+Two paths with the same commands mix number by number. Two different shapes
+are flattened to polylines, resampled to the same number of points, and
+aligned so each point travels the shortest way. When the shapes have a
+different number of rings, the extra rings grow from or shrink to their
+centre. `animate(path, { d: next })` uses it, and so does `mixPath(from, to)`.
+
+<Preview>
+	<PathMorph />
+</Preview>
+
+```ts
+animate(path, { d: circle }, { duration: 0.6, bounce: 0.2 });
+const shape = mixPath(square, star);
+shape(0.5);
+```

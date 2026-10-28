@@ -1,0 +1,87 @@
+---
+title: "Popover"
+description: "A small floating panel anchored to its trigger."
+category: "overlays"
+---
+
+import * as Example from "@/examples/ui/popover";
+
+<Preview layout="row">
+	<Example.Default />
+</Preview>
+
+## Usage
+
+```ts
+import { Popover } from "@voila.dev/ui/popover";
+```
+
+```tsx
+<Popover.Root>
+	<Popover.Trigger render={<Button variant="outline">Details</Button>} />
+	<Popover.Content>
+		<Popover.Header>
+			<Popover.Title>Landing page redesign</Popover.Title>
+			<Popover.Description>Northwind Labs — June 14.</Popover.Description>
+		</Popover.Header>
+		<p className="text-muted-foreground">A product designer is needed…</p>
+	</Popover.Content>
+</Popover.Root>
+```
+
+A small panel anchored to its trigger, for content that belongs *next to*
+something rather than over everything. It does not block the page, which is what
+separates it from [Dialog](/ui/dialog). If the content is a menu of actions, use
+[DropdownMenu](/ui/dropdown-menu) — it has the roving focus and typeahead a
+popover full of buttons will not. If it is a definition or a preview that
+appears on hover, that is [HoverCard](/ui/hover-card); if it is one line of
+help, [Tooltip](/ui/tooltip).
+
+## Recipes
+
+<Preview layout="center" label="Placed above, aligned to the start">
+	<Example.Placement />
+</Preview>
+
+`side`, `align`, `sideOffset` and `alignOffset` are surfaced directly; anything
+else the positioner takes — `collisionPadding`, `sticky`, `anchor` — goes through
+`positionerProps`.
+
+Placement is a preference, not a guarantee: the popover flips and shifts to stay
+on screen, so a `top` popover near the top of the viewport renders below the
+trigger instead.
+
+## API
+
+### Popover.Root
+
+<PropTable of="Popover.Root" />
+
+### Popover.Close
+
+<PropTable of="Popover.Close" />
+
+### Popover.Content
+
+<PropTable of="Popover.Content" />
+
+### Popover.Description
+
+<PropTable of="Popover.Description" />
+
+### Popover.Header
+
+<PropTable of="Popover.Header" />
+
+### Popover.Title
+
+<PropTable of="Popover.Title" />
+
+### Popover.Trigger
+
+<PropTable of="Popover.Trigger" />
+
+## Related
+
+[HoverCard](/ui/hover-card) · [Tooltip](/ui/tooltip) ·
+[DropdownMenu](/ui/dropdown-menu) · [Dialog](/ui/dialog)

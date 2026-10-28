@@ -1,0 +1,34 @@
+---
+title: "ToggleGroup"
+description: "A set of toggles sharing one value."
+category: "actions"
+---
+
+import * as Example from "@/examples/ui/toggle-group";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<ToggleGroup.Root defaultValue={["week"]} variant="outline">
+	<ToggleGroup.Item value="day">Day</ToggleGroup.Item>
+	<ToggleGroup.Item value="week">Week</ToggleGroup.Item>
+</ToggleGroup.Root>
+```
+
+The value is an array either way; `multiple` is what lets more than one entry
+into it. Icon-only items need an `aria-label`.
+
+For the single-choice view switcher with a sliding thumb, use
+[SegmentedControl](/ui/segmented-control).
+
+## API
+
+### ToggleGroup.Root
+
+<PropTable of="ToggleGroup.Root" />
+
+### ToggleGroup.Item
+
+<PropTable of="ToggleGroup.Item" />

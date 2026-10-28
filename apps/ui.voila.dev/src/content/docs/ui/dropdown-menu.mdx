@@ -1,0 +1,120 @@
+---
+title: "DropdownMenu"
+description: "A menu of actions opened from a button."
+category: "overlays"
+---
+
+import * as Example from "@/examples/ui/dropdown-menu";
+
+<Preview layout="center">
+	<Example.Default />
+</Preview>
+
+## Usage
+
+```ts
+import { DropdownMenu } from "@voila.dev/ui/dropdown-menu";
+```
+
+```tsx
+<DropdownMenu.Root>
+	<DropdownMenu.Trigger render={<Button variant="outline" />}>Actions</DropdownMenu.Trigger>
+	<DropdownMenu.Content className="w-56">
+		<DropdownMenu.Label>Launch review</DropdownMenu.Label>
+		<DropdownMenu.Group>
+			<DropdownMenu.Item>
+				Edit project
+				<DropdownMenu.Shortcut>⌘E</DropdownMenu.Shortcut>
+			</DropdownMenu.Item>
+		</DropdownMenu.Group>
+		<DropdownMenu.Separator />
+		<DropdownMenu.Item variant="destructive">Cancel project</DropdownMenu.Item>
+	</DropdownMenu.Content>
+</DropdownMenu.Root>
+```
+
+A menu of actions hanging off a button. Use it when the items *do* things;
+when they set a value that stays set, a [Select](/ui/select) is the honest
+control, because a menu that closes gives no sense of current state. For the
+same menu opened by right-click, [ContextMenu](/ui/context-menu) is the same
+parts with a different trigger.
+
+## Recipes
+
+Items compose: `Group` and `Separator` for structure, `Sub` and `SubTrigger`
+for nesting, `CheckboxItem` and `RadioItem` for state, `Shortcut` for the key
+hint. `variant="destructive"` tints the one item that deletes something — one
+per menu, at the bottom, behind a separator.
+
+`inset` indents an item so it lines up with siblings that have an icon or a
+checkmark; without it a mixed menu's labels sit at two different left edges.
+
+`Shortcut` takes either children (`⌘K`) or a `keys` array, which renders each
+key as its own [Kbd](/ui/kbd) chip.
+
+## API
+
+### DropdownMenu.Root
+
+<PropTable of="DropdownMenu.Root" />
+
+### DropdownMenu.CheckboxItem
+
+<PropTable of="DropdownMenu.CheckboxItem" />
+
+### DropdownMenu.Content
+
+<PropTable of="DropdownMenu.Content" />
+
+### DropdownMenu.Group
+
+<PropTable of="DropdownMenu.Group" />
+
+### DropdownMenu.Item
+
+<PropTable of="DropdownMenu.Item" />
+
+### DropdownMenu.Label
+
+<PropTable of="DropdownMenu.Label" />
+
+### DropdownMenu.Portal
+
+<PropTable of="DropdownMenu.Portal" />
+
+### DropdownMenu.RadioGroup
+
+<PropTable of="DropdownMenu.RadioGroup" />
+
+### DropdownMenu.RadioItem
+
+<PropTable of="DropdownMenu.RadioItem" />
+
+### DropdownMenu.Separator
+
+<PropTable of="DropdownMenu.Separator" />
+
+### DropdownMenu.Shortcut
+
+<PropTable of="DropdownMenu.Shortcut" />
+
+### DropdownMenu.Sub
+
+<PropTable of="DropdownMenu.Sub" />
+
+### DropdownMenu.SubContent
+
+<PropTable of="DropdownMenu.SubContent" />
+
+### DropdownMenu.SubTrigger
+
+<PropTable of="DropdownMenu.SubTrigger" />
+
+### DropdownMenu.Trigger
+
+<PropTable of="DropdownMenu.Trigger" />
+
+## Related
+
+[ContextMenu](/ui/context-menu) · [Menubar](/ui/menubar) ·
+[Select](/ui/select) · [Popover](/ui/popover)

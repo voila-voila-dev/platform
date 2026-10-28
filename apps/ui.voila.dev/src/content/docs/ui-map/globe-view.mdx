@@ -1,0 +1,65 @@
+---
+title: "GlobeView"
+description: "Put the planet on a page without an API key or a bundle tax."
+sidebar:
+  order: 3
+---
+
+import * as Example from "@/examples/ui-map/globe-view";
+
+<Preview layout="stack">
+	<Example.Globe />
+</Preview>
+
+```tsx
+<GlobeView
+	className="h-96 w-full"
+	spin={3}
+	markers={[
+		{ lngLat: [2.3522, 48.8566], pulse: true },
+		{ lngLat: [-122.4194, 37.7749], pulse: true },
+	]}
+/>
+```
+
+`GlobeView` is `MapView` on MapLibre's native globe projection: the same free,
+key-less OpenFreeMap basemaps, the same live restyle when the `.dark` class
+toggles, the same lazy-loaded runtime. The atmosphere halo is tinted from your
+`--primary` token, so a rebrand retints the globe with everything else, and the
+space behind it stays transparent so your section background shows through.
+
+Rotation pauses while the pointer is down and is skipped entirely under
+`prefers-reduced-motion`. Without WebGL the component renders
+`unavailableFallback`, or a static globe outline if you pass none.
+
+## Recipes
+
+<Preview layout="stack" label="A fixed hero frame, no rotation">
+	<Example.GlobeStill />
+</Preview>
+
+Leave `spin` at `0` and pick a `center` when the globe frames a region rather
+than decorates a hero. For sources and layers of your own, use `onReady`
+exactly as with `MapView` — it replays after a theme-driven basemap swap, so
+write it as "make the globe look like this", not "do this once".
+
+## API
+
+<PropTable of="GlobeView" />
+
+Every prop marked "read once, on mount" is exactly that: changing `center`,
+`zoom` or `spin` after the globe mounts does nothing. Drive the camera through
+the instance `onReady` hands you instead. For a `styleUrl` of your own, see
+[Basemaps](/ui-map/basemaps).
+
+## Own it
+
+The MapLibre runtime sits in `globe-view-implementation.tsx` next to the
+component. The most likely customisation is the atmosphere: edit the two
+`color-mix` expressions in `handleReady` to change what the halo is tinted
+from.
+
+## Related
+
+[MapView](/ui-map/map-view) · [Basemaps](/ui-map/basemaps) ·
+[RadiusMap](/ui-map/radius-map)

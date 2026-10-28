@@ -1,0 +1,54 @@
+---
+title: "Inbox preview"
+description: "How an email reads in a list, before anyone opens it."
+category: "data-display"
+---
+
+import * as Example from "@/examples/ui/inbox-preview";
+
+<Preview layout="stack">
+	<Example.InboxPreviewDefault />
+</Preview>
+
+```tsx
+<InboxPreview
+	sender="Acme"
+	subject="Your September invoice is ready"
+	preheader="Due on the 30th, payable online."
+/>
+```
+
+The sender, the subject and the preheader decide whether the email is opened at
+all, and they are written in a form that gives no idea of how much of them
+survives. This puts them where they land.
+
+Deliberately our own chrome rather than a replica of Gmail's or Mail's. What
+transfers between clients is the reading order and where each line is cut; the
+shade of blue does not, and a replica goes stale the week the client it copies
+is redesigned.
+
+## Both at once, not a toggle
+
+The phone is where the subject runs out — around forty characters, against a
+desktop row's hundred. A device switch hides exactly the view the author most
+needs, so both are on screen.
+
+<Preview layout="stack">
+	<Example.InboxPreviewLongSubject />
+</Preview>
+
+An empty subject reads as a placeholder rather than as a blank row, and an
+empty preheader simply leaves the room to the client, which fills it with the
+start of the body.
+
+## Copy
+
+Every string is a label, English by default, overridable one key at a time.
+
+<Preview layout="stack">
+	<Example.InboxPreviewTranslated />
+</Preview>
+
+## API
+
+<PropTable of="InboxPreview" />

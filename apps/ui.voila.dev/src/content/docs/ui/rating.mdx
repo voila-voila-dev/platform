@@ -1,0 +1,34 @@
+---
+title: "Rating"
+description: "A star rating, read-only or as an input."
+category: "forms"
+---
+
+import * as Example from "@/examples/ui/rating";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Rating.Root value={4.2} count={128} />
+
+<Rating.Input value={value} onChange={setValue} />
+```
+
+`Rating` displays and accepts fractions; `Rating.Input` collects a whole number
+from the user. `Rating.ReviewItem` lays out a rating with its author and comment.
+
+## API
+
+### Rating.Root
+
+<PropTable of="Rating.Root" />
+
+### Rating.Input
+
+<PropTable of="Rating.Input" />
+
+### Rating.ReviewItem
+
+<PropTable of="Rating.ReviewItem" />

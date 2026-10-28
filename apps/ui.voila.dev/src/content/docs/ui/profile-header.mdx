@@ -1,0 +1,35 @@
+---
+title: "ProfileHeader"
+description: "The cover, avatar, name and actions at the top of a profile."
+category: "data-display"
+---
+
+import * as Example from "@/examples/ui/profile-header";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<ProfileHeader.Root
+	name="Camille Dubois"
+	headline="Senior product designer"
+	theme="brand"
+	avatar={{ src: user.avatarUrl, name: user.name }}
+	badges={<Badge variant="brand">Identity verified</Badge>}
+	actions={<Button size="sm">Contact</Button>}
+/>
+```
+
+`theme` picks the accent — `brand` or `highlight` — which tints
+the gradient used when there is no cover image.
+
+## API
+
+### ProfileHeader.Root
+
+<PropTable of="ProfileHeader.Root" />
+
+### ProfileHeader.Cover
+
+<PropTable of="ProfileHeader.Cover" />

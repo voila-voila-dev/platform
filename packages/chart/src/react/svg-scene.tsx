@@ -1,0 +1,211 @@
+import type * as React from "react";
+import { roundedBarPath } from "#/core/paths.ts";
+import type {
+	ChartPaint,
+	ChartScene,
+	ChartTextPaint,
+	SceneNode,
+} from "#/core/types.ts";
+
+const BASELINE: Record<
+	NonNullable<ChartTextPaint["baseline"]>,
+	React.SVGAttributes<SVGTextElement>["dominantBaseline"]
+> = {
+	top: "text-before-edge",
+	middle: "central",
+	bottom: "text-after-edge",
+	alphabetic: "alphabetic",
+};
+
+const HATCH_STEP = 6;
+
+/** A stable id per colour (djb2), the same on the server and in the browser. */
+function hatchId(prefix: string, color: string): string {
+	let hash = 5381;
+	for (const character of color) {
+		hash = ((hash << 5) + hash + character.charCodeAt(0)) | 0;
+	}
+	return `${prefix}-hatch-${(hash >>> 0).toString(36)}`;
+}
+
+function hatchColors(
+	nodes: ReadonlyArray<SceneNode>,
+	into = new Set<string>(),
+): Set<string> {
+	for (const node of nodes) {
+		if (node.kind === "group") {
+			hatchColors(node.children, into);
+		} else if (node.paint.hatch && node.paint.fill) {
+			into.add(node.paint.fill);
+		}
+	}
+	return into;
+}
+
+function paintProps(
+	paint: ChartPaint,
+	prefix: string,
+): React.SVGAttributes<SVGElement> {
+	return {
+		fill:
+			paint.hatch && paint.fill
+				? `url(#${hatchId(prefix, paint.fill)})`
+				: (paint.fill ?? "none"),
+		stroke: paint.stroke,
+		strokeWidth: paint.strokeWidth,
+		strokeDasharray: paint.drawn ? "1 1" : paint.strokeDasharray,
+		// Measured in path lengths: the dash shows the first `fraction` of the line.
+		...(paint.drawn
+			? { pathLength: 1, strokeDashoffset: 1 - paint.drawn.fraction }
+			: {}),
+		strokeLinecap: paint.strokeLinecap,
+		strokeLinejoin: paint.strokeLinejoin,
+		opacity: paint.opacity,
+		fillOpacity: paint.fillOpacity,
+		strokeOpacity: paint.strokeOpacity,
+	};
+}
+
+function SceneElement({
+	node,
+	clipPrefix,
+}: {
+	node: SceneNode;
+	clipPrefix: string;
+}) {
+	const data = { "data-role": node.role, "data-series": node.series };
+	switch (node.kind) {
+		case "group": {
+			const clipId = node.clip ? `${clipPrefix}-${node.key}` : undefined;
+			return (
+				<g
+					{...data}
+					transform={
+						node.translate
+							? `translate(${node.translate.x} ${node.translate.y})`
+							: undefined
+					}
+					clipPath={clipId ? `url(#${clipId})` : undefined}
+				>
+					{node.clip && clipId ? (
+						<clipPath id={clipId}>
+							<rect {...node.clip} />
+						</clipPath>
+					) : null}
+					{node.children.map((child) => (
+						<SceneElement
+							key={child.key}
+							node={child}
+							clipPrefix={clipPrefix}
+						/>
+					))}
+				</g>
+			);
+		}
+		case "rect":
+			return node.corners ? (
+				<path
+					{...data}
+					d={roundedBarPath({ ...node, radius: node.corners })}
+					{...paintProps(node.paint, clipPrefix)}
+				/>
+			) : (
+				<rect
+					{...data}
+					x={node.x}
+					y={node.y}
+					width={node.width}
+					height={node.height}
+					{...paintProps(node.paint, clipPrefix)}
+				/>
+			);
+		case "path":
+			return (
+				<path {...data} d={node.d} {...paintProps(node.paint, clipPrefix)} />
+			);
+		case "circle":
+			return (
+				<circle
+					{...data}
+					cx={node.cx}
+					cy={node.cy}
+					r={node.r}
+					{...paintProps(node.paint, clipPrefix)}
+				/>
+			);
+		case "line":
+			return (
+				<line
+					{...data}
+					x1={node.x1}
+					y1={node.y1}
+					x2={node.x2}
+					y2={node.y2}
+					{...paintProps(node.paint, clipPrefix)}
+				/>
+			);
+		case "text":
+			return (
+				<text
+					{...data}
+					x={node.x}
+					y={node.y}
+					transform={
+						node.rotate
+							? `rotate(${node.rotate} ${node.x} ${node.y})`
+							: undefined
+					}
+					fontSize={node.paint.fontSize}
+					fontWeight={node.paint.fontWeight}
+					textAnchor={node.paint.textAnchor}
+					dominantBaseline={
+						node.paint.baseline ? BASELINE[node.paint.baseline] : undefined
+					}
+					{...paintProps(node.paint, clipPrefix)}
+				>
+					{node.text}
+				</text>
+			);
+	}
+}
+
+/** The scene's nodes as SVG elements, keyed so React reconciles a data update in place. */
+export function SvgSceneNodes({
+	scene,
+	clipPrefix,
+}: {
+	scene: ChartScene;
+	clipPrefix: string;
+}) {
+	const hatches = [...hatchColors(scene.nodes)];
+	return (
+		<>
+			{hatches.length > 0 ? (
+				<defs>
+					{hatches.map((color) => (
+						<pattern
+							key={color}
+							id={hatchId(clipPrefix, color)}
+							width={HATCH_STEP}
+							height={HATCH_STEP}
+							patternUnits="userSpaceOnUse"
+							patternTransform="rotate(45)"
+						>
+							<line
+								x1={0}
+								y1={0}
+								x2={0}
+								y2={HATCH_STEP}
+								stroke={color}
+								strokeWidth={1.5}
+							/>
+						</pattern>
+					))}
+				</defs>
+			) : null}
+			{scene.nodes.map((node) => (
+				<SceneElement key={node.key} node={node} clipPrefix={clipPrefix} />
+			))}
+		</>
+	);
+}

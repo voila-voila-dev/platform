@@ -1,0 +1,43 @@
+---
+title: "CtaBanner"
+description: "The full-bleed closing call to action."
+sidebar:
+  order: 20
+---
+
+import * as Example from "@/examples/ui-landing/cta-banner";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<CtaBanner.Root>
+	<CtaBanner.Title>Join the Acme adventure</CtaBanner.Title>
+	<CtaBanner.Description>Client or freelancer…</CtaBanner.Description>
+	<CtaBanner.Actions>
+		<Button size="lg" variant="secondary">I'm a client</Button>
+	</CtaBanner.Actions>
+</CtaBanner.Root>
+```
+
+The banner sits on the brand gradient fill, so buttons inside it need
+light-on-brand variants rather than the page defaults.
+
+## API
+
+### CtaBanner.Root
+
+<PropTable of="CtaBanner.Root" />
+
+### CtaBanner.Actions
+
+<PropTable of="CtaBanner.Actions" />
+
+### CtaBanner.Description
+
+<PropTable of="CtaBanner.Description" />
+
+### CtaBanner.Title
+
+<PropTable of="CtaBanner.Title" />

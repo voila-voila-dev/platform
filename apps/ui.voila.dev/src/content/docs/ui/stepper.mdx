@@ -1,0 +1,54 @@
+---
+title: "Stepper"
+description: "Progress through a numbered flow."
+category: "navigation"
+---
+
+import * as Example from "@/examples/ui/stepper";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Stepper.Root value={2}>
+	<Stepper.Item step={1}>
+		<Stepper.Indicator />
+		<Stepper.Title>Profil</Stepper.Title>
+		<Stepper.Separator />
+	</Stepper.Item>
+	<Stepper.Item step={2}>…</Stepper.Item>
+</Stepper.Root>
+```
+
+`value` is the step the user is on; each item knows whether it is done, current
+or still ahead from its own `step`. Leave the separator off the last item.
+
+`orientation="vertical"` stacks the steps, with `Stepper.Description` under each
+title.
+
+## API
+
+### Stepper.Root
+
+<PropTable of="Stepper.Root" />
+
+### Stepper.Description
+
+<PropTable of="Stepper.Description" />
+
+### Stepper.Indicator
+
+<PropTable of="Stepper.Indicator" />
+
+### Stepper.Item
+
+<PropTable of="Stepper.Item" />
+
+### Stepper.Separator
+
+<PropTable of="Stepper.Separator" />
+
+### Stepper.Title
+
+<PropTable of="Stepper.Title" />

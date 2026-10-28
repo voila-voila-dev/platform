@@ -1,0 +1,32 @@
+---
+title: "SegmentedControl"
+description: "One-of-a-few, as a filled track with a sliding thumb."
+category: "actions"
+---
+
+import * as Example from "@/examples/ui/segmented-control";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<SegmentedControl.Root defaultValue="week">
+	<SegmentedControl.Item value="day">Day</SegmentedControl.Item>
+	<SegmentedControl.Item value="week">Week</SegmentedControl.Item>
+	<SegmentedControl.Item value="month">Month</SegmentedControl.Item>
+</SegmentedControl.Root>
+```
+
+Always exactly one selected, so it suits a view switcher rather than a filter.
+Keep it to a handful of short labels — the segments share the width evenly.
+
+## API
+
+### SegmentedControl.Root
+
+<PropTable of="SegmentedControl.Root" />
+
+### SegmentedControl.Item
+
+<PropTable of="SegmentedControl.Item" />

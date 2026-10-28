@@ -1,0 +1,29 @@
+---
+title: "Slider"
+description: "Pick a number, or a range, by dragging."
+category: "forms"
+---
+
+import * as Example from "@/examples/ui/slider";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Slider.Root defaultValue={50} />
+<Slider.Root defaultValue={[35, 65]} min={20} max={100} />
+```
+
+An array value gives you two thumbs and a range. `Slider.Value` renders the
+current value as text next to it.
+
+## API
+
+### Slider.Root
+
+<PropTable of="Slider.Root" />
+
+### Slider.Value
+
+<PropTable of="Slider.Value" />

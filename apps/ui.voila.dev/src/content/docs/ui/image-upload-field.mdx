@@ -1,0 +1,27 @@
+---
+title: "ImageUploadField"
+description: "Drop an image, crop it, confirm it."
+category: "forms"
+---
+
+import * as Example from "@/examples/ui/image-upload-field";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<ImageUploadField
+	value={avatarUrl}
+	onFileCropped={upload}
+	onRemove={clear}
+	shape="circle"
+/>
+```
+
+`shape="rectangle"` with an `aspectRatio` covers a banner. `onFileCropped`
+receives the cropped file, so the upload stays yours.
+
+## API
+
+<PropTable of="ImageUploadField" />

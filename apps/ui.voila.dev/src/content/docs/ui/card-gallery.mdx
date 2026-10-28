@@ -1,0 +1,75 @@
+---
+title: "CardGallery"
+description: "An adaptive grid of tiles — visual large, title below — for directories people browse."
+category: "data-display"
+---
+
+import * as Example from "@/examples/ui/card-gallery";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<CardGallery.Root>
+	{organizations.map((organization) => (
+		<CardGallery.Item key={organization.name}>
+			<CardGallery.Logo src={organization.logo}>
+				{organization.name.charAt(0)}
+			</CardGallery.Logo>
+			<CardGallery.Title>{organization.name}</CardGallery.Title>
+			<CardGallery.Description>{organization.category}</CardGallery.Description>
+		</CardGallery.Item>
+	))}
+</CardGallery.Root>;
+```
+
+The column count is not configured — the grid packs as many tiles as fit and
+every tile shares the leftover space, so the same markup adapts from a sidebar
+to a full page. `itemMinWidth` is the one knob: how narrow a tile may get
+before a column is dropped.
+
+Every part takes `render`, so a tile becomes a link (or anything else) without
+wrapper elements:
+
+<Preview layout="stack">
+	<Example.AsLinks />
+</Preview>
+
+```tsx
+<CardGallery.Item render={<a href={organization.href}>…</a>} />
+```
+
+Pagination is yours to add or leave out: render [Pagination](/ui/pagination)
+(or `DataTable.Pagination`) after the grid when the list is long, or pass the
+full list for an all-at-once directory. Inside a table context,
+[DataTable's gallery view](/ui-datatable/gallery-view) wires these parts to
+the sorted, filtered row model for you.
+
+## API
+
+### CardGallery.Root
+
+<PropTable of="CardGallery.Root" />
+
+### CardGallery.Item
+
+<PropTable of="CardGallery.Item" />
+
+The tile frame. Hover and pressed affordances appear only when it renders as
+an `<a>` or `<button>`.
+
+### CardGallery.Logo
+
+<PropTable of="CardGallery.Logo" />
+
+The large square visual. Children are the fallback — shown while the image
+loads or when `src` is absent.
+
+### CardGallery.Title
+
+<PropTable of="CardGallery.Title" />
+
+### CardGallery.Description
+
+<PropTable of="CardGallery.Description" />

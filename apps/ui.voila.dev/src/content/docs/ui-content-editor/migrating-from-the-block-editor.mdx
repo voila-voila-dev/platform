@@ -1,0 +1,258 @@
+---
+title: "email-block-editor → content-editor + createEmailFeatures"
+description: "Move a stored email block document to the content editor's email preset, with the converter written out."
+sidebar:
+  order: 36
+---
+
+`@voila.dev/ui/email-block-editor` was removed in 4.0. The content editor
+replaces it: `createEmailFeatures()` edits the same fifteen blocks, and its
+document is a Slate tree, not the old `{ version, blocks }` object. Your
+component changes in a few lines. Your stored documents need one conversion.
+
+## The component
+
+```tsx
+// Before
+<EmailBlockEditor
+	blocks={blocks}
+	document={document}
+	onDocumentChange={setDocument}
+/>
+
+// After
+const FEATURES = createEmailFeatures({ currencies: ["EUR", "USD"] });
+
+<ContentEditor.Root
+	features={FEATURES}
+	appearance="email"
+	value={value}
+	onValueChange={setValue}
+/>
+```
+
+See [Presets](/ui-content-editor/presets) for the options of
+`createEmailFeatures`, and [Quick start](/ui-content-editor/quick-start) for
+the parts around the root. A custom block becomes a custom feature; see
+[Defining a feature](/ui-content-editor/defining-a-feature).
+
+## The mapping
+
+The [Email blocks](/ui-content-editor/email-blocks) page lists each block with
+its node and its page. The differences that shape the converter:
+
+| The block editor | The content editor |
+| --- | --- |
+| `heading` with `level` 1 or 2 | `h1` or `h2` |
+| `paragraph` with `spans` (`bold`, `italic`, `underline`, `href`) | `p` whose `children` are texts with marks, and `a` nodes for links |
+| `list` with `marker` and `items` | one `p` per item, with `listStyleType` (`disc`, `decimal`, `badge`) and `indent: 1` |
+| `finePrint`, `highlight`, `rating` | `fine-print`, `highlight`, `rating`; their text moves to `children` |
+| `button`, `stat`, `image`, `divider` | the same fields, plus a `children` of one empty text leaf; `divider` is `hr`, `image.src` is `url`, `image.width` is `size` |
+| `article`, `product`, `offer` | the same attributes, plus the empty `children` |
+| `table` with `columns` and `rows` | `table` of `tr` > `td` or `th` > `p` |
+| `grid` with a flat `children` list | `columns` rows, each with `column` children |
+| `{{firstName}}` inside a text | a `variable` node |
+
+## The converter
+
+A stored campaign keeps rendering with the layout it was sent with, so convert
+on read or in one migration, and keep the old document next to the new one
+until you have compared the sent HTML. This is the converter tries.care runs,
+on the kit's reader types.
+
+```ts
+import type {
+	ContentColumnsNode,
+	ContentText,
+	ContentValue,
+} from "@voila.dev/ui/content-editor/reader";
+
+const VOID = [{ text: "" }] as const;
+const VARIABLES = ["firstName", "lastName", "email"] as const;
+const PLACEHOLDER = new RegExp(`(\\{\\{(?:${VARIABLES.join("|")})\\}\\})`);
+
+const LIST_STYLE = { bullet: "disc", number: "decimal", badge: "badge" } as const;
+
+// `LegacyDocument`, `LegacyBlock` and `LegacySpan` are the shapes you stored:
+// `{ version: 1, blocks: [...] }` with the blocks listed in the table above.
+// Copy them from your own schema, the kit no longer exports them.
+
+const marks = (span: LegacySpan) => ({
+	...(span.bold === true ? { bold: true } : {}),
+	...(span.italic === true ? { italic: true } : {}),
+	...(span.underline === true ? { underline: true } : {}),
+});
+
+/** A `{{firstName}}` typed in a text becomes a variable node. */
+const withVariables = (text: string, textMarks: Omit<ContentText, "text">) =>
+	text
+		.split(PLACEHOLDER)
+		.filter((part, index) => part !== "" || index === 0)
+		.map((part) =>
+			PLACEHOLDER.test(part)
+				? { type: "variable", name: part.slice(2, -2), children: VOID }
+				: { text: part, ...textMarks },
+		);
+
+const spanInlines = (span: LegacySpan) => {
+	const children = withVariables(span.text, marks(span));
+	return span.href === undefined
+		? children
+		: [{ type: "a", url: span.href, children }];
+};
+
+const inlines = (spans: ReadonlyArray<LegacySpan>) => {
+	const children = spans.flatMap(spanInlines);
+	return children.length === 0 ? [{ text: "" }] : children;
+};
+
+const plain = (text: string) => inlines([{ text }]);
+
+/** A list is a run of paragraphs, numbered from the second item on. */
+const listItems = (block: LegacyListBlock) => {
+	const listStyleType = LIST_STYLE[block.marker];
+	return block.items.map((item, index) => ({
+		type: "p",
+		id: `${block.id}-${index}`,
+		indent: 1,
+		listStyleType,
+		...(listStyleType !== "disc" && index > 0 ? { listStart: index + 1 } : {}),
+		children: inlines(item.spans),
+	}));
+};
+
+const cell = (type: "td" | "th", text: string) => ({
+	type,
+	children: [{ type: "p", children: [{ text }] }],
+});
+
+const table = (block: LegacyTableBlock) => {
+	const row = (cells: ReadonlyArray<string>, type: "td" | "th") => ({
+		type: "tr",
+		children: block.columns.map((_, index) => cell(type, cells[index] ?? "")),
+	});
+	return {
+		type: "table",
+		id: block.id,
+		columns: block.columns.map((column) => ({ align: column.align })),
+		headerRow: block.headerRow,
+		children: [
+			...(block.headerRow ? [row(block.columns.map((c) => c.label), "th")] : []),
+			...block.rows.map((cells) => row(cells, "td")),
+		],
+	};
+};
+
+/** One block in, its nodes out: the switch is exhaustive on the legacy union. */
+const leafNodes = (block: LegacyLeafBlock): ReadonlyArray<unknown> => {
+	switch (block.type) {
+		case "heading":
+			return [{ type: block.level === 1 ? "h1" : "h2", id: block.id, children: plain(block.text) }];
+		case "paragraph":
+			return [{ type: "p", id: block.id, children: inlines(block.spans) }];
+		case "list":
+			return listItems(block);
+		case "highlight":
+			return [{ type: "highlight", id: block.id, align: block.align, children: plain(block.text) }];
+		case "finePrint":
+			return [{ type: "fine-print", id: block.id, children: inlines(block.spans) }];
+		case "rating":
+			return [{
+				type: "rating",
+				id: block.id,
+				style: block.style,
+				lowLabel: block.lowLabel,
+				highLabel: block.highLabel,
+				href: block.href,
+				children: inlines(block.question),
+			}];
+		case "button":
+			return [{
+				type: "button",
+				id: block.id,
+				label: block.label,
+				href: block.href,
+				variant: block.variant,
+				align: block.align,
+				children: VOID,
+			}];
+		case "image":
+			return [{
+				type: "image",
+				id: block.id,
+				url: block.src,
+				alt: block.alt,
+				href: block.href,
+				size: block.width,
+				overlay: block.overlay,
+				children: VOID,
+			}];
+		case "divider":
+			return [{ type: "hr", id: block.id, children: VOID }];
+		case "stat":
+			return [{
+				type: "stat",
+				id: block.id,
+				value: block.value,
+				label: block.label,
+				description: block.description,
+				align: block.align,
+				children: VOID,
+			}];
+		case "table":
+			return [table(block)];
+		case "article":
+		case "product":
+		case "offer":
+			return [{ ...block, children: VOID }];
+	}
+};
+
+/**
+ * A grid held any number of cells; a `columns` node holds one row. Cut the
+ * cells into rows of `desktopColumns`, the first row keeping the grid's id.
+ */
+const columnRows = (block: LegacyGridBlock) => {
+	const rows: Array<ContentColumnsNode> = [];
+	for (let start = 0; start < block.children.length; start += block.desktopColumns) {
+		rows.push({
+			type: "columns",
+			id: rows.length === 0 ? block.id : `${block.id}-${rows.length}`,
+			desktopColumns: block.desktopColumns,
+			mobileColumns: block.mobileColumns,
+			children: block.children
+				.slice(start, start + block.desktopColumns)
+				.map((child) => ({ type: "column", children: leafNodes(child) })),
+		} as ContentColumnsNode);
+	}
+	return rows;
+};
+
+export const legacyDocumentToValue = (document: LegacyDocument): ContentValue =>
+	document.blocks.flatMap((block) =>
+		block.type === "grid" ? columnRows(block) : leafNodes(block),
+	) as ContentValue;
+```
+
+Three things are not one to one, and each is handled above:
+
+- **A grid becomes one or more `columns` rows.** The old grid flowed any
+  number of cells into rows; a `columns` node is one row. The extra rows get an
+  id derived from the grid's.
+- **A list becomes paragraphs.** Numbering restarts are carried by
+  `listStart`, and the renderer groups consecutive items by `indent`. See
+  [Rendering an email](/ui-content-editor/rendering-an-email).
+- **A placeholder becomes a node.** Only `{{firstName}}`, `{{lastName}}` and
+  `{{email}}` are recognised; any other double-brace text stays text.
+
+## Check before you switch
+
+1. Convert every stored document in a dry run, and decode each result with a
+   schema of your own.
+2. Render the old and the new document, and diff the sent HTML on a sample.
+3. Switch the editor, and keep the old documents until the last campaign
+   built on them has been sent.
+
+[Email blocks](/ui-content-editor/email-blocks) ·
+[Presets](/ui-content-editor/presets) ·
+[Rendering an email](/ui-content-editor/rendering-an-email)

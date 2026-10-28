@@ -1,0 +1,66 @@
+---
+title: "Tooltip"
+description: "A short label describing the control under the cursor."
+category: "overlays"
+---
+
+import * as Example from "@/examples/ui/tooltip";
+
+<Preview layout="row">
+	<Example.Default />
+</Preview>
+
+## Usage
+
+```ts
+import { Tooltip } from "@voila.dev/ui/tooltip";
+```
+
+```tsx
+<Tooltip.Root>
+	<Tooltip.Trigger render={<Button size="icon" aria-label="Save" />}>
+		<FloppyDiskIcon />
+	</Tooltip.Trigger>
+	<Tooltip.Content>Save report</Tooltip.Content>
+</Tooltip.Root>
+```
+
+One line naming a control, on hover or focus. It is the smallest overlay here
+and the most misused: a tooltip cannot hold a link, a button, or anything a
+person must interact with, because it disappears when the pointer leaves and
+never appears on touch at all. If the content matters, it belongs on the page or
+in a [Popover](/ui/popover). An icon button's tooltip is a convenience — its
+`aria-label` is what actually names it.
+
+## Recipes
+
+Wrap the app once in `Tooltip.Provider` so tooltips share a delay: the first
+one waits, the rest open immediately while the pointer keeps moving along a
+toolbar. Without it every tooltip re-waits and a row of icon buttons feels
+broken.
+
+Positioning follows the same `side`/`align`/`sideOffset` model as
+[Popover](/ui/popover).
+
+## API
+
+### Tooltip.Root
+
+<PropTable of="Tooltip.Root" />
+
+### Tooltip.Content
+
+<PropTable of="Tooltip.Content" />
+
+### Tooltip.Provider
+
+<PropTable of="Tooltip.Provider" />
+
+### Tooltip.Trigger
+
+<PropTable of="Tooltip.Trigger" />
+
+## Related
+
+[Popover](/ui/popover) · [HoverCard](/ui/hover-card) · [Kbd](/ui/kbd) ·
+[Button](/ui/button)

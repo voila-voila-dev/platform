@@ -1,0 +1,105 @@
+---
+title: "Defining a feature"
+description: "One list of fields and one view become the whole element."
+sidebar:
+  order: 10
+---
+
+import * as Example from "@/examples/ui-content-editor/inspector";
+
+`defineElementFeature` turns a declaration into a feature: the Plate plugin,
+the canvas element, the default node, the slash menu and insert menu entries,
+and the [inspector](/ui-content-editor/inspector-and-fields) form. The
+built-in divider and image are defined this way. No settings form is written
+by hand.
+
+<Preview layout="stack" scroll>
+	<Example.SidePanel />
+</Preview>
+
+## Three kinds of element
+
+| Kind | What the author edits | Examples |
+| --- | --- | --- |
+| `text` | Its text, in place; settings in the inspector | a highlight, fine print |
+| `void` | Nothing in place; every field in the inspector, a live preview on the canvas | an image, a button, a divider, a variable |
+| `container` | Its children, which are other nodes | columns |
+
+A void whose reader says `kind: "inline"` flows inside text, like a
+variable chip.
+
+## The declaration
+
+```tsx
+import { TagIcon } from "@phosphor-icons/react";
+import { type ContentMoney, type ContentNodeLike, defineElementFeature } from "@voila.dev/ui/content-editor";
+
+interface PlanNode extends ContentNodeLike {
+	readonly type: "plan";
+	readonly name: string;
+	readonly period: "month" | "year";
+	readonly price: ContentMoney;
+}
+
+export const planFeature = defineElementFeature<PlanNode>({
+	key: "plan",
+	kind: "void",
+	// The reader half: React outside the editor, and the HTML a server emits.
+	node: {
+		type: "plan",
+		kind: "void",
+		Render: ({ node }) => <PlanCard node={node} />,
+		toHtml: (node) => `<div class="plan">${escapeHtml(node.name)}</div>`,
+	},
+	fields: [
+		{ type: "text", key: "name", label: "Name" },
+		{
+			type: "select",
+			key: "period",
+			label: "Billed",
+			options: [
+				{ value: "month", label: "Monthly" },
+				{ value: "year", label: "Yearly" },
+			],
+		},
+		{ type: "money", key: "price", label: "Price" },
+	],
+	defaults: { name: "Pro", period: "month", price: { amountInMinorUnits: 1900, currency: "EUR" } },
+	view: ({ node }) => <PlanCard node={node} />,
+	insert: { icon: TagIcon, keywords: ["plan", "pricing"] },
+});
+```
+
+- **`node`** is the reader: the same object `createContentReaders` would
+  hold, so a server that only renders stored content never loads Plate.
+- **`fields`** are typed against the node. A `select` on `period` only
+  accepts `"month"` and `"year"` as option values, a `boolean` field only
+  fits a boolean attribute, and a key the node does not have fails to
+  compile.
+- **`defaults`** is every attribute a fresh node starts with. The view
+  receives the node with the defaults filled in, so a document stored before
+  a field existed still renders.
+- **`view`** draws the canvas. A void's view is a preview: the helper makes
+  it non-editable and rings it while selected. A text element or a
+  container receives its editable content as `children`.
+- **`insert`** is optional. With it, the element is in the slash menu and
+  the toolbar's insert menu; a freshly inserted void is selected, so the
+  inspector opens on it.
+- **`plugins`**, **`requires`** and **`files`** are the plain
+  `ContentFeature` options, for an element that needs a Markdown input rule,
+  a host capability or dropped files.
+
+The result is a plain `ContentFeature`. Add it to the list you hand the
+root, and name it under `labels.items`:
+
+```tsx
+<ContentEditor.Root
+	features={[...createContentFeatures(), planFeature]}
+	labels={{ items: { plan: "Plan" } }}
+/>
+```
+
+A feature that does not fit one element (marks, lists, the table) is still
+written as a `ContentFeature` by hand, see
+[Custom features](/ui-content-editor/custom-features). It can declare
+`fields` for its own node types, as the link does for `a`.

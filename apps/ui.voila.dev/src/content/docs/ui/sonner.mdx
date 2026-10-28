@@ -1,0 +1,27 @@
+---
+title: "Toaster"
+description: "Transient notifications, stacked in a corner."
+category: "feedback"
+---
+
+import * as Example from "@/examples/ui/sonner";
+
+<Preview layout="row">
+	<Example.SonnerDefault />
+</Preview>
+
+```tsx
+// Once, near the root of the app
+<Toaster />
+
+// Anywhere
+toast.success("Booking confirmed");
+```
+
+Re-exported from [Sonner](https://sonner.emilkowal.ski/) with the kit's tokens
+applied, so `toast`, `toast.success`, `toast.error`, `toast.promise` and the
+rest behave as documented there.
+
+## API
+
+<PropTable of="Toaster" />
