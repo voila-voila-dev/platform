@@ -4,7 +4,7 @@ import {
 	NumberedCards,
 	numberedCardsColumnsOptions,
 	toneOptions,
-} from "@voila.dev/ui/landing";
+} from "@voila.dev/ui-landing";
 
 const meta = {
 	title: "Landing/NumberedCards",

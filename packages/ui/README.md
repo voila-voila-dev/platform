@@ -63,7 +63,7 @@ which is the bundle tax the subpaths exist to avoid. Import
 | `@voila.dev/motion` | Springs played by the browser, values on one frame loop, exits React waits for. |
 | `@voila.dev/ui/map-view`, `@voila.dev/ui/globe-view`, `@voila.dev/ui/radius-map` | Maps and a globe on free vector tiles. No API key, no bundle tax. |
 | `@voila.dev/ui/filter` | Composable filters that survive real product requirements — including geo. |
-| `@voila.dev/ui/landing` | Your marketing site, from the same system as your product. |
+| `@voila.dev/ui-landing` | Your marketing site and its articles, from the same system as your product. |
 | `@voila.dev/ui/icon` | Icons by name, safe by default — store a string, render an icon. |
 
 `packages/ui-branding` holds the voila.dev brand identity and is deliberately

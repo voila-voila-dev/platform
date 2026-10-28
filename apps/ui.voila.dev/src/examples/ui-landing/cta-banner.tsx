@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from "@phosphor-icons/react";
 import { Button } from "@voila.dev/ui/button";
-import { CtaBanner } from "@voila.dev/ui/landing";
+import { CtaBanner } from "@voila.dev/ui-landing";
 
 export function Default() {
 	return (

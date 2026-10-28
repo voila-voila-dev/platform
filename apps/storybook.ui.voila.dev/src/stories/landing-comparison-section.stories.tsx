@@ -10,7 +10,7 @@ import {
 	Eyebrow,
 	Heading,
 	Text,
-} from "@voila.dev/ui/landing";
+} from "@voila.dev/ui-landing";
 import {
 	clientBenefits,
 	freelancerBenefits,

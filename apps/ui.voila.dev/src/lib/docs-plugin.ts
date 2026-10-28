@@ -296,21 +296,20 @@ function virtualJsonPlugin(
 }
 
 /**
- * Dev only: a props table is generated from `packages/ui`, which Vite has no
+ * Dev only: a props table is generated from `packages/ui` and `ui-landing`, which Vite has no
  * reason to watch — nothing in the docs imports the source. Without this, a prop
  * added to a component keeps showing the old table until the server restarts.
  */
 export function docsPropsWatch(): Plugin {
-	const packageSrc = path.join(
-		import.meta.dirname,
-		"../../../../packages/ui/src",
+	const packageSources = ["ui", "ui-landing"].map((name) =>
+		path.join(import.meta.dirname, `../../../../packages/${name}/src`),
 	);
 	return {
 		name: "voila:docs-props-watch",
 		configureServer(server) {
-			server.watcher.add(packageSrc);
+			server.watcher.add(packageSources);
 			server.watcher.on("all", (_event, file) => {
-				if (!file.startsWith(packageSrc)) return;
+				if (!packageSources.some((source) => file.startsWith(source))) return;
 				invalidatePropsManifest();
 				// The tables are baked into the compiled MDX, so every page that
 				// carries one has to be recompiled.

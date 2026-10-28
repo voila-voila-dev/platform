@@ -1,4 +1,4 @@
-import { StatsRow } from "@voila.dev/ui/landing";
+import { StatsRow } from "@voila.dev/ui-landing";
 import { Fragment } from "react";
 import { stats } from "./fixtures";
 

@@ -1,4 +1,4 @@
-import { Text as TextComponent } from "@voila.dev/ui/landing";
+import { Text as TextComponent } from "@voila.dev/ui-landing";
 
 export function Text() {
 	return (

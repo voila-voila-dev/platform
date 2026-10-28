@@ -1,5 +1,5 @@
 import { Button } from "@voila.dev/ui/button";
-import { SiteHeader } from "@voila.dev/ui/landing";
+import { SiteHeader } from "@voila.dev/ui-landing";
 import { BrandLogo } from "./fixtures";
 
 const mainNavigation = [

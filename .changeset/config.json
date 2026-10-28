@@ -9,7 +9,15 @@
 	],
 	"commit": false,
 	"ignore": [],
-	"fixed": [["@voila.dev/ui", "@voila.dev/chart", "@voila.dev/motion"]],
+	"fixed": [
+		[
+			"@voila.dev/ui",
+			"@voila.dev/ui-landing",
+			"@voila.dev/ui-platform",
+			"@voila.dev/chart",
+			"@voila.dev/motion"
+		]
+	],
 	"linked": [],
 	"updateInternalDependencies": "patch",
 	"privatePackages": { "version": false, "tag": false }

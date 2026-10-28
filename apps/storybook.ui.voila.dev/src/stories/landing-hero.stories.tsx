@@ -10,7 +10,7 @@ import {
 	LandingHero,
 	landingHeroLayoutOptions,
 	StatsRow,
-} from "@voila.dev/ui/landing";
+} from "@voila.dev/ui-landing";
 import { Fragment } from "react";
 import { heroCopy, IllustrationPlaceholder } from "./landing-fixtures";
 

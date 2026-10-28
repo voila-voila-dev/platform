@@ -6,7 +6,7 @@ import {
 	sectionBackgroundOptions,
 	sectionSpacingOptions,
 	Text,
-} from "@voila.dev/ui/landing";
+} from "@voila.dev/ui-landing";
 
 const meta = {
 	title: "Landing/Section",

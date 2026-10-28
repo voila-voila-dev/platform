@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/tanstack-react";
-import { TestimonialGrid } from "@voila.dev/ui/landing";
+import { TestimonialGrid } from "@voila.dev/ui-landing";
 import { testimonials } from "./landing-fixtures";
 
 const meta = {

@@ -3,7 +3,7 @@ import {
 	FeatureGrid,
 	Section as SectionComponent,
 	SectionIntro as SectionIntroParts,
-} from "@voila.dev/ui/landing";
+} from "@voila.dev/ui-landing";
 import { values } from "./fixtures";
 
 /**

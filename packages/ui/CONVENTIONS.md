@@ -24,11 +24,11 @@ A folder with exactly one public component (`skeleton`, `separator`,
 namespace: `<component>.tsx` holds the implementation and `index.ts` exports it.
 That is a real exception, not drift.
 
-**`landing/` nests one level deeper** — it is a namespace *of* components, so
-`landing/components/<sub>/` is the moral equivalent of a top-level component
-folder, with `<sub>/<sub>.tsx` for the namespace and unprefixed part filenames
-(`root.tsx`, `card-title.tsx`). This is the one place the flat
-`<component>-<part>.tsx` rule does not apply.
+**`@voila.dev/ui-landing` nests one level deeper** — the package is a
+namespace *of* components, so `components/<sub>/` is the moral equivalent of a
+top-level component folder here, with `<sub>/<sub>.tsx` for the namespace and
+unprefixed part filenames (`root.tsx`, `card-title.tsx`). This is the one place
+the flat `<component>-<part>.tsx` rule does not apply.
 
 ## 2. Props interface — non-exported, always named `Props`
 
@@ -150,7 +150,7 @@ export const Empty = {
   types/hooks/variants. No individual part is reachable from it.
 - The namespace carries a short JSDoc (`/** The X parts as one namespace. */`).
 - **Compose order instead of alphabetical is allowed** when the JSDoc documents
-  the tree (`landing/`'s `/** Compose: … */`, `chart`'s drawing pipeline,
+  the tree (ui-landing's `/** Compose: … */`, `chart`'s drawing pipeline,
   `spreadsheet`'s DOM order). Say so in the JSDoc.
 
 ## 6. Other style rules in force

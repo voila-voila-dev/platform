@@ -50,7 +50,7 @@
 		{
 			"includes": [
 				"apps/**",
-				"packages/{ui,ui-branding,chart,motion}/**",
+				"packages/{ui,ui-landing,ui-branding,chart,motion}/**",
 				"scripts/ui/**"
 			],
 			"linter": {
@@ -103,7 +103,7 @@
 				"packages/ui/src/sidebar/components/**",
 				"packages/ui/src/slider/components/**",
 				"packages/ui/src/spreadsheet/**",
-				"packages/ui/src/landing/components/**",
+				"packages/ui-landing/src/components/**",
 				"packages/ui/src/content-editor/**"
 			],
 			"linter": {

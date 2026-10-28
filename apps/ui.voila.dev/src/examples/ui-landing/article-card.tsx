@@ -2,7 +2,7 @@ import { CalendarBlankIcon } from "@phosphor-icons/react";
 import {
 	ArticleCard,
 	ArticleTags as ArticleTagsParts,
-} from "@voila.dev/ui/landing";
+} from "@voila.dev/ui-landing";
 import { partnerLogoDataUri } from "./fixtures";
 
 export function Default() {

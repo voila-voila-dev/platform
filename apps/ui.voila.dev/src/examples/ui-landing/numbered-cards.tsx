@@ -3,7 +3,7 @@ import {
 	FileTextIcon,
 	RocketLaunchIcon,
 } from "@phosphor-icons/react";
-import { NumberedCards } from "@voila.dev/ui/landing";
+import { NumberedCards } from "@voila.dev/ui-landing";
 
 const orderSteps = [
 	{

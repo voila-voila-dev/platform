@@ -1,7 +1,7 @@
 import {
 	Eyebrow as EyebrowParts,
 	SectionIntro as SectionIntroParts,
-} from "@voila.dev/ui/landing";
+} from "@voila.dev/ui-landing";
 
 export function SectionIntro() {
 	return (

@@ -1,5 +1,5 @@
 import { EnvelopeSimpleIcon, LinkedinLogoIcon } from "@phosphor-icons/react";
-import { SiteFooter } from "@voila.dev/ui/landing";
+import { SiteFooter } from "@voila.dev/ui-landing";
 import { BrandLogo } from "./fixtures";
 
 export function Default() {

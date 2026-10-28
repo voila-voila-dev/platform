@@ -1,0 +1,39 @@
+/*
+ * The styles of @voila.dev/ui-landing. Import once from the app's global
+ * stylesheet, after `@voila.dev/ui/styles/globals.css`. It also points
+ * Tailwind at this package: the components ship as .tsx source, and `@source`
+ * resolves relative to this file wherever the package ends up.
+ */
+@source "../";
+@source not "../**/*.test.*";
+
+/* Page scroll lock for full-screen surfaces (burger menu, cart). The
+ * `useScrollLock` hook flags `<html>` with `data-scroll-locked`; the value is
+ * the scope. `"mobile"` and `"below-xl"` release the lock at `md` and `xl`
+ * here, so a surface hidden on desktop never leaves the page frozen and no
+ * resize listener is needed. */
+:root[data-scroll-locked] {
+	overflow: hidden;
+}
+@media (min-width: 768px) {
+	:root[data-scroll-locked="mobile"] {
+		overflow: visible;
+	}
+}
+@media (min-width: 1280px) {
+	:root[data-scroll-locked="below-xl"] {
+		overflow: visible;
+	}
+}
+
+/* Seamless logo marquee: the track renders its children twice, so sliding by
+ * half its width loops without a visible jump. Used via the arbitrary utility
+ * `animate-[landing-marquee_30s_linear_infinite]` in LogoMarquee. */
+@keyframes landing-marquee {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-50%);
+	}
+}

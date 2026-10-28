@@ -1,5 +1,5 @@
 import { BuildingsIcon } from "@phosphor-icons/react";
-import { Eyebrow as EyebrowParts } from "@voila.dev/ui/landing";
+import { Eyebrow as EyebrowParts } from "@voila.dev/ui-landing";
 
 export function Eyebrow() {
 	return (

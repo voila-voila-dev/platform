@@ -1,5 +1,5 @@
 import { CurrencyDollarIcon, PackageIcon } from "@phosphor-icons/react";
-import { FeatureGrid } from "@voila.dev/ui/landing";
+import { FeatureGrid } from "@voila.dev/ui-landing";
 
 const features = [
 	{

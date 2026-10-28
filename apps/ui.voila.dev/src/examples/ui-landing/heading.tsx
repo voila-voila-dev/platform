@@ -1,4 +1,4 @@
-import { Heading as HeadingComponent } from "@voila.dev/ui/landing";
+import { Heading as HeadingComponent } from "@voila.dev/ui-landing";
 
 export function Heading() {
 	return (

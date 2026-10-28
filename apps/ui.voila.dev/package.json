@@ -20,6 +20,7 @@
 		"@voila.dev/chart": "workspace:*",
 		"@voila.dev/motion": "workspace:*",
 		"@voila.dev/ui": "workspace:*",
+		"@voila.dev/ui-landing": "workspace:*",
 		"@voila.dev/ui-branding": "workspace:*",
 		"maplibre-gl": "catalog:maplibre",
 		"minisearch": "^7.2.0",

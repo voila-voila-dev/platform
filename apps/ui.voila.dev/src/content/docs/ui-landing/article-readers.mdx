@@ -1,0 +1,58 @@
+---
+title: "Article readers"
+description: "Print an article written in the content editor: anchors, tables, figures, callouts, charts."
+sidebar:
+  order: 25
+---
+
+`@voila.dev/ui-landing/article` adds to the content editor's readers what a
+published article needs and an editor does not:
+
+- `h2` and `h3` link to themselves, with a `#` that shows on hover;
+- a table scrolls inside a focusable frame instead of folding every figure;
+- an image becomes a lazy figure with its caption, and a button the host can
+  turn into a full-screen view (`data-article-zoom`);
+- a callout says what it is in words: `summary`, `info`, `tip`, `warning` or
+  `danger`;
+- a chart draws its figures in the reader's locale, beside a table of the same
+  values, its date and its source;
+- a calculator is drawn by the host, for the kinds it knows.
+
+```tsx
+import { contentToHtml, createContentReaders } from "@voila.dev/ui/content-editor/reader";
+import { withArticleReaders } from "@voila.dev/ui-landing/article";
+
+const readers = withArticleReaders(createContentReaders(), {
+	headingAnchor: "Link to this section",
+	tableRegion: "Scrolling table",
+	figure: {
+		srcSet: (src) => `${src}?w=480 480w, ${src}?w=960 960w`,
+		sizes: "(min-width: 768px) 720px, 100vw",
+		zoomLabel: (alt) => `Enlarge the image: ${alt}`,
+	},
+	callout: {
+		labels: { summary: "In short", info: "Good to know", tip: "Tip", warning: "Warning", danger: "Danger" },
+	},
+	chart: {
+		locale: "en-GB",
+		labels: {
+			asOf: (date) => `Figures as of ${date}`,
+			source: "Source:",
+			showData: "Show the data",
+			total: "Total",
+			plot: (title) => `Chart: ${title}`,
+		},
+	},
+	calculator: { kinds: [], Render: () => null, toHtml: () => "" },
+});
+
+const html = contentToHtml(post.body, { features: readers });
+```
+
+```css title="globals.css"
+@import "@voila.dev/ui-landing/styles/article.css";
+```
+
+A host whose articles stored other callout names reads them through
+`callout.variantOf`. A chart's series take `--article-chart-1` to `-4`, and
+fall back on the theme's `--chart-*`.

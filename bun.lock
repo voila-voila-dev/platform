@@ -31,6 +31,8 @@
         "@voila.dev/motion": "workspace:*",
         "@voila.dev/ui": "workspace:*",
         "@voila.dev/ui-branding": "workspace:*",
+        "@voila.dev/ui-landing": "workspace:*",
+        "@voila.dev/ui-platform": "workspace:*",
         "input-otp": "^1.5.0",
         "maplibre-gl": "catalog:maplibre",
         "platejs": "^53.3.11",
@@ -66,6 +68,7 @@
         "@voila.dev/motion": "workspace:*",
         "@voila.dev/ui": "workspace:*",
         "@voila.dev/ui-branding": "workspace:*",
+        "@voila.dev/ui-landing": "workspace:*",
         "maplibre-gl": "catalog:maplibre",
         "minisearch": "^7.2.0",
         "platejs": "^53.3.11",
@@ -306,6 +309,56 @@
         "react": "catalog:react",
         "react-dom": "catalog:react",
         "tailwindcss": "catalog:tailwind",
+      },
+    },
+    "packages/ui-landing": {
+      "name": "@voila.dev/ui-landing",
+      "version": "6.0.134",
+      "dependencies": {
+        "@base-ui/react": "^1.8.0",
+        "@phosphor-icons/react": "catalog:react",
+        "@voila.dev/ui": "workspace:*",
+      },
+      "devDependencies": {
+        "@testing-library/react": "^16.3.3",
+        "@types/react": "^19.3.0",
+        "@types/react-dom": "^19.3.0",
+        "@voila.dev/typescript-config": "workspace:*",
+        "jsdom": "30.0.1",
+        "react": "catalog:react",
+        "react-dom": "catalog:react",
+        "typescript": "catalog:",
+        "vitest": "catalog:",
+      },
+      "peerDependencies": {
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "tailwindcss": "^4.0.0",
+      },
+    },
+    "packages/ui-platform": {
+      "name": "@voila.dev/ui-platform",
+      "version": "6.0.134",
+      "dependencies": {
+        "@phosphor-icons/react": "catalog:react",
+        "@voila.dev/ui": "workspace:*",
+        "@voila.dev/ui-landing": "workspace:*",
+      },
+      "devDependencies": {
+        "@testing-library/react": "^16.3.3",
+        "@types/react": "^19.3.0",
+        "@types/react-dom": "^19.3.0",
+        "@voila.dev/typescript-config": "workspace:*",
+        "jsdom": "30.0.1",
+        "react": "catalog:react",
+        "react-dom": "catalog:react",
+        "typescript": "catalog:",
+        "vitest": "catalog:",
+      },
+      "peerDependencies": {
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
+        "tailwindcss": "^4.0.0",
       },
     },
     "scripts/country-data": {
@@ -1171,6 +1224,10 @@
     "@voila.dev/ui": ["@voila.dev/ui@workspace:packages/ui"],
 
     "@voila.dev/ui-branding": ["@voila.dev/ui-branding@workspace:packages/ui-branding"],
+
+    "@voila.dev/ui-landing": ["@voila.dev/ui-landing@workspace:packages/ui-landing"],
+
+    "@voila.dev/ui-platform": ["@voila.dev/ui-platform@workspace:packages/ui-platform"],
 
     "@voila.dev/ui-scripts": ["@voila.dev/ui-scripts@workspace:scripts/ui"],
 

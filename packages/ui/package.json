@@ -2,7 +2,7 @@
 	"name": "@voila.dev/ui",
 	"version": "6.0.134",
 	"type": "module",
-	"description": "One package, every component: the base set plus data-table, spreadsheet, filter, map, landing, icon and the email block editor — subpath exports only, tree-shakeable by construction.",
+	"description": "One package, every component: the base set plus data-table, spreadsheet, filter, map, icon and the email block editor — subpath exports only, tree-shakeable by construction.",
 	"license": "MIT",
 	"homepage": "https://ui.voila.dev",
 	"repository": {
@@ -23,7 +23,6 @@
 		"map",
 		"maplibre",
 		"email-editor",
-		"landing",
 		"content-editor",
 		"rich-text-editor",
 		"plate"
@@ -90,7 +89,6 @@
 			"./item": "./dist/item/index.js",
 			"./kbd": "./dist/kbd/index.js",
 			"./label": "./dist/label/index.js",
-			"./landing": "./dist/landing/index.js",
 			"./list": "./dist/list/index.js",
 			"./map-view": "./dist/map-view/index.js",
 			"./menubar": "./dist/menubar/index.js",
@@ -210,7 +208,6 @@
 		"./item": "./src/item/index.ts",
 		"./kbd": "./src/kbd/index.ts",
 		"./label": "./src/label/index.ts",
-		"./landing": "./src/landing/index.ts",
 		"./list": "./src/list/index.ts",
 		"./map-view": "./src/map-view/index.ts",
 		"./menubar": "./src/menubar/index.ts",
