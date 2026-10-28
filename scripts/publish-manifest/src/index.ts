@@ -1,10 +1,11 @@
 import { join } from "node:path";
 import { publishManifest } from "./publish-manifest.ts";
 
-// `apply` runs as prepack: it keeps the repository's package.json aside and
+// `apply` runs as prepack: it keeps the package's package.json aside and
 // writes the published one. `restore` runs as postpack and puts it back.
+// Both run from the package being packed.
 
-const root = join(import.meta.dir, "../../..");
+const root = process.cwd();
 const manifestFile = Bun.file(join(root, "package.json"));
 const backupFile = Bun.file(
 	join(root, "node_modules/.cache/publish-manifest/package.json"),
@@ -15,7 +16,7 @@ if (command === "apply") await apply();
 else if (command === "restore") await restore();
 else {
 	console.error(
-		"usage: bun scripts/publish-manifest/src/index.ts apply|restore",
+		"usage: bun ../../scripts/publish-manifest/src/index.ts apply|restore",
 	);
 	process.exitCode = 1;
 }
