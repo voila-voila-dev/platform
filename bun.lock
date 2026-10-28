@@ -9,13 +9,20 @@
         "@changesets/changelog-github": "^1.0.1",
         "@changesets/cli": "3.0.3",
         "@types/bun": "1.4.3",
+        "typescript": "7.0.2",
+      },
+    },
+    "packages/platform": {
+      "name": "@voila.dev/platform",
+      "version": "0.15.0",
+      "devDependencies": {
+        "@types/bun": "1.4.3",
         "@types/pg": "^8.23.1",
         "@types/tz-lookup": "^6.1.2",
         "drizzle-orm": "1.0.0-rc.5-5935859",
         "effect": "4.0.3",
         "exceljs": "^4.4.0",
         "pg": "^8.23.1",
-        "typescript": "7.0.2",
         "tz-lookup": "^6.1.25",
       },
       "peerDependencies": {
@@ -157,6 +164,8 @@
     "@typescript/typescript-win32-x64": ["@typescript/typescript-win32-x64@7.0.2", "", { "os": "win32", "cpu": "x64" }, "sha512-0BQ3HkAHHlKLSp1qRvf3SUhGpGsDuhB/jgFw75guyqbxJqEaS0Cw/VFO8i2nHglJUzQCRtMMR/IBAKE3ETMC4g=="],
 
     "@voila.dev/country-data": ["@voila.dev/country-data@workspace:scripts/country-data"],
+
+    "@voila.dev/platform": ["@voila.dev/platform@workspace:packages/platform"],
 
     "@voila.dev/publish-manifest": ["@voila.dev/publish-manifest@workspace:scripts/publish-manifest"],
 

@@ -1,5 +1,5 @@
 import { join } from "node:path";
-import { COUNTRY_CODES } from "../../../src/location/value-objects/country-code.ts";
+import { COUNTRY_CODES } from "../../../packages/platform/src/location/value-objects/country-code.ts";
 import { keptTemplate, keptUppercase } from "./address-template.ts";
 
 const LIBADDRESSINPUT_COMMIT = "81eb9628382b07d371d8ea0b11badf7de3857fd5";
@@ -10,7 +10,7 @@ const countryCodes = new Set<string>(COUNTRY_CODES);
 
 const outputDirectory = join(
 	import.meta.dir,
-	"../../../src/location/lib/generated",
+	"../../../packages/platform/src/location/lib/generated",
 );
 
 interface RegionData {
