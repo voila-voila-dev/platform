@@ -1,0 +1,94 @@
+---
+title: "ResponsiveDialog"
+description: "A dialog on desktop, a bottom drawer on small screens."
+category: "overlays"
+---
+
+import * as Example from "@/examples/ui/responsive-dialog";
+
+<Preview layout="center">
+	<Example.Default />
+</Preview>
+
+## Usage
+
+```ts
+import { ResponsiveDialog } from "@voila.dev/ui/responsive-dialog";
+```
+
+```tsx
+<ResponsiveDialog.Root>
+	<ResponsiveDialog.Trigger render={<Button variant="outline" />}>Open</ResponsiveDialog.Trigger>
+	<ResponsiveDialog.Content>
+		<ResponsiveDialog.Header>
+			<ResponsiveDialog.Title>Cancel this project?</ResponsiveDialog.Title>
+		</ResponsiveDialog.Header>
+		<ResponsiveDialog.Body>…</ResponsiveDialog.Body>
+		<ResponsiveDialog.Footer>
+			<Button variant="destructive">Cancel project</Button>
+		</ResponsiveDialog.Footer>
+	</ResponsiveDialog.Content>
+</ResponsiveDialog.Root>
+```
+
+A [Dialog](/ui/dialog) on desktop and a bottom [Drawer](/ui/drawer) below
+768px, behind one set of parts. A centred modal on a phone is the wrong shape —
+it fights the keyboard and puts its buttons where thumbs are not — so this
+switches rather than scaling. Use it for anything a phone user will meet; keep
+plain Dialog for desktop-only surfaces like an admin console.
+
+## Recipes
+
+The switch happens at 768px. Open the preview above and narrow the window to
+see it.
+
+The root owns the open state deliberately: the two halves are different
+component trees, so uncontrolled state would reset when the viewport crosses the
+breakpoint mid-interaction.
+
+`autoFocus={false}` is worth knowing about when the first field is a text input.
+Focusing it on open raises the keyboard over the content the user just asked to
+see; the content stays reachable by tab either way.
+
+## API
+
+### ResponsiveDialog.Root
+
+<PropTable of="ResponsiveDialog.Root" />
+
+### ResponsiveDialog.Body
+
+<PropTable of="ResponsiveDialog.Body" />
+
+### ResponsiveDialog.Close
+
+<PropTable of="ResponsiveDialog.Close" />
+
+### ResponsiveDialog.Content
+
+<PropTable of="ResponsiveDialog.Content" />
+
+### ResponsiveDialog.Description
+
+<PropTable of="ResponsiveDialog.Description" />
+
+### ResponsiveDialog.Footer
+
+<PropTable of="ResponsiveDialog.Footer" />
+
+### ResponsiveDialog.Header
+
+<PropTable of="ResponsiveDialog.Header" />
+
+### ResponsiveDialog.Title
+
+<PropTable of="ResponsiveDialog.Title" />
+
+### ResponsiveDialog.Trigger
+
+<PropTable of="ResponsiveDialog.Trigger" />
+
+## Related
+
+[Dialog](/ui/dialog) · [ResponsiveSheet](/ui/responsive-sheet) ·
+[Drawer](/ui/drawer)

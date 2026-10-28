@@ -1,0 +1,67 @@
+---
+title: "LandingHero"
+description: "The top of a marketing page: eyebrow, title, lead, actions, media."
+sidebar:
+  order: 2
+---
+
+import * as Example from "@/examples/ui-landing/landing-hero";
+
+<Preview layout="stack">
+	<Example.Hero />
+</Preview>
+
+```tsx
+<LandingHero.Root>
+	<LandingHero.Content>
+		<LandingHero.Title>
+			Find the right{" "}
+			<LandingHero.Highlight tone="brand">freelancer</LandingHero.Highlight>
+		</LandingHero.Title>
+		<LandingHero.Lead>The platform that connects…</LandingHero.Lead>
+		<LandingHero.Actions>
+			<Button size="lg">I'm hiring</Button>
+		</LandingHero.Actions>
+	</LandingHero.Content>
+	<LandingHero.Media>
+		<HeroIllustration />
+	</LandingHero.Media>
+</LandingHero.Root>
+```
+
+Drop `LandingHero.Media` and pass `layout="centered"` for a hero with no
+illustration.
+
+<Preview layout="stack">
+	<Example.HeroCentered />
+</Preview>
+
+## API
+
+### LandingHero.Root
+
+<PropTable of="LandingHero.Root" />
+
+### LandingHero.Actions
+
+<PropTable of="LandingHero.Actions" />
+
+### LandingHero.Content
+
+<PropTable of="LandingHero.Content" />
+
+### LandingHero.Highlight
+
+<PropTable of="LandingHero.Highlight" />
+
+### LandingHero.Lead
+
+<PropTable of="LandingHero.Lead" />
+
+### LandingHero.Media
+
+<PropTable of="LandingHero.Media" />
+
+### LandingHero.Title
+
+<PropTable of="LandingHero.Title" />

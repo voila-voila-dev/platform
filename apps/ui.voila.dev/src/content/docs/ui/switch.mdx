@@ -1,0 +1,24 @@
+---
+title: "Switch"
+description: "A setting that takes effect immediately."
+category: "forms"
+---
+
+import * as Example from "@/examples/ui/switch";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Switch id="notify-projects" defaultChecked />
+<Label htmlFor="notify-projects">Notify me about new projects</Label>
+```
+
+A switch applies as soon as it is flipped; a [Checkbox](/ui/checkbox) waits
+for the form to be submitted. If there is a Save button underneath, it is a
+checkbox.
+
+## API
+
+<PropTable of="Switch" />

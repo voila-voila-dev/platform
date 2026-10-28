@@ -1,0 +1,52 @@
+import type { Row, RowData } from "@tanstack/react-table";
+import type * as React from "react";
+import { DataTableEmpty } from "#/data-table/components/data-table-empty.tsx";
+import { DataTableLoadingOverlay } from "#/data-table/components/data-table-loading-overlay.tsx";
+import { DataTableMobileCard } from "#/data-table/components/data-table-mobile-card.tsx";
+import type { DataTableFeatures } from "#/data-table/lib/features.ts";
+import { cn } from "#/lib/utils.ts";
+
+interface Props<TData extends RowData> {
+	rows: Row<DataTableFeatures, TData>[];
+	loading: boolean;
+	emptyState: React.ReactNode;
+	onRowClick: ((row: TData) => void) | undefined;
+	renderMobileCard: ((row: TData) => React.ReactNode) | undefined;
+	framed: boolean;
+}
+
+/** The card list that replaces the table below `md`. */
+export function DataTableMobileCardList<TData extends RowData>({
+	rows,
+	loading,
+	emptyState,
+	onRowClick,
+	renderMobileCard,
+	framed,
+}: Props<TData>) {
+	if (renderMobileCard === undefined) {
+		return null;
+	}
+	return (
+		<div data-slot="data-table-mobile-list" className="relative md:hidden">
+			<DataTableLoadingOverlay loading={loading} className="rounded-md" />
+			{rows.length ? (
+				<ul className="flex flex-col gap-2">
+					{rows.map((row) => (
+						<li key={row.id}>
+							<DataTableMobileCard
+								row={row}
+								onRowClick={onRowClick}
+								renderMobileCard={renderMobileCard}
+							/>
+						</li>
+					))}
+				</ul>
+			) : (
+				<div className={cn(framed && "rounded-md border")}>
+					{emptyState ?? <DataTableEmpty />}
+				</div>
+			)}
+		</div>
+	);
+}

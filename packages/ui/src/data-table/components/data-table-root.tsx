@@ -1,0 +1,200 @@
+import type { RowData, Table as TanstackTable } from "@tanstack/react-table";
+import type * as React from "react";
+import { DataTableDesktopTable } from "#/data-table/components/data-table-desktop-table.tsx";
+import { DataTableGallery } from "#/data-table/components/data-table-gallery.tsx";
+import { DataTableMobileCardList } from "#/data-table/components/data-table-mobile-card-list.tsx";
+import { DataTablePagination } from "#/data-table/components/data-table-pagination.tsx";
+import {
+	type UseDataTableOptions,
+	useDataTable,
+} from "#/data-table/hooks/use-data-table.ts";
+import type { DataTableDensity } from "#/data-table/lib/density.ts";
+import type { DataTableFeatures } from "#/data-table/lib/features.ts";
+import type { DataTableView } from "#/data-table/lib/view.ts";
+
+interface Props<TData extends RowData>
+	extends UseDataTableOptions<TData>,
+		Omit<React.ComponentProps<"div">, "children"> {
+	/** When set, rows become clickable and invoke this with the row's data. */
+	onRowClick?: (row: TData) => void;
+	/** Refetch in progress: keeps the current rows visible under a spinner. */
+	loading?: boolean;
+	/** Custom empty state; defaults to a generic "No results" block. */
+	emptyState?: React.ReactNode;
+	/** Server-side pagination footer rendered below the table. */
+	pagination?: React.ComponentProps<typeof DataTablePagination>;
+	/**
+	 * Emplacement rendered above the table - compose `DataTable.Toolbar` with
+	 * `DataTable.Search`, `DataTable.Filters` and `DataTable.Actions`.
+	 */
+	toolbar?:
+		| React.ReactNode
+		| ((table: TanstackTable<DataTableFeatures, TData>) => React.ReactNode);
+	/**
+	 * Keeps the header row visible while the body scrolls. Needs a bounded
+	 * height on the scroll container - pass e.g. `max-h-96` through
+	 * `containerClassName`.
+	 */
+	stickyHeader?: boolean;
+	/** Forwarded to the underlying `Table` scroll container. */
+	containerClassName?: string;
+	/**
+	 * Card content for one row on mobile. When provided, the table is replaced
+	 * below the `md` breakpoint by a vertical list of cards (no horizontal
+	 * scroll) built from the sorted row model; cards stay clickable through
+	 * `onRowClick`. The toolbar and pagination footer remain visible.
+	 */
+	renderMobileCard?: (row: TData) => React.ReactNode;
+	/** Row height. `compact` fits about a third more rows on a screen. */
+	density?: DataTableDensity;
+	/**
+	 * Draws the table's own rounded border. Turn it off when the table sits
+	 * edge to edge inside a card that already frames it — two borders a few
+	 * pixels apart read as a mistake. The parent then clips the corners.
+	 */
+	framed?: boolean;
+	/**
+	 * Row layout. `gallery` swaps the table for a `CardGallery` grid built
+	 * from the same (sorted, filtered) row model. Needs `renderGalleryCard`;
+	 * drive it with `DataTable.ViewToggle`. The `pagination` footer works in
+	 * either layout — omit it to show everything at once.
+	 */
+	view?: DataTableView;
+	/**
+	 * Card content for one row in gallery view — compose the `CardGallery`
+	 * parts (`Logo`, `Title`, `Description`) or any JSX; the tile itself is
+	 * supplied and stays clickable through `onRowClick`.
+	 */
+	renderGalleryCard?: (row: TData) => React.ReactNode;
+}
+
+/**
+ * The kit's table recipe: `Table` + sorting + row selection + sticky header +
+ * windowed pagination, with toolbar emplacements for search and filters, and
+ * the classic extras behind opt-in props — column resizing, visibility,
+ * pinning, density, row expansion and CSV export.
+ *
+ * Column sizing: when any column sets a numeric `size` (or resizing is on) the
+ * table switches to fixed layout and sized cells truncate instead of
+ * stretching.
+ *
+ * `toolbar` is a render prop when it needs the table instance — the controls
+ * that drive columns (`DataTable.ViewOptions`, `DataTable.Export`) do.
+ */
+export function DataTableRoot<TData extends RowData>({
+	columns,
+	data,
+	initialSorting,
+	sorting,
+	onSortingChange,
+	onRowClick,
+	loading = false,
+	emptyState,
+	pagination,
+	toolbar,
+	enableRowSelection = false,
+	rowSelection,
+	onRowSelectionChange,
+	getRowId,
+	stickyHeader = false,
+	containerClassName,
+	renderMobileCard,
+	enableColumnResizing = false,
+	columnSizing,
+	onColumnSizingChange,
+	columnVisibility,
+	onColumnVisibilityChange,
+	columnPinning,
+	onColumnPinningChange,
+	density = "comfortable",
+	framed = true,
+	renderExpandedRow,
+	globalFilter,
+	view = "table",
+	renderGalleryCard,
+	className,
+	...props
+}: Props<TData>) {
+	const table = useDataTable({
+		columns,
+		data,
+		initialSorting,
+		sorting,
+		onSortingChange,
+		enableRowSelection,
+		rowSelection,
+		onRowSelectionChange,
+		getRowId,
+		enableColumnResizing,
+		columnSizing,
+		onColumnSizingChange,
+		columnVisibility,
+		onColumnVisibilityChange,
+		columnPinning,
+		onColumnPinningChange,
+		renderExpandedRow,
+		globalFilter,
+	});
+
+	// Sizes live on the leaf columns, which a column group nests one level
+	// down; the table itself only needs to know whether any leaf is sized.
+	const hasFixedSizes = table
+		.getAllLeafColumns()
+		.some((column) => typeof column.columnDef.size === "number");
+	const rows = table.getRowModel().rows;
+	const galleryActive = view === "gallery" && renderGalleryCard !== undefined;
+
+	return (
+		<div data-slot="data-table" className={className} {...props}>
+			{toolbar !== undefined && (
+				<div className="pb-3">
+					{typeof toolbar === "function" ? toolbar(table) : toolbar}
+				</div>
+			)}
+			{galleryActive ? (
+				<DataTableGallery
+					rows={rows}
+					loading={loading}
+					emptyState={emptyState}
+					onRowClick={onRowClick}
+					renderGalleryCard={renderGalleryCard}
+					framed={framed}
+				/>
+			) : (
+				<>
+					<DataTableMobileCardList
+						rows={rows}
+						loading={loading}
+						emptyState={emptyState}
+						onRowClick={onRowClick}
+						renderMobileCard={renderMobileCard}
+						framed={framed}
+					/>
+					<DataTableDesktopTable
+						headerGroups={table.getHeaderGroups()}
+						rows={rows}
+						columnCount={table.getVisibleLeafColumns().length}
+						loading={loading}
+						emptyState={emptyState}
+						onRowClick={onRowClick}
+						stickyHeader={stickyHeader}
+						containerClassName={containerClassName}
+						hasFixedSizes={hasFixedSizes}
+						hiddenOnMobile={renderMobileCard !== undefined}
+						resizable={enableColumnResizing}
+						renderExpandedRow={renderExpandedRow}
+						density={density}
+						framed={framed}
+						table={table}
+						pinned={
+							(columnPinning?.start?.length ?? 0) +
+								(columnPinning?.end?.length ?? 0) >
+							0
+						}
+					/>
+				</>
+			)}
+			{pagination !== undefined && <DataTablePagination {...pagination} />}
+		</div>
+	);
+}

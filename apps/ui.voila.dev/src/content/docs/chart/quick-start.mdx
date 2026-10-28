@@ -1,0 +1,76 @@
+---
+title: "Quick start"
+description: "Charts as a definition of marks, drawn to SVG or Canvas, every value reachable from the keyboard."
+sidebar:
+  order: 0
+---
+
+import { Composed, QuickStart } from "@/examples/chart/examples";
+
+A chart is data: a list of marks over your rows. `<Chart>` draws it, and
+everything a reader needs beyond the picture comes with it — a tooltip, a
+legend that toggles series, keyboard focus on every value, a live region that
+reads the focused value, and the values as a hidden table for screen readers.
+
+<Preview layout="stack">
+	<QuickStart />
+</Preview>
+
+## Install
+
+```sh
+bun add @voila.dev/chart
+```
+
+Peers: `react@19`, `react-dom@19`. No stylesheet to import: the chart reads
+the kit's tokens (`--chart-1` … `--chart-5`, `--muted-foreground`, `--border`)
+when the page has them and falls back to legible defaults when it does not.
+
+## A first chart
+
+```tsx
+import { defineChart, lineY } from "@voila.dev/chart";
+import { Chart } from "@voila.dev/chart/react";
+
+const definition = defineChart({
+	marks: [lineY(months, { x: "month", y: "bookings", label: "Bookings" })],
+});
+
+<Chart definition={definition} ariaLabel="Bookings per month" height={240} />;
+```
+
+`ariaLabel` is required: it is what a screen reader calls the chart. Build
+the definition in `useMemo` when it depends on props: its identity is what
+tells the chart the data changed, and what starts the update animation.
+
+## Marks compose
+
+A definition is a list of marks on shared scales. Bars, a line and a target
+rule, one definition:
+
+<Preview layout="stack">
+	<Composed />
+</Preview>
+
+```tsx
+defineChart({
+	marks: [
+		barY(months, { x: "month", y: "projects", label: "Projects" }),
+		lineY(months, { x: "month", y: "bookings", label: "Bookings", stroke: "var(--chart-2)", dots: true }),
+		ruleY([40], { label: "Target", strokeDasharray: "4 4" }),
+	],
+});
+```
+
+The scales come from the marks' channels: dates make a time axis, categories a
+band (for bars) or a point axis (for lines), numbers a linear one. Override
+any of it on the definition: `x: { label, tickFormat, format, ticks, domain,
+nice, zero, type }`, the same for `y`, and `color: { domain, range, labels }`.
+
+## Next
+
+- [Gallery](/chart/gallery): every mark, live.
+- [Interaction](/chart/interaction): keyboard, tooltip, legend, zoom, brush,
+  small multiples, animation.
+- [Rendering](/chart/rendering): Canvas, server rendering, size, and the
+  subpaths that bring d3 in.

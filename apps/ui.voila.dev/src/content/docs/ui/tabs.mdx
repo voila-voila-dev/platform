@@ -1,0 +1,47 @@
+---
+title: "Tabs"
+description: "Switch between panels that occupy the same space."
+category: "navigation"
+---
+
+import * as Example from "@/examples/ui/tabs";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Tabs.Root defaultValue="projects">
+	<Tabs.List>
+		<Tabs.Trigger value="projects">Projects</Tabs.Trigger>
+		<Tabs.Trigger value="freelancers">Freelancers</Tabs.Trigger>
+	</Tabs.List>
+	<Tabs.Content value="projects">…</Tabs.Content>
+	<Tabs.Content value="freelancers">…</Tabs.Content>
+</Tabs.Root>
+```
+
+`variant="line"` on the list swaps the filled rail for an underline, which sits
+better directly under a page header.
+
+<Preview layout="stack">
+	<Example.Line />
+</Preview>
+
+## API
+
+### Tabs.Root
+
+<PropTable of="Tabs.Root" />
+
+### Tabs.Content
+
+<PropTable of="Tabs.Content" />
+
+### Tabs.List
+
+<PropTable of="Tabs.List" />
+
+### Tabs.Trigger
+
+<PropTable of="Tabs.Trigger" />

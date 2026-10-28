@@ -1,0 +1,25 @@
+---
+title: "Heading"
+description: "The marketing type scale, h1 through h4."
+sidebar:
+  order: 7
+---
+
+import * as Example from "@/examples/ui-landing/heading";
+
+<Preview layout="stack">
+	<Example.Heading />
+</Preview>
+
+```tsx
+<Heading level="h1">
+	Find the right <span className="text-brand">freelancer</span>
+</Heading>
+```
+
+`level` sets the size and the rendered tag together. Wrap the words you want
+tinted in a span with a surface token rather than colouring the whole heading.
+
+## API
+
+<PropTable of="Heading" />

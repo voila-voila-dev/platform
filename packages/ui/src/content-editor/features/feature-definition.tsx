@@ -1,0 +1,153 @@
+import type { Icon } from "@phosphor-icons/react";
+import type {
+	AnyPlatePlugin,
+	PlateEditor,
+	PlateElementProps,
+} from "platejs/react";
+import type { ComponentType, FunctionComponent } from "react";
+import type { ContentNodeLike } from "#/content-editor/features/content-value.ts";
+import type { ContentField } from "#/content-editor/features/field-definition.ts";
+import type { ContentFeatureReader } from "#/content-editor/features/reader-definition.tsx";
+import type { ContentEditorLabels } from "#/content-editor/labels.ts";
+
+/**
+ * The editor half of a feature: what one node kind or one behaviour needs
+ * from Plate and what it puts in the chrome. Extends the reader half, so a
+ * feature is authored once and the registry derives the plugin list, the
+ * component map, the toolbar, the slash menu, the renderer and the
+ * serializer from it, where the source editor kept five lists by hand.
+ */
+export type ContentEditorMode = "block" | "inline" | "single-line";
+
+/** What a host wires that a feature cannot assume. Today only image upload. */
+export type ContentCapability = "upload-image";
+
+export type ContentEditorApi = PlateEditor;
+
+/** A value the sender fills in per recipient, offered when the author types `{{`. */
+export interface ContentVariable {
+	/** What the node stores and the renderer substitutes, e.g. `firstName`. */
+	readonly name: string;
+	/** What the chip and the suggestions show; defaults to the name. */
+	readonly label?: string;
+}
+
+export interface ContentUploadedImage {
+	readonly url: string;
+	readonly width?: number;
+	readonly height?: number;
+}
+
+export interface ContentPluginContext {
+	readonly mode: ContentEditorMode;
+	/** The block types the indent and list machinery may act on. */
+	readonly indentableTypes: ReadonlyArray<string>;
+}
+
+export interface ContentItemContext {
+	readonly labels: ContentEditorLabels;
+	readonly uploadImage: ((file: File) => Promise<ContentUploadedImage>) | null;
+}
+
+export type ContentToolbarGroup =
+	| "history"
+	| "text"
+	| "block"
+	| "list"
+	| "insert"
+	| "table";
+
+export interface ContentToolbarItem {
+	readonly key: string;
+	readonly group: ContentToolbarGroup;
+	readonly icon: Icon;
+	/** The label key under `labels.items`. */
+	readonly label: string;
+	/** Keys rendered through `Kbd`, e.g. `["⌘", "B"]`. */
+	readonly kbd?: ReadonlyArray<string>;
+	/**
+	 * The key the canvas binds to this item, as `isHotkey` reads it
+	 * (`"mod+k"`): it runs the item, or opens its form. Left out when the
+	 * item's plugin already binds its key, as the marks' plugins do.
+	 */
+	readonly hotkey?: string;
+	readonly isActive?: (editor: ContentEditorApi) => boolean;
+	readonly isDisabled?: (editor: ContentEditorApi) => boolean;
+	/** Shown only while this predicate holds (the table controls inside a table). */
+	readonly isVisible?: (editor: ContentEditorApi) => boolean;
+	readonly run: (editor: ContentEditorApi, context: ContentItemContext) => void;
+	/** When present, the item opens this instead of running (a link form). */
+	readonly Popover?: ComponentType<{ readonly onClose: () => void }>;
+	/**
+	 * True when the element under the caret is one the inspector edits (the
+	 * caret in a link): with a `ContentEditor.Inspector` mounted, the item's
+	 * key and control focus the inspector instead of opening `Popover`, so
+	 * one thing is never edited in two places. Without an inspector, the
+	 * form opens as usual.
+	 */
+	readonly editedInInspector?: (editor: ContentEditorApi) => boolean;
+	/** When present, the item opens a menu of these instead of running. */
+	readonly menu?: ReadonlyArray<ContentToolbarItem>;
+	/**
+	 * Left out of the compact toolbar: a control whose shortcut is the usual
+	 * way in (undo, indent). The full toolbar still shows it.
+	 */
+	readonly secondary?: boolean;
+}
+
+export interface ContentSlashItem {
+	readonly key: string;
+	readonly icon: Icon;
+	readonly label: string;
+	readonly keywords: ReadonlyArray<string>;
+	readonly run: (editor: ContentEditorApi, context: ContentItemContext) => void;
+}
+
+/**
+ * How a feature takes files the user drops on or pastes into the canvas.
+ * The first feature whose `accepts` says yes gets each file.
+ */
+export interface ContentFileHandler {
+	readonly accepts: (file: File) => boolean;
+	readonly insert: (
+		editor: ContentEditorApi,
+		files: ReadonlyArray<File>,
+		context: ContentItemContext,
+	) => void;
+}
+
+export interface ContentInspectorSectionProps {
+	/** The inspected node, as it is now. */
+	readonly node: ContentNodeLike;
+}
+
+export interface ContentFeature extends ContentFeatureReader {
+	readonly plugins: (
+		context: ContentPluginContext,
+	) => ReadonlyArray<AnyPlatePlugin>;
+	readonly files?: ContentFileHandler;
+	/** Canvas element per node type; a table registers four. */
+	readonly components?: Readonly<
+		Record<string, FunctionComponent<PlateElementProps>>
+	>;
+	readonly toolbar?: ReadonlyArray<ContentToolbarItem>;
+	readonly floating?: ReadonlyArray<ContentToolbarItem>;
+	readonly slash?: ReadonlyArray<ContentSlashItem>;
+	/**
+	 * What `ContentEditor.Inspector` edits, per node type: the fields of the
+	 * element the selection sits in. `defineElementFeature` fills it.
+	 */
+	readonly fields?: Readonly<Record<string, ReadonlyArray<ContentField>>>;
+	/**
+	 * What the inspector shows under the fields, per node type, for what a
+	 * field list cannot say: the columns of a row, added, removed and
+	 * reordered.
+	 */
+	readonly inspectorSections?: Readonly<
+		Record<string, ComponentType<ContentInspectorSectionProps>>
+	>;
+	/** Hidden, and its items with it, unless the host wired the capability. */
+	readonly requires?: ReadonlyArray<ContentCapability>;
+	/** Which editor modes carry this feature; defaults to block editors only for block features. */
+	readonly allowIn?: (mode: ContentEditorMode) => boolean;
+}

@@ -1,0 +1,25 @@
+---
+title: "ProseArticle"
+description: "Typographic styles for rendered blog content."
+sidebar:
+  order: 24
+---
+
+import * as Example from "@/examples/ui-landing/prose-article";
+
+<Preview layout="stack">
+	<Example.ProseArticle />
+</Preview>
+
+```tsx
+<ProseArticle>
+	<div dangerouslySetInnerHTML={{ __html: post.html }} />
+</ProseArticle>
+```
+
+This is the one place in the package that styles bare tags, because the content
+comes from a CMS and cannot carry classes.
+
+## API
+
+<PropTable of="ProseArticle" />

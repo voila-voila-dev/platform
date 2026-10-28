@@ -1,0 +1,66 @@
+---
+title: "Table"
+description: "A plain styled HTML table."
+category: "data-display"
+---
+
+import * as Example from "@/examples/ui/table";
+
+<Preview layout="stack" scroll>
+	<Example.Default />
+</Preview>
+
+```tsx
+<Table.Root>
+	<Table.Caption>Recent projects for your workspace.</Table.Caption>
+	<Table.Header>
+		<Table.Row>
+			<Table.Head>Reference</Table.Head>
+			<Table.Head className="text-right">Amount</Table.Head>
+		</Table.Row>
+	</Table.Header>
+	<Table.Body>
+		<Table.Row>
+			<Table.Cell className="font-medium">PRJ-001</Table.Cell>
+			<Table.Cell className="text-right">180.00 USD</Table.Cell>
+		</Table.Row>
+	</Table.Body>
+</Table.Root>
+```
+
+Markup and styles, nothing else. For sorting, filtering, selection, pinning and
+the rest, [DataTable](/ui-datatable/data-table) is the one you want.
+
+## API
+
+### Table.Root
+
+<PropTable of="Table.Root" />
+
+### Table.Body
+
+<PropTable of="Table.Body" />
+
+### Table.Caption
+
+<PropTable of="Table.Caption" />
+
+### Table.Cell
+
+<PropTable of="Table.Cell" />
+
+### Table.Footer
+
+<PropTable of="Table.Footer" />
+
+### Table.Head
+
+<PropTable of="Table.Head" />
+
+### Table.Header
+
+<PropTable of="Table.Header" />
+
+### Table.Row
+
+<PropTable of="Table.Row" />

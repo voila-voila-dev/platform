@@ -1,0 +1,87 @@
+---
+title: "SiteFooter"
+description: "The bottom of every marketing page: brand column, link columns, legal line."
+sidebar:
+  order: 4
+---
+
+import * as Example from "@/examples/ui-landing/site-footer";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<SiteFooter.Root>
+	<SiteFooter.Columns>
+		<SiteFooter.Brand>
+			<BrandLogo />
+			<SiteFooter.BrandDescription>Clients and freelancers…</SiteFooter.BrandDescription>
+			<SiteFooter.SocialLinks>
+				<SiteFooter.SocialLink href="#" aria-label="LinkedIn">
+					<LinkedinLogoIcon />
+				</SiteFooter.SocialLink>
+			</SiteFooter.SocialLinks>
+		</SiteFooter.Brand>
+		<SiteFooter.Column>
+			<SiteFooter.ColumnTitle>Legal</SiteFooter.ColumnTitle>
+			<SiteFooter.ColumnList>
+				<SiteFooter.ColumnLink href="/terms">Terms</SiteFooter.ColumnLink>
+			</SiteFooter.ColumnList>
+		</SiteFooter.Column>
+	</SiteFooter.Columns>
+	<SiteFooter.Bottom>
+		<SiteFooter.BottomText>© 2026 acme.dev</SiteFooter.BottomText>
+	</SiteFooter.Bottom>
+</SiteFooter.Root>
+```
+
+## API
+
+### SiteFooter.Root
+
+<PropTable of="SiteFooter.Root" />
+
+### SiteFooter.Bottom
+
+<PropTable of="SiteFooter.Bottom" />
+
+### SiteFooter.BottomText
+
+<PropTable of="SiteFooter.BottomText" />
+
+### SiteFooter.Brand
+
+<PropTable of="SiteFooter.Brand" />
+
+### SiteFooter.BrandDescription
+
+<PropTable of="SiteFooter.BrandDescription" />
+
+### SiteFooter.Column
+
+<PropTable of="SiteFooter.Column" />
+
+### SiteFooter.ColumnLink
+
+<PropTable of="SiteFooter.ColumnLink" />
+
+### SiteFooter.ColumnList
+
+<PropTable of="SiteFooter.ColumnList" />
+
+### SiteFooter.ColumnTitle
+
+<PropTable of="SiteFooter.ColumnTitle" />
+
+### SiteFooter.Columns
+
+<PropTable of="SiteFooter.Columns" />
+
+### SiteFooter.SocialLink
+
+<PropTable of="SiteFooter.SocialLink" />
+
+### SiteFooter.SocialLinks
+
+<PropTable of="SiteFooter.SocialLinks" />

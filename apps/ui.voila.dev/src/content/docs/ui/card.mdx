@@ -1,0 +1,61 @@
+---
+title: "Card"
+description: "A bordered surface grouping a title, some content and its actions."
+category: "data-display"
+---
+
+import * as Example from "@/examples/ui/card";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Card.Root>
+	<Card.Header>
+		<Card.Title>Brand designer — Launch week</Card.Title>
+		<Card.Description>Northwind Studio · Saturday, June 20</Card.Description>
+		<Card.Action><Badge>Open</Badge></Card.Action>
+	</Card.Header>
+	<Card.Content>…</Card.Content>
+	<Card.Footer className="justify-end gap-2">
+		<Button size="sm">Apply</Button>
+	</Card.Footer>
+</Card.Root>
+```
+
+`Card.Action` goes inside the header, not after it — the header is a grid and the
+action occupies its right-hand column.
+
+An `<img>` as the card's first child is detected and bled to the edges, so a
+cover image needs no wrapper.
+
+## API
+
+### Card.Root
+
+<PropTable of="Card.Root" />
+
+### Card.Action
+
+<PropTable of="Card.Action" />
+
+### Card.Content
+
+<PropTable of="Card.Content" />
+
+### Card.Description
+
+<PropTable of="Card.Description" />
+
+### Card.Footer
+
+<PropTable of="Card.Footer" />
+
+### Card.Header
+
+<PropTable of="Card.Header" />
+
+### Card.Title
+
+<PropTable of="Card.Title" />

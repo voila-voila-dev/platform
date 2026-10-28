@@ -1,0 +1,88 @@
+/*
+ * Sand - the document/workspace look (Notion, Craft): warm greige paper with a
+ * single cool blue for anything actionable, and radii tight enough that blocks
+ * of text sit flush against each other.
+ *
+ * Warmth carries the identity, so the accent can appear rarely - a button, a
+ * link, a selected row - without the UI feeling unfinished.
+ *
+ * A theme overrides identity tokens only; everything else - charts, badges,
+ * status colours - comes from the default theme it imports.
+ */
+@import "./default.css";
+
+:root {
+	--background: oklch(0.995 0.002 92);
+	--foreground: oklch(0.27 0.011 92);
+	--card: oklch(1 0.001 92);
+	--card-foreground: oklch(0.27 0.011 92);
+	--popover: oklch(1 0.001 92);
+	--popover-foreground: oklch(0.27 0.011 92);
+
+	--primary: oklch(0.555 0.16 253);
+	--primary-foreground: oklch(0.99 0.002 92);
+	--secondary: oklch(0.962 0.006 92);
+	--secondary-foreground: oklch(0.31 0.012 92);
+
+	--brand: oklch(0.606 0.167 253);
+	--brand-foreground: oklch(1 0 0);
+	--highlight: oklch(0.66 0.115 62);
+	--highlight-foreground: oklch(0.27 0.011 92);
+
+	--muted: oklch(0.962 0.006 92);
+	--muted-foreground: oklch(0.52 0.012 92);
+	--accent: oklch(0.945 0.008 92);
+	--accent-foreground: oklch(0.31 0.012 92);
+
+	--border: oklch(0.905 0.008 92);
+	--input: oklch(0.905 0.008 92);
+	--ring: oklch(0.606 0.167 253);
+
+	--sidebar: oklch(0.973 0.004 91);
+	--sidebar-foreground: oklch(0.27 0.011 92);
+	--sidebar-primary: oklch(0.555 0.16 253);
+	--sidebar-primary-foreground: oklch(0.99 0.002 92);
+	--sidebar-accent: oklch(0.945 0.008 92);
+	--sidebar-accent-foreground: oklch(0.31 0.012 92);
+	--sidebar-border: oklch(0.905 0.008 92);
+	--sidebar-ring: oklch(0.606 0.167 253);
+
+	--radius: 0.25rem;
+}
+
+.dark {
+	--background: oklch(0.213 0.003 90);
+	--foreground: oklch(0.955 0.004 92);
+	--card: oklch(0.244 0.003 90);
+	--card-foreground: oklch(0.955 0.004 92);
+	--popover: oklch(0.244 0.003 90);
+	--popover-foreground: oklch(0.955 0.004 92);
+
+	--primary: oklch(0.68 0.15 253);
+	--primary-foreground: oklch(0.213 0.003 90);
+	--secondary: oklch(0.295 0.004 90);
+	--secondary-foreground: oklch(0.955 0.004 92);
+
+	--brand: oklch(0.68 0.15 253);
+	--brand-foreground: oklch(0.213 0.003 90);
+	--highlight: oklch(0.78 0.12 68);
+	--highlight-foreground: oklch(0.213 0.003 90);
+
+	--muted: oklch(0.295 0.004 90);
+	--muted-foreground: oklch(0.73 0.006 92);
+	--accent: oklch(0.325 0.006 90);
+	--accent-foreground: oklch(0.955 0.004 92);
+
+	--border: oklch(0.95 0.01 92 / 12%);
+	--input: oklch(0.95 0.01 92 / 16%);
+	--ring: oklch(0.68 0.15 253);
+
+	--sidebar: oklch(0.232 0.003 90);
+	--sidebar-foreground: oklch(0.955 0.004 92);
+	--sidebar-primary: oklch(0.68 0.15 253);
+	--sidebar-primary-foreground: oklch(0.213 0.003 90);
+	--sidebar-accent: oklch(0.325 0.006 90);
+	--sidebar-accent-foreground: oklch(0.955 0.004 92);
+	--sidebar-border: oklch(0.95 0.01 92 / 12%);
+	--sidebar-ring: oklch(0.68 0.15 253);
+}

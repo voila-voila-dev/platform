@@ -1,0 +1,67 @@
+---
+title: "Quick start"
+description: "Springs played by the browser, a frame loop for everything else, and exits React waits for."
+sidebar:
+  order: 0
+---
+
+import { QuickStart, SpringBounce } from "@/examples/motion/examples";
+
+`@voila.dev/motion` animates elements, values and SVG shapes. Its API follows
+[Motion](https://motion.dev). A spring on an element becomes a CSS `linear()`
+easing that the browser plays with the Web Animations API, off the main
+thread. Everything the browser can't animate runs on one shared frame loop.
+
+<Preview layout="stack">
+	<QuickStart />
+</Preview>
+
+## Install
+
+```sh
+bun add @voila.dev/motion
+```
+
+No dependency. React 19 is an optional peer, needed only for
+`@voila.dev/motion/react`.
+
+## A first animation
+
+```ts
+import { animate } from "@voila.dev/motion";
+
+animate(element, { x: 240 });                                  // a spring, from where it is
+animate(element, { x: 240 }, { duration: 0.5, bounce: 0.3 }); // springier
+animate("li", { opacity: [0, 1], y: [16, 0] });                // every match of a selector
+await animate(element, { scale: 1.1 });                        // controls are awaitable
+```
+
+Times are in seconds. Two numbers spring by default. A spring's `duration`
+is how long the motion looks like it takes, and `bounce` (0 by default) is
+how far it overshoots. A new animation on the same property starts from what
+is painted, at the speed it already has.
+
+<Preview layout="stack">
+	<SpringBounce />
+</Preview>
+
+## Three entries
+
+| Import | What it brings | Size (gzip) |
+| --- | --- | --- |
+| `@voila.dev/motion/dom` | `animate` for elements only, every property played by the browser | ≤ 5 KB |
+| `@voila.dev/motion` | The full `animate` (elements, values, objects, SVG morphing, sequences), interpolation, scroll and in-view | about 11 KB |
+| `@voila.dev/motion/react` | `useAnimate`, `useMotionValue`, `useSpring`, `useTransform`, `useReducedMotion`, `Presence` | about 12 KB with the core |
+
+The `dom` entry can't animate SVG attributes or CSS variables: the browser
+can't interpolate those, so they jump to their last keyframe. Use the full
+`animate` for them.
+
+## Next
+
+- [Animate](/motion/animate): elements, values, objects, controls, stagger, sequences.
+- [Interpolation](/motion/interpolation): numbers, colours, ranges and path morphing.
+- [Values](/motion/values): motion values, derived values and the frame loop.
+- [Scroll and view](/motion/scroll-and-view): scroll-linked animations, `inView`, `resize`.
+- [React](/motion/react): the hooks and `Presence`.
+- [Accessibility](/motion/accessibility): reduced motion.

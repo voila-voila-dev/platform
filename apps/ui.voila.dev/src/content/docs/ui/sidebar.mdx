@@ -1,0 +1,138 @@
+---
+title: "Sidebar"
+description: "The application's left navigation rail, collapsible and persistent."
+category: "navigation"
+---
+
+import * as Example from "@/examples/ui/sidebar";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Sidebar.Provider>
+	<Sidebar.Root collapsible="icon">
+		<Sidebar.Header>…</Sidebar.Header>
+		<Sidebar.Content>
+			<Sidebar.Group>
+				<Sidebar.GroupLabel>Platform</Sidebar.GroupLabel>
+				<Sidebar.GroupContent>
+					<Sidebar.Menu>
+						<Sidebar.MenuItem>
+							<Sidebar.MenuButton isActive tooltip="Dashboard">
+								<HouseIcon />
+								<span>Dashboard</span>
+							</Sidebar.MenuButton>
+						</Sidebar.MenuItem>
+					</Sidebar.Menu>
+				</Sidebar.GroupContent>
+			</Sidebar.Group>
+		</Sidebar.Content>
+	</Sidebar.Root>
+	<Sidebar.Inset>
+		<header><Sidebar.Trigger /></header>
+	</Sidebar.Inset>
+</Sidebar.Provider>
+```
+
+`collapsible` takes `offcanvas` (slides away), `icon` (collapses to a rail of
+icons) or `none`. With `icon`, the `tooltip` on each menu button is what labels
+it once the text is hidden, so pass it always.
+
+The provider stores the open state in a cookie, so the sidebar comes back the
+way the user left it.
+
+## API
+
+### Sidebar.Root
+
+<PropTable of="Sidebar.Root" />
+
+### Sidebar.Content
+
+<PropTable of="Sidebar.Content" />
+
+### Sidebar.Footer
+
+<PropTable of="Sidebar.Footer" />
+
+### Sidebar.Group
+
+<PropTable of="Sidebar.Group" />
+
+### Sidebar.GroupAction
+
+<PropTable of="Sidebar.GroupAction" />
+
+### Sidebar.GroupContent
+
+<PropTable of="Sidebar.GroupContent" />
+
+### Sidebar.GroupLabel
+
+<PropTable of="Sidebar.GroupLabel" />
+
+### Sidebar.Header
+
+<PropTable of="Sidebar.Header" />
+
+### Sidebar.Input
+
+<PropTable of="Sidebar.Input" />
+
+### Sidebar.Inset
+
+<PropTable of="Sidebar.Inset" />
+
+### Sidebar.Menu
+
+<PropTable of="Sidebar.Menu" />
+
+### Sidebar.MenuAction
+
+<PropTable of="Sidebar.MenuAction" />
+
+### Sidebar.MenuBadge
+
+<PropTable of="Sidebar.MenuBadge" />
+
+### Sidebar.MenuButton
+
+<PropTable of="Sidebar.MenuButton" />
+
+### Sidebar.MenuItem
+
+<PropTable of="Sidebar.MenuItem" />
+
+### Sidebar.MenuSkeleton
+
+<PropTable of="Sidebar.MenuSkeleton" />
+
+### Sidebar.MenuSub
+
+<PropTable of="Sidebar.MenuSub" />
+
+### Sidebar.MenuSubButton
+
+<PropTable of="Sidebar.MenuSubButton" />
+
+### Sidebar.MenuSubItem
+
+<PropTable of="Sidebar.MenuSubItem" />
+
+### Sidebar.Provider
+
+<PropTable of="Sidebar.Provider" />
+
+### Sidebar.Rail
+
+<PropTable of="Sidebar.Rail" />
+
+### Sidebar.Separator
+
+<PropTable of="Sidebar.Separator" />
+
+### Sidebar.Trigger
+
+<PropTable of="Sidebar.Trigger" />

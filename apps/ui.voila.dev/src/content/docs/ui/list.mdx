@@ -1,0 +1,40 @@
+---
+title: "List"
+description: "A semantic list of Item rows."
+category: "data-display"
+---
+
+import * as Example from "@/examples/ui/list";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<List.Root aria-label="Open projects">
+	<List.Item variant="outline">
+		<Item.Media variant="icon"><CalendarCheckIcon /></Item.Media>
+		<Item.Content>
+			<Item.Title>Landing page redesign</Item.Title>
+		</Item.Content>
+	</List.Item>
+</List.Root>
+```
+
+`List` renders a `<ul>` and `List.Item` an `<li>`, taking the same children as
+[Item](/ui/item). Give the list an `aria-label` — a screen reader announces
+the count, and "list of 12" is only useful if it says a list of what.
+
+## API
+
+### List.Root
+
+<PropTable of="List.Root" />
+
+### List.Item
+
+<PropTable of="List.Item" />
+
+### List.Separator
+
+<PropTable of="List.Separator" />

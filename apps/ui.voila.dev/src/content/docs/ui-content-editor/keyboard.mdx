@@ -1,0 +1,103 @@
+---
+title: "Keyboard"
+description: "The keys the editor answers to, the same as in Gmail and Notion."
+sidebar:
+  order: 4
+---
+
+import * as Example from "@/examples/ui-content-editor/keyboard";
+
+The editor answers to the keys people already know from Gmail and Notion.
+Each block of this document says which key to try on it.
+
+<Preview layout="stack" scroll>
+	<Example.Keyboard />
+</Preview>
+
+On Windows and Linux, read Ctrl for ⌘.
+
+## Text
+
+| Key | What it does |
+| --- | --- |
+| Enter | Starts a new block. |
+| Shift+Enter | Breaks the line inside the block. The break is a `\n` in the text, and the readers render it as `<br>`. |
+| ⌘B, ⌘I, ⌘U, ⌘E | Bold, italic, underline, inline code. |
+| ⌘Z, ⌘⇧Z | Undo, redo. |
+| `/` | Opens the slash menu. |
+
+## Links
+
+| Key | What it does |
+| --- | --- |
+| ⌘K on selected text | Opens the link form in the floating toolbar, to link that text. |
+| ⌘K with the caret in a link | With a `ContentEditor.Inspector` on screen, focuses its URL field: change the address, then Enter or Escape hands the caret back to the text. Without an inspector, opens the link form to change or remove the address. |
+| ⌘V with a URL | Pasted over selected text, the URL links that text. Pasted at the caret, it arrives as a link. |
+
+A link is edited in one place at a time. The form creates one; an existing
+link belongs to the inspector when the host mounted one, and the toolbar's
+link control follows the same rule as the key.
+
+⌘K is not specific to links. A toolbar item binds a key with `hotkey`, in the
+notation `isHotkey` reads (`"mod+k"`), and the canvas then does what pressing
+the item does: it runs the item, or opens its form.
+
+```ts
+const linkItem: ContentToolbarItem = {
+	key: "link",
+	group: "text",
+	icon: LinkIcon,
+	label: "link",
+	kbd: ["⌘", "K"],
+	hotkey: "mod+k",
+	run: () => {},
+	Popover: ContentLinkPopover,
+	editedInInspector: (editor) => linkAtSelection(editor) !== null,
+};
+```
+
+`editedInInspector` is how an item hands an element to the inspector: while
+it returns true and an inspector is on screen, the key and the control focus
+the inspector's first field instead of opening `Popover`.
+
+Leave `hotkey` out when the item's own Plate plugin already binds the key,
+as the marks' plugins do for ⌘B, ⌘I and ⌘U. `kbd` stays what the tooltip
+shows.
+
+## Lists
+
+| Key | What it does |
+| --- | --- |
+| Enter on an empty item | Leaves the list. |
+| Backspace at the start of an item | Outdents it. On a first-level item, turns it back into a paragraph. |
+| Tab, Shift+Tab | Indents, outdents. |
+
+## Void elements
+
+An image, a divider or an embed holds no text, so it shows no caret. The
+arrow keys still stop on it: the element rings itself while it is selected.
+
+| Key | What it does |
+| --- | --- |
+| Arrow keys | Select the element, then move past it. At the start or the end of the document, where there is no block to move to, they create an empty paragraph. |
+| Enter | Starts a paragraph below the element. |
+| Backspace, Delete | Delete the selected element. ⌘Z brings it back. |
+
+The ring comes from `VoidFrame`, the box every void element of the kit draws
+itself in. The arrow and Enter handling is the `void-navigation` feature,
+which `createContentFeatures()` includes.
+
+## Markdown shortcuts
+
+Typed at the start of an empty block:
+
+| Type | You get |
+| --- | --- |
+| `- `, `* ` | A bulleted list. |
+| `1. `, `1) ` | A numbered list. |
+| `> ` | A quote. |
+| `## `, `### ` | A heading, one `#` per level. `# ` stays text: the page owns the `h1`. |
+| `---` | A divider. |
+
+Around text: `**bold**`, `*italic*`, `__underline__`, `~~strikethrough~~`
+and `` `code` ``.

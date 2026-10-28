@@ -1,0 +1,83 @@
+---
+title: "BentoGrid"
+description: "One featured tile plus a run of smaller ones."
+sidebar:
+  order: 14
+---
+
+import * as Example from "@/examples/ui-landing/bento-grid";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<BentoGrid.Root>
+	<BentoGrid.FeaturedItem>
+		<BentoGrid.FeaturedContent>
+			<BentoGrid.FeaturedTitle>CARE</BentoGrid.FeaturedTitle>
+		</BentoGrid.FeaturedContent>
+		<BentoGrid.FeaturedDescription>Prendre soin…</BentoGrid.FeaturedDescription>
+	</BentoGrid.FeaturedItem>
+	<BentoGrid.Item wide>
+		<BentoGrid.ItemLayout>…</BentoGrid.ItemLayout>
+	</BentoGrid.Item>
+</BentoGrid.Root>
+```
+
+`wide` makes an item span two columns, which is how you close a row that would
+otherwise leave a gap.
+
+## API
+
+### BentoGrid.Root
+
+<PropTable of="BentoGrid.Root" />
+
+### BentoGrid.FeaturedContent
+
+<PropTable of="BentoGrid.FeaturedContent" />
+
+### BentoGrid.FeaturedDescription
+
+<PropTable of="BentoGrid.FeaturedDescription" />
+
+### BentoGrid.FeaturedIcon
+
+<PropTable of="BentoGrid.FeaturedIcon" />
+
+### BentoGrid.FeaturedItem
+
+<PropTable of="BentoGrid.FeaturedItem" />
+
+### BentoGrid.FeaturedLabel
+
+<PropTable of="BentoGrid.FeaturedLabel" />
+
+### BentoGrid.FeaturedTitle
+
+<PropTable of="BentoGrid.FeaturedTitle" />
+
+### BentoGrid.Item
+
+<PropTable of="BentoGrid.Item" />
+
+### BentoGrid.ItemBody
+
+<PropTable of="BentoGrid.ItemBody" />
+
+### BentoGrid.ItemDescription
+
+<PropTable of="BentoGrid.ItemDescription" />
+
+### BentoGrid.ItemIcon
+
+<PropTable of="BentoGrid.ItemIcon" />
+
+### BentoGrid.ItemLayout
+
+<PropTable of="BentoGrid.ItemLayout" />
+
+### BentoGrid.ItemTitle
+
+<PropTable of="BentoGrid.ItemTitle" />

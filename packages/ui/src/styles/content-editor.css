@@ -1,0 +1,18 @@
+/*
+ * The two rules a content editor canvas needs that no utility class can say.
+ * Import next to `sources.css`.
+ */
+
+/* Plate's placeholder is positioned against the nearest positioned ancestor.
+ * Without this it anchors to the whole contenteditable and lands above the
+ * caret by the canvas padding; pinned to the first block it sits on the line. */
+[data-slot="content-editor-canvas"] [data-slate-node="element"] {
+	position: relative;
+}
+
+[data-slot="content-editor-canvas"] [data-slate-placeholder] {
+	color: var(--muted-foreground);
+	pointer-events: none;
+	user-select: none;
+	opacity: 1 !important;
+}

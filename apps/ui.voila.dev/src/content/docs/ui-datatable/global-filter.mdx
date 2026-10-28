@@ -1,0 +1,41 @@
+---
+title: "Global filter"
+description: "Client-side search across every visible cell."
+sidebar:
+  order: 10
+---
+
+import * as Example from "@/examples/ui-datatable/global-filter";
+
+<Preview layout="stack">
+	<Example.GlobalFilter />
+</Preview>
+
+```tsx
+const [search, setSearch] = useState("");
+
+<DataTable.Root
+	columns={columns}
+	data={projects}
+	globalFilter={search}
+	toolbar={
+		<DataTable.Toolbar>
+			<DataTable.Search
+				value={search}
+				onChange={(event) => setSearch(event.target.value)}
+			/>
+		</DataTable.Toolbar>
+	}
+/>;
+```
+
+Leave `globalFilter` undefined for server-side search: drive `DataTable.Search`
+yourself and filter in the query.
+
+## API
+
+<PropTable of="DataTable.Search" />
+
+The input is a plain search field, so its value is yours. What decides whether
+search is client- or server-side is `globalFilter` on
+[DataTable.Root](/ui-datatable/data-table), not anything here.

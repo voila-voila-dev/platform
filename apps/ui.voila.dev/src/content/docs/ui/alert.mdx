@@ -1,0 +1,48 @@
+---
+title: "Alert"
+description: "An inline message about the thing the user is looking at."
+category: "feedback"
+---
+
+import * as Example from "@/examples/ui/alert";
+
+<Preview layout="stack">
+	<Example.AlertVariants />
+</Preview>
+
+```tsx
+<Alert.Root variant="warning">
+	<WarningIcon />
+	<Alert.Title>Report due soon</Alert.Title>
+	<Alert.Description>Submit the report within 48 hours.</Alert.Description>
+</Alert.Root>
+```
+
+`Alert.Action` and `Alert.Close` are optional slots the layout knows about, so a
+button or a dismiss control lands in the right place without wrapper markup.
+
+<Preview layout="stack">
+	<Example.AlertWithAction />
+</Preview>
+
+## API
+
+### Alert.Root
+
+<PropTable of="Alert.Root" />
+
+### Alert.Action
+
+<PropTable of="Alert.Action" />
+
+### Alert.Close
+
+<PropTable of="Alert.Close" />
+
+### Alert.Description
+
+<PropTable of="Alert.Description" />
+
+### Alert.Title
+
+<PropTable of="Alert.Title" />

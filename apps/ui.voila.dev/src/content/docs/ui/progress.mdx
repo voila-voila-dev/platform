@@ -1,0 +1,36 @@
+---
+title: "Progress"
+description: "A determinate or indeterminate progress bar, with an optional label."
+category: "feedback"
+---
+
+import * as Example from "@/examples/ui/progress";
+
+<Preview layout="stack">
+	<Example.ProgressDefault />
+</Preview>
+
+```tsx
+<Progress.Root value={35}>
+	<Progress.Label>Profile completion</Progress.Label>
+	<Progress.Value />
+</Progress.Root>
+```
+
+`value={null}` is the indeterminate state — the bar loops instead of filling.
+`Progress.Value` takes a formatter child when a percentage is not what you want
+to show.
+
+## API
+
+### Progress.Root
+
+<PropTable of="Progress.Root" />
+
+### Progress.Label
+
+<PropTable of="Progress.Label" />
+
+### Progress.Value
+
+<PropTable of="Progress.Value" />

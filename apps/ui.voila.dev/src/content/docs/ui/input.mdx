@@ -1,0 +1,25 @@
+---
+title: "Input"
+description: "A single-line text field."
+category: "forms"
+---
+
+import * as Example from "@/examples/ui/input";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Input type="email" placeholder="contact@example.com" />
+```
+
+Everything goes to the underlying `<input>`, `aria-invalid` included — that is
+what draws the error ring, so wire it to your validation state rather than
+adding a class.
+
+For a label, description and error around it, use [Field](/ui/field).
+
+## API
+
+<PropTable of="Input" />

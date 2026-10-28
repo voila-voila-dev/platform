@@ -1,0 +1,23 @@
+---
+title: "Row expansion"
+description: "A detail panel under any row."
+sidebar:
+  order: 9
+---
+
+import * as Example from "@/examples/ui-datatable/row-expansion";
+
+<Preview layout="stack">
+	<Example.Expansion />
+</Preview>
+
+```tsx
+<DataTable.Root
+	columns={columns}
+	data={projects}
+	renderExpandedRow={(project) => <ProjectDetail project={project} />}
+/>;
+```
+
+Supplying the prop is what makes rows expandable — each grows a caret in a
+leading cell, and the panel spans the full width beneath it.

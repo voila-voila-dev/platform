@@ -1,0 +1,47 @@
+name: 'Run checks'
+description: 'Install dependencies and run the repo lint / type-check / test suite.'
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Bun
+      uses: ./.github/actions/setup-bun
+
+    # Vite 7 (apps/ui.voila.dev) requires Node >= 22.12.
+    - name: Setup Node
+      uses: actions/setup-node@v6
+      with:
+        node-version: '23.8.0'
+
+    - name: Install dependencies
+      uses: ./.github/actions/install-dependencies
+
+    - name: Lint & format (Biome)
+      shell: bash
+      run: bun run ci
+
+    - name: Type check
+      shell: bash
+      run: bun run check-types
+
+    # Catches a <PropTable of="…"> that names nothing and internal links that
+    # 404 — the drift the generated tables exist to prevent.
+    - name: Check docs
+      shell: bash
+      run: bun run check-docs
+
+    # Catches an English string hard-coded back into the email editor: it
+    # compiles fine and only shows up later as one stray word in a translated
+    # app.
+    - name: Check email editor labels
+      shell: bash
+      run: bun run check-labels
+
+    # The `*.browser.test.tsx` files run in a real Chromium, through Playwright.
+    - name: Install Chromium
+      shell: bash
+      working-directory: packages/ui
+      run: bunx playwright install --with-deps chromium
+
+    - name: Test
+      shell: bash
+      run: bun run test

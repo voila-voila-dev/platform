@@ -1,0 +1,81 @@
+---
+title: "SiteHeader"
+description: "The sticky top bar, with a burger menu below the md breakpoint."
+sidebar:
+  order: 3
+---
+
+import * as Example from "@/examples/ui-landing/site-header";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<SiteHeader.Root>
+	<SiteHeader.Bar>
+		<SiteHeader.Brand href="/"><BrandLogo /></SiteHeader.Brand>
+		<SiteHeader.Nav>
+			<SiteHeader.NavList>
+				<SiteHeader.NavItem href="/#pricing">Pricing</SiteHeader.NavItem>
+			</SiteHeader.NavList>
+			<SiteHeader.Actions>
+				<Button size="sm">I'm hiring</Button>
+			</SiteHeader.Actions>
+		</SiteHeader.Nav>
+		<SiteHeader.MobileToggle aria-label="Open or close the menu" />
+	</SiteHeader.Bar>
+	<SiteHeader.MobileMenu>
+		<SiteHeader.MobileNavItem href="/#pricing">Pricing</SiteHeader.MobileNavItem>
+	</SiteHeader.MobileMenu>
+</SiteHeader.Root>
+```
+
+`MobileToggle` and `MobileMenu` share their open state through the root, so the
+two lists are declared separately but only one is ever visible.
+
+## API
+
+### SiteHeader.Root
+
+<PropTable of="SiteHeader.Root" />
+
+### SiteHeader.Actions
+
+<PropTable of="SiteHeader.Actions" />
+
+### SiteHeader.Bar
+
+<PropTable of="SiteHeader.Bar" />
+
+### SiteHeader.Brand
+
+<PropTable of="SiteHeader.Brand" />
+
+### SiteHeader.MobileActions
+
+<PropTable of="SiteHeader.MobileActions" />
+
+### SiteHeader.MobileMenu
+
+<PropTable of="SiteHeader.MobileMenu" />
+
+### SiteHeader.MobileNavItem
+
+<PropTable of="SiteHeader.MobileNavItem" />
+
+### SiteHeader.MobileToggle
+
+<PropTable of="SiteHeader.MobileToggle" />
+
+### SiteHeader.Nav
+
+<PropTable of="SiteHeader.Nav" />
+
+### SiteHeader.NavItem
+
+<PropTable of="SiteHeader.NavItem" />
+
+### SiteHeader.NavList
+
+<PropTable of="SiteHeader.NavList" />

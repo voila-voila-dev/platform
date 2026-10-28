@@ -1,0 +1,109 @@
+---
+title: "AlertDialog"
+description: "A modal that interrupts to confirm something consequential."
+category: "overlays"
+---
+
+import * as Example from "@/examples/ui/alert-dialog";
+
+<Preview layout="center">
+	<Example.Default />
+</Preview>
+
+## Usage
+
+```ts
+import { AlertDialog } from "@voila.dev/ui/alert-dialog";
+```
+
+```tsx
+<AlertDialog.Root>
+	<AlertDialog.Trigger render={<Button variant="outline" />}>Cancel</AlertDialog.Trigger>
+	<AlertDialog.Content size="sm">
+		<AlertDialog.Header>
+			<AlertDialog.Media><WarningIcon className="text-destructive" /></AlertDialog.Media>
+			<AlertDialog.Title>Cancel this project?</AlertDialog.Title>
+			<AlertDialog.Description>The freelancer will be notified.</AlertDialog.Description>
+		</AlertDialog.Header>
+		<AlertDialog.Footer>
+			<AlertDialog.Cancel>Keep project</AlertDialog.Cancel>
+			<AlertDialog.Action variant="destructive">Cancel project</AlertDialog.Action>
+		</AlertDialog.Footer>
+	</AlertDialog.Content>
+</AlertDialog.Root>
+```
+
+A modal that asks one question and will not be dismissed by clicking away.
+That is the whole difference from [Dialog](/ui/dialog): an alert dialog is for a
+decision with consequences, so the escape routes are deliberate buttons rather
+than the backdrop. If you are building the common destructive confirmation,
+[ConfirmDialog](/ui/confirm-dialog) is this component with the title, buttons and
+open state already wired — reach for that first and come here when the layout
+needs to be your own.
+
+## Recipes
+
+`size` takes `default` or `sm`; `sm` fits a question whose answer is one line.
+
+Put the consequence in the title, not the control: "Delete this project?" tells
+someone what they are about to do, "Are you sure?" makes them guess. The confirm
+button should name the action too — `Delete project`, never `OK`.
+
+## API
+
+### AlertDialog.Root
+
+<PropTable of="AlertDialog.Root" />
+
+### AlertDialog.Action
+
+<PropTable of="AlertDialog.Action" />
+
+### AlertDialog.Cancel
+
+<PropTable of="AlertDialog.Cancel" />
+
+### AlertDialog.Close
+
+<PropTable of="AlertDialog.Close" />
+
+### AlertDialog.Content
+
+<PropTable of="AlertDialog.Content" />
+
+### AlertDialog.Description
+
+<PropTable of="AlertDialog.Description" />
+
+### AlertDialog.Footer
+
+<PropTable of="AlertDialog.Footer" />
+
+### AlertDialog.Header
+
+<PropTable of="AlertDialog.Header" />
+
+### AlertDialog.Media
+
+<PropTable of="AlertDialog.Media" />
+
+### AlertDialog.Overlay
+
+<PropTable of="AlertDialog.Overlay" />
+
+### AlertDialog.Portal
+
+<PropTable of="AlertDialog.Portal" />
+
+### AlertDialog.Title
+
+<PropTable of="AlertDialog.Title" />
+
+### AlertDialog.Trigger
+
+<PropTable of="AlertDialog.Trigger" />
+
+## Related
+
+[ConfirmDialog](/ui/confirm-dialog) · [Dialog](/ui/dialog) ·
+[ResponsiveDialog](/ui/responsive-dialog)

@@ -1,0 +1,32 @@
+---
+title: "Chip"
+description: "A removable token — an applied filter, a selected tag."
+category: "data-display"
+---
+
+import * as Example from "@/examples/ui/chip";
+
+<Preview layout="row">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Chip.Root variant="secondary">
+	Brand identity design
+	<Chip.Remove aria-label="Remove Brand identity design" />
+</Chip.Root>
+```
+
+A chip is something the user put there and can take away; a
+[Badge](/ui/badge) is something the data says. Give `Chip.Remove` an
+`aria-label` naming what it removes — "Remove" alone is useless in a row of six.
+
+## API
+
+### Chip.Root
+
+<PropTable of="Chip.Root" />
+
+### Chip.Remove
+
+<PropTable of="Chip.Remove" />

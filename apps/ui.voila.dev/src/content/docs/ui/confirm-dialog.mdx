@@ -1,0 +1,50 @@
+---
+title: "ConfirmDialog"
+description: "An AlertDialog as a single component, with async confirm handling."
+category: "overlays"
+---
+
+import * as Example from "@/examples/ui/confirm-dialog";
+
+<Preview layout="row">
+	<Example.Default />
+</Preview>
+
+## Usage
+
+```ts
+import { ConfirmDialog } from "@voila.dev/ui/confirm-dialog";
+```
+
+```tsx
+<ConfirmDialog
+	trigger={<Button variant="outline">Archive project</Button>}
+	title="Archive this project?"
+	description="The project will be hidden from the active list."
+	confirmLabel="Archive"
+	onConfirm={() => archiveProject(id)}
+/>
+```
+
+The destructive confirmation, assembled. It is [AlertDialog](/ui/alert-dialog)
+with the title, description, two buttons and open state already wired, because
+every product writes this dialog a dozen times and gets the button labels wrong
+in half of them. Pass a `trigger` and it drives itself; omit the trigger and
+drive it with `open` and `onOpenChange` from a menu item or a row action.
+
+## Recipes
+
+`confirmLabel` should name the action and `confirmVariant` should be
+`destructive` when it cannot be undone. The description is where "this cannot be
+undone" belongs — the title is for the question.
+
+`onOpenChange` is narrower than Base UI's: the dialog also closes itself around
+`onConfirm`, where there is no originating event, so it takes just the boolean.
+
+## API
+
+<PropTable of="ConfirmDialog" />
+
+## Related
+
+[AlertDialog](/ui/alert-dialog) · [Dialog](/ui/dialog) · [Button](/ui/button)

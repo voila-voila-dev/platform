@@ -1,0 +1,15 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "emoji-voila-dev",
+	"compatibility_date": "2025-10-01",
+	// Static-asset Worker (no `main`): the Emojibase data the chat's emoji
+	// picker reads, served from our own domain instead of a public npm CDN.
+	"assets": {
+		"directory": "./dist"
+	},
+	"observability": {
+		"enabled": true
+	},
+	"routes": [{ "pattern": "emoji.voila.dev", "custom_domain": true }],
+	"workers_dev": true
+}

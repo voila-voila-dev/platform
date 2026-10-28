@@ -1,0 +1,33 @@
+import { CheckIcon } from "@phosphor-icons/react";
+import { useContentEditorTheme } from "#/content-editor/context/theme-context.ts";
+
+interface Props {
+	features: ReadonlyArray<string>;
+}
+
+/** The ticked included features, mirroring the bulleted list the renderer
+ * emits for them. */
+export function EmailCardFeatureList({ features }: Props) {
+	const theme = useContentEditorTheme();
+	if (features.length === 0) {
+		return null;
+	}
+	return (
+		<ul className="flex list-none flex-col gap-1 p-0">
+			{features.map((feature, index) => (
+				<li
+					key={index}
+					className="flex items-start gap-2 text-[14px] leading-[1.5]"
+					style={{ color: theme.color.ink }}
+				>
+					<CheckIcon
+						size={16}
+						aria-hidden
+						style={{ color: theme.color.brand, marginTop: 3 }}
+					/>
+					{feature}
+				</li>
+			))}
+		</ul>
+	);
+}

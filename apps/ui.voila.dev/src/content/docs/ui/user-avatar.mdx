@@ -1,0 +1,26 @@
+---
+title: "UserAvatar"
+description: "An avatar with the person's name, role and presence beside it."
+category: "data-display"
+---
+
+import * as Example from "@/examples/ui/user-avatar";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<UserAvatar
+	name="Camille Dubois"
+	description="Senior product designer"
+	src={user.avatarUrl}
+	status="online"
+/>
+```
+
+Initials are derived from `name`, so the fallback needs nothing from you.
+
+## API
+
+<PropTable of="UserAvatar" />

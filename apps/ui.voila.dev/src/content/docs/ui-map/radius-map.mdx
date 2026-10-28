@@ -1,0 +1,29 @@
+---
+title: "RadiusMap"
+description: "A geodesic circle of a given radius around a place, with the viewport following it."
+sidebar:
+  order: 2
+---
+
+import * as Example from "@/examples/ui-map/radius-map";
+
+<Preview layout="stack">
+	<Example.Radius />
+</Preview>
+
+```tsx
+<RadiusMap
+	className="h-80 w-full overflow-hidden rounded-lg border"
+	center={{ latitude: 47.2184, longitude: -1.5536 }}
+	radiusKm={radiusKm}
+/>;
+```
+
+## API
+
+<PropTable of="RadiusMap" />
+
+`center` and `radiusKm` are live, which is the whole difference from
+[MapView](/ui-map/map-view): drag the radius slider and the circle redraws and
+the viewport re-frames to keep it whole. `center` and `zoom` are taken over for
+that, so they are not yours to set here.

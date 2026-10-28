@@ -1,0 +1,36 @@
+---
+title: "SectionIntro"
+description: "The centred eyebrow, title and description that opens a section."
+sidebar:
+  order: 10
+---
+
+import * as Example from "@/examples/ui-landing/section-intro";
+
+<Preview layout="stack">
+	<Example.SectionIntro />
+</Preview>
+
+```tsx
+<SectionIntro.Root>
+	<Eyebrow.Root tone="primary" className="mb-4">
+		<Eyebrow.Label>How it works</Eyebrow.Label>
+	</Eyebrow.Root>
+	<SectionIntro.Title>Deux parcours, une rencontre</SectionIntro.Title>
+	<SectionIntro.Description>Three steps are enough.</SectionIntro.Description>
+</SectionIntro.Root>
+```
+
+## API
+
+### SectionIntro.Root
+
+<PropTable of="SectionIntro.Root" />
+
+### SectionIntro.Description
+
+<PropTable of="SectionIntro.Description" />
+
+### SectionIntro.Title
+
+<PropTable of="SectionIntro.Title" />

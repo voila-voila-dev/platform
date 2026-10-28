@@ -1,0 +1,43 @@
+---
+title: "Accordion"
+description: "Stacked sections that expand one at a time."
+category: "navigation"
+---
+
+import * as Example from "@/examples/ui/accordion";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Accordion.Root defaultValue={["publishing"]}>
+	<Accordion.Item value="publishing">
+		<Accordion.Trigger>How do I publish a project?</Accordion.Trigger>
+		<Accordion.Content>
+			<p>From your client dashboard, create a project with…</p>
+		</Accordion.Content>
+	</Accordion.Item>
+</Accordion.Root>
+```
+
+`value` is an array even for a single open panel. Pass `multiple` to let several
+stay open at once.
+
+## API
+
+### Accordion.Root
+
+<PropTable of="Accordion.Root" />
+
+### Accordion.Content
+
+<PropTable of="Accordion.Content" />
+
+### Accordion.Item
+
+<PropTable of="Accordion.Item" />
+
+### Accordion.Trigger
+
+<PropTable of="Accordion.Trigger" />

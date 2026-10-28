@@ -1,0 +1,84 @@
+---
+title: "TimePicker"
+description: "A time field with a list of slots."
+category: "dates-and-time"
+---
+
+import * as Example from "@/examples/ui/time-picker";
+
+<Preview layout="center">
+	<Example.Default />
+</Preview>
+
+## Usage
+
+```ts
+import { TimePicker } from "@voila.dev/ui/time-picker";
+```
+
+`TimePicker.Root` opens a list of times rather than a clock. Picking from a list
+is faster than typing when the answer is one of a known set — appointment slots,
+opening hours, a shift start. When the time is arbitrary to the minute, the OS
+control is the better tool: `TimePicker.Native` lets someone type `14:37`
+without scrolling past it.
+
+## Three surfaces
+
+The same three every picker family here has: `Root` is the composed popover,
+`Native` is the OS control, and `Responsive` renders `Root` on a pointer and
+`Native` under the `useIsMobile` breakpoint (768px).
+
+<Preview layout="center" label="The OS control">
+	<Example.Native />
+</Preview>
+
+<Preview layout="center" label="One field, both surfaces">
+	<Example.Responsive />
+</Preview>
+
+One caveat specific to time: `step` shapes the desktop list only. The native
+control offers every minute whatever you pass, so a caller who needs the step
+enforced has to validate the value as well as bound the field.
+
+The value is a `"HH:mm"` string, not a `Date`. A time with no date attached does
+not need one, and storing it as text avoids a timezone question that has no
+answer — 09:00 at a clinic is 09:00 wherever the reader happens to be.
+
+## Recipes
+
+<Preview layout="center" label="Opening hours, quarter-hour slots">
+	<Example.Bounded />
+</Preview>
+
+`min` and `max` bound the list inclusively and `step` sets the spacing, so a
+clinic offering quarter-hour appointments between nine and half five is three
+props rather than a generated array. The list is built from these, which means
+an out-of-hours time cannot be picked — though, as ever, it can still arrive
+from stored data.
+
+`locale` and `formatOptions` control how the times are *displayed* without
+touching what is stored: a French reader sees `14:30` and an American reader
+`2:30 PM`, and both produce the string `"14:30"`.
+
+Set `name` and the field writes a hidden input carrying that same `HH:mm`, so a
+plain form post gets the value with no client code.
+
+## API
+
+### TimePicker.Root
+
+<PropTable of="TimePicker.Root" />
+
+### TimePicker.Native
+
+<PropTable of="TimePicker.Native" />
+
+### TimePicker.Responsive
+
+<PropTable of="TimePicker.Responsive" />
+
+## Related
+
+[DateTimePicker](/ui/date-time-picker) ·
+[NativeDatePicker](/ui/native-date-picker) · [DatePicker](/ui/date-picker) ·
+[Field](/ui/field)

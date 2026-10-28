@@ -1,0 +1,69 @@
+---
+title: "Item"
+description: "A row of content: media, text, actions."
+category: "data-display"
+---
+
+import * as Example from "@/examples/ui/item";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Item.Root variant="outline">
+	<Item.Media variant="icon"><CalendarCheckIcon /></Item.Media>
+	<Item.Content>
+		<Item.Title>Landing page redesign</Item.Title>
+		<Item.Description>Product designer needed for…</Item.Description>
+	</Item.Content>
+	<Item.Actions>
+		<Button size="sm" variant="outline">Apply</Button>
+	</Item.Actions>
+</Item.Root>
+```
+
+One row on its own. For several, [List](/ui/list) wraps the same parts in the
+right list semantics.
+
+## API
+
+### Item.Root
+
+<PropTable of="Item.Root" />
+
+### Item.Actions
+
+<PropTable of="Item.Actions" />
+
+### Item.Content
+
+<PropTable of="Item.Content" />
+
+### Item.Description
+
+<PropTable of="Item.Description" />
+
+### Item.Footer
+
+<PropTable of="Item.Footer" />
+
+### Item.Group
+
+<PropTable of="Item.Group" />
+
+### Item.Header
+
+<PropTable of="Item.Header" />
+
+### Item.Media
+
+<PropTable of="Item.Media" />
+
+### Item.Separator
+
+<PropTable of="Item.Separator" />
+
+### Item.Title
+
+<PropTable of="Item.Title" />

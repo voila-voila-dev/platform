@@ -1,0 +1,32 @@
+---
+title: "ArticleTags"
+description: "The tag chips on a blog card or article header."
+sidebar:
+  order: 23
+---
+
+import * as Example from "@/examples/ui-landing/article-tags";
+
+<Preview layout="row">
+	<Example.ArticleTags />
+</Preview>
+
+```tsx
+<ArticleTags.Root>
+	<ArticleTags.Tag>Hiring</ArticleTags.Tag>
+	<ArticleTags.Tag>Remote work</ArticleTags.Tag>
+</ArticleTags.Root>
+```
+
+Inside an [ArticleCard](/ui-landing/article-card) the row is
+`ArticleCard.Tags`; the tags themselves come from here either way.
+
+## API
+
+### ArticleTags.Root
+
+<PropTable of="ArticleTags.Root" />
+
+### ArticleTags.Tag
+
+<PropTable of="ArticleTags.Tag" />

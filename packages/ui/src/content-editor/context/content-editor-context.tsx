@@ -1,0 +1,57 @@
+import { createContext, useContext } from "react";
+import type {
+	ContentCapability,
+	ContentEditorMode,
+	ContentUploadedImage,
+	ContentVariable,
+} from "#/content-editor/features/feature-definition.tsx";
+import type { ContentRegistry } from "#/content-editor/features/registry.ts";
+import type { ContentEditorLabels } from "#/content-editor/labels.ts";
+import type { ContentPopoverHosts } from "#/content-editor/lib/popover-hosts.ts";
+import type {
+	ContentEditorAppearance,
+	ContentEditorTheme,
+} from "#/content-editor/theme.ts";
+
+/**
+ * What an editor instance is configured with, as opposed to what it shows.
+ * Memoised once by the root, so a part reading it does not re-render on
+ * every keystroke; the document itself lives in Plate's own store.
+ */
+export interface ContentEditorConfigContextValue {
+	readonly registry: ContentRegistry;
+	readonly mode: ContentEditorMode;
+	readonly labels: ContentEditorLabels;
+	readonly appearance: ContentEditorAppearance;
+	readonly theme: ContentEditorTheme;
+	readonly variables: ReadonlyArray<ContentVariable>;
+	readonly capabilities: ReadonlySet<ContentCapability>;
+	readonly uploadImage: ((file: File) => Promise<ContentUploadedImage>) | null;
+	readonly dropFiles: ((files: ReadonlyArray<File>) => void) | null;
+	readonly generateNodeId: () => string;
+	readonly readOnly: boolean;
+	readonly popovers: ContentPopoverHosts;
+}
+
+const ContentEditorConfigContext =
+	createContext<ContentEditorConfigContextValue | null>(null);
+
+export const ContentEditorConfigProvider = ContentEditorConfigContext.Provider;
+
+export function useContentEditorConfig(): ContentEditorConfigContextValue {
+	const value = useContext(ContentEditorConfigContext);
+	if (value === null) {
+		throw new Error(
+			"A content editor part was rendered outside <ContentEditor.Root>.",
+		);
+	}
+	return value;
+}
+
+export function useContentEditorLabels(): ContentEditorLabels {
+	return useContentEditorConfig().labels;
+}
+
+export function useContentEditorRegistry(): ContentRegistry {
+	return useContentEditorConfig().registry;
+}

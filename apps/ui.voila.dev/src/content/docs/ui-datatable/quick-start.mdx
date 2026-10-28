@@ -1,0 +1,88 @@
+---
+title: "Quick start"
+description: "A read-only data table with sorting, selection, pinning, density and CSV export, finished."
+sidebar:
+  order: 0
+---
+
+import * as Example from "@/examples/ui-datatable/quick-start";
+
+Sorting, pinning, CSV export — the table you keep rebuilding, finished.
+
+Every product grows this table eventually: rows the team reads, scans, sorts
+and exports. Most codebases rebuild it from scratch each time, and each copy
+drifts. This one is finished and source-shipped, so when a column needs to
+behave differently you read the code and change it, in `node_modules` or in
+your own repo. Every feature sits behind an opt-in prop, so a plain table
+stays a plain table.
+
+<Preview layout="stack">
+	<Example.Hero />
+</Preview>
+
+## Install
+
+```sh
+bun add @voila.dev/ui @tanstack/react-table
+```
+
+```css title="globals.css"
+@import "@voila.dev/ui/styles/sources.css";
+```
+
+Or copy the source — it's the same files. Peers: `react@19`, `react-dom@19`,
+`tailwindcss@4`.
+
+## The 3-minute win
+
+Columns in, rows in, a toolbar with export. Sorting is already on for every
+sortable column.
+
+```tsx
+import {
+	type ColumnDef,
+	DataTable,
+	type DataTableFeatures,
+} from "@voila.dev/ui/data-table";
+
+const columns: ColumnDef<DataTableFeatures, Project>[] = [
+	{ accessorKey: "reference", header: "Reference", size: 130 },
+	{ accessorKey: "client", header: "Client" },
+	{ accessorKey: "amount", header: "Amount", size: 110 },
+];
+
+<DataTable.Root
+	columns={columns}
+	data={projects}
+	toolbar={(table) => (
+		<DataTable.Toolbar>
+			<DataTable.Actions>
+				<DataTable.Export table={table} filename="projects.csv" />
+			</DataTable.Actions>
+		</DataTable.Toolbar>
+	)}
+/>;
+```
+
+## Mental model
+
+The table owns the row model, you own the data. Built on
+`@tanstack/react-table`, it takes your columns and rows and derives everything
+else: sort order, selection state, visibility, pinning, pagination. It never
+edits a value. If your users need to type into the grid, that is a different
+component with a different contract; the page
+[Which one do I need?](/ui-datatable/which-one) settles it in a minute.
+
+## Page map
+
+- [DataTable](/ui-datatable/data-table): the table itself, every extra behind a prop.
+- [Which one do I need?](/ui-datatable/which-one): read-heavy table or editable grid.
+- [Selection](/ui-datatable/selection): a checkbox column and row selection state.
+- [Column resizing](/ui-datatable/column-resizing): drag column edges, arrow keys nudge.
+- [Column pinning](/ui-datatable/column-pinning): freeze columns against either edge.
+- [Column visibility](/ui-datatable/column-visibility): a columns menu via `DataTable.ViewOptions`.
+- [Density](/ui-datatable/density): comfortable or compact row heights.
+- [Row expansion](/ui-datatable/row-expansion): a detail panel under any row.
+- [Global filter](/ui-datatable/global-filter): client-side search across visible cells.
+- [CSV export](/ui-datatable/export): `DataTable.Export`, or `dataTableToCsv` for the bytes.
+- [Pagination](/ui-datatable/pagination): a server-side windowed footer.

@@ -1,0 +1,90 @@
+---
+title: "Button"
+description: "Trigger an action."
+category: "actions"
+---
+
+import * as Example from "@/examples/ui/button";
+
+<Preview layout="row">
+	<Example.Default />
+</Preview>
+
+## Usage
+
+```ts
+import { Button } from "@voila.dev/ui/button";
+```
+
+```tsx
+<Button variant="outline">Save</Button>
+```
+
+`Button` wraps [Base UI's button](https://base-ui.com/react/components/button),
+so keyboard behaviour, focus management and the disabled semantics come from
+there. What this component adds is the variant system, the size scale, and a
+`loading` state that does the right thing for screen readers.
+
+## Recipes
+
+<Preview layout="row" label="Confirm a destructive action">
+	<Example.ConfirmDestructive />
+</Preview>
+
+`destructive` is deliberately a tinted fill rather than a solid red block: a red
+wall in a dialog footer reads as an error message, not a button. Pair it with an
+`outline` cancel so the safe way out has weight too.
+
+<Preview layout="row" label="Save while the request is in flight">
+	<Example.Loading />
+</Preview>
+
+`loading` does three things at once: renders a leading `Spinner`, sets
+`disabled`, and sets `aria-busy`. That last one is why you should prefer it over
+rolling your own. Keep the label meaningful while it spins: "Saving…" tells the
+user what is happening; a bare spinner does not.
+
+<Preview layout="row" label="An icon-only toolbar action">
+	<Example.IconSizes />
+</Preview>
+
+An icon-only button has no accessible name of its own. **Always pass
+`aria-label`**. Icons are auto-sized here and alongside text; you never set
+`size-4` yourself.
+
+<Preview layout="row" label="Navigation that reads as a button">
+	<Example.AsAnchor />
+</Preview>
+
+Base UI's `render` prop swaps the underlying element while keeping the styling
+and behaviour:
+
+```tsx
+<Button render={<Link to="/projects/$id" params={{ id }} />}>Open project</Button>
+```
+
+## API
+
+<PropTable of="Button" />
+
+The variant and size names are also exported as arrays
+(`buttonVariantOptions`, `buttonSizeOptions`), and the `cva` itself as
+`buttonVariants` from `@voila.dev/ui/button` if you need the classes without the
+component.
+
+Every state is in the
+[Storybook story](https://storybook.ui.voila.dev/?path=/story/button).
+
+## Own it
+
+The source is `@voila.dev/ui/src/button/components/button.tsx`. To change the
+variants, edit the cva block. It is the same file whether you keep the package
+or copy it into your repo.
+
+Reach for `className` for layout (`w-full`, `mt-2`), not for colour. If a
+button needs a colour the variants do not have, the token behind the variant is
+what should change; see [Theming](/start/theming#the-one-rule).
+
+## Related
+
+[ButtonGroup](/ui/button-group) · [DropdownMenu](/ui/dropdown-menu) · [ConfirmDialog](/ui/confirm-dialog)

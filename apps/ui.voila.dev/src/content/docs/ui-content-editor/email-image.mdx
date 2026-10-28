@@ -1,0 +1,65 @@
+---
+title: "Email: image options"
+description: "A link on the image, a reduced width, and the play badge of a video thumbnail."
+sidebar:
+  order: 26
+---
+
+import * as Example from "@/examples/ui-content-editor/email-blocks";
+
+The image feature carries what an email needs of an image, next to its
+file, alternative text and caption: a link, a width, and an overlay. They
+are fields of the inspector, so they are there in every appearance.
+
+<Preview layout="stack" scroll>
+	<Example.Image />
+</Preview>
+
+## Fields
+
+| Field | Values | Default |
+|---|---|---|
+| `href` | url; empty for no link | `""` |
+| `size` | `"full"`, `"contained"` | `"full"` |
+| `overlay` | `"none"`, `"play"` | `"none"` |
+
+- `size: "contained"` takes `theme.imageWidthRatio.contained` of the width
+  on the canvas (60% by default), centred: a logo, a portrait.
+- `overlay: "play"` draws the play badge in the brand colour over the image.
+  No email client plays an embedded video, so a video is a thumbnail that
+  links to it.
+
+## The stored node
+
+```json
+{
+	"type": "image",
+	"url": "https://cdn.example.com/thumbnail.jpg",
+	"alt": "Our match against Lyon",
+	"href": "https://example.com/video",
+	"size": "contained",
+	"overlay": "play",
+	"children": [{ "text": "" }]
+}
+```
+
+A node stored before these fields existed reads as `href: ""`,
+`size: "full"`, `overlay: "none"`.
+
+The web reader wraps the image in `<a href>` when there is a link, gives
+the figure `style="width:60%;margin-inline:auto"` when it is contained, and
+`data-overlay="play"` when it carries the badge.
+
+## From the email block editor
+
+The old image block maps one to one, with two renames: its `src` is the
+node's `url`, and its `width` (`"full"`, `"contained"`) is the node's
+`size`, because `width` and `height` already hold the file's pixel size.
+`alt`, `href` and `overlay` keep their names and values.
+
+## Labels
+
+`fields.imageLink` and `fields.imageLinkDescription`; `fields.imageSize`,
+`fields.imageSizeFull`, `fields.imageSizeContained`; `fields.imageOverlay`,
+`fields.imageOverlayNone`, `fields.imageOverlayPlay` and
+`fields.imageOverlayPlayDescription`.

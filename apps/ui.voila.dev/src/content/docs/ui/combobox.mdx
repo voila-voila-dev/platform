@@ -1,0 +1,97 @@
+---
+title: "Combobox"
+description: "A select you can type to filter, with optional multi-select chips."
+category: "forms"
+---
+
+import * as Example from "@/examples/ui/combobox";
+
+<Preview layout="center">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Combobox.Root items={specialties}>
+	<Combobox.Input placeholder="Select a specialty" />
+	<Combobox.Content>
+		<Combobox.Empty>No specialty found.</Combobox.Empty>
+		<Combobox.List>
+			{(specialty: string) => (
+				<Combobox.Item key={specialty} value={specialty}>{specialty}</Combobox.Item>
+			)}
+		</Combobox.List>
+	</Combobox.Content>
+</Combobox.Root>
+```
+
+`Combobox.List` takes a render function rather than elements, so the filtering
+stays inside the component instead of being something you reimplement.
+
+`Combobox.Chips`, `Combobox.Chip` and `Combobox.ChipsInput` turn it into a
+multi-select whose picks appear as chips in the field.
+
+## API
+
+### Combobox.Root
+
+<PropTable of="Combobox.Root" />
+
+### Combobox.Chip
+
+<PropTable of="Combobox.Chip" />
+
+### Combobox.Chips
+
+<PropTable of="Combobox.Chips" />
+
+### Combobox.ChipsInput
+
+<PropTable of="Combobox.ChipsInput" />
+
+### Combobox.Collection
+
+<PropTable of="Combobox.Collection" />
+
+### Combobox.Content
+
+<PropTable of="Combobox.Content" />
+
+### Combobox.Empty
+
+<PropTable of="Combobox.Empty" />
+
+### Combobox.Group
+
+<PropTable of="Combobox.Group" />
+
+### Combobox.Input
+
+<PropTable of="Combobox.Input" />
+
+### Combobox.Item
+
+<PropTable of="Combobox.Item" />
+
+### Combobox.Label
+
+<PropTable of="Combobox.Label" />
+
+### Combobox.List
+
+<PropTable of="Combobox.List" />
+
+### Combobox.Row
+
+<PropTable of="Combobox.Row" />
+
+### Combobox.Separator
+
+<PropTable of="Combobox.Separator" />
+
+### Combobox.Trigger
+
+<PropTable of="Combobox.Trigger" />
+
+### Combobox.Value
+
+<PropTable of="Combobox.Value" />

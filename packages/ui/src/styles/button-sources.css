@@ -1,0 +1,9 @@
+/*
+ * Scoped alternative to `sources.css` for consumers that only ship the
+ * button — a marketing site, say. Scans the button (and the spinner it
+ * renders while loading) so Tailwind emits their classes without pulling
+ * every component's utilities into the stylesheet.
+ */
+@source "../button";
+@source "../spinner";
+@source not "../**/*.test.*";

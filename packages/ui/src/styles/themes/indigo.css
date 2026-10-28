@@ -1,0 +1,85 @@
+/*
+ * Indigo - the issue-tracker look (Linear): a muted periwinkle primary over
+ * neutrals cooled by a trace of the same hue, tight radii, and a dark mode that
+ * goes almost to black so the accent is the only colour in the room.
+ *
+ * A theme overrides identity tokens only; everything else - charts, badges,
+ * status colours - comes from the default theme it imports.
+ */
+@import "./default.css";
+
+:root {
+	--background: oklch(1 0 0);
+	--foreground: oklch(0.16 0.012 275);
+	--card: oklch(1 0 0);
+	--card-foreground: oklch(0.16 0.012 275);
+	--popover: oklch(1 0 0);
+	--popover-foreground: oklch(0.16 0.012 275);
+
+	--primary: oklch(0.567 0.159 275);
+	--primary-foreground: oklch(0.99 0 0);
+	--secondary: oklch(0.968 0.007 275);
+	--secondary-foreground: oklch(0.24 0.025 275);
+
+	--brand: oklch(0.567 0.159 275);
+	--brand-foreground: oklch(1 0 0);
+	--highlight: oklch(0.68 0.13 275);
+	--highlight-foreground: oklch(1 0 0);
+
+	--muted: oklch(0.968 0.007 275);
+	--muted-foreground: oklch(0.5 0.022 275);
+	--accent: oklch(0.955 0.014 275);
+	--accent-foreground: oklch(0.32 0.08 275);
+
+	--border: oklch(0.918 0.009 275);
+	--input: oklch(0.918 0.009 275);
+	--ring: oklch(0.567 0.159 275);
+
+	--sidebar: oklch(0.982 0.005 275);
+	--sidebar-foreground: oklch(0.16 0.012 275);
+	--sidebar-primary: oklch(0.567 0.159 275);
+	--sidebar-primary-foreground: oklch(0.99 0 0);
+	--sidebar-accent: oklch(0.955 0.014 275);
+	--sidebar-accent-foreground: oklch(0.32 0.08 275);
+	--sidebar-border: oklch(0.918 0.009 275);
+	--sidebar-ring: oklch(0.567 0.159 275);
+
+	--radius: 0.5rem;
+}
+
+.dark {
+	--background: oklch(0.145 0.008 275);
+	--foreground: oklch(0.97 0.005 275);
+	--card: oklch(0.196 0.012 275);
+	--card-foreground: oklch(0.97 0.005 275);
+	--popover: oklch(0.196 0.012 275);
+	--popover-foreground: oklch(0.97 0.005 275);
+
+	--primary: oklch(0.68 0.145 275);
+	--primary-foreground: oklch(0.145 0.008 275);
+	--secondary: oklch(0.255 0.018 275);
+	--secondary-foreground: oklch(0.97 0.005 275);
+
+	--brand: oklch(0.68 0.145 275);
+	--brand-foreground: oklch(0.145 0.008 275);
+	--highlight: oklch(0.76 0.11 275);
+	--highlight-foreground: oklch(0.145 0.008 275);
+
+	--muted: oklch(0.255 0.018 275);
+	--muted-foreground: oklch(0.72 0.022 275);
+	--accent: oklch(0.285 0.028 275);
+	--accent-foreground: oklch(0.97 0.005 275);
+
+	--border: oklch(0.97 0.02 275 / 11%);
+	--input: oklch(0.97 0.02 275 / 15%);
+	--ring: oklch(0.68 0.145 275);
+
+	--sidebar: oklch(0.172 0.01 275);
+	--sidebar-foreground: oklch(0.97 0.005 275);
+	--sidebar-primary: oklch(0.68 0.145 275);
+	--sidebar-primary-foreground: oklch(0.145 0.008 275);
+	--sidebar-accent: oklch(0.285 0.028 275);
+	--sidebar-accent-foreground: oklch(0.97 0.005 275);
+	--sidebar-border: oklch(0.97 0.02 275 / 11%);
+	--sidebar-ring: oklch(0.68 0.145 275);
+}

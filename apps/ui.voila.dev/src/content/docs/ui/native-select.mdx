@@ -1,0 +1,36 @@
+---
+title: "NativeSelect"
+description: "A real <select>, styled to match."
+category: "forms"
+---
+
+import * as Example from "@/examples/ui/native-select";
+
+<Preview layout="center">
+	<Example.Default />
+</Preview>
+
+```tsx
+<NativeSelect.Root defaultValue="design">
+	<NativeSelect.OptGroup label="Creative">
+		<NativeSelect.Option value="design">Design</NativeSelect.Option>
+	</NativeSelect.OptGroup>
+</NativeSelect.Root>
+```
+
+No portal, no JavaScript for the popup: the OS draws the list. That makes it
+the right choice on mobile and inside a form that has to work before hydration.
+
+## API
+
+### NativeSelect.Root
+
+<PropTable of="NativeSelect.Root" />
+
+### NativeSelect.OptGroup
+
+<PropTable of="NativeSelect.OptGroup" />
+
+### NativeSelect.Option
+
+<PropTable of="NativeSelect.Option" />

@@ -1,0 +1,31 @@
+---
+title: "Kbd"
+description: "A keyboard key, rendered as a key."
+category: "actions"
+---
+
+import * as Example from "@/examples/ui/kbd";
+
+<Preview layout="row">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Kbd.Root>⌘K</Kbd.Root>
+
+<Kbd.Group>
+	<Kbd.Root>⌘</Kbd.Root>
+	<Kbd.Root>⇧</Kbd.Root>
+	<Kbd.Root>P</Kbd.Root>
+</Kbd.Group>
+```
+
+## API
+
+### Kbd.Root
+
+<PropTable of="Kbd.Root" />
+
+### Kbd.Group
+
+<PropTable of="Kbd.Group" />

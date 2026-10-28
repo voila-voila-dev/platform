@@ -1,0 +1,62 @@
+---
+title: "Scroll and view"
+description: "Animations linked to scroll, triggered by visibility, or following a size."
+sidebar:
+  order: 4
+---
+
+import { InViewFade, Resize, ScrollProgress } from "@/examples/motion/examples";
+
+## scroll
+
+`scroll(controls, options)` links an animation to scroll progress.
+
+<Preview layout="stack">
+	<ScrollProgress />
+</Preview>
+
+```ts
+scroll(animate(bar, { scaleX: [0, 1] }, { type: "tween", ease: "linear" }), { container });
+scroll((progress, info) => (label.textContent = `${Math.round(progress * 100)} %`));
+```
+
+When the browser has `ScrollTimeline`, an animation it plays gets the native
+timeline and moves with no JavaScript at all. That covers the full scroll
+range of a container, or a `target` crossing it from entry to exit
+(`ViewTimeline`). Other offsets, the callback form, and animations that run
+in JavaScript are measured on the frame loop instead: read in the `read`
+phase, applied in `update`.
+
+Options: `container` (the page by default), `axis` (`"y"` or `"x"`),
+`target`, and `offset`, two points such as `["start end", "end start"]` made
+of `start`, `center`, `end`, a number from 0 to 1, pixels or a percentage.
+
+## inView
+
+`inView(target, onStart, { root, margin, amount })` calls `onStart` when an
+element enters the viewport (or `root`). Return a function to hear when it
+leaves; without one, the element is only watched until it first shows.
+
+<Preview layout="stack">
+	<InViewFade />
+</Preview>
+
+```ts
+inView(".card", (element) => {
+	animate(element, { opacity: [0, 1], y: [24, 0] });
+	return () => animate(element, { opacity: 0 });
+}, { amount: 0.4 });
+```
+
+`amount` is `"some"` (the default), `"all"` or the share that must show.
+
+## resize
+
+`resize(element, (element, { width, height }) => …)` follows an element's
+border box. `resize(({ width, height }) => …)` follows the window. All
+elements share one `ResizeObserver`. Each call returns a function that
+stops listening.
+
+<Preview>
+	<Resize />
+</Preview>

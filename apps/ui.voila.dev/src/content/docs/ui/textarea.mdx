@@ -1,0 +1,22 @@
+---
+title: "Textarea"
+description: "A multi-line text field that grows with its content."
+category: "forms"
+---
+
+import * as Example from "@/examples/ui/textarea";
+
+<Preview layout="stack">
+	<Example.Default />
+</Preview>
+
+```tsx
+<Textarea placeholder="Describe the project for the freelancer…" />
+```
+
+It auto-grows to `max-h-64` and then scrolls, so a long description never
+pushes the submit button off the screen.
+
+## API
+
+<PropTable of="Textarea" />
