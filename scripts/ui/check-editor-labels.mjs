@@ -13,7 +13,7 @@
  * capital letter. `labels.ts` is where the strings are supposed to be, so it
  * is the one file exempt; tests assert on literals and are skipped too.
  *
- * Run from the repo root: `node scripts/check-editor-labels.mjs`.
+ * Run from the repo root: `node scripts/ui/check-editor-labels.mjs`.
  */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";

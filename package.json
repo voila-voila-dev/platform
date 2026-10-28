@@ -7,27 +7,58 @@
 		"type": "git",
 		"url": "git+https://github.com/voila-voila-dev/platform.git"
 	},
-	"workspaces": [
-		"packages/*",
-		"scripts/*"
-	],
+	"workspaces": {
+		"packages": [
+			"apps/*",
+			"packages/*",
+			"scripts/*"
+		],
+		"catalog": {
+			"@biomejs/biome": "2.5.15",
+			"@types/bun": "1.4.3",
+			"@types/node": "25.8.0",
+			"typescript": "7.0.2",
+			"vite": "8.2.2",
+			"vitest": "5.0.0"
+		},
+		"catalogs": {
+			"react": {
+				"react": "19.3.0",
+				"react-dom": "19.3.0",
+				"@phosphor-icons/react": "2.1.10"
+			},
+			"tailwind": {
+				"tailwindcss": "4.3.3",
+				"@tailwindcss/vite": "4.3.3",
+				"@tailwindcss/typography": "0.5.20"
+			},
+			"maplibre": {
+				"maplibre-gl": "6.9.0"
+			}
+		}
+	},
 	"scripts": {
-		"build": "bun run --filter '@voila.dev/platform' build",
+		"build": "bun run --filter './packages/*' build",
 		"changeset": "changeset",
 		"check": "biome check",
+		"check-docs": "bun scripts/ui/check-docs.mjs",
+		"check-labels": "node scripts/ui/check-editor-labels.mjs",
 		"check-types": "tsc --noEmit && bun run --filter '*' check-types",
-		"ci": "biome ci && bun run check-types && bun run test && bun run build",
+		"ci": "biome ci && bun run check-types && bun run check-docs && bun run check-labels && bun run test && bun run build",
+		"docs:dev": "bun run --filter @voila.dev/ui.voila.dev dev",
 		"format": "biome format --write",
 		"lint": "biome lint --write",
 		"release": "changeset publish",
-		"test": "bun test",
+		"storybook:dev": "bun run --filter @voila.dev/storybook.ui.voila.dev dev",
+		"test": "bun run --filter '*' test",
 		"version-packages": "changeset version && biome format --write packages/*/package.json"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.5.15",
+		"@biomejs/biome": "catalog:",
 		"@changesets/changelog-github": "^1.0.1",
 		"@changesets/cli": "3.0.3",
-		"@types/bun": "1.4.3",
-		"typescript": "7.0.2"
+		"@types/bun": "catalog:",
+		"esbuild": "^0.28.2",
+		"typescript": "catalog:"
 	}
 }

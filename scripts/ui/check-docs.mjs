@@ -12,14 +12,14 @@
  *
  * All three are the same failure mode the generated tables exist to end:
  * documentation drifting from the source without anything going red. Run from
- * the repo root: `bun scripts/check-docs.mjs` (bun, so the TypeScript extractor
+ * the repo root: `bun scripts/ui/check-docs.mjs` (bun, so the TypeScript extractor
  * imports directly).
  */
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { readPropsManifest } from "../apps/ui.voila.dev/src/lib/props-extract.ts";
+import { readPropsManifest } from "../../apps/ui.voila.dev/src/lib/props-extract.ts";
 
-const repoRoot = path.join(import.meta.dirname, "..");
+const repoRoot = path.join(import.meta.dirname, "../..");
 const contentDir = path.join(repoRoot, "apps/ui.voila.dev/src/content/docs");
 
 function listPages() {

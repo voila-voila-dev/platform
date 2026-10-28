@@ -1,13 +1,13 @@
 {
 	"name": "@voila.dev/motion",
-	"version": "0.0.0",
+	"version": "6.0.134",
 	"type": "module",
 	"description": "Springs played by the browser, values on one frame loop, exits React waits for.",
 	"license": "MIT",
 	"homepage": "https://ui.voila.dev",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/voila-voila-dev/ui.git",
+		"url": "git+https://github.com/voila-voila-dev/platform.git",
 		"directory": "packages/motion"
 	},
 	"keywords": [
@@ -18,7 +18,12 @@
 		"react"
 	],
 	"publishConfig": {
-		"access": "public"
+		"access": "public",
+		"exports": {
+			".": "./dist/index.js",
+			"./dom": "./dist/dom.js",
+			"./react": "./dist/react/index.js"
+		}
 	},
 	"files": [
 		"src",
@@ -35,13 +40,15 @@
 		"#/*": "./src/*"
 	},
 	"scripts": {
-		"build": "bun ../../scripts/build-package.mjs",
+		"build": "bun ../../scripts/ui/build-package.mjs",
 		"check": "biome check",
 		"check-types": "tsc --noEmit",
 		"check-bundle": "bun scripts/check-bundle.mjs",
 		"format": "biome format",
 		"lint": "biome lint",
-		"test": "vitest run && bun scripts/check-bundle.mjs"
+		"test": "vitest run && bun scripts/check-bundle.mjs",
+		"postpack": "bun ../../scripts/publish-manifest/src/index.ts restore",
+		"prepack": "bun run build && bun ../../scripts/publish-manifest/src/index.ts apply"
 	},
 	"peerDependencies": {
 		"react": "^19.0.0",

@@ -1,0 +1,6 @@
+{
+	"name": "@voila.dev/ui-scripts",
+	"private": true,
+	"description": "The ui packages' build and the docs and email editor checks, run from the repository root or a package directory.",
+	"type": "module"
+}

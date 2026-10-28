@@ -49,7 +49,7 @@ runs:
     - name: Check the built docs
       if: inputs.app == 'ui.voila.dev'
       shell: bash
-      run: bun scripts/check-docs-output.mjs
+      run: bun scripts/ui/check-docs-output.mjs
 
     # Per-PR previews get a derived config: the worker is renamed (so it never
     # touches production) and `routes` are stripped, leaving the workers.dev URL.

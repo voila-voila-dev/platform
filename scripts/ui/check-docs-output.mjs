@@ -3,19 +3,19 @@
  * all silent. A page whose example import resolves to nothing still builds: the
  * preview renders an empty stage and the response is 200. A `<PropTable of="…" />`
  * naming nothing is removed by the remark transform, so an `## API` heading ships
- * with no table under it and the build stays green. `scripts/check-docs.mjs`
+ * with no table under it and the build stays green. `scripts/ui/check-docs.mjs`
  * catches those at author time from the source; this catches them from the HTML
  * that actually shipped, which is the only artefact that cannot lie.
  *
  * Run after `bun run docs:build --force` — never against a `FULL TURBO` replay,
  * which reprints a previous pass's log without producing anything.
  *
- *   bun scripts/check-docs-output.mjs
+ *   bun scripts/ui/check-docs-output.mjs
  */
 import { readdirSync, readFileSync } from "node:fs";
 import path from "node:path";
 
-const repoRoot = path.join(import.meta.dirname, "..");
+const repoRoot = path.join(import.meta.dirname, "../..");
 const clientDir = path.join(repoRoot, "apps/ui.voila.dev/dist/client");
 const contentDir = path.join(repoRoot, "apps/ui.voila.dev/src/content/docs");
 

@@ -1,6 +1,6 @@
 /*
  * Builds one @voila.dev/* package into dist/, mirroring src/ file by file.
- * Run from the package directory: `bun ../../scripts/build-package.mjs`.
+ * Run from the package directory: `bun ../../scripts/ui/build-package.mjs`.
  *
  * No bundling — the exports globs ("./components/*" → dist/components/ui/*.js)
  * and consumer tree-shaking depend on the one-module-per-file layout. JS comes

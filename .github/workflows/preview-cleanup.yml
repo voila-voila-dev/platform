@@ -1,0 +1,47 @@
+name: Preview cleanup
+
+on:
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  teardown:
+    name: Tear down ${{ matrix.label }} preview
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - app: storybook.ui.voila.dev
+            worker: storybook-ui-voila-dev
+            label: Storybook
+          - app: ui.voila.dev
+            worker: ui-voila-dev
+            label: Docs
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      # The worker may never have been created (a fork, a failed build), so a
+      # failure here is expected; its outcome gates the comment below.
+      - name: Delete preview worker
+        id: delete
+        continue-on-error: true
+        uses: ./.github/actions/delete-preview-worker
+        with:
+          cloudflare-api-token: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          cloudflare-account-id: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          worker-name: ${{ matrix.worker }}-pr-${{ github.event.pull_request.number }}
+      - name: Mark the preview as torn down
+        if: steps.delete.outcome == 'success'
+        uses: voila-voila-dev/.github/actions/sticky-pr-comment@81236edbf9d9298d770ddaeb6df370f0c5f87778 # main
+        with:
+          id: ${{ matrix.app }}_preview
+          body: |
+            **${{ matrix.label }} preview torn down** :wastebasket:
+
+            Worker `${{ matrix.worker }}-pr-${{ github.event.pull_request.number }}` has been deleted.
